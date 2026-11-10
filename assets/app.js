@@ -13,7 +13,11 @@
  *    (a sheet on phones, a menu on wider screens); and on the front page, "Browse categories": a tap on a category
  *    shows its subcategories below it;
  *  - a notice when a new edition of the site has been installed in the background ("Updated - reload");
- *  - a Back button in the header when the site runs as an installed app (which has no browser toolbar).
+ *  - a Back button in the header when the site runs as an installed app (which has no browser toolbar);
+ *  - the reader's interests: on the first visit the front page asks "What would you like to read?" (streams, then,
+ *    if wished, subjects and a level); the front page, the Categories panel and All books then show those books, with
+ *    "Show all" a tap away. Kept in localStorage ("bjp.interests:<site path>") only;
+ *  - on a phone, the page of a book keeps "Start reading" (or "Continue 34%") in a bar at the foot of the screen.
  *
  * Without localStorage, the Cache API or service workers the parts that need them are simply not shown.
  */
@@ -539,7 +543,7 @@
     var chips = document.querySelectorAll(".bjp-chip"), none = document.querySelector(".bjp-none");
     var coll = "", q = "";
     function apply() {
-      var secs = document.querySelectorAll(".bjp-coll"), total = 0, i, k;
+      var secs = document.querySelectorAll(".bjp-coll"), total = 0, i, k, act = q ? null : activeInterests(), byColl = {};
       for (i = 0; i < secs.length; i++) {
         var sec = secs[i], show = !coll || sec.getAttribute("data-collection") === coll, n = 0;
         var items = sec.querySelectorAll(".vol-item");
@@ -547,16 +551,27 @@
           var t = items[k].querySelector(".vol-title"), s2 = items[k].querySelector(".vol-sub");
           // the title, the line under it, and the book's subjects and tags (data-find, tools/pages.py)
           if (items[k].__find == null) items[k].__find = norm((t ? t.textContent : "") + " " + (s2 ? s2.textContent : "") + " " + (items[k].getAttribute("data-find") || ""));
-          var hit = !q || items[k].__find.indexOf(q) >= 0;
+          var hit = (!q || items[k].__find.indexOf(q) >= 0) && (!act || matchesInterests(items[k], act));
           items[k].hidden = !hit;
           if (hit) n++;
         }
+        byColl[sec.getAttribute("data-collection")] = n;
         sec.hidden = !show || n === 0;
         if (show) total += n;
       }
+      // the collection chips: only those with books to show
+      for (i = 0; i < chips.length; i++) {
+        var cid = chips[i].getAttribute("data-coll");
+        chips[i].hidden = !!cid && !byColl[cid];
+      }
       if (home) home.classList.toggle("is-filtered", !!(q || coll));
-      if (none) none.hidden = total > 0;
+      if (none) {
+        none.hidden = total > 0;
+        none.textContent = act ? "None of the books here matches your interests." : "No book in the library matches that title.";
+      }
+      renderForYou(act, total);
     }
+    shelfApply = apply;
     for (var c = 0; c < chips.length; c++) {
       chips[c].addEventListener("click", function () {
         coll = this.getAttribute("data-coll") || "";
@@ -588,6 +603,35 @@
       btn.setAttribute("href", t.url);
       btn.setAttribute("aria-label", "Continue reading" + (rec && rec.title ? ": " + rec.title : ""));
     } else if (t) btn.setAttribute("href", t.url);
+    stickyStart(hero, btn, vid);
+  }
+  /* on a phone the button stays at hand: a bar at the foot of the screen while the button itself is out of sight */
+  var stickyIO = null;
+  function stickyStart(hero, btn, vid) {
+    var bar = document.querySelector(".pk-sticky");
+    if (!bar) {
+      var title = hero.querySelector(".pk-book-title"), card = hero.querySelector(".vol-card, .book-cover");
+      bar = el("div", "pk-sticky");
+      bar.setAttribute("data-vol", vid);
+      bar.innerHTML = '<span class="pk-sticky-t"' + (title && title.getAttribute("lang") ? ' lang="' + esc(title.getAttribute("lang")) + '"' : "") + ">" +
+        esc(title ? title.textContent.replace(/^\s+|\s+$/g, "") : "") + "</span>";
+      var a = btn.cloneNode(true);
+      a.removeAttribute("id");
+      bar.appendChild(a);
+      document.body.appendChild(bar);
+      document.documentElement.classList.add("pk-has-sticky");
+      if (card) bar.style.setProperty("--cv-bg", getComputedStyle(card).getPropertyValue("--cv-bg"));
+      if (window.IntersectionObserver) {
+        if (stickyIO) stickyIO.disconnect();
+        stickyIO = new IntersectionObserver(function (es) {
+          var vis = es[es.length - 1].isIntersecting;
+          bar.classList.toggle("on", !vis);
+        });
+        stickyIO.observe(btn);
+      } else bar.classList.add("on");
+    }
+    var b2 = bar.querySelector(".pk-read");
+    if (b2) { b2.innerHTML = btn.innerHTML; b2.setAttribute("href", btn.getAttribute("href")); if (btn.getAttribute("aria-label")) b2.setAttribute("aria-label", btn.getAttribute("aria-label")); }
   }
 
   /* the Get the app page: the card of the visitor's own device comes first and is marked; inside the installed
@@ -815,6 +859,14 @@
     var st0 = { q: "", cat: "", sub: "", level: "", kind: "", lang: "", sort: "" }, s = {}, k;
     for (k in st0) s[k] = st0[k];
     var finds = items.map(function (it) { return norm(it.getAttribute("data-find") || it.textContent); });
+    var allBooks = /\/books\.html$/.test(location.pathname) && !/[?&](cat|sub|subject|find|level|kind|lang)=/.test(location.search);
+    var fyBox = null;
+    if (allBooks) {
+      fyBox = el("div", "pk-foryou pk-foryou-browse");
+      fyBox.hidden = true;
+      var tools0 = page.querySelector(".pk-tools");
+      if (tools0) tools0.insertAdjacentElement("beforebegin", fyBox);
+    }
     var titles = items.map(function (it) { var t = it.querySelector(".vol-name"); return norm(t ? t.textContent : ""); });
     function ctl(name) {
       for (var i = 0; i < controls.length; i++) {
@@ -868,13 +920,14 @@
     }
     function apply(reorder) {
       var n = 0, q = norm(s.q), words = q ? q.split(" ") : [];
+      var act = allBooks && !q && !s.cat && !s.sub ? activeInterests() : null;
       items.forEach(function (it, i) {
         var subs = " " + it.getAttribute("data-subjects") + " ";
         var hit = (!s.cat || subs.indexOf(" " + s.cat + " ") >= 0) && (!s.sub || subs.indexOf(" " + s.sub + " ") >= 0) &&
           (!s.level || it.getAttribute("data-level") === s.level) &&
           (!s.kind || it.getAttribute("data-kind") === s.kind) &&
           (!s.lang || it.getAttribute("data-lang") === s.lang) &&
-          words.every(function (w) { return finds[i].indexOf(w) >= 0; });
+          words.every(function (w) { return finds[i].indexOf(w) >= 0; }) && (!act || matchesInterests(it, act));
         it.hidden = !hit;
         if (hit) n++;
       });
@@ -893,6 +946,12 @@
         idx.forEach(function (i) { box.appendChild(items[i]); });
       }
       if (shown) shown.textContent = n === items.length ? plural(n, "book", "books") : n + " of " + plural(items.length, "book", "books");
+      if (fyBox) {
+        var fh = forYouBar(act, n);
+        fyBox.innerHTML = fh;
+        fyBox.hidden = !fh;
+        fyBox.classList.toggle("is-on", !!act);
+      }
       if (empty) empty.hidden = n > 0;
       for (var i = 0; i < controls.length; i++) {
         var lab = controls[i].closest(".pk-sel");
@@ -927,6 +986,7 @@
       });
     }
     apply(!!s.sort);
+    browseApply = function () { apply(false); };
     if (old) keepInAddress();      // ?subject= becomes ?cat=...&sub=...
   }
 
@@ -1088,8 +1148,9 @@
       if (!li) { var sub = catMenu.querySelector('.pk-cm-sub[href$="/subjects/' + here + '.html"]'); li = sub && sub.closest(".pk-cm-cat"); }
     }
     var wide = catWide(), all = catMenu.querySelectorAll(".pk-cm-cat");
+    catInterests();
     for (var i = 0; i < all.length; i++) catShow(all[i], false);
-    if (li || wide) catShow(li || catMenu.querySelector(".pk-cm-cat"), true);
+    if (li || wide) catShow(li || catMenu.querySelector(".pk-cm-cat:not(.is-other)") || catMenu.querySelector(".pk-cm-cat"), true);
     catMenu.hidden = false;
     document.documentElement.classList.add("pk-cm-on");
     catBtn.setAttribute("aria-expanded", "true");
@@ -1111,6 +1172,8 @@
     catMenu.addEventListener("click", function (e) {
       var t = e.target;
       if (t.closest(".pk-cm-close")) { closeCats(true); return; }
+      if (t.closest(".pk-cm-fyall")) { catMenu.classList.toggle("is-all"); catInterests(true); return; }
+      if (t.closest("[data-pk-interests]")) { closeCats(false); openInterests(); return; }
       var b = t.closest(".pk-cm-exp");
       if (b) {
         var li = b.closest(".pk-cm-cat");
@@ -1265,6 +1328,282 @@
     window.addEventListener("resize", function () { if (open) place(open.b, open.panel); });
   }
 
+
+  /* ---------------------------------------------------------------- interests: "What would you like to read?" */
+  /* The streams come with the categories (#pk-cats "st", tools/browse.py menu_data, from tools/subjects.yml streams:):
+     [{id, t: title, d: blurb, i: icon, n: books, c: [category or subcategory ids], s: [[subcategory id, title, books]]}].
+     The choice ({streams, subs, level}, or {skip: true}) is kept per site in localStorage. A book matches a stream when
+     one of its subjects (data-subjects, with their categories) is in the stream, or, where subjects of the stream were
+     chosen, in those; a level chosen leaves out the books of another level (books without one stay). */
+  var KEY_INT = "bjp.interests:" + ROOT_PATH, shelfApply = null, browseApply = null;
+  function interests() { var v = jget(KEY_INT, null); return v && typeof v === "object" ? v : null; }
+  function saveInterests(v) { v.v = 1; v.t = Date.now(); jset(KEY_INT, v); }
+  function streamList() { var d = catData(); return d && d.st && d.st.length ? d.st : []; }
+  function activeInterests(evenIfAll) {
+    var it = interests(), st = streamList();
+    if (!it || it.skip || (it.all && !evenIfAll) || !Array.isArray(it.streams) || !it.streams.length || !st.length) return null;
+    var sets = [], names = [];
+    st.forEach(function (x) {
+      if (it.streams.indexOf(x.id) < 0) return;
+      var mine = (it.subs || []).filter(function (id) { return x.s.some(function (y) { return y[0] === id; }); });
+      sets.push(mine.length ? mine : x.c);
+      names.push(x.t);
+    });
+    return sets.length ? { sets: sets, level: it.level || "", names: names } : null;
+  }
+  function matchesInterests(item, act) {
+    var subs = " " + (item.getAttribute("data-subjects") || "") + " ", lv = item.getAttribute("data-level") || "";
+    if (act.level && lv && lv !== act.level) return false;
+    return act.sets.some(function (set) { return set.some(function (x) { return subs.indexOf(" " + x + " ") >= 0; }); });
+  }
+  /* the categories of the chosen streams (a subcategory counts for its category) */
+  function interestCats(act) {
+    var d = catData(), out = {};
+    if (!d || !act) return out;
+    act.sets.forEach(function (set) {
+      set.forEach(function (id) {
+        d.c.forEach(function (c) { if (c.id === id || c.s.some(function (y) { return y[0] === id; })) out[c.id] = 1; });
+      });
+    });
+    return out;
+  }
+  function setShowAll(on) {
+    var it = interests();
+    if (!it) return;
+    it.all = !!on;
+    saveInterests(it);
+    applyInterests();
+  }
+  function applyInterests() {
+    if (shelfApply) shelfApply();
+    if (browseApply) browseApply();
+    wireCatGridInterests();
+    var now = document.querySelectorAll(".pk-int-now"), act = activeInterests(true), it = interests();
+    for (var i = 0; i < now.length; i++) now[i].textContent = act ? "Now: " + act.names.join(", ") + (it && it.all ? " (showing all books)" : "") : "Now: all books";
+  }
+  var SPARK = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 15.5l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7z"/></svg>';
+  /* the bar above the shelves: "For you: Engineering, Languages · Show all · Change" */
+  function forYouBar(act, n) {
+    var it = interests();
+    if (act) {
+      return '<div class="pk-fy-l">' + SPARK + '<span class="pk-fy-k">For you</span><span class="pk-fy-n">' + esc(act.names.join(", ")) +
+        (act.level ? " \u00b7 " + esc(act.level.charAt(0).toUpperCase() + act.level.slice(1)) : "") + (typeof n === "number" ? ' <span class="pk-fy-c">(' + plural(n, "book", "books") + ")</span>" : "") +
+        '</span></div><div class="pk-fy-r"><button type="button" class="pk-fy-b" data-fy="all">Show all</button><button type="button" class="pk-fy-b" data-pk-interests>Change</button></div>';
+    }
+    if (it && it.all && activeInterests(true)) {
+      return '<div class="pk-fy-l"><span class="pk-fy-k">Showing all books</span></div><div class="pk-fy-r"><button type="button" class="pk-fy-b" data-fy="mine">Only my interests</button>' +
+        '<button type="button" class="pk-fy-b" data-pk-interests>Change</button></div>';
+    }
+    if (streamList().length > 1) {
+      return '<div class="pk-fy-l">' + SPARK + '<span class="pk-fy-q">See only the books you want</span></div><div class="pk-fy-r"><button type="button" class="pk-fy-b" data-pk-interests>Choose interests</button></div>';
+    }
+    return "";
+  }
+  function renderForYou(act, n) {
+    var box = document.querySelector(".pk-foryou");
+    if (!box) return;
+    var html = forYouBar(act, n);
+    box.innerHTML = html;
+    box.hidden = !html;
+    box.classList.toggle("is-on", !!act);
+  }
+  document.addEventListener("click", function (e) {
+    var t = e.target && e.target.closest && e.target.closest("[data-fy], [data-pk-interests]");
+    if (!t || (catMenu && catMenu.contains(t))) return;
+    e.preventDefault();
+    if (t.hasAttribute("data-pk-interests")) openInterests();
+    else setShowAll(t.getAttribute("data-fy") === "all");
+  });
+  /* "Browse categories" on the front page: the reader's categories, the others behind "All categories" */
+  function wireCatGridInterests() {
+    var grid = document.querySelector(".pk-catgrid");
+    if (!grid) return;
+    var act = activeInterests(), mine = interestCats(act), cats = grid.querySelectorAll(".pk-cat"), hidden = 0, i;
+    var showAll = grid.classList.contains("is-all");
+    for (i = 0; i < cats.length; i++) {
+      var id = cats[i].getAttribute("data-cat") || ((/\/subjects\/([a-z0-9-]+)\.html/.exec(cats[i].getAttribute("href") || "") || [])[1]);
+      var other = !!act && !mine[id];
+      cats[i].classList.toggle("is-other", other);
+      cats[i].hidden = other && !showAll;
+      if (other) hidden++;
+    }
+    var more = grid.querySelector(".pk-cat-allbtn");
+    if (!hidden) { if (more) more.parentNode.removeChild(more); return; }
+    if (!more) {
+      more = el("button", "pk-cat pk-cat-allbtn");
+      more.type = "button";
+      more.addEventListener("click", function () { grid.classList.toggle("is-all"); wireCatGridInterests(); });
+      grid.appendChild(more);
+    }
+    more.innerHTML = '<span class="pk-cat-tx"><span class="pk-cat-t">' + (showAll ? "Fewer categories" : "All categories") + '</span><span class="pk-cat-n">' +
+      (showAll ? "Only your interests" : hidden + " more") + "</span></span>";
+  }
+  /* the Categories panel of the header: the reader's categories, the others behind "Show all categories" */
+  function catInterests() {
+    if (!catMenu) return;
+    var act = activeInterests(), mine = interestCats(act), lis = catMenu.querySelectorAll(".pk-cm-cat");
+    for (var i = 0; i < lis.length; i++) lis[i].classList.toggle("is-other", !!act && !mine[lis[i].getAttribute("data-id")]);
+    var bar = catMenu.querySelector(".pk-cm-fy");
+    if (!bar) {
+      bar = el("div", "pk-cm-fy");
+      catMenu.querySelector(".pk-cm-head").insertAdjacentElement("afterend", bar);
+    }
+    var all = catMenu.classList.contains("is-all");
+    if (act) {
+      bar.innerHTML = '<span class="pk-cm-fyt">' + SPARK + "<span>For you: " + esc(act.names.join(", ")) + "</span></span>" +
+        '<button type="button" class="pk-cm-fyall">' + (all ? "Only my interests" : "Show all categories") + '</button><button type="button" class="pk-cm-fych" data-pk-interests>Change</button>';
+    } else if (streamList().length > 1) {
+      bar.innerHTML = '<span class="pk-cm-fyt">' + SPARK + '<span>Choose what you would like to read</span></span><button type="button" class="pk-cm-fych" data-pk-interests>Choose interests</button>';
+    } else bar.innerHTML = "";
+    bar.hidden = !bar.innerHTML;
+  }
+
+  /* the picker: a sheet in two steps; Skip shows everything */
+  var picker = null, pickerPrev = null;
+  function openInterests(first) {
+    var st = streamList(), d = catData();
+    if (!st.length || !d) return;
+    if (picker) picker.parentNode.removeChild(picker);
+    var it = interests() || {}, chosen = (it.streams || []).slice(), subs = (it.subs || []).slice(), level = it.level || "";
+    var hue = {};
+    st.forEach(function (x) {
+      for (var i = 0; i < x.c.length && hue[x.id] == null; i++) {
+        d.c.forEach(function (c) { if (hue[x.id] == null && (c.id === x.c[i] || c.s.some(function (y) { return y[0] === x.c[i]; }))) hue[x.id] = c.h; });
+      }
+    });
+    var name = (document.querySelector('meta[name="application-name"]') || {}).content || "";
+    var m = el("div", "pk-int");
+    m.setAttribute("role", "dialog");
+    m.setAttribute("aria-modal", "true");
+    m.setAttribute("aria-labelledby", "pk-int-h1");
+    m.innerHTML = '<div class="pk-int-card">' +
+      '<button type="button" class="pk-int-x" aria-label="Close: show all books">' + ICON.close + "</button>" +
+      '<section class="pk-int-step" data-step="1">' +
+        '<p class="pk-int-kick">' + (first && name ? "Welcome to " + esc(name) : "Your interests") + "</p>" +
+        '<h2 class="pk-int-h" id="pk-int-h1">What would you like to read?</h2>' +
+        '<p class="pk-int-sub">Pick one or more. You can change this at any time.</p>' +
+        '<div class="pk-int-grid" role="group" aria-label="Streams">' + st.map(function (x) {
+          return '<button type="button" class="pk-int-st" data-st="' + esc(x.id) + '" aria-pressed="' + (chosen.indexOf(x.id) >= 0) + '" style="--h:' + (+hue[x.id] || 212) + '">' +
+            '<span class="pk-int-ic"><svg class="pk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + x.i + "</svg></span>" +
+            '<span class="pk-int-t">' + esc(x.t) + '</span><span class="pk-int-d">' + esc(x.d) + "</span>" +
+            '<span class="pk-int-n">' + plural(x.n, "book", "books") + '</span><span class="pk-int-ck" aria-hidden="true">' + ICON.check + "</span></button>";
+        }).join("") + "</div>" +
+        '<div class="pk-int-foot"><button type="button" class="pk-int-skip">Skip, show everything</button>' +
+          '<button type="button" class="pk-btn pk-btn-primary pk-int-next">Next</button></div>' +
+      "</section>" +
+      '<section class="pk-int-step" data-step="2" hidden>' +
+        '<p class="pk-int-kick">Optional</p><h2 class="pk-int-h" id="pk-int-h2" tabindex="-1">Narrow it down</h2>' +
+        '<p class="pk-int-sub">Choose subjects, or leave them all. A level, if you like.</p>' +
+        '<div class="pk-int-subs"></div>' +
+        '<div class="pk-int-lvrow"><span class="pk-int-lvl" id="pk-int-lv">Level</span><div class="pk-int-lv" role="radiogroup" aria-labelledby="pk-int-lv">' +
+          [["", "Any"], ["beginner", "Beginner"], ["intermediate", "Intermediate"], ["advanced", "Advanced"]].map(function (l) {
+            return '<button type="button" role="radio" data-lv="' + l[0] + '" aria-checked="' + (level === l[0]) + '">' + l[1] + "</button>";
+          }).join("") + "</div></div>" +
+        '<div class="pk-int-foot"><button type="button" class="pk-int-back">Back</button>' +
+          '<button type="button" class="pk-btn pk-btn-primary pk-int-done">Show my books</button></div>' +
+      "</section></div>";
+    document.body.appendChild(m);
+    picker = m;
+    pickerPrev = document.activeElement;
+    document.documentElement.classList.add("pk-int-on");
+    function nextState() {
+      var n = m.querySelectorAll('.pk-int-st[aria-pressed="true"]').length, b = m.querySelector(".pk-int-next");
+      b.disabled = !n;
+      b.textContent = "Next";
+      b.title = n ? "" : "Pick at least one";
+    }
+    function fillSubs() {
+      var box = m.querySelector(".pk-int-subs"), html = "";
+      st.forEach(function (x) {
+        if (chosen.indexOf(x.id) < 0 || x.s.length < 2) return;
+        html += '<div class="pk-int-grp" role="group" aria-label="' + esc(x.t) + '"><p class="pk-int-gh">' + esc(x.t) + '</p><div class="pk-int-chips">' +
+          x.s.map(function (y) {
+            return '<button type="button" class="pk-int-chip" data-sub="' + esc(y[0]) + '" aria-pressed="' + (subs.indexOf(y[0]) >= 0) + '">' + esc(y[1]) + "<span>" + y[2] + "</span></button>";
+          }).join("") + "</div></div>";
+      });
+      box.innerHTML = html || '<p class="pk-int-none">Nothing more to choose here: all the books of your streams will show.</p>';
+    }
+    function step(n) {
+      m.querySelector('[data-step="1"]').hidden = n !== 1;
+      m.querySelector('[data-step="2"]').hidden = n !== 2;
+      if (n === 2) { fillSubs(); m.querySelector("#pk-int-h2").focus(); }
+      else { var f = m.querySelector('.pk-int-st[aria-pressed="true"]') || m.querySelector(".pk-int-st"); if (f) f.focus(); }
+      m.querySelector(".pk-int-card").scrollTop = 0;
+    }
+    function done(skip) {
+      if (skip) saveInterests({ skip: true });
+      else {
+        var keep = subs.filter(function (id) { return st.some(function (x) { return chosen.indexOf(x.id) >= 0 && x.s.some(function (y) { return y[0] === id; }); }); });
+        saveInterests({ streams: chosen, subs: keep, level: level });
+      }
+      closeInterests();
+      applyInterests();
+      var bar = document.querySelector(".pk-foryou:not([hidden])");
+      if (bar && !skip) try { bar.scrollIntoView({ block: "start", behavior: reducedMotion() ? "auto" : "smooth" }); } catch (e) { /* ignore */ }
+    }
+    m.addEventListener("click", function (e) {
+      var t = e.target;
+      var b = t.closest(".pk-int-st");
+      if (b) {
+        var id = b.getAttribute("data-st"), on = b.getAttribute("aria-pressed") !== "true";
+        b.setAttribute("aria-pressed", String(on));
+        if (on) chosen.push(id); else chosen = chosen.filter(function (x) { return x !== id; });
+        nextState();
+        return;
+      }
+      var c = t.closest(".pk-int-chip");
+      if (c) {
+        var sid = c.getAttribute("data-sub"), on2 = c.getAttribute("aria-pressed") !== "true";
+        c.setAttribute("aria-pressed", String(on2));
+        if (on2) subs.push(sid); else subs = subs.filter(function (x) { return x !== sid; });
+        return;
+      }
+      var l = t.closest("[data-lv]");
+      if (l) {
+        level = l.getAttribute("data-lv");
+        var ls = m.querySelectorAll("[data-lv]");
+        for (var i = 0; i < ls.length; i++) ls[i].setAttribute("aria-checked", String(ls[i] === l));
+        return;
+      }
+      if (t.closest(".pk-int-next")) { if (chosen.length) step(2); return; }
+      if (t.closest(".pk-int-back")) { step(1); return; }
+      if (t.closest(".pk-int-done")) { done(false); return; }
+      if (t.closest(".pk-int-skip")) { done(true); return; }
+      if (t.closest(".pk-int-x") || t === m) { if (interests()) closeInterests(); else done(true); }
+    });
+    m.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") { e.preventDefault(); if (interests()) closeInterests(); else done(true); return; }
+      if (e.key === "Tab") {
+        var fs = Array.prototype.filter.call(m.querySelectorAll("button:not([disabled]), [tabindex='0']"), function (x) { return x.offsetParent !== null; });
+        var first0 = fs[0], last0 = fs[fs.length - 1];
+        if (e.shiftKey && document.activeElement === first0) { e.preventDefault(); last0.focus(); }
+        else if (!e.shiftKey && document.activeElement === last0) { e.preventDefault(); first0.focus(); }
+      }
+      if ((e.key === "ArrowRight" || e.key === "ArrowLeft") && e.target.closest("[data-lv]")) {
+        var ls2 = Array.prototype.slice.call(m.querySelectorAll("[data-lv]")), k = ls2.indexOf(e.target.closest("[data-lv]"));
+        var nx = ls2[(k + (e.key === "ArrowRight" ? 1 : -1) + ls2.length) % ls2.length];
+        nx.focus(); nx.click(); e.preventDefault();
+      }
+    });
+    nextState();
+    step(1);
+  }
+  function closeInterests() {
+    if (!picker) return;
+    picker.parentNode.removeChild(picker);
+    picker = null;
+    document.documentElement.classList.remove("pk-int-on");
+    if (pickerPrev && pickerPrev.focus && pickerPrev.isConnected) { try { pickerPrev.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+  }
+  /* the first visit to the front page or to All books: asked once (never over the reader or the slides) */
+  function maybeAskInterests() {
+    if (interests() || streamList().length < 2 || picker) return;
+    if (!(isHome() || /\/books\.html$/.test(location.pathname))) return;
+    if (sget("sessionStorage", KEY_OPEN) === "1" || document.documentElement.classList.contains("bjp-reading")) return;
+    if (/[?&](find|cat|sub|q)=/.test(location.search)) return;
+    setTimeout(function () { if (!interests() && !picker) openInterests(true); }, 350);
+  }
+
   /* ---------------------------------------------------------------- start */
   function onPage() {
     setupChrome();
@@ -1281,6 +1620,8 @@
     wirePath();
     markLists();
     wireInstallPage();
+    applyInterests();
+    maybeAskInterests();
     emitAll();
     ready().then(function () {
       markStarted();

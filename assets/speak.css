@@ -1,0 +1,162 @@
+/* Pustakalaya: web edition. Pronunciation and the colours of language books (Book Format, section 14):
+   Listen and microphone buttons (assets/speak.js), gender and word-class colours, silent letters and liaisons,
+   and the chapter map. Works on the pages, in the reader (every page colour) and in slides. */
+
+:root {
+  --pk-say: #2f5d9a;
+  --pk-say-soft: rgba(47, 93, 154, 0.1);
+  --pk-g-m: #2563eb;
+  --pk-g-f: #db2777;
+  --pk-g-pl: #7c3aed;
+  --pk-r-noun: #2563eb;
+  --pk-r-verb: #0d9488;
+  --pk-r-adj: #9333ea;
+  --pk-r-adv: #db2777;
+  --pk-r-prep: #c2410c;
+  --pk-r-pron: #0e7490;
+  --pk-r-conj: #4d7c0f;
+  --pk-r-interj: #e11d48;
+}
+[data-md-color-scheme="slate"], .bjp-reader[data-theme="dark"], .bjp-reader[data-theme="black"] {
+  --pk-say: #8fb4e0;
+  --pk-say-soft: rgba(143, 180, 224, 0.14);
+  --pk-g-m: #7fb0ff;
+  --pk-g-f: #f78fc4;
+  --pk-g-pl: #b9a2ff;
+  --pk-r-noun: #7fb0ff;
+  --pk-r-verb: #2dd4bf;
+  --pk-r-adj: #c9a2ff;
+  --pk-r-adv: #f78fc4;
+  --pk-r-prep: #fb9a5b;
+  --pk-r-pron: #4dd5ec;
+  --pk-r-conj: #a3e635;
+  --pk-r-interj: #fb7185;
+}
+.bjp-reader[data-theme="white"], .bjp-reader[data-theme="sepia"] {
+  --pk-say: #2f5d9a; --pk-say-soft: rgba(47, 93, 154, 0.1);
+  --pk-g-m: #2563eb; --pk-g-f: #db2777; --pk-g-pl: #7c3aed;
+  --pk-r-noun: #2563eb; --pk-r-verb: #0d9488; --pk-r-adj: #9333ea; --pk-r-adv: #db2777;
+  --pk-r-prep: #c2410c; --pk-r-pron: #0e7490; --pk-r-conj: #4d7c0f; --pk-r-interj: #e11d48;
+}
+.bjp-reader[data-theme="sepia"] { --pk-say: #7a3f12; --pk-say-soft: rgba(122, 63, 18, 0.1); }
+
+/* ---------- a phrase to hear and its buttons ---------- */
+.pk-say { cursor: pointer; text-decoration: none; }
+.rd-flow .pk-say { cursor: auto; }
+.pk-say-btn, .pk-mic-btn {
+  position: relative;
+  display: inline-grid; place-items: center;
+  width: 1.9em; height: 1.9em; min-width: 28px; min-height: 28px; max-width: 34px; max-height: 34px;
+  margin: -0.3em 0.1em -0.3em 0.3em; padding: 0;
+  vertical-align: middle;
+  border: 1px solid color-mix(in srgb, var(--pk-say) 35%, transparent);
+  border-radius: 999px;
+  background: var(--pk-say-soft);
+  color: var(--pk-say);
+  font: inherit; line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background 0.15s, transform 0.12s;
+  break-inside: avoid;
+}
+/* the tap target is at least 44 px, without making the line taller */
+.pk-say-btn::after, .pk-mic-btn::after { content: ""; position: absolute; left: 50%; top: 50%; width: 44px; height: 44px; transform: translate(-50%, -50%); }
+.pk-say-btn svg, .pk-mic-btn svg { width: 62%; height: 62%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+.pk-say-btn:hover, .pk-mic-btn:hover { background: color-mix(in srgb, var(--pk-say) 18%, transparent); }
+.pk-say-btn:active, .pk-mic-btn:active { transform: scale(0.92); }
+.pk-say-btn:focus-visible, .pk-mic-btn:focus-visible { outline: 2px solid var(--pk-say); outline-offset: 2px; }
+.pk-say-btn.is-playing { background: var(--pk-say); color: var(--md-default-bg-color, #fff); animation: pk-say-pulse 1.1s ease-in-out infinite; }
+.pk-say-btn.is-playing .w2 { animation: pk-say-wave 0.9s ease-in-out infinite; }
+.pk-say-btn.is-slow::before { content: "½"; position: absolute; right: -0.45em; top: -0.55em; font: 700 0.62em/1 system-ui, sans-serif; color: var(--pk-say); }
+.pk-mic-btn { margin-left: 0.15em; }
+.pk-mic-btn.is-listening { background: #c62828; border-color: #c62828; color: #fff; animation: pk-say-pulse 1.1s ease-in-out infinite; }
+@keyframes pk-say-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pk-say) 45%, transparent); } 50% { box-shadow: 0 0 0 6px transparent; } }
+@keyframes pk-say-wave { 50% { opacity: 0.25; } }
+@media (prefers-reduced-motion: reduce) { .pk-say-btn.is-playing, .pk-mic-btn.is-listening, .pk-say-btn.is-playing .w2 { animation: none; } }
+/* no speech synthesis, or no voice for the language: the buttons go, the written pronunciation stays */
+.pk-nospeech .pk-say-btn, .pk-nospeech .pk-say-prefs,
+.pk-novoice-fr .pk-say-btn[data-lang="fr"], .pk-novoice-en .pk-say-btn[data-lang="en"], .pk-novoice-hi .pk-say-btn[data-lang="hi"],
+.pk-novoice-de .pk-say-btn[data-lang="de"], .pk-novoice-es .pk-say-btn[data-lang="es"], .pk-novoice-sa .pk-say-btn[data-lang="sa"] { display: none; }
+@media print { .pk-say-btn, .pk-mic-btn, .pk-say-prefs, .pk-say-toast { display: none !important; } }
+.sl-stage .pk-mic-btn { display: none; }
+
+.pk-say-toast {
+  position: fixed; left: 50%; bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px)); z-index: 1000;
+  transform: translate(-50%, 1rem); opacity: 0; pointer-events: none;
+  max-width: min(92vw, 30rem); padding: 0.6rem 0.9rem; border-radius: 10px;
+  background: #1f2430; color: #f4f6fa; font: 0.86rem/1.4 system-ui, sans-serif; box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+  transition: opacity 0.2s, transform 0.2s;
+}
+.pk-say-toast.show { opacity: 1; transform: translate(-50%, 0); }
+.pk-say-toast .ok { color: #7ee2a8; }
+.pk-say-toast .no { color: #ffb38a; }
+
+/* "Voice and speed" above a chapter */
+.pk-say-prefs { margin: 0 0 0.6rem; font: 0.8rem/1.35 var(--rd-ui, system-ui, sans-serif); color: var(--md-default-fg-color--light, #555); }
+.pk-say-prefs > summary { display: inline-flex; align-items: center; gap: 0.35rem; min-height: 32px; padding: 0 0.7rem; border: 1px solid var(--md-default-fg-color--lightest, #e6e6e6); border-radius: 999px; cursor: pointer; list-style: none; }
+.pk-say-prefs > summary::-webkit-details-marker { display: none; }
+.pk-say-prefs > summary svg { width: 1.1em; height: 1.1em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; color: var(--pk-say); }
+.pk-say-prefs-body { display: grid; gap: 0.5rem; margin-top: 0.5rem; padding: 0.7rem 0.8rem; border: 1px solid var(--md-default-fg-color--lightest, #e6e6e6); border-radius: 10px; max-width: 34rem; }
+.pk-sp-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.pk-sp-row > span { min-width: 4.5rem; font-weight: 600; }
+.pk-sp-row select { flex: 1 1 12rem; min-width: 0; min-height: 36px; font: inherit; color: inherit; background: var(--md-default-bg-color, #fff); border: 1px solid var(--md-default-fg-color--lighter, #bbb); border-radius: 6px; padding: 0 0.4rem; }
+.pk-sp-row button { min-height: 36px; padding: 0 0.75rem; font: inherit; color: inherit; background: transparent; border: 1px solid var(--md-default-fg-color--lighter, #bbb); border-radius: 6px; cursor: pointer; }
+.pk-sp-row button[aria-pressed="true"] { background: var(--pk-say); border-color: var(--pk-say); color: var(--md-default-bg-color, #fff); }
+.pk-sp-none { margin: 0; font-style: italic; }
+
+/* ---------- gender, word classes and sounds (the books' own colours) ---------- */
+.g-m, .g-f, .g-pl { font-weight: 650; }
+.g-m { color: var(--pk-g-m); }
+.g-f { color: var(--pk-g-f); }
+.g-pl { color: var(--pk-g-pl); }
+.r-noun, .r-verb, .r-adj, .r-adv, .r-prep, .r-pron, .r-conj, .r-interj {
+  font-weight: 650; border-radius: 4px; padding: 0 0.2em;
+  background: color-mix(in srgb, currentColor 11%, transparent);
+  box-decoration-break: clone; -webkit-box-decoration-break: clone;
+}
+.r-noun { color: var(--pk-r-noun); }
+.r-verb { color: var(--pk-r-verb); }
+.r-adj { color: var(--pk-r-adj); }
+.r-adv { color: var(--pk-r-adv); }
+.r-prep { color: var(--pk-r-prep); }
+.r-pron { color: var(--pk-r-pron); }
+.r-conj { color: var(--pk-r-conj); }
+.r-interj { color: var(--pk-r-interj); }
+.snd-mute { opacity: 0.42; text-decoration: line-through; text-decoration-thickness: 1px; }
+.snd-liaison { color: var(--pk-say); font-weight: 800; }
+.md-typeset .g-legend, .rd-flow .g-legend {
+  display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: center;
+  margin: 0.6em 0 1em; padding: 0.35em 0.7em; width: fit-content; max-width: 100%;
+  border: 1px solid var(--md-default-fg-color--lightest, #e6e6e6); border-radius: 999px;
+  font: 0.78rem/1.4 var(--rd-ui, system-ui, sans-serif); color: var(--md-default-fg-color--light, #555);
+}
+.g-legend > span { display: inline-flex; align-items: center; gap: 0.3em; }
+.g-legend > span::before { content: ""; width: 0.7em; height: 0.7em; border-radius: 50%; background: currentColor; }
+.g-legend .g-m, .g-legend .g-f, .g-legend .g-pl { font-weight: 600; }
+
+/* ---------- the chapter map ---------- */
+figure.pk-cmap { margin: 1.4em 0 1.8em; }
+.pk-cmap svg { display: block; width: 100%; height: auto; max-width: 760px; margin: 0 auto; font-family: var(--rd-ui, system-ui, sans-serif); }
+.pk-cmap .cm-edge { fill: none; stroke: color-mix(in srgb, var(--pk-say) 45%, transparent); stroke-width: 2; }
+.pk-cmap .cm-ring { fill: none; stroke: color-mix(in srgb, var(--pk-say) 40%, transparent); stroke-width: 2; stroke-dasharray: 3 7; }
+.pk-cmap .cm-hub { fill: var(--pk-say); }
+.pk-cmap .cm-hubtxt { fill: var(--md-default-bg-color, #fff); font-weight: 750; font-size: 17px; }
+.pk-cmap .cm-hubsub { fill: var(--md-default-bg-color, #fff); opacity: 0.85; font-weight: 600; font-size: 12px; }
+.pk-cmap .cm-box { fill: var(--md-default-bg-color, #fff); stroke: color-mix(in srgb, var(--pk-say) 40%, transparent); stroke-width: 1.5; }
+.pk-cmap .cm-node { cursor: pointer; }
+.pk-cmap .cm-node:hover .cm-box { stroke: var(--pk-say); stroke-width: 2.5; }
+.pk-cmap .cm-num { fill: var(--pk-say); }
+.pk-cmap .cm-numtxt { fill: var(--md-default-bg-color, #fff); font-weight: 750; font-size: 13px; }
+.pk-cmap .cm-txt { fill: var(--md-default-fg-color, #1a1a1a); font-weight: 600; font-size: 13.5px; }
+.md-typeset .pk-cmap ol, .rd-flow .pk-cmap ol { display: flex; flex-wrap: wrap; gap: 0.35em; list-style: none; margin: 0.6em 0 0; padding: 0; text-align: left; font-size: 0.85em; }
+.md-typeset .pk-cmap li, .rd-flow .pk-cmap li { margin: 0 0 0.35em; padding: 0; }
+.md-typeset .pk-cmap li::before { content: none; }
+.pk-cmap li a { display: flex; gap: 0.6em; align-items: center; min-height: 40px; padding: 0.3em 0.6em; border: 1px solid var(--md-default-fg-color--lightest, #e6e6e6); border-radius: 10px; color: inherit; text-decoration: none; line-height: 1.3; }
+.pk-cmap li .cm-n { flex: none; display: inline-grid; place-items: center; min-width: 1.8em; height: 1.8em; border-radius: 50%; background: var(--pk-say); color: var(--md-default-bg-color, #fff); font: 700 0.8em/1 var(--rd-ui, system-ui, sans-serif); }
+/* a narrow page lists the sections instead of the drawing */
+@media (max-width: 640px) {
+  .pk-cmap svg { display: none; }
+  .md-typeset .pk-cmap ol, .rd-flow .pk-cmap ol { display: block; font-size: 1em; }
+}
+.rd-flow .pk-cmap svg { max-height: 60vh; }

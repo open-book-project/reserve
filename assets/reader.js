@@ -27,9 +27,13 @@
   var KEY_SET = "bjp.reader.settings", KEY_POS = "bjp.reader.pos", KEY_AUTO = "bjp.reader.auto",
       KEY_OPEN = "bjp.reader.open", KEY_SUP = "bjp.reader.suppress", KEY_LAST = "bjp.reader.last",
       KEY_GOTO = "bjp.reader.goto", KEY_SEEN = "bjp.lib.seen", KEY_TAB = "bjp.reader.toctab",
-      KEY_BOOKS = "bjp.books", KEY_COVER = "bjp.reader.cover", KEY_MARKS = "bjp.marks", KEY_HL = "bjp.hl";
+      KEY_BOOKS = "bjp.books", KEY_COVER = "bjp.reader.cover", KEY_MARKS = "bjp.marks", KEY_HL = "bjp.hl",
+      KEY_SPEED = "bjp.reader.speed", KEY_HINT = "bjp.reader.hinted", KEY_PC = "bjp.reader.pc";
   var THEME_BG = { white: "#ffffff", sepia: "#f4ecd8", dark: "#161514", black: "#000000" };
   var THEMES = ["white", "sepia", "dark", "black"];
+  /* "auto" (the default): white, or dark when the device is in dark mode */
+  var THEME_CHOICES = ["auto"].concat(THEMES);
+  var TURNS = ["slide", "fade", "none"];
   var SIZES = [14.5, 16, 17.5, 19, 20.5, 22.5, 25, 28];
   /* the typefaces: the site's serif (with Devanagari), a book face and a sans-serif face from Google Fonts (fetched
      when chosen, kept by the service worker for offline use), and the device's own interface face */
@@ -71,7 +75,19 @@
     mg1: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7.5 8.5h9M7.5 12h9M7.5 15.5h9"/></svg>',
     mg2: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M9.5 8.5h5M9.5 12h5M9.5 15.5h5"/></svg>',
     jus: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>',
-    lft: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 10h11M4 14h16M4 18h9"/></svg>'
+    lft: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 10h11M4 14h16M4 18h9"/></svg>',
+    more: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5.5" cy="12" r="1.3"/><circle cx="12" cy="12" r="1.3"/><circle cx="18.5" cy="12" r="1.3"/></svg>',
+    sun: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>',
+    sunlow: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5"/><path d="M12 5.5v.5M12 18v.5M5.5 12h.5M18 12h.5"/></svg>',
+    warm: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c2.5 3.2 5 6 5 9.5A5 5 0 017 12.5C7 9 9.5 6.2 12 3z"/></svg>',
+    cool: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v18M4.2 7.5l15.6 9M4.2 16.5l15.6-9"/></svg>',
+    speak: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 010 6M18 6.5a7.5 7.5 0 010 11"/></svg>',
+    play: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z"/></svg>',
+    pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.5v13M15.5 5.5v13"/></svg>',
+    stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5"/></svg>',
+    look: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 015.5 4H18v13H5.5A1.5 1.5 0 004 18.5z"/><path d="M4 18.5A1.5 1.5 0 005.5 20H18v-3M8 8.5h6M8 11.5h4"/></svg>',
+    ext: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h6v6M20 4l-8 8M18 14v5a1 1 0 01-1 1H5a1 1 0 01-1-1V7a1 1 0 011-1h5"/></svg>',
+    moon: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 14.5A7.5 7.5 0 019.5 5a7.5 7.5 0 109.5 9.5z"/></svg>'
   };
 
   function store(kind) { try { return window[kind]; } catch (e) { return null; } }
@@ -234,9 +250,23 @@
       margin: typeof s.margin === "number" ? clamp(Math.round(s.margin), 0, 2) : 1,
       // Justified text by default, except on narrow phone screens where it leaves wide word gaps.
       justify: typeof s.justify === "boolean" ? s.justify : Math.min(window.innerWidth, window.screen ? window.screen.width : 9999) >= 600,
-      theme: THEMES.indexOf(s.theme) >= 0 ? s.theme : "white",
-      font: FONTS[s.font] ? s.font : "serif"
+      theme: THEME_CHOICES.indexOf(s.theme) >= 0 ? s.theme : "auto",
+      font: FONTS[s.font] ? s.font : "serif",
+      night: s.night === true,                                                     // dark from 8 pm to 6 am
+      bright: typeof s.bright === "number" ? clamp(s.bright, 0.35, 1) : 1,         // an overlay over the page, not the screen
+      warm: typeof s.warm === "number" ? clamp(s.warm, 0, 1) : 0,
+      turn: TURNS.indexOf(s.turn) >= 0 ? s.turn : "slide",
+      info: /^(pages|ch|book)$/.test(s.info || "") ? s.info : "ch"                 // the footer: pages or minutes left
     };
+  }
+  /* the page colour on screen: the one chosen, or (auto) white or dark as the device is; "night" makes a light page dark
+     between 8 pm and 6 am */
+  function osDark() { return !!(window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches); }
+  function isNight() { var h = new Date().getHours(); return h >= 20 || h < 6; }
+  function effTheme() {
+    var t = settings.theme === "auto" ? (osDark() ? "dark" : "white") : settings.theme;
+    if (settings.night && isNight() && (t === "white" || t === "sepia")) t = "dark";
+    return t;
   }
   /* a typeface from Google Fonts is fetched the first time it is chosen */
   function loadFont(key) {
@@ -249,9 +279,11 @@
     document.head.appendChild(l);
   }
   function saveSettings() { jset(KEY_SET, settings); }
+  /* phones: 19 px (about 36 characters a line on a phone 390 px wide); 17.5 px on the smallest phones */
   function sizeIndex() {
     if (settings.size !== null) return settings.size;
-    return Math.min(window.innerWidth, window.innerHeight) < 600 ? 2 : 3;
+    var m = Math.min(window.innerWidth, window.innerHeight);
+    return m < 360 ? 2 : 3;
   }
 
   /* ---------------------------------------------------------------- entry points */
@@ -335,22 +367,23 @@
         '<button type="button" class="rd-btn rd-markbtn" aria-label="Bookmark this page (B)" aria-pressed="false" title="Bookmark (B)">' + ICON.mark + '</button>' +
         '<button type="button" class="rd-btn rd-tocbtn" aria-label="Contents, bookmarks and notes (C)" aria-haspopup="dialog" aria-expanded="false" title="Contents (C)">' + ICON.toc + '</button>' +
         '<button type="button" class="rd-btn rd-setbtn" aria-label="Reading settings (A)" aria-haspopup="dialog" aria-expanded="false" title="Settings (A)"><span class="rd-aa" aria-hidden="true">A<small>a</small></span></button>' +
-        '<button type="button" class="rd-btn rd-fsbtn" aria-label="Full screen" title="Full screen" hidden>' + ICON.fs + '</button>' +
+        '<button type="button" class="rd-btn rd-morebtn" aria-label="More: search, read aloud, present, bookmarks, full screen" aria-haspopup="dialog" aria-expanded="false" title="More">' + ICON.more + '</button>' +
       '</div>' +
       '<div class="rd-bot rd-bar">' +
         '<div class="rd-scrub"><div class="rd-ticks" aria-hidden="true"></div>' +
           '<input type="range" class="rd-range" min="0" max="1000" step="1" value="0" aria-label="Position in the book">' +
-          '<output class="rd-tip" aria-hidden="true" hidden></output></div>' +
+          '<output class="rd-tip" aria-hidden="true" hidden><b class="rd-tip-t"></b><span class="rd-tip-x"></span><span class="rd-tip-p"></span></output></div>' +
         '<div class="rd-botline"><span class="rd-botch"></span><span class="rd-botpct"></span></div>' +
       '</div>' +
       '<div class="rd-foot rd-bar"><div class="rd-fline"><span class="rd-ftitle"></span>' +
-        '<span class="rd-pageno" role="status" aria-live="polite"></span><span class="rd-fpct"></span></div>' +
+        '<span class="rd-pageno" role="status" aria-live="polite"></span><button type="button" class="rd-fpct" title="Pages or minutes left"></button></div>' +
         '<div class="rd-progress" role="progressbar" aria-label="Progress in the book" aria-valuemin="0" aria-valuemax="100"><i></i></div></div>' +
       '<button type="button" class="rd-back" hidden>' + ICON.back + '<span>Back</span></button>' +
       '<div class="rd-panel rd-settings" role="dialog" aria-label="Reading settings" hidden>' +
         '<div class="rd-sheet-grip" aria-hidden="true"></div>' +
-        '<div class="rd-themes" role="radiogroup" aria-label="Page colour">' + THEMES.map(function (t) {
-          return '<button type="button" role="radio" aria-checked="false" data-k="theme" data-v="' + t + '" class="rd-th rd-th-' + t + '"><span class="rd-th-dot">Aa</span><span class="rd-th-lab">' +
+        '<div class="rd-themes" role="radiogroup" aria-label="Page colour">' + THEME_CHOICES.map(function (t) {
+          return '<button type="button" role="radio" aria-checked="false" data-k="theme" data-v="' + t + '" class="rd-th rd-th-' + t + '"' +
+            (t === "auto" ? ' title="White, or dark when the device is in dark mode"' : "") + '><span class="rd-th-dot">Aa</span><span class="rd-th-lab">' +
             t.charAt(0).toUpperCase() + t.slice(1) + "</span></button>";
         }).join("") + '</div>' +
         '<div class="rd-fonts" role="radiogroup" aria-label="Typeface">' + Object.keys(FONTS).map(function (k) {
@@ -360,9 +393,15 @@
           '<button type="button" data-act="smaller" aria-label="Smaller text (-)"><span style="font-size:13px">A</span></button>' +
           '<div class="rd-dots" aria-hidden="true"></div>' +
           '<button type="button" data-act="larger" aria-label="Larger text (+)"><span style="font-size:20px">A</span></button></div></div>' +
+        '<div class="rd-row rd-slide"><label class="rd-lab" for="rd-bright">Light</label><span class="rd-sl">' + ICON.sunlow +
+          '<input type="range" id="rd-bright" class="rd-bright" min="35" max="100" step="1">' + ICON.sun + '</span></div>' +
+        '<div class="rd-row rd-slide"><label class="rd-lab" for="rd-warm">Warmth</label><span class="rd-sl">' + ICON.cool +
+          '<input type="range" id="rd-warm" class="rd-warmr" min="0" max="100" step="1">' + ICON.warm + '</span></div>' +
+        seg("night", "Night", [["0", "Off", "Night colours off"], ["1", ICON.moon + "<span>8 pm\u20136 am</span>", "A dark page from 8 pm to 6 am"]]) +
         seg("spacing", "Lines", [["0", ICON.sp0, "Compact"], ["1", ICON.sp1, "Normal"], ["2", ICON.sp2, "Relaxed"]]) +
         seg("margin", "Margins", [["0", ICON.mg0, "Narrow"], ["1", ICON.mg1, "Medium"], ["2", ICON.mg2, "Wide"]]) +
         seg("justify", "Align", [["1", ICON.jus, "Justified"], ["0", ICON.lft, "Left"]]) +
+        seg("turn", "Turn", [["slide", "Slide", "Pages slide"], ["fade", "Fade", "Pages fade"], ["none", "None", "No animation"]]) +
         '<p class="rd-set-foot"><button type="button" class="rd-keys">' + ICON.kbd + '<span>Keyboard shortcuts</span></button></p>' +
       '</div>' +
       '<div class="rd-panel rd-toc" role="dialog" aria-label="Contents, bookmarks and notes" hidden>' +
@@ -388,6 +427,22 @@
           '<input id="rd-find-in" class="rd-goto-in rd-find-in" type="search" placeholder="Search this book" autocomplete="off" spellcheck="false" enterkeyhint="search"></div>' +
         '<div class="rd-find-res" aria-live="polite"></div>' +
       '</div>' +
+      '<div class="rd-panel rd-more" role="dialog" aria-label="More" hidden>' +
+        '<div class="rd-sheet-grip" aria-hidden="true"></div>' +
+        '<div class="rd-mgrid">' +
+          '<button type="button" class="rd-mi rd-mi-find" data-mi="find">' + ICON.search + '<span>Search</span></button>' +
+          '<button type="button" class="rd-mi rd-mi-speak" data-mi="speak">' + ICON.speak + '<span>Read aloud</span></button>' +
+          '<button type="button" class="rd-mi" data-mi="marks">' + ICON.mark + '<span>Bookmarks</span></button>' +
+          '<button type="button" class="rd-mi" data-mi="notes">' + ICON.note + '<span>Notes</span></button>' +
+          '<button type="button" class="rd-mi rd-fsbtn" data-mi="fs" hidden>' + ICON.fs + '<span>Full screen</span></button>' +
+          '<a class="rd-mi rd-mi-lib" href="' + libraryUrl() + '">' + ICON.lib + '<span>Library</span></a>' +
+          '<a class="rd-mi rd-mi-about" href="#">' + ICON.info + '<span>About this book</span></a>' +
+          '<button type="button" class="rd-mi rd-mi-keys" data-mi="keys">' + ICON.kbd + '<span>Shortcuts</span></button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="rd-panel rd-look" role="dialog" aria-label="Look up" hidden>' +
+        '<div class="rd-sheet-grip" aria-hidden="true"></div><div class="rd-look-body" aria-live="polite"></div>' +
+      '</div>' +
       '<div class="rd-panel rd-help" role="dialog" aria-label="Keyboard shortcuts" hidden>' +
         '<h2>Keyboard shortcuts</h2><dl class="rd-keylist">' +
           [["\u2192  Space  PgDn", "Next page"], ["\u2190  Shift+Space  PgUp", "Previous page"], ["Home  End", "Start or end of the chapter"],
@@ -397,6 +452,7 @@
           }).join("") + '</dl>' +
       '</div>' +
       '<div class="rd-selbar" role="toolbar" aria-label="Highlight the selected text" hidden>' +
+        '<button type="button" class="rd-selbtn rd-sel-look" data-act="look" aria-label="Look up this word" title="Look up">' + ICON.look + '<span>Look up</span></button>' +
         HL_COLORS.map(function (c) { return '<button type="button" class="rd-hlc rd-hlc-' + c + '" data-hl="' + c + '" aria-label="Highlight in ' + c + '" title="Highlight"></button>'; }).join("") +
         '<span class="rd-selsep" aria-hidden="true"></span>' +
         '<button type="button" class="rd-selbtn" data-act="note" aria-label="Add a note" title="Note">' + ICON.note + '</button>' +
@@ -409,7 +465,17 @@
           '<button type="button" class="rd-btn" data-z="in" aria-label="Zoom in">' + ICON.plus + '</button>' +
           '<button type="button" class="rd-btn" data-z="close" aria-label="Close the full-screen view (Esc)">' + ICON.close + '</button></div>' +
       '</div>' +
-      '<div class="rd-loading" role="status"><span>Loading</span></div>' +
+      '<div class="rd-shade" aria-hidden="true"><i class="rd-dim"></i><i class="rd-warm"></i></div>' +
+      '<div class="rd-tts" role="toolbar" aria-label="Read aloud" hidden>' +
+        '<button type="button" class="rd-btn" data-tts="toggle" aria-label="Pause">' + ICON.pause + '</button>' +
+        '<span class="rd-tts-lab" aria-live="polite">Reading aloud</span>' +
+        '<button type="button" class="rd-btn rd-tts-rate" data-tts="rate" aria-label="Reading speed">1\u00d7</button>' +
+        '<button type="button" class="rd-btn" data-tts="stop" aria-label="Stop reading aloud">' + ICON.stop + '</button>' +
+      '</div>' +
+      '<div class="rd-hint" aria-hidden="true" hidden><div class="rd-hint-z"><span><b>\u2039 Back</b></span><span><b>Menus</b></span><span><b>Next \u203a</b></span></div>' +
+        '<p>Tap the middle for menus, swipe to turn pages</p></div>' +
+      '<div class="rd-loading" role="status"><div class="rd-skel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>' +
+        '<span class="rd-sr">Loading</span><b class="rd-lbar" aria-hidden="true"></b></div>' +
       '<div class="rd-curtain" aria-hidden="true" hidden><span></span></div>';
     document.body.appendChild(root);
     S.root = root;
@@ -453,13 +519,44 @@
     $.botpct = root.querySelector(".rd-botpct");
     $.bot = root.querySelector(".rd-bot");
     $.zoom = root.querySelector(".rd-zoom");
+    $.more = root.querySelector(".rd-more");
+    $.look = root.querySelector(".rd-look");
+    $.lookBody = root.querySelector(".rd-look-body");
+    $.tts = root.querySelector(".rd-tts");
+    $.hint = root.querySelector(".rd-hint");
+    $.dim = root.querySelector(".rd-dim");
+    $.warm = root.querySelector(".rd-warm");
+    $.finfo = root.querySelector(".rd-fpct");
+    $.bright = root.querySelector(".rd-bright");
+    $.warmr = root.querySelector(".rd-warmr");
+    $.tipT = root.querySelector(".rd-tip-t");
+    $.tipX = root.querySelector(".rd-tip-x");
+    $.tipP = root.querySelector(".rd-tip-p");
     $.dots.innerHTML = SIZES.map(function () { return "<i></i>"; }).join("");
+    renderActions();
 
     root.querySelector(".rd-close").addEventListener("click", function () { close(); });
     root.querySelector(".rd-tocbtn").addEventListener("click", function () { togglePanel("toc"); });
     root.querySelector(".rd-setbtn").addEventListener("click", function () { togglePanel("set"); });
     root.querySelector(".rd-findbtn").addEventListener("click", function () { togglePanel("find"); });
     root.querySelector(".rd-keys").addEventListener("click", function () { togglePanel("help"); });
+    root.querySelector(".rd-morebtn").addEventListener("click", function () { togglePanel("more"); });
+    $.more.addEventListener("click", onMoreClick);
+    $.look.addEventListener("click", onLookClick);
+    $.tts.addEventListener("click", onTtsClick);
+    $.finfo.addEventListener("click", cycleInfo);
+    $.bright.addEventListener("input", onShadeInput);
+    $.warmr.addEventListener("input", onShadeInput);
+    $.bright.addEventListener("change", saveSettings);
+    $.warmr.addEventListener("change", saveSettings);
+    if (window.matchMedia) {
+      var mq = window.matchMedia("(prefers-color-scheme: dark)");
+      var onScheme = function () { if (settings.theme === "auto") applySettingsUI(); };
+      if (mq.addEventListener) mq.addEventListener("change", onScheme); else if (mq.addListener) mq.addListener(onScheme);
+    }
+    // the night colours begin and end on time while a book is open
+    setInterval(function () { if (S.open && settings.night) applySettingsUI(); }, 60000);
+    $.flow.addEventListener("scroll", onXScroll, true);
     $.mark.addEventListener("click", toggleBookmark);
     $.findIn.addEventListener("input", debounce(onFindInput, 220));
     $.findIn.addEventListener("keydown", onFindKey);
@@ -489,6 +586,8 @@
     });
     $.lib.addEventListener("click", onLibraryClick);
     $.about.addEventListener("click", onAboutClick);
+    $.more.querySelector(".rd-mi-lib").addEventListener("click", onLibraryClick);
+    $.more.querySelector(".rd-mi-about").addEventListener("click", function (e) { e.preventDefault(); $.about.click(); });
     $.goIn.addEventListener("input", onGotoInput);
     $.goIn.addEventListener("keydown", onGotoKey);
     $.goRes.addEventListener("keydown", onGotoKey);
@@ -519,17 +618,19 @@
         if (p !== null && !isOnPage(p)) goto(p, false);
       }
     });
-    $.flow.addEventListener("load", debounce(function () { if (S.open && !S.loading) relayout(); }, 120), true);
+    $.flow.addEventListener("load", debounce(function () { if (S.open && !S.loading) relayout(); }, 250), true);
     window.addEventListener("resize", debounce(function () { if (S.open) relayout(true); }, 150));
     window.addEventListener("orientationchange", debounce(function () { if (S.open) relayout(true); }, 250));
     document.addEventListener("fullscreenchange", onFsChange);
     document.addEventListener("webkitfullscreenchange", onFsChange);
     document.addEventListener("keydown", onKey, true);
+    document.addEventListener("keydown", function () { S.kbd = true; }, true);
+    document.addEventListener("pointerdown", function () { S.kbd = false; }, true);
     window.addEventListener("popstate", onPopState, true);
     window.addEventListener("pagehide", function () { if (S.open) savePos(); });
     document.addEventListener("visibilitychange", function () { if (document.hidden && S.open) savePos(); });
     if (document.fonts && document.fonts.addEventListener) {
-      document.fonts.addEventListener("loadingdone", debounce(function () { if (S.open && !S.loading) relayout(true); }, 150));
+      document.fonts.addEventListener("loadingdone", debounce(function () { if (S.open && !S.loading) relayout(true); }, 300));
     }
     // an app on the iPad home screen is already full screen (and WebKit's own full-screen view would cover the reader's controls)
     var fsOk = !!((root.requestFullscreen || root.webkitRequestFullscreen) && (document.fullscreenEnabled || document.webkitFullscreenEnabled)) &&
@@ -613,6 +714,7 @@
     build();
     var rec = recFromDocument(document, location.href, true);
     if (!rec) return;
+    if (!rec.remoteError) cache[rec.url] = rec;
     S.open = true;
     S.origUrl = pageUrl(location.href);
     S.backStack = [];
@@ -673,9 +775,9 @@
   function finishOpen() {
     $.loading.hidden = true;
     liftCurtain();
-    $.stage.classList.remove("rd-fade");
     try { $.flow.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
-    prefetch();
+    firstHint();
+    runQueued();
   }
 
   function close(opts) {
@@ -684,6 +786,8 @@
     savePos();
     S.open = false;
     clearTimeout(S.hideT);
+    ttsStop();
+    mathToken++;
     closePanels();
     closePop();
     closeZoom();
@@ -694,6 +798,7 @@
     setThemeColor(false);
     inertOthers(false);
     sdel("sessionStorage", KEY_OPEN);
+    try { document.dispatchEvent(new Event("bjp:reader-close")); } catch (e) { /* the page under the reader is typeset (mathjax.js) */ }
     if (fsElement()) { try { (document.exitFullscreen || document.webkitExitFullscreen).call(document); } catch (e) { /* ignore */ } }
     var changed = S.url !== S.origUrl;
     if (S.prevFocus && S.prevFocus.focus && !changed) { try { S.prevFocus.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
@@ -765,9 +870,27 @@
       box.classList.add("rd-zoomable");
       box.appendChild(xb);
     }
+    // figures open full screen with a tap: a small mark on the picture says so
+    list = flow.querySelectorAll("figure img, img.tikz");
+    for (i = 0; i < list.length; i++) {
+      var im = list[i];
+      if (im.closest(".rd-imgbox, a, .pk-book, .pk-sc-fig") || im.closest("mjx-container")) continue;
+      var w0 = +im.getAttribute("width") || 0;
+      if (w0 && w0 < 120) continue;
+      var bx = el("span", "rd-imgbox");
+      im.parentNode.insertBefore(bx, im);
+      bx.appendChild(im);
+      bx.appendChild(el("span", "rd-fig-x", ICON.expand));
+    }
     // images in pages that are not on screen must still load, or the page breaks would move later
     list = flow.querySelectorAll("img");
-    for (i = 0; i < list.length; i++) { list[i].setAttribute("loading", "eager"); list[i].removeAttribute("fetchpriority"); }
+    for (i = 0; i < list.length; i++) {
+      list[i].setAttribute("loading", "eager");
+      list[i].removeAttribute("fetchpriority");
+      // a page scan takes its room before it arrives (its size is in the page), so the pages do not move as scans come
+      var sw0 = +list[i].getAttribute("width"), sh0 = +list[i].getAttribute("height");
+      if (sw0 > 0 && sh0 > 0 && list[i].classList.contains("pk-scan")) list[i].style.setProperty("--ar", (sw0 / sh0).toFixed(4));
+    }
     list = flow.querySelectorAll("a[href]");
     for (i = 0; i < list.length; i++) {
       var a = list[i], h = a.getAttribute("href");
@@ -796,9 +919,15 @@
     return window.bjpMath ? window.bjpMath.pending([$.flow]).length > 0 : $.flow.querySelector(".arithmatex, .math") !== null;
   }
 
-  /* Put a fetched chapter into the flow, wait until it is fully typeset, paginate and place the position. */
+  /* Put a fetched chapter into the flow and show its pages as soon as the text and the fonts are ready: pictures whose
+     size the page states are not waited for; the mathematics on and near the page to be shown is typeset first, the
+     rest of the chapter a little at a time afterwards (assets/mathjax.js), re-paginating and keeping the place. A
+     chapter typeset once is kept typeset (rec.typeset), and the next chapter is typeset ahead while the reader reads. */
+  var mathToken = 0;
   function mount(rec, where, fade) {
+    var tok = ++mathToken;
     S.loading = true;
+    S.mathTodo = null;
     S.rec = rec;
     S.url = rec.url;
     S.path = pagePath(rec.url);
@@ -808,12 +937,18 @@
     if (!bk || S.modelBook !== bk.id) { S.model = null; S.modelBook = bk ? bk.id : ""; }
     $.flow.classList.add("rd-hidden");
     $.flow.style.transform = "none";
-    $.flow.innerHTML = rec.html;
+    wantDevanagari(rec.html);
+    // a very long chapter is read in segments of a few sections (segments()): the one with the place asked for
+    var segs = segments(rec), seg = null;
+    if (segs) { var pick = pickSeg(rec, segs, where); S.seg = pick.k; where = pick.where; seg = segs[pick.k]; }
+    else S.seg = 0;
+    S.segs = segs;
+    $.flow.innerHTML = seg ? (seg.typeset || seg.html) : (rec.typeset || rec.html);
     prepareFlow();
     S.anchors = [];
     S.n = 0;
     var h1 = $.flow.querySelector("h1");
-    var title = h1 ? h1.textContent.replace(/¶/g, "").trim() : rec.title;
+    var title = h1 ? h1.textContent.replace(/¶/g, "").trim() : rec.h1 || rec.title;
     S.title = title;
     $.title.textContent = title;
     $.ftitle.textContent = title;
@@ -824,18 +959,316 @@
     updateBackChip();
     markSeen(S.path);
     loadModel();
-    return waitReady().then(function () {
+    S.tm = { mount: performance.now() };
+    return waitBasics().then(function () {
+      if (tok !== mathToken) return null;
+      S.tm.basics = performance.now();
       applySettingsUI();
       applyHighlights();
       measureAndPaginate(null);
       applyWhere(where);
+      var todo = window.bjpMath && needsMath() ? window.bjpMath.pending([$.flow]) : [];
+      if (!todo.length || !window.bjpMath.typesetEls) return null;
+      var keep = where === "end" ? "end" : captureAnchor(), near = mathAround(todo);
+      var first = typesetOut(near.now);
+      S.mathTodo = near.later;
+      // typeset in time: shown typeset; late (MathJax still arriving): shown, and re-paginated when it is done
+      return raceTimeout(first.then(function () { first.done = true; }), 4000).then(function () {
+        if (tok !== mathToken) return;
+        measureAndPaginate(null);
+        reWhere(where, keep);
+        if (!first.done) first.then(function () { if (tok === mathToken) relayoutKeep(); });
+      });
+    }).then(function () {
+      if (tok !== mathToken) return;
       $.flow.classList.remove("rd-hidden");
       S.loading = false;
-      if (fade) { $.stage.classList.remove("rd-fade"); }
+      S.tm.shown = performance.now();
+      S.pageAt = Date.now();
+      updatePageUI();
+      if (S.mathTodo && S.mathTodo.length) typesetRest(tok); else settled(tok);
     });
   }
 
+  /* ---- very long chapters: segments of a few sections, each paginated on its own and loaded when reached. The page's
+     address, its anchors and its numbering stay as they are: a link, a search result, a bookmark or the saved place finds
+     its segment. Highlights and bookmarks keep the block numbers of the whole chapter (hlOff, anOff). */
+  var SEG_MIN = 50000, SEG_CHARS = 24000;
+  function segments(rec) {
+    if (rec.segs !== undefined) return rec.segs;
+    rec.segs = null;
+    if (!rec.html || rec.html.length < SEG_MIN) return null;
+    var t = document.createElement("template");
+    t.innerHTML = rec.html;
+    var root = t.content, total = root.textContent.length;
+    // the weight of a chapter: its text, and a figure, a table or a formula counted as a few lines more
+    if (weight(root) < SEG_MIN) return null;
+    // the element whose children are cut: down through the element that holds nearly all the text (the text of a linked
+    // book inside its shell); what stands beside it at each level (the title, the credit) goes with the first or last segment
+    var host = root, levels = [];
+    for (;;) {
+      var big = null, ks = host.children;
+      for (var q = 0; q < ks.length; q++) if (ks[q].textContent.length > total * 0.85) big = ks[q];
+      if (!big || big.children.length < 2 || /^(P|LI|TABLE|PRE|BLOCKQUOTE|FIGURE)$/.test(big.tagName)) break;
+      var pre = [], post = [], seen = false;
+      for (q = 0; q < ks.length; q++) { if (ks[q] === big) seen = true; else (seen ? post : pre).push(ks[q]); }
+      levels.push({ el: big, pre: pre, post: post });
+      host = big;
+      if (host.children.length > 3) {
+        // stop where the text is spread over many blocks
+        var top = 0;
+        for (q = 0; q < host.children.length; q++) top = Math.max(top, host.children[q].textContent.length);
+        if (top < total * 0.85) break;
+      }
+    }
+    var kids = [].slice.call(host.children), hasH2 = kids.some(function (k) { return k.tagName === "H2"; });
+    var groups = [], cur = [], len = 0;
+    kids.forEach(function (k) {
+      // at a section (##) once a segment is long enough; in a long section at a subsection, and in a very long one
+      // between any two blocks
+      var t = k.tagName, cut = (hasH2 && t === "H2" && len >= SEG_CHARS) || ((/^H[2-4]$/.test(t)) && len >= SEG_CHARS * (hasH2 ? 1.5 : 1)) ||
+        (/^(HR|P|DIV|BLOCKQUOTE|UL|OL|TABLE|FIGURE|SECTION|DL|PRE)$/.test(t) && len >= SEG_CHARS * (hasH2 ? 2.5 : 1.2));
+      if (cut && !(k.classList && k.classList.contains("footnote"))) { groups.push(cur); cur = []; len = 0; }
+      cur.push(k);
+      len += weight(k);
+    });
+    if (cur.length) {
+      // a short end (a last section, the notes) stays with the segment before it
+      if (groups.length && len < SEG_CHARS / 3) groups[groups.length - 1] = groups[groups.length - 1].concat(cur);
+      else groups.push(cur);
+    }
+    if (groups.length < 2) return null;
+    var h1 = root.querySelector("h1");
+    rec.h1 = h1 ? h1.textContent.replace(/¶/g, "").trim() : "";
+    rec.whole = root;                       // for notes and references in another segment
+    var start = 0, hl = 0, an = 0, lastG = groups.length - 1;
+    function count(nodes, acc) {
+      nodes.forEach(function (n) {
+        acc.chars += n.textContent.length;
+        acc.nh += (n.matches(HL_SEL) ? 1 : 0) + n.querySelectorAll(HL_SEL).length;
+        acc.na += (n.matches(ANCH_SEL) ? 1 : 0) + n.querySelectorAll(ANCH_SEL).length;
+        if (n.id) acc.ids[n.id] = 1;
+        var withId = n.querySelectorAll("[id]");
+        for (var i = 0; i < withId.length; i++) acc.ids[withId[i].id] = 1;
+      });
+    }
+    function html(nodes) { return nodes.map(function (n) { return n.outerHTML; }).join("\n"); }
+    rec.segs = groups.map(function (nodes, gi) {
+      var acc = { chars: 0, nh: 0, na: 0, ids: {} }, inner = html(nodes);
+      // the levels from the inside out: the element itself (a shallow copy), with what stood before it in the first
+      // segment and what came after it in the last
+      for (var w = levels.length - 1; w >= 0; w--) {
+        var L = levels[w], c = L.el.cloneNode(false);
+        c.innerHTML = inner;
+        inner = (gi === 0 ? html(L.pre) : "") + c.outerHTML + (gi === lastG ? html(L.post) : "");
+      }
+      levels.forEach(function (L) { if (gi === 0) count(L.pre, acc); });
+      count(nodes, acc);
+      levels.forEach(function (L) { if (gi === lastG) count(L.post, acc); });
+      var sg = { html: inner, start: start, chars: acc.chars, hlOff: hl, hlN: acc.nh, anOff: an, ids: acc.ids };
+      start += acc.chars; hl += acc.nh; an += acc.na;
+      return sg;
+    });
+    rec.segChars = start;
+    return rec.segs;
+  }
+  function weight(n) {
+    return n.textContent.length + 600 * n.querySelectorAll("img, svg, table, div.arithmatex, pre").length + 120 * n.querySelectorAll("span.arithmatex").length;
+  }
+  function segOfId(segs, id) {
+    for (var i = 0; segs && i < segs.length; i++) if (segs[i].ids[id]) return i;
+    return -1;
+  }
+  function segOfFrac(segs, rec, f) {
+    var x = clamp(f, 0, 1) * rec.segChars;
+    for (var i = 0; i < segs.length; i++) if (x < segs[i].start + segs[i].chars || i === segs.length - 1) return { k: i, f: clamp((x - segs[i].start) / Math.max(1, segs[i].chars), 0, 0.999) };
+    return { k: 0, f: 0 };
+  }
+  /* the segment that holds the place asked for, and the place within it */
+  function pickSeg(rec, segs, where) {
+    var last = segs.length - 1;
+    if (where === "end") return { k: last, where: "end" };
+    if (where && typeof where === "object") {
+      if (typeof where.seg === "number") return { k: clamp(where.seg, 0, last), where: where.at || "start" };
+      if (where.hash) {
+        var k = segOfId(segs, safeDecode(where.hash.slice(1)));
+        if (k >= 0) return { k: k, where: where };
+      }
+      if (where.hl) {
+        var hh = findHl(where.hl);
+        if (hh) for (var j = 0; j < segs.length; j++) if (hh.h.b >= segs[j].hlOff && hh.h.b < segs[j].hlOff + segs[j].hlN) return { k: j, where: where };
+      }
+      if (where.anchor) {
+        if (typeof where.anchor.seg === "number") return { k: clamp(where.anchor.seg, 0, last), where: where };
+        var g = segOfFrac(segs, rec, where.anchor.f || 0);
+        return { k: g.k, where: { anchor: { i: null, n: 0, f: g.f } } };
+      }
+    }
+    if (where === "saved") {
+      var rp = (jget(KEY_POS, {}) || {})[pagePath(rec.url)];
+      if (rp && typeof rp.seg === "number") return { k: clamp(rp.seg, 0, last), where: { anchor: { i: rp.i, n: rp.n, f: rp.f, dp: rp.dp || 0 } } };
+      if (rp && typeof rp.f === "number") { var g2 = segOfFrac(segs, rec, rp.f); return { k: g2.k, where: { anchor: { i: null, n: 0, f: g2.f } } }; }
+    }
+    return { k: 0, where: where };
+  }
+  function moreSeg(dir) { return !!(S.segs && (dir > 0 ? S.seg < S.segs.length - 1 : S.seg > 0)); }
+  function loadSeg(k, at) { return loadChapter(S.url, { seg: k, at: at }); }
+  /* how far through the chapter the end of page (pages from the start of the segment) is: 0 to 1 */
+  function chapFrac(pages) {
+    var f = S.n ? clamp(pages / S.n, 0, 1) : 0;
+    if (!S.segs) return f;
+    var sg = S.segs[S.seg];
+    return clamp((sg.start + f * sg.chars) / Math.max(1, S.rec.segChars), 0, 1);
+  }
+  /* an element of this chapter, in the segment on screen or, for a note or a reference, anywhere in the chapter */
+  function inChapter(id) {
+    var t = byId($.flow, id);
+    if (t || !S.segs || !S.rec || !S.rec.whole) return t;
+    return byId(S.rec.whole, id);
+  }
+
+  /* the place again after the first formulas are typeset: the element asked for, or the block that began the page */
+  function reWhere(where, keep) {
+    if (keep === "end") { goto(S.n - 1, false, true); return; }
+    if (where && typeof where === "object") {
+      var t = where.find ? $.flow.querySelector("mark.rd-flash") : where.hl ? $.flow.querySelector('mark[data-hl="' + where.hl + '"]') :
+        where.hash ? byId($.flow, safeDecode(where.hash.slice(1))) : null;
+      var pg = t ? pageOfEl(t) : null;
+      if (pg !== null) { goto(pg, false, true); return; }
+    }
+    restoreAnchor(keep);
+  }
+  /* the mathematics of the pages around the one shown (now), and the rest in the order to typeset it: the pages after it,
+     then those before it, nearest first */
+  function mathAround(todo) {
+    var lo = S.page - 1, hi = S.page + (S.spread ? 4 : 2), now = [], after = [], before = [];
+    for (var i = 0; i < todo.length; i++) {
+      var pg = pageOfEl(todo[i]);
+      if (pg === null || (pg >= lo && pg <= hi)) now.push(todo[i]);
+      else if (pg > hi) after.push(todo[i]);
+      else before.push(todo[i]);
+    }
+    return { now: now, later: after.concat(before.reverse()) };
+  }
+  /* Formulas are typeset out of the page: MathJax measures text by putting it beside the formula, and inside the paged
+     text every such measure would lay out the whole chapter again. Copies are typeset in a box of the page's width
+     and type, out of sight, and then take the place of the originals in one go. */
+  function typesetOut(els) {
+    return typesetCopies(els).then(swapIn);
+  }
+  /* the copies typeset, not yet put in place: [[original, copy, holder]] */
+  function swapIn(pairs) {
+    (pairs || []).forEach(function (x) { if (x[0].isConnected && x[1].querySelector("mjx-container")) x[0].parentNode.replaceChild(x[1], x[0]); });
+    (pairs || []).forEach(function (x) { if (x[2].parentNode) x[2].parentNode.removeChild(x[2]); });
+  }
+  function typesetCopies(els) {
+    if (!els.length || !window.bjpMath || !window.bjpMath.typesetEls) return Promise.resolve([]);
+    var box = $.mj;
+    if (!box) {
+      box = $.mj = el("div", "rd-pre md-typeset");
+      box.setAttribute("aria-hidden", "true");
+      box.inert = true;
+      S.root.appendChild(box);
+    }
+    box.style.width = (S.pw || 320) + "px";
+    box.style.fontSize = $.flow.style.fontSize;
+    box.style.fontFamily = $.flow.style.fontFamily;
+    box.style.lineHeight = $.flow.style.lineHeight;
+    var pairs = els.map(function (e) {
+      var c = e.cloneNode(true), holder = el(e.tagName === "DIV" ? "div" : "p");
+      holder.appendChild(c);
+      box.appendChild(holder);
+      return [e, c, holder];
+    });
+    return window.bjpMath.typesetEls(pairs.map(function (x) { return x[1]; })).then(function () { return pairs; });
+  }
+  function idle(fn) {
+    if (window.requestIdleCallback) window.requestIdleCallback(fn, { timeout: 250 });
+    else setTimeout(fn, 16);
+  }
+  /* The rest of the chapter's mathematics, a few formulas at a time, out of the page. The copies typeset wait out of
+     sight and are put in place together: when the reader comes within a few pages of them, and at the end. Every change
+     inside the paged text lays the whole chapter out again, so they are few. The place on the page is kept. */
+  function typesetRest(tok) {
+    var list = S.mathTodo || [];
+    S.mathReady = [];
+    function step() {
+      if (tok !== mathToken || !S.open) return;
+      if (!list.length) { S.mathTodo = null; swapReady(); settled(tok); return; }
+      idle(function () {
+        if (tok !== mathToken || !S.open) return;
+        typesetCopies(list.splice(0, 60)).then(function (pairs) {
+          if (tok !== mathToken || !S.open) return;
+          S.mathReady = S.mathReady.concat(pairs);
+          if (mathNearby()) swapReady();
+          step();
+        });
+      });
+    }
+    step();
+  }
+  /* the formulas typeset and the next ones to typeset: is the reader within a few pages of one of them? */
+  function mathNearby() {
+    var all = (S.mathReady || []).map(function (x) { return x[0]; }).concat((S.mathTodo || []).slice(0, 1));
+    for (var i = 0; i < all.length; i++) {
+      var pg = all[i].isConnected ? pageOfEl(all[i]) : null;
+      if (pg !== null && pg >= S.page - 2 && pg <= S.page + (S.spread ? 5 : 3)) return true;
+    }
+    return false;
+  }
+  function swapReady() {
+    var r = S.mathReady || [];
+    S.mathReady = [];
+    if (!r.length) { relayoutKeep(); return; }
+    var keep = captureAnchor();
+    swapIn(r);
+    relayoutKeep(keep);
+  }
+  /* re-paginate after a change of the text (a formula typeset, a late picture), keeping the place */
+  function relayoutKeep(keep) {
+    if (!S.open || S.loading || !S.n) return;
+    if (S.p && S.p.drag) { setTimeout(function () { relayoutKeep(); }, 300); return; }
+    var a = keep || captureAnchor();
+    measureAndPaginate(null);
+    restoreAnchor(a);
+  }
+  /* the chapter is complete: its pagination and its typeset text are kept, and the next chapter is made ready */
+  function settled(tok) {
+    if (tok !== mathToken || !S.open) return;
+    pcSet(S.n);
+    var unit = S.segs ? S.segs[S.seg] : S.rec;
+    if (unit && !unit.typeset && unit.html.indexOf("arithmatex") >= 0) unit.typeset = cleanFlowHtml();
+    prefetch();
+  }
+  function cleanFlowHtml() {
+    var c = $.flow.cloneNode(true), i, list = c.querySelectorAll("mark.rd-hl, mark.rd-flash");
+    for (i = 0; i < list.length; i++) { var m = list[i], pa = m.parentNode; while (m.firstChild) pa.insertBefore(m.firstChild, m); pa.removeChild(m); }
+    list = c.querySelectorAll(".rd-xhint");
+    for (i = 0; i < list.length; i++) list[i].parentNode.removeChild(list[i]);
+    c.normalize();
+    return c.innerHTML;
+  }
+
+  /* pages of a chapter, per screen size and settings: the count shown while the chapter is still being typeset */
+  var PC = jget(KEY_PC, {}) || {};
+  function pcKey() { return S.path + (S.segs ? "#" + S.seg : "") + "|" + S.lastDims; }
+  function pcGet() { var v = PC[pcKey()]; return typeof v === "number" ? v : 0; }
+  function pcSet(n) {
+    var k = pcKey();
+    if (PC[k] === n) return;
+    PC[k] = n;
+    var ks = Object.keys(PC);
+    if (ks.length > 400) delete PC[ks[0]];
+    jset(KEY_PC, PC);
+  }
+
   /* the book's language (library.yml) for the text: hyphenation, the choice of font, screen readers */
+  /* a chapter with Devanagari text: the site's Devanagari face (extra.css) is asked for at once, so that the pages are
+     laid out in it the first time (waitBasics waits for the fonts a moment) */
+  function wantDevanagari(html) {
+    if (!document.fonts || !document.fonts.load || !/[ऀ-ॿ]/.test(html || "")) return;
+    try { document.fonts.load('400 1em "Noto Serif Devanagari"', "क"); document.fonts.load('700 1em "Noto Serif Devanagari"', "क"); } catch (e) { /* the installed face stands in */ }
+  }
   function setLang(lang) {
     S.lang = lang || "en";
     S.root.setAttribute("lang", S.lang);
@@ -855,123 +1288,255 @@
     }, function () { /* without the contents the footer shows the chapter only */ });
   }
 
-  function waitReady() {
-    var chain = Promise.resolve();
-    if (needsMath() && window.bjpMath) chain = chain.then(function () { return raceTimeout(window.bjpMath.typeset([$.flow]), 12000); });
-    chain = chain.then(function () { return document.fonts && document.fonts.ready ? raceTimeout(document.fonts.ready, 1500) : null; });
-    chain = chain.then(function () { return raceTimeout(imagesReady($.flow), 4000); });
-    return chain;
+  /* the text's fonts and the pictures of unknown size, each for a moment at most (a late one re-paginates) */
+  function waitBasics() {
+    // (a moment the first time; once a chapter has been shown its faces are there, and a late one re-paginates)
+    var fw = S.shown ? 250 : 600;
+    S.shown = true;
+    return Promise.all([
+      document.fonts && document.fonts.ready ? raceTimeout(document.fonts.ready, fw) : null,
+      raceTimeout(imagesReady($.flow), 1500)
+    ]);
   }
 
+  /* the chapters before and after are fetched while this one is read, and the next one is typeset ahead */
   function prefetch() {
-    setTimeout(function () {
+    clearTimeout(S.preT);
+    S.preT = setTimeout(function () {
       if (!S.open || !S.rec) return;
-      if (S.rec.next) fetchPage(S.rec.next).catch(function () {});
+      if (moreSeg(1)) pretypeset(S.segs[S.seg + 1]);
+      else if (S.rec.next) fetchPage(S.rec.next).then(function (r) { var sg = segments(r); pretypeset(sg ? sg[0] : r); }, function () {});
       if (S.rec.prev) fetchPage(S.rec.prev).catch(function () {});
       bookContents().catch(function () {});
-    }, 900);
+    }, 500);
+  }
+  function pretypeset(rec) {
+    if (!rec || rec.typeset || rec.pre || !window.bjpMath || !window.bjpMath.typesetEls || rec.html.indexOf("arithmatex") < 0) return;
+    rec.pre = true;
+    var box = $.pre;
+    if (!box) {
+      box = $.pre = el("div", "rd-pre md-typeset");
+      box.setAttribute("aria-hidden", "true");
+      box.inert = true;
+      S.root.appendChild(box);
+    }
+    box.style.width = (S.pw || 320) + "px";
+    box.style.fontSize = $.flow.style.fontSize;
+    box.innerHTML = rec.html;
+    var list = window.bjpMath.pending([box]), tok = mathToken;
+    function step() {
+      if (tok !== mathToken || !S.open || S.loading) { rec.pre = false; box.innerHTML = ""; return; }
+      if (!list.length) { rec.typeset = box.innerHTML; box.innerHTML = ""; return; }
+      idle(function () {
+        if (tok !== mathToken || S.loading) { rec.pre = false; box.innerHTML = ""; return; }
+        window.bjpMath.typesetEls(list.splice(0, 20)).then(step, function () { rec.pre = false; });
+      });
+    }
+    step();
   }
 
+  /* the next or another chapter: while it is fetched and made ready a light outline of a page shows (after a moment,
+     so that a quick change shows none), then the page slides in from the side it was asked from */
+  function showSkeleton(on) {
+    if (!$.loading) return;
+    $.loading.classList.toggle("is-change", on);
+    $.loading.hidden = !on;
+  }
   function loadChapter(url, where) {
     if (S.loading) return Promise.resolve();
     S.loading = true;
     savePos();
     closePanels();
     closePop();
-    $.stage.classList.add("rd-fade");
-    var wait = new Promise(function (r) { setTimeout(r, reducedMotion() ? 0 : 150); });
-    return Promise.all([fetchPage(url), wait]).then(function (r) {
+    hideSelbar();
+    var dir = where === "end" || (where && where.at === "end") ? -1 : 1;
+    showSkeleton(true);
+    return fetchPage(url).then(function (rec) {
       S.loading = false;
-      return mount(r[0], where, true);
+      return mount(rec, where, true);
     }).then(function () {
-      prefetch();
+      showSkeleton(false);
+      enterAnim(dir);
+      runQueued();
+      if (R.on && !R.paused) ttsFromPage();
     }).catch(function () {
       S.loading = false;
-      $.stage.classList.remove("rd-fade");
+      S.queued = 0;
+      showSkeleton(false);
       $.flow.classList.remove("rd-hidden");
       $.pageno.textContent = navigator.onLine === false ? "This page is not available offline." : "Could not load the next page. Check the connection.";
       setTimeout(updatePageUI, 2500);
     });
+  }
+  function enterAnim(dir) {
+    var st = turnStyle();
+    if (st === "none") return;
+    var v = $.view;
+    v.classList.remove("rd-enter-l", "rd-enter-r", "rd-enter-f");
+    void v.offsetWidth;
+    v.classList.add(st === "fade" ? "rd-enter-f" : dir < 0 ? "rd-enter-l" : "rd-enter-r");
+    clearTimeout(S.enterT);
+    S.enterT = setTimeout(function () { v.classList.remove("rd-enter-l", "rd-enter-r", "rd-enter-f"); }, 400);
+  }
+  function turnStyle() { return reducedMotion() ? "none" : settings.turn; }
+  /* page turns asked for while a chapter was loading are made when it is ready */
+  function runQueued() {
+    var q = S.queued || 0;
+    S.queued = 0;
+    while (q !== 0 && !S.loading && S.n) {
+      var d = q > 0 ? 1 : -1;
+      q -= d;
+      turn(d);
+    }
+    if (q && S.loading) S.queued = q;
   }
 
   /* ---------------------------------------------------------------- pagination */
   function px(v) { return parseFloat(v) || 0; }
 
   function measureAndPaginate(keep) {
-    var flow = $.flow, root = S.root, i, list;
+    var t0 = performance.now();
+    try { paginate(); } finally { var dt = performance.now() - t0; S.mp = S.mp || [0, 0, 0]; S.mp[0]++; S.mp[1] += dt; S.mp[2] = dt; }
+  }
+  /* (a style is written only when it changes: every write between two measures would lay the whole chapter out again,
+     which for a long chapter with many formulas takes a good part of a second) */
+  function sp(st, name, val) { if (st.getPropertyValue(name) !== val) st.setProperty(name, val); }
+  function paginate() {
+    var flow = $.flow, root = S.root, i, list, fst = flow.style;
     var fontPx = SIZES[sizeIndex()];
     var vw = window.innerWidth, vh = window.innerHeight;
     var phone = Math.min(vw, vh) < 600;
-    root.style.setProperty("--rd-mx", Math.max(phone ? 16 : 20, Math.round(vw * MARGINS[settings.margin])) + "px");
+    // phones: margins of about 22 px (medium), so that a line of 19 px type holds about 36 characters
+    sp(root.style, "--rd-mx", Math.max(phone ? 14 : 20, Math.round(vw * (phone ? [0.036, 0.056, 0.1] : MARGINS)[settings.margin])) + "px");
     // The top margin clears the 52px toolbar, so the first line is never hidden under it.
-    root.style.setProperty("--rd-mt", (phone ? 62 : 68) + "px");
-    root.style.setProperty("--rd-mb", (phone ? 60 : 52) + "px");
+    sp(root.style, "--rd-mt", (phone ? 62 : 68) + "px");
+    sp(root.style, "--rd-mb", (phone ? 60 : 52) + "px");
     var cs = getComputedStyle($.stage);
     var availW = Math.floor($.stage.clientWidth - px(cs.paddingLeft) - px(cs.paddingRight));
     var availH = Math.floor($.stage.clientHeight - px(cs.paddingTop) - px(cs.paddingBottom));
     S.spread = vw >= 1100 && vw > vh;
     var gap = S.spread ? clamp(Math.round(fontPx * 2.6), 40, 88) : 32;
-    var maxMeasure = Math.round(fontPx * 36);
+    // about 66 characters a line on large screens, 36 to 40 on a phone
+    var maxMeasure = Math.round(fontPx * (phone && !S.spread ? 19 : 36));
     var pw = S.spread ? Math.min(Math.floor((availW - gap) / 2), maxMeasure) : Math.min(availW, maxMeasure);
     pw = Math.max(pw, 120);
     var viewW = S.spread ? 2 * pw + gap : pw;
     var ph = Math.max(availH, 120);
     S.pw = pw; S.ph = ph; S.gap = gap; S.stride = pw + gap;
-    root.style.setProperty("--rd-vw", viewW + "px");
-    $.view.style.width = viewW + "px";
-    $.view.style.height = ph + "px";
-    flow.style.width = viewW + "px";
-    flow.style.height = ph + "px";
-    flow.style.columnWidth = pw + "px";
-    flow.style.columnGap = gap + "px";
-    flow.style.setProperty("--rd-h", ph + "px");
-    flow.style.fontSize = fontPx + "px";
-    flow.style.fontFamily = (FONTS[settings.font] || FONTS.serif).css;
+    sp(root.style, "--rd-vw", viewW + "px");
+    sp($.view.style, "width", viewW + "px");
+    sp($.view.style, "height", ph + "px");
+    sp(fst, "width", viewW + "px");
+    sp(fst, "height", ph + "px");
+    sp(fst, "column-width", pw + "px");
+    sp(fst, "column-gap", gap + "px");
+    sp(fst, "--rd-h", ph + "px");
+    sp(fst, "font-size", fontPx + "px");
+    var ff = (FONTS[settings.font] || FONTS.serif).css;
+    if (flow.__ff !== ff) { flow.__ff = ff; fst.fontFamily = ff; }
     // Devanagari carries its marks above and below the line: it needs a little more leading
-    flow.style.lineHeight = String(LEADS[settings.spacing] + (/^hi\b/.test(S.lang) ? 0.14 : 0));
+    sp(fst, "line-height", String(LEADS[settings.spacing] + (/^hi\b/.test(S.lang) ? 0.14 : 0)));
     flow.classList.toggle("rd-just", settings.justify);
     flow.classList.toggle("rd-left", !settings.justify);
-    // tables taller than a page may break across pages; the others scroll inside the table
+    var dims = [vw, vh, pw, ph, S.spread, fontPx, settings.spacing, settings.margin, settings.justify, settings.font, S.lang].join("/");
+    // tables taller than a page may break across pages; the others scroll inside the table (decided once per chapter
+    // and page size: formulas typeset later do not change it)
     list = flow.querySelectorAll(".tbl");
-    for (i = 0; i < list.length; i++) {
-      list[i].classList.remove("rd-tbl-flow", "rd-tbl-tight");
-      var t0 = list[i].querySelector("table");
-      if (t0) t0.style.zoom = "";
+    if (list.length && flow.__tbl !== dims + "|" + mathToken) {
+      flow.__tbl = dims + "|" + mathToken;
+      for (i = 0; i < list.length; i++) {
+        list[i].classList.remove("rd-tbl-flow", "rd-tbl-tight");
+        var t0 = list[i].querySelector("table");
+        if (t0 && t0.style.zoom) t0.style.zoom = "";
+      }
+      var tall = [];
+      for (i = 0; i < list.length; i++) {
+        var tb = list[i].querySelector("table");
+        tall.push(!!(tb && tb.offsetHeight > ph * 0.8));
+      }
+      for (i = 0; i < list.length; i++) if (tall[i]) list[i].classList.add("rd-tbl-flow");
+      // a table that runs over several pages cannot scroll sideways: scale it down to the page width instead
+      var tight = [];
+      for (i = 0; i < list.length; i++) {
+        var ft = list[i].querySelector("table");
+        if (!ft || !tall[i]) continue;
+        var cw = list[i].clientWidth, w0 = ft.scrollWidth;
+        if (w0 > cw + 1) tight.push([list[i], ft, Math.max(0.5, (cw - 1) / w0).toFixed(3)]);
+      }
+      tight.forEach(function (x) { x[0].classList.add("rd-tbl-tight"); x[1].style.zoom = x[2]; });
     }
+    // a display formula wider than the page is set smaller to fit (down to three quarters of its size, so that its number
+    // stays in sight); only one wider still scrolls sideways
+    list = flow.querySelectorAll("mjx-container[display='true']");
+    var fit = [], tagged = [];
+    // a numbered formula too wide: first its number moves to the right edge of the formula itself (without the space
+    // that balanced it on the left), then the whole is made smaller
     for (i = 0; i < list.length; i++) {
-      var tb = list[i].querySelector("table");
-      if (tb && tb.offsetHeight > ph * 0.8) list[i].classList.add("rd-tbl-flow");
+      var mt = list[i];
+      if (!mt.classList.contains("rd-tagfit") && mt.querySelector("mjx-labels") && mt.scrollWidth > mt.clientWidth + 1) tagged.push(mt);
     }
-    // a table that runs over several pages cannot scroll sideways: scale it down to the page width instead
+    tagged.forEach(function (x) { x.classList.add("rd-tagfit"); });
     for (i = 0; i < list.length; i++) {
-      var ft = list[i].querySelector("table");
-      if (!ft || !list[i].classList.contains("rd-tbl-flow")) continue;
-      var cw = list[i].clientWidth;
-      if (ft.scrollWidth <= cw + 1) continue;
-      list[i].classList.add("rd-tbl-tight");
-      if (ft.scrollWidth > cw + 1) ft.style.zoom = Math.max(0.5, (cw - 1) / ft.scrollWidth).toFixed(3);
+      var mj = list[i];
+      if (mj.closest(".rd-tbl-flow")) continue;
+      var base = +mj.getAttribute("data-rd-fs") || 0;
+      if (!base) { base = parseFloat(mj.style.fontSize) || 100; mj.setAttribute("data-rd-fs", String(base)); }
+      var cur = parseFloat(mj.style.fontSize) || base, cw2 = mj.clientWidth;
+      if (!cw2) continue;
+      var natural = mj.scrollWidth * base / cur;
+      var want = natural > cw2 + 1 ? base * Math.max(mj.classList.contains("rd-tagfit") ? 0.66 : 0.74, (cw2 - 2) / natural) : base;
+      if (Math.abs(want - cur) > 0.4) fit.push([mj, want.toFixed(1) + "%"]);
     }
-    list = flow.querySelectorAll(".tbl-scroll, mjx-container[display='true']");
+    fit.forEach(function (x) { x[0].style.fontSize = x[1]; });
+    list = flow.querySelectorAll(".tbl-scroll, mjx-container[display='true'], pre > code");
+    var overs = [];
     for (i = 0; i < list.length; i++) {
-      var s = list[i];
-      var inFlow = s.closest && s.closest(".rd-tbl-flow");
-      s.classList.toggle("rd-xscroll", !inFlow && s.scrollWidth > s.clientWidth + 1);
+      var sb = list[i];
+      overs.push(!(sb.closest && sb.closest(".rd-tbl-flow")) && sb.scrollWidth > sb.clientWidth + 1);
     }
+    // wide blocks: an edge fade (onXScroll) and a line that says they scroll and open full screen with a tap
+    var fresh = [];
+    for (i = 0; i < list.length; i++) {
+      var bx = list[i], was = bx.classList.contains("rd-xscroll");
+      if (overs[i] === was && (!was || (bx.__hint && bx.__hint.isConnected))) continue;
+      bx.classList.toggle("rd-xscroll", overs[i]);
+      if (bx.__hint && bx.__hint.parentNode) bx.__hint.parentNode.removeChild(bx.__hint);
+      bx.__hint = null;
+      if (overs[i]) fresh.push(bx);
+    }
+    fresh.forEach(function (b) { if (b.scrollLeft) b.scrollLeft = 0; });
+    fresh.forEach(function (b) {
+      b.classList.add("rd-x-r");
+      b.classList.remove("rd-x-l");
+      var hint = el("div", "rd-xhint", "<span>\u2194</span> Swipe sideways, or tap to enlarge");
+      hint.setAttribute("aria-hidden", "true");
+      var host = b.closest(".tbl") || b.closest(".highlight") || (b.parentElement && b.parentElement.classList.contains("arithmatex") ? b.parentElement : null);
+      if (host && host.classList.contains("tbl")) host.appendChild(hint);
+      else (host || b).insertAdjacentElement("afterend", hint);
+      b.__hint = hint;
+    });
     // inline formulas cannot break across lines: one wider than what is left of its column scrolls sideways
     list = flow.querySelectorAll("mjx-container:not([display='true'])");
-    for (i = 0; i < list.length; i++) list[i].classList.remove("rd-xscroll");
-    var flowLeft = flow.getBoundingClientRect().left;
+    var flowLeft = flow.getBoundingClientRect().left, wideM = [];
     for (i = 0; i < list.length; i++) {
-      var r = list[i].getBoundingClientRect();
-      if (r.width < 40 || list[i].parentElement.closest(".rd-xscroll, .rd-tbl-flow")) continue;
-      var colRight = flowLeft + Math.floor((r.left - flowLeft + 1) / S.stride) * S.stride + pw;
-      if (r.right > colRight + 1) list[i].classList.add("rd-xscroll");
+      var m2 = list[i], on = m2.classList.contains("rd-xscroll"), want2 = false;
+      if (!m2.parentElement.closest(".rd-xscroll, .rd-tbl-flow")) {
+        var r = m2.getBoundingClientRect();
+        if (r.width >= 40) {
+          var colRight = flowLeft + Math.floor((r.left - flowLeft + 1) / S.stride) * S.stride + pw;
+          // (one already scrolling is as wide as its column: it stays so while it would not fit)
+          want2 = on ? m2.scrollWidth > m2.clientWidth + 1 || r.right > colRight + 1 : r.right > colRight + 1;
+        }
+      }
+      if (want2 !== on) wideM.push([m2, want2]);
     }
+    wideM.forEach(function (x) { x[0].classList.toggle("rd-xscroll", x[1]); });
     // number of pages
     S.anchors = flow.querySelectorAll(ANCH_SEL);
     var fr = flow.getBoundingClientRect();
     var n = Math.max(1, Math.round((flow.scrollWidth + gap) / S.stride));
     var last = flow.lastElementChild;
+    while (last && last.classList.contains("rd-xhint") && last.previousElementSibling) last = last.previousElementSibling;
     if (last) {
       var rects = last.getClientRects();
       if (rects.length) {
@@ -981,7 +1546,8 @@
       }
     }
     S.n = n;
-    S.lastDims = [vw, vh, pw, ph, S.spread, fontPx, settings.spacing, settings.margin, settings.justify, settings.font, S.lang].join("/");
+    S.textLen = flow.textContent.length;
+    S.lastDims = dims;
   }
 
   function relayout(onlyIfChanged) {
@@ -993,6 +1559,12 @@
     if (onlyIfChanged && before === S.lastDims && S.lastN === S.n) { /* unchanged */ }
     S.lastN = S.n;
     restoreAnchor(keep);
+    // the text box being typed into (a quiz) stays on screen when the pages are laid out again
+    var ae = document.activeElement;
+    if (ae && ae !== $.flow && $.flow.contains(ae) && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName)) {
+      var p = pageOfEl(ae);
+      if (p !== null && !isOnPage(p)) goto(p, false);
+    }
   }
 
   function pageOfEl(e) {
@@ -1018,14 +1590,20 @@
       r = S.anchors[idx].getClientRects();
       if (r[0].left - fr.left >= end - 2 && idx > 0) idx--;
     } else idx = S.anchors.length - 1;
-    return { i: idx, n: S.anchors.length, f: S.n > 1 ? S.page / S.n : 0 };
+    // the block may have begun pages earlier (a long paragraph, a stack of page scans): how many
+    var ap = idx >= 0 ? pageOfEl(S.anchors[idx]) : null, dp = ap === null ? 0 : Math.max(0, S.page - ap);
+    var a = { i: idx, n: S.anchors.length, f: S.n > 1 ? S.page / S.n : 0, dp: dp };
+    if (S.segs) a.seg = S.seg;
+    return a;
   }
 
   function restoreAnchor(a) {
     var p = 0;
+    // a place in another segment of the chapter: that segment is loaded
+    if (a && S.segs && typeof a.seg === "number" && a.seg !== S.seg && !S.loading) { loadChapter(S.url, { anchor: a }); return; }
     if (a && a.i !== null && a.n === S.anchors.length && S.anchors[a.i]) {
       var q = pageOfEl(S.anchors[a.i]);
-      p = q === null ? Math.round(a.f * S.n) : q;
+      p = q === null ? Math.round(a.f * S.n) : q + (a.dp || 0);
     } else if (a) p = Math.round((a.f || 0) * S.n);
     goto(p, false, true);
   }
@@ -1050,7 +1628,7 @@
     if (where === "saved") {
       var all = jget(KEY_POS, {}) || {};
       var rec = all[S.path];
-      if (rec && typeof rec.f === "number") { restoreAnchor({ i: rec.i, n: rec.n, f: rec.f }); return; }
+      if (rec && typeof rec.f === "number") { restoreAnchor({ i: rec.i, n: rec.n, f: rec.f, dp: rec.dp || 0 }); return; }
     }
     goto(0, false, true);
   }
@@ -1060,9 +1638,19 @@
     if (S.spread) p -= p % 2;
     var moved = p !== S.page;
     S.page = p;
-    var f = $.flow;
-    f.classList.toggle("rd-anim", !!anim && !reducedMotion());
-    f.style.transform = "translate3d(" + (-p * S.stride) + "px,0,0)";
+    var f = $.flow, st = anim ? turnStyle() : "none", x = "translate3d(" + (-p * S.stride) + "px,0,0)";
+    clearTimeout(S.fadeT);
+    if (st === "fade" && moved) {
+      // fade: the page dims, moves, and comes back
+      f.classList.remove("rd-anim");
+      $.view.classList.add("rd-fading");
+      S.fadeT = setTimeout(function () { f.style.transform = x; $.view.classList.remove("rd-fading"); }, 110);
+    } else {
+      $.view.classList.remove("rd-fading");
+      f.classList.toggle("rd-anim", st === "slide");
+      f.style.transform = x;
+    }
+    if (moved) S.pageAt = Date.now();
     updatePageUI();
     if (moved) { closePop(); scheduleSave(); }
     else if (!quiet) scheduleSave();
@@ -1072,10 +1660,10 @@
   function bookPct() {
     if (!S.model || !S.n) return null;
     var last = S.spread ? Math.min(S.page + 2, S.n) : S.page + 1;
-    return pctAt(S.model, S.path, last / S.n);
+    return pctAt(S.model, S.path, chapFrac(last));
   }
   function shownPct(p) {
-    var atEnd = S.model && fileOfPath(S.path) === S.model.last && S.page + (S.spread ? 2 : 1) >= S.n;
+    var atEnd = S.model && fileOfPath(S.path) === S.model.last && S.page + (S.spread ? 2 : 1) >= S.n && !moreSeg(1);
     return atEnd ? 100 : Math.max(0, Math.min(99, Math.round(p)));
   }
 
@@ -1084,10 +1672,18 @@
     var p = S.page, shown = p + 1, txt;
     if (S.spread && p + 2 <= S.n) txt = (p + 1) + "\u2013" + (p + 2) + " of " + S.n;
     else txt = shown + " of " + S.n;
+    var total = S.mathTodo ? Math.max(S.n, pcGet()) : S.n;
+    if (total !== S.n) txt = txt.replace(/ of \d+$/, " of " + total);
+    if (S.segs) {
+      // a chapter in segments: its pages counted at the rate of the segment on screen
+      var sg = S.segs[S.seg], perChar = total / Math.max(1, sg.chars), before = Math.round(sg.start * perChar);
+      var all = Math.max(before + total, Math.round(S.rec.segChars * perChar));
+      txt = (before + p + 1) + (S.spread && p + 2 <= S.n ? "\u2013" + (before + p + 2) : "") + " of " + all;
+    }
     $.pageno.textContent = txt;
     var last = S.spread ? Math.min(p + 2, S.n) : p + 1;
-    var left = S.n - last;
-    var leftTxt = left <= 0 ? "Last page in chapter" : left === 1 ? "1 page left in chapter" : left + " pages left in chapter";
+    var left = total - last;
+    var leftTxt = infoText(left, last);
     var pct = bookPct();
     if (pct === null) {
       $.fpct.textContent = leftTxt;
@@ -1096,7 +1692,7 @@
       $.botpct.textContent = "";
     } else {
       var sp = shownPct(pct);
-      $.fpct.textContent = leftTxt + " \u00b7 " + sp + "%";
+      $.fpct.textContent = settings.info === "book" ? leftTxt : leftTxt + " \u00b7 " + sp + "%";
       $.prog.style.width = pct.toFixed(2) + "%";
       $.progBar.setAttribute("aria-valuenow", String(sp));
       $.botpct.textContent = sp + "% of the book";
@@ -1106,18 +1702,28 @@
   }
 
   function turn(dir) {
-    if (S.loading || !S.n) return;
+    if (S.loading) { S.queued = clamp((S.queued || 0) + dir, -4, 4); return; }
+    if (!S.n) return;
+    hideHint();
+    noteSpeed(dir);
     var step = S.spread ? 2 : 1;
+    if ((S.mathReady && S.mathReady.length) || S.mathTodo) {
+      if (S.mathReady && S.mathReady.length && mathNearby()) swapReady();
+      else if (dir > 0 ? S.page + step >= S.n : S.page - step < 0) relayoutKeep();
+    }
     if (dir > 0) {
       if (S.page + step < S.n) goto(S.page + step, true);
+      else if (moreSeg(1)) loadSeg(S.seg + 1, "start");
       else if (S.rec && S.rec.next) loadChapter(S.rec.next, "start");
       else nudge(-1);
     } else {
       if (S.page - step >= 0) goto(S.page - step, true);
+      else if (moreSeg(-1)) loadSeg(S.seg - 1, "end");
       else if (S.rec && S.rec.prev) loadChapter(S.rec.prev, "end");
       else nudge(1);
     }
     if (!S.panel) hideChrome();
+    if (R.on && !R.paused && !R.turning) ttsFromPage();
   }
 
   function nudge(sign) {
@@ -1139,8 +1745,9 @@
     if (!S.open || !S.n || S.loading) return;
     var a = captureAnchor();
     var all = jget(KEY_POS, {}) || {};
-    all[S.path] = { i: a.i, n: a.n, f: a.f, t: Date.now() };
-    var frac = Math.min(S.page + (S.spread ? 2 : 1), S.n) / S.n;
+    all[S.path] = { i: a.i, n: a.n, f: a.f, dp: a.dp, t: Date.now() };
+    if (S.segs) all[S.path].seg = S.seg;
+    var frac = chapFrac(Math.min(S.page + (S.spread ? 2 : 1), S.n));
     saveLast(S.path, S.title, frac, "reader");
     saveBook(S.path, S.title, frac, "reader", bookPct());
     var keys = Object.keys(all);
@@ -1163,7 +1770,7 @@
     updateBackChip();
     if (!b) return;
     closePop();
-    if (b.url === S.url) restoreAnchor(b.anchor);
+    if (b.url === S.url) restoreAnchor(b.anchor);       // (another segment of this chapter: loaded by restoreAnchor)
     else loadChapter(b.url, { anchor: b.anchor });
   }
 
@@ -1171,6 +1778,7 @@
     var id;
     try { id = decodeURIComponent(hash.replace(/^#/, "")); } catch (e) { id = hash.replace(/^#/, ""); }
     var t = byId($.flow, id);
+    if (!t && S.segs && segOfId(S.segs, id) >= 0) { loadChapter(S.url, { hash: "#" + id }); return true; }
     if (!t) return false;
     goToEl(t, true);
     return true;
@@ -1186,7 +1794,7 @@
     var fromPop = e.currentTarget === $.pop;
     if (href.charAt(0) === "#") {
       e.preventDefault();
-      var tgt = byId($.flow, safeDecode(href.slice(1)));
+      var tgt = inChapter(safeDecode(href.slice(1)));
       if (tgt && !fromPop && refPreview(tgt)) { showRefPop(a, refPreview(tgt), { hash: href }); return; }
       if (fromPop) closePop();
       var cur = captureAnchor();
@@ -1219,7 +1827,7 @@
 
   function showFootnote(a) {
     var id = safeDecode((a.getAttribute("href") || "").replace(/^#/, ""));
-    var li = byId($.flow, id);
+    var li = inChapter(id);
     if (!li) { jumpHash(a.getAttribute("href")); return; }
     S.popGo = null;
     openPop(previewHtml(li), a, "fn");
@@ -1250,18 +1858,19 @@
     else showChrome(false);
   }
 
-  var PANEL_BTN = { toc: ".rd-tocbtn", set: ".rd-setbtn", find: ".rd-findbtn", help: ".rd-keys" };
-  function panelEl(which) { return which === "toc" ? $.toc : which === "set" ? $.set : which === "find" ? $.find : $.help; }
+  var PANEL_BTN = { toc: ".rd-tocbtn", set: ".rd-setbtn", find: ".rd-findbtn", help: ".rd-keys", more: ".rd-morebtn", look: null };
+  var PANELS = ["toc", "set", "find", "help", "more", "look"];
+  function panelEl(which) { return { toc: $.toc, set: $.set, find: $.find, help: $.help, more: $.more, look: $.look }[which] || $.help; }
   function togglePanel(which) {
     var panel = panelEl(which);
     var willOpen = panel.hidden;
     if (!willOpen || S.panel === "toc") resetGoto();
     closePop();
     hideSelbar();
-    ["toc", "set", "find", "help"].forEach(function (k) {
+    PANELS.forEach(function (k) {
       var el2 = panelEl(k);
       if (el2 !== panel) el2.hidden = true;
-      var b = S.root.querySelector(PANEL_BTN[k]);
+      var b = PANEL_BTN[k] && S.root.querySelector(PANEL_BTN[k]);
       if (b && b.hasAttribute("aria-expanded")) b.setAttribute("aria-expanded", String(k === which && willOpen));
     });
     panel.hidden = !willOpen;
@@ -1272,7 +1881,8 @@
       if (which === "toc") showTab(S.tab || (/^(bk|mk|hl)$/.test(sget("localStorage", KEY_TAB) || "") ? sget("localStorage", KEY_TAB) : "bk"), false);
       var f = which === "find" ? $.findIn : panel.querySelector("button[aria-checked='true'], .rd-tab[aria-selected='true'], button, [tabindex]");
       if (which === "find") { S.findBook = null; ensureFindIndex(); }
-      if (f) { try { f.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+      if (f && (which === "find" || S.kbd || which === "toc")) { try { f.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
+      else { try { panel.setAttribute("tabindex", "-1"); panel.focus({ preventScroll: true }); } catch (e) { /* ignore */ } }
     } else {
       armHide();
       try { $.flow.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
@@ -1288,12 +1898,13 @@
   function closePanels() {
     if (!S.root) return;
     resetGoto();
-    $.set.hidden = true; $.toc.hidden = true; $.find.hidden = true; $.help.hidden = true;
+    PANELS.forEach(function (k) {
+      panelEl(k).hidden = true;
+      var b = PANEL_BTN[k] && S.root.querySelector(PANEL_BTN[k]);
+      if (b && b.hasAttribute("aria-expanded")) b.setAttribute("aria-expanded", "false");
+    });
     S.panel = null;
     S.root.classList.remove("rd-panel-on");
-    S.root.querySelector(".rd-tocbtn").setAttribute("aria-expanded", "false");
-    S.root.querySelector(".rd-setbtn").setAttribute("aria-expanded", "false");
-    S.root.querySelector(".rd-findbtn").setAttribute("aria-expanded", "false");
   }
 
   /* while the reader is open, the browser bar (or the installed app's title bar) takes the page colour */
@@ -1302,7 +1913,7 @@
     if (!meta) return;
     if (on) {
       if (S.themeWas == null) S.themeWas = meta.getAttribute("content") || "#ffffff";
-      meta.setAttribute("content", THEME_BG[settings.theme] || "#ffffff");
+      meta.setAttribute("content", THEME_BG[effTheme()] || "#ffffff");
     } else if (S.themeWas != null) {
       meta.setAttribute("content", S.themeWas);
       S.themeWas = null;
@@ -1311,8 +1922,10 @@
 
   function applySettingsUI() {
     if (!S.root) return;
-    S.root.setAttribute("data-theme", settings.theme);
+    S.root.setAttribute("data-theme", effTheme());
+    S.root.setAttribute("data-turn", turnStyle());
     if (S.open) setThemeColor(true);
+    applyShade();
     var si = sizeIndex();
     var dots = $.dots.children;
     for (var i = 0; i < dots.length; i++) dots[i].className = i <= si ? "on" : "";
@@ -1323,6 +1936,7 @@
     for (var j = 0; j < bs.length; j++) {
       var k = bs[j].getAttribute("data-k"), v = bs[j].getAttribute("data-v"), cur;
       if (k === "justify") cur = settings.justify ? "1" : "0";
+      else if (k === "night") cur = settings.night ? "1" : "0";
       else cur = String(settings[k]);
       bs[j].setAttribute("aria-checked", String(cur === v));
       bs[j].tabIndex = cur === v ? 0 : -1;
@@ -1341,6 +1955,8 @@
       if (k === "theme") { settings.theme = v; relayoutNeeded = false; }
       else if (k === "font") { settings.font = v; loadFont(v); }
       else if (k === "justify") settings.justify = v === "1";
+      else if (k === "night") { settings.night = v === "1"; relayoutNeeded = false; }
+      else if (k === "turn") { settings.turn = v; relayoutNeeded = false; }
       else settings[k] = parseInt(v, 10);
     } else return;
     saveSettings();
@@ -1351,7 +1967,7 @@
   /* radio groups: arrow keys move inside the group */
   function groupArrow(e) {
     var b = document.activeElement;
-    if (!b || !b.closest || !b.closest(".rd-seg, .rd-tabs, .rd-themes, .rd-fonts")) return false;
+    if (!b || !b.closest || !b.closest(".rd-seg, .rd-tabs, .rd-themes, .rd-fonts") || b.tagName !== "BUTTON") return false;
     var dir = e.key === "ArrowRight" || e.key === "ArrowDown" ? 1 : e.key === "ArrowLeft" || e.key === "ArrowUp" ? -1 : 0;
     if (!dir) return false;
     var sibs = [].slice.call(b.parentNode.querySelectorAll("button"));
@@ -1676,7 +2292,7 @@
     S.toastT = setTimeout(function () { $.toast.classList.remove("on"); }, 1600);
   }
   function cycleTheme() {
-    settings.theme = THEMES[(THEMES.indexOf(settings.theme) + 1) % THEMES.length];
+    settings.theme = THEMES[(THEMES.indexOf(effTheme()) + 1) % THEMES.length];
     saveSettings();
     applySettingsUI();
     announce(settings.theme.charAt(0).toUpperCase() + settings.theme.slice(1) + " page");
@@ -1795,7 +2411,10 @@
   }
   function currentMark() {
     var l = bookMarks();
-    for (var i = 0; i < l.length; i++) if (l[i].path === S.path && (isOnPage(markPage(l[i])) || isOnPage(Math.round((l[i].f || 0) * S.n)))) return i;
+    for (var i = 0; i < l.length; i++) {
+      if (l[i].path !== S.path || (S.segs && (l[i].seg || 0) !== S.seg)) continue;
+      if (isOnPage(markPage(l[i])) || isOnPage(Math.round((l[i].f || 0) * S.n))) return i;
+    }
     return -1;
   }
   function toggleBookmark() {
@@ -1804,7 +2423,9 @@
     if (at >= 0) { list.splice(at, 1); announce("Bookmark removed"); }
     else {
       var a = captureAnchor(), e2 = a.i !== null ? S.anchors[a.i] : null;
-      list.push({ path: S.path, ch: S.title, i: a.i, n: a.n, f: S.n > 1 ? S.page / S.n : 0, x: clip(e2 ? e2.textContent : "", 140), pct: bookPct(), t: Date.now() });
+      var bm = { path: S.path, ch: S.title, i: a.i, n: a.n, f: S.n > 1 ? S.page / S.n : 0, x: clip(e2 ? e2.textContent : "", 140), pct: bookPct(), t: Date.now() };
+      if (S.segs) bm.seg = S.seg;
+      list.push(bm);
       announce("Page bookmarked");
     }
     saveMarks(list);
@@ -1841,7 +2462,7 @@
     if (!m) return;
     if (b.classList.contains("rd-it-del")) { list.splice(k, 1); saveMarks(list); renderMarks(); updateMarkUI(); return; }
     togglePanel("toc");
-    var where = { anchor: { i: m.i, n: m.n, f: m.f } };
+    var where = { anchor: { i: m.i, n: m.n, f: m.f, seg: m.seg } };
     if (m.path === S.path) restoreAnchor(where.anchor);
     else { pushBack(); loadChapter(location.origin + m.path, where); }
   }
@@ -1888,12 +2509,14 @@
   function applyHighlights() {
     var list = bookHls().filter(function (h) { return h.path === S.path; });
     if (!list.length) return;
-    var blocks = $.flow.querySelectorAll(HL_SEL);
+    var blocks = $.flow.querySelectorAll(HL_SEL), off = S.segs ? S.segs[S.seg].hlOff : 0;
     list.forEach(function (h) {
-      var b = blocks[h.b], t = b ? b.textContent : "", o = h.o;
+      // a chapter in segments: only the highlights of the segment on screen (block numbers of the whole chapter)
+      if (S.segs && (h.b < off || h.b >= off + blocks.length)) return;
+      var b = blocks[h.b - off], t = b ? b.textContent : "", o = h.o;
       if (!b || t.substr(o, h.q.length) !== h.q) {
         o = b ? t.indexOf(h.q) : -1;
-        if (o < 0) {
+        if (o < 0 && !S.segs) {
           for (var k = 0; k < blocks.length; k++) { o = blocks[k].textContent.indexOf(h.q); if (o >= 0) { b = blocks[k]; break; } }
         }
       }
@@ -1910,6 +2533,8 @@
     var r = sel.getRangeAt(0);
     if (!$.flow.contains(r.commonAncestorContainer) || !blockOf(r.startContainer) || String(sel).trim().length < 2) { hideSelbar(); return; }
     S.sel = r.cloneRange();
+    var words = String(sel).trim();
+    $.selbar.querySelector(".rd-sel-look").hidden = !(words.length <= 48 && words.split(/\s+/).length <= 3);
     var rects = r.getClientRects(), r0 = rects[0] || r.getBoundingClientRect(), r1 = rects[rects.length - 1] || r0;
     $.selbar.hidden = false;
     var W = S.root.clientWidth, H = S.root.clientHeight, bw = $.selbar.offsetWidth, bh = $.selbar.offsetHeight;
@@ -1938,7 +2563,7 @@
     end = start + q.length;
     if (q.length < 1) return null;
     var blocks = [].slice.call($.flow.querySelectorAll(HL_SEL));
-    var h = { id: "h" + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36), path: S.path, ch: S.title, b: blocks.indexOf(b1), o: start, q: q, c: color, n: "", pct: bookPct(), t: Date.now() };
+    var h = { id: "h" + Date.now().toString(36) + Math.floor(Math.random() * 1296).toString(36), path: S.path, ch: S.title, b: blocks.indexOf(b1) + (S.segs ? S.segs[S.seg].hlOff : 0), o: start, q: q, c: color, n: "", pct: bookPct(), t: Date.now() };
     var list = bookHls();
     list.push(h);
     saveHls(list);
@@ -1952,6 +2577,13 @@
     if (!b) return;
     var c = b.getAttribute("data-hl"), act = b.getAttribute("data-act");
     if (c) { if (createHighlight(c)) announce("Highlighted"); return; }
+    if (act === "look") {
+      var w = S.sel ? S.sel.toString() : "";
+      hideSelbar();
+      try { window.getSelection().removeAllRanges(); } catch (er0) { /* ignore */ }
+      openLookup(w);
+      return;
+    }
     if (act === "note") { var x = createHighlight("yellow"); if (x && x.m) showHlPop(x.m, true); return; }
     if (act === "copy") {
       var t = S.sel ? S.sel.toString() : "";
@@ -2034,7 +2666,7 @@
       return;
     }
     togglePanel("toc");
-    if (f.h.path === S.path) { var m = marksOf(f.h.id)[0]; if (m) goToEl(m, false); }
+    if (f.h.path === S.path) { var m = marksOf(f.h.id)[0]; if (m) goToEl(m, false); else if (S.segs) loadChapter(S.url, { hl: f.h.id }); }
     else { pushBack(); loadChapter(location.origin + f.h.path, { hl: f.h.id }); }
   }
 
@@ -2115,6 +2747,7 @@
     if (!h) return;
     togglePanel("find");
     var u = new URL(location.origin + BOOK_ROOT + h.loc), where = { hash: u.hash || "", find: S.findQ };
+    if (u.pathname === S.path && S.segs && u.hash && !byId($.flow, safeDecode(u.hash.slice(1)))) { pushBack(); loadChapter(S.url, where); return; }
     if (u.pathname === S.path) {
       clearFlash();
       var start = u.hash ? byId($.flow, safeDecode(u.hash.slice(1))) : null, m = flashFind(S.findQ, start);
@@ -2177,8 +2810,12 @@
   function onScrubInput() {
     S.scrubbing = true;
     showChrome(true);
-    var v = +$.range.value, t = scrubTarget(v);
-    $.tip.textContent = t ? clip(t.title, 60) + " · " + Math.round(v / 10) + "%" : "Page " + (Math.round(v / 1000 * Math.max(0, S.n - 1)) + 1) + " of " + S.n;
+    var v = +$.range.value, t = scrubTarget(v), here = (!t || fileOfPath(S.path) === t.f) && !S.segs;
+    var pg = here ? (t ? Math.floor(t.frac * S.n) : Math.round(v / 1000 * Math.max(0, S.n - 1))) : -1;
+    $.tipT.textContent = t ? clip(t.title, 60) : S.title || "";
+    $.tipX.textContent = pg >= 0 ? clip(pageSnippet(pg), 90) : "";
+    $.tipX.hidden = !$.tipX.textContent;
+    $.tipP.textContent = (pg >= 0 ? "Page " + (pg + 1) + " of " + S.n + (t ? " \u00b7 " : "") : "") + (t ? Math.round(v / 10) + "% of the book" : "");
     $.tip.hidden = false;
     var w = $.range.clientWidth, tw = $.tip.offsetWidth;
     $.tip.style.left = clamp(v / 1000 * w - tw / 2, 0, Math.max(0, w - tw)) + "px";
@@ -2188,6 +2825,12 @@
     $.tip.hidden = true;
     var v = +$.range.value, t = scrubTarget(v);
     if (!t) { goto(Math.round(v / 1000 * Math.max(0, S.n - 1)), true); return; }
+    if (fileOfPath(S.path) === t.f && S.segs) {
+      var gs = segOfFrac(S.segs, S.rec, t.frac);
+      if (gs.k === S.seg) { goto(Math.floor(gs.f * S.n), true); armHide(); }
+      else { pushBack(); loadChapter(S.url, { anchor: { i: null, n: 0, f: t.frac } }); }
+      return;
+    }
     if (fileOfPath(S.path) === t.f) { goto(Math.floor(t.frac * S.n), true); armHide(); return; }
     pushBack();
     loadChapter(S.modelBase + t.f, { anchor: { i: null, n: 0, f: t.frac } });
@@ -2226,11 +2869,15 @@
       cap ? previewHtml(cap) : "", false);
   }
   function openZoomDoc(box) {
-    var c = box.cloneNode(true), junk = c.querySelectorAll(".rd-expand, [id]");
+    var c = box.cloneNode(true), junk = c.querySelectorAll(".rd-expand, .rd-xhint, [id]");
     for (var i = 0; i < junk.length; i++) { if (junk[i].classList.contains("rd-expand")) junk[i].parentNode.removeChild(junk[i]); else junk[i].removeAttribute("id"); }
     c.classList.remove("rd-tbl-flow", "rd-tbl-tight", "rd-zoomable");
     var t = c.querySelector("table");
     if (t) t.style.zoom = "";
+    c.classList.remove("rd-xscroll", "rd-x-l", "rd-x-r");
+    var ms = c.querySelectorAll("mjx-container[data-rd-fs]");
+    for (var k = 0; k < ms.length; k++) { ms[k].style.fontSize = ms[k].getAttribute("data-rd-fs") + "%"; ms[k].classList.remove("rd-xscroll", "rd-x-l", "rd-x-r"); }
+    if (c.matches && c.matches("mjx-container[data-rd-fs]")) c.style.fontSize = c.getAttribute("data-rd-fs") + "%";
     openZoom('<div class="rd-zoom-doc md-typeset">' + c.outerHTML + "</div>", "", true);
   }
   function closeZoom() {
@@ -2307,25 +2954,24 @@
   }
   function onFsChange() {
     var on = !!fsElement();
-    $.fs.innerHTML = on ? ICON.fsExit : ICON.fs;
-    $.fs.setAttribute("aria-label", on ? "Leave full screen" : "Full screen");
-    $.fs.title = on ? "Leave full screen" : "Full screen";
+    $.fs.innerHTML = (on ? ICON.fsExit : ICON.fs) + "<span>" + (on ? "Leave full screen" : "Full screen") + "</span>";
     if (S.open) setTimeout(function () { relayout(); }, 120);
   }
 
   /* ---------------------------------------------------------------- input: pointer, wheel, keyboard */
-  var INTERACTIVE = "a,button,summary,input,select,textarea,.rd-panel,.rd-pop,.rd-top,.rd-bot,.rd-back,.rd-selbar,[role=button]";
+  var INTERACTIVE = "a,button,summary,input,select,textarea,label,.pk-q-ui,.rd-panel,.rd-pop,.rd-top,.rd-bot,.rd-back,.rd-selbar,[role=button]";
 
   function onPointerDown(e) {
-    if (!S.open || S.loading) return;
+    if (!S.open) return;
     if (e.pointerType === "mouse" && e.button !== 0) return;
+    if (e.target && e.target.closest && e.target.closest("input, textarea, select")) return;     // a text box of a quiz: no page turns
     S.p = { id: e.pointerId, x: e.clientX, y: e.clientY, t: e.timeStamp, mouse: e.pointerType === "mouse", drag: false, moved: false, target: e.target, dx: 0 };
   }
   function edgeResist(dx) {
     var vw = $.view.clientWidth || 300;
     var noPrev = S.page === 0, noNext = S.page + (S.spread ? 2 : 1) >= S.n;
-    if (dx > 0 && noPrev) dx *= S.rec && S.rec.prev ? 0.5 : 0.22;
-    else if (dx < 0 && noNext) dx *= S.rec && S.rec.next ? 0.5 : 0.22;
+    if (dx > 0 && noPrev) dx *= (S.rec && S.rec.prev) || moreSeg(-1) ? 0.5 : 0.22;
+    else if (dx < 0 && noNext) dx *= (S.rec && S.rec.next) || moreSeg(1) ? 0.5 : 0.22;
     return clamp(dx, -vw, vw);
   }
   function onPointerMove(e) {
@@ -2349,7 +2995,7 @@
         closePop();
       } else if (Math.abs(dy) > 12 || Math.abs(dx) > 12) p.moved = true;
     }
-    if (p.drag) {
+    if (p.drag && !S.loading) {
       p.dx = dx;
       $.flow.style.transform = "translate3d(" + (-S.page * S.stride + edgeResist(dx)) + "px,0,0)";
     }
@@ -2365,12 +3011,13 @@
       var v = Math.abs(dx) / dt;
       if (Math.abs(dx) > thr || (v > 0.45 && Math.abs(dx) > 24)) {
         var dir = dx < 0 ? 1 : -1;
+        if (S.loading) { turn(dir); return; }
         var step = S.spread ? 2 : 1;
         var hasPage = dir > 0 ? S.page + step < S.n : S.page - step >= 0;
-        var hasChapter = dir > 0 ? S.rec && S.rec.next : S.rec && S.rec.prev;
+        var hasChapter = moreSeg(dir) || (dir > 0 ? S.rec && S.rec.next : S.rec && S.rec.prev);
         if (hasPage || hasChapter) { turn(dir); return; }
       }
-      goto(S.page, true, true);
+      if (!S.loading) goto(S.page, true, true);
       return;
     }
     if (p.moved) return;
@@ -2389,14 +3036,25 @@
   }
   function tap(x, target) {
     if (target && target.closest && target.closest(INTERACTIVE)) return;
+    hideHint();
     if ($.pop && !$.pop.hidden) { closePop(); return; }
     if (S.panel) { closePanels(); armHide(); return; }
     if (!$.selbar.hidden) { hideSelbar(); return; }
-    if (target && target.closest) {
+    if (target && target.closest && !S.loading) {
       var hl = target.closest("mark.rd-hl");
       if (hl) { showHlPop(hl); return; }
-      var img = target.closest("figure img, img.tikz, .rd-flow p > img");
+      var img = target.closest("figure img, img.tikz, .rd-flow p > img, .rd-imgbox");
+      if (img && img.classList.contains("rd-imgbox")) img = img.querySelector("img");
       if (img && $.flow.contains(img)) { openZoomImg(img); return; }
+      // a table, a formula or code too wide for the page opens full screen
+      var wide = target.closest(".rd-xscroll, .tbl.rd-tbl-tight, .rd-xhint");
+      if (wide && $.flow.contains(wide)) {
+        var box = wide.classList.contains("rd-xhint") ? wide.previousElementSibling || wide.parentNode : wide;
+        box = box.closest(".tbl, .highlight") || box.closest("div.arithmatex") || box;
+        if (box.querySelector && (box.matches("mjx-container") || box.querySelector("mjx-container[display='true']")) && !box.closest(".tbl")) openZoomDoc(box, true);
+        else openZoomDoc(box);
+        return;
+      }
     }
     var f = x / S.root.clientWidth;
     if (f < 1 / 3) turn(-1);
@@ -2404,7 +3062,7 @@
     else toggleChrome();
   }
   function onWheel(e) {
-    if (!S.open || S.loading) return;
+    if (!S.open) return;
     if (e.target.closest && e.target.closest(".rd-panel,.rd-pop")) return;
     if (e.ctrlKey) return; // pinch zoom
     var t = e.target.closest && e.target.closest(".rd-xscroll");
@@ -2464,8 +3122,411 @@
     }
   }
 
+
+  /* ---------------------------------------------------------------- the footer: pages or minutes left */
+  /* The reading speed is measured on this device: the characters of a page and the time it stayed on screen, for pages
+     read for between 4 seconds and 4 minutes (a running average in "bjp.reader.speed", characters a minute). */
+  function speed() { var v = +sget("localStorage", KEY_SPEED); return v > 0 ? v : 1000; }
+  function noteSpeed(dir) {
+    var now = Date.now(), dt = now - (S.pageAt || now);
+    if (dir <= 0 || !S.textLen || !S.n || dt < 4000 || dt > 240000 || R.on) return;
+    var sample = clamp(S.textLen / S.n * (S.spread ? 2 : 1) / (dt / 60000), 250, 5000), v = +sget("localStorage", KEY_SPEED) || 0;
+    sset("localStorage", KEY_SPEED, String(Math.round(v ? v * 0.85 + sample * 0.15 : sample)));
+  }
+  function minText(chars) {
+    var m = Math.round(chars / speed());
+    if (m < 1) return "Less than a minute";
+    if (m < 60) return m + " min";
+    var h = Math.floor(m / 60), r = m % 60;
+    return h + " h" + (r ? " " + r + " min" : "");
+  }
+  function infoText(left, last) {
+    if (settings.info === "pages" || !S.textLen) {
+      if (S.segs) left = Math.round((1 - chapFrac(last)) * S.rec.segChars * S.n / Math.max(1, S.textLen));
+      return left <= 0 ? "Last page in chapter" : left === 1 ? "1 page left in chapter" : left + " pages left in chapter";
+    }
+    if (settings.info === "book" && S.model && S.model.total) {
+      var pct = bookPct(), rest = pct === null ? 0 : (100 - pct) / 100 * S.model.total * 20;
+      return rest < 1 ? "End of the book" : minText(rest) + " left in book";
+    }
+    var chars = Math.max(0, left) / Math.max(1, S.n) * S.textLen;
+    if (S.segs) chars = (1 - chapFrac(last)) * S.rec.segChars;
+    return left <= 0 && !moreSeg(1) ? "Last page in chapter" : minText(chars) + " left in chapter";
+  }
+  function cycleInfo() {
+    var order = ["ch", "book", "pages"];
+    settings.info = order[(order.indexOf(settings.info) + 1) % order.length];
+    if (settings.info === "book" && !(S.model && S.model.total)) settings.info = "pages";
+    saveSettings();
+    updatePageUI();
+  }
+
+  /* ---------------------------------------------------------------- light and warmth: overlays over the reader only */
+  function applyShade() {
+    if (!$.dim) return;
+    $.dim.style.opacity = ((1 - settings.bright) * 1.15).toFixed(3);
+    var nightWarm = settings.night && isNight() ? 0.25 : 0;
+    $.warm.style.opacity = (Math.max(settings.warm, nightWarm) * 0.42).toFixed(3);
+    if (document.activeElement !== $.bright) $.bright.value = String(Math.round(settings.bright * 100));
+    if (document.activeElement !== $.warmr) $.warmr.value = String(Math.round(settings.warm * 100));
+    $.bright.setAttribute("aria-valuetext", Math.round(settings.bright * 100) + "%");
+    $.warmr.setAttribute("aria-valuetext", Math.round(settings.warm * 100) + "%");
+  }
+  function onShadeInput() {
+    settings.bright = clamp(+$.bright.value / 100, 0.35, 1);
+    settings.warm = clamp(+$.warmr.value / 100, 0, 1);
+    applyShade();
+  }
+
+  /* ---------------------------------------------------------------- wide blocks: the edges fade where there is more */
+  function onXScroll(e) {
+    var b = e.target;
+    if (!b || !b.classList || !b.classList.contains("rd-xscroll")) return;
+    b.classList.toggle("rd-x-l", b.scrollLeft > 2);
+    b.classList.toggle("rd-x-r", b.scrollLeft + b.clientWidth < b.scrollWidth - 2);
+  }
+  /* the first words of a page of this chapter (the preview of the slider) */
+  function pageSnippet(pg) {
+    var fr = $.flow.getBoundingClientRect(), start = pg * S.stride;
+    for (var i = 0; i < S.anchors.length; i++) {
+      var r = S.anchors[i].getClientRects();
+      if (!r.length || r[r.length - 1].right - fr.left <= start + 2) continue;
+      var t = S.anchors[i].textContent.replace(/\s+/g, " ").trim();
+      if (t) return t;
+    }
+    return "";
+  }
+
+  /* ---------------------------------------------------------------- the More sheet */
+  var ACTIONS = [];
+  /* other scripts add their own entries (assets/slides.js: Present): {id, label, title, icon, run} */
+  function addAction(a) {
+    if (!a || !a.id) return;
+    for (var i = 0; i < ACTIONS.length; i++) if (ACTIONS[i].id === a.id) return;
+    ACTIONS.push(a);
+    renderActions();
+  }
+  function renderActions() {
+    if (!$.more) return;
+    var grid = $.more.querySelector(".rd-mgrid"), after = grid.querySelector(".rd-mi-speak");
+    ACTIONS.forEach(function (a) {
+      if (grid.querySelector('[data-mi="x:' + a.id + '"]')) return;
+      var b = el("button", "rd-mi rd-mi-x", (a.icon || "") + "<span>" + escapeHtml(a.label) + "</span>");
+      b.type = "button";
+      b.setAttribute("data-mi", "x:" + a.id);
+      if (a.title) b.title = a.title;
+      after.insertAdjacentElement("afterend", b);
+      after = b;
+    });
+  }
+  function onMoreClick(e) {
+    var b = e.target.closest("[data-mi]");
+    if (!b) return;
+    var k = b.getAttribute("data-mi");
+    if (k === "find") { togglePanel("find"); return; }
+    if (k === "keys") { togglePanel("help"); return; }
+    if (k === "marks" || k === "notes") { togglePanel("toc"); showTab(k === "marks" ? "mk" : "hl", true); return; }
+    closePanels();
+    if (k === "speak") ttsStart();
+    else if (k === "fs") toggleFullscreen();
+    else if (k.indexOf("x:") === 0) {
+      for (var i = 0; i < ACTIONS.length; i++) if ("x:" + ACTIONS[i].id === k) { try { ACTIONS[i].run(); } catch (er) { /* ignore */ } }
+    }
+  }
+
+  /* ---------------------------------------------------------------- look up a word (Wiktionary) */
+  /* The word selected (the Look up button of the selection bar) is looked up in the English Wiktionary, which explains
+     words of English, French, Hindi, Sanskrit and many other languages, from the browser: nothing but the word is sent
+     (no cookies, no referrer). Links to Wikipedia and a translation open in a new tab only when tapped. */
+  var lookCache = {};
+  var WIKI_LANGS = { en: 1, fr: 1, hi: 1, sa: 1, de: 1, es: 1 };
+  function lookWord(w) {
+    try { return String(w || "").replace(/^[^\p{L}\p{M}\p{N}]+|[^\p{L}\p{M}\p{N}]+$/gu, "").trim(); }
+    catch (e) { return String(w || "").replace(/^[\s.,;:!?"'()\[\]«»“”‘’]+|[\s.,;:!?"'()\[\]«»“”‘’]+$/g, "").trim(); }
+  }
+  function fetchDefs(q) {
+    if (lookCache[q]) return lookCache[q];
+    var url = "https://en.wiktionary.org/api/rest_v1/page/definition/" + encodeURIComponent(q.replace(/ /g, "_"));
+    var p = fetch(url, { credentials: "omit", referrerPolicy: "no-referrer", mode: "cors", headers: { Accept: "application/json" } }).then(function (r) {
+      if (r.status === 404) return null;
+      if (!r.ok) throw new Error("http " + r.status);
+      return r.json();
+    });
+    lookCache[q] = p;
+    p.catch(function () { delete lookCache[q]; });
+    return p;
+  }
+  function textOf(html) {
+    var d = document.createElement("div");
+    d.innerHTML = String(html || "").replace(/<(script|style)[\s\S]*?<\/\1>/gi, "");
+    return d.textContent.replace(/\s+/g, " ").trim();
+  }
+  function openLookup(word) {
+    var q = lookWord(word);
+    if (!q) return;
+    if (S.panel !== "look") togglePanel("look");
+    var lang = (S.lang || "en").split("-")[0], wl = WIKI_LANGS[lang] ? lang : "en", enc = encodeURIComponent(q);
+    var links = '<p class="rd-look-links">' +
+      '<a href="https://en.wiktionary.org/wiki/' + enc + '" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Wiktionary' + ICON.ext + "</a>" +
+      '<a href="https://' + wl + '.wikipedia.org/wiki/Special:Search?search=' + enc + '" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Wikipedia' + ICON.ext + "</a>" +
+      (lang !== "en" || /[^\u0000-\u024f]/.test(q) ? '<a href="https://translate.google.com/?sl=auto&tl=en&op=translate&text=' + enc + '" target="_blank" rel="noopener noreferrer" referrerpolicy="no-referrer">Translate' + ICON.ext + "</a>" : "") +
+      "</p>";
+    var head = '<h2 class="rd-look-w" lang="' + escapeHtml(S.lang || "en") + '">' + escapeHtml(q) + "</h2>";
+    if (navigator.onLine === false) {
+      $.lookBody.innerHTML = head + '<p class="rd-note">Looking up a word needs a connection.</p>' + links;
+      return;
+    }
+    $.lookBody.innerHTML = head + '<p class="rd-note">Looking it up\u2026</p>' + links;
+    var tries = [q];
+    if (q.toLowerCase() !== q) tries.push(q.toLowerCase());
+    (function next(i) {
+      fetchDefs(tries[i]).then(function (j) {
+        if (S.panel !== "look") return;
+        if (!j && i + 1 < tries.length) { next(i + 1); return; }
+        $.lookBody.innerHTML = head + renderDefs(j, lang) + links;
+      }, function () {
+        if (S.panel === "look") $.lookBody.innerHTML = head + '<p class="rd-note">The dictionary could not be reached. Try again later.</p>' + links;
+      });
+    })(0);
+  }
+  function renderDefs(j, lang) {
+    if (!j) return '<p class="rd-note">No entry for this word in Wiktionary.</p>';
+    var keys = Object.keys(j), order = (lang === "en" ? ["en"] : [lang, "en"]).concat(keys.filter(function (k) { return k !== lang && k !== "en"; })), out = "", shown = 0;
+    order.forEach(function (k) {
+      if (shown >= 2 || !Array.isArray(j[k])) return;
+      var parts = "";
+      j[k].slice(0, 3).forEach(function (pos) {
+        var defs = (pos.definitions || []).map(function (d) { return textOf(d.definition); }).filter(Boolean).slice(0, 3);
+        if (!defs.length) return;
+        parts += '<p class="rd-look-pos">' + escapeHtml(pos.partOfSpeech || "") + "</p><ol>" + defs.map(function (d) { return "<li>" + escapeHtml(d) + "</li>"; }).join("") + "</ol>";
+      });
+      if (!parts) return;
+      shown++;
+      out += '<div class="rd-look-lang"><p class="rd-look-ln">' + escapeHtml((j[k][0] && j[k][0].language) || k) + "</p>" + parts + "</div>";
+    });
+    return out || '<p class="rd-note">No entry for this word in Wiktionary.</p>';
+  }
+  function onLookClick(e) {
+    var a = e.target.closest("a[href]");
+    if (a) e.stopPropagation();
+  }
+
+  /* ---------------------------------------------------------------- read aloud */
+  /* A small shared helper over the browser's speech synthesis (window.bjpTTS), and the reader's use of it: the text from
+     the page on screen, sentence by sentence, in the book's language; the pages follow the voice; pause, speed, stop.
+     The voice and speed chosen for the phrases of the language books (assets/speak.js, "Voice and speed", kept in
+     localStorage "pk.speak") are used here too, and a phrase played there pauses the reading. */
+  var TTS = window.bjpTTS || (window.bjpTTS = (function () {
+    var synth = window.speechSynthesis;
+    function supported() { return !!(synth && window.SpeechSynthesisUtterance); }
+    function prefs() { try { return JSON.parse(localStorage.getItem("pk.speak") || "{}") || {}; } catch (e) { return {}; } }
+    function voiceFor(lang) {
+      if (!supported()) return null;
+      var vs = synth.getVoices() || [], l = String(lang || "en").toLowerCase(), base = l.split("-")[0], alt = base === "sa" ? "hi" : base;
+      var want = (prefs().voice || {})[base];
+      function find(f) { for (var i = 0; i < vs.length; i++) if (f(String(vs[i].lang || "").toLowerCase().replace("_", "-"), vs[i])) return vs[i]; return null; }
+      return (want && find(function (x, v) { return v.name === want; })) || find(function (x) { return x === l; }) ||
+        (base === "en" && find(function (x) { return x === "en-in" || x === "en-gb"; })) ||
+        find(function (x) { return x.split("-")[0] === base; }) || find(function (x) { return x.split("-")[0] === alt; });
+    }
+    function speak(text, lang, o) {
+      o = o || {};
+      var u = new window.SpeechSynthesisUtterance(text), v = voiceFor(lang);
+      u.lang = lang || "en";
+      if (v) u.voice = v;
+      u.rate = (o.rate || 1) * (+prefs().speed || 1);
+      if (o.onend) u.onend = o.onend;
+      if (o.onerror) u.onerror = o.onerror;
+      if (o.onboundary) u.onboundary = o.onboundary;
+      synth.speak(u);
+      return u;
+    }
+    function stop() { if (supported()) synth.cancel(); }
+    if (supported() && synth.getVoices) { synth.getVoices(); }
+    return { supported: supported, voiceFor: voiceFor, speak: speak, stop: stop };
+  })());
+  var R = { on: false, paused: false, rate: 1, blocks: [], bi: 0, units: [], ui: 0, gen: 0, turning: false };
+  var READ_SEL = "p,li,dd,dt,h1,h2,h3,h4,h5,figcaption,blockquote,.admonition-title,.srcline,.translation,td,th";
+  function readBlocks() {
+    var all = $.flow.querySelectorAll(READ_SEL), out = [];
+    for (var i = 0; i < all.length; i++) {
+      var b = all[i];
+      if (b.querySelector(READ_SEL) || b.closest(".rd-pre, .footnote, .rd-xhint")) continue;
+      out.push(b);
+    }
+    return out;
+  }
+  /* the text of a block without its formulas and buttons, with the text node of every stretch (for the page it is on) */
+  function blockText(b) {
+    var w = document.createTreeWalker(b, NodeFilter.SHOW_TEXT, { acceptNode: function (n) {
+      var pe = n.parentElement;
+      return pe && pe.closest("mjx-container, .rd-expand, .rd-fig-x, sup, .headerlink, script, style") ? 2 : 1;
+    } }), n, text = "", map = [];
+    while ((n = w.nextNode())) { map.push([text.length, n]); text += n.nodeValue; }
+    return { text: text, map: map };
+  }
+  function splitUnits(t) {
+    var out = [], re = /[^.!?।॥;:]+[.!?।॥;:]*["'”’)\]]*\s*/g, m, at = 0;
+    while ((m = re.exec(t))) {
+      var seg = m[0];
+      while (seg.length > 240) {
+        var cut = seg.lastIndexOf(" ", 220);
+        if (cut < 60) cut = 220;
+        out.push([at, seg.slice(0, cut)]);
+        at += cut; seg = seg.slice(cut);
+      }
+      if (seg.trim()) out.push([at, seg]);
+      at += seg.length;
+    }
+    return out;
+  }
+  function pageOfOffset(bt, off) {
+    var node = null, start = 0;
+    for (var i = 0; i < bt.map.length; i++) { if (bt.map[i][0] <= off) { node = bt.map[i][1]; start = bt.map[i][0]; } else break; }
+    if (!node) return null;
+    try {
+      var r = document.createRange(), o = clamp(off - start, 0, node.nodeValue.length - 1);
+      r.setStart(node, Math.max(0, o)); r.setEnd(node, Math.min(node.nodeValue.length, o + 1));
+      var rc = r.getClientRects()[0];
+      if (!rc) return null;
+      return clamp(Math.floor((rc.left - $.flow.getBoundingClientRect().left + 2) / S.stride), 0, S.n - 1);
+    } catch (e) { return null; }
+  }
+  function markSpoken(bt, a, b) {
+    if (!window.CSS || !CSS.highlights || typeof window.Highlight !== "function") return;
+    try {
+      var r = document.createRange(), sn = null, so = 0, en = null, eo = 0;
+      for (var i = 0; i < bt.map.length; i++) {
+        var st = bt.map[i][0], nd = bt.map[i][1], ln = nd.nodeValue.length;
+        if (!sn && a < st + ln) { sn = nd; so = Math.max(0, a - st); }
+        if (b <= st + ln) { en = nd; eo = Math.max(0, b - st); break; }
+      }
+      if (!sn || !en) return;
+      r.setStart(sn, so); r.setEnd(en, Math.min(eo, en.nodeValue.length));
+      CSS.highlights.set("rd-tts", new window.Highlight(r));
+    } catch (e) { /* no highlight */ }
+  }
+  function clearSpoken() { try { if (window.CSS && CSS.highlights) CSS.highlights.delete("rd-tts"); } catch (e) { /* ignore */ } }
+  function ttsUI() {
+    var t = $.tts.querySelector('[data-tts="toggle"]');
+    t.innerHTML = R.paused ? ICON.play : ICON.pause;
+    t.setAttribute("aria-label", R.paused ? "Go on reading aloud" : "Pause");
+    $.tts.querySelector(".rd-tts-lab").textContent = R.paused ? "Paused" : "Reading aloud";
+    $.tts.querySelector(".rd-tts-rate").textContent = String(R.rate).replace(/^0\./, ".") + "\u00d7";
+  }
+  function ttsStart() {
+    if (!TTS.supported()) { announce("Reading aloud is not available in this browser"); return; }
+    if (window.pkSpeak && window.pkSpeak.stop) { try { window.pkSpeak.stop(); } catch (e) { /* ignore */ } }
+    R.on = true; R.paused = false;
+    $.tts.hidden = false;
+    S.root.classList.add("rd-tts-on");
+    ttsUI();
+    ttsFromPage();
+  }
+  /* read from the first block that reaches the page on screen */
+  function ttsFromPage() {
+    if (!R.on || S.loading) return;
+    R.gen++;
+    TTS.stop();
+    R.blocks = readBlocks();
+    var fr = $.flow.getBoundingClientRect(), start = S.page * S.stride;
+    R.bi = R.blocks.length;
+    for (var i = 0; i < R.blocks.length; i++) {
+      var rc = R.blocks[i].getClientRects();
+      if (rc.length && rc[rc.length - 1].right - fr.left > start + 2) { R.bi = i; break; }
+    }
+    R.units = null;
+    R.ui = 0;
+    // a block that began on the page before: from its first sentence on this page
+    if (R.bi < R.blocks.length) {
+      var bt = blockText(R.blocks[R.bi]), us = splitUnits(bt.text);
+      for (var k = 0; k < us.length; k++) { var pg = pageOfOffset(bt, us[k][0] + us[k][1].search(/\S|$/)); if (pg === null || pg >= S.page) { R.ui = k; break; } R.ui = k; }
+      R.bt = bt; R.units = us;
+    }
+    ttsSpeak(R.gen);
+  }
+  function ttsSpeak(gen) {
+    if (!R.on || R.paused || gen !== R.gen) return;
+    while (R.bi < R.blocks.length && (!R.units || R.ui >= R.units.length)) {
+      if (R.units) { R.bi++; R.units = null; R.ui = 0; continue; }
+      R.bt = blockText(R.blocks[R.bi]);
+      R.units = splitUnits(R.bt.text);
+      if (!R.units.length) { R.bi++; R.units = null; }
+    }
+    if (R.bi >= R.blocks.length) {
+      // the end of the chapter: on into the next one
+      clearSpoken();
+      if (moreSeg(1)) { R.turning = true; loadSeg(S.seg + 1, "start").then(function () { R.turning = false; }); }
+      else if (S.rec && S.rec.next) { R.turning = true; loadChapter(S.rec.next, "start").then(function () { R.turning = false; }); }
+      else ttsStop();
+      return;
+    }
+    var u = R.units[R.ui], bt = R.bt, base = u[0];
+    followVoice(bt, base + u[1].search(/\S|$/));
+    markSpoken(bt, base, base + u[1].length);
+    TTS.speak(u[1], S.lang || "en", {
+      rate: R.rate,
+      onboundary: function (ev) { if (gen === R.gen && typeof ev.charIndex === "number") followVoice(bt, base + ev.charIndex); },
+      onend: function () { if (gen !== R.gen) return; R.ui++; ttsSpeak(gen); },
+      onerror: function (ev) {
+        if (gen !== R.gen) return;
+        // stopped from elsewhere (a phrase of a language book played): the reading pauses where it was
+        if (ev && (ev.error === "interrupted" || ev.error === "canceled")) { R.paused = true; R.gen++; ttsUI(); return; }
+        R.ui++; setTimeout(function () { ttsSpeak(gen); }, 50);
+      }
+    });
+  }
+  /* the page turns when the voice reaches the next one */
+  function followVoice(bt, off) {
+    var pg = pageOfOffset(bt, off);
+    if (pg === null || isOnPage(pg)) return;
+    if (pg > S.page) { R.turning = true; goto(pg, true); R.turning = false; }
+  }
+  function ttsStop() {
+    if (!R.on) return;
+    R.on = false; R.paused = false; R.gen++;
+    TTS.stop();
+    clearSpoken();
+    if ($.tts) $.tts.hidden = true;
+    if (S.root) S.root.classList.remove("rd-tts-on");
+  }
+  function onTtsClick(e) {
+    var b = e.target.closest("[data-tts]");
+    if (!b) return;
+    var k = b.getAttribute("data-tts");
+    if (k === "stop") { ttsStop(); return; }
+    if (k === "rate") {
+      var rates = [1, 1.25, 1.5, 0.8];
+      R.rate = rates[(rates.indexOf(R.rate) + 1) % rates.length];
+      ttsUI();
+      if (!R.paused) { R.gen++; TTS.stop(); ttsSpeak(R.gen); }
+      return;
+    }
+    if (R.paused) { R.paused = false; ttsUI(); R.gen++; ttsSpeak(R.gen); }
+    else { R.paused = true; R.gen++; TTS.stop(); ttsUI(); }
+  }
+
+  /* ---------------------------------------------------------------- the first time: how to use the reader */
+  function firstHint() {
+    if (sget("localStorage", KEY_HINT) === "1" || !$.hint) return;
+    sset("localStorage", KEY_HINT, "1");
+    $.hint.hidden = false;
+    clearTimeout(S.hintT);
+    S.hintT = setTimeout(hideHint, 5000);
+  }
+  function hideHint() {
+    if (!$.hint || $.hint.hidden || $.hint.classList.contains("out")) return;
+    clearTimeout(S.hintT);
+    $.hint.classList.add("out");
+    setTimeout(function () { $.hint.hidden = true; $.hint.classList.remove("out"); }, 320);
+  }
+
   /* ---------------------------------------------------------------- start */
-  window.bjpReader = { open: open, close: close, goto: function (p) { goto(p, false); }, state: S };
+  window.bjpReader = { open: open, close: close, goto: function (p) { goto(p, false); }, state: S,
+    relayout: function () { relayout(false); },      // assets/quiz.js: a question that grew
+    addAction: addAction,                            // a tile in the More sheet (assets/slides.js: Present)
+    toEnd: function () { if (moreSeg(1)) loadSeg(S.segs.length - 1, "end"); else goto(S.n - 1, false); },   // the last page of the chapter
+    lookup: function (w) { if (S.open) openLookup(w); } };
   if (window.document$ && window.document$.subscribe) window.document$.subscribe(init);
   else if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
   else init();

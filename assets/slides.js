@@ -165,6 +165,12 @@
     else if (hdr) hdr.appendChild(b);
   }
   function readerButton() {
+    // the reader's More sheet (assets/reader.js), where it has one
+    var R = window.bjpReader;
+    if (R && R.addAction) {
+      R.addAction({ id: "present", label: "Present", title: "Present this chapter as slides (P)", icon: ICON, run: function () { present(fromReader()); } });
+      return true;
+    }
     var top = document.querySelector(".bjp-reader .rd-top");
     if (!top) return false;
     if (top.querySelector(".sl-rdbtn")) return true;

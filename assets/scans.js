@@ -130,10 +130,15 @@
     }
     return h.join("\n");
   }
+  /* a book whose image service has failed once in this session (it then answers with an error page, which the browser
+     blocks) has its pages asked for at the other address from then on */
+  var ALT = {};
+  try { ALT = JSON.parse(sessionStorage.getItem("pk-scans-alt") || "{}") || {}; } catch (e) { ALT = {}; }
+  function useAlt(id) { ALT[id] = 1; try { sessionStorage.setItem("pk-scans-alt", JSON.stringify(ALT)); } catch (e) { /* no storage */ } }
   function scansHtml(m, from, to) {
-    var a = m.archive, r = ratio(a), h = ['<div class="pk-sc-stack">'];
+    var a = m.archive, r = ratio(a), h = ['<div class="pk-sc-stack">'], alt = !!ALT[m.id];
     for (var n = from; n <= to; n++) {
-      h.push('<div class="pk-sc-fig" id="p-' + n + '" data-n="' + n + '"><img class="pk-scan" src="' + esc(imgUrl(a, n, BASE_W)) + '" width="' + BASE_W +
+      h.push('<div class="pk-sc-fig" id="p-' + n + '" data-n="' + n + '"><img class="pk-scan" src="' + esc(alt ? altUrl(a, n, BASE_W) : imgUrl(a, n, BASE_W)) + '"' + (alt ? ' data-step="1"' : "") + ' width="' + BASE_W +
         '" height="' + Math.round(BASE_W * r) + '" loading="lazy" decoding="async" alt="Scan of page ' + n + '" data-book="' + esc(m.id) + '" data-n="' + n + '">' +
         '<div class="pk-sc-cap"><span>Page ' + n + '</span><button type="button" class="pk-sc-view" data-book="' + esc(m.id) + '" data-n="' + n + '">Open in the viewer</button></div></div>');
     }
@@ -252,7 +257,7 @@
     var src = im.getAttribute("src"), step = im.getAttribute("data-step") || "0", m = BOOKS[im.getAttribute("data-book")], n = +im.getAttribute("data-n");
     if (/^blob:/.test(src)) return;
     var w = +((/\/full\/(\d+),/.exec(src) || [])[1] || (/_w(\d+)\.jpg/.exec(src) || [])[1] || BASE_W);     // ("max": the base size)
-    if (online() && m && n && step === "0") { im.setAttribute("data-step", "1"); im.src = altUrl(m.archive, n, w); return; }
+    if (online() && m && n && step === "0") { useAlt(m.id); im.setAttribute("data-step", "1"); im.src = altUrl(m.archive, n, w); return; }
     if (online() && m && n && step === "1") { im.setAttribute("data-step", "2"); setTimeout(function () { im.src = imgUrl(m.archive, n, w); }, 1500); return; }
     if (step === "3") return;
     im.setAttribute("data-step", "3");
@@ -397,6 +402,7 @@
     function ok(u) {
       if (done || !S || token !== S.token) return;
       done = true; clearTimeout(timer);
+      S.full = true;
       S.img.src = u; S.bucket = w; S.wait.hidden = true; S.msg.hidden = true;
       if (!S.sized) { S.sized = true; layout(false); }
     }
@@ -424,6 +430,17 @@
     }
     next();
   }
+  /* the page at 400 px wide, shown until the screen-size image arrives (never over it) */
+  function quick(n, token) {
+    if (!online()) return;
+    var im = new Image(), u = imgUrl(S.a, n, 400);
+    im.onload = function () {
+      if (!S || token !== S.token || S.full) return;
+      S.img.src = u; S.wait.hidden = true;
+      if (!S.sized) { S.sized = true; layout(false); }
+    };
+    im.src = u;
+  }
   function upgrade() {
     if (!S || !S.sized) return;
     var w = BUCKETS[bucketFor()];
@@ -449,10 +466,13 @@
     if (cur) cur.removeAttribute("aria-selected");
     var t = S.thumbs.children[n - 1];
     if (t) { t.setAttribute("aria-selected", "true"); if (!first || true) scrollThumb(t); }
+    // a small copy first (quick to come), then the one for the screen takes its place
+    S.full = false;
+    quick(n, S.token);
     setSrc(imgUrl(S.a, n, w), S.token, w);
     layout(false);
     S.pane.style.opacity = "1";
-    setTimeout(function () { if (S && S.n === n) { preload(n + 1); preload(n - 1); } }, 250);
+    setTimeout(function () { if (S && S.n === n) { preload(n + 1); preload(n + 2); preload(n - 1); } }, 250);
     S.last = Date.now();
   }
   function scrollThumb(t) {

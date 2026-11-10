@@ -29,6 +29,7 @@
           processHtmlClass: "arithmatex|math"
         },
         startup: {
+          typeset: false,          // the page is typeset by typesetPage below (not while the reader shows the chapter)
           pageReady: function () {
             return window.MathJax.startup.defaultPageReady().then(function () { resolve(window.MathJax); });
           }
@@ -74,12 +75,40 @@
     });
   }
 
-  function typesetPage() {
-    if (!hasMath()) return;
-    typeset();
+  /* Typeset the given mathematics elements themselves (top-level .arithmatex/.math elements not yet typeset), in the
+     order given: the reader typesets the pages on screen first and the rest of a chapter a little at a time. */
+  function typesetEls(els) {
+    return ensure().then(function (MJ) {
+      if (!MJ) return null;
+      queue = queue.then(function () {
+        var todo = (els || []).filter(function (e) { return e.isConnected && !e.querySelector("mjx-container") && !e.closest("mjx-container"); });
+        if (!todo.length) return null;
+        try { return MJ.typesetPromise(todo); } catch (e) { return null; }
+      }).catch(function () { return null; });
+      return queue;
+    });
   }
 
-  window.bjpMath = { ensure: ensure, typeset: typeset, hasMath: hasMath, pending: pending };
+  /* The page's own mathematics. While the reader shows the chapter (assets/reader.js), the page under it is not typeset:
+     the reader typesets its own copy, the pages on screen first. The page is typeset when the reader closes. MathJax
+     itself is fetched at once, so that it is ready for the reader. */
+  var pageWaiting = false;
+  function reading() { return document.documentElement.classList.contains("bjp-reading"); }
+  function typesetPage() {
+    if (!hasMath()) return;
+    ensure();
+    setTimeout(function () {
+      if (reading()) { pageWaiting = true; return; }
+      typeset([document.querySelector("article.md-content__inner") || document]);
+    }, 0);
+  }
+  document.addEventListener("bjp:reader-close", function () {
+    if (!pageWaiting) return;
+    pageWaiting = false;
+    typeset([document.querySelector("article.md-content__inner") || document]);
+  });
+
+  window.bjpMath = { ensure: ensure, typeset: typeset, typesetEls: typesetEls, hasMath: hasMath, pending: pending };
 
   if (window.document$ && window.document$.subscribe) {
     window.document$.subscribe(typesetPage);

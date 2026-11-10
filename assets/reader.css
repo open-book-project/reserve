@@ -910,3 +910,236 @@ html.bjp-booting .bjp-reader { visibility: visible; }
   --md-code-hl-name-color: var(--rd-fg); --md-code-hl-operator-color: #b9b6b0; --md-code-hl-punctuation-color: #a09d97;
   --md-code-hl-comment-color: #8d8a85; --md-code-hl-generic-color: var(--rd-fg); --md-code-hl-variable-color: #e2ded6;
 }
+
+/* =====================================================================================================
+   Phones first: 44 px targets, a decluttered bar with a More sheet, light and warmth, the page colour of
+   the device, pages that slide or fade, a light outline while a chapter is made ready, wide blocks that
+   say they scroll, look-up, read-aloud and a first-time hint.
+   ===================================================================================================== */
+/* the bar: close, (Library), title, (search), bookmark, contents, Aa, more */
+@media (max-width: 420px) { .rd-btn { min-width: 44px; } .rd-title { padding: 0 4px; } }
+@media (max-width: 599px) { .rd-top .rd-findbtn { display: none; } }
+@media (max-width: 479px) { .rd-top .rd-libbtn { display: none; } }
+.rd-title { font-size: 14px; }
+.rd-morebtn svg { fill: currentColor; stroke: none; }
+
+/* the More sheet: large tiles */
+.rd-panel.rd-more { width: min(400px, calc(100vw - 16px)); padding: 12px; }
+.rd-mgrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 6px; }
+.rd-mi {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 7px; min-height: 76px; padding: 8px 4px;
+  border: 0; border-radius: 14px; background: color-mix(in srgb, var(--rd-fg) 5%, transparent); color: var(--rd-fg);
+  font: 600 12px/1.2 var(--rd-ui); text-align: center; text-decoration: none; cursor: pointer;
+}
+.rd-mi[hidden] { display: none; }
+.rd-mi svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.rd-mi:hover { background: color-mix(in srgb, var(--rd-fg) 10%, transparent); }
+.rd-mi:active { background: color-mix(in srgb, var(--rd-fg) 15%, transparent); }
+.rd-mi:focus-visible { outline: 2px solid var(--rd-link); outline-offset: 1px; }
+@media (min-width: 480px) { .rd-mi-lib { display: none; } }
+@media (hover: none) { .rd-mi-keys { display: none; } }
+html.pk-linked .rd-mi-find { display: none; }
+.bjp-reader.rd-tts-on .rd-mi-speak { color: var(--rd-link); }
+
+/* targets of at least 44 px */
+.rd-seg button, .rd-tab { height: 44px; }
+.rd-size button { height: 44px; width: 48px; }
+.bk-exp { width: 44px; }
+.bk-row { min-height: 46px; }
+.bk-secs { margin-left: 44px; }
+.bk-secs a { display: flex; align-items: center; min-height: 44px; box-sizing: border-box; padding-top: 6px; padding-bottom: 6px; }
+.rd-it-del { width: 44px; }
+.rd-keys { min-height: 44px; }
+.rd-back { height: 44px; }
+.rd-pop-go, .rd-pop-save { min-height: 44px; }
+.rd-hl-del { width: 44px; height: 44px; }
+.rd-selbtn { width: 44px; height: 44px; }
+.rd-selbar .rd-hlc { width: 34px; height: 34px; margin: 5px 3px; position: relative; }
+.rd-selbar .rd-hlc::after { content: ""; position: absolute; inset: -7px -5px; }
+.rd-selbtn.rd-sel-look { width: auto; padding: 0 12px 0 9px; gap: 6px; display: inline-flex; align-items: center; font: 600 13px var(--rd-ui); }
+.rd-selbtn.rd-sel-look[hidden] { display: none; }
+.rd-expand { width: 36px; height: 36px; }
+.rd-expand::after { content: ""; position: absolute; inset: -5px; }
+
+/* the slider over the book: 44 px tall, with a preview of the place while it is dragged */
+.rd-scrub { height: 44px; }
+.rd-range { height: 44px; }
+.rd-range::-webkit-slider-thumb { width: 24px; height: 24px; margin-top: -10px; }
+.rd-range::-moz-range-thumb { width: 20px; height: 20px; }
+.rd-tip {
+  bottom: 50px; display: flex; flex-direction: column; gap: 3px; width: max-content; max-width: min(78vw, 330px); padding: 10px 12px;
+  border-radius: 14px; white-space: normal; text-align: left;
+}
+.rd-tip[hidden] { display: none; }
+.rd-tip-t { font: 700 13px/1.25 var(--rd-ui); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rd-tip-x { font: 400 13.5px/1.4 var(--bjp-serif); opacity: 0.85; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.rd-tip-x[hidden] { display: none; }
+.rd-tip-p { font: 600 11.5px/1.2 var(--rd-ui); opacity: 0.7; font-variant-numeric: tabular-nums; }
+
+/* the footer: a tap on the time or pages left switches between pages, minutes in the chapter and in the book */
+.rd-fpct { pointer-events: auto; border: 0; background: none; padding: 14px 0; margin: -14px 0; font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.rd-fpct:focus-visible { outline: 2px solid var(--rd-link); outline-offset: 2px; border-radius: 6px; }
+
+/* settings: five page colours (Auto first), light, warmth, night, page turn */
+.rd-themes { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px; }
+.rd-th-dot { width: 44px; height: 44px; }
+.rd-th-auto .rd-th-dot { background: linear-gradient(135deg, #fff 0 50%, #2a2826 50% 100%); color: #888; }
+.rd-row.rd-slide { gap: 8px; }
+.rd-sl { flex: 1; min-width: 0; display: flex; align-items: center; gap: 6px; color: var(--rd-muted); }
+.rd-sl svg { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.rd-sl input[type="range"] {
+  flex: 1; min-width: 0; height: 44px; margin: 0; background: transparent; -webkit-appearance: none; appearance: none; cursor: pointer; touch-action: pan-x;
+}
+.rd-sl input[type="range"]::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--rd-fg) 14%, transparent); }
+.rd-sl input[type="range"]::-moz-range-track { height: 6px; border-radius: 3px; background: color-mix(in srgb, var(--rd-fg) 14%, transparent); }
+.rd-sl input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 26px; height: 26px; margin-top: -10px; border-radius: 50%; background: var(--rd-bg); border: 2px solid var(--rd-link); box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25); }
+.rd-sl input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--rd-bg); border: 2px solid var(--rd-link); }
+.rd-sl input[type="range"]:focus-visible { outline: 2px solid var(--rd-link); outline-offset: 2px; border-radius: 8px; }
+.rd-sl input.rd-warmr::-webkit-slider-runnable-track { background: linear-gradient(90deg, color-mix(in srgb, var(--rd-fg) 14%, transparent), #f0a24a); }
+.rd-seg button { font: 600 13px var(--rd-ui); }
+.rd-seg button > span { font: 600 12.5px var(--rd-ui); }
+.rd-seg button:has(svg + span) { display: inline-flex; align-items: center; justify-content: center; gap: 5px; }
+.rd-seg button:has(svg + span) svg { width: 18px; height: 18px; }
+
+/* light and warmth: overlays over the page and its bars (not the sheets) */
+.rd-shade { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+.rd-shade i { position: absolute; inset: 0; opacity: 0; transition: opacity 0.12s linear; }
+.rd-dim { background: #000; }
+.rd-warm { background: #ff9a2e; mix-blend-mode: multiply; }
+.bjp-reader[data-theme="dark"] .rd-warm, .bjp-reader[data-theme="black"] .rd-warm { mix-blend-mode: soft-light; background: #ff8a1e; }
+
+/* a chapter being made ready: an outline of a page (shown after a moment), and a thin bar */
+.rd-loading { display: block; background: var(--rd-bg); }
+.rd-skel {
+  position: absolute; left: calc(var(--rd-mx) + env(safe-area-inset-left)); right: calc(var(--rd-mx) + env(safe-area-inset-right));
+  top: calc(var(--rd-mt) + env(safe-area-inset-top)); max-width: var(--rd-vw, 680px); margin: 0 auto; font-size: 18px;
+}
+.rd-skel i { display: block; height: 0.8em; margin: 0 0 1.05em; border-radius: 6px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--rd-fg) 6%, transparent) 0%, color-mix(in srgb, var(--rd-fg) 11%, transparent) 50%, color-mix(in srgb, var(--rd-fg) 6%, transparent) 100%);
+  background-size: 200% 100%; animation: rd-shimmer 1.4s ease-in-out infinite; }
+.rd-skel i:first-child { width: 62%; height: 1.4em; margin-bottom: 1.6em; }
+.rd-skel i:nth-child(4n+3) { width: 92%; }
+.rd-skel i:nth-child(5) { width: 70%; margin-bottom: 1.9em; }
+.rd-skel i:last-child { width: 54%; }
+@keyframes rd-shimmer { from { background-position: 100% 0; } to { background-position: -100% 0; } }
+.rd-lbar { position: absolute; left: 0; right: 0; top: env(safe-area-inset-top); height: 2px; overflow: hidden; }
+.rd-lbar::before { content: ""; position: absolute; top: 0; bottom: 0; width: 34%; background: var(--rd-link); opacity: 0.7; animation: rd-lbar 1.1s ease-in-out infinite; }
+@keyframes rd-lbar { from { left: -34%; } to { left: 100%; } }
+.rd-loading.is-change { animation: rd-skel-in 0.2s ease 0.14s both; }
+@keyframes rd-skel-in { from { opacity: 0; } to { opacity: 1; } }
+
+/* turning pages: slide (default), fade or none; a chapter comes in from the side it was asked from */
+.rd-view.rd-fading { opacity: 0.08; transition: opacity 0.1s ease; }
+.rd-view.rd-enter-r { animation: rd-in-r 0.26s cubic-bezier(0.2, 0.7, 0.25, 1); }
+.rd-view.rd-enter-l { animation: rd-in-l 0.26s cubic-bezier(0.2, 0.7, 0.25, 1); }
+.rd-view.rd-enter-f { animation: rd-fade 0.22s ease; }
+@keyframes rd-in-r { from { transform: translateX(28px); opacity: 0.2; } to { transform: none; opacity: 1; } }
+@keyframes rd-in-l { from { transform: translateX(-28px); opacity: 0.2; } to { transform: none; opacity: 1; } }
+
+/* wide tables, formulas and code: the edge fades where there is more, a line says what to do, a tap enlarges */
+.rd-flow .rd-xscroll.rd-x-r { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 34px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 34px), transparent); }
+.rd-flow .rd-xscroll.rd-x-l { -webkit-mask-image: linear-gradient(90deg, transparent, #000 34px); mask-image: linear-gradient(90deg, transparent, #000 34px); }
+.rd-flow .rd-xscroll.rd-x-l.rd-x-r { -webkit-mask-image: linear-gradient(90deg, transparent, #000 34px, #000 calc(100% - 34px), transparent); mask-image: linear-gradient(90deg, transparent, #000 34px, #000 calc(100% - 34px), transparent); }
+.rd-flow .rd-xscroll { cursor: zoom-in; scrollbar-width: none; }
+.rd-flow .rd-xscroll::-webkit-scrollbar { display: none; }
+.rd-flow .rd-xhint {
+  display: flex; align-items: center; justify-content: flex-end; gap: 5px; margin: 0.25em 0 0.9em; break-before: avoid; page-break-before: avoid;
+  font: 600 11.5px/1.3 var(--rd-ui); color: var(--rd-muted); text-align: right; cursor: zoom-in; hyphens: manual;
+}
+.rd-flow .rd-xhint span { font-size: 15px; line-height: 1; color: var(--rd-link); }
+.rd-flow .tbl .rd-xhint { margin-bottom: 0; }
+/* the button for the full-screen view never covers a caption or code */
+.rd-flow .tbl.rd-zoomable > .rd-expand { top: 0; }
+.rd-flow .tbl.rd-zoomable > .tbl-caption, .rd-flow .tbl.rd-zoomable > p:first-child { padding-right: 46px; min-height: 36px; box-sizing: border-box; }
+.rd-flow .tbl.rd-zoomable:not(:has(> .tbl-caption)):not(:has(> p:first-child)) { padding-top: 42px; }
+.rd-flow .highlight.rd-zoomable pre > code, .rd-flow pre.rd-zoomable > code { padding-right: 46px; }
+@media (max-width: 600px) {
+  /* code on a phone wraps, keeping its indentation; full screen shows it unwrapped */
+  .rd-flow pre > code { white-space: pre-wrap; overflow-wrap: anywhere; word-break: normal; font-size: 0.8em; }
+}
+
+/* figures: a small mark says that a tap shows them full screen */
+.rd-flow .rd-imgbox { position: relative; display: block; width: fit-content; max-width: 100%; margin: 0 auto; }
+.rd-flow .rd-fig-x {
+  position: absolute; right: 6px; bottom: 6px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px;
+  background: color-mix(in srgb, var(--rd-bg) 82%, transparent); color: var(--rd-muted); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18); pointer-events: none;
+}
+.rd-flow .rd-fig-x svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.rd-flow .rd-imgbox img { cursor: zoom-in; }
+
+/* a book's first page: the title page without the cover again (the reader came from it) */
+.rd-flow .pk-book-cover { display: none; }
+.rd-flow .pk-book { margin-top: 1.2em; }
+
+/* verse and plays on a phone: smaller indents, so that a line keeps its words */
+@media (max-width: 600px) {
+  .rd-flow .pk-speech, .rd-flow .pk-poem, .rd-flow .pk-letter, .rd-flow .pk-epigraph, .rd-flow .pk-stage { margin-left: 0.6em; }
+  .rd-flow .pk-i2 { padding-left: 1.5em; }
+  .rd-flow .pk-i3 { padding-left: 2em; }
+  .rd-flow .pk-i4 { padding-left: 2.5em; }
+  .rd-flow blockquote { margin-left: 0; margin-right: 0; padding-left: 0.8em; }
+  .rd-flow .admonition, .rd-flow details { margin-left: 0; margin-right: 0; }
+}
+
+/* look up a word */
+.rd-panel.rd-look { width: min(400px, calc(100vw - 16px)); }
+.rd-panel h2.rd-look-w { margin: 2px 0 8px; font: 700 22px/1.2 var(--bjp-serif); letter-spacing: 0; text-transform: none; color: var(--rd-fg); }
+.rd-look-lang { margin: 0 0 10px; }
+.rd-look-ln { margin: 8px 0 2px; font: 700 11px/1.3 var(--rd-ui); letter-spacing: 0.08em; text-transform: uppercase; color: var(--rd-muted); }
+.rd-look-pos { margin: 6px 0 2px; font: italic 600 13.5px/1.3 var(--bjp-serif); color: var(--rd-link); }
+.rd-look ol { margin: 0 0 4px; padding-left: 1.4em; font: 400 15px/1.5 var(--bjp-serif); }
+.rd-look li { margin: 2px 0; }
+.rd-look-links { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 4px; padding-top: 10px; border-top: 1px solid var(--rd-line); }
+.rd-look-links a {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border-radius: 999px; box-sizing: border-box;
+  background: color-mix(in srgb, var(--rd-fg) 6%, transparent); color: var(--rd-fg); font: 600 13px var(--rd-ui); text-decoration: none;
+}
+.rd-look-links a svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 0.6; }
+.rd-look-links a:focus-visible { outline: 2px solid var(--rd-link); outline-offset: 1px; }
+.rd-panel.rd-look .rd-look-body { user-select: text; -webkit-user-select: text; }
+
+/* read aloud: a small bar above the footer, and the sentence being read */
+.rd-tts {
+  position: absolute; z-index: 4; left: 50%; bottom: calc(58px + env(safe-area-inset-bottom)); transform: translateX(-50%);
+  display: flex; align-items: center; gap: 2px; padding: 3px 6px; border-radius: 999px; border: 1px solid var(--rd-line);
+  background: var(--rd-chrome); color: var(--rd-fg); box-shadow: var(--rd-shadow); font-family: var(--rd-ui);
+  -webkit-backdrop-filter: saturate(1.4) blur(18px); backdrop-filter: saturate(1.4) blur(18px);
+}
+.rd-tts[hidden] { display: none; }
+.rd-tts svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+.rd-tts-lab { padding: 0 8px; font: 600 13px var(--rd-ui); white-space: nowrap; color: var(--rd-muted); }
+.rd-tts-rate { font: 700 13px var(--rd-ui); font-variant-numeric: tabular-nums; }
+.bjp-reader.rd-chrome-on .rd-tts { bottom: calc(96px + env(safe-area-inset-bottom)); }
+::highlight(rd-tts) { background-color: rgba(255, 196, 0, 0.32); }
+
+/* the first time: where to tap (it lets every touch through, and goes after a few seconds or the first turn) */
+.rd-hint {
+  position: absolute; z-index: 3; left: 0; right: 0; top: calc(var(--rd-mt) + env(safe-area-inset-top)); bottom: calc(var(--rd-mb) + env(safe-area-inset-bottom));
+  display: flex; flex-direction: column; justify-content: flex-end; pointer-events: none; animation: rd-fade 0.3s ease;
+  font-family: var(--rd-ui); transition: opacity 0.3s ease;
+}
+.rd-hint[hidden] { display: none; }
+.rd-hint.out { opacity: 0; }
+.rd-hint-z { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr 1fr; }
+.rd-hint-z span { display: grid; place-items: center; font: 700 13px var(--rd-ui); color: var(--rd-link); background: color-mix(in srgb, var(--rd-link) 7%, transparent); }
+.rd-hint-z span:nth-child(2) { background: color-mix(in srgb, var(--rd-link) 13%, transparent); border-left: 1px dashed color-mix(in srgb, var(--rd-link) 40%, transparent); border-right: 1px dashed color-mix(in srgb, var(--rd-link) 40%, transparent); }
+.rd-hint p { position: relative; margin: 0 auto 14px; padding: 10px 16px; border-radius: 999px; background: var(--rd-fg); color: var(--rd-bg); font: 600 13.5px/1.3 var(--rd-ui); box-shadow: var(--rd-shadow); text-align: center; max-width: 86%; }
+
+/* the next chapter being typeset ahead, out of sight */
+.rd-pre { position: absolute; left: -100000px; top: 0; visibility: hidden; pointer-events: none; contain: layout style; }
+
+@media (prefers-reduced-motion: reduce) {
+  .rd-view.rd-enter-r, .rd-view.rd-enter-l, .rd-view.rd-enter-f, .rd-skel i, .rd-lbar::before, .rd-hint, .rd-loading.is-change { animation: none !important; }
+  .rd-view.rd-fading, .rd-shade i { transition: none !important; }
+}
+
+/* a numbered formula too wide for the page: its number at the right edge of the formula, which starts at the left */
+.rd-flow mjx-container.rd-tagfit mjx-mtable { display: inline-flex !important; align-items: flex-start; min-width: 0 !important; }
+.rd-flow mjx-container.rd-tagfit mjx-mtable > mjx-table { margin: 0 !important; flex: none; }
+.rd-flow mjx-container.rd-tagfit mjx-mtable > mjx-labels { position: static !important; width: auto !important; flex: none; margin-left: 1em; }
+.rd-flow mjx-container.rd-tagfit mjx-labels > mjx-itable { position: static !important; }
+.rd-goto-in { height: 44px; }
+/* page scans of the scanned books: their room is kept before they arrive (the size is in the page) */
+.rd-flow .pk-sc-fig img.pk-scan[style*="--ar"] { width: min(100%, calc(min(64vh, 58rem) * var(--ar))); height: auto; aspect-ratio: var(--ar); }
+@media (max-width: 700px) { .rd-flow .pk-sc-fig img.pk-scan[style*="--ar"] { width: min(100%, calc(50vh * var(--ar))); } }
+.rd-hint-z b { padding: 6px 12px; border-radius: 999px; background: var(--rd-bg); box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12); font: inherit; }
