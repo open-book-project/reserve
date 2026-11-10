@@ -1,40 +1,28 @@
 
 <!doctype html>
 <html lang="en" class="no-js">
-  <head>
-    
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#ffffff">
-  
-    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
-  
-  
-    <meta name="author" content="The Open Book Project">
-  
-  
-    <meta name="robots" content="noindex,nofollow">
-  
-  
-    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/trust/pki-x-509-certificates-in-depth.html">
-  
-  
-    <link rel="prev" href="trusted-execution-confidential-computing-attestation.html">
-  
-  
-    <link rel="next" href="root-cas-in-depth.html">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" media="print" onload="this.media='all'">
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap"></noscript>
-  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
-  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
-  <link rel="manifest" href="../../manifest.webmanifest">
-  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "kind": "reference", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "kind": "field-guide", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "kind": "course", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "kind": "textbook", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "kind": "field-guide", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "kind": "reference", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "kind": "textbook", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "kind": "course", "lang": "en", "path": "courses/web_programming"}]</script><script>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+<meta name="author" content="The Open Book Project">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/trust/pki-x-509-certificates-in-depth.html">
+<link rel="prev" href="trusted-execution-confidential-computing-attestation.html">
+<link rel="next" href="root-cas-in-depth.html">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap"></noscript>
+<link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="../../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="Reserve Shelf"><script src="../../assets/library-data.js"></script><script>
     (function () {
       var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
       if (!X) return;
@@ -69,7 +57,7 @@
       if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
     } catch (e) { /* no storage: covers */ }
   </script>
-  <script>
+<script>
     /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
     try {
       var cv = sessionStorage.getItem("bjp.reader.cover");
@@ -81,1444 +69,755 @@
       }
     } catch (e) { /* no session storage: the page simply opens as usual */ }
   </script>
-
-    
-      
-        <title>6. PKI & X.509 Certificates, In Depth - The Open Book Project: Reserve Shelf</title>
-      
-    
-    
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
-      
-        
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
-      
-      
-
-
-    
-    
-      
-    
-    
-      
-    
-    
-      <link rel="stylesheet" href="../../assets/extra.css">
-    
-      <link rel="stylesheet" href="../../assets/reader.css">
-    
-      <link rel="stylesheet" href="../../assets/viz.css">
-    
-      <link rel="stylesheet" href="../../assets/app.css">
-    
-      <link rel="stylesheet" href="../../assets/theme.css">
-    
-      <link rel="stylesheet" href="../../assets/slides.css">
-    
-      <link rel="stylesheet" href="../../assets/remote.css">
-    
-      <link rel="stylesheet" href="../../assets/scans.css">
-    
-      <link rel="stylesheet" href="../../assets/speak.css">
-    
-      <link rel="stylesheet" href="../../assets/quiz.css">
-    
-    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
-    
-      
-
-    
-    
-  </head>
-  
-  
-    
-    
-      
-    
-    
-    
-    
-    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
-  
-    
-    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
-    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
-    <label class="md-overlay" for="__drawer"></label>
-    <div data-md-component="skip">
-      
-        
-        <a href="#61-what-pki-is-binding-names-to-keys" class="md-skip">
-          Skip to content
-        </a>
-      
-    </div>
-    <div data-md-component="announce">
-      
-    </div>
-    
-    
-      
-
-  
-
-<header class="md-header md-header--shadow" data-md-component="header">
-  <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
-      
-  <img src="../../assets/icons/logo.svg" alt="logo">
-
-    </a>
-    <label class="md-header__button md-icon" for="__drawer">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
-    </label>
-    <div class="md-header__title" data-md-component="header-title">
-      <div class="md-header__ellipsis">
-        <div class="md-header__topic">
-          <span class="md-ellipsis">
-            The Open Book Project: Reserve Shelf
-          </span>
-        </div>
-        <div class="md-header__topic" data-md-component="header-topic">
-          <span class="md-ellipsis">
-            
-              6. PKI & X.509 Certificates, In Depth
-            
-          </span>
-        </div>
-      </div>
-    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
-    </a>
-    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
-    </a>
-    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}],"st":[{"id":"science","t":"Science","d":"Physics, chemistry, biology, maths","i":"<circle cx=\"12\" cy=\"12\" r=\"1.4\"/><ellipse cx=\"12\" cy=\"12\" rx=\"9\" ry=\"3.6\"/><ellipse cx=\"12\" cy=\"12\" rx=\"9\" ry=\"3.6\" transform=\"rotate(60 12 12)\"/><ellipse cx=\"12\" cy=\"12\" rx=\"9\" ry=\"3.6\" transform=\"rotate(120 12 12)\"/>","n":1,"c":["science","mathematics"],"s":[["statistics","Statistics & Data Science",1]]},{"id":"engineering","t":"Engineering & Technology","d":"Electronics, chips, machines, defence","i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","n":4,"c":["engineering","computer-architecture"],"s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1],["computer-architecture","Computer Architecture & Chips",3]]},{"id":"computers","t":"Computers & IT","d":"Programming, networks, machine learning, security","i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","n":7,"c":["computer-science"],"s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]}]}</script>
-    
-      
-        <form class="md-header__option" data-md-component="palette">
-  
-    
-    
-    
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
-    
-      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
-      </label>
-    
-  
-    
-    
-    
-    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
-    
-      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
-      </label>
-    
-  
-</form>
-      
-    
-    
-      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
-    
-    
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-        <div class="md-search__suggest" data-md-component="search-suggest"></div>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
+<title>6. PKI & X.509 Certificates, In Depth - The Open Book Project: Reserve Shelf</title>
+<link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+<link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+<link rel="stylesheet" href="../../assets/extra.css">
+<link rel="stylesheet" href="../../assets/reader.css">
+<link rel="stylesheet" href="../../assets/viz.css">
+<link rel="stylesheet" href="../../assets/app.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/slides.css">
+<link rel="stylesheet" href="../../assets/remote.css">
+<link rel="stylesheet" href="../../assets/scans.css">
+<link rel="stylesheet" href="../../assets/speak.css">
+<link rel="stylesheet" href="../../assets/quiz.css">
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a href="#61-what-pki-is-binding-names-to-keys" class="md-skip">
+Skip to content
+</a>
 </div>
-      
-    
-    
-  </nav>
-  
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav class="md-header__inner md-grid" aria-label="Header">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+The Open Book Project: Reserve Shelf
+</span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+6. PKI & X.509 Certificates, In Depth
+</span>
+</div>
+</div>
+</div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+</a>
+<a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+</a>
+<form class="md-header__option" data-md-component="palette">
+<input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+<label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+</label>
+<input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+<label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+<label class="md-search__icon md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</label>
+<nav class="md-search__options" aria-label="Search">
+<button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+Initializing search
+</div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
 </header>
-    
-    <div class="md-container" data-md-component="container">
-      
-      
-        
-          
-        
-      
-      <main class="md-main" data-md-component="main">
-        <div class="md-main__inner md-grid">
-          
-            
-              
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
-
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
 <nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
-  <label class="md-nav__title" for="__drawer">
-    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
-      
-  <img src="../../assets/icons/logo.svg" alt="logo">
-
-    </a>
-    The Open Book Project: Reserve Shelf
-  </label>
-  <ul class="md-nav__list" data-md-scrollfix>
-    
-      <li class="md-nav__item bjp-nav-all">
-        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
-          <span class="md-ellipsis">All books</span>
-        </a>
-      </li>
-      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Roots of Trust, TPM & PKI</span></li>
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="index.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Overview and preface
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="how-to-read-this-guide.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    How to read this guide
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="trust-foundations.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    1. Trust Foundations
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="hardware-roots-of-trust.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    2. Hardware Roots of Trust
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="the-trusted-platform-module-in-depth.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    3. The Trusted Platform Module, In Depth
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="secure-boot-measured-boot-firmware-trust.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    4. Secure Boot, Measured Boot & Firmware Trust
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="trusted-execution-confidential-computing-attestation.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    5. Trusted Execution, Confidential Computing & Attestation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    6. PKI & X.509 Certificates, In Depth
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="pki-x-509-certificates-in-depth.html" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    6. PKI & X.509 Certificates, In Depth
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
+<label class="md-nav__title" for="__drawer">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+The Open Book Project: Reserve Shelf
+</label>
+<ul class="md-nav__list" data-md-scrollfix>
+<li class="md-nav__item bjp-nav-all">
+<a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+<span class="md-ellipsis">All books</span>
+</a>
+</li>
+<li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Roots of Trust, TPM & PKI</span></li>
+<li class="md-nav__item">
+<a href="index.html" class="md-nav__link">
+<span class="md-ellipsis">
+Overview and preface
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="how-to-read-this-guide.html" class="md-nav__link">
+<span class="md-ellipsis">
+How to read this guide
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="trust-foundations.html" class="md-nav__link">
+<span class="md-ellipsis">
+1. Trust Foundations
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="hardware-roots-of-trust.html" class="md-nav__link">
+<span class="md-ellipsis">
+2. Hardware Roots of Trust
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="the-trusted-platform-module-in-depth.html" class="md-nav__link">
+<span class="md-ellipsis">
+3. The Trusted Platform Module, In Depth
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="secure-boot-measured-boot-firmware-trust.html" class="md-nav__link">
+<span class="md-ellipsis">
+4. Secure Boot, Measured Boot & Firmware Trust
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="trusted-execution-confidential-computing-attestation.html" class="md-nav__link">
+<span class="md-ellipsis">
+5. Trusted Execution, Confidential Computing & Attestation
+</span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+6. PKI & X.509 Certificates, In Depth
+</span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a href="pki-x-509-certificates-in-depth.html" class="md-nav__link md-nav__link--active">
+<span class="md-ellipsis">
+6. PKI & X.509 Certificates, In Depth
+</span>
+</a>
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#61-what-pki-is-binding-names-to-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.1 What PKI Is: Binding Names to Keys
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.1 What PKI Is: Binding Names to Keys">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-see-the-identity-issuer-and-validity-a-real-website-presents" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: See the identity, issuer and validity a real website presents
-      
-    </span>
-  </a>
-  
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#61-what-pki-is-binding-names-to-keys" class="md-nav__link">
+<span class="md-ellipsis">
+6.1 What PKI Is: Binding Names to Keys
+</span>
+</a>
+<nav class="md-nav" aria-label="6.1 What PKI Is: Binding Names to Keys">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-see-the-identity-issuer-and-validity-a-real-website-presents" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: See the identity, issuer and validity a real website presents
+</span>
+</a>
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#62-the-cast-ca-ra-va-subscriber-relying-party-and-trust-anchor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-find-the-ca-and-validation-authority-endpoints-named-inside-a-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Find the CA and validation-authority endpoints named inside a certificate
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#63-x509-v3-anatomy-field-by-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.3 X.509 v3 Anatomy, Field by Field
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.3 X.509 v3 Anatomy, Field by Field">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-read-every-field-then-just-the-serial-and-fingerprint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Read every field, then just the serial and fingerprint
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#64-certificate-extensions-in-depth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.4 Certificate Extensions in Depth
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.4 Certificate Extensions in Depth">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-print-just-the-extensions-that-matter-and-define-them-when-making-a-lab-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Print just the extensions that matter, and define them when making a lab certificate
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#65-asn1-der-pem-and-certificate-file-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.5 ASN.1, DER, PEM and Certificate File Formats
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.5 ASN.1, DER, PEM and Certificate File Formats">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-make-a-csr-inspect-raw-asn1-and-convert-between-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Make a CSR, inspect raw ASN.1 and convert between formats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#66-certificate-types-tls-client-smime-code-document-device-and-qualified" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-identify-a-certificates-type-from-its-policy-oids-and-eku" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Identify a certificate's type from its policy OIDs and EKU
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#67-keys-and-signature-algorithms-in-certificates-including-post-quantum" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-generate-classical-and-post-quantum-lab-keys-ml-dsa-needs-openssl-35" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Generate classical and post-quantum lab keys (ML-DSA needs OpenSSL 3.5+)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#68-chain-building-and-path-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.8 Chain Building and Path Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.8 Chain Building and Path Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-show-the-chain-a-server-sends-and-validate-a-lab-chain-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Show the chain a server sends and validate a lab chain yourself
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#69-revocation-crls-ocsp-stapling-crlite-and-short-lived-certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-find-revocation-pointers-read-a-crl-and-query-ocsp-where-it-still-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Find revocation pointers, read a CRL, and query OCSP where it still exists
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#610-certificate-transparency-public-logs-of-every-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.10 Certificate Transparency: Public Logs of Every Certificate
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.10 Certificate Transparency: Public Logs of Every Certificate">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-search-ct-for-a-domain-and-see-the-scts-inside-a-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Search CT for a domain and see the SCTs inside a certificate
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#611-tls-and-certificates-together-handshakes-sni-and-mutual-tls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-inspect-a-tls-13-handshake-and-run-a-local-mutual-tls-lab" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Inspect a TLS 1.3 handshake and run a local mutual-TLS lab
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#612-hsts-pinning-and-dane-extra-locks-on-certificate-trust" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-check-hsts-compute-an-spki-pin-and-look-up-a-tlsa-record" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Check HSTS, compute an SPKI pin and look up a TLSA record
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#613-trust-stores-who-decides-which-roots-you-trust" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.13 Trust Stores: Who Decides Which Roots You Trust
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.13 Trust Stores: Who Decides Which Roots You Trust">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-count-and-list-trusted-roots-in-several-stores" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Count and list trusted roots in several stores
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#614-hands-on-certificate-tooling-openssl-certutil-keytool-step-and-crtsh" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-a-quick-diagnostic-toolkit-session" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: A quick diagnostic toolkit session
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
+</ul>
 </nav>
-      
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="root-cas-in-depth.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    7. Root CAs, In Depth
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="running-pki-private-cas-automation-lifecycle.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    8. Running PKI: Private CAs, Automation & Lifecycle
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="standards-careers-learning.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    9. Standards, Careers & Learning
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="ten-things-every-student-of-trust-should-master.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Ten Things Every Student of Trust Should Master
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-        
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="glossary-of-terms.html" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Glossary of Terms
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-      
-    
-  </ul>
+</li>
+<li class="md-nav__item">
+<a href="#62-the-cast-ca-ra-va-subscriber-relying-party-and-trust-anchor" class="md-nav__link">
+<span class="md-ellipsis">
+6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor
+</span>
+</a>
+<nav class="md-nav" aria-label="6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-find-the-ca-and-validation-authority-endpoints-named-inside-a-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Find the CA and validation-authority endpoints named inside a certificate
+</span>
+</a>
+</li>
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-            
-              
-              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
-                <div class="md-sidebar__scrollwrap">
-                  <div class="md-sidebar__inner">
-                    
-
+</li>
+<li class="md-nav__item">
+<a href="#63-x509-v3-anatomy-field-by-field" class="md-nav__link">
+<span class="md-ellipsis">
+6.3 X.509 v3 Anatomy, Field by Field
+</span>
+</a>
+<nav class="md-nav" aria-label="6.3 X.509 v3 Anatomy, Field by Field">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-read-every-field-then-just-the-serial-and-fingerprint" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Read every field, then just the serial and fingerprint
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#64-certificate-extensions-in-depth" class="md-nav__link">
+<span class="md-ellipsis">
+6.4 Certificate Extensions in Depth
+</span>
+</a>
+<nav class="md-nav" aria-label="6.4 Certificate Extensions in Depth">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-print-just-the-extensions-that-matter-and-define-them-when-making-a-lab-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Print just the extensions that matter, and define them when making a lab certificate
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#65-asn1-der-pem-and-certificate-file-formats" class="md-nav__link">
+<span class="md-ellipsis">
+6.5 ASN.1, DER, PEM and Certificate File Formats
+</span>
+</a>
+<nav class="md-nav" aria-label="6.5 ASN.1, DER, PEM and Certificate File Formats">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-make-a-csr-inspect-raw-asn1-and-convert-between-formats" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Make a CSR, inspect raw ASN.1 and convert between formats
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#66-certificate-types-tls-client-smime-code-document-device-and-qualified" class="md-nav__link">
+<span class="md-ellipsis">
+6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified
+</span>
+</a>
+<nav class="md-nav" aria-label="6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-identify-a-certificates-type-from-its-policy-oids-and-eku" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Identify a certificate's type from its policy OIDs and EKU
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#67-keys-and-signature-algorithms-in-certificates-including-post-quantum" class="md-nav__link">
+<span class="md-ellipsis">
+6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)
+</span>
+</a>
+<nav class="md-nav" aria-label="6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-generate-classical-and-post-quantum-lab-keys-ml-dsa-needs-openssl-35" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Generate classical and post-quantum lab keys (ML-DSA needs OpenSSL 3.5+)
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#68-chain-building-and-path-validation" class="md-nav__link">
+<span class="md-ellipsis">
+6.8 Chain Building and Path Validation
+</span>
+</a>
+<nav class="md-nav" aria-label="6.8 Chain Building and Path Validation">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-show-the-chain-a-server-sends-and-validate-a-lab-chain-yourself" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Show the chain a server sends and validate a lab chain yourself
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#69-revocation-crls-ocsp-stapling-crlite-and-short-lived-certificates" class="md-nav__link">
+<span class="md-ellipsis">
+6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates
+</span>
+</a>
+<nav class="md-nav" aria-label="6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-find-revocation-pointers-read-a-crl-and-query-ocsp-where-it-still-exists" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Find revocation pointers, read a CRL, and query OCSP where it still exists
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#610-certificate-transparency-public-logs-of-every-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+6.10 Certificate Transparency: Public Logs of Every Certificate
+</span>
+</a>
+<nav class="md-nav" aria-label="6.10 Certificate Transparency: Public Logs of Every Certificate">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-search-ct-for-a-domain-and-see-the-scts-inside-a-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Search CT for a domain and see the SCTs inside a certificate
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#611-tls-and-certificates-together-handshakes-sni-and-mutual-tls" class="md-nav__link">
+<span class="md-ellipsis">
+6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS
+</span>
+</a>
+<nav class="md-nav" aria-label="6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-inspect-a-tls-13-handshake-and-run-a-local-mutual-tls-lab" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Inspect a TLS 1.3 handshake and run a local mutual-TLS lab
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#612-hsts-pinning-and-dane-extra-locks-on-certificate-trust" class="md-nav__link">
+<span class="md-ellipsis">
+6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust
+</span>
+</a>
+<nav class="md-nav" aria-label="6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-check-hsts-compute-an-spki-pin-and-look-up-a-tlsa-record" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Check HSTS, compute an SPKI pin and look up a TLSA record
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#613-trust-stores-who-decides-which-roots-you-trust" class="md-nav__link">
+<span class="md-ellipsis">
+6.13 Trust Stores: Who Decides Which Roots You Trust
+</span>
+</a>
+<nav class="md-nav" aria-label="6.13 Trust Stores: Who Decides Which Roots You Trust">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-count-and-list-trusted-roots-in-several-stores" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Count and list trusted roots in several stores
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#614-hands-on-certificate-tooling-openssl-certutil-keytool-step-and-crtsh" class="md-nav__link">
+<span class="md-ellipsis">
+6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh
+</span>
+</a>
+<nav class="md-nav" aria-label="6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-a-quick-diagnostic-toolkit-session" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: A quick diagnostic toolkit session
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="root-cas-in-depth.html" class="md-nav__link">
+<span class="md-ellipsis">
+7. Root CAs, In Depth
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="running-pki-private-cas-automation-lifecycle.html" class="md-nav__link">
+<span class="md-ellipsis">
+8. Running PKI: Private CAs, Automation & Lifecycle
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="standards-careers-learning.html" class="md-nav__link">
+<span class="md-ellipsis">
+9. Standards, Careers & Learning
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ten-things-every-student-of-trust-should-master.html" class="md-nav__link">
+<span class="md-ellipsis">
+Ten Things Every Student of Trust Should Master
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="glossary-of-terms.html" class="md-nav__link">
+<span class="md-ellipsis">
+Glossary of Terms
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
 <nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#61-what-pki-is-binding-names-to-keys" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.1 What PKI Is: Binding Names to Keys
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.1 What PKI Is: Binding Names to Keys">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-see-the-identity-issuer-and-validity-a-real-website-presents" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: See the identity, issuer and validity a real website presents
-      
-    </span>
-  </a>
-  
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#61-what-pki-is-binding-names-to-keys" class="md-nav__link">
+<span class="md-ellipsis">
+6.1 What PKI Is: Binding Names to Keys
+</span>
+</a>
+<nav class="md-nav" aria-label="6.1 What PKI Is: Binding Names to Keys">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-see-the-identity-issuer-and-validity-a-real-website-presents" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: See the identity, issuer and validity a real website presents
+</span>
+</a>
 </li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#62-the-cast-ca-ra-va-subscriber-relying-party-and-trust-anchor" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-find-the-ca-and-validation-authority-endpoints-named-inside-a-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Find the CA and validation-authority endpoints named inside a certificate
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#63-x509-v3-anatomy-field-by-field" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.3 X.509 v3 Anatomy, Field by Field
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.3 X.509 v3 Anatomy, Field by Field">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-read-every-field-then-just-the-serial-and-fingerprint" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Read every field, then just the serial and fingerprint
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#64-certificate-extensions-in-depth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.4 Certificate Extensions in Depth
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.4 Certificate Extensions in Depth">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-print-just-the-extensions-that-matter-and-define-them-when-making-a-lab-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Print just the extensions that matter, and define them when making a lab certificate
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#65-asn1-der-pem-and-certificate-file-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.5 ASN.1, DER, PEM and Certificate File Formats
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.5 ASN.1, DER, PEM and Certificate File Formats">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-make-a-csr-inspect-raw-asn1-and-convert-between-formats" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Make a CSR, inspect raw ASN.1 and convert between formats
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#66-certificate-types-tls-client-smime-code-document-device-and-qualified" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-identify-a-certificates-type-from-its-policy-oids-and-eku" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Identify a certificate's type from its policy OIDs and EKU
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#67-keys-and-signature-algorithms-in-certificates-including-post-quantum" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-generate-classical-and-post-quantum-lab-keys-ml-dsa-needs-openssl-35" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Generate classical and post-quantum lab keys (ML-DSA needs OpenSSL 3.5+)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#68-chain-building-and-path-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.8 Chain Building and Path Validation
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.8 Chain Building and Path Validation">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-show-the-chain-a-server-sends-and-validate-a-lab-chain-yourself" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Show the chain a server sends and validate a lab chain yourself
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#69-revocation-crls-ocsp-stapling-crlite-and-short-lived-certificates" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-find-revocation-pointers-read-a-crl-and-query-ocsp-where-it-still-exists" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Find revocation pointers, read a CRL, and query OCSP where it still exists
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#610-certificate-transparency-public-logs-of-every-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.10 Certificate Transparency: Public Logs of Every Certificate
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.10 Certificate Transparency: Public Logs of Every Certificate">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-search-ct-for-a-domain-and-see-the-scts-inside-a-certificate" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Search CT for a domain and see the SCTs inside a certificate
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#611-tls-and-certificates-together-handshakes-sni-and-mutual-tls" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-inspect-a-tls-13-handshake-and-run-a-local-mutual-tls-lab" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Inspect a TLS 1.3 handshake and run a local mutual-TLS lab
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#612-hsts-pinning-and-dane-extra-locks-on-certificate-trust" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-check-hsts-compute-an-spki-pin-and-look-up-a-tlsa-record" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Check HSTS, compute an SPKI pin and look up a TLSA record
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#613-trust-stores-who-decides-which-roots-you-trust" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.13 Trust Stores: Who Decides Which Roots You Trust
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.13 Trust Stores: Who Decides Which Roots You Trust">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-count-and-list-trusted-roots-in-several-stores" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: Count and list trusted roots in several stores
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#614-hands-on-certificate-tooling-openssl-certutil-keytool-step-and-crtsh" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#try-it-a-quick-diagnostic-toolkit-session" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Try it: A quick diagnostic toolkit session
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
+</ul>
 </nav>
-                  </div>
-                </div>
-              </div>
-            
-          
-          
-            <div class="md-content" data-md-component="content">
-              
-              <article class="md-content__inner md-typeset">
-                
-                  
-
-
-
+</li>
+<li class="md-nav__item">
+<a href="#62-the-cast-ca-ra-va-subscriber-relying-party-and-trust-anchor" class="md-nav__link">
+<span class="md-ellipsis">
+6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor
+</span>
+</a>
+<nav class="md-nav" aria-label="6.2 The Cast: CA, RA, VA, Subscriber, Relying Party and Trust Anchor">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-find-the-ca-and-validation-authority-endpoints-named-inside-a-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Find the CA and validation-authority endpoints named inside a certificate
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#63-x509-v3-anatomy-field-by-field" class="md-nav__link">
+<span class="md-ellipsis">
+6.3 X.509 v3 Anatomy, Field by Field
+</span>
+</a>
+<nav class="md-nav" aria-label="6.3 X.509 v3 Anatomy, Field by Field">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-read-every-field-then-just-the-serial-and-fingerprint" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Read every field, then just the serial and fingerprint
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#64-certificate-extensions-in-depth" class="md-nav__link">
+<span class="md-ellipsis">
+6.4 Certificate Extensions in Depth
+</span>
+</a>
+<nav class="md-nav" aria-label="6.4 Certificate Extensions in Depth">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-print-just-the-extensions-that-matter-and-define-them-when-making-a-lab-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Print just the extensions that matter, and define them when making a lab certificate
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#65-asn1-der-pem-and-certificate-file-formats" class="md-nav__link">
+<span class="md-ellipsis">
+6.5 ASN.1, DER, PEM and Certificate File Formats
+</span>
+</a>
+<nav class="md-nav" aria-label="6.5 ASN.1, DER, PEM and Certificate File Formats">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-make-a-csr-inspect-raw-asn1-and-convert-between-formats" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Make a CSR, inspect raw ASN.1 and convert between formats
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#66-certificate-types-tls-client-smime-code-document-device-and-qualified" class="md-nav__link">
+<span class="md-ellipsis">
+6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified
+</span>
+</a>
+<nav class="md-nav" aria-label="6.6 Certificate Types: TLS, Client, S/MIME, Code, Document, Device and Qualified">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-identify-a-certificates-type-from-its-policy-oids-and-eku" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Identify a certificate's type from its policy OIDs and EKU
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#67-keys-and-signature-algorithms-in-certificates-including-post-quantum" class="md-nav__link">
+<span class="md-ellipsis">
+6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)
+</span>
+</a>
+<nav class="md-nav" aria-label="6.7 Keys and Signature Algorithms in Certificates (Including Post-Quantum)">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-generate-classical-and-post-quantum-lab-keys-ml-dsa-needs-openssl-35" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Generate classical and post-quantum lab keys (ML-DSA needs OpenSSL 3.5+)
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#68-chain-building-and-path-validation" class="md-nav__link">
+<span class="md-ellipsis">
+6.8 Chain Building and Path Validation
+</span>
+</a>
+<nav class="md-nav" aria-label="6.8 Chain Building and Path Validation">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-show-the-chain-a-server-sends-and-validate-a-lab-chain-yourself" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Show the chain a server sends and validate a lab chain yourself
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#69-revocation-crls-ocsp-stapling-crlite-and-short-lived-certificates" class="md-nav__link">
+<span class="md-ellipsis">
+6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates
+</span>
+</a>
+<nav class="md-nav" aria-label="6.9 Revocation: CRLs, OCSP, Stapling, CRLite and Short-Lived Certificates">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-find-revocation-pointers-read-a-crl-and-query-ocsp-where-it-still-exists" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Find revocation pointers, read a CRL, and query OCSP where it still exists
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#610-certificate-transparency-public-logs-of-every-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+6.10 Certificate Transparency: Public Logs of Every Certificate
+</span>
+</a>
+<nav class="md-nav" aria-label="6.10 Certificate Transparency: Public Logs of Every Certificate">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-search-ct-for-a-domain-and-see-the-scts-inside-a-certificate" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Search CT for a domain and see the SCTs inside a certificate
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#611-tls-and-certificates-together-handshakes-sni-and-mutual-tls" class="md-nav__link">
+<span class="md-ellipsis">
+6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS
+</span>
+</a>
+<nav class="md-nav" aria-label="6.11 TLS and Certificates Together: Handshakes, SNI and Mutual TLS">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-inspect-a-tls-13-handshake-and-run-a-local-mutual-tls-lab" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Inspect a TLS 1.3 handshake and run a local mutual-TLS lab
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#612-hsts-pinning-and-dane-extra-locks-on-certificate-trust" class="md-nav__link">
+<span class="md-ellipsis">
+6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust
+</span>
+</a>
+<nav class="md-nav" aria-label="6.12 HSTS, Pinning and DANE: Extra Locks on Certificate Trust">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-check-hsts-compute-an-spki-pin-and-look-up-a-tlsa-record" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Check HSTS, compute an SPKI pin and look up a TLSA record
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#613-trust-stores-who-decides-which-roots-you-trust" class="md-nav__link">
+<span class="md-ellipsis">
+6.13 Trust Stores: Who Decides Which Roots You Trust
+</span>
+</a>
+<nav class="md-nav" aria-label="6.13 Trust Stores: Who Decides Which Roots You Trust">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-count-and-list-trusted-roots-in-several-stores" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: Count and list trusted roots in several stores
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#614-hands-on-certificate-tooling-openssl-certutil-keytool-step-and-crtsh" class="md-nav__link">
+<span class="md-ellipsis">
+6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh
+</span>
+</a>
+<nav class="md-nav" aria-label="6.14 Hands-On Certificate Tooling: openssl, certutil, keytool, step and crt.sh">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#try-it-a-quick-diagnostic-toolkit-session" class="md-nav__link">
+<span class="md-ellipsis">
+Try it: A quick diagnostic toolkit session
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
 <h1 id="chapter-6-pki-x509-certificates-in-depth">Chapter 6: PKI &amp; X.509 Certificates, In Depth<a class="headerlink" href="#chapter-6-pki-x509-certificates-in-depth" title="Permanent link">&para;</a></h1>
 <p>This chapter opens up the certificate itself and the machinery around it: who issues and checks certificates, every X.509 field and extension, file formats, signature algorithms including post-quantum ML-DSA, how clients build and validate chains, revocation, Certificate Transparency, TLS, trust stores and the tools professionals use daily. Root CAs and their governance come next in Chapter 60, and running your own CA in Chapter 70.</p>
 <h2 id="61-what-pki-is-binding-names-to-keys">6.1 What PKI Is: Binding Names to Keys<a class="headerlink" href="#61-what-pki-is-binding-names-to-keys" title="Permanent link">&para;</a></h2>
@@ -1527,7 +826,6 @@
 <img src="img/06-01-what-pki-is-binding-names-to-keys.svg" alt="Most real-world failures happen in the last box: missed renewals and slow revocation." loading="lazy" width="1000" height="389">
 <figcaption><strong>The certificate lifecycle in seven steps.</strong> Most real-world failures happen in the last box: missed renewals and slow revocation.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>PKI works like passports: a government checks your identity once and issues a hard-to-forge document, and border officers around the world accept it because they trust the issuing government's stamp — not because they know you personally.</p>
@@ -1649,7 +947,6 @@
 <img src="img/06-02-the-cast-ca-ra-va-subscriber-relying.svg" alt="The relying party never contacts the RA; it trusts the CA&#x27;s signature and checks status with the VA." loading="lazy" width="1000" height="520">
 <figcaption><strong>Who talks to whom in a PKI.</strong> The relying party never contacts the RA; it trusts the CA&#x27;s signature and checks status with the VA.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>Think of a driving licence: the licensing office's front desk checks your documents (RA), the back office prints and signs the licence (CA), you carry it (subscriber), a police officer checks it (relying party), the officer's radio check for suspensions is the VA, and the officer's trust in the national licensing agency is the trust anchor.</p>
@@ -1780,7 +1077,6 @@
 <img src="img/06-03-x-509-v3-anatomy-field-by-field.svg" alt="Everything except the last layer is inside tbsCertificate and covered by the CA&#x27;s signature." loading="lazy" width="1000" height="647">
 <figcaption><strong>Inside an X.509 v3 certificate.</strong> Everything except the last layer is inside tbsCertificate and covered by the CA&#x27;s signature.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>A certificate is like a notarised form: the boxes on the form (name, dates, reference number) are the body, and the notary's stamp at the bottom covers every box — change any box and the stamp no longer matches.</p>
@@ -2110,7 +1406,6 @@ certutil<span class="w"> </span>-dump<span class="w"> </span>cert.cer
 <img src="img/06-05-asn-1-der-pem-and-certificate-file.svg" alt="Each layer wraps the one below; signatures are always computed over the DER bytes." loading="lazy" width="1000" height="354">
 <figcaption><strong>From abstract syntax to the file on disk.</strong> Each layer wraps the one below; signatures are always computed over the DER bytes.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>ASN.1 is the blueprint, DER is the house built exactly to it, PEM is the same house photographed and posted as a printable picture, and PKCS #12 is a locked removal van holding the house keys and the deeds together.</p>
@@ -2423,7 +1718,6 @@ openssl<span class="w"> </span>pkcs12<span class="w"> </span>-in<span class="w">
 <img src="img/06-07-keys-and-signature-algorithms-in.svg" alt="Post-quantum signatures are 25-80 times larger than ECDSA, which is why chain size now matters." loading="lazy" width="1000" height="428">
 <figcaption><strong>Public key + signature size per certificate.</strong> Post-quantum signatures are 25-80 times larger than ECDSA, which is why chain size now matters.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>Choosing a signature algorithm is like choosing the kind of lock on a safe: older heavy locks (RSA), compact modern ones (ECDSA, Ed25519), and new quantum-proof locks (ML-DSA) that are very strong but far bulkier to fit.</p>
@@ -2559,7 +1853,6 @@ wc<span class="w"> </span>-c<span class="w"> </span>p256.key<span class="w"> </s
 <img src="img/06-08-chain-building-and-path-validation.svg" alt="Failing any step makes the path invalid; the client may then try another path." loading="lazy" width="1000" height="389">
 <figcaption><strong>What a client checks before trusting a certificate.</strong> Failing any step makes the path invalid; the client may then try another path.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>It is like checking a reference letter: the letter is signed by a manager, whose authority is confirmed by a director, whose identity you already know. If any signature is missing, forged or expired, the whole chain of vouching collapses.</p>
@@ -2698,7 +1991,6 @@ openssl<span class="w"> </span>verify<span class="w"> </span>-CAfile<span class=
 <img src="img/06-09-revocation-crls-ocsp-stapling-crlite.svg" alt="The trend is from online lookups toward pushed lists and certificates too short-lived to need revoking." loading="lazy" width="1000" height="221">
 <figcaption><strong>How revocation evolved.</strong> The trend is from online lookups toward pushed lists and certificates too short-lived to need revoking.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>Revocation is like a shop's list of stolen credit cards: the till can download the whole list each morning (CRL), phone the bank for every card (OCSP), or the bank can issue cards that only work for a week so a stolen one soon becomes useless (short-lived certificates).</p>
@@ -2840,7 +2132,6 @@ openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span cla
 <img src="img/06-10-certificate-transparency-public-logs-of.svg" alt="The SCT is a promise to log; monitors close the loop by watching what was actually logged." loading="lazy" width="1000" height="519">
 <figcaption><strong>How a certificate gets its SCTs.</strong> The SCT is a promise to log; monitors close the loop by watching what was actually logged.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>CT is like a public land registry: every property deed must be entered in a register anyone can read, so if someone forges a deed to your house, it shows up where you — or a watchful neighbour — can spot it.</p>
@@ -2983,7 +2274,6 @@ openssl<span class="w"> </span>x509<span class="w"> </span>-in<span class="w"> <
 <img src="img/06-11-tls-and-certificates-together.svg" alt="Messages in braces are encrypted; both sides prove key possession with CertificateVerify." loading="lazy" width="1000" height="601">
 <figcaption><strong>TLS 1.3 handshake with mutual TLS.</strong> Messages in braces are encrypted; both sides prove key possession with CertificateVerify.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>A TLS handshake is like meeting a courier at the door: they show an ID badge (certificate), then sign your delivery sheet in front of you (CertificateVerify) so you know the badge is theirs — and in mTLS you show your ID back before they hand over the parcel.</p>
@@ -3279,7 +2569,6 @@ dig<span class="w"> </span>+dnssec<span class="w"> </span>TLSA<span class="w"> <
 <img src="img/06-13-trust-stores-who-decides-which-roots.svg" alt="Root programs share disclosure data through CCADB, but each store is shipped and updated separately." loading="lazy" width="1000" height="580">
 <figcaption><strong>One certificate, many trust stores.</strong> Root programs share disclosure data through CCADB, but each store is shipped and updated separately.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>Trust stores are like the lists of accepted foreign driving licences kept by different countries: the same licence is fine in one country and refused in another, depending on whose list the officer checks.</p>
@@ -3418,7 +2707,6 @@ python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"import
 <img src="img/06-14-hands-on-certificate-tooling-openssl.svg" alt="Pick the tool that matches the platform&#x27;s own trust store and formats." loading="lazy" width="1000" height="580">
 <figcaption><strong>The certificate toolbox.</strong> Pick the tool that matches the platform&#x27;s own trust store and formats.</figcaption>
 </figure>
-
 <div class="admonition note">
 <p class="admonition-title">Think of it like…</p>
 <p>These tools are a mechanic's diagnostic kit: a multimeter for every car (openssl), the manufacturer's own scanner (certutil, keytool), an easy-read dashboard (step, cfssl), and the national vehicle register you can search (crt.sh).</p>
@@ -3563,134 +2851,77 @@ zlint<span class="w"> </span>-pretty<span class="w"> </span>cert.pem
 </tr>
 </tbody>
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-                
-              </article>
-            </div>
-          
-          
-<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
-        </div>
-        
-          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
-  Back to top
-</button>
-        
-      </main>
-      
-        <footer class="md-footer">
-  
-    
-      
-      <nav class="md-footer__inner md-grid" aria-label="Footer" >
-        
-          
-          <a href="trusted-execution-confidential-computing-attestation.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Trusted Execution, Confidential Computing &amp; Attestation">
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-            </div>
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Previous
-              </span>
-              <div class="md-ellipsis">
-                5. Trusted Execution, Confidential Computing & Attestation
-              </div>
-            </div>
-          </a>
-        
-        
-          
-          <a href="root-cas-in-depth.html" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Root CAs, In Depth">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                Next
-              </span>
-              <div class="md-ellipsis">
-                7. Root CAs, In Depth
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
-        
-      </nav>
-    
-  
-  <div class="md-footer-meta md-typeset">
-    <div class="md-footer-meta__inner md-grid">
-      <div class="md-copyright">
-  
-    <div class="md-copyright__highlight">
-      The Open Book Project: Reserve Shelf &middot;
-      <a href="../../about.html">About this library</a> &middot;
-      <a href="../../publish.html">Publish your book</a> &middot;
-      © The authors of the books
-    </div>
-  
-  
-    Made with
-    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
-      Material for MkDocs
-    </a>
-  
+</article>
 </div>
-      
-    </div>
-  </div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button type="button" class="md-top md-icon" data-md-component="top" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+Back to top
+</button>
+</main>
+<footer class="md-footer">
+<nav class="md-footer__inner md-grid" aria-label="Footer" >
+<a href="trusted-execution-confidential-computing-attestation.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Trusted Execution, Confidential Computing &amp; Attestation">
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Previous
+</span>
+<div class="md-ellipsis">
+5. Trusted Execution, Confidential Computing & Attestation
+</div>
+</div>
+</a>
+<a href="root-cas-in-depth.html" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Root CAs, In Depth">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Next
+</span>
+<div class="md-ellipsis">
+7. Root CAs, In Depth
+</div>
+</div>
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+The Open Book Project: Reserve Shelf &middot;
+<a href="../../about.html">About this library</a> &middot;
+<a href="../../publish.html">Publish your book</a> &middot;
+© The authors of the books
+</div>
+Made with
+<a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+Material for MkDocs
+</a>
+</div>
+</div>
+</div>
 </footer>
-      
-    </div>
-    <div class="md-dialog" data-md-component="dialog">
-      <div class="md-dialog__inner md-typeset"></div>
-    </div>
-    
-    
-    
-      
-      
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
-    
-    
-  
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
-      
-        <script src="../../assets/mathjax.js"></script>
-      
-        <script src="../../assets/viz.js"></script>
-      
-        <script src="../../assets/remote.js"></script>
-      
-        <script src="../../assets/scans.js"></script>
-      
-        <script src="../../assets/reader.js"></script>
-      
-        <script src="../../assets/app.js"></script>
-      
-        <script src="../../assets/slides.js"></script>
-      
-        <script src="../../assets/speak.js"></script>
-      
-        <script src="../../assets/quiz.js"></script>
-      
-    
-  <script>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+<script src="../../assets/mathjax.js"></script>
+<script src="../../assets/viz.js"></script>
+<script src="../../assets/remote.js"></script>
+<script src="../../assets/scans.js"></script>
+<script src="../../assets/reader.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/slides.js"></script>
+<script src="../../assets/speak.js"></script>
+<script src="../../assets/quiz.js"></script>
+<script>
     /* offline reading: the service worker at the site root (its scope is the whole site) */
     if ("serviceWorker" in navigator && window.isSecureContext) {
       window.addEventListener("load", function () {
@@ -3698,6 +2929,5 @@ zlint<span class="w"> </span>-pretty<span class="w"> </span>cert.pem
       });
     }
   </script>
-
-  </body>
+</body>
 </html>

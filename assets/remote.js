@@ -123,7 +123,8 @@
     ".ws-pagenum", ".pagenum", ".pagenum-inner", ".mwe-math-fallback-image-inline", ".mwe-math-fallback-image-display",
     ".mw-cite-backlink", ".sistersitebox", ".plainSister", ".interProject", ".BookCat", ".wikibooks-navigation",
     ".noexcerpt", ".mw-kartographer-maplink", ".magnify", "[role=navigation]", ".licenseContainer", ".ws-license",
-    ".wst-licence", ".PD-old", ".stub", ".rellink", ".hatnote", ".dablink", ".mw-jump-link", ".mw-references-columns > h2"
+    ".wst-licence", ".PD-old", ".stub", ".rellink", ".hatnote", ".dablink", ".mw-jump-link", ".mw-references-columns > h2",
+    "#dynamic_layout_overrider"
   ];
   var CLASS_MAP = { "center": "pk-center", "wst-center": "pk-center", "wst-block-center": "pk-center", "wst-rh": "pk-center",
     "i1": "pk-i1", "i2": "pk-i2", "i3": "pk-i3", "i4": "pk-i4", "ws-poem": "pk-poem", "ws-poem-stanza": "pk-stanza", "wst-rule": "pk-rule", "wst-smallcaps": "pk-sc", "wst-sc": "pk-sc",

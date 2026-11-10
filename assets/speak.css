@@ -74,12 +74,25 @@
 @keyframes pk-say-pulse { 0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--pk-say) 45%, transparent); } 50% { box-shadow: 0 0 0 6px transparent; } }
 @keyframes pk-say-wave { 50% { opacity: 0.25; } }
 @media (prefers-reduced-motion: reduce) { .pk-say-btn.is-playing, .pk-mic-btn.is-listening, .pk-say-btn.is-playing .w2 { animation: none; } }
-/* no speech synthesis, or no voice for the language: the buttons go, the written pronunciation stays */
-.pk-nospeech .pk-say-btn, .pk-nospeech .pk-say-prefs,
-.pk-novoice-fr .pk-say-btn[data-lang="fr"], .pk-novoice-en .pk-say-btn[data-lang="en"], .pk-novoice-hi .pk-say-btn[data-lang="hi"],
-.pk-novoice-de .pk-say-btn[data-lang="de"], .pk-novoice-es .pk-say-btn[data-lang="es"], .pk-novoice-sa .pk-say-btn[data-lang="sa"] { display: none; }
-@media print { .pk-say-btn, .pk-mic-btn, .pk-say-prefs, .pk-say-toast { display: none !important; } }
+/* neither a recording nor a device voice for the language: the buttons go, the written pronunciation stays */
+.pk-nospeech .pk-say-btn, .pk-nospeech .pk-say-prefs, .pk-nospeech .pk-playall,
+.pk-novoice-fr :is(.pk-say-btn, .pk-playall)[data-lang="fr"], .pk-novoice-en :is(.pk-say-btn, .pk-playall)[data-lang="en"],
+.pk-novoice-hi :is(.pk-say-btn, .pk-playall)[data-lang="hi"], .pk-novoice-de :is(.pk-say-btn, .pk-playall)[data-lang="de"],
+.pk-novoice-es :is(.pk-say-btn, .pk-playall)[data-lang="es"], .pk-novoice-sa :is(.pk-say-btn, .pk-playall)[data-lang="sa"] { display: none; }
+@media print { .pk-say-btn, .pk-mic-btn, .pk-say-prefs, .pk-say-toast, .pk-playall { display: none !important; } }
 .sl-stage .pk-mic-btn { display: none; }
+
+/* "Play all" above a list of phrases */
+.pk-playall {
+  display: inline-flex; align-items: center; gap: 0.4em; margin: 0.2em 0 0.5em; padding: 0 0.85em 0 0.7em; min-height: 36px;
+  border: 1px solid color-mix(in srgb, var(--pk-say) 40%, transparent); border-radius: 999px;
+  background: var(--pk-say-soft); color: var(--pk-say);
+  font: 600 0.8rem/1 var(--rd-ui, system-ui, sans-serif); cursor: pointer; -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+}
+.pk-playall svg { width: 0.95em; height: 0.95em; }
+.pk-playall:hover { background: color-mix(in srgb, var(--pk-say) 18%, transparent); }
+.pk-playall:focus-visible { outline: 2px solid var(--pk-say); outline-offset: 2px; }
+.pk-playall.is-on { background: var(--pk-say); color: var(--md-default-bg-color, #fff); }
 
 .pk-say-toast {
   position: fixed; left: 50%; bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px)); z-index: 1000;
