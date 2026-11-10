@@ -19,7 +19,7 @@
  */
 "use strict";
 
-var VERSION = "867793286711";
+var VERSION = "e8bf24dabeb3";
 var SHELL = ["index.html", "books.html", "about.html", "install.html", "publish.html", "offline.html", "manifest.webmanifest", "library.json", "subjects/aerospace-defence.html", "subjects/cloud-data-centres.html", "subjects/computer-architecture.html", "subjects/computer-science.html", "subjects/cyber-security.html", "subjects/databases.html", "subjects/electronics.html", "subjects/engineering.html", "subjects/index.html", "subjects/mathematics.html", "subjects/programming.html", "subjects/statistics.html", "subjects/web-development.html", "assets/app.css", "assets/app.js", "assets/extra.css", "assets/icons/apple-touch-icon.png", "assets/icons/favicon-32.png", "assets/icons/favicon.svg", "assets/icons/icon-192.png", "assets/icons/icon-512.png", "assets/icons/logo.svg", "assets/icons/maskable-512.png", "assets/images/favicon.png", "assets/javascripts/bundle.d7400e89.min.js", "assets/javascripts/workers/search.2c215733.min.js", "assets/mathjax.js", "assets/reader.css", "assets/reader.js", "assets/remote.css", "assets/remote.js", "assets/scans.css", "assets/scans.js", "assets/slides-deck.js", "assets/slides.css", "assets/slides.js", "assets/stylesheets/main.ec1eaa64.min.css", "assets/stylesheets/palette.ab4e12ef.min.css", "assets/theme.css", "assets/viz-kit.js", "assets/viz.css", "assets/viz.js"];
 var BOOKS = [];                           // the books' folders, longest first
 
