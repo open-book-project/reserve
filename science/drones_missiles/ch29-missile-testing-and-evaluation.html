@@ -1,0 +1,3736 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch29-missile-testing-and-evaluation.html">
+  
+  
+    <link rel="prev" href="ch28-missile-manufacturing.html">
+  
+  
+    <link rel="next" href="ch30-hypersonic-vehicles.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>29. Missile Testing and Evaluation - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-te_framework" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              29. Missile Testing and Evaluation
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-te_framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1 Test and Evaluation Framework
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.1 Test and Evaluation Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2911-developmental-and-operational-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.1 Developmental and Operational Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2912-test-and-evaluation-master-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.2 Test and Evaluation Master Plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2913-building-block-test-philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.3 Building-Block Test Philosophy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2914-test-range-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.4 Test Range Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-propulsion_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2 Propulsion Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.2 Propulsion Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2921-static-fire-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.1 Static Fire Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2922-altitude-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.2 Altitude Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2923-combustion-instability-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.3 Combustion Instability Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2924-burn-rate-and-pressure-exponent-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.4 Burn Rate and Pressure Exponent Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-aero_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3 Aerodynamic Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.3 Aerodynamic Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2931-wind-tunnel-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.1 Wind Tunnel Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2932-pressure-sensitive-paint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.2 Pressure-Sensitive Paint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2933-schlieren-photography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.3 Schlieren Photography
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2934-store-separation-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.4 Store Separation Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-guidance_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4 Guidance and Navigation Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.4 Guidance and Navigation Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2941-seeker-hardware-in-the-loop-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.1 Seeker Hardware-in-the-Loop Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2942-ins-characterisation-on-rate-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.2 INS Characterisation on Rate Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2943-guidance-monte-carlo-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.3 Guidance Monte Carlo Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2944-emiemc-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.4 EMI/EMC Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-warhead_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5 Warhead and Fuze Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.5 Warhead and Fuze Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2951-arena-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.1 Arena Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2952-detonation-velocity-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.2 Detonation Velocity Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2953-insensitive-munitions-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.3 Insensitive Munitions Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2954-lethal-radius-determination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.4 Lethal Radius Determination
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2955-fuze-function-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.5 Fuze Function Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-environmental_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6 Environmental Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.6 Environmental Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2961-mil-std-810h-test-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.1 MIL-STD-810H Test Suite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2962-hero-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.2 HERO Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2963-transportation-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.3 Transportation Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2964-storage-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.4 Storage Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-flight_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7 Flight Test Programme
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.7 Flight Test Programme">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2971-mission-planning-and-range-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.1 Mission Planning and Range Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2972-flight-test-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.2 Flight Test Instrumentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2973-tracking-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.3 Tracking Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2974-flight-profile-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.4 Flight Profile Phases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2975-data-reduction-and-anomaly-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.5 Data Reduction and Anomaly Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lethality_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8 Lethality Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.8 Lethality Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2981-live-warhead-tests-against-representative-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.1 Live Warhead Tests Against Representative Targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2982-penetration-of-hardened-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.2 Penetration of Hardened Targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2983-blast-overpressure-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.3 Blast Overpressure Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2984-fragment-recovery-and-mott-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.4 Fragment Recovery and Mott Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-reliability_failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9 Reliability and Failure Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.9 Reliability and Failure Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2991-reliability-estimation-from-flight-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.1 Reliability Estimation from Flight Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2992-reliability-growth-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.2 Reliability Growth Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2993-failure-mode-effects-and-criticality-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.3 Failure Mode Effects and Criticality Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2994-fracas-in-test-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.4 FRACAS in Test and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10 Test Ranges and Facilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.10 Test Ranges and Facilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#29101-united-states-test-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10.1 United States Test Ranges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29102-international-test-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10.2 International Test Ranges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29103-flight-termination-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10.3 Flight Termination Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11 Test Data Management and Reporting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.11 Test Data Management and Reporting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#29111-data-management-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11.1 Data Management Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29112-test-reports-and-configuration-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11.2 Test Reports and Configuration Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29113-statistical-methods-in-te" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11.3 Statistical Methods in T&amp;E
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-te_framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1 Test and Evaluation Framework
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.1 Test and Evaluation Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2911-developmental-and-operational-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.1 Developmental and Operational Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2912-test-and-evaluation-master-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.2 Test and Evaluation Master Plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2913-building-block-test-philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.3 Building-Block Test Philosophy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2914-test-range-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.1.4 Test Range Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-propulsion_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2 Propulsion Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.2 Propulsion Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2921-static-fire-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.1 Static Fire Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2922-altitude-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.2 Altitude Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2923-combustion-instability-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.3 Combustion Instability Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2924-burn-rate-and-pressure-exponent-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.2.4 Burn Rate and Pressure Exponent Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-aero_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3 Aerodynamic Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.3 Aerodynamic Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2931-wind-tunnel-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.1 Wind Tunnel Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2932-pressure-sensitive-paint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.2 Pressure-Sensitive Paint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2933-schlieren-photography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.3 Schlieren Photography
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2934-store-separation-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.3.4 Store Separation Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-guidance_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4 Guidance and Navigation Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.4 Guidance and Navigation Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2941-seeker-hardware-in-the-loop-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.1 Seeker Hardware-in-the-Loop Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2942-ins-characterisation-on-rate-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.2 INS Characterisation on Rate Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2943-guidance-monte-carlo-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.3 Guidance Monte Carlo Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2944-emiemc-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.4.4 EMI/EMC Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-warhead_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5 Warhead and Fuze Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.5 Warhead and Fuze Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2951-arena-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.1 Arena Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2952-detonation-velocity-measurement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.2 Detonation Velocity Measurement
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2953-insensitive-munitions-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.3 Insensitive Munitions Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2954-lethal-radius-determination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.4 Lethal Radius Determination
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2955-fuze-function-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.5.5 Fuze Function Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-environmental_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6 Environmental Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.6 Environmental Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2961-mil-std-810h-test-suite" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.1 MIL-STD-810H Test Suite
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2962-hero-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.2 HERO Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2963-transportation-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.3 Transportation Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2964-storage-compatibility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.6.4 Storage Compatibility
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-flight_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7 Flight Test Programme
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.7 Flight Test Programme">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2971-mission-planning-and-range-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.1 Mission Planning and Range Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2972-flight-test-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.2 Flight Test Instrumentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2973-tracking-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.3 Tracking Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2974-flight-profile-phases" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.4 Flight Profile Phases
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2975-data-reduction-and-anomaly-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.7.5 Data Reduction and Anomaly Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lethality_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8 Lethality Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.8 Lethality Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2981-live-warhead-tests-against-representative-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.1 Live Warhead Tests Against Representative Targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2982-penetration-of-hardened-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.2 Penetration of Hardened Targets
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2983-blast-overpressure-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.3 Blast Overpressure Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2984-fragment-recovery-and-mott-distribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.8.4 Fragment Recovery and Mott Distribution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-reliability_failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9 Reliability and Failure Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.9 Reliability and Failure Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2991-reliability-estimation-from-flight-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.1 Reliability Estimation from Flight Tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2992-reliability-growth-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.2 Reliability Growth Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2993-failure-mode-effects-and-criticality-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.3 Failure Mode Effects and Criticality Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2994-fracas-in-test-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.9.4 FRACAS in Test and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10 Test Ranges and Facilities
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.10 Test Ranges and Facilities">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#29101-united-states-test-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10.1 United States Test Ranges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29102-international-test-ranges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10.2 International Test Ranges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29103-flight-termination-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.10.3 Flight Termination Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11 Test Data Management and Reporting
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="29.11 Test Data Management and Reporting">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#29111-data-management-infrastructure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11.1 Data Management Infrastructure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29112-test-reports-and-configuration-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11.2 Test Reports and Configuration Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#29113-statistical-methods-in-te" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        29.11.3 Statistical Methods in T&amp;E
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-missile_test">Chapter 29: Missile Testing and Evaluation<a class="headerlink" href="#ch-missile_test" title="Permanent link">&para;</a></h1>
+<h2 id="sec-te_framework"><span class="secnum">29.1</span> Test and Evaluation Framework<a class="headerlink" href="#sec-te_framework" title="Permanent link">&para;</a></h2>
+<p>Missile systems undergo the most rigorously structured test and evaluation (T&amp;E) process in the defence acquisition cycle. A modern missile programme may expend 10–20% of its total development budget on T&amp;E activities, ranging from sub-milligram explosive sensitivity tests in a laboratory to multimillion-dollar live-fire events at instrumented ranges. The intellectual architecture governing all of these activities is codified in governing DoD and NATO directives.</p>
+<h3 id="2911-developmental-and-operational-testing"><span class="secnum">29.1.1</span> Developmental and Operational Testing<a class="headerlink" href="#2911-developmental-and-operational-testing" title="Permanent link">&para;</a></h3>
+<p><strong>Developmental Testing (DT)</strong> is contractor-led (with government oversight) and answers the question: <em>does the system meet its technical specification?</em> DT begins at the component level and builds through subsystems to the full integrated system. Test plans are derived from the System Requirements Document (SRD) and allocated to individual test events in the System Test Plan (STP).</p>
+<p><strong>Operational Testing (OT)</strong> is government-led (typically by an independent operational test agency such as the US Army Operational Test Command, ATEC, or the Director, Operational Test and Evaluation, DOT&amp;E) and answers the question: <em>is the system operationally effective and operationally suitable in realistic military conditions?</em> OT uses production-representative hardware, military operators who were not involved in development, and tactics, techniques, and procedures (TTPs) from actual field doctrine.</p>
+<p><strong>Independent Verification and Validation (IV&amp;V)</strong> of software is a parallel activity mandated by DoDI 5000.87 for all software-intensive weapon systems.</p>
+<h3 id="2912-test-and-evaluation-master-plan"><span class="secnum">29.1.2</span> Test and Evaluation Master Plan<a class="headerlink" href="#2912-test-and-evaluation-master-plan" title="Permanent link">&para;</a></h3>
+<p>The Test and Evaluation Master Plan (TEMP) is the primary T&amp;E management document. Per DoDI 5000.89, it addresses:</p>
+<ul>
+<li>
+<p>Test and evaluation strategy (integrated DT/OT)</p>
+</li>
+<li>
+<p>Critical technical parameters (CTPs) and critical operational issues (COIs)</p>
+</li>
+<li>
+<p>Resource requirements: ranges, models and simulation, special test equipment</p>
+</li>
+<li>
+<p>Schedule: milestones aligned with programme decision points</p>
+</li>
+<li>
+<p>Risk areas requiring additional testing</p>
+</li>
+</ul>
+<p>The TEMP is updated at each programme milestone (Milestone A, B, C) and at each major test phase.</p>
+<h3 id="2913-building-block-test-philosophy"><span class="secnum">29.1.3</span> Building-Block Test Philosophy<a class="headerlink" href="#2913-building-block-test-philosophy" title="Permanent link">&para;</a></h3>
+<p>The building-block approach minimises risk by fully characterising lower-level assemblies before committing to expensive system-level tests. The hierarchy is:</p>
+<ol>
+<li>
+<p><strong>Material and component:</strong> individual piece-parts; mechanical, electrical, and energetic characterisation.</p>
+</li>
+<li>
+<p><strong>Subsystem:</strong> propulsion (static fire), guidance (iron bird, HWIL), warhead (arena test), structure (static load test).</p>
+</li>
+<li>
+<p><strong>System integration:</strong> combined subsystem operation; captive-carry with delivery platform; all-up-round (AUR) static test.</p>
+</li>
+<li>
+<p><strong>System flight test:</strong> free-flight with full guidance; warhead function (live or inert).</p>
+</li>
+<li>
+<p><strong>Operational evaluation:</strong> fielded-unit operators; representative scenarios; force-on-force exercises.</p>
+</li>
+</ol>
+<h3 id="2914-test-range-requirements"><span class="secnum">29.1.4</span> Test Range Requirements<a class="headerlink" href="#2914-test-range-requirements" title="Permanent link">&para;</a></h3>
+<p>A missile test range must provide:</p>
+<ul>
+<li>
+<p><strong>Safety:</strong> Range safety officer (RSO); flight termination system (FTS) authority; impact area clearance; Notice to Airmen (NOTAM) and Notice to Mariners (NOTMAR); airspace reservation (MOA/ATCAA).</p>
+</li>
+<li>
+<p><strong>Tracking:</strong> Precision trajectory data from multiple redundant sources (radar, GPS, optical) to characterise vehicle state.</p>
+</li>
+<li>
+<p><strong>Telemetry:</strong> Real-time down-link of all instrumentation channels; ground station with recording and display; sufficient margin for horizon-limited ranges.</p>
+</li>
+<li>
+<p><strong>Environmental monitoring:</strong> Weather balloons (density, wind profile); surface winds at launch point and target area; visibility; turbulence.</p>
+</li>
+</ul>
+<h2 id="sec-propulsion_testing"><span class="secnum">29.2</span> Propulsion Testing<a class="headerlink" href="#sec-propulsion_testing" title="Permanent link">&para;</a></h2>
+<h3 id="2921-static-fire-test"><span class="secnum">29.2.1</span> Static Fire Test<a class="headerlink" href="#2921-static-fire-test" title="Permanent link">&para;</a></h3>
+<p>The definitive acceptance test for a solid-propellant rocket motor is the static fire test, in which the motor is mounted horizontally or vertically on a load cell and fired to measure thrust, pressure, and total impulse as functions of time.</p>
+<p>Key instrumentation:</p>
+<ul>
+<li>
+<p><strong>Thrust:</strong> High-capacity load cell (capacity <span class="arithmatex">\(\ge 1.5 \times F_{max}\)</span>); Kistler piezoelectric or strain-gauge type; <span class="arithmatex">\(\pm 0.2\%\)</span> full-scale accuracy.</p>
+</li>
+<li>
+<p><strong>Chamber pressure:</strong> Multiple Kistler or PCB piezoelectric transducers at injector, mid-grain, and nozzle stagnation locations; 100 kHz sample rate.</p>
+</li>
+<li>
+<p><strong>High-speed cameras:</strong> 1,000–10,000 fps; capture plume, nozzle erosion, igniter function, and TVC deflection.</p>
+</li>
+<li>
+<p><strong>Thermal:</strong> Thermocouples at case exterior (<span class="arithmatex">\(\ge 20\)</span> channels); radiometer for plume emission.</p>
+</li>
+</ul>
+<p>The total impulse <span class="arithmatex">\(I_t\)</span> is:</p>
+<div id="eq-total_impulse"></div>
+<div class="arithmatex">\[I_t = \int_0^{t_b} F(t)\,dt\tag{29.1}\]</div>
+<p>where <span class="arithmatex">\(t_b\)</span> is burn time. The specific impulse <span class="arithmatex">\(I_{sp}\)</span> is:</p>
+<div id="eq-isp_measured"></div>
+<div class="arithmatex">\[I_{sp} = \frac{I_t}{m_p \cdot g_0}\tag{29.2}\]</div>
+<p>where <span class="arithmatex">\(m_p\)</span> is the propellant mass consumed and <span class="arithmatex">\(g_0 = 9.80665\,\text{m/s}^2\)</span>. The characteristic velocity <span class="arithmatex">\(c^*\)</span> provides a figure of merit for the propellant independent of nozzle efficiency:</p>
+<div id="eq-cstar"></div>
+<div class="arithmatex">\[c^* = \frac{p_c \cdot A_t}{\dot{m}}\tag{29.3}\]</div>
+<h3 id="2922-altitude-simulation"><span class="secnum">29.2.2</span> Altitude Simulation<a class="headerlink" href="#2922-altitude-simulation" title="Permanent link">&para;</a></h3>
+<p>Rocket motors perform differently at altitude (reduced back-pressure allows greater nozzle expansion). An altitude simulation facility uses a sealed test cell with a large diffuser downstream of the motor nozzle to maintain a low-pressure environment. The equivalent altitude is set by the cell pressure <span class="arithmatex">\(p_{cell}\)</span>, which can simulate conditions up to 15,000 m (<span class="arithmatex">\(p \approx 12\,\text{kPa}\)</span>) in a ground facility.</p>
+<p>The performance gain from altitude (<span class="arithmatex">\(\Delta I_{sp}\)</span>) versus sea level:</p>
+<div id="eq-isp_gain"></div>
+<div class="arithmatex">\[\Delta I_{sp} = \frac{(p_e - p_a) A_e}{\dot{m} g_0}\tag{29.4}\]</div>
+<p>where <span class="arithmatex">\(p_a\)</span> is the ambient (back) pressure. At vacuum, <span class="arithmatex">\(p_a = 0\)</span>, and the full vacuum <span class="arithmatex">\(I_{sp}\)</span> is realised.</p>
+<h3 id="2923-combustion-instability-testing"><span class="secnum">29.2.3</span> Combustion Instability Testing<a class="headerlink" href="#2923-combustion-instability-testing" title="Permanent link">&para;</a></h3>
+<p>Combustion instability (CI) is a catastrophic resonance between acoustic modes of the motor cavity and heat-release oscillations from the burning propellant. The acoustic natural frequencies of a cylindrical chamber of length <span class="arithmatex">\(L\)</span> and radius <span class="arithmatex">\(R\)</span> are:</p>
+<div id="eq-acoustic_freq"></div>
+<div class="arithmatex">\[f_{mn} = \frac{c}{2\pi}\sqrt{\left(\frac{m\pi}{L}\right)^2 + \left(\frac{\chi_{mn}}{R}\right)^2}\tag{29.5}\]</div>
+<p>where <span class="arithmatex">\(c\)</span> is speed of sound in the gas, <span class="arithmatex">\(m\)</span> is the longitudinal mode number, and <span class="arithmatex">\(\chi_{mn}\)</span> is the <span class="arithmatex">\(n\)</span>th zero of the derivative of the <span class="arithmatex">\(m\)</span>th Bessel function. Detection uses flush-mounted Kistler or PCB dynamic pressure transducers; fast Fourier transform (FFT) identifies modal frequencies. A peak pressure oscillation exceeding <span class="arithmatex">\(\pm 3\%\)</span> of mean chamber pressure is considered unstable.</p>
+<h3 id="2924-burn-rate-and-pressure-exponent-measurement"><span class="secnum">29.2.4</span> Burn Rate and Pressure Exponent Measurement<a class="headerlink" href="#2924-burn-rate-and-pressure-exponent-measurement" title="Permanent link">&para;</a></h3>
+<p>The Crawford bomb (closed bomb) measures strand burn rates at elevated pressures. A thin propellant strand (6 mm dia <span class="arithmatex">\(\times\)</span> 50 mm long) burns in a pressurised nitrogen environment; the time to burn between embedded nichrome wires gives <span class="arithmatex">\(\dot{r}(p)\)</span>. Fitting the Vieille equation:</p>
+<div id="eq-vieille_ln"></div>
+<div class="arithmatex">\[\ln\dot{r} = \ln a + n \ln p\tag{29.6}\]</div>
+<p>yields the pressure exponent <span class="arithmatex">\(n\)</span> and coefficient <span class="arithmatex">\(a\)</span>. Propellants with <span class="arithmatex">\(n &gt; 0.6\)</span> are at risk of dynamic instability (pressure runaway if chamber pressure exceeds design operating point). The stability criterion requires <span class="arithmatex">\(n &lt; 1\)</span>.</p>
+<h2 id="sec-aero_testing"><span class="secnum">29.3</span> Aerodynamic Testing<a class="headerlink" href="#sec-aero_testing" title="Permanent link">&para;</a></h2>
+<h3 id="2931-wind-tunnel-testing"><span class="secnum">29.3.1</span> Wind Tunnel Testing<a class="headerlink" href="#2931-wind-tunnel-testing" title="Permanent link">&para;</a></h3>
+<p>Wind tunnel testing provides the aerodynamic database (ADB) that underpins flight simulation, autopilot design, and performance prediction. Missile wind tunnel tests span a wide Mach number range:</p>
+<div class="tbl" id="tab-wind_tunnel">
+<div class="tbl-caption"><strong>Table 29.1.</strong> Wind tunnel facilities and applicable Mach number ranges</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Facility Type</strong></th>
+<th style="text-align: left;"><strong>Mach Range</strong></th>
+<th style="text-align: left;"><strong>Reynolds Number</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Subsonic</td>
+<td style="text-align: left;"><span class="math inline">\(&lt; 0.6\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(10^6\)</span>–<span class="math inline">\(10^7\)</span></td>
+<td style="text-align: left;">Continuous flow; NLF studies</td>
+</tr>
+<tr>
+<td style="text-align: left;">Transonic</td>
+<td style="text-align: left;">0.6–1.3</td>
+<td style="text-align: left;"><span class="math inline">\(10^7\)</span>–<span class="math inline">\(10^8\)</span></td>
+<td style="text-align: left;">Slotted-wall test section</td>
+</tr>
+<tr>
+<td style="text-align: left;">Supersonic</td>
+<td style="text-align: left;">1.5–5.0</td>
+<td style="text-align: left;"><span class="math inline">\(10^6\)</span>–<span class="math inline">\(10^7\)</span></td>
+<td style="text-align: left;">Blow-down or continuous</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hypersonic</td>
+<td style="text-align: left;">5–12</td>
+<td style="text-align: left;"><span class="math inline">\(10^5\)</span>–<span class="math inline">\(10^7\)</span></td>
+<td style="text-align: left;">Gun tunnel or arc-heated</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ballistic range</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> 3</td>
+<td style="text-align: left;"><span class="math inline">\(10^6\)</span>–<span class="math inline">\(10^8\)</span></td>
+<td style="text-align: left;">Free-flight model; no sting</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The aerodynamic force and moment coefficients are non-dimensionalised by dynamic pressure <span class="arithmatex">\(q = \frac{1}{2}\rho V^2\)</span>, reference area <span class="arithmatex">\(S_{ref}\)</span> (typically <span class="arithmatex">\(\pi d^2/4\)</span>), and reference length <span class="arithmatex">\(d_{ref}\)</span> (body diameter or span):</p>
+<div id="eq-aero_coeffs"></div>
+<div class="arithmatex">\[C_N = \frac{N}{q S_{ref}}, \quad
+  C_m = \frac{M_{pitch}}{q S_{ref} d_{ref}}, \quad
+  C_A = \frac{A}{q S_{ref}}\tag{29.7}\]</div>
+<p>A 6-component internal balance measures all three forces and three moments simultaneously with accuracy <span class="arithmatex">\(\pm 0.1\%\)</span> of full scale. Tunnel-to-flight corrections account for wall interference, sting interference, and Reynolds number mismatch.</p>
+<h3 id="2932-pressure-sensitive-paint"><span class="secnum">29.3.2</span> Pressure-Sensitive Paint<a class="headerlink" href="#2932-pressure-sensitive-paint" title="Permanent link">&para;</a></h3>
+<p>Pressure-sensitive paint (PSP) contains luminescent molecules (porphyrin, Pd-TFPP) embedded in an oxygen-permeable binder. Intensity <span class="arithmatex">\(I\)</span> of luminescence is related to local oxygen partial pressure <span class="arithmatex">\(p_{O_2}\)</span> (and hence static pressure) by the Stern-Volmer relation:</p>
+<div id="eq-psv"></div>
+<div class="arithmatex">\[\frac{I_{ref}}{I} = A + B \cdot \frac{p}{p_{ref}}\tag{29.8}\]</div>
+<p>where <span class="arithmatex">\(A\)</span> and <span class="arithmatex">\(B\)</span> are calibration constants and the subscript <span class="arithmatex">\(ref\)</span> denotes the wind-off reference state. PSP replaces thousands of pressure taps and provides full-field pressure maps at sub-millimetre resolution.</p>
+<h3 id="2933-schlieren-photography"><span class="secnum">29.3.3</span> Schlieren Photography<a class="headerlink" href="#2933-schlieren-photography" title="Permanent link">&para;</a></h3>
+<p>Schlieren systems visualise compressibility effects (shocks, expansion fans, boundary-layer transition) by exploiting the dependence of the refractive index <span class="arithmatex">\(n\)</span> of air on density <span class="arithmatex">\(\rho\)</span>:</p>
+<div id="eq-gladstone_dale"></div>
+<div class="arithmatex">\[n - 1 = k\rho, \quad k \approx 2.26 \times 10^{-4}\,\text{m}^3/\text{kg}\tag{29.9}\]</div>
+<p>A knife edge at the focal point of a collimated beam intercepts deflected rays; regions of high <span class="arithmatex">\(|dn/dy|\)</span> appear bright or dark (depending on orientation), revealing shock positions to <span class="arithmatex">\(\pm 0.5\,\text{mm}\)</span>.</p>
+<h3 id="2934-store-separation-testing"><span class="secnum">29.3.4</span> Store Separation Testing<a class="headerlink" href="#2934-store-separation-testing" title="Permanent link">&para;</a></h3>
+<p>Captive trajectory simulation (CTS) in a wind tunnel characterises the trajectory of a missile after ejection from an aircraft pylon. A 6-DOF sting mechanism moves the missile model through the pre-measured flowfield of the carrier aircraft (captured at multiple positions) in a closed-loop controller. The equations of motion integrated at each step:</p>
+<div id="eq-store_eom"></div>
+<div class="arithmatex">\[m\dot{\mathbf{V}} = \mathbf{F}_{aero}(x,y,z,\alpha,\beta,M) + m\mathbf{g}\tag{29.10}\]</div>
+<p>CTS results guide ejection-foot force selection to ensure safe separation clearance (typically <span class="arithmatex">\(&gt; 150\,\text{mm}\)</span> from the aircraft structure at all simulated conditions).</p>
+<h2 id="sec-guidance_testing"><span class="secnum">29.4</span> Guidance and Navigation Testing<a class="headerlink" href="#sec-guidance_testing" title="Permanent link">&para;</a></h2>
+<h3 id="2941-seeker-hardware-in-the-loop-testing"><span class="secnum">29.4.1</span> Seeker Hardware-in-the-Loop Testing<a class="headerlink" href="#2941-seeker-hardware-in-the-loop-testing" title="Permanent link">&para;</a></h3>
+<p>Hardware-in-the-loop (HWIL) simulation places the actual seeker on a dome test fixture while the guidance computer, autopilot, and 6-DOF simulation run in real time. The IR scene projector (or RF signal generator for radar seekers) stimulates the seeker with a realistic target scenario.</p>
+<p>The closed-loop guidance error <span class="arithmatex">\(\varepsilon\)</span> drives the missile toward zero miss distance. The proportional navigation guidance law:</p>
+<div id="eq-pn_guidance"></div>
+<div class="arithmatex">\[\mathbf{a}_c = N' \dot{\lambda} \cdot V_c \hat{\mathbf{n}}\tag{29.11}\]</div>
+<p>where <span class="arithmatex">\(N'\)</span> is the effective navigation ratio (typically 3–5), <span class="arithmatex">\(\dot{\lambda}\)</span> is the line-of-sight (LOS) rate, <span class="arithmatex">\(V_c\)</span> is closing velocity, and <span class="arithmatex">\(\hat{\mathbf{n}}\)</span> is the unit vector perpendicular to the LOS. The seeker must measure <span class="arithmatex">\(\dot{\lambda}\)</span> with sufficient bandwidth and noise rejection to achieve the required miss distance. The miss distance <span class="arithmatex">\(M\)</span> for a first-order guidance system with time constant <span class="arithmatex">\(\tau\)</span> and closing time <span class="arithmatex">\(t_f\)</span> is approximately:</p>
+<div id="eq-miss_distance"></div>
+<div class="arithmatex">\[M \approx \frac{1}{2} a_t t_f^2 \cdot \frac{(N'\tau/t_f)^2}{N'-1}\tag{29.12}\]</div>
+<p>where <span class="arithmatex">\(a_t\)</span> is target acceleration. HWIL testing validates seeker noise equivalent angle (NEA), gimbal rate limit effects, and countermeasure rejection.</p>
+<h3 id="2942-ins-characterisation-on-rate-table"><span class="secnum">29.4.2</span> INS Characterisation on Rate Table<a class="headerlink" href="#2942-ins-characterisation-on-rate-table" title="Permanent link">&para;</a></h3>
+<p>The IMU is characterised on a multi-axis rate table (typically 3-axis, accuracy <span class="arithmatex">\(\pm 0.001°/\text{s}\)</span>) in a thermal chamber (<span class="arithmatex">\(-54°\)</span>C to <span class="arithmatex">\(+71°\)</span>C). A 24-state Kalman filter identifies all error parameters:</p>
+<div id="eq-kalman_state"></div>
+<div class="arithmatex">\[\mathbf{x} = [\delta\boldsymbol{\phi},\,\delta\mathbf{v},\,\delta\mathbf{p},\,\mathbf{b}_g,\,\mathbf{b}_a,\,\mathbf{s}_g,\,\mathbf{s}_a,\,\boldsymbol{\mu}_g]^T\tag{29.13}\]</div>
+<p>where <span class="arithmatex">\(\delta\boldsymbol{\phi}\)</span> are attitude errors, <span class="arithmatex">\(\delta\mathbf{v}\)</span> are velocity errors, <span class="arithmatex">\(\delta\mathbf{p}\)</span> are position errors, <span class="arithmatex">\(\mathbf{b}_g\)</span> and <span class="arithmatex">\(\mathbf{b}_a\)</span> are gyro and accelerometer biases, <span class="arithmatex">\(\mathbf{s}_g\)</span> and <span class="arithmatex">\(\mathbf{s}_a\)</span> are scale factor errors, and <span class="arithmatex">\(\boldsymbol{\mu}_g\)</span> are gyro misalignments. The Kalman update:</p>
+<div id="eq-kalman_update"></div>
+<div class="arithmatex">\[\hat{\mathbf{x}}^+ = \hat{\mathbf{x}}^- + \mathbf{K}(\mathbf{z} - \mathbf{H}\hat{\mathbf{x}}^-)\tag{29.14}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{K}\)</span> is the Kalman gain matrix, <span class="arithmatex">\(\mathbf{z}\)</span> is the measurement vector (from the precision table), and <span class="arithmatex">\(\mathbf{H}\)</span> is the observation matrix.</p>
+<h3 id="2943-guidance-monte-carlo-simulation"><span class="secnum">29.4.3</span> Guidance Monte Carlo Simulation<a class="headerlink" href="#2943-guidance-monte-carlo-simulation" title="Permanent link">&para;</a></h3>
+<p>A 6-DOF Monte Carlo simulation with 1,000 or more independent runs establishes the circular error probable (CEP) against a variety of target and engagement conditions. Input uncertainty parameters are modelled as distributions:</p>
+<ul>
+<li>
+<p>IMU bias: <span class="arithmatex">\(\mathcal{N}(0, \sigma_b^2)\)</span></p>
+</li>
+<li>
+<p>Wind: <span class="arithmatex">\(\mathcal{N}(0, \sigma_w^2)\)</span> per axis</p>
+</li>
+<li>
+<p>Target motion: bounded random walk</p>
+</li>
+<li>
+<p>Atmospheric density: <span class="arithmatex">\(\mathcal{N}(\bar{\rho}, \sigma_\rho^2)\)</span></p>
+</li>
+<li>
+<p>Launch condition errors: position, velocity, attitude</p>
+</li>
+</ul>
+<p>CEP is the radius within which 50% of impact points fall. For a bivariate normal distribution with equal standard deviations <span class="arithmatex">\(\sigma\)</span> in both horizontal axes:</p>
+<div id="eq-cep"></div>
+<div class="arithmatex">\[CEP \approx 1.1774 \sigma\tag{29.15}\]</div>
+<p>For unequal sigmas (<span class="arithmatex">\(\sigma_x \ne \sigma_y\)</span>):</p>
+<div id="eq-cep_unequal"></div>
+<div class="arithmatex">\[CEP \approx 0.5887(\sigma_x + \sigma_y)\tag{29.16}\]</div>
+<h3 id="2944-emiemc-testing"><span class="secnum">29.4.4</span> EMI/EMC Testing<a class="headerlink" href="#2944-emiemc-testing" title="Permanent link">&para;</a></h3>
+<p>Electromagnetic interference (EMI) and electromagnetic compatibility (EMC) are tested per MIL-STD-461G. Key emission limits for missile electronics:</p>
+<ul>
+<li>
+<p>RE102: Radiated emissions from electronics (30 MHz–18 GHz); must not degrade seeker performance.</p>
+</li>
+<li>
+<p>CS114: Conducted susceptibility on cables; simulates induced currents from platform emitters.</p>
+</li>
+<li>
+<p>RS103: Radiated susceptibility; apply external fields to verify no functional impairment.</p>
+</li>
+</ul>
+<p>HERO compliance per MIL-STD-464C requires that with the armed missile installed on the platform, the field at any squib lead shall not exceed:</p>
+<div id="eq-hero_limit"></div>
+<div class="arithmatex">\[E_{limit} = \sqrt{\frac{2 P_{fire} R_{squib}}{A_{eff}}}\tag{29.17}\]</div>
+<p>where <span class="arithmatex">\(P_{fire}\)</span> is the no-fire power (typically <span class="arithmatex">\(1\,\text{mW}\)</span>) and <span class="arithmatex">\(A_{eff}\)</span> is the effective antenna area of the squib circuit.</p>
+<h2 id="sec-warhead_testing"><span class="secnum">29.5</span> Warhead and Fuze Testing<a class="headerlink" href="#sec-warhead_testing" title="Permanent link">&para;</a></h2>
+<h3 id="2951-arena-test"><span class="secnum">29.5.1</span> Arena Test<a class="headerlink" href="#2951-arena-test" title="Permanent link">&para;</a></h3>
+<p>The arena test characterises the fragment spatial distribution of a warhead. The warhead is suspended at the centre of a circular array of witness plates (typically 5 mm mild steel) at a radius of 3–15 m. Static detonation is initiated and fragment perforations are counted and measured.</p>
+<p>Fragment velocity <span class="arithmatex">\(V_f\)</span> at radius <span class="arithmatex">\(R\)</span> from the detonation point decays as:</p>
+<div id="eq-fragment_vel"></div>
+<div class="arithmatex">\[V_f(R) = V_0 \exp\!\left(-\frac{C_D \rho_a A_f}{2 m_f} R\right)\tag{29.18}\]</div>
+<p>where <span class="arithmatex">\(V_0\)</span> is initial fragment velocity (typically 1,500–2,500 m/s for steel natural fragmentation), <span class="arithmatex">\(C_D\)</span> is fragment drag coefficient, <span class="arithmatex">\(\rho_a\)</span> is air density, <span class="arithmatex">\(A_f\)</span> is mean frontal area, and <span class="arithmatex">\(m_f\)</span> is mean fragment mass.</p>
+<p>The Gurney velocity <span class="arithmatex">\(\sqrt{2E}\)</span> (related to the explosive energy release per unit mass of casing) provides the theoretical initial velocity:</p>
+<div id="eq-gurney"></div>
+<div class="arithmatex">\[V_0 = \sqrt{2E} \cdot \sqrt{\frac{C/M}{1 + C/(2M)}}\tag{29.19}\]</div>
+<p>where <span class="arithmatex">\(C\)</span> is explosive mass and <span class="arithmatex">\(M\)</span> is metal case mass (Gurney equation for a cylinder, assuming uniform radial expansion).</p>
+<h3 id="2952-detonation-velocity-measurement"><span class="secnum">29.5.2</span> Detonation Velocity Measurement<a class="headerlink" href="#2952-detonation-velocity-measurement" title="Permanent link">&para;</a></h3>
+<p>Detonation velocity (VOD) is measured by:</p>
+<ul>
+<li>
+<p><strong>Probe wires:</strong> Shorting pins embedded in the explosive column at known intervals; each pin produces a voltage step as the detonation front passes; time intervals yield VOD.</p>
+</li>
+<li>
+<p><strong>VISAR (Velocity Interferometer System for Any Reflector):</strong> Laser Doppler technique; measures interface velocity continuously at ns resolution; particularly suited to in-cylinder measurements.</p>
+</li>
+</ul>
+<p>The Chapman-Jouguet detonation velocity <span class="arithmatex">\(D_{CJ}\)</span> for a given explosive is related to the heat of detonation <span class="arithmatex">\(Q_D\)</span> and density <span class="arithmatex">\(\rho_0\)</span>:</p>
+<div id="eq-cj_velocity"></div>
+<div class="arithmatex">\[D_{CJ} = \sqrt{2(\gamma^2-1) Q_D}\tag{29.20}\]</div>
+<p>where <span class="arithmatex">\(\gamma\)</span> is the product-gas isentropic exponent at the CJ state. For RDX at <span class="arithmatex">\(\rho_0 = 1.77\,\text{g/cm}^3\)</span>, <span class="arithmatex">\(D_{CJ} \approx 8,750\,\text{m/s}\)</span>.</p>
+<h3 id="2953-insensitive-munitions-testing"><span class="secnum">29.5.3</span> Insensitive Munitions Testing<a class="headerlink" href="#2953-insensitive-munitions-testing" title="Permanent link">&para;</a></h3>
+<p>Insensitive Munitions (IM) testing per MIL-DTL-23659 and STANAG 4439 subjects the complete munition to a suite of unplanned stimuli:</p>
+<div class="tbl" id="tab-im_tests">
+<div class="tbl-caption"><strong>Table 29.2.</strong> Insensitive Munitions (IM) test matrix and response definitions</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Test</strong></th>
+<th style="text-align: left;"><strong>Stimulus</strong></th>
+<th style="text-align: left;"><strong>Acceptable Response</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Bullet Impact (BI)</td>
+<td style="text-align: left;">12.7 mm AP, 850 m/s</td>
+<td style="text-align: left;">Burn (Type V) or No reaction (Type VI)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fragment Impact (FI)</td>
+<td style="text-align: left;">1.6 g at 2,530 m/s</td>
+<td style="text-align: left;">Burn or No reaction</td>
+</tr>
+<tr>
+<td style="text-align: left;">Shaped Charge Jet (SCJ)</td>
+<td style="text-align: left;">84 mm HEAT</td>
+<td style="text-align: left;">Deflagration (Type IV) or less</td>
+</tr>
+<tr>
+<td style="text-align: left;">Slow Cook-off (SCO)</td>
+<td style="text-align: left;"><span class="math inline">\(3.3°\text{C/hr}\)</span> to ignition</td>
+<td style="text-align: left;">Burn or No reaction</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fast Cook-off (FCO)</td>
+<td style="text-align: left;">Pool fire (750°C flame)</td>
+<td style="text-align: left;">Burn or No reaction</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sympathetic Detonation (SD)</td>
+<td style="text-align: left;">Adjacent round detonates</td>
+<td style="text-align: left;">No detonation of test item</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Response types per AOP-39: I = Detonation; II = Partial Detonation; III = Explosion; IV = Deflagration; V = Burn; VI = No reaction. The IM requirement is that no test event produces a response worse than Type IV (deflagration).</p>
+<h3 id="2954-lethal-radius-determination"><span class="secnum">29.5.4</span> Lethal Radius Determination<a class="headerlink" href="#2954-lethal-radius-determination" title="Permanent link">&para;</a></h3>
+<p>Lethality against personnel (unprotected) is assessed by deploying target arrays at various ranges <span class="arithmatex">\(R\)</span> from the detonation point. The probability of kill <span class="arithmatex">\(P_k(R)\)</span> is fitted to the Weibull or logistic model:</p>
+<div id="eq-pk_weibull"></div>
+<div class="arithmatex">\[P_k(R) = \exp\!\left[-\left(\frac{R}{R_{50}}\right)^m\right]\tag{29.21}\]</div>
+<p>where <span class="arithmatex">\(R_{50}\)</span> is the lethal radius at which <span class="arithmatex">\(P_k = 0.5\)</span> and <span class="arithmatex">\(m\)</span> is the Weibull shape parameter. The lethal radius <span class="arithmatex">\(R_{50}\)</span> is a key figure of merit in warhead effectiveness specifications.</p>
+<h3 id="2955-fuze-function-testing"><span class="secnum">29.5.5</span> Fuze Function Testing<a class="headerlink" href="#2955-fuze-function-testing" title="Permanent link">&para;</a></h3>
+<p>The fuze must function reliably under valid conditions and never function under invalid conditions (safe-arm requirements). Testing covers:</p>
+<ul>
+<li>
+<p><strong>Arming sequence:</strong> All arming conditions (setback, spin, time, etc.) verified to arm in the design sequence.</p>
+</li>
+<li>
+<p><strong>No-fire environment:</strong> Fuze must not initiate under MIL-STD-1316 no-fire environments (drop, heat, EM fields).</p>
+</li>
+<li>
+<p><strong>Function tests:</strong> Target simulation by sensor stimulation; verify fuze function within the design window.</p>
+</li>
+<li>
+<p><strong>Safe separation:</strong> For aircraft-delivered munitions, fuze must not arm until safe separation distance from the aircraft is exceeded.</p>
+</li>
+</ul>
+<h2 id="sec-environmental_testing"><span class="secnum">29.6</span> Environmental Testing<a class="headerlink" href="#sec-environmental_testing" title="Permanent link">&para;</a></h2>
+<h3 id="2961-mil-std-810h-test-suite"><span class="secnum">29.6.1</span> MIL-STD-810H Test Suite<a class="headerlink" href="#2961-mil-std-810h-test-suite" title="Permanent link">&para;</a></h3>
+<p>Environmental testing per MIL-STD-810H applies the full suite of natural environments that the missile will encounter during manufacture, storage, transportation, and deployment. Key methods:</p>
+<div class="tbl" id="tab-enviro_tests">
+<div class="tbl-caption"><strong>Table 29.3.</strong> MIL-STD-810H environmental test methods applicable to missiles</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Method</strong></th>
+<th style="text-align: left;"><strong>Test</strong></th>
+<th style="text-align: left;"><strong>Representative Conditions</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">501.7</td>
+<td style="text-align: left;">High Temperature</td>
+<td style="text-align: left;"><span class="math inline">\(+71°\)</span>C storage; <span class="math inline">\(+85°\)</span>C operational</td>
+</tr>
+<tr>
+<td style="text-align: left;">502.7</td>
+<td style="text-align: left;">Low Temperature</td>
+<td style="text-align: left;"><span class="math inline">\(-46°\)</span>C storage; <span class="math inline">\(-32°\)</span>C operational</td>
+</tr>
+<tr>
+<td style="text-align: left;">503.7</td>
+<td style="text-align: left;">Temperature Shock</td>
+<td style="text-align: left;"><span class="math inline">\(-54°\)</span>C to <span class="math inline">\(+71°\)</span>C in <span class="math inline">\(&lt; 5\,\text{min}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">507.6</td>
+<td style="text-align: left;">Humidity</td>
+<td style="text-align: left;"><span class="math inline">\(95\%\)</span> RH at <span class="math inline">\(40°\)</span>C for 240 h</td>
+</tr>
+<tr>
+<td style="text-align: left;">509.7</td>
+<td style="text-align: left;">Salt Fog</td>
+<td style="text-align: left;">5% NaCl spray; 48 h; shipboard exposure</td>
+</tr>
+<tr>
+<td style="text-align: left;">514.8</td>
+<td style="text-align: left;">Vibration</td>
+<td style="text-align: left;">Cat. 4 truck (<span class="math inline">\(0.01\,\text{g}^2/\text{Hz}\)</span>, 5–500 Hz)</td>
+</tr>
+<tr>
+<td style="text-align: left;">516.8</td>
+<td style="text-align: left;">Shock</td>
+<td style="text-align: left;">40 g, 11 ms half-sine; bench handling</td>
+</tr>
+<tr>
+<td style="text-align: left;">520.4</td>
+<td style="text-align: left;">Temperature-Altitude</td>
+<td style="text-align: left;"><span class="math inline">\(-56°\)</span>C at <span class="math inline">\(21 \text{ km}\)</span>; air launch</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The severity level is tailored to the specific life-cycle environments using measured field data where available (MIL-STD-810H Annex C tailoring).</p>
+<h3 id="2962-hero-testing"><span class="secnum">29.6.2</span> HERO Testing<a class="headerlink" href="#2962-hero-testing" title="Permanent link">&para;</a></h3>
+<p>HERO (Hazards of Electromagnetic Radiation to Ordnance) testing verifies that missile ordnance (squibs, EEDs) is not susceptible to RF fields present in the operational environment. Per MIL-STD-464C:</p>
+<div id="eq-hero_power"></div>
+<div class="arithmatex">\[P_{induced} = \frac{E^2 \cdot A_{eff}}{120\pi}\tag{29.22}\]</div>
+<p>The absorbed power <span class="arithmatex">\(P_{induced}\)</span> in the squib circuit must remain below <span class="arithmatex">\(P_{no-fire} / 20\)</span> (6 dB margin below the no-fire level) at all operational field strengths. Testing uses a calibrated open TEM cell or antenna to expose the armed missile/squib assembly to specified field levels (MIL-STD-464C Table 1). Safe standoff distances from radar emitters are determined by the HERO safe distance:</p>
+<div id="eq-hero_safe"></div>
+<div class="arithmatex">\[R_{safe} = \sqrt{\frac{P_t G_t}{4\pi S_{limit}}}\tag{29.23}\]</div>
+<p>where <span class="arithmatex">\(P_t G_t\)</span> is transmitter EIRP and <span class="arithmatex">\(S_{limit}\)</span> is the power density limit at the squib.</p>
+<h3 id="2963-transportation-testing"><span class="secnum">29.6.3</span> Transportation Testing<a class="headerlink" href="#2963-transportation-testing" title="Permanent link">&para;</a></h3>
+<p>Transportation vibration is tested per MIL-STD-810H Method 514.8 using measured power spectral density (PSD) profiles for:</p>
+<ul>
+<li>
+<p>Category 4 (wheeled vehicle, cross-country): PSD 0.01–0.04 <span class="arithmatex">\(\text{g}^2/\text{Hz}\)</span> over 5–100 Hz; 1-hour equivalent per axis.</p>
+</li>
+<li>
+<p>Category 7 (helicopter external sling): 0.5–1.0 <span class="arithmatex">\(\text{g}^2/\text{Hz}\)</span> at 10–100 Hz; severe for fragile guidance components.</p>
+</li>
+<li>
+<p>Category 20 (jet aircraft cargo): 0.015 <span class="arithmatex">\(\text{g}^2/\text{Hz}\)</span> over 15–2,000 Hz.</p>
+</li>
+</ul>
+<p>The fatigue damage equivalent of a random vibration environment is estimated from the power spectral density using Miner’s rule with an assumed S-N slope <span class="arithmatex">\(b\)</span>:</p>
+<div id="eq-fatigue_damage"></div>
+<div class="arithmatex">\[D = \int_0^\infty \frac{n(f)}{N(f)} \, df \approx \frac{T}{K} \left[\int_0^\infty G_{xx}(f)^{b/2} \, df\right]\tag{29.24}\]</div>
+<h3 id="2964-storage-compatibility"><span class="secnum">29.6.4</span> Storage Compatibility<a class="headerlink" href="#2964-storage-compatibility" title="Permanent link">&para;</a></h3>
+<p>Long-term storage (up to 20 years for strategic systems) requires compatibility testing between the propellant, liner, case material, and lubricants. Off-gassing from propellants (primarily in double-base types: NO, NO<span class="arithmatex">\(_2\)</span>, aldehydes) is measured by head-space gas analysis. Propellant/metal contact interactions (stress-corrosion cracking of steel) are simulated in accelerated immersion tests at elevated temperature.</p>
+<h2 id="sec-flight_test"><span class="secnum">29.7</span> Flight Test Programme<a class="headerlink" href="#sec-flight_test" title="Permanent link">&para;</a></h2>
+<h3 id="2971-mission-planning-and-range-safety"><span class="secnum">29.7.1</span> Mission Planning and Range Safety<a class="headerlink" href="#2971-mission-planning-and-range-safety" title="Permanent link">&para;</a></h3>
+<p>Each flight test event requires a comprehensive Mission Package (MP) approved by the Range Safety Officer (RSO) at least 30 days before execution. The MP includes:</p>
+<ul>
+<li>
+<p>Test objectives and success criteria (quantitative)</p>
+</li>
+<li>
+<p>Vehicle configuration and mass properties</p>
+</li>
+<li>
+<p>Expected trajectory (nominal and <span class="arithmatex">\(3\sigma\)</span> dispersed)</p>
+</li>
+<li>
+<p>Flight termination system (FTS) arm/fire logic and criteria</p>
+</li>
+<li>
+<p>Tracking and telemetry coverage map</p>
+</li>
+<li>
+<p>Hazard areas (debris footprint, fragment hazard)</p>
+</li>
+<li>
+<p>Weather go/no-go criteria (wind, visibility, lightning)</p>
+</li>
+<li>
+<p>Coordination with air traffic control (NOTAM numbers)</p>
+</li>
+</ul>
+<p>The maximum downrange hazard footprint for an unguided or FTS-terminated vehicle is computed from the energy state at termination. For a ballistic fragment:</p>
+<div id="eq-ballistic_range"></div>
+<div class="arithmatex">\[R_{max} = \frac{V_{term}^2 \sin(2\theta)}{g}\tag{29.25}\]</div>
+<p>where <span class="arithmatex">\(V_{term}\)</span> is velocity at FTS termination and <span class="arithmatex">\(\theta\)</span> is the trajectory angle at that point.</p>
+<h3 id="2972-flight-test-instrumentation"><span class="secnum">29.7.2</span> Flight Test Instrumentation<a class="headerlink" href="#2972-flight-test-instrumentation" title="Permanent link">&para;</a></h3>
+<p>Flight test instrumentation (FTI) is a temporary system installed only for test purposes, supplementing the missile’s operational instrumentation. A missile FTI system may include:</p>
+<ul>
+<li>
+<p>PCM telemetry encoder: 200–500 channels; 10–50 Mbit/s; PCM/FM or SOQPSK-TG modulation per IRIG-106.</p>
+</li>
+<li>
+<p>GPS/INS hybrid: DGPS position to <span class="arithmatex">\(\pm 0.3\,\text{m}\)</span> RMS; velocimeter for velocity <span class="arithmatex">\(\pm 0.1\,\text{m/s}\)</span>.</p>
+</li>
+<li>
+<p>Miniature pressure transducers: 20–50 distributed surface pressure taps.</p>
+</li>
+<li>
+<p>Accelerometers: 3-axis, <span class="arithmatex">\(\pm 100 g\)</span> or <span class="arithmatex">\(\pm 500 g\)</span> depending on location.</p>
+</li>
+<li>
+<p>Thermal sensors: 20–50 surface thermocouples; radiometer.</p>
+</li>
+<li>
+<p>Antennas: S-band (2.2–2.4 GHz) telemetry; GPS; FTS command receiver.</p>
+</li>
+</ul>
+<p>The Nyquist sampling theorem requires a sample rate <span class="arithmatex">\(f_s \ge 2 f_{max}\)</span> for each channel; structural dynamics channels may need <span class="arithmatex">\(f_s &gt; 2,000\,\text{samples/s}\)</span>.</p>
+<h3 id="2973-tracking-systems"><span class="secnum">29.7.3</span> Tracking Systems<a class="headerlink" href="#2973-tracking-systems" title="Permanent link">&para;</a></h3>
+<p>Precision tracking provides an independent trajectory record independent of the telemetry system (which may fail). Tracking systems at major ranges:</p>
+<ul>
+<li>
+<p><strong>FPS-16 C-band precision tracking radar:</strong> Range accuracy <span class="arithmatex">\(\pm 1\,\text{m}\)</span>; angle accuracy <span class="arithmatex">\(\pm 0.1\,\text{mrad}\)</span> (0.006°); track update rate 10–60 Hz.</p>
+</li>
+<li>
+<p><strong>AN/MPS-39 MOTR (Multiple Object Tracking Radar):</strong> Simultaneous track of 10 objects; range 200 km; used at Kwajalein, White Sands.</p>
+</li>
+<li>
+<p><strong>Cinetheodolites:</strong> Optical (35 mm or digital); 2 stations required for stereo; photogrammetric reduction to 3D trajectory.</p>
+</li>
+<li>
+<p><strong>GPS transponder:</strong> High-accuracy GPS receiver and data logger on missile (combined with telemetry); real-time position to GCS.</p>
+</li>
+</ul>
+<p>The 3D miss vector is measured by the scoring radar (e.g., TSPI radar) positioned near the target:</p>
+<div id="eq-miss_3d"></div>
+<div class="arithmatex">\[\text{Miss} = \sqrt{(\Delta x)^2 + (\Delta y)^2 + (\Delta z)^2}\tag{29.26}\]</div>
+<h3 id="2974-flight-profile-phases"><span class="secnum">29.7.4</span> Flight Profile Phases<a class="headerlink" href="#2974-flight-profile-phases" title="Permanent link">&para;</a></h3>
+<p>A complete guided missile flight test programme progresses through structured flight phases, each building on the previous:</p>
+<p><strong>Phase 1 — Captive Carry (CC).</strong> The missile remains on the launch platform (aircraft pylon, ship launcher, or ground vehicle). All umbilical interfaces, MIL-STD-1760 digital bus communications, seeker activation and target acquisition (from the platform), and cockpit displays are verified in a realistic flight environment without the risk of a free-flight event.</p>
+<p><strong>Phase 2 — Motor-Off Separation.</strong> The missile is released from the platform with the motor not ignited. This event characterises the separation dynamics and verifies that post-separation aerodynamics are stable, that no mechanical interference occurs, and that the FTI telemetry stream is clean immediately post-release.</p>
+<p><strong>Phase 3 — Motor Ignition.</strong> Motor is ignited immediately after separation. Thrust vector, ignition delay, and motor ballistics are verified. The trajectory is monitored for anomalous roll rates or pitch excursions.</p>
+<p><strong>Phase 4 — Guided Flight (Sub-terminal).</strong> Seeker acquires target; guidance commands are generated; the autopilot is exercised through the full angle-of- attack (<span class="arithmatex">\(\alpha\)</span>) envelope. Trajectory is compared to 6-DOF simulation predictions. Key metrics: time to acquisition, guidance bandwidth, trim drag.</p>
+<p><strong>Phase 5 — Terminal Phase and Lethality.</strong> For a live-warhead event, the missile is guided to the target (drone, stationary tank hulk, ship target). Warhead function (proper detonation initiation), miss distance, and battle damage are assessed. For inert rounds, impact scoring is done by optical and radar tracking.</p>
+<h3 id="2975-data-reduction-and-anomaly-resolution"><span class="secnum">29.7.5</span> Data Reduction and Anomaly Resolution<a class="headerlink" href="#2975-data-reduction-and-anomaly-resolution" title="Permanent link">&para;</a></h3>
+<p>Raw telemetry frames are ingested by the range data reduction system and converted to engineering units using calibration coefficients:</p>
+<div id="eq-telemetry_cal"></div>
+<div class="arithmatex">\[x_{EU} = G \cdot \left(\frac{N}{N_{max}} - \text{offset}\right) + B\tag{29.27}\]</div>
+<p>where <span class="arithmatex">\(N\)</span> is the raw PCM count, <span class="arithmatex">\(N_{max}\)</span> is the full-scale count, <span class="arithmatex">\(G\)</span> is the gain calibration, and <span class="arithmatex">\(B\)</span> is the bias offset. Time-alignment between tracks, telemetry, and flight termination data is done by a UTC-referenced IRIG-B time code.</p>
+<p>When an anomaly is detected, the resolution process begins immediately:</p>
+<ol>
+<li>
+<p><strong>Anomaly characterisation:</strong> Replay of all telemetry channels; correlation of anomaly time with vehicle state.</p>
+</li>
+<li>
+<p><strong>Root cause hypothesis:</strong> Fault tree analysis; comparison with pre-flight 6-DOF predictions; data from previous tests.</p>
+</li>
+<li>
+<p><strong>Design/process change:</strong> Hardware modification, software patch, or procedure change to eliminate root cause.</p>
+</li>
+<li>
+<p><strong>Verification:</strong> Bench test or additional flight test to confirm fix.</p>
+</li>
+<li>
+<p><strong>FRACAS closure:</strong> Formal closure report; update to design documentation.</p>
+</li>
+</ol>
+<h2 id="sec-lethality_testing"><span class="secnum">29.8</span> Lethality Testing<a class="headerlink" href="#sec-lethality_testing" title="Permanent link">&para;</a></h2>
+<h3 id="2981-live-warhead-tests-against-representative-targets"><span class="secnum">29.8.1</span> Live Warhead Tests Against Representative Targets<a class="headerlink" href="#2981-live-warhead-tests-against-representative-targets" title="Permanent link">&para;</a></h3>
+<p>Lethality testing answers the system-level question: given a successful guidance intercept, does the warhead kill the target? Live-warhead tests are conducted at instrumented government test ranges. Target configurations include:</p>
+<ul>
+<li>
+<p><strong>Armoured vehicle targets:</strong> Full-scale or subscale RHA plate stacks; T-72 or M60 hulks; internal pressure gauges for spall assessment.</p>
+</li>
+<li>
+<p><strong>Aircraft targets:</strong> QF-16 or BQM-167 drone targets; fuselage panels with representative structural materials.</p>
+</li>
+<li>
+<p><strong>Ship targets:</strong> Decommissioned ship hulks at sea ranges; internal instrumentation; fire and damage assessment team after exercise.</p>
+</li>
+<li>
+<p><strong>Buried targets:</strong> Reinforced concrete bunkers; penetration depth measured by post-shot excavation.</p>
+</li>
+</ul>
+<h3 id="2982-penetration-of-hardened-targets"><span class="secnum">29.8.2</span> Penetration of Hardened Targets<a class="headerlink" href="#2982-penetration-of-hardened-targets" title="Permanent link">&para;</a></h3>
+<p>For a kinetic penetrator impacting concrete at velocity <span class="arithmatex">\(V_i\)</span>, the penetration depth <span class="arithmatex">\(P\)</span> is modelled by the modified Young formula:</p>
+<div id="eq-penetration_concrete"></div>
+<div class="arithmatex">\[P = \frac{0.0795 \, S_N \, m_p}{A_p \, \sqrt{f'_c}} \ln\!\left(1 + \frac{V_i^2}{19974}\right)\tag{29.28}\]</div>
+<p>where <span class="arithmatex">\(S_N\)</span> is the nose performance factor, <span class="arithmatex">\(m_p\)</span> is penetrator mass (kg), <span class="arithmatex">\(A_p\)</span> is cross-sectional area (m<span class="arithmatex">\(^2\)</span>), <span class="arithmatex">\(f'_c\)</span> is concrete compressive strength (MPa), and <span class="arithmatex">\(V_i\)</span> is impact velocity (m/s). For RHA steel penetration (Forrestal correlation):</p>
+<div id="eq-penetration_rha"></div>
+<div class="arithmatex">\[P_{RHA} = \frac{m_p}{k A_p \rho_{target}} \ln\!\left(1 + \frac{k \rho_{target} V_i^2}{2 \sigma_{target}}\right)\tag{29.29}\]</div>
+<p>where <span class="arithmatex">\(k\)</span> is the penetration resistance parameter and <span class="arithmatex">\(\sigma_{target}\)</span> is the target flow stress.</p>
+<h3 id="2983-blast-overpressure-assessment"><span class="secnum">29.8.3</span> Blast Overpressure Assessment<a class="headerlink" href="#2983-blast-overpressure-assessment" title="Permanent link">&para;</a></h3>
+<p>Blast overpressure from a high-explosive warhead is measured by calibrated pressure transducers (PCB 137 series, Kistler 701) at multiple radii in a free-field (hemispherical detonation) or airburst geometry. The Friedlander waveform model:</p>
+<div id="eq-friedlander"></div>
+<div class="arithmatex">\[p(t) = p_{so}\left(1 - \frac{t}{t^+}\right)\exp\!\left(-\frac{\alpha t}{t^+}\right)\tag{29.30}\]</div>
+<p>where <span class="arithmatex">\(p_{so}\)</span> is peak overpressure, <span class="arithmatex">\(t^+\)</span> is positive phase duration, and <span class="arithmatex">\(\alpha\)</span> is the waveform parameter (typically 1.0 for TNT equivalence). The scaled distance <span class="arithmatex">\(Z\)</span> (Hopkinson-Cranz scaling):</p>
+<div id="eq-scaled_distance"></div>
+<div class="arithmatex">\[Z = \frac{R}{W^{1/3}}\tag{29.31}\]</div>
+<p>allows results from different charge sizes to be compared on a universal curve. For TNT, <span class="arithmatex">\(p_{so}(Z)\)</span> at scaled distances <span class="arithmatex">\(0.5 &lt; Z &lt; 40\,\text{m/kg}^{1/3}\)</span> is tabulated in UFC 3-340-02 (Structures to Resist the Effects of Accidental Explosions).</p>
+<h3 id="2984-fragment-recovery-and-mott-distribution"><span class="secnum">29.8.4</span> Fragment Recovery and Mott Distribution<a class="headerlink" href="#2984-fragment-recovery-and-mott-distribution" title="Permanent link">&para;</a></h3>
+<p>Post-detonation fragment recovery from buried witness plates (or recovery pits) provides the mass distribution. The Mott formula for natural fragmentation:</p>
+<div id="eq-mott"></div>
+<div class="arithmatex">\[N(m &gt; m_0) = N_T \exp\!\left(-\sqrt{\frac{m_0}{\mu}}\right)\tag{29.32}\]</div>
+<p>where <span class="arithmatex">\(N(m &gt; m_0)\)</span> is the number of fragments with mass greater than <span class="arithmatex">\(m_0\)</span>, <span class="arithmatex">\(N_T\)</span> is the total fragment count, and <span class="arithmatex">\(\mu\)</span> is the Mott distribution parameter (depends on casing geometry and material). The mean fragment mass:</p>
+<div id="eq-mean_frag"></div>
+<div class="arithmatex">\[\bar{m} = 2\mu \left[1 - \left(1 + \sqrt{\frac{m_{max}}{\mu}}\right)
+  \exp\!\left(-\sqrt{\frac{m_{max}}{\mu}}\right)\right]^{-1}\tag{29.33}\]</div>
+<p>X-ray radiography of witness plates and high-speed photography provide complementary data on fragment spatial distribution and velocity.</p>
+<div class="tbl" id="tab-lethality_instr">
+<div class="tbl-caption"><strong>Table 29.4.</strong> Typical lethality test instrumentation and parameters</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Measurement</strong></th>
+<th style="text-align: left;"><strong>Instrument</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fragment velocity</td>
+<td style="text-align: left;">Laser curtain / Dopler</td>
+<td style="text-align: left;">Multi-layer foil screens at 1–3 m intervals</td>
+</tr>
+<tr>
+<td style="text-align: left;">Blast overpressure</td>
+<td style="text-align: left;">PCB 137 / Kistler 701</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 1\%\)</span> FS; multiple radii; free-field siting</td>
+</tr>
+<tr>
+<td style="text-align: left;">Detonation velocity</td>
+<td style="text-align: left;">VISAR / probe wires</td>
+<td style="text-align: left;">Sub-microsecond resolution; <span class="math inline">\(\pm 10\,\text{m/s}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Penetration depth</td>
+<td style="text-align: left;">Post-shot excavation</td>
+<td style="text-align: left;">Direct measurement; <span class="math inline">\(\pm 5\,\text{mm}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Target structural response</td>
+<td style="text-align: left;">Accelerometers / strain gauges</td>
+<td style="text-align: left;">10 kHz sample rate; transmitted shock</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fireball/plume</td>
+<td style="text-align: left;">High-speed camera</td>
+<td style="text-align: left;">10,000 fps; photometric calibration</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-reliability_failure"><span class="secnum">29.9</span> Reliability and Failure Analysis<a class="headerlink" href="#sec-reliability_failure" title="Permanent link">&para;</a></h2>
+<h3 id="2991-reliability-estimation-from-flight-tests"><span class="secnum">29.9.1</span> Reliability Estimation from Flight Tests<a class="headerlink" href="#2991-reliability-estimation-from-flight-tests" title="Permanent link">&para;</a></h3>
+<p>After <span class="arithmatex">\(n\)</span> flight tests with <span class="arithmatex">\(k\)</span> successes, the probability of success <span class="arithmatex">\(P_d\)</span> is estimated by the maximum likelihood estimate:</p>
+<div id="eq-pd_mle"></div>
+<div class="arithmatex">\[\hat{P}_d = \frac{k}{n}\tag{29.34}\]</div>
+<p>The exact (Clopper-Pearson) two-sided confidence interval at confidence level <span class="arithmatex">\(1 - 2\alpha\)</span>:</p>
+<div id="eq-pd_lower"></div>
+<div class="arithmatex">\[P_L = F^{-1}_{Beta}\!\left(\alpha;\, k,\, n-k+1\right)\tag{29.35}\]</div>
+<div id="eq-pd_upper"></div>
+<div class="arithmatex">\[P_U = F^{-1}_{Beta}\!\left(1-\alpha;\, k+1,\, n-k\right)\tag{29.36}\]</div>
+<p>where <span class="arithmatex">\(F^{-1}_{Beta}(p; a, b)\)</span> is the <span class="arithmatex">\(p\)</span>-th quantile of the Beta<span class="arithmatex">\((a,b)\)</span> distribution. For <span class="arithmatex">\(k = 7\)</span> successes out of <span class="arithmatex">\(n = 8\)</span> trials at 90% confidence (<span class="arithmatex">\(\alpha = 0.05\)</span>):</p>
+<div id="eq-pd_example"></div>
+<div class="arithmatex">\[P_L = F^{-1}_{Beta}(0.05;\, 7,\, 2) \approx 0.59\tag{29.37}\]</div>
+<p>This means we can state with 90% confidence that the true probability of success is at least 59%. Achieving a demonstrated <span class="arithmatex">\(P_d \ge 0.90\)</span> with 80% confidence requires a minimum of <span class="arithmatex">\(n = 22\)</span> consecutive successes (from the binomial lower bound).</p>
+<h3 id="2992-reliability-growth-models"><span class="secnum">29.9.2</span> Reliability Growth Models<a class="headerlink" href="#2992-reliability-growth-models" title="Permanent link">&para;</a></h3>
+<p>The AMSAA/Crow reliability growth model (per MIL-HDBK-189C) fits cumulative failures <span class="arithmatex">\(N(T)\)</span> against cumulative test time or cumulative number of trials <span class="arithmatex">\(T\)</span>:</p>
+<div id="eq-crow_amsaa"></div>
+<div class="arithmatex">\[E[N(T)] = \lambda T^\beta\tag{29.38}\]</div>
+<p>Parameter estimates by maximum likelihood (for time-truncated data):</p>
+<div id="eq-beta_hat"></div>
+<div class="arithmatex">\[\hat{\beta} = \frac{n}{\sum_{i=1}^{n} \ln(T/t_i)}\tag{29.39}\]</div>
+<div id="eq-lambda_hat"></div>
+<div class="arithmatex">\[\hat{\lambda} = \frac{n}{T^{\hat{\beta}}}\tag{29.40}\]</div>
+<p>where <span class="arithmatex">\(t_i\)</span> are the failure times and <span class="arithmatex">\(T\)</span> is the truncation time. The instantaneous failure rate (MTBF at time <span class="arithmatex">\(T\)</span>):</p>
+<div id="eq-crow_mtbf"></div>
+<div class="arithmatex">\[MTBF(T) = \frac{T^{1-\hat{\beta}}}{\hat{\lambda}\hat{\beta}}\tag{29.41}\]</div>
+<p>The Duane plot (<span class="arithmatex">\(\log\)</span> cumulative MTBF vs. <span class="arithmatex">\(\log\)</span> cumulative time) provides a visual check of whether growth is proceeding at the planned slope.</p>
+<h3 id="2993-failure-mode-effects-and-criticality-analysis"><span class="secnum">29.9.3</span> Failure Mode Effects and Criticality Analysis<a class="headerlink" href="#2993-failure-mode-effects-and-criticality-analysis" title="Permanent link">&para;</a></h3>
+<p>FMECA is performed per MIL-STD-1629A on all missile subsystems. Each failure mode is assigned a Risk Priority Number:</p>
+<div id="eq-rpn"></div>
+<div class="arithmatex">\[RPN = S \times O \times D\tag{29.42}\]</div>
+<p>where <span class="arithmatex">\(S\)</span> is severity (1–10), <span class="arithmatex">\(O\)</span> is occurrence likelihood (1–10), and <span class="arithmatex">\(D\)</span> is detectability (1 = easily detected; 10 = undetectable). RPN <span class="arithmatex">\(\ge 100\)</span> triggers a mandatory corrective action. Criticality <span class="arithmatex">\(C_r\)</span> (from the MIL-1629A criticality matrix):</p>
+<div id="eq-criticality"></div>
+<div class="arithmatex">\[C_r = \beta \cdot \alpha_p \cdot \lambda_p \cdot t\tag{29.43}\]</div>
+<p>where <span class="arithmatex">\(\beta\)</span> is the conditional probability of mission failure given the failure mode, <span class="arithmatex">\(\alpha_p\)</span> is the failure mode ratio, <span class="arithmatex">\(\lambda_p\)</span> is the part failure rate, and <span class="arithmatex">\(t\)</span> is operating time.</p>
+<h3 id="2994-fracas-in-test-and-evaluation"><span class="secnum">29.9.4</span> FRACAS in Test and Evaluation<a class="headerlink" href="#2994-fracas-in-test-and-evaluation" title="Permanent link">&para;</a></h3>
+<p>During the flight test programme, FRACAS captures every anomaly—not just hardware failures but also software discrepancies, test equipment malfunctions, and operator errors. The database feeds reliability growth models (updated after each test event) and informs the programme manager’s assessment of readiness for the next milestone.</p>
+<h2 id="sec-test_ranges"><span class="secnum">29.10</span> Test Ranges and Facilities<a class="headerlink" href="#sec-test_ranges" title="Permanent link">&para;</a></h2>
+<h3 id="29101-united-states-test-ranges"><span class="secnum">29.10.1</span> United States Test Ranges<a class="headerlink" href="#29101-united-states-test-ranges" title="Permanent link">&para;</a></h3>
+<p><strong>White Sands Missile Range (WSMR), New Mexico.</strong> The largest overland test range in the United States at approximately 8,300 km<span class="arithmatex">\(^2\)</span> (plus out-of-the-range areas extending to 67,000 km<span class="arithmatex">\(^2\)</span> for special tests). WSMR hosts a complete suite of tracking and telemetry assets (16 tracking radar sites, 10 telemetry stations), an inertial test complex, ballistic targets, and environmental test facilities. Classified programs are accommodated with appropriate facility controls. WSMR has hosted tests of Patriot, Javelin, ATACMS, and many strategic ballistic missile components.</p>
+<p><strong>Point Mugu Naval Air Warfare Center (NAWCWD), California.</strong> The Pacific Missile Test Range provides 58,000 km<span class="arithmatex">\(^2\)</span> of sea range. It is the primary range for AIM-9X, AIM-120 AMRAAM, HARM, and ship-launched cruise missile testing, offering overwater flight with uninhabited drop zones.</p>
+<p><strong>Eglin Air Force Base / Gulf Test and Training Range (GTTR), Florida.</strong> Encompasses approximately 170,000 km<span class="arithmatex">\(^2\)</span> of water range over the Gulf of Mexico. Eglin is the home of the Air Force Research Laboratory Munitions Directorate and hosts the primary test sites for all Air Force air-to-ground and air-to-air munitions.</p>
+<p><strong>China Lake Naval Air Weapons Station (NAWS), California.</strong> A 4,500 km<span class="arithmatex">\(^2\)</span> desert test site with unrestricted airspace to 18 km. Specialises in air-launched weapons; hosts the Naval Air Weapons Center Weapons Division. Extreme thermal environments (surface temperatures to 65°C) are ideal for EO/IR seeker testing.</p>
+<p><strong>Kwajalein Atoll (Ronald Reagan Ballistic Missile Defense Test Site, RTS).</strong> A 1,700 km downrange site in the Pacific, used for intercontinental ballistic missile (ICBM) re-entry vehicle testing and ballistic missile defence (BMD) intercept testing. The long-range geometry (ICBM range 5,000–8,000 km) cannot be replicated at any continental US range.</p>
+<h3 id="29102-international-test-ranges"><span class="secnum">29.10.2</span> International Test Ranges<a class="headerlink" href="#29102-international-test-ranges" title="Permanent link">&para;</a></h3>
+<p><strong>Woomera Range Complex (WRC), South Australia.</strong> At 127,000 km<span class="arithmatex">\(^2\)</span>, Woomera is the world’s largest overland range. The restricted airspace volume extends to unlimited altitude, enabling supersonic and hypersonic testing without altitude limits. Australia’s proximity to equatorial launch windows and the restricted Southern Hemisphere ocean provide unique long-range opportunities. WRC has been used for hypersonic glide vehicle research (HiFiRE programme) and extended-range glide-capable munitions.</p>
+<p><strong>Hebrides Range (HMR), United Kingdom.</strong> Located on the Scottish island chain with 150,000 km<span class="arithmatex">\(^2\)</span> of instrumented sea range, HMR is operated by QinetiQ under contract to the UK MoD. It is used for Brimstone, CAMM (Common Anti-air Modular Missile), and sea-skimming missile tests. Adverse weather conditions (North Atlantic) are a feature as much as a liability, providing realistic at-sea target environments.</p>
+<p><strong>DGA Essais de Missiles, Landes, France.</strong> The French defence procurement agency (DGA) operates a sea range off the Landes coast on the Bay of Biscay. Aster, Scalp EG/Storm Shadow, and Exocet testing has been conducted here. The range includes a dedicated seeker evaluation site with IR and RF scene projectors.</p>
+<p><strong>Vidsel Test Range, Sweden.</strong> An overland range in northern Sweden; particularly valuable for cold-weather testing below <span class="arithmatex">\(-40\)</span>°C. Used by Saab for RBS-15 and BILL missile tests; NATO partners also use it for cold-environment qualification.</p>
+<h3 id="29103-flight-termination-systems"><span class="secnum">29.10.3</span> Flight Termination Systems<a class="headerlink" href="#29103-flight-termination-systems" title="Permanent link">&para;</a></h3>
+<p>Every missile flight test over populated or shared airspace is equipped with a Flight Termination System (FTS). The FTS receives a coded command from the RSO and immediately terminates propulsion and/or destroys the airframe to limit the debris footprint.</p>
+<p>FTS components:</p>
+<ul>
+<li>
+<p><strong>Command receiver:</strong> Dual-redundant; IRIG-106 Chapter 4 compliant; frequency diversity (dual-frequency) to resist jamming.</p>
+</li>
+<li>
+<p><strong>Termination devices:</strong> Linear-shaped charge (LSC) that severs the motor case (terminating thrust); or explosive ordnance disposal (EOD) charge that fragments the airframe.</p>
+</li>
+<li>
+<p><strong>Autonomous FTS (AFTS):</strong> Onboard position-based logic terminates flight if the vehicle exits the pre-planned safety volume, independent of ground command (required by Eastern and Western Test Range safety manuals for manned-space but increasingly applied to long-range missile tests).</p>
+</li>
+</ul>
+<p>The safe distance <span class="arithmatex">\(R_{FTS}\)</span> from an FTS debris footprint scales with vehicle kinetic energy at activation:</p>
+<div id="eq-fts_debris"></div>
+<div class="arithmatex">\[R_{debris} \approx \frac{1}{g} \sqrt{2 E_{kinetic}} \approx \frac{V_{FTS}}{g} \cdot V_{FTS}
+             = \frac{V_{FTS}^2}{g}\tag{29.44}\]</div>
+<p>at a 45° ballistic trajectory assumption. This provides a rapid first estimate; detailed debris dispersion is computed by Monte Carlo simulation of fragmentation patterns.</p>
+<div class="tbl" id="tab-range_instr">
+<div class="tbl-caption"><strong>Table 29.5.</strong> Representative instrumentation accuracy at major test ranges</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Sensor</strong></th>
+<th style="text-align: left;"><strong>Position Accuracy</strong></th>
+<th style="text-align: left;"><strong>Velocity Accuracy</strong></th>
+<th style="text-align: left;"><strong>Update Rate</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">FPS-16 radar</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 1\,\text{m}\)</span> range</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 0.3\,\text{m/s}\)</span></td>
+<td style="text-align: left;">10–60 Hz</td>
+</tr>
+<tr>
+<td style="text-align: left;">AN/MPS-39 MOTR</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 3\,\text{m}\)</span> range</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 0.5\,\text{m/s}\)</span></td>
+<td style="text-align: left;">10 Hz</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cinetheodolite</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 0.1\,\text{mrad}\)</span> angle</td>
+<td style="text-align: left;">(derived)</td>
+<td style="text-align: left;">30–60 fps</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPS/INS hybrid</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 0.3\,\text{m}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\pm 0.1\,\text{m/s}\)</span></td>
+<td style="text-align: left;">100 Hz</td>
+</tr>
+<tr>
+<td style="text-align: left;">VISAR</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;"><span class="math inline">\(\pm 1\,\text{m/s}\)</span></td>
+<td style="text-align: left;">CW (ns res.)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-test_data"><span class="secnum">29.11</span> Test Data Management and Reporting<a class="headerlink" href="#sec-test_data" title="Permanent link">&para;</a></h2>
+<h3 id="29111-data-management-infrastructure"><span class="secnum">29.11.1</span> Data Management Infrastructure<a class="headerlink" href="#29111-data-management-infrastructure" title="Permanent link">&para;</a></h3>
+<p>Modern missile test programs generate terabytes of data per flight test event. The FTI PCM stream at 50 Mbit/s over a 60-second flight produces 3.75 GB of raw data per channel (before multiplexing). Data management requirements:</p>
+<ul>
+<li>
+<p>Real-time display: selected key parameters on wall screens in the control room; limit alarm monitoring; GO/NO-GO assessment within seconds of event.</p>
+</li>
+<li>
+<p>Archival: all raw data archived to RAID-6 storage; replicated offsite; retention for 25+ years (contractual requirement for strategic programs).</p>
+</li>
+<li>
+<p>Data rights: Test data generated at government ranges is US Government property; access controlled by ITAR, DoD 5220.22-M (NISPOM), and contract DD254.</p>
+</li>
+</ul>
+<h3 id="29112-test-reports-and-configuration-control"><span class="secnum">29.11.2</span> Test Reports and Configuration Control<a class="headerlink" href="#29112-test-reports-and-configuration-control" title="Permanent link">&para;</a></h3>
+<p>Test results are documented in a Test Report (TR) for each event, covering:</p>
+<ol>
+<li>
+<p>Test objectives and pass/fail criteria (restated from ATP)</p>
+</li>
+<li>
+<p>Configuration at test (hardware serial numbers, software versions, date)</p>
+</li>
+<li>
+<p>Environmental conditions at time of test</p>
+</li>
+<li>
+<p>Results: measured values vs. specified limits; statistical summary</p>
+</li>
+<li>
+<p>Anomalies: description, preliminary root cause, FRACAS number</p>
+</li>
+<li>
+<p>Disposition: system status; readiness for next test event</p>
+</li>
+</ol>
+<p>Configuration control is enforced by a Configuration Control Board (CCB) which approves any deviation between successive test configurations. This ensures that performance improvements between tests are attributable to deliberate design changes, not accidental configuration drift.</p>
+<h3 id="29113-statistical-methods-in-te"><span class="secnum">29.11.3</span> Statistical Methods in T&amp;E<a class="headerlink" href="#29113-statistical-methods-in-te" title="Permanent link">&para;</a></h3>
+<p>Statistical rigour is essential when drawing conclusions from the inevitably small sample sizes of expensive flight tests. Key methods:</p>
+<p><strong>Sequential probability ratio test (SPRT):</strong> Allows accept/reject decisions to be made after each test rather than waiting for a full lot. The likelihood ratio after <span class="arithmatex">\(n\)</span> tests:</p>
+<div id="eq-sprt"></div>
+<div class="arithmatex">\[\Lambda_n = \prod_{i=1}^{n} \frac{f(x_i | H_1)}{f(x_i | H_0)}\tag{29.45}\]</div>
+<p>Accept <span class="arithmatex">\(H_0\)</span> if <span class="arithmatex">\(\Lambda_n \le B\)</span>; accept <span class="arithmatex">\(H_1\)</span> if <span class="arithmatex">\(\Lambda_n \ge A\)</span>; continue testing if <span class="arithmatex">\(B &lt; \Lambda_n &lt; A\)</span>. For Type I error <span class="arithmatex">\(\alpha = 0.10\)</span> and Type II error <span class="arithmatex">\(\beta = 0.10\)</span>: <span class="arithmatex">\(A \approx (1-\beta)/\alpha = 9\)</span> and <span class="arithmatex">\(B \approx \beta/(1-\alpha) = 0.11\)</span>.</p>
+<p><strong>Bayesian inference:</strong> Prior knowledge of system reliability (from component tests, simulation, predecessor systems) is combined with flight test evidence to give a posterior distribution on <span class="arithmatex">\(P_d\)</span>:</p>
+<div id="eq-bayes_posterior"></div>
+<div class="arithmatex">\[p(P_d | k, n) \propto P_d^k (1-P_d)^{n-k} \cdot \pi(P_d)\tag{29.46}\]</div>
+<p>A Beta(<span class="arithmatex">\(\alpha_0, \beta_0\)</span>) prior with <span class="arithmatex">\(\alpha_0 + \beta_0 = 10\)</span> (10 equivalent prior tests) combined with <span class="arithmatex">\(k = 6\)</span> successes in <span class="arithmatex">\(n = 7\)</span> flight tests gives a posterior Beta<span class="arithmatex">\((6+\alpha_0,\, 1+\beta_0)\)</span>, from which any credible interval may be computed analytically.</p>
+<p><strong>Design of experiments (DoE):</strong> A full factorial or response surface design of flight test conditions (launch altitude, closing speed, target aspect, countermeasure setting) with fractional factorial reduction enables maximum information extraction from the fewest test events. A <span class="arithmatex">\(2^k\)</span> fractional factorial design with <span class="arithmatex">\(k = 5\)</span> factors at 2 levels yields 16 runs (quarter fraction) covering all main effects and two-factor interactions simultaneously.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch28-missile-manufacturing.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 28. Missile Manufacturing">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                28. Missile Manufacturing
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch30-hypersonic-vehicles.html" class="md-footer__link md-footer__link--next" aria-label="Next: 30. Hypersonic Vehicles">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                30. Hypersonic Vehicles
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

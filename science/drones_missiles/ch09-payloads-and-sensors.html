@@ -1,0 +1,3562 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch09-payloads-and-sensors.html">
+  
+  
+    <link rel="prev" href="ch08-communication-systems.html">
+  
+  
+    <link rel="next" href="ch10-software-autonomy-and-artificial-intelligence.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>9. Payloads and Sensors - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-payload_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              9. Payloads and Sensors
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-payload_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Introduction to UAV and Missile Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.1 Introduction to UAV and Missile Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-payload_taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.1 Payload Classification Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#912-payload-performance-trade-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.2 Payload Performance Trade-space
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-eo_ir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Electro-Optical and Infrared Sensors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 Electro-Optical and Infrared Sensors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cmos_ccd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 Visible-Band Cameras: CMOS vs CCD Sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lens_optics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 Lens Optics and Field of View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gsd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 Ground Sample Distance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ir_cameras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 Infrared Cameras
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ir_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.5 Thermal Imaging System Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gimbals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.6 Gimbal Stabilisation Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-multispectral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.7 Multi-Spectral and Hyperspectral Imaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Synthetic Aperture Radar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 Synthetic Aperture Radar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sar_principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.1 Aperture Synthesis Principle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sar_range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.2 Range Resolution and Chirp Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sar_modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.3 SAR Modes of Operation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-prf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.4 Pulse Repetition Frequency Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-insar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.5 Interferometric SAR and DEM Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-polsar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.6 Polarimetric SAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-minisar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.7 Miniaturised UAV SAR Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lidar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 LiDAR and 3D Mapping
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.4 LiDAR and 3D Mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lidar_principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4.1 LiDAR Operating Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-pointcloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4.2 Point Cloud Metrics and Full-Waveform Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mapping_pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4.3 3D Mapping Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sigint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 SIGINT and ELINT Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 SIGINT and ELINT Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-esm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5.1 Electronic Support Measures (ESM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-df" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5.2 Direction Finding Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sdr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5.3 Software-Defined Radio SIGINT Platforms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-weapons_payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6 Weapons Payloads for UCAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.6 Weapons Payloads for UCAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-weapons_integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6.1 Electrical and Mechanical Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-weapons_examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6.2 Representative Guided Weapons
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cargo_payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7 Cargo and Logistics Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.7 Cargo and Logistics Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cargo_cg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7.1 Load Carrying and Centre of Gravity Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7.2 Precision Delivery Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8 Electronic Warfare Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.8 Electronic Warfare Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-radar_jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8.1 Radar Jamming Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gps_jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8.2 GPS Denial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-payload_integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9 Payload Integration Engineering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.9 Payload Integration Engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-weight_balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.1 Weight, Balance, and Mass Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-electrical_interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.2 Electrical Interface Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-vib_isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.3 Vibration Isolation Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-thermal_payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.4 Thermal Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-emi_emc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.5 EMI/EMC Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-pms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.6 Payload Management System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-payload_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.7 Summary Table: Representative UAV Payload Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-payload_conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.10 Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-payload_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1 Introduction to UAV and Missile Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.1 Introduction to UAV and Missile Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-payload_taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.1 Payload Classification Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#912-payload-performance-trade-space" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.1.2 Payload Performance Trade-space
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-eo_ir" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2 Electro-Optical and Infrared Sensors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.2 Electro-Optical and Infrared Sensors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cmos_ccd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.1 Visible-Band Cameras: CMOS vs CCD Sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lens_optics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.2 Lens Optics and Field of View
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gsd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.3 Ground Sample Distance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ir_cameras" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.4 Infrared Cameras
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ir_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.5 Thermal Imaging System Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gimbals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.6 Gimbal Stabilisation Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-multispectral" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.2.7 Multi-Spectral and Hyperspectral Imaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3 Synthetic Aperture Radar
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.3 Synthetic Aperture Radar">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sar_principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.1 Aperture Synthesis Principle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sar_range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.2 Range Resolution and Chirp Bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sar_modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.3 SAR Modes of Operation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-prf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.4 Pulse Repetition Frequency Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-insar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.5 Interferometric SAR and DEM Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-polsar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.6 Polarimetric SAR
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-minisar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.3.7 Miniaturised UAV SAR Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lidar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4 LiDAR and 3D Mapping
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.4 LiDAR and 3D Mapping">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lidar_principle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4.1 LiDAR Operating Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-pointcloud" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4.2 Point Cloud Metrics and Full-Waveform Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mapping_pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.4.3 3D Mapping Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sigint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5 SIGINT and ELINT Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.5 SIGINT and ELINT Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-esm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5.1 Electronic Support Measures (ESM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-df" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5.2 Direction Finding Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sdr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.5.3 Software-Defined Radio SIGINT Platforms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-weapons_payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6 Weapons Payloads for UCAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.6 Weapons Payloads for UCAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-weapons_integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6.1 Electrical and Mechanical Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-weapons_examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.6.2 Representative Guided Weapons
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cargo_payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7 Cargo and Logistics Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.7 Cargo and Logistics Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cargo_cg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7.1 Load Carrying and Centre of Gravity Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.7.2 Precision Delivery Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_payloads" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8 Electronic Warfare Payloads
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.8 Electronic Warfare Payloads">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-radar_jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8.1 Radar Jamming Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gps_jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.8.2 GPS Denial
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-payload_integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9 Payload Integration Engineering
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9.9 Payload Integration Engineering">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-weight_balance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.1 Weight, Balance, and Mass Properties
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-electrical_interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.2 Electrical Interface Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-vib_isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.3 Vibration Isolation Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-thermal_payload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.4 Thermal Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-emi_emc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.5 EMI/EMC Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-pms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.6 Payload Management System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-payload_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.9.7 Summary Table: Representative UAV Payload Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-payload_conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9.10 Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-payloads">Chapter 9: Payloads and Sensors<a class="headerlink" href="#ch-payloads" title="Permanent link">&para;</a></h1>
+<h2 id="sec-payload_intro"><span class="secnum">9.1</span> Introduction to UAV and Missile Payloads<a class="headerlink" href="#sec-payload_intro" title="Permanent link">&para;</a></h2>
+<p>The payload subsystem defines the operational utility of any unmanned aerial vehicle (UAV) or guided weapon system. Whereas the airframe, propulsion, and avionics provide the means of flight, the payload delivers the mission effect — whether that effect is intelligence collection, precision strike, logistics delivery, or electronic warfare suppression. Modern unmanned platforms carry payloads that account for 20%–40% of gross take-off weight (GTOW), and the integration of these payloads into the airframe drives fundamental design constraints in aerodynamics, structural loading, electrical power budgets, thermal management, and electromagnetic compatibility.</p>
+<p>This chapter provides comprehensive treatment of the principal payload classes employed on contemporary and next-generation UAVs and cruise missiles. The discussion spans the full spectrum from passive electro-optical (EO) and infrared (IR) sensors, through active synthetic aperture radar (SAR) and laser rangefinders, to offensive weapons, logistical delivery systems, and electronic warfare (EW) suites. Each section addresses physical operating principles, quantitative performance metrics, design equations, integration constraints, and representative fielded systems.</p>
+<h3 id="subsec-payload_taxonomy"><span class="secnum">9.1.1</span> Payload Classification Taxonomy<a class="headerlink" href="#subsec-payload_taxonomy" title="Permanent link">&para;</a></h3>
+<p>Payloads are classified along two orthogonal axes: <em>function</em> (what the payload does) and <em>interaction mode</em> (whether it is passive, active, or kinetic). <a href="#tab-payload_taxonomy">Table 9.1</a> summarises the principal categories.</p>
+<div class="tbl" id="tab-payload_taxonomy">
+<div class="tbl-caption"><strong>Table 9.1.</strong> UAV and Missile Payload Classification</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Category</strong></th>
+<th style="text-align: left;"><strong>Sub-type</strong></th>
+<th style="text-align: left;"><strong>Interaction</strong></th>
+<th style="text-align: left;"><strong>Primary Application</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Intelligence, Surveillance</td>
+<td style="text-align: left;">EO/IR Camera</td>
+<td style="text-align: left;">Passive</td>
+<td style="text-align: left;">ISR, targeting</td>
+</tr>
+<tr>
+<td style="text-align: left;">&amp; Reconnaissance (ISR)</td>
+<td style="text-align: left;">Hyperspectral</td>
+<td style="text-align: left;">Passive</td>
+<td style="text-align: left;">MASINT, agriculture</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">SAR/ISAR</td>
+<td style="text-align: left;">Active</td>
+<td style="text-align: left;">All-weather mapping</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">LiDAR</td>
+<td style="text-align: left;">Active</td>
+<td style="text-align: left;">3-D mapping, obstacle detect.</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">SIGINT/ELINT</td>
+<td style="text-align: left;">Passive</td>
+<td style="text-align: left;">Signals collection</td>
+</tr>
+<tr>
+<td style="text-align: left;">Kinetic Effects</td>
+<td style="text-align: left;">Guided bombs</td>
+<td style="text-align: left;">Kinetic</td>
+<td style="text-align: left;">Precision strike</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Missiles</td>
+<td style="text-align: left;">Kinetic</td>
+<td style="text-align: left;">Stand-off strike</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Loitering munition</td>
+<td style="text-align: left;">Kinetic</td>
+<td style="text-align: left;">Time-critical targets</td>
+</tr>
+<tr>
+<td style="text-align: left;">Logistics</td>
+<td style="text-align: left;">Cargo pod</td>
+<td style="text-align: left;">Passive</td>
+<td style="text-align: left;">Resupply, medical</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Sling load</td>
+<td style="text-align: left;">Passive</td>
+<td style="text-align: left;">Outsized cargo</td>
+</tr>
+<tr>
+<td style="text-align: left;">Electronic Warfare</td>
+<td style="text-align: left;">Jammer</td>
+<td style="text-align: left;">Active</td>
+<td style="text-align: left;">Radar/comms denial</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">DRFM repeater</td>
+<td style="text-align: left;">Active/Deceptive</td>
+<td style="text-align: left;">False target generation</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Decoy</td>
+<td style="text-align: left;">Active</td>
+<td style="text-align: left;">Missile saturation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Communications</td>
+<td style="text-align: left;">Relay transponder</td>
+<td style="text-align: left;">Active</td>
+<td style="text-align: left;">BLOS communications</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">Mesh node</td>
+<td style="text-align: left;">Active</td>
+<td style="text-align: left;">Swarm networking</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="912-payload-performance-trade-space"><span class="secnum">9.1.2</span> Payload Performance Trade-space<a class="headerlink" href="#912-payload-performance-trade-space" title="Permanent link">&para;</a></h3>
+<p>The fundamental payload design trade is between <em>aperture size</em> (which drives sensing performance), <em>mass</em> (which reduces endurance or range), and <em>power consumption</em> (which heats the platform and demands larger batteries or generators). These interdependencies are captured in a generalised payload figure of merit:</p>
+<div id="eq-payload_fom"></div>
+<div class="arithmatex">\[\mathrm{FOM}_\mathrm{payload} = \frac{P_\mathrm{performance}}{m_\mathrm{payload} \cdot P_\mathrm{electric}}\tag{9.1}\]</div>
+<p>where <span class="arithmatex">\(P_\mathrm{performance}\)</span> is mission-relevant performance (e.g., spatial resolution in line-pairs/mm, detection range in km, or jam-to-signal ratio in dB), <span class="arithmatex">\(m_\mathrm{payload}\)</span> is payload mass in kg, and <span class="arithmatex">\(P_\mathrm{electric}\)</span> is average electrical power draw in watts.</p>
+<h2 id="sec-eo_ir"><span class="secnum">9.2</span> Electro-Optical and Infrared Sensors<a class="headerlink" href="#sec-eo_ir" title="Permanent link">&para;</a></h2>
+<p>Electro-optical sensors form the backbone of airborne reconnaissance, target acquisition, and precision guidance. They exploit reflected or emitted electromagnetic radiation in the visible (0.4–0.7 µ m), near-infrared (NIR, 0.7–1.0 µ m), shortwave infrared (SWIR, 1.0–2.5 µ m), mid-wave infrared (MWIR, 3–5 µ m), and longwave infrared (LWIR, 8–12 µ m) bands.</p>
+<h3 id="subsec-cmos_ccd"><span class="secnum">9.2.1</span> Visible-Band Cameras: CMOS vs CCD Sensors<a class="headerlink" href="#subsec-cmos_ccd" title="Permanent link">&para;</a></h3>
+<p>Contemporary airborne cameras almost universally employ one of two focal plane array (FPA) technologies: charge-coupled device (CCD) or complementary metal-oxide semiconductor (CMOS) active pixel sensor (APS).</p>
+<p><strong>CCD Architecture.</strong> In a CCD, each pixel accumulates photo-generated charge in a potential well. At the end of the integration period, charge is transferred serially toward a single output amplifier by sequentially clocking gate voltages. This serial readout architecture produces outstanding uniformity (fixed-pattern noise <span class="arithmatex">\(&lt;0.1\%\)</span>) and very low read noise (2–5 <span class="arithmatex">\(e^-\)</span> rms at slow pixel rates), making CCDs superior for faint-source astronomy or long-range surveillance where SNR is critical. However, the serial readout limits frame rate, and full-frame CCDs draw significant power during clocking.</p>
+<p><strong>CMOS Architecture.</strong> CMOS APS sensors place an amplifier, reset transistor, and select transistor within each pixel (three-transistor, 3T, or four-transistor, 4T architecture). Each pixel is addressed individually (random access), enabling rolling or global shutter readout at very high frame rates. Modern back-illuminated CMOS (BSI-CMOS) sensors achieve quantum efficiency <span class="arithmatex">\(&gt;80\%\)</span> across the visible band and read noise of 1–3 <span class="arithmatex">\(e^-\)</span>, closing much of the historical performance gap with CCD. CMOS sensors also integrate ADCs per column or pixel, dramatically reducing readout power. For UAV applications, CMOS dominates due to lower mass, lower power, and higher frame rates.</p>
+<p><strong>Key Sensor Metrics.</strong></p>
+<ul>
+<li>
+<p><strong>Resolution (megapixels):</strong> Total pixel count <span class="arithmatex">\(N = N_H \times N_V\)</span>. Common formats: 4K (<span class="arithmatex">\(3840 \times 2160 = 8.3\)</span> MP), 61 MP (full-frame, <span class="arithmatex">\(9504 \times 6336\)</span>), custom large-format mosaics up to 1.8 GP.</p>
+</li>
+<li>
+<p><strong>Pixel pitch <span class="arithmatex">\(p\)</span>:</strong> Physical size of one pixel, typically 1.4–8 µ m. Smaller pitch → denser array for fixed sensor format, but more diffraction-limited and lower dynamic range.</p>
+</li>
+<li>
+<p><strong>Dynamic Range:</strong> <span class="arithmatex">\(\mathrm{DR} = 20 \log_{10}(Q_\mathrm{sat}/\sigma_\mathrm{read})\)</span> where <span class="arithmatex">\(Q_\mathrm{sat}\)</span> is saturation charge capacity and <span class="arithmatex">\(\sigma_\mathrm{read}\)</span> is read noise. Typical values 60–80 dB.</p>
+</li>
+<li>
+<p><strong>Signal-to-Noise Ratio (SNR):</strong> Under shot-noise-limited illumination:</p>
+</li>
+</ul>
+<div id="eq-snr_camera"></div>
+<div class="arithmatex">\[\mathrm{SNR} = \frac{Q_e}{\sqrt{Q_e + Q_d t + \sigma_\mathrm{read}^2 + \sigma_\mathrm{ADC}^2}}\tag{9.2}\]</div>
+<p>where <span class="arithmatex">\(Q_e = \eta \Phi t\)</span> is the signal electrons (<span class="arithmatex">\(\eta\)</span> = quantum efficiency, <span class="arithmatex">\(\Phi\)</span> = photon flux, <span class="arithmatex">\(t\)</span> = integration time), <span class="arithmatex">\(Q_d\)</span> is dark current electrons per second, <span class="arithmatex">\(\sigma_\mathrm{read}\)</span> is read noise, and <span class="arithmatex">\(\sigma_\mathrm{ADC}\)</span> is ADC quantisation noise.</p>
+<ul>
+<li><strong>Modulation Transfer Function (MTF):</strong> The MTF describes spatial frequency response. The system MTF is the product of individual component MTFs:</li>
+</ul>
+<div id="eq-mtf_system"></div>
+<div class="arithmatex">\[\mathrm{MTF}_\mathrm{system}(f) = \mathrm{MTF}_\mathrm{lens}(f) \cdot \mathrm{MTF}_\mathrm{detector}(f) \cdot \mathrm{MTF}_\mathrm{motion}(f) \cdot \mathrm{MTF}_\mathrm{atm}(f)\tag{9.3}\]</div>
+<p>The detector MTF for a square pixel of pitch <span class="arithmatex">\(p\)</span> is:</p>
+<div id="eq-mtf_detector"></div>
+<div class="arithmatex">\[\mathrm{MTF}_\mathrm{det}(f) = \left|\mathrm{sinc}(p \cdot f)\right| = \left|\frac{\sin(\pi p f)}{\pi p f}\right|\tag{9.4}\]</div>
+<p>where <span class="arithmatex">\(f\)</span> is spatial frequency in cycles per mm. The Nyquist frequency is <span class="arithmatex">\(f_N = 1/(2p)\)</span>.</p>
+<h3 id="subsec-lens_optics"><span class="secnum">9.2.2</span> Lens Optics and Field of View<a class="headerlink" href="#subsec-lens_optics" title="Permanent link">&para;</a></h3>
+<p>The fundamental thin-lens equation relates object distance <span class="arithmatex">\(d_o\)</span>, image distance <span class="arithmatex">\(d_i\)</span>, and focal length <span class="arithmatex">\(f\)</span>:</p>
+<div id="eq-thin_lens"></div>
+<div class="arithmatex">\[\frac{1}{f} = \frac{1}{d_o} + \frac{1}{d_i}\tag{9.5}\]</div>
+<p>For airborne systems, <span class="arithmatex">\(d_o \gg f\)</span> (object at near-infinity), so <span class="arithmatex">\(d_i \approx f\)</span>. The f-number (f/#) is defined as:</p>
+<div id="eq-fnumber"></div>
+<div class="arithmatex">\[f/\# = \frac{f}{D_\mathrm{aperture}}\tag{9.6}\]</div>
+<p>A lens with a lower f/# collects more light (irradiance <span class="arithmatex">\(\propto 1/(f/\#)^2\)</span>) but is harder to correct for aberrations and is physically larger. Airborne EO lenses typically range from f/2.8 to f/5.6.</p>
+<p>The full-angle field of view (FOV) in the horizontal direction is:</p>
+<div id="eq-fov_horizontal"></div>
+<div class="arithmatex">\[\mathrm{FOV}_H = 2 \arctan\!\left(\frac{W_\mathrm{sensor}}{2f}\right)\tag{9.7}\]</div>
+<p>where <span class="arithmatex">\(W_\mathrm{sensor}\)</span> is the sensor width. For example, a 36 mm sensor with a 50 mm lens: <span class="arithmatex">\(\mathrm{FOV}_H = 2\arctan(18/50) = 39.6°\)</span>.</p>
+<h3 id="subsec-gsd"><span class="secnum">9.2.3</span> Ground Sample Distance<a class="headerlink" href="#subsec-gsd" title="Permanent link">&para;</a></h3>
+<p>The ground sample distance (GSD) is the ground-projected size of one pixel — the most operationally significant metric linking camera optics to image intelligence. It is given by:</p>
+<div id="eq-gsd"></div>
+<div class="arithmatex">\[\mathrm{GSD} = \frac{H \cdot p}{f \cdot 1000}\tag{9.8}\]</div>
+<p>where <span class="arithmatex">\(H\)</span> is altitude above ground level (AGL) in metres, <span class="arithmatex">\(p\)</span> is pixel pitch in µ m, <span class="arithmatex">\(f\)</span> is focal length in mm, and GSD is in metres per pixel. Rearranging to find the required focal length for a target GSD:</p>
+<div id="eq-focal_req"></div>
+<div class="arithmatex">\[f_\mathrm{required} = \frac{H \cdot p}{\mathrm{GSD} \cdot 1000}\tag{9.9}\]</div>
+<p><strong>Example:</strong> A UAV at <span class="arithmatex">\(H = 300\)</span> m, sensor pixel pitch <span class="arithmatex">\(p = 3.76\)</span> µ m (Sony IMX477), requires <span class="arithmatex">\(\mathrm{GSD} = 5\)</span> cm. The required focal length is:</p>
+<div class="arithmatex">\[f = \frac{300 \times 3.76}{5 \times 1000 \times 10^{-2} \times 1000} = \frac{1128}{50} = 22.56\,\mathrm{mm}\]</div>
+<p>The total swath width on the ground at this altitude with a 12.33 mm wide sensor (Sony IMX477, <span class="arithmatex">\(4056\times3040\)</span>, <span class="arithmatex">\(3.76\)</span> µ m pitch):</p>
+<div id="eq-swath"></div>
+<div class="arithmatex">\[W_\mathrm{swath} = \frac{W_\mathrm{sensor} \cdot H}{f} = \frac{12.33 \times 300}{22.56} \approx 164\,\mathrm{m}\tag{9.10}\]</div>
+<p><a href="#tab-gsd_examples">Table 9.2</a> shows GSD for representative sensor/altitude combinations.</p>
+<div class="tbl" id="tab-gsd_examples">
+<div class="tbl-caption"><strong>Table 9.2.</strong> GSD as a Function of Altitude and Focal Length (pixel pitch = 4 µ m)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: right;"><strong>Alt (m)</strong></th>
+<th style="text-align: right;"><strong>f = 8 mm</strong></th>
+<th style="text-align: right;"><strong>f = 16 mm</strong></th>
+<th style="text-align: right;"><strong>f = 25 mm</strong></th>
+<th style="text-align: right;"><strong>f = 50 mm</strong></th>
+<th style="text-align: right;"><strong>f = 100 mm</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">5.0 cm</td>
+<td style="text-align: right;">2.5 cm</td>
+<td style="text-align: right;">1.6 cm</td>
+<td style="text-align: right;">0.8 cm</td>
+<td style="text-align: right;">0.4 cm</td>
+</tr>
+<tr>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">15.0 cm</td>
+<td style="text-align: right;">7.5 cm</td>
+<td style="text-align: right;">4.8 cm</td>
+<td style="text-align: right;">2.4 cm</td>
+<td style="text-align: right;">1.2 cm</td>
+</tr>
+<tr>
+<td style="text-align: right;">1000</td>
+<td style="text-align: right;">50.0 cm</td>
+<td style="text-align: right;">25.0 cm</td>
+<td style="text-align: right;">16.0 cm</td>
+<td style="text-align: right;">8.0 cm</td>
+<td style="text-align: right;">4.0 cm</td>
+</tr>
+<tr>
+<td style="text-align: right;">3000</td>
+<td style="text-align: right;">150 cm</td>
+<td style="text-align: right;">75 cm</td>
+<td style="text-align: right;">48 cm</td>
+<td style="text-align: right;">24 cm</td>
+<td style="text-align: right;">12 cm</td>
+</tr>
+<tr>
+<td style="text-align: right;">10000</td>
+<td style="text-align: right;">500 cm</td>
+<td style="text-align: right;">250 cm</td>
+<td style="text-align: right;">160 cm</td>
+<td style="text-align: right;">80 cm</td>
+<td style="text-align: right;">40 cm</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="subsec-ir_cameras"><span class="secnum">9.2.4</span> Infrared Cameras<a class="headerlink" href="#subsec-ir_cameras" title="Permanent link">&para;</a></h3>
+<p>Infrared cameras detect thermal emission from objects according to Planck’s radiation law. The spectral radiance of a blackbody at temperature <span class="arithmatex">\(T\)</span> is:</p>
+<div id="eq-planck"></div>
+<div class="arithmatex">\[L_\lambda(T) = \frac{2hc^2}{\lambda^5} \cdot \frac{1}{e^{hc/\lambda k_B T} - 1}\tag{9.11}\]</div>
+<p>where <span class="arithmatex">\(h = 6.626\times10^{-34}\)</span> J s is Planck’s constant, <span class="arithmatex">\(c = 3\times10^8\)</span> m/s, <span class="arithmatex">\(k_B = 1.381\times10^{-23}\)</span> J/K. Peak emission shifts with temperature according to Wien’s displacement law: <span class="arithmatex">\(\lambda_\mathrm{peak} = 2898/T\)</span> µ m (with <span class="arithmatex">\(T\)</span> in kelvin). For room-temperature objects (<span class="arithmatex">\(T \approx 300\)</span> K), <span class="arithmatex">\(\lambda_\mathrm{peak} \approx 9.7\)</span> µ m, well within the LWIR band.</p>
+<p><strong>MWIR (3–5 µ m) detectors</strong> are predominantly InSb (indium antimonide) or MCT (mercury cadmium telluride, HgCdTe). InSb requires cryogenic cooling to 77 K using a Stirling-cycle cooler to suppress thermally generated dark current. MCT detectors can be bandgap-engineered by varying the Cd/Hg ratio to cover any wavelength from 1–25 µ m and can achieve higher operating temperatures (HOT detectors, up to 150 K) by engineering wider bandgaps. MWIR is preferred when imaging hot targets (jet exhausts, missile plumes), where the contrast against background is maximum.</p>
+<p><strong>LWIR (8–12 µ m) detectors</strong> include cooled MCT, quantum well infrared photodetectors (QWIPs), and uncooled microbolometers. Uncooled microbolometers use resistive temperature sensors (vanadium oxide, VOx, or amorphous silicon, a-Si) that heat up when IR radiation is absorbed, changing their resistance. Arrays of 640<span class="arithmatex">\(\times\)</span>480 or 1024<span class="arithmatex">\(\times\)</span>768 are standard; 17 µ m or 12 µ m pitch bolometer arrays are now common. Uncooled detectors eliminate the mass, power, and reliability burden of cryocoolers, making them attractive for small UAVs.</p>
+<p><strong>Noise Equivalent Temperature Difference (NETD)</strong> is the most important figure of merit for thermal cameras:</p>
+<div id="eq-netd"></div>
+<div class="arithmatex">\[\mathrm{NETD} = \frac{\Delta T_\mathrm{noise}}{\Delta T_\mathrm{scene}} = \frac{V_\mathrm{noise}}{\partial V / \partial T}\tag{9.12}\]</div>
+<p>where <span class="arithmatex">\(\Delta T_\mathrm{noise}\)</span> is the apparent temperature fluctuation due to detector noise, and <span class="arithmatex">\(\partial V / \partial T\)</span> is the responsivity. High-performance cooled cameras achieve NETD <span class="arithmatex">\(&lt;20\)</span> mK; quality uncooled bolometers achieve 40–60 mK; budget sensors may be 80–120 mK. NETD <span class="arithmatex">\(&lt;50\)</span> mK is generally considered the threshold for reliable target recognition at operationally relevant distances.</p>
+<p>The Johnson criteria relate target detection, recognition, and identification (DRI) to the number of resolved cycles across the critical dimension of the target:</p>
+<div id="eq-johnson"></div>
+<div class="arithmatex">\[N_\mathrm{cycles} = \frac{d_\mathrm{target}}{2 \cdot \mathrm{GSD}}\tag{9.13}\]</div>
+<p>Detection requires <span class="arithmatex">\(N \geq 1\)</span>, recognition <span class="arithmatex">\(N \geq 4\)</span>, identification <span class="arithmatex">\(N \geq 8\)</span>.</p>
+<h3 id="subsec-ir_design"><span class="secnum">9.2.5</span> Thermal Imaging System Design<a class="headerlink" href="#subsec-ir_design" title="Permanent link">&para;</a></h3>
+<p>The signal chain for a thermal imaging system involves the detector, readout integrated circuit (ROIC), and digital processing. The charge generated per pixel per frame:</p>
+<div id="eq-ir_charge"></div>
+<div class="arithmatex">\[Q = \eta \cdot I_\lambda \cdot A_\mathrm{pixel} \cdot t_\mathrm{int} / (h\nu)\tag{9.14}\]</div>
+<p>where <span class="arithmatex">\(\eta\)</span> is quantum efficiency (50–80% for cooled MCT), <span class="arithmatex">\(I_\lambda\)</span> is photon irradiance, <span class="arithmatex">\(A_\mathrm{pixel}\)</span> is pixel area, and <span class="arithmatex">\(t_\mathrm{int}\)</span> is integration time. The ROIC capacitance sets maximum charge storage:</p>
+<div id="eq-roic_capacity"></div>
+<div class="arithmatex">\[Q_\mathrm{max} = C_\mathrm{ROIC} \cdot V_\mathrm{swing}\tag{9.15}\]</div>
+<p>Typical ROIC capacitances are 10–200 fF with voltage swings of 1–3 V, giving well capacities of <span class="arithmatex">\(10^7\)</span>–<span class="arithmatex">\(10^9\)</span> electrons.</p>
+<p><a href="#tab-ir_comparison">Table 9.3</a> compares key IR detector technologies.</p>
+<div class="tbl" id="tab-ir_comparison">
+<div class="tbl-caption"><strong>Table 9.3.</strong> Comparison of Infrared Detector Technologies</div>
+<div class="tbl-scroll">
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Technology</strong></td>
+<td style="text-align: left;"><strong>Band</strong></td>
+<td style="text-align: left;"><strong>Cooling</strong></td>
+<td style="text-align: left;"><strong>NETD</strong></td>
+<td style="text-align: left;"><strong>D*</strong></td>
+<td style="text-align: left;"><strong>Mass</strong></td>
+<td style="text-align: left;"><strong>Power</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(µ m)</td>
+<td style="text-align: left;">(K)</td>
+<td style="text-align: left;">(mK)</td>
+<td style="text-align: left;">(cm<span class="math inline">\(\sqrt{\mathrm{Hz}}\)</span>/W)</td>
+<td style="text-align: left;">(kg)</td>
+<td style="text-align: left;">(W)</td>
+</tr>
+<tr>
+<td style="text-align: left;">InSb FPA</td>
+<td style="text-align: left;">3–5</td>
+<td style="text-align: left;">77</td>
+<td style="text-align: left;">10–20</td>
+<td style="text-align: left;"><span class="math inline">\(3\times10^{11}\)</span></td>
+<td style="text-align: left;">0.5–1.5</td>
+<td style="text-align: left;">5–15</td>
+</tr>
+<tr>
+<td style="text-align: left;">MCT MWIR FPA</td>
+<td style="text-align: left;">3–5</td>
+<td style="text-align: left;">77–150</td>
+<td style="text-align: left;">10–30</td>
+<td style="text-align: left;"><span class="math inline">\(2\times10^{11}\)</span></td>
+<td style="text-align: left;">0.5–2.0</td>
+<td style="text-align: left;">3–10</td>
+</tr>
+<tr>
+<td style="text-align: left;">MCT LWIR FPA</td>
+<td style="text-align: left;">8–12</td>
+<td style="text-align: left;">77</td>
+<td style="text-align: left;">15–25</td>
+<td style="text-align: left;"><span class="math inline">\(2\times10^{10}\)</span></td>
+<td style="text-align: left;">0.5–2.0</td>
+<td style="text-align: left;">5–15</td>
+</tr>
+<tr>
+<td style="text-align: left;">QWIP FPA</td>
+<td style="text-align: left;">8–10</td>
+<td style="text-align: left;">77</td>
+<td style="text-align: left;">20–40</td>
+<td style="text-align: left;"><span class="math inline">\(5\times10^{9}\)</span></td>
+<td style="text-align: left;">0.5–1.5</td>
+<td style="text-align: left;">5–12</td>
+</tr>
+<tr>
+<td style="text-align: left;">VOx Bolometer</td>
+<td style="text-align: left;">8–14</td>
+<td style="text-align: left;">Uncooled</td>
+<td style="text-align: left;">40–80</td>
+<td style="text-align: left;"><span class="math inline">\(2\times10^{8}\)</span></td>
+<td style="text-align: left;">0.1–0.5</td>
+<td style="text-align: left;">1–3</td>
+</tr>
+<tr>
+<td style="text-align: left;">a-Si Bolometer</td>
+<td style="text-align: left;">8–14</td>
+<td style="text-align: left;">Uncooled</td>
+<td style="text-align: left;">50–100</td>
+<td style="text-align: left;"><span class="math inline">\(1\times10^{8}\)</span></td>
+<td style="text-align: left;">0.05–0.3</td>
+<td style="text-align: left;">0.5–2</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="subsec-gimbals"><span class="secnum">9.2.6</span> Gimbal Stabilisation Systems<a class="headerlink" href="#subsec-gimbals" title="Permanent link">&para;</a></h3>
+<p>A gyroscopically stabilised gimbal decouples the sensor from airframe motion, maintaining pointing toward a target while the UAV pitches, rolls, and yaws. The performance requirements are stringent: airframe angular rates during turbulence can reach 20–50 deg/s, while image stabilisation requires residual motion <span class="arithmatex">\(&lt;0.1\)</span> mrad (equivalent to sub-pixel movement).</p>
+<p><strong>2-Axis Gimbals</strong> (pan, tilt) are adequate for forward-looking and downward-looking sensors where roll-stabilisation is provided by the airframe’s own roll attitude. They are lighter and simpler.</p>
+<p><strong>3-Axis Gimbals</strong> (roll, pitch, yaw) provide full decoupling and are required for precision targeting or when the UAV operates with significant roll. The Wescam MX-15D, Raytheon Multi-Spectral Targeting System (MTS-B), and DJI Zenmuse X7 are examples spanning military and commercial markets.</p>
+<p>The gimbal control architecture employs cascaded loops:</p>
+<div id="eq-gimbal_control"></div>
+<div class="arithmatex">\[\theta_\mathrm{gimbal}(s) = \frac{G_\mathrm{pos}(s)}{1 + G_\mathrm{pos}(s) G_\mathrm{rate}(s) P(s)} \cdot \theta_\mathrm{cmd}(s)\tag{9.16}\]</div>
+<p>where <span class="arithmatex">\(G_\mathrm{rate}(s)\)</span> is the inner angular rate controller (typically a lead-lag compensator), <span class="arithmatex">\(G_\mathrm{pos}(s)\)</span> is the outer position loop, and <span class="arithmatex">\(P(s)\)</span> is the plant transfer function. The inner rate loop bandwidth must exceed 10 Hz to reject airframe vibration; outer position loop bandwidth is typically 1–3 Hz. Gyroscopes mounted directly on the camera head (not on the airframe) are essential for inertial rate feedback — this prevents the base motion from appearing as a torque disturbance before the inner loop can reject it.</p>
+<p>The required torque motor stiffness against disturbance:</p>
+<div id="eq-gimbal_torque"></div>
+<div class="arithmatex">\[T_\mathrm{disturbance} = J \ddot{\theta}_\mathrm{airframe} + B \dot{\theta}_\mathrm{airframe}\tag{9.17}\]</div>
+<p>where <span class="arithmatex">\(J\)</span> is the gimbal axis inertia and <span class="arithmatex">\(B\)</span> is bearing friction. For a 1-kg gimbal with axis radius of gyration 0.05 m, <span class="arithmatex">\(J \approx 2.5\times10^{-3}\)</span> kg m<span class="arithmatex">\(^2\)</span>. At 50 deg/s<span class="arithmatex">\(^2\)</span> angular acceleration, <span class="arithmatex">\(T \approx 0.22\)</span> N m, setting the motor torque requirement.</p>
+<h3 id="subsec-multispectral"><span class="secnum">9.2.7</span> Multi-Spectral and Hyperspectral Imaging<a class="headerlink" href="#subsec-multispectral" title="Permanent link">&para;</a></h3>
+<p>Multi-spectral imagers capture images in a discrete set of spectral bands, typically: Blue (450 nm), Green (560 nm), Red (650 nm), Red-Edge (730 nm), NIR (840 nm), and optionally SWIR (1550 nm). Separate bandpass filters are applied to each detector or, in a single-sensor design, to a tiled Bayer-like mosaic.</p>
+<p>The Normalised Difference Vegetation Index (NDVI), used extensively in agricultural UAV applications, is:</p>
+<div id="eq-ndvi"></div>
+<div class="arithmatex">\[\mathrm{NDVI} = \frac{\rho_\mathrm{NIR} - \rho_\mathrm{Red}}{\rho_\mathrm{NIR} + \rho_\mathrm{Red}}\tag{9.18}\]</div>
+<p>where <span class="arithmatex">\(\rho\)</span> denotes band reflectance. NDVI ranges from <span class="arithmatex">\(-1\)</span> (water) through 0 (bare soil) to <span class="arithmatex">\(+1\)</span> (dense vegetation). Extended indices include the Red-Edge Chlorophyll Index (CIre) and the Enhanced Vegetation Index (EVI):</p>
+<div id="eq-evi"></div>
+<div class="arithmatex">\[\mathrm{EVI} = 2.5 \cdot \frac{\rho_\mathrm{NIR} - \rho_\mathrm{Red}}{\rho_\mathrm{NIR} + 6\rho_\mathrm{Red} - 7.5\rho_\mathrm{Blue} + 1}\tag{9.19}\]</div>
+<p><strong>Hyperspectral imaging</strong> captures a continuous spectrum at each pixel — typically 100–400 narrow spectral bands across 400–2500 nm with 5–10 nm spectral resolution. Pushbroom scanners use a line array of pixels with a dispersing element (prism or grating) spreading wavelengths along one dimension of a 2-D detector. As the platform moves, successive lines are scanned, building a 3-D data cube [<span class="arithmatex">\(x\)</span>, <span class="arithmatex">\(y\)</span>, <span class="arithmatex">\(\lambda\)</span>]. Spectral unmixing algorithms (matched filter, fully constrained least squares) identify material abundances at sub-pixel scale. Representative airborne hyperspectral payloads: Headwall Photonics Nano-Hyperspec (397–1003 nm, 270 bands, 0.36 kg), SPECIM AFX10 (400–1000 nm, 3.0 kg).</p>
+<h2 id="sec-sar"><span class="secnum">9.3</span> Synthetic Aperture Radar<a class="headerlink" href="#sec-sar" title="Permanent link">&para;</a></h2>
+<p>Synthetic aperture radar (SAR) overcomes the fundamental limitation of optical sensors — dependence on daylight and cloud-free conditions — by actively illuminating the scene with microwave or millimetre-wave energy and forming images from the coherent backscatter. SAR is employed on strategic ISR platforms (Global Hawk Block 30 with MP-RTIP), tactical UCAVs, and small commercial SAR satellites (Capella Space, ICEYE), and increasingly on tactical UAVs (<span class="arithmatex">\(&lt;100\)</span> kg) carrying miniaturised SAR payloads.</p>
+<h3 id="subsec-sar_principle"><span class="secnum">9.3.1</span> Aperture Synthesis Principle<a class="headerlink" href="#subsec-sar_principle" title="Permanent link">&para;</a></h3>
+<p>A real-aperture side-looking radar (SLAR) achieves azimuth (along-track) resolution:</p>
+<div id="eq-slar_resolution"></div>
+<div class="arithmatex">\[\delta_\mathrm{az}^\mathrm{SLAR} = \frac{\lambda R}{D}\tag{9.20}\]</div>
+<p>where <span class="arithmatex">\(\lambda\)</span> is wavelength, <span class="arithmatex">\(R\)</span> is slant range, and <span class="arithmatex">\(D\)</span> is physical antenna length. At <span class="arithmatex">\(R = 10\)</span> km, <span class="arithmatex">\(\lambda = 0.03\)</span> m (X-band), <span class="arithmatex">\(D = 0.5\)</span> m: <span class="arithmatex">\(\delta_\mathrm{az}^\mathrm{SLAR} = 600\)</span> m — tactically useless.</p>
+<p>SAR synthesises a large aperture <span class="arithmatex">\(L_\mathrm{SA}\)</span> equal to the distance flown while the target remains within the antenna beam. For a focused SAR, the coherent processing gain gives:</p>
+<div id="eq-sar_azimuth_resolution"></div>
+<div class="arithmatex">\[\delta_\mathrm{az}^\mathrm{SAR} = \frac{D}{2}\tag{9.21}\]</div>
+<p>This remarkable result shows that SAR azimuth resolution is <em>independent of range</em> and <em>inversely proportional to physical aperture size</em> — a smaller antenna gives finer azimuth resolution because it has a wider beam, dwelling on each point for longer. For <span class="arithmatex">\(D = 0.5\)</span> m, <span class="arithmatex">\(\delta_\mathrm{az}^\mathrm{SAR} = 0.25\)</span> m regardless of range.</p>
+<h3 id="subsec-sar_range"><span class="secnum">9.3.2</span> Range Resolution and Chirp Bandwidth<a class="headerlink" href="#subsec-sar_range" title="Permanent link">&para;</a></h3>
+<p>Range (cross-track) resolution is determined by the transmit signal bandwidth. For a linear frequency modulated (LFM, or chirp) pulse with bandwidth <span class="arithmatex">\(B\)</span>:</p>
+<div id="eq-range_resolution"></div>
+<div class="arithmatex">\[\delta_r = \frac{c}{2B}\tag{9.22}\]</div>
+<p>where <span class="arithmatex">\(c = 3\times10^8\)</span> m/s. To achieve <span class="arithmatex">\(\delta_r = 0.3\)</span> m, the required bandwidth is <span class="arithmatex">\(B = c/(2\delta_r) = 500\)</span> MHz. The time-bandwidth product of the chirp is:</p>
+<div id="eq-tbp"></div>
+<div class="arithmatex">\[\mathrm{TBP} = B \cdot \tau = \frac{c}{2\delta_r} \cdot \tau\tag{9.23}\]</div>
+<p>A long pulse (<span class="arithmatex">\(\tau = 10\)</span> µ s) with <span class="arithmatex">\(B = 500\)</span> MHz gives TBP <span class="arithmatex">\(= 5000\)</span>, yielding 5000:1 pulse compression gain in signal-to-noise ratio versus a single-frequency pulse of the same energy.</p>
+<p>The slant-range resolution maps to ground-range resolution as:</p>
+<div id="eq-ground_range_res"></div>
+<div class="arithmatex">\[\delta_\mathrm{gr} = \frac{\delta_r}{\sin\theta_\mathrm{inc}}\tag{9.24}\]</div>
+<p>where <span class="arithmatex">\(\theta_\mathrm{inc}\)</span> is the incidence angle. At <span class="arithmatex">\(\theta_\mathrm{inc} = 45°\)</span>, <span class="arithmatex">\(\delta_\mathrm{gr} = \sqrt{2}\,\delta_r\)</span>.</p>
+<h3 id="subsec-sar_modes"><span class="secnum">9.3.3</span> SAR Modes of Operation<a class="headerlink" href="#subsec-sar_modes" title="Permanent link">&para;</a></h3>
+<p><strong>Stripmap SAR:</strong> The antenna beam is fixed relative to the platform. The synthetic aperture length is <span class="arithmatex">\(L_\mathrm{SA} = \lambda R / D\)</span>, and azimuth resolution equals <span class="arithmatex">\(D/2\)</span> as derived above. Continuous strip mapping trades unlimited along-track coverage for fixed azimuth resolution.</p>
+<p><strong>Spotlight SAR:</strong> The antenna steers electronically or mechanically to dwell on a specific patch, extending the synthetic aperture to <span class="arithmatex">\(L_\mathrm{SA} \gg \lambda R/D\)</span>. Azimuth resolution is now:</p>
+<div id="eq-spotlight_az"></div>
+<div class="arithmatex">\[\delta_\mathrm{az}^\mathrm{spot} = \frac{\lambda R}{2 L_\mathrm{SA}}\tag{9.25}\]</div>
+<p>Spotlight mode achieves sub-0.1 m azimuth resolution at the cost of limited area coverage and more complex Doppler processing (non-linear phase history).</p>
+<p><strong>ScanSAR:</strong> The beam steps in elevation to cover multiple sub-swaths, widening total swath at the cost of reduced azimuth resolution (reduced dwell per sub-swath). Total swath width can be increased 3–5× compared to stripmap.</p>
+<p><strong>Burst-mode (TOPS):</strong> Terrain Observation with Progressive Scans (TOPS) sweeps the beam in azimuth, forcing uniform azimuth resolution across a wide swath; used in Sentinel-1.</p>
+<h3 id="subsec-prf"><span class="secnum">9.3.4</span> Pulse Repetition Frequency Constraints<a class="headerlink" href="#subsec-prf" title="Permanent link">&para;</a></h3>
+<p>The PRF must satisfy two competing constraints simultaneously:</p>
+<div id="eq-prf_doppler"></div>
+<div id="eq-prf_range"></div>
+<div class="arithmatex">\[\begin{align*}
+\mathrm{PRF} &amp;&gt; \frac{2V}{D} \quad \text{(Nyquist sampling of Doppler history)} \\
+\mathrm{PRF} &amp;&lt; \frac{c}{2 \Delta r_\mathrm{swath}} \quad \text{(avoid range ambiguities)}
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(V\)</span> is platform velocity and <span class="arithmatex">\(\Delta r_\mathrm{swath}\)</span> is swath extent in slant range. For a <span class="arithmatex">\(V = 100\)</span> m/s UAV, <span class="arithmatex">\(D = 0.3\)</span> m antenna: PRF <span class="arithmatex">\(&gt; 667\)</span> Hz. For a 10 km swath at 45° incidence, <span class="arithmatex">\(\Delta r_\mathrm{swath} = 14.1\)</span> km, requiring PRF <span class="arithmatex">\(&lt; 10.6\)</span> kHz. The window 667–10,600 Hz is a valid PRF range.</p>
+<h3 id="subsec-insar"><span class="secnum">9.3.5</span> Interferometric SAR and DEM Generation<a class="headerlink" href="#subsec-insar" title="Permanent link">&para;</a></h3>
+<p>InSAR uses two SAR images acquired from slightly different positions (baseline <span class="arithmatex">\(B_\perp\)</span> perpendicular to the line-of-sight). The interferometric phase difference <span class="arithmatex">\(\Delta\phi\)</span> between corresponding pixels is:</p>
+<div id="eq-insar_phase"></div>
+<div class="arithmatex">\[\Delta\phi = \frac{4\pi}{\lambda} \cdot \frac{B_\perp \sin\theta_\mathrm{inc}}{R} \cdot \Delta h\tag{9.28}\]</div>
+<p>where <span class="arithmatex">\(\Delta h\)</span> is the terrain height difference. The height ambiguity (height difference producing <span class="arithmatex">\(2\pi\)</span> phase change) is:</p>
+<div id="eq-height_ambiguity"></div>
+<div class="arithmatex">\[h_\mathrm{amb} = \frac{\lambda R}{2 B_\perp \sin\theta_\mathrm{inc}}\tag{9.29}\]</div>
+<p>Phase unwrapping (Goldstein branch-cut algorithm, minimum cost flow) converts wrapped phase to absolute height. At X-band (<span class="arithmatex">\(\lambda = 31\)</span> mm), <span class="arithmatex">\(R = 5\)</span> km, <span class="arithmatex">\(B_\perp = 20\)</span> m, <span class="arithmatex">\(\theta = 45°\)</span>: <span class="arithmatex">\(h_\mathrm{amb} \approx 5.5\)</span> m, providing sub-metre height accuracy after unwrapping. TanDEM-X achieves a global DEM with 12 m posting and 2 m absolute vertical accuracy.</p>
+<h3 id="subsec-polsar"><span class="secnum">9.3.6</span> Polarimetric SAR<a class="headerlink" href="#subsec-polsar" title="Permanent link">&para;</a></h3>
+<p>Full-polarimetric (quad-pol) SAR transmits and receives horizontal (H) and vertical (V) polarisations, yielding the <span class="arithmatex">\(2\times2\)</span> scattering matrix <span class="arithmatex">\(\mathbf{S}\)</span>:</p>
+<div id="eq-scattering_matrix"></div>
+<div class="arithmatex">\[\mathbf{S} = \begin{pmatrix} S_{HH} &amp; S_{HV} \\ S_{VH} &amp; S_{VV} \end{pmatrix}\tag{9.30}\]</div>
+<p>The Pauli decomposition decomposes <span class="arithmatex">\(\mathbf{S}\)</span> into a basis of canonical scatterers:</p>
+<div id="eq-pauli"></div>
+<div class="arithmatex">\[\mathbf{S} = \frac{S_{HH}+S_{VV}}{\sqrt{2}} \begin{pmatrix}1&amp;0\\0&amp;1\end{pmatrix} + \frac{S_{HH}-S_{VV}}{\sqrt{2}} \begin{pmatrix}1&amp;0\\0&amp;-1\end{pmatrix} + S_{HV}\sqrt{2} \begin{pmatrix}0&amp;1\\1&amp;0\end{pmatrix}\tag{9.31}\]</div>
+<p>The three Pauli components correspond to: odd-bounce (surface) scattering, double-bounce (corner reflectors, buildings, trees), and volume (diffuse, vegetation). False-colour Pauli composites allow rapid scene interpretation: urban areas appear bright in the double-bounce channel; forests appear bright in the volume channel.</p>
+<h3 id="subsec-minisar"><span class="secnum">9.3.7</span> Miniaturised UAV SAR Systems<a class="headerlink" href="#subsec-minisar" title="Permanent link">&para;</a></h3>
+<p>The IMSAR NSP-5 is representative of a modern miniaturised UAV SAR: 1.5 kg, 30 W, Ku-band, 0.3 m resolution in stripmap, deployable on Group 2 UAVs (MTOW 10–25 kg). The Capella Space X-band satellite SAR constellation achieves 0.5 m spotlight resolution from orbit. Key miniaturisation challenges are: (1) achieving sufficient pulse energy within regulatory emission limits; (2) vibration isolation of the antenna to maintain phase coherence; (3) real-time on-board processing (GPU-accelerated backprojection algorithm) to avoid high-bandwidth downlinks.</p>
+<h2 id="sec-lidar"><span class="secnum">9.4</span> LiDAR and 3D Mapping<a class="headerlink" href="#sec-lidar" title="Permanent link">&para;</a></h2>
+<p>Light detection and ranging (LiDAR) uses pulsed or modulated laser light to measure distance with centimetre-level accuracy. Airborne LiDAR is the enabling technology for high-resolution terrain models, infrastructure inspection, forest characterisation, and autonomous navigation.</p>
+<h3 id="subsec-lidar_principle"><span class="secnum">9.4.1</span> LiDAR Operating Principles<a class="headerlink" href="#subsec-lidar_principle" title="Permanent link">&para;</a></h3>
+<p><strong>Pulsed time-of-flight (ToF) LiDAR</strong> measures the round-trip travel time of a laser pulse:</p>
+<div id="eq-lidar_range"></div>
+<div class="arithmatex">\[R = \frac{c \cdot \Delta t}{2 n}\tag{9.32}\]</div>
+<p>where <span class="arithmatex">\(\Delta t\)</span> is time delay between transmit and receive, and <span class="arithmatex">\(n\)</span> is refractive index of air (<span class="arithmatex">\(\approx 1.0003\)</span>). Timing resolution of 50 ps corresponds to a range precision of <span class="arithmatex">\(\approx 7.5\)</span> mm. Laser wavelengths used: 905 nm (lower cost, Class 1 eye-safety with difficulty), 1064 nm (Nd:YAG, high peak power), 1550 nm (erbium-doped fibre, eye-safe at higher power, preferred for aviation).</p>
+<p><strong>Geiger-mode APD arrays</strong> operate individual avalanche photodiodes in single-photon Geiger mode. A single reflected photon triggers an avalanche and is registered as a detection event. Lidar Associates’ Jigsaw system demonstrated 1.6 billion pulses/second with mm-level resolution. Very low pulse energy is required, permitting high PRF and dense point clouds.</p>
+<p><strong>FMCW LiDAR</strong> (frequency-modulated continuous wave) transmits a chirped laser and measures range by the beat frequency between transmitted and received signals:</p>
+<div id="eq-fmcw_lidar"></div>
+<div class="arithmatex">\[f_\mathrm{beat} = \frac{2 R \cdot \Delta f}{c \cdot T_\mathrm{sweep}}\tag{9.33}\]</div>
+<p>where <span class="arithmatex">\(\Delta f\)</span> is chirp bandwidth and <span class="arithmatex">\(T_\mathrm{sweep}\)</span> is sweep period. FMCW also inherently measures radial velocity from the Doppler shift:</p>
+<div id="eq-fmcw_doppler"></div>
+<div class="arithmatex">\[v_r = \frac{f_\mathrm{Doppler} \cdot \lambda}{2}\tag{9.34}\]</div>
+<p>This simultaneous range and velocity measurement makes FMCW LiDAR attractive for autonomous vehicle obstacle avoidance. Companies including Aeva, Aurora, and Luminar have commercialised FMCW LiDAR.</p>
+<h3 id="subsec-pointcloud"><span class="secnum">9.4.2</span> Point Cloud Metrics and Full-Waveform Analysis<a class="headerlink" href="#subsec-pointcloud" title="Permanent link">&para;</a></h3>
+<p>Airborne LiDAR point density (points per square metre) is:</p>
+<div id="eq-point_density"></div>
+<div class="arithmatex">\[\rho_\mathrm{pts} = \frac{\mathrm{PRF} \cdot n_\mathrm{lines}}{V_\mathrm{GS} \cdot W_\mathrm{scan}}\tag{9.35}\]</div>
+<p>where <span class="arithmatex">\(n_\mathrm{lines}\)</span> is scan lines per second, <span class="arithmatex">\(V_\mathrm{GS}\)</span> is ground speed, <span class="arithmatex">\(W_\mathrm{scan}\)</span> is scan strip width. Typical topographic mapping requires <span class="arithmatex">\(\geq 4\)</span> pts/m<span class="arithmatex">\(^2\)</span>; structural inspection requires <span class="arithmatex">\(\geq 50\)</span> pts/m<span class="arithmatex">\(^2\)</span>.</p>
+<p>Full-waveform LiDAR digitises the entire returned pulse at 1–2 GHz sampling rate, yielding a waveform <span class="arithmatex">\(I(t)\)</span> that encodes the vertical distribution of reflecting surfaces. Decomposition by Gaussian fitting:</p>
+<div id="eq-fullwaveform"></div>
+<div class="arithmatex">\[I(t) = \sum_{k=1}^{N} A_k \exp\!\left(-\frac{(t - t_k)^2}{2\sigma_k^2}\right)\tag{9.36}\]</div>
+<p>extracts <span class="arithmatex">\(N\)</span> discrete returns with amplitude <span class="arithmatex">\(A_k\)</span>, range <span class="arithmatex">\(R_k = c t_k/2\)</span>, and pulse width <span class="arithmatex">\(\sigma_k\)</span>. This enables canopy penetration for forest biomass estimation, detection of low-lying terrain under vegetation, and characterisation of surface roughness.</p>
+<h3 id="subsec-mapping_pipeline"><span class="secnum">9.4.3</span> 3D Mapping Pipeline<a class="headerlink" href="#subsec-mapping_pipeline" title="Permanent link">&para;</a></h3>
+<p>The airborne LiDAR mapping pipeline integrates multiple sensor streams:</p>
+<div id="eq-lidar_georef"></div>
+<div class="arithmatex">\[\mathbf{p}_\mathrm{world} = \mathbf{T}_\mathrm{world}^\mathrm{IMU}(t) \cdot \mathbf{T}_\mathrm{IMU}^\mathrm{laser} \cdot \mathbf{p}_\mathrm{laser}\tag{9.37}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{p}_\mathrm{laser} = [R\cos\theta, R\sin\theta, 0]^T\)</span> is the point in laser-scanner frame, <span class="arithmatex">\(\mathbf{T}_\mathrm{IMU}^\mathrm{laser}\)</span> is the boresight calibration transform (determined in a calibration flight), and <span class="arithmatex">\(\mathbf{T}_\mathrm{world}^\mathrm{IMU}(t)\)</span> is the IMU/GNSS trajectory. GNSS-aided inertial navigation provides position accuracy <span class="arithmatex">\(\leq 5\)</span> cm (RTK GNSS) and angular accuracy <span class="arithmatex">\(\leq 0.02°\)</span> (tactical-grade IMU), driving absolute point accuracy of 2–5 cm vertically.</p>
+<p>LiDAR SLAM algorithms (LOAM, LIO-SAM) fuse point clouds with IMU data to estimate ego-motion without GPS, critical for indoor or GPS-denied environments. The LIO-SAM factor graph optimises IMU preintegration factors, LiDAR odometry factors, and GPS factors simultaneously using GTSAM.</p>
+<h2 id="sec-sigint"><span class="secnum">9.5</span> SIGINT and ELINT Payloads<a class="headerlink" href="#sec-sigint" title="Permanent link">&para;</a></h2>
+<p>Signals Intelligence (SIGINT) payloads are passive electronic sensors that intercept, record, and analyse electromagnetic emissions. SIGINT divides into Communications Intelligence (COMINT, intercepting communications signals) and Electronic Intelligence (ELINT, characterising radar and electronic systems).</p>
+<h3 id="subsec-esm"><span class="secnum">9.5.1</span> Electronic Support Measures (ESM)<a class="headerlink" href="#subsec-esm" title="Permanent link">&para;</a></h3>
+<p>An ESM system is fundamentally a broad-band receiver covering 0.1–18 GHz (sometimes 40 GHz) that detects, measures, and classifies emitters of interest. Key functions:</p>
+<ol>
+<li>
+<p><strong>Frequency measurement:</strong> Instantaneous frequency measurement (IFM) receiver resolves frequency to 1 MHz accuracy within nanoseconds.</p>
+</li>
+<li>
+<p><strong>Direction finding (DF):</strong> Determines the azimuth to the emitter.</p>
+</li>
+<li>
+<p><strong>Pulse parameter extraction:</strong> RF frequency, pulse width, pulse repetition interval (PRI), scan period, antenna polarisation.</p>
+</li>
+<li>
+<p><strong>Emitter identification:</strong> Match measured parameters against an emitter library (Electronic Order of Battle, EOB).</p>
+</li>
+</ol>
+<h3 id="subsec-df"><span class="secnum">9.5.2</span> Direction Finding Techniques<a class="headerlink" href="#subsec-df" title="Permanent link">&para;</a></h3>
+<p><strong>Angle-of-Arrival (AOA) interferometry</strong> exploits the phase difference between signals received at two antennas separated by baseline <span class="arithmatex">\(d\)</span>:</p>
+<div id="eq-aoa_phase"></div>
+<div class="arithmatex">\[\Delta\phi = \frac{2\pi d \sin\theta}{\lambda}\tag{9.38}\]</div>
+<p>where <span class="arithmatex">\(\theta\)</span> is the bearing to the emitter. Solving for <span class="arithmatex">\(\theta\)</span>:</p>
+<div id="eq-aoa_bearing"></div>
+<div class="arithmatex">\[\theta = \arcsin\!\left(\frac{\lambda \Delta\phi}{2\pi d}\right)\tag{9.39}\]</div>
+<p>Ambiguities arise when <span class="arithmatex">\(d &gt; \lambda/2\)</span> (the phase difference exceeds <span class="arithmatex">\(2\pi\)</span>). Multi-baseline interferometers (short, medium, and long baselines) resolve ambiguities: the short baseline (typically <span class="arithmatex">\(d = \lambda/2\)</span>) provides unambiguous but coarse angle; the long baseline (up to <span class="arithmatex">\(10\lambda\)</span>) provides fine resolution. DF accuracy <span class="arithmatex">\(\sigma_\theta\)</span>:</p>
+<div id="eq-df_accuracy"></div>
+<div class="arithmatex">\[\sigma_\theta = \frac{\lambda}{2\pi d \cos\theta \cdot \mathrm{SNR}^{1/2}}\tag{9.40}\]</div>
+<p><strong>TDOA (Time Difference of Arrival):</strong> Multiple UAVs or sensors measure the arrival time difference of the same emitter signal. Two TDOA measurements from three platforms yield two hyperbolic LOBs whose intersection fixes the emitter position. TDOA accuracy depends on timing synchronisation (GPS PPS to 100 ns) and signal bandwidth.</p>
+<h3 id="subsec-sdr"><span class="secnum">9.5.3</span> Software-Defined Radio SIGINT Platforms<a class="headerlink" href="#subsec-sdr" title="Permanent link">&para;</a></h3>
+<p>Modern SIGINT payloads are almost universally SDR-based, providing reconfigurability across frequency bands and waveforms:</p>
+<ul>
+<li>
+<p><strong>HackRF One:</strong> 1 MHz–6 GHz; 20 MHz BW; 8-bit ADC; &#36;320. Useful for hobby/research.</p>
+</li>
+<li>
+<p><strong>Ettus USRP B210:</strong> 70 MHz–6 GHz; 56 MHz BW; 12-bit ADC; <span class="arithmatex">\(\approx\)</span>&#36;1,100. Research/academic.</p>
+</li>
+<li>
+<p><strong>Pentek Jade XMC:</strong> DC–3 GHz; 3.2 GS/s; 16-bit; rugged; MIL-grade.</p>
+</li>
+<li>
+<p><strong>Mercury Systems ECDR-214:</strong> 2-channel wideband; VITA 57.1 FMC; FPGA processing.</p>
+</li>
+</ul>
+<p>The instantaneous dynamic range requirement for a military SIGINT payload is typically <span class="arithmatex">\(&gt;70\)</span> dB (to simultaneously detect weak signals in the presence of strong interferers), driving ADC bit depth to 14–16 bits and requiring low-noise front-end LNAs with <span class="arithmatex">\(&lt;2\)</span> dB noise figure.</p>
+<h2 id="sec-weapons_payloads"><span class="secnum">9.6</span> Weapons Payloads for UCAVs<a class="headerlink" href="#sec-weapons_payloads" title="Permanent link">&para;</a></h2>
+<p>Unmanned combat aerial vehicles (UCAVs) carry a range of precision guided munitions (PGMs), air-to-surface missiles, and loitering munitions. The integration of weapons onto UAV platforms introduces unique challenges related to structural certification, arming safety, and release dynamics.</p>
+<h3 id="subsec-weapons_integration"><span class="secnum">9.6.1</span> Electrical and Mechanical Integration<a class="headerlink" href="#subsec-weapons_integration" title="Permanent link">&para;</a></h3>
+<p>The NATO standard electrical interface for smart weapons is MIL-STD-1760, defining a 38-pin electrical connector that carries:</p>
+<ul>
+<li>
+<p>MIL-STD-1553B data bus (1 Mbit/s) for weapon initiation/status commands</p>
+</li>
+<li>
+<p>28 V DC power for weapon electronics</p>
+</li>
+<li>
+<p>Umbilical safety wire (fires weapon enable when released)</p>
+</li>
+<li>
+<p>Fuze arming and firing discrete signals</p>
+</li>
+<li>
+<p>High-speed Ethernet (1000BASE-T) in the latest Block D revision</p>
+</li>
+</ul>
+<p>The suspension and release unit (SRU) must provide the correct ejection force to clear the weapon from the aerodynamic wake before fins deploy. Ejection force <span class="arithmatex">\(F_e\)</span> must satisfy:</p>
+<div id="eq-ejection_force"></div>
+<div class="arithmatex">\[F_e \geq m_w \left( a_\mathrm{escape} + g \sin\gamma + \frac{q S_\mathrm{ref} C_{D,w}}{m_w} \right)\tag{9.41}\]</div>
+<p>where <span class="arithmatex">\(m_w\)</span> is weapon mass, <span class="arithmatex">\(a_\mathrm{escape}\)</span> is required separation acceleration (<span class="arithmatex">\(\geq 9.81\)</span> m/s<span class="arithmatex">\(^2\)</span>), <span class="arithmatex">\(\gamma\)</span> is flight path angle, <span class="arithmatex">\(q\)</span> is dynamic pressure, and <span class="arithmatex">\(C_{D,w}\)</span> is weapon drag coefficient.</p>
+<h3 id="subsec-weapons_examples"><span class="secnum">9.6.2</span> Representative Guided Weapons<a class="headerlink" href="#subsec-weapons_examples" title="Permanent link">&para;</a></h3>
+<p><strong>GBU-39 Small Diameter Bomb (SDB):</strong> Mass 110 kg; GPS/INS guidance; 13 cm diameter; 1.8 m length; glide range <span class="arithmatex">\(&gt;110\)</span> km from 40,000 ft release; CEP <span class="arithmatex">\(&lt;5\)</span> m. The SDB’s small cross-section (0.013 m<span class="arithmatex">\(^2\)</span>) allows four weapons per standard 1000 lb hardpoint station. SDB II (GBU-53/B) adds tri-mode seeker (MMW, IR, semi-active laser) for moving target engagement.</p>
+<p><strong>AGM-114 Hellfire:</strong> Mass 49 kg; length 1.63 m; diameter 178 mm; warhead 9 kg shaped charge HEAT; range 8 km; guidance: semi-active laser (SAL) homing or millimetre-wave (MMW) radar seeker (AGM-114L Longbow). Variants include thermobaric (AGM-114N) and kinetic energy rod (AGM-114R9X) warheads. Reaper (MQ-9) carries four Hellfire on two wing pylons.</p>
+<p><strong>Brimstone:</strong> BAE Systems dual-mode SAL/MMW missile; mass 48.5 kg; range 12+ km (powered, sea-skimming capable); active MMW seeker (Ku-band FMCW) enables autonomous target selection within a pre-defined engagement zone, permitting salvo firing without per-missile laser designation. Brimstone is qualified on the Protector (MQ-9B).</p>
+<p>The guidance accuracy for a laser-homing seeker follows a proportional navigation law; the miss distance (CEP) is a function of seeker noise and navigation ratio <span class="arithmatex">\(N'\)</span>:</p>
+<div id="eq-cep_seeker"></div>
+<div class="arithmatex">\[\mathrm{CEP} = K_\sigma \cdot \sigma_\varepsilon \cdot t_\mathrm{go}^2\tag{9.42}\]</div>
+<p>where <span class="arithmatex">\(\sigma_\varepsilon\)</span> is seeker angular noise (mrad), <span class="arithmatex">\(t_\mathrm{go}\)</span> is time-to-go (s), and <span class="arithmatex">\(K_\sigma\)</span> depends on navigation ratio (typically <span class="arithmatex">\(K_\sigma \approx 0.3\)</span> for <span class="arithmatex">\(N' = 4\)</span>).</p>
+<h2 id="sec-cargo_payloads"><span class="secnum">9.7</span> Cargo and Logistics Payloads<a class="headerlink" href="#sec-cargo_payloads" title="Permanent link">&para;</a></h2>
+<p>The application of UAVs to logistics — medical resupply, e-commerce last-mile delivery, and military forward resupply — has driven a distinct class of payload integration requirements focused on load carriage, quick release, and delivery accuracy.</p>
+<h3 id="subsec-cargo_cg"><span class="secnum">9.7.1</span> Load Carrying and Centre of Gravity Management<a class="headerlink" href="#subsec-cargo_cg" title="Permanent link">&para;</a></h3>
+<p>For a UAV with gross take-off weight <span class="arithmatex">\(W_\mathrm{GTOW}\)</span>, the payload CG offset <span class="arithmatex">\(\Delta x\)</span> shifts the total CG by:</p>
+<div id="eq-cg_shift"></div>
+<div class="arithmatex">\[\Delta x_\mathrm{total} = \frac{m_\mathrm{payload} \cdot \Delta x_\mathrm{payload}}{m_\mathrm{payload} + m_\mathrm{airframe}}\tag{9.43}\]</div>
+<p>CG shift must remain within the flight envelope CG envelope (typically <span class="arithmatex">\(\pm 5\)</span>% MAC for fixed-wing, <span class="arithmatex">\(\pm 30\)</span> mm from gimbal centre for multirotor). Adjustable payload rails or ballast systems compensate for variable payload masses.</p>
+<p>Vibration isolation of fragile cargo (medical diagnostics, blood products) uses passive elastomeric isolators designed so:</p>
+<div id="eq-vib_isolation"></div>
+<div class="arithmatex">\[f_\mathrm{nat} = \frac{1}{2\pi}\sqrt{\frac{k}{m}} &lt; \frac{f_\mathrm{vibration}}{2}\tag{9.44}\]</div>
+<p>to place the natural frequency below the dominant airframe vibration frequency (propeller fundamental and harmonics, typically 80–200 Hz for small multirotor). Isolation effectiveness at frequency ratio <span class="arithmatex">\(r = f/f_\mathrm{nat}\)</span>:</p>
+<div id="eq-transmissibility"></div>
+<div class="arithmatex">\[T_\mathrm{isolation} = \sqrt{\frac{1 + (2\zeta r)^2}{(1 - r^2)^2 + (2\zeta r)^2}}\tag{9.45}\]</div>
+<p>For <span class="arithmatex">\(r = 10\)</span> and <span class="arithmatex">\(\zeta = 0.05\)</span>: <span class="arithmatex">\(T_\mathrm{isolation} \approx 0.011\)</span> (-39 dB), meaning only 1.1% of vibration amplitude is transmitted to the payload.</p>
+<h3 id="subsec-delivery"><span class="secnum">9.7.2</span> Precision Delivery Systems<a class="headerlink" href="#subsec-delivery" title="Permanent link">&para;</a></h3>
+<p><strong>Zipline</strong> uses a fixed-wing UAV that flies overhead and drops a package on a winch-lowered cord, achieving <span class="arithmatex">\(\pm 3\)</span> m delivery accuracy in rural Rwanda and Ghana. A simple drop delivery without winch relies on GPS waypoint positioning plus wind compensation:</p>
+<div id="eq-drop_compensation"></div>
+<div class="arithmatex">\[x_\mathrm{release} = x_\mathrm{target} - \left( V_\mathrm{UAV} + V_\mathrm{wind} \right) \cdot \sqrt{\frac{2H}{g}}\tag{9.46}\]</div>
+<p>where <span class="arithmatex">\(H\)</span> is release altitude and <span class="arithmatex">\(\sqrt{2H/g}\)</span> is approximate free-fall time. Wing (Alphabet) hovers the delivery drone above the target and lowers the package on a tether, achieving <span class="arithmatex">\(\pm 5\)</span> m accuracy without landing. Amazon Prime Air uses sensor fusion (computer vision + GPS) for <span class="arithmatex">\(\pm 30\)</span> cm positioning.</p>
+<h2 id="sec-ew_payloads"><span class="secnum">9.8</span> Electronic Warfare Payloads<a class="headerlink" href="#sec-ew_payloads" title="Permanent link">&para;</a></h2>
+<p>Electronic warfare payloads carried by UAVs range from small battery-powered spot jammers on loitering munitions to sophisticated multi-function EW suites on MALE/HALE platforms. EW payloads are categorised as: Electronic Attack (EA), Electronic Protection (EP), and Electronic Support (ES).</p>
+<h3 id="subsec-radar_jamming"><span class="secnum">9.8.1</span> Radar Jamming Principles<a class="headerlink" href="#subsec-radar_jamming" title="Permanent link">&para;</a></h3>
+<p>For a jammer to effectively deny a radar’s ability to detect a target, the jammer-to-signal (J/S) ratio at the radar receiver must exceed a threshold <span class="arithmatex">\(\Gamma_J\)</span>. The J/S ratio for a stand-off jammer is:</p>
+<div id="eq-js_ratio"></div>
+<div class="arithmatex">\[\frac{J}{S} = \frac{P_J G_J \sigma_T R_T^4}{P_T G_T^2 \lambda^2 R_J^2 (4\pi)^2}\tag{9.47}\]</div>
+<p>where <span class="arithmatex">\(P_J\)</span> is jammer power, <span class="arithmatex">\(G_J\)</span> is jammer antenna gain toward the radar, <span class="arithmatex">\(\sigma_T\)</span> is target RCS, <span class="arithmatex">\(R_T\)</span> is target-to-radar range, <span class="arithmatex">\(P_T\)</span> is radar transmit power, <span class="arithmatex">\(G_T\)</span> is radar antenna gain, and <span class="arithmatex">\(R_J\)</span> is jammer-to-radar range. This shows J/S improves as <span class="arithmatex">\(R_J^{-2}\)</span> while signal falls as <span class="arithmatex">\(R_T^{-4}\)</span> — jamming becomes relatively easier as the jammer approaches the radar.</p>
+<p><strong>Digital RF Memory (DRFM) Jammer:</strong> A DRFM samples the incoming radar pulse, stores it in digital memory, and retransmits it with programmable delay and Doppler modifications. This creates false target echoes that the radar cannot distinguish from real targets. The false target range offset:</p>
+<div id="eq-drfm_range_offset"></div>
+<div class="arithmatex">\[\Delta R_\mathrm{false} = \frac{c \cdot \Delta\tau_\mathrm{delay}}{2}\tag{9.48}\]</div>
+<p>A 100 ns additional delay creates a false target 15 m further away. DRFM jammers are the primary counter-measure against modern pulse Doppler and FMCW seekers.</p>
+<h3 id="subsec-gps_jamming"><span class="secnum">9.8.2</span> GPS Denial<a class="headerlink" href="#subsec-gps_jamming" title="Permanent link">&para;</a></h3>
+<p>The minimum received GPS signal power at the antenna is <span class="arithmatex">\(-130\)</span> dBm (L1 C/A). A GPS jammer with EIRP of <span class="arithmatex">\(P_J G_J\)</span> watts denies GPS reception within a radius <span class="arithmatex">\(R_J\)</span> where:</p>
+<div id="eq-gps_denial"></div>
+<div class="arithmatex">\[R_J = \sqrt{\frac{P_J G_J}{4\pi \cdot P_\mathrm{threshold} \cdot (C/N_0)_\mathrm{required}}}\tag{9.49}\]</div>
+<p>More practically, GPS receivers track signals when the jamming-to-noise ratio <span class="arithmatex">\(J/N_0 &gt; C/N_0 - 3\)</span> dB. At this margin, tracking becomes unreliable. A 1 W omnidirectional GPS jammer (<span class="arithmatex">\(0\)</span> dBi) denies standard GPS receivers at roughly 25 km radius (free space); in practice terrain and blockage reduce this to 5–15 km for airborne jammers.</p>
+<h2 id="sec-payload_integration"><span class="secnum">9.9</span> Payload Integration Engineering<a class="headerlink" href="#sec-payload_integration" title="Permanent link">&para;</a></h2>
+<p>Payload integration is a systems engineering discipline that bridges payload performance requirements with airframe structural, electrical, and thermal constraints. Failures in integration — unexpected vibration, EMI corruption of sensor data, CG shifts beyond limits — are a leading source of mission failure in operational UAV programmes.</p>
+<h3 id="subsec-weight_balance"><span class="secnum">9.9.1</span> Weight, Balance, and Mass Properties<a class="headerlink" href="#subsec-weight_balance" title="Permanent link">&para;</a></h3>
+<p>The payload mass fraction, defined as <span class="arithmatex">\(f_\mathrm{pl} = m_\mathrm{payload}/m_\mathrm{GTOW}\)</span>, directly determines endurance through the Breguet range equation. For a multirotor UAV:</p>
+<div id="eq-endurance_hover"></div>
+<div class="arithmatex">\[E_\mathrm{hover} = \frac{m_\mathrm{battery} \cdot E_\mathrm{sp}}{P_\mathrm{hover}}\tag{9.50}\]</div>
+<div id="eq-hover_power"></div>
+<div class="arithmatex">\[P_\mathrm{hover} = \sqrt{\frac{(m_\mathrm{GTOW} g)^3}{2 \rho A_\mathrm{disk}}}\tag{9.51}\]</div>
+<p>where <span class="arithmatex">\(A_\mathrm{disk}\)</span> is the total rotor disk area and <span class="arithmatex">\(\rho\)</span> is air density. Adding payload mass <span class="arithmatex">\(\Delta m\)</span> reduces endurance by:</p>
+<div id="eq-endurance_sensitivity"></div>
+<div class="arithmatex">\[\frac{\Delta E}{E} \approx -\frac{3}{2} \cdot \frac{\Delta m}{m_\mathrm{GTOW}}\tag{9.52}\]</div>
+<p>A 10% payload mass increase reduces hover endurance by approximately 15%.</p>
+<h3 id="subsec-electrical_interface"><span class="secnum">9.9.2</span> Electrical Interface Standards<a class="headerlink" href="#subsec-electrical_interface" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-electrical_interfaces">Table 9.4</a> summarises the principal electrical and data bus standards used for UAV payload integration.</p>
+<div class="tbl" id="tab-electrical_interfaces">
+<div class="tbl-caption"><strong>Table 9.4.</strong> Payload Electrical Interface Standards</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Standard</strong></th>
+<th style="text-align: left;"><strong>Type</strong></th>
+<th style="text-align: left;"><strong>Data Rate</strong></th>
+<th style="text-align: left;"><strong>Max Nodes</strong></th>
+<th style="text-align: left;"><strong>Application</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MIL-STD-1553B</td>
+<td style="text-align: left;">Serial, half-duplex</td>
+<td style="text-align: left;">1 Mbit/s</td>
+<td style="text-align: left;">31 RTs</td>
+<td style="text-align: left;">Weapons, avionics</td>
+</tr>
+<tr>
+<td style="text-align: left;">RS-422</td>
+<td style="text-align: left;">Serial, full-duplex</td>
+<td style="text-align: left;">10 Mbit/s</td>
+<td style="text-align: left;">10 receivers</td>
+<td style="text-align: left;">Sensors, comms</td>
+</tr>
+<tr>
+<td style="text-align: left;">RS-485</td>
+<td style="text-align: left;">Serial, half-duplex</td>
+<td style="text-align: left;">10 Mbit/s</td>
+<td style="text-align: left;">32 nodes</td>
+<td style="text-align: left;">Multi-drop bus</td>
+</tr>
+<tr>
+<td style="text-align: left;">CAN bus</td>
+<td style="text-align: left;">Serial, half-duplex</td>
+<td style="text-align: left;">1 Mbit/s</td>
+<td style="text-align: left;">127 nodes</td>
+<td style="text-align: left;">Actuation, ESC</td>
+</tr>
+<tr>
+<td style="text-align: left;">100BASE-TX Eth</td>
+<td style="text-align: left;">Full-duplex</td>
+<td style="text-align: left;">100 Mbit/s</td>
+<td style="text-align: left;">Unlimited</td>
+<td style="text-align: left;">Video, high-BW</td>
+</tr>
+<tr>
+<td style="text-align: left;">1000BASE-T Eth</td>
+<td style="text-align: left;">Full-duplex</td>
+<td style="text-align: left;">1 Gbit/s</td>
+<td style="text-align: left;">Unlimited</td>
+<td style="text-align: left;">SAR, hyperspectral</td>
+</tr>
+<tr>
+<td style="text-align: left;">ARINC 429</td>
+<td style="text-align: left;">Serial, unidirectional</td>
+<td style="text-align: left;">100 kbit/s</td>
+<td style="text-align: left;">1 Tx/20 Rx</td>
+<td style="text-align: left;">Legacy avionics</td>
+</tr>
+<tr>
+<td style="text-align: left;">SpaceWire</td>
+<td style="text-align: left;">Serial, full-duplex</td>
+<td style="text-align: left;">200 Mbit/s</td>
+<td style="text-align: left;">32 nodes</td>
+<td style="text-align: left;">Space/mil sensors</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Hot-plug protection must prevent inrush currents from damaging power rails when payloads are connected with power applied. A simple solution uses a P-channel MOSFET with gate-drive slew rate limiting (inrush <span class="arithmatex">\(= C_\mathrm{bypass} \cdot dV/dt\)</span>). For a payload with 1 mF bypass capacitance and a target inrush <span class="arithmatex">\(&lt;1\)</span> A: <span class="arithmatex">\(dV/dt &lt; 1000\)</span> V/s, achieved with a 10 ms power-up ramp.</p>
+<h3 id="subsec-vib_isolation"><span class="secnum">9.9.3</span> Vibration Isolation Design<a class="headerlink" href="#subsec-vib_isolation" title="Permanent link">&para;</a></h3>
+<p>Airframe vibrations originate primarily from rotor/propeller blade passing frequencies. For an electric multirotor with <span class="arithmatex">\(N_p\)</span> propeller blades at RPM <span class="arithmatex">\(n\)</span>:</p>
+<div id="eq-blade_passing"></div>
+<div class="arithmatex">\[f_\mathrm{BPF} = \frac{N_p \cdot n}{60}\tag{9.53}\]</div>
+<p>A hex-rotor at 8000 RPM with 3-blade propellers: <span class="arithmatex">\(f_\mathrm{BPF} = 400\)</span> Hz. A 3-axis passive isolator using D30 polymer mounts achieves 20 dB insertion loss at 400 Hz when natural frequency is designed at <span class="arithmatex">\(f_\mathrm{nat} \approx 25\)</span> Hz (<span class="arithmatex">\(r = 16\)</span>).</p>
+<h3 id="subsec-thermal_payload"><span class="secnum">9.9.4</span> Thermal Management<a class="headerlink" href="#subsec-thermal_payload" title="Permanent link">&para;</a></h3>
+<p>Payload waste heat must be conducted and/or convected to the airstream. The thermal resistance from payload junction to ambient:</p>
+<div id="eq-thermal_resistance"></div>
+<div class="arithmatex">\[\theta_{j-a} = \theta_{j-c} + \theta_{c-h} + \theta_{h-a}\tag{9.54}\]</div>
+<p>where <span class="arithmatex">\(\theta_{j-c}\)</span> is junction-to-case (device), <span class="arithmatex">\(\theta_{c-h}\)</span> is case-to-heatsink (TIM), and <span class="arithmatex">\(\theta_{h-a}\)</span> is heatsink-to-ambient. For a 10 W payload in a 60°C ambient with maximum junction temperature 125°C:</p>
+<div id="eq-thermal_req"></div>
+<div class="arithmatex">\[\theta_{j-a} \leq \frac{125 - 60}{10} = 6.5\,\mathrm{K/W}\tag{9.55}\]</div>
+<p>Forced convection cooling achieves <span class="arithmatex">\(h \approx 50\)</span> W/m<span class="arithmatex">\(^2\)</span> K on a finned surface. Required fin area: <span class="arithmatex">\(A_\mathrm{fin} = P / (h \cdot \Delta T) = 10 / (50 \times 30) = 0.0067\)</span> m<span class="arithmatex">\(^2 = 67\)</span> cm<span class="arithmatex">\(^2\)</span>.</p>
+<h3 id="subsec-emi_emc"><span class="secnum">9.9.5</span> EMI/EMC Compliance<a class="headerlink" href="#subsec-emi_emc" title="Permanent link">&para;</a></h3>
+<p>MIL-STD-461G specifies emission and susceptibility limits for equipment installed on military vehicles and aircraft. Key requirements:</p>
+<ul>
+<li>
+<p>CE101/CE102: conducted emissions on power leads (30 Hz–10 MHz)</p>
+</li>
+<li>
+<p>RE102: radiated emissions from equipment (2 MHz–18 GHz)</p>
+</li>
+<li>
+<p>CS101/CS114: conducted susceptibility</p>
+</li>
+<li>
+<p>RS103: radiated susceptibility (field strength 10–200 V/m)</p>
+</li>
+</ul>
+<p>Digital payload processors switching at clock frequencies 100 MHz–2 GHz radiate clock harmonics across the RF spectrum. Shielding attenuation for a metal enclosure with aperture:</p>
+<div id="eq-shielding"></div>
+<div class="arithmatex">\[\mathrm{SE}_\mathrm{aperture} = 20 \log_{10}\!\left(\frac{\lambda}{2L_\mathrm{aperture}}\right) \quad \text{for } L_\mathrm{aperture} &lt; \lambda/2\tag{9.56}\]</div>
+<p>An aperture of 10 mm at 10 GHz (<span class="arithmatex">\(\lambda = 30\)</span> mm): SE <span class="arithmatex">\(= 20\log_{10}(30/20) = 3.5\)</span> dB — marginal. Waveguide-below-cutoff honeycomb panels achieve <span class="arithmatex">\(&gt;100\)</span> dB shielding for the same physical opening by cutting off propagation of wavelengths <span class="arithmatex">\(\lambda &gt; 2d_\mathrm{cell}\)</span>.</p>
+<figure class="fig fig-diagram" id="fig-gimbal_control">
+<img class="tikz" src="img/tikz-f7820c200769.svg" alt="Three-axis gimbal stabilisation control architecture showing inner rate loop and outer position loop. The IMU is mounted on the gimbal head itself to provide inertial stabilisation independent of…" loading="lazy" width="320" height="144">
+<figcaption><strong>Figure 9.1.</strong> Three-axis gimbal stabilisation control architecture showing inner rate loop and outer position loop. The IMU is mounted on the gimbal head itself to provide inertial stabilisation independent of airframe motion.</figcaption>
+</figure>
+
+<figure class="fig fig-diagram" id="fig-sar_block">
+<img class="tikz" src="img/tikz-97fdfb9360c0.svg" alt="Miniaturised UAV SAR payload block diagram showing transmit (TX) waveform generation, power amplification, T/R switching, receive LNA, downconversion, and digital signal processing chain. Motion…" loading="lazy" width="404" height="186">
+<figcaption><strong>Figure 9.2.</strong> Miniaturised UAV SAR payload block diagram showing transmit (TX) waveform generation, power amplification, T/R switching, receive LNA, downconversion, and digital signal processing chain. Motion compensation uses INS/GNSS navigation data to correct phase history.</figcaption>
+</figure>
+
+<h3 id="subsec-pms"><span class="secnum">9.9.6</span> Payload Management System Architecture<a class="headerlink" href="#subsec-pms" title="Permanent link">&para;</a></h3>
+<p>The payload management system (PMS) is the onboard computing and software layer that orchestrates multiple payload subsystems, manages recording, and provides the interface to the ground control station. Modern PMS architectures use a publish-subscribe middleware (DDS or ROS2) to decouple payload drivers from mission logic. Key PMS functions:</p>
+<ol>
+<li>
+<p><strong>Payload health monitoring:</strong> Periodic health-check messages; watchdog timers; power cycling on fault.</p>
+</li>
+<li>
+<p><strong>Recording management:</strong> Circular buffer with time-tagged sensor data; metadata injection (GPS, IMU, time); STANAG 4609 KLV metadata for EO/IR video.</p>
+</li>
+<li>
+<p><strong>Tasking and scheduling:</strong> Priority-based payload tasking queue; sensor slewing commands; coordinate transforms.</p>
+</li>
+<li>
+<p><strong>Data compression:</strong> H.264/H.265 video encoding; LAS compression for point clouds; CCSDS lossless compression for science data.</p>
+</li>
+<li>
+<p><strong>Downlink management:</strong> STANAG 4607 GMTI reports; STANAG 4609 video; prioritised delivery over constrained satellite or radio links.</p>
+</li>
+</ol>
+<h3 id="subsec-payload_summary"><span class="secnum">9.9.7</span> Summary Table: Representative UAV Payload Systems<a class="headerlink" href="#subsec-payload_summary" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-payload_summary">
+<div class="tbl-caption"><strong>Table 9.5.</strong> Representative Commercial and Military UAV Payload Systems (2024)</div>
+<div class="tbl-scroll">
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>System</strong></td>
+<td style="text-align: left;"><strong>Type</strong></td>
+<td style="text-align: right;"><strong>Mass</strong></td>
+<td style="text-align: right;"><strong>Power</strong></td>
+<td style="text-align: left;"><strong>Key Performance</strong></td>
+<td style="text-align: left;"><strong>Platform</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"><strong>(kg)</strong></td>
+<td style="text-align: right;"><strong>(W)</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">DJI Zenmuse X7</td>
+<td style="text-align: left;">EO camera+gimbal</td>
+<td style="text-align: right;">0.449</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">24 MP, 6K video</td>
+<td style="text-align: left;">Matrice 300</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">FLIR Vue Pro 640</td>
+<td style="text-align: left;">LWIR uncooled</td>
+<td style="text-align: right;">0.092</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">640<span class="math inline">\(\times\)</span>512, 13mm, 50 mK</td>
+<td style="text-align: left;">DJI/Parrot</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Wescam MX-20</td>
+<td style="text-align: left;">EO/IR/LRF turret</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: left;">20” diam, 10-sensor, SAL</td>
+<td style="text-align: left;">Predator/Hawk</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">IMSAR NSP-5</td>
+<td style="text-align: left;">Ku-band SAR</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: left;">0.3 m stripmap</td>
+<td style="text-align: left;">Group 2+</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Velodyne HDL-32E</td>
+<td style="text-align: left;">Scanning LiDAR</td>
+<td style="text-align: right;">2.0</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">32 beams, 100m range</td>
+<td style="text-align: left;">Multirotor</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Ouster OS1-128</td>
+<td style="text-align: left;">Solid-state LiDAR</td>
+<td style="text-align: right;">0.447</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: left;">128 beams, 120m, 2600 pts/shot</td>
+<td style="text-align: left;">Fixed-wing</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Raytheon MTS-B</td>
+<td style="text-align: left;">EO/IR/LRF/LGM</td>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">400</td>
+<td style="text-align: left;">LWIR/MWIR/CCD/SAL</td>
+<td style="text-align: left;">Predator/Gray Eagle</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Hellfire AGM-114R</td>
+<td style="text-align: left;">ATGM</td>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">n/a</td>
+<td style="text-align: left;">8 km, SAL/MMW dual</td>
+<td style="text-align: left;">Reaper/Apache</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">GBU-39 SDB</td>
+<td style="text-align: left;">Glide bomb</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">n/a</td>
+<td style="text-align: left;">110 km glide, GPS/INS</td>
+<td style="text-align: left;">F-15/MQ-9B</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-payload_conclusion"><span class="secnum">9.10</span> Conclusion<a class="headerlink" href="#sec-payload_conclusion" title="Permanent link">&para;</a></h2>
+<p>Payloads define the operational value of any unmanned system. The design and integration of EO/IR sensors, SAR, LiDAR, SIGINT, weapons, cargo, and EW equipment demands mastery of optics, microwave engineering, structural mechanics, power electronics, and software engineering. The trend toward sensor fusion — combining passive EO/IR with active SAR and LiDAR, coupled with onboard AI for real-time exploitation — is transforming UAV payloads from simple data-collecting devices into autonomous battlespace decision-support systems. The following chapters on Software and AI (Chapter 10) and Communications (Chapter 12) examine the enabling digital infrastructure that extracts operational value from the raw data these sensors produce.</p>
+<p>Key quantitative takeaways:</p>
+<ul>
+<li>
+<p>GSD <span class="arithmatex">\(= H \cdot p / (f \times 10^3)\)</span>; for sub-10 cm GSD at 300 m altitude, focal lengths of 15–25 mm with 4 µ m pitch sensors are required.</p>
+</li>
+<li>
+<p>SAR azimuth resolution <span class="arithmatex">\(= D/2\)</span> (independent of range); range resolution <span class="arithmatex">\(= c/(2B)\)</span> requiring <span class="arithmatex">\(&gt;500\)</span> MHz bandwidth for sub-30 cm resolution.</p>
+</li>
+<li>
+<p>Thermal cameras: NETD <span class="arithmatex">\(&lt; 50\)</span> mK required for reliable target recognition; cooled MCT achieves <span class="arithmatex">\(&lt; 20\)</span> mK; uncooled VOx achieves 40–80 mK.</p>
+</li>
+<li>
+<p>Vibration isolation: target natural frequency <span class="arithmatex">\(&lt;\)</span>20 Hz for 40 dB+ rejection of propeller harmonics at 200–400 Hz.</p>
+</li>
+<li>
+<p>DRFM jammers create false targets with delay-controlled range offset <span class="arithmatex">\(\Delta R = c \Delta\tau / 2\)</span>.</p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch08-communication-systems.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 8. Communication Systems">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                8. Communication Systems
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-footer__link md-footer__link--next" aria-label="Next: 10. Software, Autonomy and Artificial Intelligence">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                10. Software, Autonomy and Artificial Intelligence
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

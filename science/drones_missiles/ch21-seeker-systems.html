@@ -1,0 +1,4008 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch21-seeker-systems.html">
+  
+  
+    <link rel="prev" href="ch20-guidance-navigation-and-control.html">
+  
+  
+    <link rel="next" href="ch22-warheads-and-effects.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>21. Seeker Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch-seekers" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              21. Seeker Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch21-seeker-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.1 Seeker Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2 Seeker Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.2 Seeker Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2121-purpose-and-information-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.1 Purpose and Information Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2122-geometric-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.2 Geometric Relationships
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2123-gimbal-stabilisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.3 Gimbal Stabilisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2124-tracking-bandwidth-and-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.4 Tracking Bandwidth and Noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2125-signal-to-noise-ratio-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.5 Signal-to-Noise Ratio Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ir_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3 Infrared Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.3 Infrared Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2131-overview-and-detector-bands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.1 Overview and Detector Bands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2132-reticle-based-point-source-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.2 Reticle-Based Point-Source Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2133-imaging-ir-iir-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.3 Imaging IR (IIR) Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2134-stirling-cryocooler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.4 Stirling Cryocooler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2135-seeker-dome-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.5 Seeker Dome Materials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2136-lock-on-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.6 Lock-On Range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2137-irccm-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.7 IRCCM Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-radar_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4 Radar Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.4 Radar Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2141-semi-active-radar-homing-sarh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.1 Semi-Active Radar Homing (SARH)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2142-active-radar-homing-arh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.2 Active Radar Homing (ARH)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2143-anti-radiation-seeker-passive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.3 Anti-Radiation Seeker (Passive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2144-eccm-in-active-radar-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.4 ECCM in Active Radar Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-laser_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.5 Laser Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.5 Laser Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2151-semi-active-laser-sal-homing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.5.1 Semi-Active Laser (SAL) Homing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2152-active-laser-ladar-terminal-seeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.5.2 Active Laser (LADAR) Terminal Seeker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-eo_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6 Electro-Optical Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.6 Electro-Optical Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2161-tv-visible-band-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6.1 TV (Visible Band) Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2162-dsmac-digital-scene-matching-area-correlator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6.2 DSMAC: Digital Scene Matching Area Correlator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2163-automatic-target-recognition-atr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6.3 Automatic Target Recognition (ATR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-multimode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.7 Multi-Mode Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.7 Multi-Mode Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2171-rationale-and-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.7.1 Rationale and Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2172-fusion-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.7.2 Fusion Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-gimbal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8 Gimbal and Stabilisation Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.8 Gimbal and Stabilisation Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2181-gimbal-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.1 Gimbal Configurations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2182-stabilisation-loop-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.2 Stabilisation Loop Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2183-gimbal-angle-limits-and-vignetting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.3 Gimbal Angle Limits and Vignetting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2184-lock-before-launch-vs-lock-after-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.4 Lock-Before-Launch vs Lock-After-Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_sigproc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9 Seeker Signal Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.9 Seeker Signal Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2191-angle-tracking-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9.1 Angle Tracking Filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2192-glint-and-extended-target-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9.2 Glint and Extended Target Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2193-mti-and-doppler-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9.3 MTI and Doppler Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10 Seeker Testing and Calibration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.10 Seeker Testing and Calibration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21101-boresight-calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.1 Boresight Calibration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21102-seeker-characterisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.2 Seeker Characterisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21103-hardware-in-the-loop-hwil-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.3 Hardware-in-the-Loop (HWIL) Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21104-environmental-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.4 Environmental Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-future_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11 Advanced and Future Seeker Technologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.11 Advanced and Future Seeker Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21111-wide-band-aesa-radar-seeker-with-sar-imaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.1 Wide-Band AESA Radar Seeker with SAR Imaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21112-quantum-dot-ir-detectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.2 Quantum Dot IR Detectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21113-rfir-dual-mode-on-single-gimbal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.3 RF/IR Dual-Mode on Single Gimbal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21114-cognitive-and-ai-enabled-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.4 Cognitive and AI-Enabled Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21115-hyperspectral-seeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.5 Hyperspectral Seeker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21116-flash-lidar-terminal-seeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.6 Flash LiDAR Terminal Seeker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.12 Summary of Seeker Selection Trade Space
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.1 Seeker Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2 Seeker Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.2 Seeker Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2121-purpose-and-information-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.1 Purpose and Information Flow
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2122-geometric-relationships" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.2 Geometric Relationships
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2123-gimbal-stabilisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.3 Gimbal Stabilisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2124-tracking-bandwidth-and-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.4 Tracking Bandwidth and Noise
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2125-signal-to-noise-ratio-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.2.5 Signal-to-Noise Ratio Requirement
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ir_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3 Infrared Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.3 Infrared Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2131-overview-and-detector-bands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.1 Overview and Detector Bands
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2132-reticle-based-point-source-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.2 Reticle-Based Point-Source Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2133-imaging-ir-iir-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.3 Imaging IR (IIR) Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2134-stirling-cryocooler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.4 Stirling Cryocooler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2135-seeker-dome-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.5 Seeker Dome Materials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2136-lock-on-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.6 Lock-On Range
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2137-irccm-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.3.7 IRCCM Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-radar_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4 Radar Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.4 Radar Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2141-semi-active-radar-homing-sarh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.1 Semi-Active Radar Homing (SARH)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2142-active-radar-homing-arh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.2 Active Radar Homing (ARH)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2143-anti-radiation-seeker-passive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.3 Anti-Radiation Seeker (Passive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2144-eccm-in-active-radar-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.4.4 ECCM in Active Radar Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-laser_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.5 Laser Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.5 Laser Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2151-semi-active-laser-sal-homing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.5.1 Semi-Active Laser (SAL) Homing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2152-active-laser-ladar-terminal-seeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.5.2 Active Laser (LADAR) Terminal Seeker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-eo_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6 Electro-Optical Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.6 Electro-Optical Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2161-tv-visible-band-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6.1 TV (Visible Band) Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2162-dsmac-digital-scene-matching-area-correlator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6.2 DSMAC: Digital Scene Matching Area Correlator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2163-automatic-target-recognition-atr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.6.3 Automatic Target Recognition (ATR)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-multimode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.7 Multi-Mode Seekers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.7 Multi-Mode Seekers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2171-rationale-and-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.7.1 Rationale and Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2172-fusion-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.7.2 Fusion Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-gimbal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8 Gimbal and Stabilisation Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.8 Gimbal and Stabilisation Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2181-gimbal-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.1 Gimbal Configurations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2182-stabilisation-loop-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.2 Stabilisation Loop Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2183-gimbal-angle-limits-and-vignetting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.3 Gimbal Angle Limits and Vignetting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2184-lock-before-launch-vs-lock-after-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.8.4 Lock-Before-Launch vs Lock-After-Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_sigproc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9 Seeker Signal Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.9 Seeker Signal Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2191-angle-tracking-filters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9.1 Angle Tracking Filters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2192-glint-and-extended-target-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9.2 Glint and Extended Target Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2193-mti-and-doppler-filtering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.9.3 MTI and Doppler Filtering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10 Seeker Testing and Calibration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.10 Seeker Testing and Calibration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21101-boresight-calibration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.1 Boresight Calibration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21102-seeker-characterisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.2 Seeker Characterisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21103-hardware-in-the-loop-hwil-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.3 Hardware-in-the-Loop (HWIL) Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21104-environmental-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.10.4 Environmental Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-future_seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11 Advanced and Future Seeker Technologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="21.11 Advanced and Future Seeker Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21111-wide-band-aesa-radar-seeker-with-sar-imaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.1 Wide-Band AESA Radar Seeker with SAR Imaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21112-quantum-dot-ir-detectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.2 Quantum Dot IR Detectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21113-rfir-dual-mode-on-single-gimbal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.3 RF/IR Dual-Mode on Single Gimbal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21114-cognitive-and-ai-enabled-seekers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.4 Cognitive and AI-Enabled Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21115-hyperspectral-seeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.5 Hyperspectral Seeker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#21116-flash-lidar-terminal-seeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.11.6 Flash LiDAR Terminal Seeker
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-seeker_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        21.12 Summary of Seeker Selection Trade Space
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-seekers">Chapter 21: Seeker Systems<a class="headerlink" href="#ch-seekers" title="Permanent link">&para;</a></h1>
+<h2 id="ch-seekers"><span class="secnum">21.1</span> Seeker Systems<a class="headerlink" href="#ch-seekers" title="Permanent link">&para;</a></h2>
+<p>Seeker systems constitute the perceptual front-end of a guided weapon. They measure the angular relationship between the missile body axis and the optical, electromagnetic, or acoustic line-of-sight (LOS) to the target, and they generate the angular rate signal that feeds the proportional navigation (PN) guidance law. Modern seekers combine precision stabilised gimbals, sophisticated detector arrays, and embedded signal processors into packages that must survive launch shock, sustain tracking through violent manoeuvring, and resist deliberate countermeasures—all within severe constraints on mass, volume, and cost.</p>
+<p>This chapter treats each seeker modality in systematic engineering depth: infrared (IR), imaging infrared (IIR), semi-active and active radar, laser and electro-optical, and multi-mode architectures. Signal processing, gimbal design, hardware-in-the-loop (HWIL) testing, and future technologies complete the treatment.</p>
+<h2 id="sec-seeker_fundamentals"><span class="secnum">21.2</span> Seeker Fundamentals<a class="headerlink" href="#sec-seeker_fundamentals" title="Permanent link">&para;</a></h2>
+<h3 id="2121-purpose-and-information-flow"><span class="secnum">21.2.1</span> Purpose and Information Flow<a class="headerlink" href="#2121-purpose-and-information-flow" title="Permanent link">&para;</a></h3>
+<p>The primary function of a seeker is to measure the <em>angular error</em> between the missile longitudinal axis and the target LOS, and to differentiate that angle to produce the LOS rate vector <span class="arithmatex">\(\dot{\boldsymbol{\lambda}} = [\dot{\lambda}_{az},\,\dot{\lambda}_{el}]^\top\)</span>. This two-component signal is the essential input to the proportional navigation (PN) guidance law:</p>
+<div id="eq-PN_law"></div>
+<div class="arithmatex">\[\mathbf{a}_{c} = N' V_{c}\, \dot{\boldsymbol{\lambda}}\tag{21.1}\]</div>
+<p>where <span class="arithmatex">\(N'\)</span> is the effective navigation ratio (typically 3–5), <span class="arithmatex">\(V_c\)</span> is the closing velocity, and <span class="arithmatex">\(\mathbf{a}_c\)</span> is the commanded lateral acceleration perpendicular to the current LOS. Any error or noise in <span class="arithmatex">\(\dot{\boldsymbol{\lambda}}\)</span> propagates directly into miss distance; therefore seeker noise is the dominant performance driver in the terminal phase of flight.</p>
+<h3 id="2122-geometric-relationships"><span class="secnum">21.2.2</span> Geometric Relationships<a class="headerlink" href="#2122-geometric-relationships" title="Permanent link">&para;</a></h3>
+<p>Let <span class="arithmatex">\(\boldsymbol{r}\)</span> be the missile-to-target relative position vector. The LOS angle in the inertial frame is:</p>
+<div id="eq-lambda_def"></div>
+<div class="arithmatex">\[\lambda = \arctan\!\left(\frac{r_y}{r_x}\right)\tag{21.2}\]</div>
+<p>and the LOS rate is:</p>
+<div id="eq-lambda_dot"></div>
+<div class="arithmatex">\[\dot{\lambda} = \frac{r_x \dot{r}_y - r_y \dot{r}_x}{r_x^2 + r_y^2}
+               = \frac{\dot{r}_\perp}{r}\tag{21.3}\]</div>
+<p>where <span class="arithmatex">\(\dot{r}_\perp\)</span> is the component of relative velocity perpendicular to the LOS and <span class="arithmatex">\(r = |\boldsymbol{r}|\)</span>. For an unguided (constant-velocity) collision course <span class="arithmatex">\(\dot{\lambda} = 0\)</span>; any deviation indicates the geometry is not collision and guidance is required.</p>
+<h3 id="2123-gimbal-stabilisation"><span class="secnum">21.2.3</span> Gimbal Stabilisation<a class="headerlink" href="#2123-gimbal-stabilisation" title="Permanent link">&para;</a></h3>
+<p>In the inertial frame the seeker must hold its optical axis on the target regardless of missile body motion. This is achieved through a gyroscopically stabilised gimbal. An inner-loop rate gyro (mounted on the gimbal itself) measures gimbal inertial angular rate <span class="arithmatex">\(\dot{\theta}_{gimbal}\)</span> and drives a torque motor to null the residual error. The closed-loop transfer function of the stabilisation loop is:</p>
+<div id="eq-stab_loop"></div>
+<div class="arithmatex">\[\frac{\dot{\theta}_{gimbal}(s)}{\dot{\theta}_{body}(s)}
+  = \frac{K_s}{s + K_s}\tag{21.4}\]</div>
+<p>where <span class="arithmatex">\(K_s\)</span> is the stabilisation loop gain (typically 200–500 rad/s). The residual coupling from body motion to apparent LOS rate is:</p>
+<div id="eq-parasite"></div>
+<div class="arithmatex">\[\dot{\lambda}_{parasite} = \dot{\theta}_{body}\cdot\frac{s}{s+K_s}\tag{21.5}\]</div>
+<p>For <span class="arithmatex">\(K_s = 300\)</span> rad/s, the body coupling at 3 Hz (typical airframe bending mode) is attenuated by 20 dB.</p>
+<h3 id="2124-tracking-bandwidth-and-noise"><span class="secnum">21.2.4</span> Tracking Bandwidth and Noise<a class="headerlink" href="#2124-tracking-bandwidth-and-noise" title="Permanent link">&para;</a></h3>
+<p>The seeker tracker must follow target angular motion, which may reach angular rates of 30–40 rad/s in a high-closing-speed engagement. The tracking bandwidth <span class="arithmatex">\(\omega_T\)</span> (inner angle-tracking loop) must satisfy:</p>
+<div id="eq-track_bw"></div>
+<div class="arithmatex">\[\omega_T \geq 2\,\dot{\lambda}_{max} / \varepsilon_{max}\tag{21.6}\]</div>
+<p>where <span class="arithmatex">\(\varepsilon_{max}\)</span> is the maximum allowable track lag. Typical values are <span class="arithmatex">\(\omega_T = 10\)</span>–50 rad/s.</p>
+<p>Seeker noise is characterised by the <em>noise equivalent angle</em> (NEA), <span class="arithmatex">\(\sigma_\lambda\)</span>, and the resulting LOS-rate noise density <span class="arithmatex">\(S_{\dot{\lambda}}(\omega)\)</span>. Via adjoint analysis, the contribution to miss distance variance is:</p>
+<div id="eq-miss_adjoint"></div>
+<div class="arithmatex">\[\sigma_{miss}^2 = \int_0^\infty S_{\dot{\lambda}}(\omega)\,
+  \left|H_{miss}(j\omega)\right|^2 d\omega\tag{21.7}\]</div>
+<p>where <span class="arithmatex">\(H_{miss}\)</span> is the adjoint transfer function from LOS-rate noise to miss distance. A rule of thumb for PN guidance with <span class="arithmatex">\(N'=4\)</span> is:</p>
+<div id="eq-miss_approx"></div>
+<div class="arithmatex">\[\sigma_{miss} \approx \frac{V_c\,t_{go}^2}{6}\,\sigma_{\dot{\lambda}}\tag{21.8}\]</div>
+<p>where <span class="arithmatex">\(t_{go}\)</span> is the time-to-go and <span class="arithmatex">\(\sigma_{\dot{\lambda}}\)</span> is the RMS LOS-rate noise. This highlights why seeker noise is so consequential in the last few seconds of flight.</p>
+<h3 id="2125-signal-to-noise-ratio-requirement"><span class="secnum">21.2.5</span> Signal-to-Noise Ratio Requirement<a class="headerlink" href="#2125-signal-to-noise-ratio-requirement" title="Permanent link">&para;</a></h3>
+<p>Reliable track-lock requires a minimum SNR at the detector or receiver:</p>
+<div id="eq-snr_req"></div>
+<div class="arithmatex">\[\mathrm{SNR}_{min} = 10\;\text{dB} \quad\text{(track maintenance)}\tag{21.9}\]</div>
+<p>Below this threshold, the tracking loop loses coherence and track is broken. Acquisition typically requires SNR <span class="arithmatex">\(\geq\)</span> 15 dB to ensure unambiguous lock-on. The seeker designer must verify that SNR exceeds these thresholds across the entire engagement envelope: maximum range, minimum target signature, and worst-case atmospheric conditions.</p>
+<div class="tbl" id="tab-seeker_params">
+<div class="tbl-caption"><strong>Table 21.1.</strong> Key seeker performance parameters and typical values</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Typical Range</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">LOS rate output range</td>
+<td style="text-align: left;"><span class="math inline">\(\dot{\lambda}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(\pm\)</span>30–60 rad/s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tracking bandwidth</td>
+<td style="text-align: left;"><span class="math inline">\(\omega_T\)</span></td>
+<td style="text-align: left;">10–50 rad/s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Stabilisation bandwidth</td>
+<td style="text-align: left;"><span class="math inline">\(K_s\)</span></td>
+<td style="text-align: left;">200–500 rad/s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Noise equivalent angle</td>
+<td style="text-align: left;">NEA</td>
+<td style="text-align: left;">0.05–0.5 mrad (IR); 0.1–1 mrad (radar)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Boresight error</td>
+<td style="text-align: left;">BER</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>0.5 mrad</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gimbal angle range</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><span class="math inline">\(\pm\)</span>35–60<span class="math inline">\(^\circ\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Acquisition FOV</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><span class="math inline">\(\pm\)</span>5–30<span class="math inline">\(^\circ\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Track SNR requirement</td>
+<td style="text-align: left;">SNR</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>10 dB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Acquisition SNR</td>
+<td style="text-align: left;">SNR</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>15 dB</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-ir_seekers"><span class="secnum">21.3</span> Infrared Seekers<a class="headerlink" href="#sec-ir_seekers" title="Permanent link">&para;</a></h2>
+<h3 id="2131-overview-and-detector-bands"><span class="secnum">21.3.1</span> Overview and Detector Bands<a class="headerlink" href="#2131-overview-and-detector-bands" title="Permanent link">&para;</a></h3>
+<p>Infrared seekers detect the thermal emission and reflected IR radiation from the target. The atmosphere has two primary transmission windows exploited by IR seekers:</p>
+<ul>
+<li>
+<p><strong>MWIR (mid-wave IR)</strong>: 3–5 <span class="arithmatex">\(\mu\)</span>m — dominated by hot exhaust gas (CO<span class="arithmatex">\(_2\)</span>, H<span class="arithmatex">\(_2\)</span>O emission bands near 4.3 <span class="arithmatex">\(\mu\)</span>m) and hot metal surfaces. Detectors: InSb cooled to 77 K; HgCdTe (MCT).</p>
+</li>
+<li>
+<p><strong>LWIR (long-wave IR)</strong>: 8–12 <span class="arithmatex">\(\mu\)</span>m — aerodynamic heating and body skin emission; ambient background objects; uncooled bolometers are feasible. Detectors: uncooled VOx microbolometer; cooled MCT.</p>
+</li>
+<li>
+<p><strong>SWIR (short-wave IR)</strong>: 1–2.5 <span class="arithmatex">\(\mu\)</span>m — reflected solar illumination; laser spot (1064 nm, 1550 nm); InGaAs photodiode arrays; no cooling required.</p>
+</li>
+</ul>
+<div class="tbl" id="tab-ir_detectors">
+<div class="tbl-caption"><strong>Table 21.2.</strong> IR seeker detector materials and operating characteristics</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Material</strong></th>
+<th style="text-align: left;"><strong>Band (<span class="math inline">\(\mu\)</span>m)</strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(T_{op}\)</span> (K)</strong></th>
+<th style="text-align: left;"><strong>D<span class="math inline">\(^*\)</span> (Jones)</strong></th>
+<th style="text-align: left;"><strong>Cooling</strong></th>
+<th style="text-align: left;"><strong>Application</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">InSb</td>
+<td style="text-align: left;">3–5</td>
+<td style="text-align: left;">77</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;10^{11}\)</span></td>
+<td style="text-align: left;">Stirling</td>
+<td style="text-align: left;">MWIR seeker</td>
+</tr>
+<tr>
+<td style="text-align: left;">HgCdTe (MCT)</td>
+<td style="text-align: left;">3–5 / 8–12</td>
+<td style="text-align: left;">77–120</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;10^{11}\)</span></td>
+<td style="text-align: left;">Stirling</td>
+<td style="text-align: left;">Dual-band, LWIR</td>
+</tr>
+<tr>
+<td style="text-align: left;">VOx microbolometer</td>
+<td style="text-align: left;">8–14</td>
+<td style="text-align: left;">300</td>
+<td style="text-align: left;"><span class="math inline">\(\sim10^9\)</span></td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Uncooled LWIR</td>
+</tr>
+<tr>
+<td style="text-align: left;">InGaAs</td>
+<td style="text-align: left;">0.9–1.7</td>
+<td style="text-align: left;">300</td>
+<td style="text-align: left;"><span class="math inline">\(\sim10^{10}\)</span></td>
+<td style="text-align: left;">TEC (271 K)</td>
+<td style="text-align: left;">SWIR, laser</td>
+</tr>
+<tr>
+<td style="text-align: left;">PbS</td>
+<td style="text-align: left;">1–3</td>
+<td style="text-align: left;">243</td>
+<td style="text-align: left;"><span class="math inline">\(\sim10^{10}\)</span></td>
+<td style="text-align: left;">TEC</td>
+<td style="text-align: left;">Older MWIR</td>
+</tr>
+<tr>
+<td style="text-align: left;">QWIP</td>
+<td style="text-align: left;">8–9</td>
+<td style="text-align: left;">70</td>
+<td style="text-align: left;"><span class="math inline">\(\sim10^{10}\)</span></td>
+<td style="text-align: left;">Stirling</td>
+<td style="text-align: left;">LWIR FPA</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>D<span class="arithmatex">\(^*\)</span> is the specific detectivity in cm<span class="arithmatex">\(\cdot\)</span>Hz<span class="arithmatex">\(^{1/2}\)</span>/W (Jones).</p>
+<h3 id="2132-reticle-based-point-source-seekers"><span class="secnum">21.3.2</span> Reticle-Based Point-Source Seekers<a class="headerlink" href="#2132-reticle-based-point-source-seekers" title="Permanent link">&para;</a></h3>
+<p>Early and low-cost IR seekers use a reticle (chopper disc) to modulate the incoming target spot and derive angle-error information.</p>
+<div class="parahead">
+<p>SpinScan (Amplitude Modulation).</p>
+</div>
+<p>A spinning reticle with alternating transparent and opaque sectors amplitude-modulates the target spot at frequency <span class="arithmatex">\(f_r = \Omega/2\pi\)</span>. When the target is centred on the optical axis the modulation depth is zero; off-axis, the signal amplitude is proportional to the angular error <span class="arithmatex">\(\varepsilon\)</span> and the phase of the modulation relative to a reference encoder gives the error direction:</p>
+<div id="eq-SpinScan"></div>
+<div class="arithmatex">\[V_{signal}(t) = A\,\varepsilon\,\cos(\Omega t - \phi_{dir})\tag{21.10}\]</div>
+<p>where <span class="arithmatex">\(\phi_{dir}\)</span> is the azimuth direction of the target offset. SpinScan is susceptible to background bias: a uniform hot cloud can produce a false signal.</p>
+<div class="parahead">
+<p>ConScan (Conical Scan).</p>
+</div>
+<p>The optical axis is nutated (precessed) around the seeker axis at rate <span class="arithmatex">\(\Omega\)</span>. When on-target the signal strength is constant; an off-axis target modulates signal amplitude at <span class="arithmatex">\(\Omega\)</span>. The error signal is:</p>
+<div id="eq-ConScan"></div>
+<div class="arithmatex">\[\varepsilon_{AZ} = K_{cs}\,A_{ac}\cos\phi; \qquad
+  \varepsilon_{EL} = K_{cs}\,A_{ac}\sin\phi\tag{21.11}\]</div>
+<p>where <span class="arithmatex">\(A_{ac}\)</span> is the AC amplitude and <span class="arithmatex">\(K_{cs}\)</span> is a scale factor. ConScan is less susceptible to uniform background but vulnerable to amplitude-modulated jamming at frequency <span class="arithmatex">\(\Omega\)</span>.</p>
+<div class="parahead">
+<p>Rosette Scan.</p>
+</div>
+<p>The spot traces a rosette pattern covering the FOV. Acquisition capability is superior to SpinScan; used in Stinger (POST variant). The scan pattern is generated by superposing two circular motions:</p>
+<div id="eq-rosette"></div>
+<div class="arithmatex">\[x(t) = A\cos(\omega_1 t) + B\cos(\omega_2 t); \quad
+  y(t) = A\sin(\omega_1 t) + B\sin(\omega_2 t)\tag{21.12}\]</div>
+<p>where <span class="arithmatex">\(\omega_1,\,\omega_2\)</span> are incommensurate to ensure dense coverage.</p>
+<h3 id="2133-imaging-ir-iir-seekers"><span class="secnum">21.3.3</span> Imaging IR (IIR) Seekers<a class="headerlink" href="#2133-imaging-ir-iir-seekers" title="Permanent link">&para;</a></h3>
+<p>IIR seekers replace the single-element detector and reticle with a focal plane array (FPA), producing a full 2D thermal image of the scene at each frame. This transforms the seeker into an imaging sensor and enables:</p>
+<ul>
+<li>
+<p>Target shape recognition and discrimination</p>
+</li>
+<li>
+<p>Aimpoint selection at a specific vulnerable zone</p>
+</li>
+<li>
+<p>Robust IRCCM via image-based tracking algorithms</p>
+</li>
+<li>
+<p>Lock-on at longer ranges due to larger detector area</p>
+</li>
+</ul>
+<div class="parahead">
+<p>FPA Specifications.</p>
+</div>
+<p>Current military FPAs are typically <span class="arithmatex">\(320\times256\)</span> or <span class="arithmatex">\(640\times512\)</span> elements, with pixel pitch 15–30 <span class="arithmatex">\(\mu\)</span>m and readout integrated circuits (ROICs) providing integration time control, non-uniformity correction (NUC), and serial digital output. The NETD (noise equivalent temperature difference) for cooled MCT arrays is 20–50 mK; for uncooled bolometers it is 30–80 mK.</p>
+<p>The number of target pixels at range <span class="arithmatex">\(R\)</span> is:</p>
+<div id="eq-target_pixels"></div>
+<div class="arithmatex">\[N_{pix} = \frac{A_{target}}{R^2} \cdot \frac{f^2}{p^2}\tag{21.13}\]</div>
+<p>where <span class="arithmatex">\(f\)</span> is focal length and <span class="arithmatex">\(p\)</span> is pixel pitch. Reliable tracking requires <span class="arithmatex">\(N_{pix} \geq 4\)</span>; ATR requires <span class="arithmatex">\(N_{pix} \geq 25\)</span>–64.</p>
+<h3 id="2134-stirling-cryocooler"><span class="secnum">21.3.4</span> Stirling Cryocooler<a class="headerlink" href="#2134-stirling-cryocooler" title="Permanent link">&para;</a></h3>
+<p>Cooled detectors (InSb, MCT) require operation at 77 K. Linear Stirling cryocoolers are the standard solution:</p>
+<ul>
+<li>
+<p>Input power: 1.5–5 W electrical</p>
+</li>
+<li>
+<p>Cool-down time: 3–10 minutes (typically reduced to <span class="arithmatex">\(&lt;\)</span>90 s for tactical seekers via pre-cooled dewar strategies)</p>
+</li>
+<li>
+<p>MTBF: 5000–8000 h (military-grade)</p>
+</li>
+<li>
+<p>Mass: 80–300 g depending on cooling capacity</p>
+</li>
+<li>
+<p>Vibration export: <span class="arithmatex">\(&lt;\)</span>0.5 g at compressor frequency; requires dual-piston or active cancellation</p>
+</li>
+</ul>
+<p>The thermodynamic COP (coefficient of performance) of the Stirling cycle:</p>
+<div id="eq-Stirling_COP"></div>
+<div class="arithmatex">\[\mathrm{COP} = \frac{Q_{cold}}{W_{input}}
+               = \eta_{Stirling}\,\frac{T_{cold}}{T_{hot}-T_{cold}}\tag{21.14}\]</div>
+<p>where <span class="arithmatex">\(\eta_{Stirling} \approx 0.3\)</span>–0.5 for practical devices.</p>
+<h3 id="2135-seeker-dome-materials"><span class="secnum">21.3.5</span> Seeker Dome Materials<a class="headerlink" href="#2135-seeker-dome-materials" title="Permanent link">&para;</a></h3>
+<p>The forward dome must be transparent in the seeker’s spectral band, withstand aerodynamic heating, and survive rain erosion at high speed.</p>
+<div class="tbl" id="tab-dome_materials">
+<div class="tbl-caption"><strong>Table 21.3.</strong> Seeker dome material properties</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Material</strong></th>
+<th style="text-align: left;"><strong>Band</strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(n\)</span></strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(T_{max}\)</span> (<span class="math inline">\(^\circ\)</span>C)</strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(k_T\)</span> (W/mK)</strong></th>
+<th style="text-align: left;"><strong>MOR (MPa)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Germanium</td>
+<td style="text-align: left;">2–15 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;">4.0</td>
+<td style="text-align: left;">400</td>
+<td style="text-align: left;">59</td>
+<td style="text-align: left;">100</td>
+</tr>
+<tr>
+<td style="text-align: left;">Zinc Sulphide</td>
+<td style="text-align: left;">0.4–12 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;">2.2</td>
+<td style="text-align: left;">650</td>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">103</td>
+</tr>
+<tr>
+<td style="text-align: left;">Zinc Selenide</td>
+<td style="text-align: left;">0.6–16 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;">2.4</td>
+<td style="text-align: left;">300</td>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">55</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sapphire (<span class="math inline">\(c\)</span>-cut)</td>
+<td style="text-align: left;">0.2–5 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;">1.6</td>
+<td style="text-align: left;">1600</td>
+<td style="text-align: left;">30</td>
+<td style="text-align: left;">400</td>
+</tr>
+<tr>
+<td style="text-align: left;">ALON (AlON)</td>
+<td style="text-align: left;">0.2–5 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;">1.78</td>
+<td style="text-align: left;">1200</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">300</td>
+</tr>
+<tr>
+<td style="text-align: left;">Silicon</td>
+<td style="text-align: left;">1.2–7 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;">3.4</td>
+<td style="text-align: left;">700</td>
+<td style="text-align: left;">150</td>
+<td style="text-align: left;">130</td>
+</tr>
+<tr>
+<td style="text-align: left;">Spinel (MgAlO)</td>
+<td style="text-align: left;">0.2–5 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;">1.73</td>
+<td style="text-align: left;">1200</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">195</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p><span class="arithmatex">\(n\)</span> = refractive index at band centre; <span class="arithmatex">\(k_T\)</span> = thermal conductivity; MOR = modulus of rupture. Germanium is the most common LWIR dome; sapphire and ALON are preferred for high-speed (<span class="arithmatex">\(&gt;\)</span>Mach 2) applications where kinetic heating is severe.</p>
+<h3 id="2136-lock-on-range"><span class="secnum">21.3.6</span> Lock-On Range<a class="headerlink" href="#2136-lock-on-range" title="Permanent link">&para;</a></h3>
+<p>The IR seeker lock-on range is derived from the radiometric link equation. Irradiance at the detector from a target of intensity <span class="arithmatex">\(I_{target}\)</span> (W/sr) at range <span class="arithmatex">\(R\)</span> after atmospheric transmission <span class="arithmatex">\(\tau_{atm}\)</span>:</p>
+<div id="eq-IR_link"></div>
+<div class="arithmatex">\[E_{det} = \frac{I_{target}\,\tau_{atm}\,A_{opt}}{R^2}\tag{21.15}\]</div>
+<p>Setting <span class="arithmatex">\(E_{det} \cdot A_{det} = \mathrm{SNR}_{req}\cdot \mathrm{NEP}\)</span> and solving for <span class="arithmatex">\(R\)</span>:</p>
+<div id="eq-IR_lock_range"></div>
+<div class="arithmatex">\[R_{lock} = \sqrt{\frac{I_{target}\,\tau_{atm}\,A_{opt}\,A_{det}}
+  {\mathrm{SNR}_{req}\cdot\mathrm{NEP}}}\tag{21.16}\]</div>
+<p>Equivalently, in terms of the detector specific detectivity <span class="arithmatex">\(D^*\)</span>:</p>
+<div id="eq-IR_lock_Dstar"></div>
+<div class="arithmatex">\[R_{lock} = D^*\,\sqrt{\frac{I_{target}\,\tau_{atm}\,A_{opt}}
+  {\mathrm{SNR}_{req}\cdot\sqrt{A_{det}\,\Delta f}}}\tag{21.17}\]</div>
+<p>where <span class="arithmatex">\(\Delta f\)</span> is the noise bandwidth of the pre-detection filter.</p>
+<h3 id="2137-irccm-techniques"><span class="secnum">21.3.7</span> IRCCM Techniques<a class="headerlink" href="#2137-irccm-techniques" title="Permanent link">&para;</a></h3>
+<p>Infrared countercountermeasures (IRCCM) protect the seeker against flares, laser jammers, and directed IR jamming. Major techniques:</p>
+<dl>
+<dt>Dual-band discrimination:</dt>
+<dd>Compare MWIR and LWIR signatures. Targets have characteristic spectral ratios; flares typically emit differently (flares peak in MWIR; plume peak in LWIR varies). A discrimination threshold <span class="arithmatex">\(R_{band} = I_{MWIR}/I_{LWIR}\)</span> is compared against the expected target ratio.</dd>
+<dt>Kinematic rejection:</dt>
+<dd>Flares decelerate rapidly after ejection. The seeker tracks the rate of change of angular velocity; a genuine target maintains consistent kinematics, while a flare diverges rapidly.</dd>
+<dt>Spectral discrimination:</dt>
+<dd>High-resolution spectral analysis identifies CO<span class="arithmatex">\(_2\)</span> and H<span class="arithmatex">\(_2\)</span>O emission features unique to jet exhaust. Flares (magnesium-based) have different spectra.</dd>
+<dt>Image processing / shape tracking (IIR):</dt>
+<dd>
+<p>With FPA-based seekers, the target shape (fuselage, wing planform, exhaust nozzle) is tracked via template matching. Flares are compact point sources with different morphology. Normalised cross-correlation: <span id="eq-NCC"></span></p>
+<div class="arithmatex">\[\mathrm{NCC}(\mathbf{u}) = \frac{\sum_{x,y}
+      [I(x,y)-\bar{I}][T(x-u_x,y-u_y)-\bar{T}]}
+      {\sqrt{\sum_{x,y}[I-\bar{I}]^2\sum_{x,y}[T-\bar{T}]^2}}\tag{21.18}\]</div>
+</dd>
+<dt>Jam-to-signal ratio monitoring:</dt>
+<dd>The seeker processor monitors sudden signal-level jumps indicative of DIRCM (directed IR countermeasure) illumination and triggers IRCCM logic.</dd>
+</dl>
+<h2 id="sec-radar_seekers"><span class="secnum">21.4</span> Radar Seekers<a class="headerlink" href="#sec-radar_seekers" title="Permanent link">&para;</a></h2>
+<h3 id="2141-semi-active-radar-homing-sarh"><span class="secnum">21.4.1</span> Semi-Active Radar Homing (SARH)<a class="headerlink" href="#2141-semi-active-radar-homing-sarh" title="Permanent link">&para;</a></h3>
+<p>In SARH, the launch platform maintains a CW or pulsed-CW radar illumination on the target. The missile receiver tracks the reflected signal. The radar equation for the bistatic SARH link is:</p>
+<div id="eq-SARH_radar"></div>
+<div class="arithmatex">\[P_r = \frac{P_t\,G_t\,G_r\,\sigma\,\lambda^2}
+             {(4\pi)^3\,R_t^2\,R_m^2\,L}\tag{21.19}\]</div>
+<p>where <span class="arithmatex">\(R_t\)</span> is the illuminator-to-target range, <span class="arithmatex">\(R_m\)</span> is the missile-to-target range, <span class="arithmatex">\(\sigma\)</span> is the target radar cross-section, and <span class="arithmatex">\(L\)</span> is the total system loss.</p>
+<div class="parahead">
+<p>Doppler Processing.</p>
+</div>
+<p>The closing rate between missile and target is measured from the Doppler shift:</p>
+<div id="eq-doppler"></div>
+<div class="arithmatex">\[f_d = \frac{2\,f_0\,V_c}{c} = \frac{2\,V_c}{\lambda}\tag{21.20}\]</div>
+<p>where <span class="arithmatex">\(V_c = -\dot{r}\)</span> is the closing velocity and <span class="arithmatex">\(f_0\)</span> is the carrier frequency. For <span class="arithmatex">\(f_0 = 10\)</span> GHz and <span class="arithmatex">\(V_c = 500\)</span> m/s, <span class="arithmatex">\(f_d = 33.3\)</span> kHz. The Doppler filter centred on the expected <span class="arithmatex">\(f_d\)</span> improves clutter rejection.</p>
+<div class="parahead">
+<p>Monopulse Angle Tracking.</p>
+</div>
+<p>Angle measurement in SARH uses monopulse processing. A four-horn or five-horn cluster forms sum (<span class="arithmatex">\(\Sigma\)</span>) and difference (<span class="arithmatex">\(\Delta_{AZ}\)</span>, <span class="arithmatex">\(\Delta_{EL}\)</span>) beams. The angle error in azimuth is:</p>
+<div id="eq-monopulse"></div>
+<div class="arithmatex">\[\varepsilon_{AZ} = k_{mon}\,\frac{\mathrm{Re}(\Delta_{AZ}/\Sigma)}
+  {|\Sigma|^2/|\Sigma|^2}
+  = k_{mon}\,\frac{\Delta_{AZ}}{\Sigma}\tag{21.21}\]</div>
+<p>where <span class="arithmatex">\(k_{mon}\)</span> is the monopulse slope (rad<span class="arithmatex">\(^{-1}\)</span>). The monopulse technique is instantaneous (single pulse) and is immune to amplitude-modulated jamming that defeats sequential lobing.</p>
+<h3 id="2142-active-radar-homing-arh"><span class="secnum">21.4.2</span> Active Radar Homing (ARH)<a class="headerlink" href="#2142-active-radar-homing-arh" title="Permanent link">&para;</a></h3>
+<p>Active seekers carry their own transmitter, making the weapon fire-and-forget after launch. The monostatic radar equation is:</p>
+<div id="eq-ARH_radar"></div>
+<div class="arithmatex">\[P_r = \frac{P_t\,G^2\,\sigma\,\lambda^2}
+             {(4\pi)^3\,R^4\,L}\tag{21.22}\]</div>
+<p>where all quantities now refer to the seeker alone. The required minimum <span class="arithmatex">\(P_t\)</span> to achieve lock at range <span class="arithmatex">\(R_{lock}\)</span> with <span class="arithmatex">\(\mathrm{SNR}_{req}\)</span> is:</p>
+<div id="eq-ARH_power"></div>
+<div class="arithmatex">\[P_t = \frac{(4\pi)^3\,R_{lock}^4\,k\,T_s\,B_n\,F\,\mathrm{SNR}_{req}\,L}
+             {G^2\,\sigma\,\lambda^2}\tag{21.23}\]</div>
+<p>and the SNR-limited lock-on range:</p>
+<div id="eq-ARH_lock"></div>
+<div class="arithmatex">\[R_{lock} = \left[\frac{P_t\,G^2\,\sigma\,\lambda^2\,\tau\,B_n}
+             {(4\pi)^3\,k\,T\,F\,\mathrm{SNR}_{req}\,L}\right]^{1/4}\tag{21.24}\]</div>
+<div class="parahead">
+<p>Waveform Design.</p>
+</div>
+<p>Modern ARH seekers use Linear Frequency Modulated (LFM) pulse compression. A pulse of bandwidth <span class="arithmatex">\(B\)</span> yields range resolution:</p>
+<div id="eq-range_res"></div>
+<div class="arithmatex">\[\delta R = \frac{c}{2B}\tag{21.25}\]</div>
+<p>For <span class="arithmatex">\(B = 500\)</span> MHz, <span class="arithmatex">\(\delta R = 0.3\)</span> m. The time-bandwidth product (pulse compression ratio) is <span class="arithmatex">\(TB\)</span>; typical values are 100–1000. Velocity resolution from coherent integration of <span class="arithmatex">\(N\)</span> pulses over integration time <span class="arithmatex">\(T_c\)</span>:</p>
+<div id="eq-vel_res"></div>
+<div class="arithmatex">\[\delta v = \frac{\lambda}{2\,T_c}\tag{21.26}\]</div>
+<div class="parahead">
+<p>AESA Seeker.</p>
+</div>
+<p>Active electronically scanned array (AESA) seekers replace the mechanically gimballed antenna with a phased array. A planar array of <span class="arithmatex">\(M\times N\)</span> transmit/receive (T/R) modules provides:</p>
+<ul>
+<li>
+<p>Electronic beam steering at <span class="arithmatex">\(\pm\)</span>60<span class="arithmatex">\(^\circ\)</span> without mechanical motion</p>
+</li>
+<li>
+<p>Simultaneous multiple beams for guidance + ESM functions</p>
+</li>
+<li>
+<p>Bandwidth 1–5 GHz enabling pulse compression</p>
+</li>
+<li>
+<p>Low probability of intercept (LPI) waveforms</p>
+</li>
+<li>
+<p>Monopulse angle accuracy: <span class="arithmatex">\(\sigma_\theta \approx \theta_{3dB}/(2\sqrt{2\,SNR})\)</span></p>
+</li>
+</ul>
+<p>The beam steering phase shift for element <span class="arithmatex">\((m,n)\)</span> to steer to angle <span class="arithmatex">\((\theta,\phi)\)</span>:</p>
+<div id="eq-AESA_phase"></div>
+<div class="arithmatex">\[\psi_{mn} = \frac{2\pi}{\lambda}(m\,d_x\sin\theta\cos\phi
+              + n\,d_y\sin\theta\sin\phi)\tag{21.27}\]</div>
+<div class="parahead">
+<p>Constant False Alarm Rate (CFAR) Detection.</p>
+</div>
+<p>CFAR processing adapts the detection threshold to the local clutter level. In cell-averaging CFAR (CA-CFAR) with <span class="arithmatex">\(N\)</span> reference cells:</p>
+<div id="eq-CFAR"></div>
+<div class="arithmatex">\[T_{CFAR} = \alpha\,\frac{1}{N}\sum_{i=1}^{N} x_i\tag{21.28}\]</div>
+<p>where <span class="arithmatex">\(\alpha\)</span> is the threshold multiplier chosen to achieve the desired false alarm rate <span class="arithmatex">\(P_{fa}\)</span>:</p>
+<div id="eq-CFAR_alpha"></div>
+<div class="arithmatex">\[\alpha = N\left(P_{fa}^{-1/N} - 1\right)\tag{21.29}\]</div>
+<h3 id="2143-anti-radiation-seeker-passive"><span class="secnum">21.4.3</span> Anti-Radiation Seeker (Passive)<a class="headerlink" href="#2143-anti-radiation-seeker-passive" title="Permanent link">&para;</a></h3>
+<p>Anti-radiation missiles (ARMs) home on the target’s own electromagnetic emissions, requiring no illumination from the launch platform.</p>
+<div class="parahead">
+<p>Wide-Band ESM Receiver.</p>
+</div>
+<p>Coverage: 0.5–18 GHz (extendable to 40 GHz); instantaneous bandwidth typically 500 MHz with channelised or digital receiver scanning.</p>
+<div class="parahead">
+<p>Interferometric Direction Finding.</p>
+</div>
+<p>Phase-difference interferometry using two antennas separated by baseline <span class="arithmatex">\(d\)</span>:</p>
+<div id="eq-interferometer"></div>
+<div class="arithmatex">\[\Delta\phi = \frac{2\pi\,d\,\sin\theta}{\lambda}\tag{21.30}\]</div>
+<p>Solving for target bearing:</p>
+<div id="eq-theta_DF"></div>
+<div class="arithmatex">\[\theta = \arcsin\!\left(\frac{\lambda\,\Delta\phi}{2\pi\,d}\right)\tag{21.31}\]</div>
+<p>Angle accuracy: <span class="arithmatex">\(\sigma_\theta = \lambda/(2\pi\,d\,\sqrt{\mathrm{SNR}})\)</span>. For <span class="arithmatex">\(d = 0.5\)</span> m, <span class="arithmatex">\(f = 10\)</span> GHz, SNR <span class="arithmatex">\(=20\)</span> dB, <span class="arithmatex">\(\sigma_\theta \approx 0.1\)</span> mrad.</p>
+<div class="parahead">
+<p>Memory Mode.</p>
+</div>
+<p>When the target radar is switched off, the ARM’s inertial navigation system maintains the last-known LOS direction and the seeker continues guiding toward the estimated target location. Updated bearing estimates from brief radar re-emissions are fused with the INS propagated position.</p>
+<h3 id="2144-eccm-in-active-radar-seekers"><span class="secnum">21.4.4</span> ECCM in Active Radar Seekers<a class="headerlink" href="#2144-eccm-in-active-radar-seekers" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Frequency agility:</strong> Pulse-to-pulse frequency hopping over <span class="arithmatex">\(&gt;100\)</span> MHz defeats narrowband noise jammers.</p>
+</li>
+<li>
+<p><strong>PRF agility:</strong> Randomised pulse repetition intervals defeat range-gate pull-off (RGPO) jamming.</p>
+</li>
+<li>
+<p><strong>LPI waveforms:</strong> Low peak power, wide bandwidth, random modulation reduces probability of intercept by target ESM receivers.</p>
+</li>
+<li>
+<p><strong>Adaptive CFAR:</strong> Detects jamming-induced threshold elevation; uses alternative reference cells.</p>
+</li>
+<li>
+<p><strong>Home-on-jam (HOJ):</strong> If a jammer is sufficiently powerful, the seeker switches from radar tracking to passive tracking of the jammer beam.</p>
+</li>
+</ul>
+<h2 id="sec-laser_seekers"><span class="secnum">21.5</span> Laser Seekers<a class="headerlink" href="#sec-laser_seekers" title="Permanent link">&para;</a></h2>
+<h3 id="2151-semi-active-laser-sal-homing"><span class="secnum">21.5.1</span> Semi-Active Laser (SAL) Homing<a class="headerlink" href="#2151-semi-active-laser-sal-homing" title="Permanent link">&para;</a></h3>
+<p>SAL seekers require a laser designator (airborne, ground-based, or SOF-carried) to illuminate the target. The designator pulses at a coded pulse repetition frequency (PRF) and the seeker’s quadrant photodetector measures the centroid of the returned laser spot.</p>
+<div class="parahead">
+<p>Wavelengths and Atmospheric Windows.</p>
+</div>
+<ul>
+<li>
+<p><span class="arithmatex">\(\lambda = 1064\)</span> nm: Nd:YAG; most common; good Si detector response; atmospheric transmission excellent in clear air.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\lambda = 1550\)</span> nm: Er:glass fibre laser; eye-safe at Class 1 power levels at range; requires InGaAs detector.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\lambda = 532\)</span> nm: frequency-doubled Nd:YAG; visible; limited tactical use.</p>
+</li>
+</ul>
+<div class="parahead">
+<p>Quadrant Detector Angle Sensing.</p>
+</div>
+<p>The quadrant (four-element) detector produces four signals <span class="arithmatex">\(Q_A\)</span>–<span class="arithmatex">\(Q_D\)</span>. Angle error signals:</p>
+<div id="eq-QD_Az"></div>
+<div class="arithmatex">\[\varepsilon_{AZ} = K_Q\,\frac{(Q_A + Q_D) - (Q_B + Q_C)}
+                             {Q_A + Q_B + Q_C + Q_D}\tag{21.32}\]</div>
+<div id="eq-QD_El"></div>
+<div class="arithmatex">\[\varepsilon_{EL} = K_Q\,\frac{(Q_A + Q_B) - (Q_C + Q_D)}
+                             {Q_A + Q_B + Q_C + Q_D}\tag{21.33}\]</div>
+<p>The normalisation by total signal makes the angle measurement independent of absolute signal level. <span class="arithmatex">\(K_Q\)</span> is the quadrant detector scale factor (rad/<span class="arithmatex">\(\Delta\)</span>signal).</p>
+<div class="parahead">
+<p>Radiometric Link Equation.</p>
+</div>
+<p>The received power at the detector from a Lambertian target (reflectivity <span class="arithmatex">\(\rho\)</span>, area <span class="arithmatex">\(A_{spot}\)</span>, cosine factor <span class="arithmatex">\(\cos\theta\)</span>):</p>
+<div id="eq-SAL_link"></div>
+<div class="arithmatex">\[P_r = \frac{E_L\,\rho\,A_{det}\,\tau_{atm}^2\,\cos\theta}
+             {\pi\,R^2\,\Omega_{spot}}\tag{21.34}\]</div>
+<p>where <span class="arithmatex">\(E_L\)</span> is the designator pulse energy (J), <span class="arithmatex">\(\Omega_{spot}\)</span> is the solid angle of the laser spot, and <span class="arithmatex">\(\tau_{atm}^2\)</span> accounts for two-way atmospheric attenuation.</p>
+<div class="parahead">
+<p>Atmospheric Attenuation.</p>
+</div>
+<p>Beer–Lambert law for laser propagation:</p>
+<div id="eq-Beer_Lambert"></div>
+<div class="arithmatex">\[I(R) = I_0\,\exp(-\beta R)\tag{21.35}\]</div>
+<p>where the attenuation coefficient <span class="arithmatex">\(\beta\)</span> (m<span class="arithmatex">\(^{-1}\)</span>) combines molecular absorption <span class="arithmatex">\(\beta_{mol}\)</span> and aerosol scattering <span class="arithmatex">\(\beta_{aer}\)</span>:</p>
+<div id="eq-beta_total"></div>
+<div class="arithmatex">\[\beta = \beta_{mol} + \beta_{aer}\tag{21.36}\]</div>
+<p>For <span class="arithmatex">\(\lambda = 1064\)</span> nm in clear air, <span class="arithmatex">\(\beta \approx 0.1\)</span>–0.3 km<span class="arithmatex">\(^{-1}\)</span>; in moderate haze, <span class="arithmatex">\(\beta \approx 0.5\)</span>–1 km<span class="arithmatex">\(^{-1}\)</span>; in thick smoke, <span class="arithmatex">\(\beta\)</span> can exceed 5 km<span class="arithmatex">\(^{-1}\)</span>.</p>
+<div class="parahead">
+<p>PRF Coding.</p>
+</div>
+<p>The designator transmits coded pulse trains (typically 4–8 pulse sequences) to prevent fratricide. The seeker performs temporal pattern matching:</p>
+<div id="eq-PRF_match"></div>
+<div class="arithmatex">\[\hat{c} = \arg\max_{c}\sum_{k} y(t_k)\cdot p_c(t_k)\tag{21.37}\]</div>
+<p>where <span class="arithmatex">\(y(t_k)\)</span> are the received pulse timestamps and <span class="arithmatex">\(p_c\)</span> is the expected pattern for code <span class="arithmatex">\(c\)</span>.</p>
+<div class="parahead">
+<p>Accuracy.</p>
+</div>
+<p>SAL seekers achieve CEP <span class="arithmatex">\(&lt;\)</span> 1–3 m in clear conditions. Accuracy degrades in turbulence (beam wander <span class="arithmatex">\(\sigma_{BW} \propto C_n^2 R^{11/6}\)</span>) and smoke obscuration.</p>
+<h3 id="2152-active-laser-ladar-terminal-seeker"><span class="secnum">21.5.2</span> Active Laser (LADAR) Terminal Seeker<a class="headerlink" href="#2152-active-laser-ladar-terminal-seeker" title="Permanent link">&para;</a></h3>
+<p>Missile-borne pulsed LADAR provides 3D point-cloud imagery of the target in the terminal phase. Range measurement:</p>
+<div id="eq-LADAR_range"></div>
+<div class="arithmatex">\[R = \frac{c\,\Delta t}{2}\tag{21.38}\]</div>
+<p>with timing accuracy <span class="arithmatex">\(\sigma_{\Delta t} \approx 0.1\)</span> ns giving <span class="arithmatex">\(\sigma_R \approx 15\)</span> mm. Flash LADAR illuminates the entire scene in one pulse, producing a <span class="arithmatex">\(128\times128\)</span> range/intensity image per shot. Applications include:</p>
+<ul>
+<li>
+<p>Aimpoint selection on 3D target model (e.g., engine intake vs. cockpit vs. fuel tank)</p>
+</li>
+<li>
+<p>Decoy discrimination by 3D shape comparison</p>
+</li>
+<li>
+<p>Terminal navigation update: compare measured point-cloud to stored 3D target model; CEP <span class="arithmatex">\(&lt;\)</span> 0.1 m achievable</p>
+</li>
+</ul>
+<h2 id="sec-eo_seekers"><span class="secnum">21.6</span> Electro-Optical Seekers<a class="headerlink" href="#sec-eo_seekers" title="Permanent link">&para;</a></h2>
+<h3 id="2161-tv-visible-band-seekers"><span class="secnum">21.6.1</span> TV (Visible Band) Seekers<a class="headerlink" href="#2161-tv-visible-band-seekers" title="Permanent link">&para;</a></h3>
+<p>Television seekers use silicon CCD or CMOS arrays in the visible band (0.4–0.9 <span class="arithmatex">\(\mu\)</span>m). Key characteristics:</p>
+<ul>
+<li>
+<p>Resolution: 640<span class="arithmatex">\(\times\)</span>480 to 1920<span class="arithmatex">\(\times\)</span>1080 pixels</p>
+</li>
+<li>
+<p>Frame rate: 30–120 Hz</p>
+</li>
+<li>
+<p>Tracking: centroid or correlation algorithm</p>
+</li>
+<li>
+<p>Limitation: passive daylight only; cannot operate at night or in smoke/cloud</p>
+</li>
+</ul>
+<div class="parahead">
+<p>Centroid Tracker.</p>
+</div>
+<p>The target centroid in the image plane is computed as the intensity-weighted mean of the target-segmented pixels:</p>
+<div id="eq-centroid"></div>
+<div class="arithmatex">\[\bar{x} = \frac{\sum_{(i,j)\in\mathcal{T}} i\,I(i,j)}
+             {\sum_{(i,j)\in\mathcal{T}} I(i,j)},
+  \qquad
+  \bar{y} = \frac{\sum_{(i,j)\in\mathcal{T}} j\,I(i,j)}
+             {\sum_{(i,j)\in\mathcal{T}} I(i,j)}\tag{21.39}\]</div>
+<p>The angular error signals are then <span class="arithmatex">\(\varepsilon_{AZ} = (\bar{x} - x_c) \cdot \delta_{pix}\)</span> and similarly for elevation, where <span class="arithmatex">\(\delta_{pix}\)</span> is the pixel angular subtense (IFOV).</p>
+<h3 id="2162-dsmac-digital-scene-matching-area-correlator"><span class="secnum">21.6.2</span> DSMAC: Digital Scene Matching Area Correlator<a class="headerlink" href="#2162-dsmac-digital-scene-matching-area-correlator" title="Permanent link">&para;</a></h3>
+<p>The Tomahawk cruise missile employs DSMAC as a terminal navigation update (TNI). A stored reference image of the target area (from satellite reconnaissance) is correlated with the live seeker image:</p>
+<div id="eq-DSMAC_corr"></div>
+<div class="arithmatex">\[C(\mathbf{u}) = \sum_{x,y} I(x,y)\cdot T(x-u_x,\, y-u_y)\tag{21.40}\]</div>
+<p>The peak of <span class="arithmatex">\(C(\mathbf{u})\)</span> gives the displacement of the missile from the planned aimpoint. This correction is fed to the guidance computer to correct accumulated INS drift. DSMAC achieves CEP <span class="arithmatex">\(&lt;\)</span> 3–10 m even after long-range cruise.</p>
+<h3 id="2163-automatic-target-recognition-atr"><span class="secnum">21.6.3</span> Automatic Target Recognition (ATR)<a class="headerlink" href="#2163-automatic-target-recognition-atr" title="Permanent link">&para;</a></h3>
+<p>Modern IIR and TV seekers incorporate CNN-based ATR. A neural network (typically MobileNetV3 or a bespoke lightweight architecture) is trained offline on thermal signature databases. Onboard inference:</p>
+<div id="eq-ATR"></div>
+<div class="arithmatex">\[\hat{c} = \arg\max_{c}\, P(class_c \mid \mathbf{x}; \boldsymbol{\theta})\tag{21.41}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{x}\)</span> is the image patch and <span class="arithmatex">\(\boldsymbol{\theta}\)</span> are the network weights stored in flash memory. ATR enables:</p>
+<ul>
+<li>
+<p>Classification of tank, APC, truck, helicopter, ship</p>
+</li>
+<li>
+<p>Automatic selection of the high-value target in a scene containing multiple objects</p>
+</li>
+<li>
+<p>Aimpoint offset selection (e.g., turret ring vs. engine deck)</p>
+</li>
+<li>
+<p>Rejection of decoys whose thermal signature doesn’t match the target class</p>
+</li>
+</ul>
+<p>The ATR probability of correct identification (PID) must exceed 0.95 for autonomous operation; below this threshold, human-in-the-loop confirmation is required (man-on-the-loop ethics requirement).</p>
+<h2 id="sec-multimode"><span class="secnum">21.7</span> Multi-Mode Seekers<a class="headerlink" href="#sec-multimode" title="Permanent link">&para;</a></h2>
+<h3 id="2171-rationale-and-architecture"><span class="secnum">21.7.1</span> Rationale and Architecture<a class="headerlink" href="#2171-rationale-and-architecture" title="Permanent link">&para;</a></h3>
+<p>No single seeker modality excels in all engagement conditions:</p>
+<ul>
+<li>
+<p>IR fails in cloud/smoke/flares</p>
+</li>
+<li>
+<p>Radar is susceptible to ECM and has limited aimpoint precision</p>
+</li>
+<li>
+<p>Laser requires target illumination and degrades in obscurants</p>
+</li>
+<li>
+<p>EO is daylight-only</p>
+</li>
+</ul>
+<p>Multi-mode seekers combine two or more modalities on a shared gimbal to overcome individual limitations. Common pairings:</p>
+<ul>
+<li>
+<p><strong>SAL + IIR</strong> (e.g., GBU-54 LJDAM concept, Dual Seeker variant): laser provides GPS-denied precision; IIR provides all-weather fallback.</p>
+</li>
+<li>
+<p><strong>ARH + IIR</strong>: active radar for acquisition at long range; IIR for precision terminal aimpointing.</p>
+</li>
+<li>
+<p><strong>ARH + SAL</strong>: fire-and-forget plus optional designator override; Brimstone dual-mode.</p>
+</li>
+<li>
+<p><strong>MMW + IIR</strong>: millimetre-wave radar penetrates smoke and cloud; IIR provides high-resolution aimpoint. Brimstone 2 uses this combination.</p>
+</li>
+</ul>
+<h3 id="2172-fusion-algorithms"><span class="secnum">21.7.2</span> Fusion Algorithms<a class="headerlink" href="#2172-fusion-algorithms" title="Permanent link">&para;</a></h3>
+<div class="parahead">
+<p>Weighted Combination.</p>
+</div>
+<p>The fused LOS rate estimate is a reliability-weighted sum:</p>
+<div id="eq-fusion_weighted"></div>
+<div class="arithmatex">\[\dot{\lambda}_{fused} = \frac{w_{IR}\,\dot{\lambda}_{IR}
+                               + w_{RF}\,\dot{\lambda}_{RF}}
+                               {w_{IR} + w_{RF}}\tag{21.42}\]</div>
+<p>where <span class="arithmatex">\(w_k = 1/\sigma_{\dot{\lambda},k}^2\)</span> are the inverse variance weights.</p>
+<div class="parahead">
+<p>Interacting Multiple Model (IMM).</p>
+</div>
+<p>The IMM estimator maintains <span class="arithmatex">\(M\)</span> parallel Kalman filters, each modelling a different target motion (constant velocity, constant acceleration, coordinated turn). The fused state estimate:</p>
+<div id="eq-IMM_fused"></div>
+<div class="arithmatex">\[\hat{\mathbf{x}} = \sum_{k=1}^{M} \mu_k^{post}\,\hat{\mathbf{x}}_k\tag{21.43}\]</div>
+<p>where the model probabilities <span class="arithmatex">\(\mu_k^{post}\)</span> are updated via Bayes’ rule on the likelihood of each model given the measurements. IMM provides smooth transitions between target motion modes and robustness against countermeasures.</p>
+<div class="parahead">
+<p>Track-Before-Detect (TBD).</p>
+</div>
+<p>At low SNR (below the single-scan detection threshold), TBD integrates target energy across multiple scans before declaring detection. The optimal TBD test statistic is:</p>
+<div id="eq-TBD"></div>
+<div class="arithmatex">\[\Lambda = \sum_{k=1}^{K} \log\frac{p(z_k | target)}{p(z_k | noise)}\tag{21.44}\]</div>
+<p>compared against a threshold <span class="arithmatex">\(h\)</span>. TBD extends acquisition range by 20–40% compared to single-scan detection.</p>
+<div class="tbl" id="tab-multimode_examples">
+<div class="tbl-caption"><strong>Table 21.4.</strong> Representative multi-mode seeker systems</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Missile</strong></th>
+<th style="text-align: left;"><strong>Modes</strong></th>
+<th style="text-align: left;"><strong>Freq/Band</strong></th>
+<th style="text-align: left;"><strong>CEP</strong></th>
+<th style="text-align: left;"><strong>Role</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AIM-9X Block II</td>
+<td style="text-align: left;">IIR</td>
+<td style="text-align: left;">MWIR 3–5 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>1 m</td>
+<td style="text-align: left;">A-A</td>
+</tr>
+<tr>
+<td style="text-align: left;">AIM-120D</td>
+<td style="text-align: left;">ARH</td>
+<td style="text-align: left;">X-band AESA</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>5 m</td>
+<td style="text-align: left;">A-A</td>
+</tr>
+<tr>
+<td style="text-align: left;">Brimstone 2</td>
+<td style="text-align: left;">MMW + SAL</td>
+<td style="text-align: left;">94 GHz + 1064 nm</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>1 m</td>
+<td style="text-align: left;">A-G</td>
+</tr>
+<tr>
+<td style="text-align: left;">Javelin</td>
+<td style="text-align: left;">Dual-band IIR</td>
+<td style="text-align: left;">MWIR + LWIR</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>0.5 m</td>
+<td style="text-align: left;">A-T</td>
+</tr>
+<tr>
+<td style="text-align: left;">AGM-65H Maverick</td>
+<td style="text-align: left;">IIR</td>
+<td style="text-align: left;">MWIR</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>1 m</td>
+<td style="text-align: left;">A-G</td>
+</tr>
+<tr>
+<td style="text-align: left;">AGM-88E AARGM</td>
+<td style="text-align: left;">ARH + GPS</td>
+<td style="text-align: left;">X/Ku-band</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>3 m</td>
+<td style="text-align: left;">SEAD</td>
+</tr>
+<tr>
+<td style="text-align: left;">Spike-ER2</td>
+<td style="text-align: left;">EO/IIR</td>
+<td style="text-align: left;">Vis + MWIR</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>0.5 m</td>
+<td style="text-align: left;">A-T</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-gimbal"><span class="secnum">21.8</span> Gimbal and Stabilisation Design<a class="headerlink" href="#sec-gimbal" title="Permanent link">&para;</a></h2>
+<h3 id="2181-gimbal-configurations"><span class="secnum">21.8.1</span> Gimbal Configurations<a class="headerlink" href="#2181-gimbal-configurations" title="Permanent link">&para;</a></h3>
+<div class="parahead">
+<p>Two-Axis Gimbal (Pitch/Yaw).</p>
+</div>
+<p>The most common configuration for tactical missiles. The inner ring carries the detector/antenna and a rate gyro; the outer ring provides a second degree of freedom. The LOS is stabilised in two angular coordinates. Cross-coupling exists between axes; for small angles the coupling torque is:</p>
+<div id="eq-gyro_couple"></div>
+<div class="arithmatex">\[\tau_{couple} = I_z\,(\omega_{body} \times \boldsymbol{\Omega}_{gyro})\tag{21.45}\]</div>
+<div class="parahead">
+<p>Three-Axis Gimbal.</p>
+</div>
+<p>Full decoupled stabilisation; required for bank-to-turn (BTT) missiles where the body rolls. Adds mass and complexity; slip rings must carry signals through three axes. Total angular momentum of inner assembly must be minimised to reduce torque export from gimbal to airframe.</p>
+<div class="parahead">
+<p>Strapdown Seeker.</p>
+</div>
+<p>Some modern designs (particularly IIR with very wide FPA) use a strapdown (fixed) detector and electronically stabilise the LOS by digitally de-rotating the image using IMU data. The angular compensation applied to pixel <span class="arithmatex">\((u,v)\)</span>:</p>
+<div id="eq-strapdown_stab"></div>
+<div class="arithmatex">\[\begin{pmatrix}u'\\v'\end{pmatrix}
+  = \mathbf{R}_{stab}(\boldsymbol{\theta}_{body})
+    \begin{pmatrix}u\\v\end{pmatrix}\tag{21.46}\]</div>
+<p>Strapdown eliminates mechanical gimbal but requires very fast (&gt;1000 Hz) IMU and image processing.</p>
+<h3 id="2182-stabilisation-loop-design"><span class="secnum">21.8.2</span> Stabilisation Loop Design<a class="headerlink" href="#2182-stabilisation-loop-design" title="Permanent link">&para;</a></h3>
+<p>The inner stabilisation loop architecture uses a rate gyro on the gimbal to measure inertial angular rate <span class="arithmatex">\(\dot{\theta}_{gim}\)</span> and drives a torque motor to null this rate:</p>
+<div id="eq-stab_controller"></div>
+<div class="arithmatex">\[G_{stab}(s) = \frac{K_p(1 + s/\omega_z)}{s(1 + s/\omega_p)}\tag{21.47}\]</div>
+<p>where <span class="arithmatex">\(\omega_z\)</span> is the lead compensator zero and <span class="arithmatex">\(\omega_p\)</span> is the pole. Stability margins: gain margin <span class="arithmatex">\(&gt;\)</span>6 dB, phase margin <span class="arithmatex">\(&gt;\)</span>45<span class="arithmatex">\(^\circ\)</span>. The friction in gimbal bearings is a primary disturbance; flexure bearings (no contact friction) are used in precision seekers but limit angular range to <span class="arithmatex">\(\pm\)</span>5–10<span class="arithmatex">\(^\circ\)</span> and require an outer coarse gimbal.</p>
+<h3 id="2183-gimbal-angle-limits-and-vignetting"><span class="secnum">21.8.3</span> Gimbal Angle Limits and Vignetting<a class="headerlink" href="#2183-gimbal-angle-limits-and-vignetting" title="Permanent link">&para;</a></h3>
+<p>The practical angular range of a gimballed seeker is <span class="arithmatex">\(\pm\)</span>35–60<span class="arithmatex">\(^\circ\)</span> from the missile boresight. Beyond this limit, vignetting (partial obscuration of the aperture by the dome rim or gimbal structure) reduces sensitivity. The vignetting transmission factor:</p>
+<div id="eq-vignetting"></div>
+<div class="arithmatex">\[\tau_{vig}(\theta) = \cos(\theta/\theta_{max})\qquad \theta \leq \theta_{max}\tag{21.48}\]</div>
+<p>This imposes a practical constraint on launch geometry: the missile must be pointed within <span class="arithmatex">\(\pm\)</span>35<span class="arithmatex">\(^\circ\)</span> of the target at launch for reliable acquisition.</p>
+<h3 id="2184-lock-before-launch-vs-lock-after-launch"><span class="secnum">21.8.4</span> Lock-Before-Launch vs Lock-After-Launch<a class="headerlink" href="#2184-lock-before-launch-vs-lock-after-launch" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>Lock-Before-Launch (LBL):</dt>
+<dd>The seeker is slaved (via databus) to the parent aircraft’s radar or IRST track. Before release, the seeker acquires the target and confirms lock (crosshair on track, SNR adequate). Only then does the pilot consent to release. Standard for short-range IR missiles (AIM-9, ASRAAM).</dd>
+<dt>Lock-After-Launch (LAL):</dt>
+<dd>The missile is released on a predicted bearing; after motor ignition the missile manoeuvres its seeker toward the target, acquires, and locks. Required when the target is beyond launch seeker acquisition range (long-range BVR engagements) or when rapid launch (spray-and-pray) tactics are used. The launch aircraft continues to provide target track updates via datalink until the seeker acquires.</dd>
+</dl>
+<h2 id="sec-seeker_sigproc"><span class="secnum">21.9</span> Seeker Signal Processing<a class="headerlink" href="#sec-seeker_sigproc" title="Permanent link">&para;</a></h2>
+<h3 id="2191-angle-tracking-filters"><span class="secnum">21.9.1</span> Angle Tracking Filters<a class="headerlink" href="#2191-angle-tracking-filters" title="Permanent link">&para;</a></h3>
+<p>The seeker angle tracker maintains an estimate of target angular position and rate in the seeker frame. The Kalman filter state vector is:</p>
+<div id="eq-tracker_state"></div>
+<div class="arithmatex">\[\mathbf{x}_k = [\lambda_{AZ},\,\dot{\lambda}_{AZ},\,\lambda_{EL},
+                  \,\dot{\lambda}_{EL}]^\top\tag{21.49}\]</div>
+<p>with process model <span class="arithmatex">\(\mathbf{x}_{k+1} = \mathbf{F}\,\mathbf{x}_k + \mathbf{w}_k\)</span> where:</p>
+<div id="eq-tracker_F"></div>
+<div class="arithmatex">\[\mathbf{F} = \begin{pmatrix}1 &amp; T &amp; 0 &amp; 0\\
+                              0 &amp; 1 &amp; 0 &amp; 0\\
+                              0 &amp; 0 &amp; 1 &amp; T\\
+                              0 &amp; 0 &amp; 0 &amp; 1\end{pmatrix}\tag{21.50}\]</div>
+<p><span class="arithmatex">\(T\)</span> is the sample interval (typ. 10–50 ms). Measurement noise covariance <span class="arithmatex">\(R = \sigma_{NEA}^2 \mathbf{I}\)</span>. Process noise covariance <span class="arithmatex">\(Q = q\,\mathrm{diag}(T^3/3,\, T,\, T^3/3,\, T)\)</span> where <span class="arithmatex">\(q\)</span> is the manoeuvre noise intensity.</p>
+<h3 id="2192-glint-and-extended-target-effects"><span class="secnum">21.9.2</span> Glint and Extended Target Effects<a class="headerlink" href="#2192-glint-and-extended-target-effects" title="Permanent link">&para;</a></h3>
+<p>For an extended target (a ship, aircraft, or large vehicle), the radar or IR return originates from distributed scattering centres. The apparent centre of radiation wanders randomly—this is called <em>glint</em>. The glint noise spectral density is approximately:</p>
+<div id="eq-glint_psd"></div>
+<div class="arithmatex">\[S_{glint}(f) \approx \frac{\sigma_{glint}^2\,\tau_{glint}}
+  {1 + (2\pi f \tau_{glint})^2}\tag{21.51}\]</div>
+<p>where <span class="arithmatex">\(\sigma_{glint}\)</span> is the RMS glint displacement (typically 0.1–0.5 of target extent) and <span class="arithmatex">\(\tau_{glint}\)</span> is the correlation time (0.01–1 s). Glint is white noise at frequencies below <span class="arithmatex">\(1/(2\pi\tau_{glint})\)</span> and is a significant terminal miss distance contributor for radar seekers engaging large targets.</p>
+<h3 id="2193-mti-and-doppler-filtering"><span class="secnum">21.9.3</span> MTI and Doppler Filtering<a class="headerlink" href="#2193-mti-and-doppler-filtering" title="Permanent link">&para;</a></h3>
+<p>Moving Target Indication (MTI) processing rejects stationary clutter. A two-pulse MTI canceller output:</p>
+<div id="eq-MTI_2pulse"></div>
+<div class="arithmatex">\[y_k = x_k - x_{k-1}\tag{21.52}\]</div>
+<p>The MTI improvement factor for <span class="arithmatex">\(N\)</span>-pulse canceller with target Doppler <span class="arithmatex">\(f_d\)</span> and clutter spectral width <span class="arithmatex">\(\sigma_v\)</span>:</p>
+<div id="eq-MTI_IF"></div>
+<div class="arithmatex">\[I_{MTI} = \frac{\mathrm{SNR}_{out}}{\mathrm{SNR}_{in}}
+  = \frac{N}{\pi^2\,(2\sigma_v/\lambda)^2\,T_{PRI}^2}\tag{21.53}\]</div>
+<p>For a pulse Doppler (PD) seeker the target return is isolated in the Doppler domain; the Doppler filter bank covers PRF/2 to PRF/2 with <span class="arithmatex">\(N_{FFT}\)</span> bins, each of width <span class="arithmatex">\(\Delta f_d = PRF/N_{FFT}\)</span>.</p>
+<h2 id="sec-seeker_test"><span class="secnum">21.10</span> Seeker Testing and Calibration<a class="headerlink" href="#sec-seeker_test" title="Permanent link">&para;</a></h2>
+<h3 id="21101-boresight-calibration"><span class="secnum">21.10.1</span> Boresight Calibration<a class="headerlink" href="#21101-boresight-calibration" title="Permanent link">&para;</a></h3>
+<p>Boresight error (BSE) is the angular offset between the seeker null (zero-error output direction) and the missile mechanical axis. BSE must be <span class="arithmatex">\(&lt;\)</span>0.5 mrad (<span class="arithmatex">\(\sim\)</span>0.03<span class="arithmatex">\(^\circ\)</span>) to avoid systematic offset at target impact. Calibration procedure:</p>
+<ol>
+<li>
+<p>Mount missile on precision boresight stand aligned to theodolite</p>
+</li>
+<li>
+<p>Command seeker to null (zero error output)</p>
+</li>
+<li>
+<p>Measure optical axis direction using retro-reflection collimator</p>
+</li>
+<li>
+<p>Compute BSE and apply electrical correction bias</p>
+</li>
+<li>
+<p>Verify residual BSE <span class="arithmatex">\(&lt;\)</span>0.5 mrad across temperature range <span class="arithmatex">\(-\)</span>40 to <span class="arithmatex">\(+\)</span>71<span class="arithmatex">\(^\circ\)</span>C</p>
+</li>
+</ol>
+<h3 id="21102-seeker-characterisation"><span class="secnum">21.10.2</span> Seeker Characterisation<a class="headerlink" href="#21102-seeker-characterisation" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-seeker_tests">
+<div class="tbl-caption"><strong>Table 21.5.</strong> Seeker characterisation tests and acceptance criteria</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Test</strong></th>
+<th style="text-align: left;"><strong>Method</strong></th>
+<th style="text-align: left;"><strong>Acceptance Criterion</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Boresight error</td>
+<td style="text-align: left;">Collimator alignment</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>0.5 mrad</td>
+</tr>
+<tr>
+<td style="text-align: left;">Noise equivalent angle</td>
+<td style="text-align: left;">Statistical noise floor</td>
+<td style="text-align: left;">per spec (typ. 0.1–0.5 mrad)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tracking bandwidth</td>
+<td style="text-align: left;">Swept frequency input</td>
+<td style="text-align: left;"><span class="math inline">\(-\)</span>3 dB at <span class="math inline">\(\omega_T\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Acquisition range</td>
+<td style="text-align: left;">Range tower</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;R_{spec}\)</span> at <span class="math inline">\(P_{acq} &gt; 0.95\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">IRCCM rejection</td>
+<td style="text-align: left;">Flare rack trials</td>
+<td style="text-align: left;">Track maintained <span class="math inline">\(&gt;90\%\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Vibration survival</td>
+<td style="text-align: left;">Sine + random per MIL-810</td>
+<td style="text-align: left;">Function after; no loose parts</td>
+</tr>
+<tr>
+<td style="text-align: left;">Shock survival</td>
+<td style="text-align: left;">Half-sine pulse 40 g/11 ms</td>
+<td style="text-align: left;">Function after</td>
+</tr>
+<tr>
+<td style="text-align: left;">Temperature</td>
+<td style="text-align: left;"><span class="math inline">\(-54\)</span> to <span class="math inline">\(+71^\circ\)</span>C ops</td>
+<td style="text-align: left;">Full spec across range</td>
+</tr>
+<tr>
+<td style="text-align: left;">EMI susceptibility</td>
+<td style="text-align: left;">MIL-STD-461</td>
+<td style="text-align: left;">No degradation above <span class="math inline">\(E\)</span>-field limits</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="21103-hardware-in-the-loop-hwil-testing"><span class="secnum">21.10.3</span> Hardware-in-the-Loop (HWIL) Testing<a class="headerlink" href="#21103-hardware-in-the-loop-hwil-testing" title="Permanent link">&para;</a></h3>
+<p>HWIL seeker testing places the physical seeker hardware on a multi-axis flight motion simulator (FMS) table with the seeker looking at a simulated target scene:</p>
+<ul>
+<li>
+<p><strong>IR scene projector:</strong> Resistive array (128<span class="arithmatex">\(\times\)</span>128 to 512<span class="arithmatex">\(\times\)</span>512 elements) heated to simulate thermal scenes; dynamic update rate 200–1000 Hz.</p>
+</li>
+<li>
+<p><strong>RF scene generator:</strong> Signal injection into seeker receiver; simulates target return, clutter, and ECM at correct power levels.</p>
+</li>
+<li>
+<p><strong>Laser spot simulator:</strong> Pulsed laser diode with beam steering mirror; coded PRF sequence; dithered position for noise.</p>
+</li>
+<li>
+<p><strong>6-DOF FMS table:</strong> Reproduces missile body angular rates from simulated 6-DOF trajectory; bandwidth 50–200 Hz; angular rate <span class="arithmatex">\(\pm\)</span>500 deg/s.</p>
+</li>
+</ul>
+<p>The HWIL simulation loop processes:</p>
+<div id="eq-HWIL_loop"></div>
+<div class="arithmatex">\[\text{Seeker output } \dot{\lambda} \longrightarrow
+  \text{Guidance computer} \longrightarrow
+  \mathbf{a}_c \longrightarrow
+  \text{6-DOF sim} \longrightarrow
+  \dot{\theta}_{body} \longrightarrow
+  \text{FMS table} \longrightarrow
+  \text{Scene projector update}\tag{21.54}\]</div>
+<p>This closed-loop HWIL evaluates the complete sensor-to-guidance signal chain under realistic dynamic conditions.</p>
+<h3 id="21104-environmental-testing"><span class="secnum">21.10.4</span> Environmental Testing<a class="headerlink" href="#21104-environmental-testing" title="Permanent link">&para;</a></h3>
+<p>All seekers must pass MIL-STD-810H environmental qualification:</p>
+<ul>
+<li>
+<p><strong>Temperature-Altitude:</strong> Method 520; simulates high-altitude storage and operation; reduced convective cooling.</p>
+</li>
+<li>
+<p><strong>Vibration:</strong> Method 514.8; random vibration 0.04 g²/Hz across 20–2000 Hz; swept sine for resonance searches.</p>
+</li>
+<li>
+<p><strong>Shock:</strong> Method 516.8; functional shock 40 g, 11 ms; crash hazard 75 g, 11 ms.</p>
+</li>
+<li>
+<p><strong>Sand and Dust:</strong> Method 510.7; particulate ingestion.</p>
+</li>
+<li>
+<p><strong>Humidity:</strong> Method 507.6; 95% RH at 40<span class="arithmatex">\(^\circ\)</span>C cycling.</p>
+</li>
+<li>
+<p><strong>Salt Fog:</strong> Method 509.7; maritime environments.</p>
+</li>
+</ul>
+<p>EMI/EMC compliance is verified to MIL-STD-461G: radiated emissions RE102 (10 kHz–18 GHz); radiated susceptibility RS103 (up to 200 V/m); conducted susceptibility CS114 (bulk current injection).</p>
+<h2 id="sec-future_seekers"><span class="secnum">21.11</span> Advanced and Future Seeker Technologies<a class="headerlink" href="#sec-future_seekers" title="Permanent link">&para;</a></h2>
+<h3 id="21111-wide-band-aesa-radar-seeker-with-sar-imaging"><span class="secnum">21.11.1</span> Wide-Band AESA Radar Seeker with SAR Imaging<a class="headerlink" href="#21111-wide-band-aesa-radar-seeker-with-sar-imaging" title="Permanent link">&para;</a></h3>
+<p>Next-generation AESA seekers will achieve sufficiently wide instantaneous bandwidth to generate synthetic aperture radar (SAR) imagery of the target area. SAR cross-range resolution:</p>
+<div id="eq-SAR_res"></div>
+<div class="arithmatex">\[\delta_{cr} = \frac{\lambda R}{2\,L_{syn}} = \frac{D_{antenna}}{2}\tag{21.55}\]</div>
+<p>This resolution is independent of range and depends only on the physical aperture size <span class="arithmatex">\(D_{antenna}\)</span>. For a 150 mm AESA seeker at <span class="arithmatex">\(Ka\)</span>-band (<span class="arithmatex">\(\lambda = 8\)</span> mm), <span class="arithmatex">\(\delta_{cr} = 75\)</span> mm—sufficient to identify vehicle class from aimpoint selection. Inverse SAR (ISAR) uses target motion rather than missile motion to generate the synthetic aperture.</p>
+<h3 id="21112-quantum-dot-ir-detectors"><span class="secnum">21.11.2</span> Quantum Dot IR Detectors<a class="headerlink" href="#21112-quantum-dot-ir-detectors" title="Permanent link">&para;</a></h3>
+<p>Conventional cooled IR detectors require cryogenic cooling to reduce dark current. Quantum dot (QD) nanocrystal detectors (e.g., PbS, PbSe, InAs QDs in colloidal suspension or epitaxially grown) exploit quantum confinement to tune the absorption cutoff wavelength by varying dot size:</p>
+<div id="eq-QD_gap"></div>
+<div class="arithmatex">\[E_{gap}(r) = E_{gap,bulk} + \frac{\hbar^2\pi^2}{2r^2}
+               \left(\frac{1}{m_e^*} + \frac{1}{m_h^*}\right)\tag{21.56}\]</div>
+<p>where <span class="arithmatex">\(r\)</span> is the dot radius and <span class="arithmatex">\(m_e^*\)</span>, <span class="arithmatex">\(m_h^*\)</span> are effective masses. MWIR QD detectors operating at room temperature have demonstrated <span class="arithmatex">\(D^* &gt; 10^{10}\)</span> Jones, approaching cooled InSb at 77 K. Elimination of the Stirling cryocooler would reduce seeker mass by 0.1–0.3 kg and remove the 90-second cool-down time constraint.</p>
+<h3 id="21113-rfir-dual-mode-on-single-gimbal"><span class="secnum">21.11.3</span> RF/IR Dual-Mode on Single Gimbal<a class="headerlink" href="#21113-rfir-dual-mode-on-single-gimbal" title="Permanent link">&para;</a></h3>
+<p>Integrating a millimetre-wave (MMW) patch array antenna with an IIR detector on the same gimbal stabilisation platform reduces mass and cost compared to separate RF and IR gimbals. The shared gimbal must be transparent (or at least compatible) to both RF and IR; challenges include:</p>
+<ul>
+<li>
+<p>Dome material must transmit both 94 GHz MMW and 3–5 <span class="arithmatex">\(\mu\)</span>m IR (no single natural material does this; solutions use a composite dome with a FSS element or a window aperture for each band)</p>
+</li>
+<li>
+<p>Electromagnetic compatibility: high-power RF T/R modules must not saturate the sensitive IR detector</p>
+</li>
+<li>
+<p>Gimbal cross-axis torque from the larger MMW antenna must not degrade IR stabilisation</p>
+</li>
+</ul>
+<h3 id="21114-cognitive-and-ai-enabled-seekers"><span class="secnum">21.11.4</span> Cognitive and AI-Enabled Seekers<a class="headerlink" href="#21114-cognitive-and-ai-enabled-seekers" title="Permanent link">&para;</a></h3>
+<p>The cognitive seeker paradigm applies machine learning throughout the signal chain:</p>
+<ul>
+<li>
+<p><strong>Scene understanding:</strong> CNN detects and classifies all objects in the scene simultaneously, assigns lethality priorities.</p>
+</li>
+<li>
+<p><strong>Countermeasure recognition:</strong> Trained on jammer signatures; classifies jammer type and automatically selects the optimal IRCCM or ECCM response.</p>
+</li>
+<li>
+<p><strong>Adaptive waveform:</strong> Reinforcement learning agent selects radar waveform (frequency, PRF, bandwidth, power) to maximise SNR given real-time clutter and jamming environment.</p>
+</li>
+<li>
+<p><strong>Aimpoint selection:</strong> Identifies the most lethal aimpoint on the target structure (engine, fuel, crew).</p>
+</li>
+</ul>
+<p>The inference engine runs on a radiation-hardened AI accelerator (e.g., a radiation-tolerant version of a systolic-array chip) consuming <span class="arithmatex">\(&lt;\)</span>5 W, delivering <span class="arithmatex">\(&gt;\)</span>1 TOPS inference throughput.</p>
+<h3 id="21115-hyperspectral-seeker"><span class="secnum">21.11.5</span> Hyperspectral Seeker<a class="headerlink" href="#21115-hyperspectral-seeker" title="Permanent link">&para;</a></h3>
+<p>A hyperspectral seeker acquires a full spectral cube (<span class="arithmatex">\(x\)</span>-spatial, <span class="arithmatex">\(y\)</span>-spatial, <span class="arithmatex">\(\lambda\)</span>-wavelength) at each frame. Typical specification:</p>
+<ul>
+<li>
+<p>Spectral range: 1–5 <span class="arithmatex">\(\mu\)</span>m or 8–12 <span class="arithmatex">\(\mu\)</span>m</p>
+</li>
+<li>
+<p>Spectral channels: 64–256</p>
+</li>
+<li>
+<p>Spatial pixels: 128<span class="arithmatex">\(\times\)</span>128 per frame</p>
+</li>
+<li>
+<p>Frame rate: 10–30 Hz</p>
+</li>
+</ul>
+<p>Target discrimination uses the full spectral signature: paint type, metal alloy, exhaust composition, and fuel type leave unique spectral fingerprints. The detection statistic is the spectral matched filter:</p>
+<div id="eq-SMF"></div>
+<div class="arithmatex">\[d_{SMF} = \frac{(\mathbf{s} - \boldsymbol{\mu})^\top
+                   \mathbf{C}^{-1}(\mathbf{t} - \boldsymbol{\mu})}
+                 {\sqrt{(\mathbf{s}-\boldsymbol{\mu})^\top
+                   \mathbf{C}^{-1}(\mathbf{s}-\boldsymbol{\mu})}}\tag{21.57}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{t}\)</span> is the measured pixel spectrum, <span class="arithmatex">\(\mathbf{s}\)</span> is the target spectral signature, <span class="arithmatex">\(\boldsymbol{\mu}\)</span> is the background mean, and <span class="arithmatex">\(\mathbf{C}\)</span> is the background covariance matrix. The hyperspectral seeker provides the ultimate IRCCM capability: flares, decoys, and jammers cannot replicate the full spectral signature of a real target.</p>
+<h3 id="21116-flash-lidar-terminal-seeker"><span class="secnum">21.11.6</span> Flash LiDAR Terminal Seeker<a class="headerlink" href="#21116-flash-lidar-terminal-seeker" title="Permanent link">&para;</a></h3>
+<p>Flash LiDAR (Light Detection and Ranging) illuminates the scene with a single pulse and captures a 2D range image simultaneously on an InGaAs Geiger-mode APD array. Each pixel records the photon time-of-arrival:</p>
+<div id="eq-flash_LIDAR"></div>
+<div class="arithmatex">\[R_{ij} = \frac{c\,(t_{ij} - t_{tx})}{2}\tag{21.58}\]</div>
+<p>yielding a 3D point cloud. At terminal engagement distances (100–500 m), aimpoint precision is:</p>
+<div id="eq-LiDAR_aim"></div>
+<div class="arithmatex">\[\sigma_{aimpoint} = \frac{R\cdot p_{det}}{f} \approx \text{1--10 cm}\tag{21.59}\]</div>
+<p>This exceeds the precision of any RF or single-band IR seeker. Flash LiDAR enables selective aimpointing on specific structural elements (jet intake, cockpit, missile rail) that would maximise damage or kill probability.</p>
+<h2 id="sec-seeker_summary"><span class="secnum">21.12</span> Summary of Seeker Selection Trade Space<a class="headerlink" href="#sec-seeker_summary" title="Permanent link">&para;</a></h2>
+<p>Seeker selection is ultimately a systems engineering trade driven by threat type, engagement geometry, operational environment, and cost constraints. The key trade factors are summarised in <a href="#tab-seeker_tradeoff">Table 21.6</a>.</p>
+<div class="tbl" id="tab-seeker_tradeoff">
+<div class="tbl-caption"><strong>Table 21.6.</strong> Comparative assessment of seeker modalities across key attributes</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Attribute</strong></th>
+<th style="text-align: center;"><strong>SpinScan IR</strong></th>
+<th style="text-align: center;"><strong>IIR</strong></th>
+<th style="text-align: center;"><strong>SARH</strong></th>
+<th style="text-align: center;"><strong>ARH</strong></th>
+<th style="text-align: center;"><strong>SAL</strong></th>
+<th style="text-align: center;"><strong>TV/EO</strong></th>
+<th style="text-align: center;"><strong>MMW</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">All-weather capability</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Very Low</td>
+<td style="text-align: center;">Very High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fire-and-forget</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;">Partial</td>
+<td style="text-align: center;">Yes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Precision (CEP)</td>
+<td style="text-align: center;">3–10 m</td>
+<td style="text-align: center;"><span class="math inline">\(&lt;\)</span>2 m</td>
+<td style="text-align: center;">3–10 m</td>
+<td style="text-align: center;">3–10 m</td>
+<td style="text-align: center;"><span class="math inline">\(&lt;\)</span>2 m</td>
+<td style="text-align: center;"><span class="math inline">\(&lt;\)</span>2 m</td>
+<td style="text-align: center;">3–10 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">IRCCM/ECCM robustness</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Range capability</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cost</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Very High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mass</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+</tr>
+<tr>
+<td style="text-align: left;">Collateral risk</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">Med</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Med</td>
+</tr>
+<tr>
+<td style="text-align: left;">Maturity</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Med</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The trend across all programmes is toward multi-mode seekers combining at minimum two modalities, with embedded AI for scene understanding, target classification, and countermeasure adaptation. The cost of seeker hardware continues to fall as detector arrays, digital processing, and AESA components mature along semiconductor scaling curves. The seeker represents the highest-density engineering challenge in the guided weapon: it must achieve sensor, electromechanical, signal processing, and software functions in a volume often smaller than a 200 mm diameter sphere, surviving launch environments that impose <span class="arithmatex">\(&gt;\)</span>30 g vibration and <span class="arithmatex">\(&gt;\)</span>100 g shock, in temperatures from <span class="arithmatex">\(-54^\circ\)</span>C to <span class="arithmatex">\(+71^\circ\)</span>C, while resisting active countermeasures designed specifically to defeat it.</p>
+<p><em>Key equations summary:</em> PN guidance (<a href="#eq-PN_law">(21.1)</a>); LOS rate (<a href="#eq-lambda_dot">(21.3)</a>); IR lock-on range (<a href="#eq-IR_lock_range">(21.16)</a>); SARH equation (<a href="#eq-SARH_radar">(21.19)</a>); ARH lock-on range (<a href="#eq-ARH_lock">(21.24)</a>); SAL radiometric link (<a href="#eq-SAL_link">(21.34)</a>); Beer-Lambert (<a href="#eq-Beer_Lambert">(21.35)</a>); monopulse angle (<a href="ch31-electronic-warfare-and-countermeasures.html#eq-monopulse">(31.43)</a>); interferometer DF (<a href="#eq-interferometer">(21.30)</a>); CFAR threshold (<a href="#eq-CFAR">(21.28)</a>); Kalman tracker model (<a href="#eq-tracker_F">(21.50)</a>); AESA phase shift (<a href="#eq-AESA_phase">(21.27)</a>); quantum dot bandgap (<a href="#eq-QD_gap">(21.56)</a>); flash LiDAR (<a href="#eq-flash_LIDAR">(21.58)</a>).</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch20-guidance-navigation-and-control.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 20. Guidance, Navigation and Control">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                20. Guidance, Navigation and Control
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch22-warheads-and-effects.html" class="md-footer__link md-footer__link--next" aria-label="Next: 22. Warheads and Effects">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                22. Warheads and Effects
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

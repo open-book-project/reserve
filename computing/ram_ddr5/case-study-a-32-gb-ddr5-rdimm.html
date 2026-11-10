@@ -1,0 +1,1494 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/case-study-a-32-gb-ddr5-rdimm.html">
+  
+  
+    <link rel="prev" href="choosing-ram.html">
+  
+  
+    <link rel="next" href="signals-on-the-module.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>11. Case Study: A 32 GB DDR5 Registered Module - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#111-why-a-module-is-the-worked-example" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              11. Case Study: A 32 GB DDR5 Registered Module
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what-ram-is.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lpddr-and-gddr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#111-why-a-module-is-the-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Why a module is the worked example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-four-levels-die-package-module-computer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Four levels: die, package, module, computer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-anatomy-of-an-rdimm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Anatomy of an RDIMM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-the-specification-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 The specification at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-design-as-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Design as code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-reading-a-data-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 Reading a data sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#117-two-sided-boards-and-mirroring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 Two-sided boards and mirroring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#118-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#119-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#111-why-a-module-is-the-worked-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Why a module is the worked example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-four-levels-die-package-module-computer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Four levels: die, package, module, computer
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-anatomy-of-an-rdimm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Anatomy of an RDIMM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-the-specification-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 The specification at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-design-as-code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Design as code
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#116-reading-a-data-sheet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 Reading a data sheet
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#117-two-sided-boards-and-mirroring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 Two-sided boards and mirroring
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#118-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#119-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-11-case-study-a-32-gb-ddr5-registered-module">Chapter 11: Case Study: A 32 GB DDR5 Registered Module<a class="headerlink" href="#chapter-11-case-study-a-32-gb-ddr5-registered-module" title="Permanent link">&para;</a></h1>
+<p>From this chapter to Chapter 14 the book follows one real design from the single chip to the finished board: a 32 GB DDR5 registered DIMM (RDIMM) with error correction, designed as code with Python, the ngspice circuit simulator and the KiCad board-design suite, using real data sheets from Micron and Richtek. This chapter introduces the module, shows what sits on it, works out its capacity and bandwidth, and teaches the skill that underlies the whole project: reading a data sheet. It ends with the puzzle of the two-sided board, in which chips on the back are mirrored. Chapters 12 to 14 then take up signals, power, and the board with its firmware and manufacture.</p>
+<h2 id="111-why-a-module-is-the-worked-example">11.1 Why a module is the worked example<a class="headerlink" href="#111-why-a-module-is-the-worked-example" title="Permanent link">&para;</a></h2>
+<p>The course that this book draws on chose a DDR5 module for two reasons. Memory sticks are designed by many companies, not only by the chip makers (Kingston, ADATA, Netlist and SMART Modular among them), and every part of the module can be studied with open tools. The chip level is explained in Chapters 2 and 15, and practised with SRAM in the assignments, but the module level is where a student can follow every wire.</p>
+<div class="admonition note">
+<p class="admonition-title">How firm are these numbers?</p>
+<p>The figures below come from the project's own calculations and from manufacturers' data sheets (the Micron 16 Gb DDR5 SDRAM die data sheet, the Richtek RTQ5119A power-management data sheet, and the JEDEC DDR5 standard JESD79-5). They are design-stage values, not measurements of a built module. When the course was written, architecture, pin maps, signal and power analysis were done, the parts were placed on a real board and the power planes added, and routing the copper traces was in progress. Three pin maps (RCD, SPD hub and the edge connector) were still missing because they need non-public data sheets and the JEDEC module standard.</p>
+</div>
+<h2 id="112-four-levels-die-package-module-computer">11.2 Four levels: die, package, module, computer<a class="headerlink" href="#112-four-levels-die-package-module-computer" title="Permanent link">&para;</a></h2>
+<p>A memory product exists at four levels.</p>
+<ol>
+<li><strong>Die.</strong> The bare chip, about the size of a fingernail, made at the fab from a GDSII layout file.</li>
+<li><strong>Package.</strong> A tiny circuit board with solder balls (a BGA) and black plastic. The chip of this project comes in a package with 78 balls, 7.5 × 11 mm.</li>
+<li><strong>Module.</strong> The stick: a printed circuit board (PCB) carrying 20 memory chips, helper chips and the gold fingers of the edge connector.</li>
+<li><strong>Computer.</strong> The module plugs into a DIMM slot, and the processor's memory controller talks to it.</li>
+</ol>
+<p>The course designs the module level in full detail.</p>
+<h2 id="113-anatomy-of-an-rdimm">11.3 Anatomy of an RDIMM<a class="headerlink" href="#113-anatomy-of-an-rdimm" title="Permanent link">&para;</a></h2>
+<p>Figure 11.1 shows the project's floorplan (top) and the paths that data, commands, power and management take (bottom). It was generated from the design code and is provisional: the final placement must follow the JEDEC RDIMM raw card and the vendors' data sheets.</p>
+<figure class="fig fig-diagram">
+<img src="img/rdimm-architecture.png" alt="Top: floorplan of the DDR5 RDIMM with ten DRAMs on each of two sub-channels, the RCD in the centre, the PMIC and SPD hub at the top and a 288-pin edge connector. Bottom: a block diagram of host controller, edge connector, RCD, sub-channels A and B, SPD hub and PMIC" loading="lazy" width="1600" height="1417">
+<figcaption><strong>Figure 11.1.</strong> Top: floorplan of the DDR5 RDIMM with ten DRAMs on each of two sub-channels, the RCD in the centre, the PMIC and SPD hub at the top and a 288-pin edge connector. Bottom: a block diagram of host controller, edge connector, RCD, sub-channels A and B, SPD hub and PMIC</figcaption>
+</figure>
+
+<p>The four kinds of part on the module are:</p>
+<ul>
+<li><strong>20 DRAM chips.</strong> The memory itself. 16 hold data and 4 hold the ECC check bits. Each sub-channel has 10 chips: 8 data nibbles plus 2 ECC nibbles.</li>
+<li><strong>The RCD (register).</strong> A traffic controller: it receives commands from the processor and re-sends them cleanly to all 20 chips.</li>
+<li><strong>The PMIC (power chip).</strong> It turns the 12 V from the motherboard into the 1.1 V and 1.8 V the chips need.</li>
+<li><strong>The SPD hub and sensors.</strong> An identity card that tells the computer what this stick is, plus thermometers.</li>
+</ul>
+<p>Data wires run point to point, one wire to one chip, with no buffer. Commands, however, must reach many chips, so they travel through the RCD on a shared route (the subject of Section 12.4).</p>
+<h2 id="114-the-specification-at-a-glance">11.4 The specification at a glance<a class="headerlink" href="#114-the-specification-at-a-glance" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data capacity</td>
+<td>32 GB, plus 8 GB of ECC check bits (40 GB raw)</td>
+</tr>
+<tr>
+<td>DRAM chips</td>
+<td>20 × Micron MT60B4G4RZ, 16 Gb each, x4</td>
+</tr>
+<tr>
+<td>Rank and organisation</td>
+<td>1Rx4 (one rank of x4 chips)</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>DDR5-4800 (4800 MT/s per pin)</td>
+</tr>
+<tr>
+<td>Peak bandwidth</td>
+<td>38.4 GB/s</td>
+</tr>
+<tr>
+<td>Board</td>
+<td>10 copper layers, 1.27 mm thick</td>
+</tr>
+<tr>
+<td>Components on the board</td>
+<td>205</td>
+</tr>
+<tr>
+<td>Electrical connections (nets)</td>
+<td>258</td>
+</tr>
+<tr>
+<td>Automated design checks</td>
+<td>86 passing</td>
+</tr>
+<tr>
+<td>Edge connector</td>
+<td>288 pins</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Example 11.1: Where do 32 GB, 20 chips and 38.4 GB/s come from?</p>
+<ol>
+<li><strong>Width.</strong> A DDR5 DIMM has two sub-channels. Each carries 32 data bits and 8 ECC bits, so 40 bits, and the DIMM carries <span class="arithmatex">\(2 \times 40 = 80\)</span> bits.</li>
+<li><strong>Chip count.</strong> The chips are x4, with four data pins each, so <span class="arithmatex">\(80 / 4 = 20\)</span> chips, ten per sub-channel.</li>
+<li><strong>Capacity.</strong> Each chip holds 16 Gb <span class="arithmatex">\(= 2\)</span> GB. Twenty chips give <span class="arithmatex">\(20 \times 2 = 40\)</span> GB raw. Sixteen of them carry data: <span class="arithmatex">\(16 \times 2 = 32\)</span> GB; the other four give 8 GB of check bits.</li>
+<li><strong>Bandwidth.</strong> The data path is <span class="arithmatex">\(2 \times 32 = 64\)</span> bits at 4800 MT/s: <span class="arithmatex">\(4800 \times 64 / 8 / 1000 = 38.4\)</span> GB/s. (The ECC bits do not count towards data bandwidth.)</li>
+<li><strong>Check.</strong> Without ECC, sixteen x4 chips would fill 64 bits. A 1Rx4 ECC module is that module plus 25 per cent more chips, which is the price of reliability.</li>
+</ol>
+</div>
+<h2 id="115-design-as-code">11.5 Design as code<a class="headerlink" href="#115-design-as-code" title="Permanent link">&para;</a></h2>
+<p>Instead of drawing wires by hand, the project describes the module in Python. A program then builds the circuit board, runs the simulations and writes a design document. Change one number, rerun, and everything updates. Here is a fragment that wires the "strap" pins of every DRAM:</p>
+<div class="language-python highlight"><pre><span></span><code><span class="c1"># from design/rdimm.py: straps on every DRAM</span>
+<span class="n">d</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"VDDQ"</span> <span class="k">if</span> <span class="n">side</span> <span class="o">==</span> <span class="s2">"bottom"</span> <span class="k">else</span> <span class="s2">"VSS"</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="s2">"MIR"</span><span class="p">)</span>
+<span class="n">d</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"VSS"</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="s2">"CAI"</span><span class="p">)</span>
+<span class="n">far_end</span> <span class="o">=</span> <span class="n">pos</span> <span class="o">==</span> <span class="mi">0</span>          <span class="c1"># last chip on the command bus</span>
+<span class="n">d</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s2">"VDDQ"</span> <span class="k">if</span> <span class="n">far_end</span> <span class="k">else</span> <span class="s2">"VSS"</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="s2">"CA_ODT"</span><span class="p">)</span>
+</code></pre></div>
+<p>Automated tests then check the design like a strict inspector: every pin connected, every data lane intact, power below each chip's limit, no parts overlapping. The 86 checks run in about two seconds. The project is organised like this:</p>
+<table>
+<thead>
+<tr>
+<th>Folder</th>
+<th>What lives there</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>design/</td>
+<td>Parts, connections, timing, placement, routing rules</td>
+</tr>
+<tr>
+<td>design/pinmaps/</td>
+<td>Pin maps copied from the real data sheets</td>
+</tr>
+<tr>
+<td>si/</td>
+<td>Signal simulations with ngspice, eye diagrams</td>
+</tr>
+<tr>
+<td>power/</td>
+<td>Current budget and decoupling analysis</td>
+</tr>
+<tr>
+<td>spd/</td>
+<td>The 1024-byte identity-card contents</td>
+</tr>
+<tr>
+<td>pcb/</td>
+<td>Builds the KiCad board, custom footprints</td>
+</tr>
+<tr>
+<td>tests/</td>
+<td>The automated checks</td>
+</tr>
+<tr>
+<td>docs/</td>
+<td>Figures and the generated design document</td>
+</tr>
+</tbody>
+</table>
+<h2 id="116-reading-a-data-sheet">11.6 Reading a data sheet<a class="headerlink" href="#116-reading-a-data-sheet" title="Permanent link">&para;</a></h2>
+<p>A data sheet is the manufacturer's instruction manual for a part: every pin, every voltage, every timing, every current. Engineers read it line by line, because guesses are expensive. Figure 11.2 shows the ball map of the 78-ball x4 DRAM package from the Micron data sheet, colour-coded by function.</p>
+<figure class="fig fig-diagram">
+<img src="img/dram-ballout.png" alt="Ball map of the 78-ball DDR5 x4 DRAM package, with balls coloured by function: data, command, clock, power and ground" loading="lazy" width="1240" height="1640">
+<figcaption><strong>Figure 11.2.</strong> Ball map of the 78-ball DDR5 x4 DRAM package, with balls coloured by function: data, command, clock, power and ground</figcaption>
+</figure>
+
+<p>The project's authors made six assumptions before reading the data sheets, and the data sheets overturned all of them. Table 11.1 lists them. Each is a small lesson in why the data sheet is the contract.</p>
+<table>
+<thead>
+<tr>
+<th>We assumed</th>
+<th>The data sheet said</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Nothing about the CA_ODT pin</td>
+<td>A strap pin selects the termination group; it must be wired</td>
+</tr>
+<tr>
+<td>All 14 command pins used</td>
+<td>CA13 is unused at 16 Gb: tie its ball high</td>
+</tr>
+<tr>
+<td>Chip power about 250 mA</td>
+<td>Up to 377 mA during refresh bursts</td>
+</tr>
+<tr>
+<td>The PMIC sits on the main bus</td>
+<td>It sits on the hub's local bus</td>
+</tr>
+<tr>
+<td>The PMIC's 1.0 V output powers other parts</td>
+<td>Marked "for PMIC internal use only"</td>
+</tr>
+<tr>
+<td>Simple rectangular pads</td>
+<td>Corner chamfers are needed to keep 0.15 mm gaps</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 11.1: Six assumptions overturned by the data sheets.</em></p>
+<div class="admonition warning">
+<p class="admonition-title">Guesses are expensive</p>
+<p>Several of these errors would not have shown up in simulation. A chip with a CA_ODT pin left floating, or a PMIC output used for something the maker reserves for itself, may behave unpredictably or not work at all. A data-sheet review is a design step, not a formality.</p>
+</div>
+<h2 id="117-two-sided-boards-and-mirroring">11.7 Two-sided boards and mirroring<a class="headerlink" href="#117-two-sided-boards-and-mirroring" title="Permanent link">&para;</a></h2>
+<p>To fit 20 chips, the module puts 10 on the front and 10 directly behind them on the back. A chip flipped over to the back has its pins mirrored left to right: the pin that was on the left is now on the right. Think of two people facing each other through a glass wall: your right hand lines up with their left.</p>
+<p>DDR5 chips solve this with a <strong>MIR</strong> pin. Tie it high on the back-side chip, and the chip internally swaps its command pins in pairs, so that the board can wire the front and back chips straight through. In the project this is one rule: logical command bit <span class="arithmatex">\(i\)</span> goes to the ball labelled CA[<span class="arithmatex">\(i \oplus 1\)</span>] on mirrored chips (the XOR flips the lowest bit of the index). In the code fragment above, the MIR strap is tied to VDDQ for chips on the bottom side and to VSS otherwise. A test checks all 20 chips.</p>
+<figure class="fig fig-diagram">
+<img src="img/dram-mirror-netmap.png" alt="Side-by-side ball maps of a front DRAM and its mirrored partner on the back, with bold rings on the swapped command balls" loading="lazy" width="1600" height="1192">
+<figcaption><strong>Figure 11.3.</strong> Side-by-side ball maps of a front DRAM and its mirrored partner on the back, with bold rings on the swapped command balls</figcaption>
+</figure>
+
+<div class="admonition example">
+<p class="admonition-title">Example 11.2: Which ball does a mirrored chip use?</p>
+<p>Using the rule CA[<span class="arithmatex">\(i \oplus 1\)</span>]:</p>
+<ol>
+<li>Logical bit 2 is binary <code>10</code>; XOR with 1 gives <code>11</code>, which is 3. On a mirrored chip, logical CA2 is carried on ball CA3.</li>
+<li>Logical bit 3 (<code>11</code>) becomes <code>10</code>, which is 2: CA3 is carried on ball CA2. The two trade places.</li>
+<li>Logical bits 4 and 5 trade the same way: <span class="arithmatex">\(4 \oplus 1 = 5\)</span> and <span class="arithmatex">\(5 \oplus 1 = 4\)</span>.</li>
+<li>In general the pairs (2, 3), (4, 5), (6, 7), and so on swap, so a single wire on the board lands on the correct function of both the front and the back chip.</li>
+</ol>
+</div>
+<div class="admonition note">
+<p class="admonition-title">A point where the source is ambiguous</p>
+<p>The course text lists the swapped pairs starting at CA2 and CA3, while its rule <span class="arithmatex">\(i \oplus 1\)</span> would also pair CA0 with CA1. The authoritative mirror table is the one in the chip's data sheet and the JEDEC standard; use that for any real design.</p>
+</div>
+<h2 id="118-summary">11.8 Summary<a class="headerlink" href="#118-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The worked example is a 32 GB DDR5-4800 ECC RDIMM: 20 Micron 16 Gb x4 chips, an RCD, a PMIC and an SPD hub on a ten-layer board; peak bandwidth 38.4 GB/s.</li>
+<li>Width, chip count, capacity and bandwidth follow from simple arithmetic: 80 bits per DIMM (2 × (32 + 8)), 20 x4 chips, 32 GB data plus 8 GB of ECC.</li>
+<li>Describing the module as code lets tests check every connection and limit in seconds.</li>
+<li>The data sheet is the contract: it overturned six of the project's assumptions.</li>
+<li>Chips on the back of the board are mirrored; the MIR pin swaps command pins in pairs so both sides can be wired straight through.</li>
+</ul>
+<h2 id="119-exercises">11.9 Exercises<a class="headerlink" href="#119-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 11.1.</strong> How many x8 chips of 16 Gb would a 1Rx8 non-ECC DDR5 UDIMM have, and how many would a 1Rx8 ECC module have?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Non-ECC: <span class="arithmatex">\(64/8 = 8\)</span> chips, 16 GB. ECC: <span class="arithmatex">\(2 \times 40 = 80\)</span> bits, so <span class="arithmatex">\(80/8 = 10\)</span> chips, still 16 GB of data.</p>
+</details>
+<p><strong>Exercise 11.2.</strong> If the module's DRAM were DDR5-6400, what would its peak bandwidth be? What is the ratio to the DDR5-4800 module?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(6400 \times 64 / 8 / 1000 = 51.2\)</span> GB/s; the ratio to 38.4 GB/s is <span class="arithmatex">\(51.2/38.4 = 1.33\)</span>.</p>
+</details>
+<p><strong>Exercise 11.3.</strong> A designer assumed a DRAM draws 250 mA. The data sheet gives 377 mA during refresh bursts. By what percentage is the assumption low, and what is the extra current for 20 chips?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(377/250 = 1.508\)</span>, so the assumption is 33.7 per cent below the data-sheet value (equivalently, the data-sheet value is about 51 per cent higher). For 20 chips the extra is <span class="arithmatex">\(20 \times (377 - 250) = 2540\)</span> mA, about 2.5 A.</p>
+</details>
+<p><strong>Exercise 11.4.</strong> Apply the rule CA[<span class="arithmatex">\(i \oplus 1\)</span>] to logical command bits 6 and 7, then to bit 8 and bit 9.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Bit 6 (<code>0110</code>) <span class="arithmatex">\(\oplus\)</span> 1 = <code>0111</code> = 7, so logical CA6 uses ball CA7; bit 7 uses ball CA6. Bit 8 (<code>1000</code>) <span class="arithmatex">\(\oplus\)</span> 1 = <code>1001</code> = 9, so CA8 uses ball CA9, and CA9 uses ball CA8.</p>
+</details>
+<p><strong>Exercise 11.5.</strong> The project ties the MIR strap of back-side chips to VDDQ and of front-side chips to VSS. Explain why this must be done by a wire on the board, and why a test that checks all 20 chips is worth having.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>MIR is an input pin whose logic level the chip reads, so the board must supply it: a high level tells the chip it is mirrored. If a front chip were wrongly tied high, or a back chip left low, its command bits would be swapped with respect to the board wiring, and commands would be decoded wrongly. A test over all 20 chips catches a single wrong strap that visual inspection might miss.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="choosing-ram.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 10. Choosing RAM and Comparing the Families">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                10. Choosing RAM and Comparing the Families
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="signals-on-the-module.html" class="md-footer__link md-footer__link--next" aria-label="Next: 12. Signals: When a Wire Stops Being Just a Wire">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                12. Signals: When a Wire Stops Being Just a Wire
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

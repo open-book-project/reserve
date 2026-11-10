@@ -1,0 +1,3920 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch25-flight-control-systems.html">
+  
+  
+    <link rel="prev" href="ch24-missile-airframe-and-structures.html">
+  
+  
+    <link rel="next" href="ch26-missile-electronics-and-power.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>25. Flight Control Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-fcs_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              25. Flight Control Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch25-flight-control-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.1 Introduction to Missile Flight Control Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_arch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2 FCS System Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.2 FCS System Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2521-signal-flow-and-autopilot-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.1 Signal Flow and Autopilot Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2522-time-constants-and-bandwidth-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.2 Time Constants and Bandwidth Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2523-transfer-function-block-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.3 Transfer Function Block Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2524-stability-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.4 Stability Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fin_control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3 Aerodynamic Fin Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.3 Aerodynamic Fin Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2531-fin-configurations-and-their-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3.1 Fin Configurations and Their Trade-offs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2532-hinge-moment-and-actuator-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3.2 Hinge Moment and Actuator Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2533-all-moveable-tail-amt-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3.3 All-Moveable Tail (AMT) Surfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4 Thrust Vector Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.4 Thrust Vector Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2541-rationale-and-flight-phase-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.1 Rationale and Flight Phase Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2542-flexseal-flex-bearing-tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.2 Flexseal / Flex Bearing TVC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2543-gimballed-nozzle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.3 Gimballed Nozzle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2544-jet-vane-tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.4 Jet Vane TVC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2545-liquid-injection-tvc-litvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.5 Liquid Injection TVC (LITVC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2546-reaction-control-system-rcs-thrusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.6 Reaction Control System (RCS) Thrusters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2547-blended-tvc-and-aerodynamic-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.7 Blended TVC and Aerodynamic Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lat_autopilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5 Lateral Autopilot Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.5 Lateral Autopilot Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2551-acceleration-command-autopilot-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.1 Acceleration Command Autopilot Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2552-airframe-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.2 Airframe Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2553-rate-loop-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.3 Rate Loop Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2554-acceleration-loop-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.4 Acceleration Loop Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2555-phase-advance-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.5 Phase Advance Compensation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2556-gain-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.6 Gain Scheduling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-roll_autopilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6 Roll Autopilot
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.6 Roll Autopilot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2561-spin-stabilised-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6.1 Spin-Stabilised Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2562-roll-stabilised-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6.2 Roll-Stabilised Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2563-bank-to-turn-btt-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6.3 Bank-to-Turn (BTT) Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7 Actuator Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.7 Actuator Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2571-electromechanical-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.1 Electromechanical Actuators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2572-electrohydrostatic-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.2 Electrohydrostatic Actuators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2573-pneumatic-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.3 Pneumatic Actuators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2574-actuator-power-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.4 Actuator Power Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2575-actuator-redundancy-and-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.5 Actuator Redundancy and Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8 Flight Control System Analysis Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.8 Flight Control System Analysis Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2581-classical-frequency-domain-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.1 Classical Frequency-Domain Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2582-h-robust-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.2 H∞ Robust Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2583-linear-parameter-varying-lpv-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.3 Linear Parameter-Varying (LPV) Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2584-monte-carlo-uncertainty-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.4 Monte Carlo Uncertainty Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2585-hardware-in-the-loop-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.5 Hardware-in-the-Loop Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-special_fcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9 Special Flight Control Problems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.9 Special Flight Control Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2591-rolling-airframe-missiles-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.1 Rolling Airframe Missiles (RAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2592-high-altitude-flight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.2 High-Altitude Flight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2593-hypersonic-flight-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.3 Hypersonic Flight Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2594-boost-phase-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.4 Boost-Phase Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2595-terminal-phase-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.5 Terminal Phase Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cs_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10 Control Surface Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.10 Control Surface Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25101-aerodynamic-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.1 Aerodynamic Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25102-structural-loads-and-hinge-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.2 Structural Loads and Hinge Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25103-materials-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.3 Materials Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25104-folding-fin-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.4 Folding Fin Mechanisms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11 FCS Testing and Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.11 FCS Testing and Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25111-iron-bird-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.1 Iron Bird Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25112-aero-servo-elastic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.2 Aero-Servo-Elastic Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25113-free-flight-test-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.3 Free-Flight Test Instrumentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25114-flight-termination-system-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.4 Flight Termination System Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12 Advanced Topics in Missile FCS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.12 Advanced Topics in Missile FCS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25121-adaptive-and-intelligent-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.1 Adaptive and Intelligent Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25122-nonlinear-dynamic-inversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.2 Nonlinear Dynamic Inversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25123-control-allocation-for-over-actuated-vehicles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.3 Control Allocation for Over-Actuated Vehicles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25124-structural-filter-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.4 Structural Filter Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.13 Summary and Design Process
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.1 Introduction to Missile Flight Control Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_arch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2 FCS System Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.2 FCS System Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2521-signal-flow-and-autopilot-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.1 Signal Flow and Autopilot Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2522-time-constants-and-bandwidth-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.2 Time Constants and Bandwidth Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2523-transfer-function-block-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.3 Transfer Function Block Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2524-stability-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.2.4 Stability Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fin_control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3 Aerodynamic Fin Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.3 Aerodynamic Fin Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2531-fin-configurations-and-their-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3.1 Fin Configurations and Their Trade-offs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2532-hinge-moment-and-actuator-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3.2 Hinge Moment and Actuator Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2533-all-moveable-tail-amt-surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.3.3 All-Moveable Tail (AMT) Surfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4 Thrust Vector Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.4 Thrust Vector Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2541-rationale-and-flight-phase-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.1 Rationale and Flight Phase Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2542-flexseal-flex-bearing-tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.2 Flexseal / Flex Bearing TVC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2543-gimballed-nozzle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.3 Gimballed Nozzle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2544-jet-vane-tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.4 Jet Vane TVC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2545-liquid-injection-tvc-litvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.5 Liquid Injection TVC (LITVC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2546-reaction-control-system-rcs-thrusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.6 Reaction Control System (RCS) Thrusters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2547-blended-tvc-and-aerodynamic-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.4.7 Blended TVC and Aerodynamic Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lat_autopilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5 Lateral Autopilot Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.5 Lateral Autopilot Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2551-acceleration-command-autopilot-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.1 Acceleration Command Autopilot Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2552-airframe-transfer-function" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.2 Airframe Transfer Function
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2553-rate-loop-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.3 Rate Loop Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2554-acceleration-loop-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.4 Acceleration Loop Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2555-phase-advance-compensation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.5 Phase Advance Compensation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2556-gain-scheduling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.5.6 Gain Scheduling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-roll_autopilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6 Roll Autopilot
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.6 Roll Autopilot">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2561-spin-stabilised-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6.1 Spin-Stabilised Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2562-roll-stabilised-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6.2 Roll-Stabilised Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2563-bank-to-turn-btt-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.6.3 Bank-to-Turn (BTT) Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7 Actuator Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.7 Actuator Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2571-electromechanical-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.1 Electromechanical Actuators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2572-electrohydrostatic-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.2 Electrohydrostatic Actuators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2573-pneumatic-actuators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.3 Pneumatic Actuators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2574-actuator-power-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.4 Actuator Power Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2575-actuator-redundancy-and-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.7.5 Actuator Redundancy and Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8 Flight Control System Analysis Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.8 Flight Control System Analysis Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2581-classical-frequency-domain-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.1 Classical Frequency-Domain Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2582-h-robust-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.2 H∞ Robust Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2583-linear-parameter-varying-lpv-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.3 Linear Parameter-Varying (LPV) Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2584-monte-carlo-uncertainty-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.4 Monte Carlo Uncertainty Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2585-hardware-in-the-loop-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.8.5 Hardware-in-the-Loop Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-special_fcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9 Special Flight Control Problems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.9 Special Flight Control Problems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2591-rolling-airframe-missiles-ram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.1 Rolling Airframe Missiles (RAM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2592-high-altitude-flight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.2 High-Altitude Flight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2593-hypersonic-flight-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.3 Hypersonic Flight Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2594-boost-phase-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.4 Boost-Phase Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2595-terminal-phase-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.9.5 Terminal Phase Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cs_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10 Control Surface Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.10 Control Surface Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25101-aerodynamic-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.1 Aerodynamic Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25102-structural-loads-and-hinge-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.2 Structural Loads and Hinge Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25103-materials-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.3 Materials Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25104-folding-fin-mechanisms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.10.4 Folding Fin Mechanisms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11 FCS Testing and Validation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.11 FCS Testing and Validation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25111-iron-bird-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.1 Iron Bird Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25112-aero-servo-elastic-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.2 Aero-Servo-Elastic Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25113-free-flight-test-instrumentation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.3 Free-Flight Test Instrumentation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25114-flight-termination-system-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.11.4 Flight Termination System Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12 Advanced Topics in Missile FCS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="25.12 Advanced Topics in Missile FCS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#25121-adaptive-and-intelligent-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.1 Adaptive and Intelligent Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25122-nonlinear-dynamic-inversion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.2 Nonlinear Dynamic Inversion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25123-control-allocation-for-over-actuated-vehicles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.3 Control Allocation for Over-Actuated Vehicles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25124-structural-filter-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.12.4 Structural Filter Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        25.13 Summary and Design Process
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-missile_fcs">Chapter 25: Flight Control Systems<a class="headerlink" href="#ch-missile_fcs" title="Permanent link">&para;</a></h1>
+<h2 id="sec-fcs_intro"><span class="secnum">25.1</span> Introduction to Missile Flight Control Systems<a class="headerlink" href="#sec-fcs_intro" title="Permanent link">&para;</a></h2>
+<p>A missile flight control system (FCS) is the integrated set of hardware and algorithms that translates guidance acceleration commands into controlled, stable airframe motion throughout every phase of flight—boost, midcourse, and terminal. The FCS sits between the guidance processor (which computes the required lateral acceleration to intercept a target or follow a trajectory) and the physical world of aerodynamics and propulsion. Without a properly designed FCS, even the most sophisticated seeker and optimal guidance law will produce a vehicle that oscillates, diverges, or fails to execute the commanded manoeuvre.</p>
+<p>The engineering challenge is severe: aerodynamic derivatives shift by an order of magnitude across the flight envelope as the missile accelerates through the transonic region and climbs or dives through pressure altitudes from sea level to 30 km. Control effectors must be sized for the worst-case combination of dynamic pressure and angle-of-attack, yet must not destabilise the vehicle in the much softer conditions at boost ignition. Actuators must respond within milliseconds while consuming minimal energy from the missile’s limited power budget. The entire assembly must survive the shock and vibration of launch, the thermal environment of aerodynamic heating, and the electromagnetic environment of modern battlefields.</p>
+<p>This chapter provides a comprehensive treatment of missile FCS design: system architecture, aerodynamic and thrust-vector control effectors, autopilot synthesis, actuator technology, advanced analysis methods, and the special problems posed by rolling airframes, hypersonic speeds, and boost-phase flight.</p>
+<h2 id="sec-fcs_arch"><span class="secnum">25.2</span> FCS System Architecture<a class="headerlink" href="#sec-fcs_arch" title="Permanent link">&para;</a></h2>
+<h3 id="2521-signal-flow-and-autopilot-role"><span class="secnum">25.2.1</span> Signal Flow and Autopilot Role<a class="headerlink" href="#2521-signal-flow-and-autopilot-role" title="Permanent link">&para;</a></h3>
+<p>The guidance processor outputs a lateral acceleration command <span class="arithmatex">\(n_c\)</span> (expressed in <span class="arithmatex">\(g\)</span>) that the autopilot must realise as closely as possible. The autopilot does not directly command force; it commands control surface deflection <span class="arithmatex">\(\delta\)</span> (or TVC angle) which, through aerodynamics, creates body angular rates and ultimately angle of attack <span class="arithmatex">\(\alpha\)</span>. Angle of attack generates aerodynamic lift <span class="arithmatex">\(L = q S C_N \alpha\)</span>, which is the lateral force <span class="arithmatex">\(F_\perp\)</span> that produces the lateral acceleration <span class="arithmatex">\(n = F_\perp / W\)</span> (in <span class="arithmatex">\(g\)</span>).</p>
+<p>The four principal feedback signals closing the autopilot loops are:</p>
+<ol>
+<li>
+<p><strong>Lateral accelerometer output</strong> <span class="arithmatex">\(a_m\)</span> (m/s<span class="arithmatex">\(^2\)</span> or <span class="arithmatex">\(g\)</span>): mounted near the centre of gravity; measures total lateral acceleration including gravity component resolved in the body frame.</p>
+</li>
+<li>
+<p><strong>Body rate gyroscope</strong> <span class="arithmatex">\(q_m\)</span> (rad/s): measures pitch (or yaw) rate; provides damping to prevent body oscillations.</p>
+</li>
+<li>
+<p><strong>Roll rate gyroscope</strong> <span class="arithmatex">\(p_m\)</span> (rad/s): used in roll autopilot and for rolling-airframe demodulation.</p>
+</li>
+<li>
+<p><strong>Fin position transducer</strong> <span class="arithmatex">\(\delta_m\)</span>: provides actuator inner-loop closure; resolves actuator nonlinearity and friction.</p>
+</li>
+</ol>
+<h3 id="2522-time-constants-and-bandwidth-hierarchy"><span class="secnum">25.2.2</span> Time Constants and Bandwidth Hierarchy<a class="headerlink" href="#2522-time-constants-and-bandwidth-hierarchy" title="Permanent link">&para;</a></h3>
+<p>Stable autopilot design requires a clear separation between the bandwidths of the guidance filter, the acceleration loop, and the rate loop. The rule of thumb is that each inner loop must be at least four to five times faster than the next outer loop. Let the relevant time constants be defined as in <a href="#tab-fcs_time_constants">Table 25.1</a>.</p>
+<div class="tbl" id="tab-fcs_time_constants">
+<div class="tbl-caption"><strong>Table 25.1.</strong> Missile FCS time-constant hierarchy and typical values</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Loop / Element</strong></th>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Typical Range</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Guidance filter</td>
+<td style="text-align: left;"><span class="math inline">\(\tau_g\)</span></td>
+<td style="text-align: left;">0.5–3.0 s</td>
+<td style="text-align: left;">PNG time constant; seeker lag</td>
+</tr>
+<tr>
+<td style="text-align: left;">Outer accel. loop</td>
+<td style="text-align: left;"><span class="math inline">\(\tau_a\)</span></td>
+<td style="text-align: left;">0.1–0.5 s</td>
+<td style="text-align: left;">Airframe + accel. bandwidth</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rate loop</td>
+<td style="text-align: left;"><span class="math inline">\(\tau_r\)</span></td>
+<td style="text-align: left;">0.02–0.08 s</td>
+<td style="text-align: left;">Gyro + rate gain</td>
+</tr>
+<tr>
+<td style="text-align: left;">Actuator</td>
+<td style="text-align: left;"><span class="math inline">\(\tau_{act}\)</span></td>
+<td style="text-align: left;">0.005–0.02 s</td>
+<td style="text-align: left;">Servo bandwidth</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fin position</td>
+<td style="text-align: left;"><span class="math inline">\(\tau_{fp}\)</span></td>
+<td style="text-align: left;">0.001–0.005 s</td>
+<td style="text-align: left;">Inner actuator loop</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The separation requirement is formally stated: <span id="eq-tau_sep"></span></p>
+<div class="arithmatex">\[\tau_g \;\gg\; \tau_a \;\gg\; \tau_r \;\gg\; \tau_{act}\tag{25.1}\]</div>
+<p>Failure to maintain this hierarchy causes loop interaction: guidance oscillations feed into the autopilot at frequencies near the rate loop resonance, potentially causing fin saturation or structural excitation.</p>
+<h3 id="2523-transfer-function-block-diagram"><span class="secnum">25.2.3</span> Transfer Function Block Diagram<a class="headerlink" href="#2523-transfer-function-block-diagram" title="Permanent link">&para;</a></h3>
+<p>The open-loop transfer function from guidance command <span class="arithmatex">\(n_c\)</span> to achieved lateral acceleration <span class="arithmatex">\(n\)</span> can be written as the cascade of four transfer functions: <span id="eq-GOL"></span></p>
+<div class="arithmatex">\[G_{OL}(s) = G_{guid}(s)\cdot G_{act}(s)\cdot G_{airframe}(s)\cdot H_{fb}(s)\tag{25.2}\]</div>
+<p>where: <span id="eq-Gguid"></span><span id="eq-Gact"></span><span id="eq-Gaf"></span><span id="eq-Hfb"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  G_{guid}(s) &amp;= \frac{1}{\tau_g s + 1}
+    \quad \text{(first-order guidance/seeker filter)} \\[4pt]
+  G_{act}(s) &amp;= \frac{\omega_{act}^2}{s^2 + 2\zeta_{act}\omega_{act}s + \omega_{act}^2}
+    \quad \text{(second-order actuator)} \\[4pt]
+  G_{airframe}(s) &amp;= \frac{K_a \omega_a^2}{s^2 + 2\zeta_a\omega_a s + \omega_a^2}
+    \quad \text{(airframe acceleration response)} \\[4pt]
+  H_{fb}(s) &amp;= \frac{K_{acc}}{(\tau_{acc}s + 1)}
+    \quad \text{(accelerometer sensor gain and lag)}
+\end{align*}\]</div>
+<p>The airframe static gain <span class="arithmatex">\(K_a\)</span> (in <span class="arithmatex">\(g\)</span> per radian of fin deflection) is: <span id="eq-Ka"></span></p>
+<div class="arithmatex">\[K_a = \frac{q S C_{N\alpha}}{W}
+        \cdot \frac{C_{N\alpha}}{C_{m\delta}} \cdot \frac{l_{ref}}{1}\tag{25.7}\]</div>
+<h3 id="2524-stability-requirements"><span class="secnum">25.2.4</span> Stability Requirements<a class="headerlink" href="#2524-stability-requirements" title="Permanent link">&para;</a></h3>
+<p>Robust stability is mandated across the full flight envelope. The standard requirements derived from MIL-HDBK-1211 and NATO STANAG 4355 are: <span id="eq-GM"></span><span id="eq-PM"></span><span id="eq-Sens"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \text{Gain margin} &amp;\geq 6\;\text{dB} \\
+  \text{Phase margin} &amp;\geq 30^\circ \\
+  \text{Sensitivity peak} &amp;\leq 6\;\text{dB}\quad (M_s \leq 2)
+\end{align*}\]</div>
+<p>These margins must be satisfied at all scheduled gain table entries (Mach 0.3 to Mach 4+, sea level to 25 km) with aerodynamic coefficient uncertainties of <span class="arithmatex">\(\pm 30\%\)</span> applied simultaneously to <span class="arithmatex">\(C_{N\alpha}\)</span>, <span class="arithmatex">\(C_{m\alpha}\)</span>, and <span class="arithmatex">\(C_{m\delta}\)</span>. A missile that marginally passes the nominal analysis routinely fails this combined worst-case check, requiring redesign of the gain schedule or addition of notch filters at structural resonance frequencies.</p>
+<h2 id="sec-fin_control"><span class="secnum">25.3</span> Aerodynamic Fin Control<a class="headerlink" href="#sec-fin_control" title="Permanent link">&para;</a></h2>
+<h3 id="2531-fin-configurations-and-their-trade-offs"><span class="secnum">25.3.1</span> Fin Configurations and Their Trade-offs<a class="headerlink" href="#2531-fin-configurations-and-their-trade-offs" title="Permanent link">&para;</a></h3>
+<p>Three fundamental aerodynamic control configurations are used in operational missiles, each with characteristic stability and control implications:</p>
+<div class="parahead">
+<p>Tail control (aft of centre of gravity).</p>
+</div>
+<p>The tail-control configuration places movable fins behind the vehicle CG. Deflecting a tail fin creates a nose-pitching moment that drives the missile to a new angle of attack; the resulting lift acts predominantly on the body forward of the CG and on fixed forward fins (if present). The configuration is statically stable (fins behind CG provide positive pitch stiffness <span class="arithmatex">\(C_{m\alpha} &lt; 0\)</span>), making it attractive for subsonic and supersonic missiles where stability is a primary concern. The lag between fin deflection and achieved acceleration is relatively long because the vehicle must rotate to a new <span class="arithmatex">\(\alpha\)</span> before lateral force builds.</p>
+<div class="parahead">
+<p>Canard control (ahead of centre of gravity).</p>
+</div>
+<p>Canard surfaces generate a direct lift contribution forward of the CG simultaneously with the pitching moment. Response is faster because the aerodynamic force is partially direct and partially through <span class="arithmatex">\(\alpha\)</span> buildup. The vehicle is, however, statically unstable without an active control system (canards ahead of CG provide destabilising pitch moment contribution). Canard missiles require a stable inner rate loop to fly. Roll-pitch coupling is more pronounced because deflecting a canard pair for pitch also influences the roll moment if the canards are non-planar.</p>
+<div class="parahead">
+<p>Wing control (at or near centre of gravity).</p>
+</div>
+<p>Wing control places the primary lift surfaces near the CG, minimising the pitching moment produced by their deflection. The result is a predominantly direct-lift response with minimal pitch rotation. This configuration is used on some air-to-air missiles (AIM-9X Sidewinder variants) and enables very agile post-stall manoeuvring because effective lift is achieved at low <span class="arithmatex">\(\alpha\)</span>. The design is more complex structurally because the large wings must be mechanically driven.</p>
+<h3 id="2532-hinge-moment-and-actuator-sizing"><span class="secnum">25.3.2</span> Hinge Moment and Actuator Sizing<a class="headerlink" href="#2532-hinge-moment-and-actuator-sizing" title="Permanent link">&para;</a></h3>
+<p>The aerodynamic hinge moment <span class="arithmatex">\(H_m\)</span> about the fin pivot axis is the primary driver of actuator torque and therefore actuator power. It is expressed as: <span id="eq-CH"></span></p>
+<div class="arithmatex">\[C_H = C_{H\alpha}\,\alpha + C_{H\delta}\,\delta\tag{25.11}\]</div>
+<div id="eq-HM"></div>
+<div class="arithmatex">\[H_m = C_H \cdot q \cdot S_f \cdot c_f\tag{25.12}\]</div>
+<p>where <span class="arithmatex">\(S_f\)</span> is the fin planform area (m<span class="arithmatex">\(^2\)</span>) and <span class="arithmatex">\(c_f\)</span> is the mean aerodynamic chord of the fin (m). The actuator must produce a torque <span class="arithmatex">\(T_{act}\)</span> exceeding the aerodynamic hinge moment at all flight conditions: <span id="eq-Tact"></span></p>
+<div class="arithmatex">\[T_{act} \geq H_m \cdot SF_{hm}\tag{25.13}\]</div>
+<p>where <span class="arithmatex">\(SF_{hm} \geq 1.5\)</span> is a safety factor accounting for manufacturing tolerances, friction, and thermal effects on hinge moment coefficients. The maximum hinge moment generally occurs at the combination of maximum dynamic pressure and maximum angle of attack, which in many tactical missiles is the sea-level supersonic terminal phase.</p>
+<div class="tbl" id="tab-fin_config">
+<div class="tbl-caption"><strong>Table 25.2.</strong> Fin control configuration comparison</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: center;"><strong>Tail Control</strong></th>
+<th style="text-align: center;"><strong>Canard</strong></th>
+<th style="text-align: center;"><strong>Wing</strong></th>
+<th style="text-align: center;"><strong>AMT</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Static stability (open loop)</td>
+<td style="text-align: center;">Stable</td>
+<td style="text-align: center;">Unstable</td>
+<td style="text-align: center;">Marginal</td>
+<td style="text-align: center;">Stable</td>
+</tr>
+<tr>
+<td style="text-align: left;">Response speed</td>
+<td style="text-align: center;">Slow</td>
+<td style="text-align: center;">Fast</td>
+<td style="text-align: center;">Very fast</td>
+<td style="text-align: center;">Moderate</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hinge moment per <span class="math inline">\(g\)</span></td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Moderate</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">Roll-pitch coupling</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Moderate</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">Max <span class="math inline">\(C_{N\delta}\)</span> (typical)</td>
+<td style="text-align: center;">0.8–1.2</td>
+<td style="text-align: center;">1.0–1.6</td>
+<td style="text-align: center;">1.2–2.0</td>
+<td style="text-align: center;">1.4–2.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Structural complexity</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Moderate</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Moderate</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="2533-all-moveable-tail-amt-surfaces"><span class="secnum">25.3.3</span> All-Moveable Tail (AMT) Surfaces<a class="headerlink" href="#2533-all-moveable-tail-amt-surfaces" title="Permanent link">&para;</a></h3>
+<p>All-moveable tail surfaces rotate the entire fin panel about the fin pivot axis rather than deflecting only a trailing-edge flap. This provides significantly higher control effectiveness (higher <span class="arithmatex">\(C_{N\delta}\)</span>) for a given fin area compared with a flapped configuration. More importantly, the hinge moment coefficients are much lower because the pressure resultant acts very close to the pivot axis. The relationship between flap and AMT hinge moments at the same control force is approximately: <span id="eq-AMT_ratio"></span></p>
+<div class="arithmatex">\[\frac{H_{m,AMT}}{H_{m,flap}} \approx \frac{x_{cp,fin} - x_{pivot}}{c_f}\tag{25.14}\]</div>
+<p>This ratio is typically 0.1–0.25 for well-designed AMT fins, meaning the actuator torque requirement is reduced by 75–90%. The penalty is a more complex hinge mechanism that must accommodate large rotation angles (<span class="arithmatex">\(\pm 25^\circ\)</span> vs <span class="arithmatex">\(\pm 15^\circ\)</span> for flaps) and is more sensitive to aerodynamic aeroelastic coupling at high dynamic pressure.</p>
+<h2 id="sec-tvc"><span class="secnum">25.4</span> Thrust Vector Control<a class="headerlink" href="#sec-tvc" title="Permanent link">&para;</a></h2>
+<h3 id="2541-rationale-and-flight-phase-requirements"><span class="secnum">25.4.1</span> Rationale and Flight Phase Requirements<a class="headerlink" href="#2541-rationale-and-flight-phase-requirements" title="Permanent link">&para;</a></h3>
+<p>At launch, dynamic pressure <span class="arithmatex">\(q = \frac{1}{2}\rho V^2\)</span> is effectively zero: the vehicle velocity is zero and the fin-generated forces and moments are negligible. For an aerodynamically controlled missile, this means the FCS has no authority during the critical first moments of flight when the motor is establishing the vehicle on its initial trajectory and before speed builds to the point where fins become effective. The transition to aerodynamic authority typically occurs at <span class="arithmatex">\(q \approx 10\)</span>–20 kPa, corresponding to 100–200 m/s at sea level.</p>
+<p>Thrust vector control (TVC) provides attitude authority during this low-<span class="arithmatex">\(q\)</span> phase by deflecting the thrust vector. The moment produced is: <span id="eq-M_TVC"></span></p>
+<div class="arithmatex">\[M_{TVC} = T \cdot \sin(\delta_{tvc}) \cdot l_{tvc}\tag{25.15}\]</div>
+<p>where <span class="arithmatex">\(T\)</span> is motor thrust (N), <span class="arithmatex">\(\delta_{tvc}\)</span> is the TVC deflection angle (rad), and <span class="arithmatex">\(l_{tvc}\)</span> is the distance from the nozzle exit plane to the vehicle CG (m). For typical boost motors, <span class="arithmatex">\(T\)</span> ranges from 10 kN (small tactical missile) to 500 kN (large ballistic missile boost stage).</p>
+<h3 id="2542-flexseal-flex-bearing-tvc"><span class="secnum">25.4.2</span> Flexseal / Flex Bearing TVC<a class="headerlink" href="#2542-flexseal-flex-bearing-tvc" title="Permanent link">&para;</a></h3>
+<p>The flexseal (or flex bearing) is an elastomeric compound laminate bonded between the nozzle and the motor case that allows the nozzle to pivot while maintaining a gas seal. It consists of alternating layers of metal shims and silicone or natural rubber bonded under heat and pressure. The device has a restoring spring stiffness <span class="arithmatex">\(K_\theta\)</span> that tends to return the nozzle to null: <span id="eq-M_restore"></span></p>
+<div class="arithmatex">\[M_{restore} = K_\theta \cdot \delta_{tvc}\tag{25.16}\]</div>
+<p>The actuator must overcome this restoring moment plus the gyroscopic moment from the spinning exhaust: <span id="eq-F_act_flex"></span></p>
+<div class="arithmatex">\[F_{act} = \frac{K_\theta \cdot \delta_{tvc}}{l_{act}} + T\sin(\delta_{tvc})\tag{25.17}\]</div>
+<p>The stiffness <span class="arithmatex">\(K_\theta\)</span> depends on the elastomer shear modulus <span class="arithmatex">\(G_e\)</span>, the number of rubber layers <span class="arithmatex">\(n\)</span>, their thickness <span class="arithmatex">\(t_r\)</span>, and the bearing area <span class="arithmatex">\(A_b\)</span>: <span id="eq-Ktheta"></span></p>
+<div class="arithmatex">\[K_\theta \approx \frac{G_e \cdot A_b \cdot n}{t_r} \cdot r_{eff}^2\tag{25.18}\]</div>
+<p>Typical flex bearing parameters: maximum deflection <span class="arithmatex">\(\pm 8^\circ\)</span>; stiffness <span class="arithmatex">\(K_\theta = 50\)</span>–<span class="arithmatex">\(500\,\text{kN\,m/rad}\)</span>; service temperature range <span class="arithmatex">\(-54^\circ\)</span>C to <span class="arithmatex">\(+70^\circ\)</span>C; life 10–25 years with appropriate inspections. The bearing is damaged by excessive deflection beyond the rated angle, which tears the rubber laminate layers.</p>
+<h3 id="2543-gimballed-nozzle"><span class="secnum">25.4.3</span> Gimballed Nozzle<a class="headerlink" href="#2543-gimballed-nozzle" title="Permanent link">&para;</a></h3>
+<p>A gimballed nozzle uses a spherical or cylindrical ball joint to allow multi-axis nozzle deflection. Unlike the flex bearing, which has limited angular deflection due to rubber fatigue, the gimballed nozzle can sustain larger deflections (<span class="arithmatex">\(\pm 10^\circ\)</span>–<span class="arithmatex">\(15^\circ\)</span>) and higher thrust loads. Two perpendicular electromechanical or electrohydrostatic actuators are attached to the nozzle exterior and react against the motor case. The total actuator force requirement for a gimballed nozzle: <span id="eq-F_act_gimbal"></span></p>
+<div class="arithmatex">\[F_{act,gimbal} = T\sin(\delta_{tvc}) + M_{gyro} / l_{act}\tag{25.19}\]</div>
+<p>where <span class="arithmatex">\(M_{gyro}\)</span> is the gyroscopic moment from the motor and propellant spin, which is relevant for roll-stabilised motors.</p>
+<h3 id="2544-jet-vane-tvc"><span class="secnum">25.4.4</span> Jet Vane TVC<a class="headerlink" href="#2544-jet-vane-tvc" title="Permanent link">&para;</a></h3>
+<p>Jet vanes are ablative graphite or tungsten blades inserted into the exhaust stream downstream of the nozzle exit. They deflect the jet by creating an asymmetric pressure on the vane surface, producing a side force. The TVC side force coefficient for a jet vane is: <span id="eq-F_jv"></span></p>
+<div class="arithmatex">\[F_{tvc,vane} = C_{jv} \cdot T \cdot \sin(\delta_{vane})\tag{25.20}\]</div>
+<p>where <span class="arithmatex">\(C_{jv} \approx 0.5\)</span>–<span class="arithmatex">\(0.8\)</span> is the jet vane efficiency (loss relative to full thrust deflection due to flow disruption and partial blocking).</p>
+<p>Jet vane TVC has significant disadvantages: the vanes ablate and lose mass during the motor burn, changing their aerodynamic properties; they create a thrust loss of 3–6% even at null deflection due to flow disturbance; and they are limited to single-burn solid motors. They were used in the German V-2 (graphite vanes), Soviet SA-2 Guideline, and many first-generation ballistic missiles. Modern designs generally prefer flex bearings or gimballed nozzles.</p>
+<h3 id="2545-liquid-injection-tvc-litvc"><span class="secnum">25.4.5</span> Liquid Injection TVC (LITVC)<a class="headerlink" href="#2545-liquid-injection-tvc-litvc" title="Permanent link">&para;</a></h3>
+<p>LITVC injects a liquid (commonly inhibited red fuming nitric acid, nitrogen tetroxide, or water) into the nozzle diverging section on one side. The injected liquid gasifies, creating an oblique shock that deflects the exhaust flow. This generates a side force without mechanical deflection of the nozzle. The side force is: <span id="eq-F_LITVC"></span></p>
+<div class="arithmatex">\[F_{LITVC} = C_{si} \cdot \dot{m}_{inj} \cdot V_e\tag{25.21}\]</div>
+<p>where <span class="arithmatex">\(C_{si}\)</span> is the secondary injection efficiency (typically 2–3, reflecting the amplification of injected momentum into exhaust side force), <span class="arithmatex">\(\dot{m}_{inj}\)</span> is the injectant mass flow rate (kg/s), and <span class="arithmatex">\(V_e\)</span> is the exhaust velocity (m/s). LITVC produces negligible thrust loss at null (unlike jet vanes), clean aerodynamic lines, and is used in the US Navy Trident II D5 SLBM first stage.</p>
+<h3 id="2546-reaction-control-system-rcs-thrusters"><span class="secnum">25.4.6</span> Reaction Control System (RCS) Thrusters<a class="headerlink" href="#2546-reaction-control-system-rcs-thrusters" title="Permanent link">&para;</a></h3>
+<p>Hot-gas or cold-gas RCS thrusters mounted in pairs at the vehicle periphery provide pure torque without thrust magnitude change. Cold-gas systems use nitrogen or helium; hot-gas systems bleed combustion gases from the main motor. The control moment produced by a pair of thrusters: <span id="eq-M_RCS"></span></p>
+<div class="arithmatex">\[M_{RCS} = 2 F_{thruster} \cdot r_{body}\tag{25.22}\]</div>
+<p>RCS thrusters have very fast response (milliseconds), are unaffected by dynamic pressure, and can operate above the atmosphere (exo-atmospheric interceptors such as THAAD, SM-3). Their limitation is finite propellant: total impulse must be budgeted against the required manoeuvre history.</p>
+<h3 id="2547-blended-tvc-and-aerodynamic-control"><span class="secnum">25.4.7</span> Blended TVC and Aerodynamic Control<a class="headerlink" href="#2547-blended-tvc-and-aerodynamic-control" title="Permanent link">&para;</a></h3>
+<p>Most modern boost-glide and tactical missiles use a blended control law that transitions smoothly from TVC-dominated control at launch to aerodynamics-dominated control as dynamic pressure builds. The control allocation is: <span id="eq-blend_tvc"></span><span id="eq-blend_fin"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \delta_{tvc} &amp;= \frac{n_c - n_{aero}}{K_{tvc}} \cdot f_{tvc}(q) \\
+  \delta_{fin} &amp;= \frac{n_c}{K_{aero}(q,M)} \cdot (1 - f_{tvc}(q))
+\end{align*}\]</div>
+<p>The blending function <span class="arithmatex">\(f_{tvc}(q)\)</span> transitions from 1 at <span class="arithmatex">\(q = 0\)</span> to 0 at <span class="arithmatex">\(q = q_{trans}\)</span> (typically 15–25 kPa), with a smooth logistic or piecewise linear transition to prevent abrupt control discontinuities.</p>
+<h2 id="sec-lat_autopilot"><span class="secnum">25.5</span> Lateral Autopilot Design<a class="headerlink" href="#sec-lat_autopilot" title="Permanent link">&para;</a></h2>
+<h3 id="2551-acceleration-command-autopilot-architecture"><span class="secnum">25.5.1</span> Acceleration Command Autopilot Architecture<a class="headerlink" href="#2551-acceleration-command-autopilot-architecture" title="Permanent link">&para;</a></h3>
+<p>The acceleration command (ACC) autopilot is the dominant architecture for homing missiles because guidance laws (proportional navigation, augmented PN) output lateral acceleration commands directly. The three-loop autopilot structure is:</p>
+<ol>
+<li>
+<p><strong>Inner rate loop</strong>: gyro feedback closes around the airframe; bandwidth <span class="arithmatex">\(\sim\)</span>100 Hz; provides damping.</p>
+</li>
+<li>
+<p><strong>Middle acceleration loop</strong>: accelerometer feedback closes around the rate loop; bandwidth <span class="arithmatex">\(\sim\)</span>30 Hz; achieves commanded acceleration.</p>
+</li>
+<li>
+<p><strong>Outer command shaping</strong>: filters the guidance command; limits slew rate; provides pre-filter for guidance loop closure.</p>
+</li>
+</ol>
+<h3 id="2552-airframe-transfer-function"><span class="secnum">25.5.2</span> Airframe Transfer Function<a class="headerlink" href="#2552-airframe-transfer-function" title="Permanent link">&para;</a></h3>
+<p>The relationship between fin deflection <span class="arithmatex">\(\delta\)</span> (rad) and lateral acceleration <span class="arithmatex">\(a_y\)</span> (m/s<span class="arithmatex">\(^2\)</span>) is the airframe transfer function. Treating the missile as a rigid body in the short-period approximation: <span id="eq-Gaf2"></span></p>
+<div class="arithmatex">\[\frac{a_y(s)}{\delta(s)} = G_{af}(s) =
+    \frac{K_a\,\omega_a^2}{s^2 + 2\zeta_a\omega_a\,s + \omega_a^2}\tag{25.25}\]</div>
+<p>The airframe natural frequency <span class="arithmatex">\(\omega_a\)</span> and damping <span class="arithmatex">\(\zeta_a\)</span> are functions of Mach number <span class="arithmatex">\(M\)</span> and altitude <span class="arithmatex">\(h\)</span>: <span id="eq-omegaa"></span><span id="eq-zetaa"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \omega_a(M,h) &amp;= \sqrt{\frac{-q\,S\,C_{m\alpha}\,\overline{c}}{I_y}}
+  \\[4pt]
+  \zeta_a(M,h) &amp;= \frac{-q\,S\,\overline{c}\,C_{mq}}{2\,I_y\,\omega_a}
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(C_{m\alpha}\)</span> is the pitch stiffness derivative (negative for stability), <span class="arithmatex">\(C_{mq}\)</span> is the pitch damping derivative, <span class="arithmatex">\(I_y\)</span> is the pitch moment of inertia, <span class="arithmatex">\(\overline{c}\)</span> is the reference chord, and <span class="arithmatex">\(S\)</span> is the reference area.</p>
+<p>The static gain <span class="arithmatex">\(K_a\)</span> represents the achieved lateral acceleration per unit fin deflection at quasi-steady state: <span id="eq-Ka2"></span></p>
+<div class="arithmatex">\[K_a = \frac{q\,S}{W}\left(C_{N\delta} + C_{N\alpha}\frac{C_{m\delta}}{-C_{m\alpha}}\right)\tag{25.28}\]</div>
+<h3 id="2553-rate-loop-design"><span class="secnum">25.5.3</span> Rate Loop Design<a class="headerlink" href="#2553-rate-loop-design" title="Permanent link">&para;</a></h3>
+<p>The rate loop transfer function (gyro plus rate gain <span class="arithmatex">\(K_r\)</span>): <span id="eq-Grate"></span></p>
+<div class="arithmatex">\[G_{rate}(s) = \frac{K_r}{s\,\tau_r + 1}\tag{25.29}\]</div>
+<p>The closed-loop rate loop transfer function is: <span id="eq-GCL_rate"></span></p>
+<div class="arithmatex">\[G_{CL,rate}(s) = \frac{G_{act}(s)\cdot G_{af}(s)}{1 + K_r\,G_{act}(s)\cdot G_{af}(s)}\tag{25.30}\]</div>
+<p>Choosing <span class="arithmatex">\(K_r\)</span> to place the closed-loop poles at the desired bandwidth (<span class="arithmatex">\(\omega_r \approx 2\pi \times 80\)</span> rad/s), the rate loop suppresses body rate oscillations and raises the effective airframe damping ratio. After rate loop closure, the equivalent airframe damping increases from <span class="arithmatex">\(\zeta_a \approx 0.05\)</span> (aerodynamic alone) to <span class="arithmatex">\(\zeta_{eq} \approx 0.5\)</span>–<span class="arithmatex">\(0.7\)</span>.</p>
+<h3 id="2554-acceleration-loop-design"><span class="secnum">25.5.4</span> Acceleration Loop Design<a class="headerlink" href="#2554-acceleration-loop-design" title="Permanent link">&para;</a></h3>
+<p>The acceleration loop closes the accelerometer signal around the rate loop: <span id="eq-Gacc"></span></p>
+<div class="arithmatex">\[G_{acc}(s) = K_{acc}\left(1 + \frac{1}{\tau_i s}\right)\tag{25.31}\]</div>
+<p>The integral term eliminates steady-state error in constant-acceleration manoeuvres caused by gravity and trim offsets. Anti-windup logic is essential: when fins are at their deflection limit <span class="arithmatex">\(\delta_{max}\)</span>, the integrator must be held at its current value to prevent accumulation that would cause significant transient overshoot when the limit is removed. A common back-calculation anti-windup scheme: <span id="eq-antiwindup"></span></p>
+<div class="arithmatex">\[\dot{x}_i = e_{acc} - \frac{1}{\tau_{aw}}(\delta_{cmd} - \delta_{lim})\tag{25.32}\]</div>
+<p>where <span class="arithmatex">\(\tau_{aw}\)</span> is the anti-windup time constant, typically equal to the actuator time constant.</p>
+<h3 id="2555-phase-advance-compensation"><span class="secnum">25.5.5</span> Phase Advance Compensation<a class="headerlink" href="#2555-phase-advance-compensation" title="Permanent link">&para;</a></h3>
+<p>The combined phase lag of actuator and airframe at the acceleration loop crossover frequency often exceeds 120<span class="arithmatex">\(^\circ\)</span>, leaving inadequate phase margin. A lead compensator restores phase: <span id="eq-Glead"></span></p>
+<div class="arithmatex">\[G_{lead}(s) = \frac{\tau_d s + 1}{\tau_d s / N + 1}\tag{25.33}\]</div>
+<p>where <span class="arithmatex">\(N = 5\)</span>–<span class="arithmatex">\(20\)</span> is the lead ratio. Maximum phase lead occurs at: <span id="eq-omega_max_lead"></span></p>
+<div class="arithmatex">\[\omega_{max} = \frac{1}{\tau_d / \sqrt{N}}\tag{25.34}\]</div>
+<p>with maximum phase lead angle: <span id="eq-phi_max"></span></p>
+<div class="arithmatex">\[\phi_{max} = \arcsin\left(\frac{N-1}{N+1}\right)\tag{25.35}\]</div>
+<h3 id="2556-gain-scheduling"><span class="secnum">25.5.6</span> Gain Scheduling<a class="headerlink" href="#2556-gain-scheduling" title="Permanent link">&para;</a></h3>
+<p>Because <span class="arithmatex">\(K_a\)</span>, <span class="arithmatex">\(\omega_a\)</span>, and <span class="arithmatex">\(\zeta_a\)</span> all depend on <span class="arithmatex">\(M\)</span> and <span class="arithmatex">\(h\)</span>, fixed gains are inadequate across the flight envelope. Gain scheduling implements a two-dimensional look-up table: <span id="eq-GS"></span></p>
+<div class="arithmatex">\[K_r = K_r(M, h),\quad K_{acc} = K_{acc}(M, h)\tag{25.36}\]</div>
+<p>The table is populated by analysing the linearised plant at a grid of <span class="arithmatex">\(N_M \times N_h\)</span> operating points (typically <span class="arithmatex">\(8 \times 6 = 48\)</span> points) and selecting gains to maintain the required phase margin at each point. Bilinear interpolation between grid points is used in flight software.</p>
+<p><a href="#tab-autopilot_gains">Table 25.3</a> gives representative gain schedule values for a medium-range tactical missile autopilot at sea level.</p>
+<div class="tbl" id="tab-autopilot_gains">
+<div class="tbl-caption"><strong>Table 25.3.</strong> Representative gain schedule at sea level (<span class="math inline">\(h = 0\)</span> km)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><strong>Mach</strong></th>
+<th style="text-align: center;"><span class="math inline">\(K_a\)</span> (g/rad)</th>
+<th style="text-align: center;"><span class="math inline">\(\omega_a\)</span> (rad/s)</th>
+<th style="text-align: center;"><span class="math inline">\(K_r\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(K_{acc}\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0.5</td>
+<td style="text-align: center;">8.2</td>
+<td style="text-align: center;">18.4</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.055</td>
+</tr>
+<tr>
+<td style="text-align: center;">1.0</td>
+<td style="text-align: center;">22.1</td>
+<td style="text-align: center;">31.6</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.024</td>
+</tr>
+<tr>
+<td style="text-align: center;">1.5</td>
+<td style="text-align: center;">38.4</td>
+<td style="text-align: center;">42.8</td>
+<td style="text-align: center;">0.06</td>
+<td style="text-align: center;">0.015</td>
+</tr>
+<tr>
+<td style="text-align: center;">2.0</td>
+<td style="text-align: center;">56.7</td>
+<td style="text-align: center;">51.2</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.010</td>
+</tr>
+<tr>
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">71.3</td>
+<td style="text-align: center;">57.6</td>
+<td style="text-align: center;">0.032</td>
+<td style="text-align: center;">0.008</td>
+</tr>
+<tr>
+<td style="text-align: center;">3.0</td>
+<td style="text-align: center;">84.1</td>
+<td style="text-align: center;">61.8</td>
+<td style="text-align: center;">0.026</td>
+<td style="text-align: center;">0.007</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-roll_autopilot"><span class="secnum">25.6</span> Roll Autopilot<a class="headerlink" href="#sec-roll_autopilot" title="Permanent link">&para;</a></h2>
+<h3 id="2561-spin-stabilised-missiles"><span class="secnum">25.6.1</span> Spin-Stabilised Missiles<a class="headerlink" href="#2561-spin-stabilised-missiles" title="Permanent link">&para;</a></h3>
+<p>Spin-stabilised missiles (such as unguided rockets and some older anti-tank missiles) use aerodynamic or mechanical spin to provide gyroscopic stiffness against disturbance moments. The gyroscopic stiffness is: <span id="eq-gyro_stiffness"></span></p>
+<div class="arithmatex">\[M_{gyro} = I_x \cdot p \cdot q_b\tag{25.37}\]</div>
+<p>where <span class="arithmatex">\(I_x\)</span> is the roll moment of inertia and <span class="arithmatex">\(p\)</span> is the spin rate (rad/s). Spin rates of 1–20 Hz are used. The disadvantage is that guidance accuracy degrades with spin because the seeker must demodulate the target angle from the spinning reference frame, and any cross-coupling between pitch and yaw planes limits manoeuvre capability.</p>
+<h3 id="2562-roll-stabilised-missiles"><span class="secnum">25.6.2</span> Roll-Stabilised Missiles<a class="headerlink" href="#2562-roll-stabilised-missiles" title="Permanent link">&para;</a></h3>
+<p>Most modern guided missiles use active roll control to maintain a fixed roll attitude (roll angle <span class="arithmatex">\(\phi \approx 0\)</span>), simplifying guidance and control decoupling. The roll transfer function is: <span id="eq-roll_tf"></span></p>
+<div class="arithmatex">\[\frac{p(s)}{\delta_a(s)} = \frac{K_{roll}}{s\,(I_x s + B_{roll})}\tag{25.38}\]</div>
+<p>where <span class="arithmatex">\(\delta_a\)</span> is the differential fin deflection (antisymmetric), <span class="arithmatex">\(K_{roll}\)</span> is the roll control power, <span class="arithmatex">\(I_x\)</span> is the roll inertia, and <span class="arithmatex">\(B_{roll}\)</span> is the aerodynamic roll damping coefficient. The roll rate gyro closes the rate loop: <span id="eq-phi"></span></p>
+<div class="arithmatex">\[\phi(s) = \frac{p(s)}{s}\tag{25.39}\]</div>
+<p>A proportional-integral controller on roll angle error achieves zero steady- state roll angle: <span id="eq-roll_ctrl"></span></p>
+<div class="arithmatex">\[\delta_a = K_{\phi}\,(\phi_{cmd} - \phi) + K_p\,(p_{cmd} - p)\tag{25.40}\]</div>
+<h3 id="2563-bank-to-turn-btt-control"><span class="secnum">25.6.3</span> Bank-to-Turn (BTT) Control<a class="headerlink" href="#2563-bank-to-turn-btt-control" title="Permanent link">&para;</a></h3>
+<p>Bank-to-turn missiles roll to orient their maximum lift vector toward the required manoeuvre direction, then pitch. This is more energy-efficient than skid-to-turn because the full lift capability of the airframe can be used in one plane rather than splitting between pitch and yaw. The BTT roll command is: <span id="eq-BTT_phi"></span></p>
+<div class="arithmatex">\[\phi_{cmd} = \arctan\!\left(\frac{n_{z,cmd}}{n_{y,cmd}}\right)\tag{25.41}\]</div>
+<p>The BTT roll rate command is the time derivative: <span id="eq-BTT_phidot"></span></p>
+<div class="arithmatex">\[\dot\phi_{cmd} = \frac{n_{y,cmd}\dot n_{z,cmd} - n_{z,cmd}\dot n_{y,cmd}}
+                        {n_{y,cmd}^2 + n_{z,cmd}^2}\tag{25.42}\]</div>
+<p>BTT requires coordination: the pitch manoeuvre must wait until the vehicle is rolled to the correct orientation, introducing a time delay that must be accounted for in guidance. The BTT loop bandwidth must be at least 3<span class="arithmatex">\(\times\)</span> the manoeuvre frequency component to avoid lag-induced miss distance.</p>
+<h2 id="sec-actuators"><span class="secnum">25.7</span> Actuator Systems<a class="headerlink" href="#sec-actuators" title="Permanent link">&para;</a></h2>
+<h3 id="2571-electromechanical-actuators"><span class="secnum">25.7.1</span> Electromechanical Actuators<a class="headerlink" href="#2571-electromechanical-actuators" title="Permanent link">&para;</a></h3>
+<p>The electromechanical actuator (EMA) is the dominant actuator technology in modern tactical missiles due to its high energy density, controllability, and elimination of hydraulic fluid. The EMA consists of:</p>
+<ul>
+<li>
+<p>Brushless DC (BLDC) servo motor with resolver or encoder</p>
+</li>
+<li>
+<p>High-ratio gearbox (planetary or harmonic drive): ratio 100:1–500:1</p>
+</li>
+<li>
+<p>Ball screw or roller screw: converts rotation to linear motion</p>
+</li>
+<li>
+<p>Output crank arm: converts linear motion to fin shaft rotation</p>
+</li>
+<li>
+<p>Drive electronics: field-oriented control (FOC); current loop bandwidth <span class="arithmatex">\(&gt;\)</span>5 kHz</p>
+</li>
+</ul>
+<p>The EMA bandwidth is limited by the mechanical resonance of the motor-gearbox-screw-fin system. In the simplified model: <span id="eq-EMA_BW"></span></p>
+<div class="arithmatex">\[\omega_{EMA} \approx \sqrt{\frac{K_t K_{back}}{J_{eff} R_a}}\tag{25.43}\]</div>
+<p>where <span class="arithmatex">\(K_t\)</span> is the torque constant (N m/A), <span class="arithmatex">\(K_{back}\)</span> is the back-EMF constant (V s/rad), <span class="arithmatex">\(J_{eff}\)</span> is the effective inertia referred to the motor shaft (including reflected load inertia), and <span class="arithmatex">\(R_a\)</span> is the armature resistance. Typical EMA bandwidths are 50–200 Hz.</p>
+<p>The back-drive force—the force the aerodynamic hinge moment exerts against the EMA through the mechanism—determines whether the actuator can hold position against aerodynamic load without power consumption. The self-locking condition requires: <span id="eq-self_lock"></span></p>
+<div class="arithmatex">\[\tan(\lambda) &lt; \mu_{screw}\tag{25.44}\]</div>
+<p>where <span class="arithmatex">\(\lambda\)</span> is the ball screw lead angle and <span class="arithmatex">\(\mu_{screw}\)</span> is the thread-friction coefficient (0.1–0.15 for lubricated steel). For ball screws (<span class="arithmatex">\(\lambda &gt; \mu\)</span>), the load can back-drive; a brake or worm gear is needed for position hold without power.</p>
+<h3 id="2572-electrohydrostatic-actuators"><span class="secnum">25.7.2</span> Electrohydrostatic Actuators<a class="headerlink" href="#2572-electrohydrostatic-actuators" title="Permanent link">&para;</a></h3>
+<p>The electrohydrostatic actuator (EHA) combines the power density of hydraulics with the simplicity of electric actuation. A dedicated bidirectional electric pump drives a small hydraulic cylinder. No central hydraulic manifold is required. The EHA offers:</p>
+<ul>
+<li>
+<p>Higher force density than EMA at equivalent volume (<span class="arithmatex">\(\sim\)</span>3<span class="arithmatex">\(\times\)</span> force/volume)</p>
+</li>
+<li>
+<p>Natural compliance that absorbs shock loads from aerodynamic hinge moments</p>
+</li>
+<li>
+<p>Inherently stiff position hold due to hydraulic incompressibility</p>
+</li>
+<li>
+<p>Complexity: pump, motor, reservoir, seals all within a compact package</p>
+</li>
+</ul>
+<p>EHA bandwidth is typically 30–100 Hz, limited by the hydraulic compressibility and flow saturation.</p>
+<h3 id="2573-pneumatic-actuators"><span class="secnum">25.7.3</span> Pneumatic Actuators<a class="headerlink" href="#2573-pneumatic-actuators" title="Permanent link">&para;</a></h3>
+<p>Cold-gas pneumatic actuators use a stored nitrogen or helium bottle to drive a piston-type actuator. They offer the fastest transient response (bandwidth <span class="arithmatex">\(&gt;\)</span>300 Hz) and highest force density (pressure <span class="arithmatex">\(\times\)</span> area) of any actuator type. The limitation is total travel: the gas bottle is sized for the mission, and overly aggressive manoeuvring depletes the bottle early. Pneumatic actuators are therefore used on short-duration missiles (surface-to-air boost/coast or terminal-only control) or where response speed is paramount.</p>
+<h3 id="2574-actuator-power-budget"><span class="secnum">25.7.4</span> Actuator Power Budget<a class="headerlink" href="#2574-actuator-power-budget" title="Permanent link">&para;</a></h3>
+<p>Peak actuator electrical or hydraulic power must be supplied by the missile’s power system (thermal battery or turbogenerator). The peak EMA power is: <span id="eq-EMA_power"></span></p>
+<div class="arithmatex">\[P_{EMA,peak} = T_{act} \cdot \omega_{motor,max} / \eta_{mech}\tag{25.45}\]</div>
+<p>For a missile with four EMAs each drawing 500 W at peak, the total peak actuation demand is 2 kW. The thermal battery must supply this for up to 60 s with a sustained average load of <span class="arithmatex">\(\sim\)</span>400 W and must survive a cold soak to <span class="arithmatex">\(-54^\circ\)</span>C and hot soak to <span class="arithmatex">\(+71^\circ\)</span>C per MIL-STD-810.</p>
+<h3 id="2575-actuator-redundancy-and-failure-modes"><span class="secnum">25.7.5</span> Actuator Redundancy and Failure Modes<a class="headerlink" href="#2575-actuator-redundancy-and-failure-modes" title="Permanent link">&para;</a></h3>
+<p>Fail-passive redundancy (dual-redundant EMA with voting comparator) is standard for most tactical missiles. If one EMA fails to null, the comparator detects the disagreement (<span class="arithmatex">\(&gt;\)</span>2<span class="arithmatex">\(^\circ\)</span> error for <span class="arithmatex">\(&gt;\)</span>100 ms) and disconnects the failed channel while the healthy channel maintains control. Triplex actuators (three independent channels) provide fail-operative capability: one failure does not reduce authority. The reliability improvement with redundancy: <span id="eq-reliability"></span></p>
+<div class="arithmatex">\[\lambda_{system} = 3\lambda^2 - 2\lambda^3\tag{25.46}\]</div>
+<p>for a triplex majority-vote system with individual channel unreliability <span class="arithmatex">\(\lambda\)</span>.</p>
+<div class="tbl" id="tab-actuator_compare">
+<div class="tbl-caption"><strong>Table 25.4.</strong> Actuator technology comparison for tactical missiles</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Type</strong></th>
+<th style="text-align: center;"><strong>BW (Hz)</strong></th>
+<th style="text-align: center;"><strong>Force/Vol</strong></th>
+<th style="text-align: center;"><strong>Stall</strong></th>
+<th style="text-align: center;"><strong>Temp</strong></th>
+<th style="text-align: center;"><strong>Typical Use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">EMA (ball screw)</td>
+<td style="text-align: center;">50–200</td>
+<td style="text-align: center;">Moderate</td>
+<td style="text-align: center;">Back-drive</td>
+<td style="text-align: center;"><span class="math inline">\(-54\)</span> to <span class="math inline">\(+85^\circ\)</span>C</td>
+<td style="text-align: center;">Most modern tactical</td>
+</tr>
+<tr>
+<td style="text-align: left;">EHA</td>
+<td style="text-align: center;">30–100</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Self-lock</td>
+<td style="text-align: center;"><span class="math inline">\(-40\)</span> to <span class="math inline">\(+70^\circ\)</span>C</td>
+<td style="text-align: center;">High-force applications</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pneumatic</td>
+<td style="text-align: center;">200–400</td>
+<td style="text-align: center;">Very high</td>
+<td style="text-align: center;">Self-lock</td>
+<td style="text-align: center;"><span class="math inline">\(-54\)</span> to <span class="math inline">\(+70^\circ\)</span>C</td>
+<td style="text-align: center;">Short-endurance SAMs</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hydraulic (central)</td>
+<td style="text-align: center;">50–150</td>
+<td style="text-align: center;">Very high</td>
+<td style="text-align: center;">Self-lock</td>
+<td style="text-align: center;"><span class="math inline">\(-54\)</span> to <span class="math inline">\(+120^\circ\)</span>C</td>
+<td style="text-align: center;">Older large missiles</td>
+</tr>
+<tr>
+<td style="text-align: left;">Voice coil</td>
+<td style="text-align: center;">500+</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Back-drive</td>
+<td style="text-align: center;"><span class="math inline">\(-20\)</span> to <span class="math inline">\(+60^\circ\)</span>C</td>
+<td style="text-align: center;">Small / nano UAS</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-fcs_analysis"><span class="secnum">25.8</span> Flight Control System Analysis Methods<a class="headerlink" href="#sec-fcs_analysis" title="Permanent link">&para;</a></h2>
+<h3 id="2581-classical-frequency-domain-methods"><span class="secnum">25.8.1</span> Classical Frequency-Domain Methods<a class="headerlink" href="#2581-classical-frequency-domain-methods" title="Permanent link">&para;</a></h3>
+<div class="parahead">
+<p>Bode analysis.</p>
+</div>
+<p>The Bode plot of the open-loop transfer function <span class="arithmatex">\(G_{OL}(j\omega)\)</span> directly identifies gain crossover frequency <span class="arithmatex">\(\omega_{gc}\)</span> (where <span class="arithmatex">\(|G_{OL}|=1\)</span>) and phase crossover frequency <span class="arithmatex">\(\omega_{pc}\)</span> (where <span class="arithmatex">\(\angle G_{OL} = -180^\circ\)</span>). The stability margins are: <span id="eq-GM_def"></span><span id="eq-PM_def"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  GM &amp;= -20\log_{10}|G_{OL}(j\omega_{pc})|\quad\text{(dB)} \\
+  PM &amp;= 180^\circ + \angle G_{OL}(j\omega_{gc})
+\end{align*}\]</div>
+<div class="parahead">
+<p>Root locus.</p>
+</div>
+<p>As gain <span class="arithmatex">\(K\)</span> varies from 0 to <span class="arithmatex">\(\infty\)</span>, closed-loop poles trace continuous loci from open-loop poles to open-loop zeros. The designer selects gain to place closed-loop poles in the desired region of the <span class="arithmatex">\(s\)</span>-plane: <span class="arithmatex">\(\text{Re}(s) &lt; -\sigma\)</span> for decay rate and <span class="arithmatex">\(|\text{Im}(s)| &lt; \omega_{max}\)</span> for oscillation frequency.</p>
+<div class="parahead">
+<p>Nichols chart.</p>
+</div>
+<p>The Nichols chart plots open-loop gain <span class="arithmatex">\(|G_{OL}|\)</span> (dB) versus open-loop phase (degrees). Closed-loop gain contours are overlaid; the designer reads stability margins and closed-loop bandwidth directly. The Nichols chart is particularly useful for gain-scheduled systems where the designer must verify that all operating points satisfy margin requirements simultaneously.</p>
+<h3 id="2582-h-robust-control"><span class="secnum">25.8.2</span> H∞ Robust Control<a class="headerlink" href="#2582-h-robust-control" title="Permanent link">&para;</a></h3>
+<p>When parametric uncertainty in aerodynamic coefficients is large (as is common at transonic speeds or for missile programs with limited wind-tunnel data), classical loop-shaping margins may be insufficient. H<span class="arithmatex">\(\infty\)</span> robust synthesis formulates the control design as an optimisation: <span id="eq-Hinf"></span></p>
+<div class="arithmatex">\[\min_{K} \left\| T_{zw}(s) \right\|_\infty\tag{25.49}\]</div>
+<p>where <span class="arithmatex">\(T_{zw}\)</span> is the closed-loop transfer matrix from disturbance inputs <span class="arithmatex">\(w\)</span> to performance outputs <span class="arithmatex">\(z\)</span>. The structured singular value <span class="arithmatex">\(\mu\)</span> quantifies robustness to structured uncertainty <span class="arithmatex">\(\Delta\)</span>: <span id="eq-mu"></span></p>
+<div class="arithmatex">\[\mu_\Delta[M(j\omega)] = \frac{1}{\min_{\Delta}\{\bar\sigma(\Delta) :
+    \det(I - M\Delta) = 0\}}\tag{25.50}\]</div>
+<p>The condition <span class="arithmatex">\(\mu &lt; 1\)</span> for all <span class="arithmatex">\(\omega\)</span> guarantees robust stability for all perturbations <span class="arithmatex">\(\Delta\)</span> with <span class="arithmatex">\(\|\Delta\|_\infty \leq 1\)</span>.</p>
+<h3 id="2583-linear-parameter-varying-lpv-control"><span class="secnum">25.8.3</span> Linear Parameter-Varying (LPV) Control<a class="headerlink" href="#2583-linear-parameter-varying-lpv-control" title="Permanent link">&para;</a></h3>
+<p>An LPV model of the missile is written as: <span id="eq-LPV1"></span><span id="eq-LPV2"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \dot x &amp;= A(\rho)\,x + B(\rho)\,u \\
+  y &amp;= C(\rho)\,x + D(\rho)\,u
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(\rho = [M, h, \alpha]^T\)</span> is the scheduling vector. A gain-scheduled LPV controller <span class="arithmatex">\(K(\rho)\)</span> is designed such that the closed-loop system is quadratically stable: there exists a single Lyapunov function <span class="arithmatex">\(V = x^T P x\)</span> with <span class="arithmatex">\(P &gt; 0\)</span> satisfying the Lyapunov inequality at every operating point. This provides stability guarantees during gain transitions that are absent from conventional table look-up gain scheduling.</p>
+<h3 id="2584-monte-carlo-uncertainty-analysis"><span class="secnum">25.8.4</span> Monte Carlo Uncertainty Analysis<a class="headerlink" href="#2584-monte-carlo-uncertainty-analysis" title="Permanent link">&para;</a></h3>
+<p>A Monte Carlo simulation randomises aerodynamic coefficients, actuator parameters, seeker noise, and target manoeuvre within their statistical distributions and runs thousands of engagement scenarios. The figure of merit is the circular error probable (CEP) or percentage of engagements with miss distance <span class="arithmatex">\(r_{miss} &lt; r_{kill}\)</span> (the lethal radius). A typical requirement: 90% single-shot kill probability (SSKP) against a <span class="arithmatex">\(6\,g\)</span>-manoeuvring target requires <span class="arithmatex">\(r_{miss} &lt; r_{kill}\)</span> in <span class="arithmatex">\(&gt;\)</span>90% of 10,000 Monte Carlo runs. The miss distance statistic: <span id="eq-miss_sigma"></span></p>
+<div class="arithmatex">\[\sigma_{miss}^2 = \sigma_{noise}^2 + \sigma_{aero}^2 + \sigma_{target}^2\tag{25.53}\]</div>
+<h3 id="2585-hardware-in-the-loop-simulation"><span class="secnum">25.8.5</span> Hardware-in-the-Loop Simulation<a class="headerlink" href="#2585-hardware-in-the-loop-simulation" title="Permanent link">&para;</a></h3>
+<p>Hardware-in-the-loop (HWIL) testing places the real FCS computer (with flight software, processors, and signal interfaces) in a closed-loop with a high-fidelity real-time simulation running the airframe, actuator, and seeker models. The FCS receives simulated sensor signals (accelerometers, gyros, seeker) converted to analogue voltages via digital-to-analogue converters and outputs fin commands that are read back by analogue-to-digital converters. Timing fidelity requirements: simulation frame rate <span class="arithmatex">\(\geq 1\)</span> kHz; transport delay <span class="arithmatex">\(&lt;\)</span>1 ms. HWIL is the definitive test before flight and is used to verify:</p>
+<ul>
+<li>
+<p>Correct autopilot response to simulated engagement scenarios</p>
+</li>
+<li>
+<p>Computational timing (no overruns in FCS executive)</p>
+</li>
+<li>
+<p>Failure mode response (simulated actuator failure, gyro fault)</p>
+</li>
+<li>
+<p>Temperature cycling of FCS computer hardware</p>
+</li>
+</ul>
+<h2 id="sec-special_fcs"><span class="secnum">25.9</span> Special Flight Control Problems<a class="headerlink" href="#sec-special_fcs" title="Permanent link">&para;</a></h2>
+<h3 id="2591-rolling-airframe-missiles-ram"><span class="secnum">25.9.1</span> Rolling Airframe Missiles (RAM)<a class="headerlink" href="#2591-rolling-airframe-missiles-ram" title="Permanent link">&para;</a></h3>
+<p>Rolling airframe missiles (RAM) deliberately spin about their longitudinal axis to average out aerodynamic asymmetries, reduce manufacturing cost (fewer control channels needed), and simplify construction. Examples include the RAM ship defence missile (NATO) and early versions of the Stinger MANPADS.</p>
+<p>The fundamental complication is that the guidance command <span class="arithmatex">\(n_c\)</span> is computed in the non-rolling guidance frame but must be executed by fins fixed in the rolling body frame. The command must be demodulated: <span id="eq-RAM_demod"></span></p>
+<div class="arithmatex">\[\delta_{pitch} = n_c \cos(\phi(t)),\quad \delta_{yaw} = n_c \sin(\phi(t))\tag{25.54}\]</div>
+<p>where <span class="arithmatex">\(\phi(t) = \phi_0 + p\,t\)</span> is the instantaneous roll angle, <span class="arithmatex">\(p\)</span> is the (measured) roll rate, and <span class="arithmatex">\(\phi_0\)</span> is the reference phase. Phase synchronisation between the roll angle estimate and the actual airframe orientation is critical: a phase error of 30<span class="arithmatex">\(^\circ\)</span> causes a 13% loss in commanded force and can cause divergence.</p>
+<p>Cross-coupling between pitch and yaw in a rolling body must be handled. The coupled equations of motion for a rolling airframe: <span id="eq-RAM_q"></span><span id="eq-RAM_r"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \dot q + p\,r &amp;= M_{aero}/I_y \\
+  \dot r - p\,q &amp;= N_{aero}/I_z
+\end{align*}\]</div>
+<p>show that roll rate <span class="arithmatex">\(p\)</span> directly cross-couples pitch rate <span class="arithmatex">\(q\)</span> into yaw angular acceleration and vice versa. This coupling introduces a spin-induced nutation mode at frequency <span class="arithmatex">\(\omega_{nut} \approx p\,I_x/I_y\)</span> that the autopilot must not excite.</p>
+<h3 id="2592-high-altitude-flight"><span class="secnum">25.9.2</span> High-Altitude Flight<a class="headerlink" href="#2592-high-altitude-flight" title="Permanent link">&para;</a></h3>
+<p>At altitude <span class="arithmatex">\(h = 20\)</span> km, ambient density is <span class="arithmatex">\(\rho = 0.0889\)</span> kg/m<span class="arithmatex">\(^3\)</span>, approximately 9% of sea-level density. For the same Mach number, dynamic pressure <span class="arithmatex">\(q = \frac{1}{2}\rho a^2 M^2\)</span> is thus 9% of the sea-level value, and aerodynamic effectiveness (<span class="arithmatex">\(K_a \propto q\)</span>) is correspondingly reduced. The autopilot must either:</p>
+<ol>
+<li>
+<p>Operate the fins at much larger deflection angles (potentially reaching <span class="arithmatex">\(\delta_{max}\)</span>), limiting commanded acceleration, or</p>
+</li>
+<li>
+<p>Supplement aerodynamic control with TVC or RCS throughout the flight, at the cost of additional propellant mass.</p>
+</li>
+</ol>
+<p>The minimum aerodynamic control authority altitude <span class="arithmatex">\(h_{min}\)</span> is where <span class="arithmatex">\(q\)</span> is sufficient to achieve <span class="arithmatex">\(n_{cmd,max}\)</span> at <span class="arithmatex">\(\delta = \delta_{max}\)</span>: <span id="eq-h_min"></span></p>
+<div class="arithmatex">\[h_{min} = h\left(q_{min} = \frac{n_{cmd,max}\,W}{S\,C_{N\delta}\,\delta_{max}
+             + S\,C_{N\alpha}\,\alpha_{max}}\right)\tag{25.57}\]</div>
+<h3 id="2593-hypersonic-flight-control"><span class="secnum">25.9.3</span> Hypersonic Flight Control<a class="headerlink" href="#2593-hypersonic-flight-control" title="Permanent link">&para;</a></h3>
+<p>At Mach numbers above 5, unique control challenges emerge:</p>
+<ul>
+<li>
+<p><strong>Control surface heating:</strong> Stagnation temperature at a sharp leading edge: <span class="arithmatex">\(T_s = T_\infty(1 + \frac{\gamma-1}{2}M^2)\)</span>. At Mach 8, sea level equivalent conditions, <span class="arithmatex">\(T_s \approx 2300\)</span> K, well above the melting point of aluminium (933 K) and approaching that of titanium (1940 K). Fins must be carbonised ablatives, refractory metals (tungsten, molybdenum), or cooled structures.</p>
+</li>
+<li>
+<p><strong>Very short time of flight:</strong> Total flight time for a hypersonic glide vehicle may be 15–30 minutes; guidance updates and FCS response must be precisely managed within tight computation windows.</p>
+</li>
+<li>
+<p><strong>Plasma blackout:</strong> Ionised gas sheath at peak heating reduces signal penetration; GPS and datalink may be interrupted during peak heating, requiring autonomous FCS operation from INS only.</p>
+</li>
+<li>
+<p><strong>Aerothermoelastic effects:</strong> Thermal gradients degrade structural stiffness; aeroelastic modes shift frequency and may couple with FCS gains designed for cold-structure properties.</p>
+</li>
+</ul>
+<h3 id="2594-boost-phase-control"><span class="secnum">25.9.4</span> Boost-Phase Control<a class="headerlink" href="#2594-boost-phase-control" title="Permanent link">&para;</a></h3>
+<p>During motor burn (<span class="arithmatex">\(\Delta t \approx 3\)</span>–<span class="arithmatex">\(20\)</span> s), the missile mass decreases substantially, shifting the CG and changing aerodynamic derivatives. The CG shift from full to burnout: <span id="eq-CG_shift"></span></p>
+<div class="arithmatex">\[\Delta x_{CG} = \frac{m_{propellant}}{m_{total}}\,l_{propellant,cg}\tag{25.58}\]</div>
+<p>This shift changes <span class="arithmatex">\(C_{m\alpha}\)</span> and <span class="arithmatex">\(C_{m\delta}\)</span> and must be compensated by the gain schedule. A pitch program (pre-computed pitch rate profile as a function of motor burn time and target elevation) provides the initial trajectory shaping before the seeker acquires the target. TVC provides control authority until aerodynamic fins become effective.</p>
+<h3 id="2595-terminal-phase-control"><span class="secnum">25.9.5</span> Terminal Phase Control<a class="headerlink" href="#2595-terminal-phase-control" title="Permanent link">&para;</a></h3>
+<p>In the terminal phase, the seeker provides guidance commands at high update rates (<span class="arithmatex">\(&gt;\)</span>100 Hz). Seeker noise is the dominant source of fin activity. The noise induced fin rate can be characterised by its power spectral density: <span id="eq-fin_noise_psd"></span></p>
+<div class="arithmatex">\[S_{\delta}(\omega) = |G_{FCS}(j\omega)|^2 \cdot S_{noise}(\omega)\tag{25.59}\]</div>
+<p>Excessive fin activity drives actuator duty cycle high and can saturate the actuator, causing loss of control authority. The acceleration loop bandwidth must be set no higher than required to track the true target acceleration, and a notch filter at the seeker noise peak frequency is often added. Rate limiting on the fin command prevents actuator velocity saturation: <span id="eq-rate_limit"></span></p>
+<div class="arithmatex">\[|\dot\delta| \leq \dot\delta_{max} \approx 500^\circ/\text{s}\tag{25.60}\]</div>
+<h2 id="sec-cs_design"><span class="secnum">25.10</span> Control Surface Design<a class="headerlink" href="#sec-cs_design" title="Permanent link">&para;</a></h2>
+<h3 id="25101-aerodynamic-sizing"><span class="secnum">25.10.1</span> Aerodynamic Sizing<a class="headerlink" href="#25101-aerodynamic-sizing" title="Permanent link">&para;</a></h3>
+<p>Fin area is selected to provide the required control moment at maximum angle of attack and maximum dynamic pressure. The minimum fin area <span class="arithmatex">\(S_{f,min}\)</span>: <span id="eq-Sf_min"></span></p>
+<div class="arithmatex">\[S_{f,min} = \frac{M_{ctrl,req}}{q_{max}\,C_{N\delta,fin}\,l_{fin}}\tag{25.61}\]</div>
+<p>where <span class="arithmatex">\(M_{ctrl,req}\)</span> is the required control moment at the maximum manoeuvre condition, <span class="arithmatex">\(q_{max}\)</span> is the maximum expected dynamic pressure, <span class="arithmatex">\(C_{N\delta,fin}\)</span> is the fin normal-force per radian slope, and <span class="arithmatex">\(l_{fin}\)</span> is the fin moment arm from the fin aerodynamic centre to the CG.</p>
+<p>The fin aspect ratio <span class="arithmatex">\(AR = b_f^2/S_f\)</span> affects both lift slope and drag. High-AR fins provide higher lift-curve slope (approaching <span class="arithmatex">\(2\pi\)</span> per radian at subsonic speeds) but have larger bending moments and lower flutter speeds. Tactical missiles generally use low-AR trapezoidal or delta fins with <span class="arithmatex">\(AR = 0.5\)</span>–<span class="arithmatex">\(2.0\)</span>.</p>
+<h3 id="25102-structural-loads-and-hinge-sizing"><span class="secnum">25.10.2</span> Structural Loads and Hinge Sizing<a class="headerlink" href="#25102-structural-loads-and-hinge-sizing" title="Permanent link">&para;</a></h3>
+<p>The critical structural load on a fin is the root bending moment: <span id="eq-M_root"></span></p>
+<div class="arithmatex">\[M_{root} = q\,S_f\,C_{N,fin}\,(\alpha + \delta)\,y_{cp}\tag{25.62}\]</div>
+<p>where <span class="arithmatex">\(y_{cp}\)</span> is the spanwise position of the fin pressure centre measured from the root. This moment must be carried by the fin root attachment, which typically uses a spigot-and-socket or flanged bolt pattern machined into the fin shaft.</p>
+<p>Fin flutter speed must exceed <span class="arithmatex">\(1.15 V_{max}\)</span> (15% margin). Flutter is a coupled bending-torsion aeroelastic instability. A simplified flutter speed estimate using the Theodorsen function approach: <span id="eq-V_flutter"></span></p>
+<div class="arithmatex">\[V_{flutter} \approx \omega_\theta\,b_f \sqrt{\frac{2}{\rho\,C_{L\alpha}}}\tag{25.63}\]</div>
+<p>where <span class="arithmatex">\(\omega_\theta\)</span> is the torsional natural frequency (rad/s) and <span class="arithmatex">\(b_f\)</span> is the fin semi-span (m).</p>
+<h3 id="25103-materials-selection"><span class="secnum">25.10.3</span> Materials Selection<a class="headerlink" href="#25103-materials-selection" title="Permanent link">&para;</a></h3>
+<p>Fin material selection depends primarily on the maximum surface temperature due to aerodynamic heating: <span id="eq-Taw"></span><span id="eq-qflux"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  T_{aw} &amp;= T_\infty \left(1 + r\,\frac{\gamma - 1}{2}\,M^2\right) \\
+  \dot q_{s} &amp;= \frac{k}{r_{nose}^{0.5}}\,\rho^{0.5}\,V^3
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(r\)</span> is the recovery factor (<span class="arithmatex">\(\approx0.85\)</span> for turbulent flow) and <span class="arithmatex">\(\dot q_s\)</span> is the stagnation heating rate. Material selections: aluminium alloy 7075 for subsonic and low supersonic (Mach <span class="arithmatex">\(&lt;\)</span>2.5); titanium Ti-6Al-4V for Mach 2.5–5; carbon-carbon composite or refractory metal leading edges for Mach <span class="arithmatex">\(&gt;\)</span>5.</p>
+<h3 id="25104-folding-fin-mechanisms"><span class="secnum">25.10.4</span> Folding Fin Mechanisms<a class="headerlink" href="#25104-folding-fin-mechanisms" title="Permanent link">&para;</a></h3>
+<p>Folding fins reduce the stowed diameter of the missile for compatibility with launcher tubes and aircraft pylons. The fin rotates from folded to deployed about a hinge at the root. Spring force or pyrotechnic deployment drives the fin open; a locking mechanism (detent or collet) prevents back-folding under aerodynamic and inertial loads. Design requirements:</p>
+<ul>
+<li>
+<p>Deployment time: <span class="arithmatex">\(&lt;\)</span>50 ms from launch signal</p>
+</li>
+<li>
+<p>Deployment velocity at lock: <span class="arithmatex">\(&lt;\)</span>15 rad/s to limit lock impact load</p>
+</li>
+<li>
+<p>Lock force: <span class="arithmatex">\(&gt;\)</span>3<span class="arithmatex">\(\times\)</span> aerodynamic hinge moment at <span class="arithmatex">\(q_{max}\)</span></p>
+</li>
+<li>
+<p>Repeat deploy cycles: <span class="arithmatex">\(&gt;\)</span>200 without lubrication</p>
+</li>
+</ul>
+<p>The deployment energy balance: <span id="eq-fin_deploy"></span></p>
+<div class="arithmatex">\[E_{spring} = I_{fin}\,\omega_{lock}^2/2 + E_{aero,drag} + E_{friction}\tag{25.66}\]</div>
+<h2 id="sec-fcs_test"><span class="secnum">25.11</span> FCS Testing and Validation<a class="headerlink" href="#sec-fcs_test" title="Permanent link">&para;</a></h2>
+<h3 id="25111-iron-bird-testing"><span class="secnum">25.11.1</span> Iron Bird Testing<a class="headerlink" href="#25111-iron-bird-testing" title="Permanent link">&para;</a></h3>
+<p>The iron bird (or system integration rig, SIR) is a full-scale bench installation of all FCS hardware including the FCS computer, power converter, thermal battery, wiring harness, and all four actuators. Actuator loads are applied by load cells or load simulation motors that replicate the aerodynamic hinge moments computed from the 6-DOF simulation. The iron bird verifies:</p>
+<ul>
+<li>
+<p>Electrical interface compatibility of all components</p>
+</li>
+<li>
+<p>Thermal battery discharge curve and actuator power budget</p>
+</li>
+<li>
+<p>Actuator step response and bandwidth under load</p>
+</li>
+<li>
+<p>FCS software timing and CPU loading</p>
+</li>
+<li>
+<p>Failure mode and effect analysis (FMEA) scenarios by inducing failures</p>
+</li>
+</ul>
+<h3 id="25112-aero-servo-elastic-analysis"><span class="secnum">25.11.2</span> Aero-Servo-Elastic Analysis<a class="headerlink" href="#25112-aero-servo-elastic-analysis" title="Permanent link">&para;</a></h3>
+<p>Aero-servo-elastic (ASE) analysis examines the interaction between structural vibration modes and the FCS. If a structural bending mode frequency lies within the FCS bandwidth, and the mode shape produces accelerometer output, the FCS can inadvertently feed energy into the structural mode, causing divergence. The ASE stability check: <span id="eq-ASE"></span></p>
+<div class="arithmatex">\[|G_{FCS}(j\omega_{struct}) \cdot G_{struct}(j\omega_{struct})| &lt; 1\tag{25.67}\]</div>
+<p>must be satisfied at all structural mode frequencies <span class="arithmatex">\(\omega_{struct}\)</span>. If not, a notch filter at <span class="arithmatex">\(\omega_{struct}\)</span> is inserted in the accelerometer signal path. Typical first structural mode frequencies: <span class="arithmatex">\(50\)</span>–<span class="arithmatex">\(200\)</span> Hz for tactical missiles, well above the nominal FCS bandwidth but within range of high-frequency rate loop components.</p>
+<h3 id="25113-free-flight-test-instrumentation"><span class="secnum">25.11.3</span> Free-Flight Test Instrumentation<a class="headerlink" href="#25113-free-flight-test-instrumentation" title="Permanent link">&para;</a></h3>
+<p>Flight tests instrument the FCS with a telemetry package that transmits:</p>
+<ul>
+<li>
+<p>Fin deflection angles (<span class="arithmatex">\(\delta_1\)</span>–<span class="arithmatex">\(\delta_4\)</span>) at 500 Hz</p>
+</li>
+<li>
+<p>Lateral accelerations (<span class="arithmatex">\(a_y\)</span>, <span class="arithmatex">\(a_z\)</span>) at 500 Hz</p>
+</li>
+<li>
+<p>Body rates (<span class="arithmatex">\(p\)</span>, <span class="arithmatex">\(q\)</span>, <span class="arithmatex">\(r\)</span>) at 500 Hz</p>
+</li>
+<li>
+<p>FCS computer outputs: commanded <span class="arithmatex">\(\delta\)</span>, guidance command <span class="arithmatex">\(n_c\)</span></p>
+</li>
+<li>
+<p>Power system data: battery voltage, current, temperature</p>
+</li>
+</ul>
+<p>Post-flight analysis compares measured fin deflection to the model prediction from the pre-flight simulation. Disagreement greater than 10% indicates an aerodynamic model error and triggers model update. Flight test plans typically include:</p>
+<ol>
+<li>
+<p>Controlled autopilot response tests (step and doublet commands injected)</p>
+</li>
+<li>
+<p>Guidance law tracking tests against cooperative targets</p>
+</li>
+<li>
+<p>Boundary condition tests (high Mach, high altitude, cold temperature)</p>
+</li>
+<li>
+<p>Tail-chase and head-on engagement geometries</p>
+</li>
+</ol>
+<h3 id="25114-flight-termination-system-integration"><span class="secnum">25.11.4</span> Flight Termination System Integration<a class="headerlink" href="#25114-flight-termination-system-integration" title="Permanent link">&para;</a></h3>
+<p>The flight termination system (FTS) must be capable of overriding the FCS and placing the missile in a safe configuration (or actuating the destruct charge) on command from the range safety officer. FTS integration requires:</p>
+<ul>
+<li>
+<p>A dedicated hardwired command channel independent of the FCS computer</p>
+</li>
+<li>
+<p>FTS command sets all fins to a pre-defined destruct deflection (full trailing-edge up, creating maximum drag and pitch-over)</p>
+</li>
+<li>
+<p>Motor inhibit or safe/arm reset</p>
+</li>
+<li>
+<p>Destruct initiation (30 ms delay after FTS command to allow safe vehicle attitude)</p>
+</li>
+</ul>
+<p>The FTS must be tested to respond within 250 ms of a range safety officer command transmitted on a dedicated encrypted UHF frequency.</p>
+<div class="tbl" id="tab-fcs_test_matrix">
+<div class="tbl-caption"><strong>Table 25.5.</strong> FCS validation test matrix: required tests and acceptance criteria</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Test Type</strong></th>
+<th style="text-align: left;"><strong>Facility</strong></th>
+<th style="text-align: left;"><strong>Key Measurement</strong></th>
+<th style="text-align: left;"><strong>Accept Criterion</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Actuator step response</td>
+<td style="text-align: left;">SIR / iron bird</td>
+<td style="text-align: left;">Rise time, overshoot</td>
+<td style="text-align: left;"><span class="math inline">\(t_{r} &lt; 20\)</span> ms; OS <span class="math inline">\(&lt;\)</span>15%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Open-loop Bode</td>
+<td style="text-align: left;">SIR with swept sine</td>
+<td style="text-align: left;">GM, PM</td>
+<td style="text-align: left;">GM <span class="math inline">\(&gt;\)</span>6 dB; PM <span class="math inline">\(&gt;\)</span>30<span class="math inline">\(^\circ\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">HWIL engagement</td>
+<td style="text-align: left;">HWIL simulator</td>
+<td style="text-align: left;">Miss distance</td>
+<td style="text-align: left;">CEP <span class="math inline">\(&lt; r_{kill}\)</span> at 90%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Aero-servo-elastic</td>
+<td style="text-align: left;">SIR + FE model</td>
+<td style="text-align: left;">ASE stability margins</td>
+<td style="text-align: left;">Eq. <a href="#eq-ASE">(25.67)</a> satisfied</td>
+</tr>
+<tr>
+<td style="text-align: left;">Free flight (DT)</td>
+<td style="text-align: left;">Range (OT&amp;E site)</td>
+<td style="text-align: left;">Fin <span class="math inline">\(\delta\)</span> vs model</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>10% deviation</td>
+</tr>
+<tr>
+<td style="text-align: left;">MIL-STD-810 env.</td>
+<td style="text-align: left;">Climatic chamber</td>
+<td style="text-align: left;">FCS function</td>
+<td style="text-align: left;">Pass all function tests</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-fcs_advanced"><span class="secnum">25.12</span> Advanced Topics in Missile FCS<a class="headerlink" href="#sec-fcs_advanced" title="Permanent link">&para;</a></h2>
+<h3 id="25121-adaptive-and-intelligent-control"><span class="secnum">25.12.1</span> Adaptive and Intelligent Control<a class="headerlink" href="#25121-adaptive-and-intelligent-control" title="Permanent link">&para;</a></h3>
+<p>Neural network adaptive control has been investigated for missiles operating in highly nonlinear post-stall regimes or with significant aerodynamic uncertainty. A model reference adaptive controller (MRAC) adjusts gains online to minimise the error between the actual plant response and a reference model: <span id="eq-MRAC"></span></p>
+<div class="arithmatex">\[\dot W = -\gamma \, e_m^T \, B_{ref}^T \, P \, x_{ref} \, \phi^T(x)\tag{25.68}\]</div>
+<p>where <span class="arithmatex">\(W\)</span> is the neural network weight matrix, <span class="arithmatex">\(\gamma\)</span> is the learning rate, <span class="arithmatex">\(e_m\)</span> is the model error, <span class="arithmatex">\(P\)</span> is the solution to a Lyapunov equation for the reference model, and <span class="arithmatex">\(\phi(x)\)</span> is the activation function vector. Practical implementation requires bounding the weight update to prevent parameter divergence and must be rigorously validated in HWIL before flight.</p>
+<h3 id="25122-nonlinear-dynamic-inversion"><span class="secnum">25.12.2</span> Nonlinear Dynamic Inversion<a class="headerlink" href="#25122-nonlinear-dynamic-inversion" title="Permanent link">&para;</a></h3>
+<p>Nonlinear dynamic inversion (NDI) cancels the nonlinear dynamics of the airframe by solving for the required control surface deflection directly from the equations of motion. For the pitch axis: <span id="eq-NDI"></span></p>
+<div class="arithmatex">\[\delta = \frac{I_y(\dot q_{cmd} - f_q(x))}{g_q(x)}\tag{25.69}\]</div>
+<p>where <span class="arithmatex">\(\dot q_{cmd}\)</span> is the desired pitch acceleration, <span class="arithmatex">\(f_q(x)\)</span> are the known aerodynamic contributions, and <span class="arithmatex">\(g_q(x)\)</span> is the control effectiveness. NDI produces a linear closed-loop system whose performance does not depend on operating point, eliminating the need for gain scheduling—provided the aerodynamic model is accurate. Robustness to model error is addressed by adding a classical feedback term on the residual error.</p>
+<h3 id="25123-control-allocation-for-over-actuated-vehicles"><span class="secnum">25.12.3</span> Control Allocation for Over-Actuated Vehicles<a class="headerlink" href="#25123-control-allocation-for-over-actuated-vehicles" title="Permanent link">&para;</a></h3>
+<p>Modern missiles with combined TVC + aerodynamic control + RCS have more control effectors than degrees of freedom. Control allocation selects the optimal combination of effectors to produce a required moment vector while respecting deflection limits and minimising a cost (typically fin structural load or actuator power): <span id="eq-CA"></span></p>
+<div class="arithmatex">\[\min_u \|Wu\|_2 \quad\text{subject to}\quad Bu = v,\quad u_{min} \leq u \leq u_{max}\tag{25.70}\]</div>
+<p>where <span class="arithmatex">\(u\)</span> is the vector of effector commands, <span class="arithmatex">\(B\)</span> is the control effectiveness matrix, <span class="arithmatex">\(v\)</span> is the required moment vector, and <span class="arithmatex">\(W\)</span> is a weighting matrix. The solution is a quadratic programme solvable in real time using active-set or interior-point methods implemented on the FCS processor.</p>
+<h3 id="25124-structural-filter-design"><span class="secnum">25.12.4</span> Structural Filter Design<a class="headerlink" href="#25124-structural-filter-design" title="Permanent link">&para;</a></h3>
+<p>When structural bending modes are close to the control bandwidth, a biquadratic (bi-quad) notch filter is inserted at the accelerometer output: <span id="eq-Gnotch"></span></p>
+<div class="arithmatex">\[G_{notch}(s) = \frac{s^2 + 2\zeta_n\omega_n s + \omega_n^2}
+                      {s^2 + 2\zeta_d\omega_n s + \omega_n^2}\tag{25.71}\]</div>
+<p>where <span class="arithmatex">\(\omega_n\)</span> is the notch centre frequency (set to the structural mode frequency), <span class="arithmatex">\(\zeta_n &lt; \zeta_d\)</span>. Choosing <span class="arithmatex">\(\zeta_n = 0.02\)</span> and <span class="arithmatex">\(\zeta_d = 0.5\)</span> provides 30 dB of notch depth at <span class="arithmatex">\(\omega_n\)</span> with minimal effect on phase at lower frequencies.</p>
+<h2 id="sec-fcs_summary"><span class="secnum">25.13</span> Summary and Design Process<a class="headerlink" href="#sec-fcs_summary" title="Permanent link">&para;</a></h2>
+<p>Missile flight control system design is an iterative discipline spanning aerodynamics, structural mechanics, electrical engineering, and software. The recommended design process follows these steps:</p>
+<ol>
+<li>
+<p>Establish the flight envelope: Mach range, altitude range, maximum lateral acceleration requirement.</p>
+</li>
+<li>
+<p>Select the control concept: tail, canard, wing, or combined; TVC required or aerodynamic only.</p>
+</li>
+<li>
+<p>Develop the linearised plant model at a grid of operating points; compute <span class="arithmatex">\(K_a\)</span>, <span class="arithmatex">\(\omega_a\)</span>, <span class="arithmatex">\(\zeta_a\)</span> at each point.</p>
+</li>
+<li>
+<p>Design the autopilot for each operating point; assemble the gain schedule; verify margins at all grid points plus worst-case aerodynamic uncertainties.</p>
+</li>
+<li>
+<p>Size actuators for maximum hinge moment plus margin; select EMA, EHA, or pneumatic based on bandwidth and power budget.</p>
+</li>
+<li>
+<p>Perform ASE analysis; insert notch filters as required.</p>
+</li>
+<li>
+<p>Implement on FCS processor; verify timing in HWIL.</p>
+</li>
+<li>
+<p>Test on iron bird; conduct free-flight development tests; qualify.</p>
+</li>
+</ol>
+<p>The intersection of robust stability, structural integrity, weight minimisation, and cost drives every design decision. The FCS is the discipline that ultimately determines whether an otherwise well-designed missile can reliably intercept its intended target under all operational conditions.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch24-missile-airframe-and-structures.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 24. Missile Airframe and Structures">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                24. Missile Airframe and Structures
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch26-missile-electronics-and-power.html" class="md-footer__link md-footer__link--next" aria-label="Next: 26. Missile Electronics and Power">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                26. Missile Electronics and Power
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

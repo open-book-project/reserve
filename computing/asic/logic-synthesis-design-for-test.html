@@ -1,0 +1,3262 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/asic/logic-synthesis-design-for-test.html">
+  
+  
+    <link rel="prev" href="functional-verification.html">
+  
+  
+    <link rel="next" href="physical-design-floorplan-to-route.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>4. Logic Synthesis & Design for Test - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#41-how-logic-synthesis-works" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Logic Synthesis & Design for Test
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">ASIC Design: A Field Guide</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to-read-this-guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to read this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chip-design-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Chip Design Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="specification-architecture-rtl-design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Specification, Architecture & RTL Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="functional-verification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Functional Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Logic Synthesis & Design for Test
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="logic-synthesis-design-for-test.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Logic Synthesis & Design for Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#41-how-logic-synthesis-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 How Logic Synthesis Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-synthesis-tools-design-compiler-fusion-compiler-genus-yosys-and-abc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Synthesis Tools: Design Compiler, Fusion Compiler, Genus, Yosys and ABC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Synthesis Tools: Design Compiler, Fusion Compiler, Genus, Yosys and ABC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-synthesise-a-design-with-yosys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Synthesise a design with Yosys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-standard-cell-libraries-and-liberty-lib-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Standard-Cell Libraries and Liberty (.lib) Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Standard-Cell Libraries and Liberty (.lib) Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-part-of-a-liberty-cell-description-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Part of a Liberty cell description (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-pvt-corners-modes-and-mcmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 PVT Corners, Modes and MCMM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-timing-constraints-with-sdc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Timing Constraints with SDC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Timing Constraints with SDC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-a-fuller-sdc-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: A fuller SDC example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-static-timing-analysis-sta-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Static Timing Analysis (STA) Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 Static Timing Analysis (STA) Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-basic-opensta-session-with-a-detailed-path-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Basic OpenSTA session with a detailed path report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-power-aware-synthesis-clock-gating-multi-vt-and-upf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Power-Aware Synthesis: Clock Gating, Multi-Vt and UPF
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.7 Power-Aware Synthesis: Clock Gating, Multi-Vt and UPF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-illustrative-design-compiler-style-power-settings-tcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Illustrative Design Compiler-style power settings (Tcl)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#48-dft-concepts-faults-scan-and-controllability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 DFT Concepts: Faults, Scan and Controllability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.8 DFT Concepts: Faults, Scan and Controllability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-what-scan-insertion-does-to-a-flip-flop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: What scan insertion does to a flip-flop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#49-scan-insertion-and-test-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9 Scan Insertion and Test Compression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#410-atpg-and-dft-tools-testmax-modus-and-tessent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10 ATPG and DFT Tools: TestMAX, Modus and Tessent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#411-bist-memory-bist-and-repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11 BIST, Memory BIST and Repair
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.11 BIST, Memory BIST and Repair">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-an-8-bit-lfsr-pattern-generator-and-march-c-in-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: An 8-bit LFSR pattern generator and March C- in notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#412-jtag-and-test-access-standards-ieee-11491-1500-1687" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12 JTAG and Test Access Standards (IEEE 1149.1, 1500, 1687)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#413-test-coverage-quality-and-yield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13 Test Coverage, Quality and Yield
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.13 Test Coverage, Quality and Yield">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-compute-defect-level-with-the-williamsbrown-model-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Compute defect level with the Williams–Brown model (Python)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="physical-design-floorplan-to-route.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Physical Design: Floorplan to Route
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signoff-tapeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Signoff & Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fabrication-packaging-test-bring-up.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Fabrication, Packaging, Test & Bring-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="eda-industry-open-source-silicon-analog-ai-in-eda-careers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. EDA Industry, Open-Source Silicon, Analog, AI-in-EDA & Careers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ten-things-every-asic-student-should-master.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ten Things Every ASIC Student Should Master
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-of-terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary of Terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#41-how-logic-synthesis-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 How Logic Synthesis Works
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#42-synthesis-tools-design-compiler-fusion-compiler-genus-yosys-and-abc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Synthesis Tools: Design Compiler, Fusion Compiler, Genus, Yosys and ABC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Synthesis Tools: Design Compiler, Fusion Compiler, Genus, Yosys and ABC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-synthesise-a-design-with-yosys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Synthesise a design with Yosys
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#43-standard-cell-libraries-and-liberty-lib-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Standard-Cell Libraries and Liberty (.lib) Files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Standard-Cell Libraries and Liberty (.lib) Files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-part-of-a-liberty-cell-description-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Part of a Liberty cell description (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#44-pvt-corners-modes-and-mcmm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 PVT Corners, Modes and MCMM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#45-timing-constraints-with-sdc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Timing Constraints with SDC
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Timing Constraints with SDC">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-a-fuller-sdc-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: A fuller SDC example
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#46-static-timing-analysis-sta-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Static Timing Analysis (STA) Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 Static Timing Analysis (STA) Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-basic-opensta-session-with-a-detailed-path-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Basic OpenSTA session with a detailed path report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#47-power-aware-synthesis-clock-gating-multi-vt-and-upf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Power-Aware Synthesis: Clock Gating, Multi-Vt and UPF
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.7 Power-Aware Synthesis: Clock Gating, Multi-Vt and UPF">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-illustrative-design-compiler-style-power-settings-tcl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Illustrative Design Compiler-style power settings (Tcl)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#48-dft-concepts-faults-scan-and-controllability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 DFT Concepts: Faults, Scan and Controllability
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.8 DFT Concepts: Faults, Scan and Controllability">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-what-scan-insertion-does-to-a-flip-flop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: What scan insertion does to a flip-flop
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#49-scan-insertion-and-test-compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9 Scan Insertion and Test Compression
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#410-atpg-and-dft-tools-testmax-modus-and-tessent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10 ATPG and DFT Tools: TestMAX, Modus and Tessent
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#411-bist-memory-bist-and-repair" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11 BIST, Memory BIST and Repair
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.11 BIST, Memory BIST and Repair">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-an-8-bit-lfsr-pattern-generator-and-march-c-in-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: An 8-bit LFSR pattern generator and March C- in notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#412-jtag-and-test-access-standards-ieee-11491-1500-1687" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12 JTAG and Test Access Standards (IEEE 1149.1, 1500, 1687)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#413-test-coverage-quality-and-yield" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13 Test Coverage, Quality and Yield
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.13 Test Coverage, Quality and Yield">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-compute-defect-level-with-the-williamsbrown-model-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Compute defect level with the Williams–Brown model (Python)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-4-logic-synthesis-design-for-test">Chapter 4: Logic Synthesis &amp; Design for Test<a class="headerlink" href="#chapter-4-logic-synthesis-design-for-test" title="Permanent link">&para;</a></h1>
+<p>Synthesis is where your RTL becomes real hardware: a netlist of standard cells from the foundry's library, optimised to meet timing, power and area goals described in SDC constraints. This chapter explains how synthesis works, what Liberty libraries and PVT corners are, how to write timing constraints, how static timing analysis judges them and how synthesis cuts power. It then covers Design for Test (DFT): scan chains, ATPG, compression, BIST, JTAG and the test standards that let every manufactured chip be checked in seconds.</p>
+<h2 id="41-how-logic-synthesis-works">4.1 How Logic Synthesis Works<a class="headerlink" href="#41-how-logic-synthesis-works" title="Permanent link">&para;</a></h2>
+<p>Logic synthesis turns RTL into a gate-level netlist. It happens in three main steps: translation (reading RTL into generic logic), optimisation (simplifying and restructuring logic for speed, area and power), and technology mapping (choosing real cells from the foundry library). The tool constantly checks timing against your constraints and tries alternatives until goals are met.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-01-how-logic-synthesis-works.svg" alt="Optimisation is driven by your constraints at every step after translation." loading="lazy" width="1000" height="397">
+<figcaption><strong>Inside a synthesis run.</strong> Optimisation is driven by your constraints at every step after translation.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Synthesis is like a translator turning a story into another language, then an editor tightening the prose, then a typesetter fitting it to the exact page size and font available.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Nadia synthesises a 64-bit multiplier for 1.5 GHz. The tool first builds a generic multiplier, then chooses a Booth-encoded Wallace-tree architecture because a simple array is too slow. It maps logic to the library's fastest cells on critical paths and small high-Vt cells elsewhere. The report shows 0 ps negative slack, 48,000 µm² area and 12 mW at the typical corner.</p>
+</div>
+<h4 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Read RTL, libraries and constraints (SDC, UPF).</li>
+<li>Elaborate: build generic logic and infer registers, adders, multiplexers and memories.</li>
+<li>Optimise: constant propagation, logic sharing, restructuring, resource selection.</li>
+<li>Map to standard cells, size gates, insert buffers and clock gating.</li>
+<li>Report timing, area and power; write the netlist, SDC and guidance files for the next steps.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Synthesis engineers, RTL designers checking PPA, and physical design engineers in integrated flows.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Garbage in, garbage out: synthesis results are only as good as the RTL quality and the constraints you give it.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Translation produces a technology-independent network (for example Synopsys GTECH generic cells, or and-inverter graphs in ABC) that can be optimised before real cell delays are known.</li>
+<li>Arithmetic operators are recognised as whole units and given architectures to suit timing, such as ripple or prefix adders and Booth-encoded multipliers.</li>
+<li>Optimisation is constraint-driven: failing paths get faster, larger cells and restructuring, while paths with spare slack are downsized to save area and leakage.</li>
+<li>Keeping hierarchy eases debug and equivalence checking, but ungrouping enables cross-boundary optimisation; tools often auto-ungroup small modules.</li>
+<li>Logic with no observable effect, such as unloaded flops, is removed; surprising removals usually reveal RTL bugs like unconnected outputs.</li>
+<li>Flows run an initial compile, then incremental optimisation after DFT insertion or constraint updates to fix remaining violations without starting again.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Expecting synthesis to fix a poor architecture; a long arithmetic chain needs pipelining or restructuring in the RTL.</li>
+<li>Ignoring warnings about inferred latches, multiple drivers or removed registers; these often reveal real RTL bugs.</li>
+<li>Over-using dont_touch, which blocks optimisation and can leave violations the tool could otherwise fix.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Logic synthesis</strong><br><em>EDA technique · Methodology · Synthesis</em></td>
+<td>Automatic conversion of RTL into an optimised netlist of standard cells.</td>
+<td>A 50,000-line RTL design becomes a 20-million-cell netlist in a few hours.</td>
+</tr>
+<tr>
+<td><strong>Elaboration</strong><br><em>Synthesis step · Concept · Synthesis</em></td>
+<td>Building the full design hierarchy, resolving parameters and generate blocks.</td>
+<td>A FIFO with DEPTH=16 is elaborated into exactly 16 storage rows.</td>
+</tr>
+<tr>
+<td><strong>Technology mapping</strong><br><em>Synthesis step · Concept · Synthesis</em></td>
+<td>Choosing actual library cells to implement the generic logic.</td>
+<td>Generic AND-OR logic is mapped to an AOI22_X2 cell.</td>
+</tr>
+<tr>
+<td><strong>Logic optimisation</strong><br><em>Synthesis step · Concept · Synthesis</em></td>
+<td>Restructuring Boolean logic to reduce delay, area or power while preserving function.</td>
+<td>Common sub-expressions shared between two adders are computed once.</td>
+</tr>
+<tr>
+<td><strong>Gate sizing and buffering</strong><br><em>Synthesis/P&amp;R optimisation · Concept · Synthesis</em></td>
+<td>Selecting cell drive strengths and inserting buffers to meet timing and fix slow transitions.</td>
+<td>Upsizing a NAND from X1 to X4 speeds a critical path by 20 ps.</td>
+</tr>
+<tr>
+<td><strong>Retiming</strong><br><em>Synthesis optimisation · Concept · Synthesis</em></td>
+<td>Moving registers across logic to balance pipeline stages without changing function.</td>
+<td>Retiming shifts half a multiplier's logic into the next pipeline stage.</td>
+</tr>
+<tr>
+<td><strong>Datapath synthesis / DesignWare</strong><br><em>Synopsys DesignWare Library; Cadence ChipWare · IP · Synthesis · Commercial</em></td>
+<td>Optimised arithmetic architectures (adders, multipliers, dividers) chosen automatically by synthesis.</td>
+<td>Synthesis picks a fast parallel-prefix adder from DesignWare for a critical path.</td>
+</tr>
+<tr>
+<td><strong>Multi-bit flip-flop banking</strong><br><em>Low-power synthesis technique · Concept · Synthesis</em></td>
+<td>Merging several single-bit flops into multi-bit cells that share clock circuitry.</td>
+<td>Banking 4-bit flops cuts clock power by around 10-20 % in a register-heavy block.</td>
+</tr>
+<tr>
+<td><strong>Don't-touch and dont_use</strong><br><em>Synthesis directives · Concept · Synthesis</em></td>
+<td>Directives telling the tool not to modify certain instances or not to use certain cells.</td>
+<td>Clock-domain synchroniser flops are marked dont_touch so they are not optimised away.</td>
+</tr>
+<tr>
+<td><strong>QoR (Quality of Results)</strong><br><em>Industry term · Concept · Synthesis</em></td>
+<td>Summary of how good a synthesis or implementation run is: timing, area, power and congestion.</td>
+<td>A tool upgrade improves QoR by 3 % area at the same timing.</td>
+</tr>
+<tr>
+<td><strong>Resource sharing</strong><br><em>Synthesis optimisation · Concept · Synthesis</em></td>
+<td>Using one hardware operator for several RTL operations that never happen in the same cycle, saving area.</td>
+<td>Two additions in different branches of a case statement share one adder plus a multiplexer.</td>
+</tr>
+<tr>
+<td><strong>Ungrouping and boundary optimisation</strong><br><em>Synthesis option · Concept · Synthesis</em></td>
+<td>Flattening module hierarchy, or optimising across module ports, so logic split between modules can be simplified together.</td>
+<td>Ungrouping a small decoder lets the tool merge its logic with the FSM, removing two levels of gates.</td>
+</tr>
+<tr>
+<td><strong>Constant propagation and dead-logic removal</strong><br><em>Synthesis optimisation · Concept · Synthesis</em></td>
+<td>Pushing tied-off values through the logic and deleting anything that cannot affect an output.</td>
+<td>A parameter disables the debug port, so 1,200 flops and their logic vanish from the netlist automatically.</td>
+</tr>
+<tr>
+<td><strong>FSM extraction and re-encoding</strong><br><em>Synthesis optimisation · Concept · Synthesis</em></td>
+<td>Recognising state machines in RTL and choosing a better state encoding, such as one-hot, for speed or area.</td>
+<td>A 12-state binary FSM is re-encoded one-hot, trading 8 extra flops for a faster next-state decode.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="42-synthesis-tools-design-compiler-fusion-compiler-genus-yosys-and-abc">4.2 Synthesis Tools: Design Compiler, Fusion Compiler, Genus, Yosys and ABC<a class="headerlink" href="#42-synthesis-tools-design-compiler-fusion-compiler-genus-yosys-and-abc" title="Permanent link">&para;</a></h2>
+<p>Commercial ASIC synthesis is dominated by Synopsys (Design Compiler and Fusion Compiler) and Cadence (Genus). Modern tools are 'physically aware': they consider where cells will be placed so their timing estimates match layout. In open source, Yosys reads Verilog and uses the ABC engine from UC Berkeley for logic optimisation and mapping.</p>
+<p><strong>Three synthesis flows side by side</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Synopsys DC / Fusion</th>
+<th>Cadence Genus</th>
+<th>Yosys + ABC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Read RTL</strong></td>
+<td>analyze, elaborate</td>
+<td>read_hdl, elaborate</td>
+<td>read_verilog -sv</td>
+</tr>
+<tr>
+<td><strong>Main command</strong></td>
+<td>compile_ultra / compile_fusion</td>
+<td>syn_generic, syn_map, syn_opt</td>
+<td>synth, dfflibmap, abc</td>
+</tr>
+<tr>
+<td><strong>Physical awareness</strong></td>
+<td>Topographical / native in FC</td>
+<td>iSpatial with Innovus</td>
+<td>None (OpenROAD later)</td>
+</tr>
+<tr>
+<td><strong>Typical outputs</strong></td>
+<td>Netlist, SDC, SVF</td>
+<td>Netlist, SDC, LEC dofile</td>
+<td>Netlist, stat report</td>
+</tr>
+<tr>
+<td><strong>Licence</strong></td>
+<td>Commercial</td>
+<td>Commercial</td>
+<td>Open source (ISC)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Commands differ, but every flow reads RTL and constraints and writes a netlist plus reports.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Choosing a synthesis tool is like choosing a professional kitchen: the big brands have every gadget and support, while the open-source kitchen is free and great for learning, though less turbo-charged.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>At a large company, Vikram runs Fusion Compiler, which uses the same engines for synthesis and place-and-route so timing correlates closely. At a start-up with Cadence licences, his friend uses Genus with iSpatial to predict placement. At home, Vikram synthesises his RISC-V hobby core with Yosys for SKY130 and compares the area reports.</p>
+</div>
+<h4 id="how-it-works_1">How it works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Set up the library paths, target libraries and design files.</li>
+<li>Read RTL and constraints; elaborate the top module.</li>
+<li>Compile/synthesise with chosen effort and physical awareness (floorplan or DEF).</li>
+<li>Check reports: timing (QoR), area, power, design rule violations, unmapped cells.</li>
+<li>Write outputs: netlist, SDC, UPF, and guidance for LEC.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Synthesis/implementation engineers; RTL designers running quick PPA checks.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the basic command flow of one commercial tool (read, elaborate, link, compile, report_timing, write) and Yosys's 'synth' command.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A typical commercial script sets libraries, reads and elaborates RTL, links, reads SDC and UPF, runs check_design and check_timing, compiles, inserts DFT, re-optimises incrementally and writes netlist, constraints, reports and LEC guidance.</li>
+<li>Physical-aware synthesis reads the floorplan (DEF) and technology LEF so wire delays and congestion reflect real layout, reducing surprises at place-and-route.</li>
+<li>Fusion Compiler shares one data model between synthesis and implementation, while Genus links to Innovus through iSpatial; both aim to keep timing correlated across steps.</li>
+<li>Yosys's synth command runs a generic script (proc, opt, fsm, memory, techmap, abc); for ASICs, flops are mapped with dfflibmap and logic with abc against a Liberty file, as in LibreLane.</li>
+<li>Reports to read on every run: worst paths per clock group, area by hierarchy, cell and Vt usage, power, design-rule violations and messages about latches or removed logic.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Skipping check_design and check_timing; unresolved references and unconstrained endpoints produce a netlist that looks fine but is not.</li>
+<li>Comparing QoR between tools without identical libraries, constraints and corners; most differences then come from setup, not the tool.</li>
+<li>Forgetting timing models for memories and analogue macros, so synthesis sees no timing on their paths.</li>
+</ul>
+</div>
+<h3 id="try-it-synthesise-a-design-with-yosys">Try it: Synthesise a design with Yosys<a class="headerlink" href="#try-it-synthesise-a-design-with-yosys" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>yosys<span class="w"> </span>-p<span class="w"> </span><span class="s2">"read_verilog -sv counter.sv; synth -top counter; \</span>
+<span class="s2">  dfflibmap -liberty sky130_fd_sc_hd__tt_025C_1v80.lib; \</span>
+<span class="s2">  abc -liberty sky130_fd_sc_hd__tt_025C_1v80.lib; \</span>
+<span class="s2">  stat; write_verilog -noattr counter_netlist.v"</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_1">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Synopsys Design Compiler (DC NXT)</strong><br><em>Synopsys · Tool · Synthesis · Commercial</em></td>
+<td>Long-standing industry-standard RTL synthesis tool, with topographical/physical-aware modes.</td>
+<td>Generations of engineers learned synthesis with 'compile_ultra' in Design Compiler.</td>
+</tr>
+<tr>
+<td><strong>Synopsys Fusion Compiler</strong><br><em>Synopsys · Tool · Synthesis · Commercial</em></td>
+<td>Synopsys RTL-to-GDSII tool whose synthesis step shares one database and engines with placement, so synthesis timing reflects real layout.</td>
+<td>A team synthesises with compile_fusion and continues straight into placement in the same database, avoiding a netlist hand-off.</td>
+</tr>
+<tr>
+<td><strong>Cadence Genus Synthesis Solution</strong><br><em>Cadence Design Systems · Tool · Synthesis · Commercial</em></td>
+<td>Cadence's RTL synthesis tool with iSpatial technology linking to Innovus placement.</td>
+<td>Genus iSpatial predicts wire delays using Innovus's placer for better correlation.</td>
+</tr>
+<tr>
+<td><strong>Siemens Oasys-RTL</strong><br><em>Siemens EDA · Tool · Synthesis · Commercial</em></td>
+<td>Physically aware RTL synthesis and floorplanning tool for early PPA exploration.</td>
+<td>Architects use Oasys-RTL to check whether a block will route before full implementation.</td>
+</tr>
+<tr>
+<td><strong>Yosys</strong><br><em>YosysHQ · Tool · Synthesis · Open source</em></td>
+<td>Open-source synthesis framework: reads Verilog, runs optimisation passes and maps to a Liberty cell library or FPGA primitives via scripted commands.</td>
+<td>'synth -top counter', then 'dfflibmap' and 'abc' with a SKY130 Liberty file, turn RTL into gates; 'stat' reports cell count and area.</td>
+</tr>
+<tr>
+<td><strong>ABC</strong><br><em>UC Berkeley (Alan Mishchenko) · Tool · Synthesis · Open source</em></td>
+<td>Logic optimisation and technology-mapping engine using and-inverter graphs, used inside Yosys.</td>
+<td>Yosys's abc pass maps optimised logic onto Liberty cells.</td>
+</tr>
+<tr>
+<td><strong>Physical-aware synthesis</strong><br><em>EDA technique · Methodology · Synthesis</em></td>
+<td>Synthesis that uses floorplan and placement estimates so wire delays are realistic.</td>
+<td>Using the floorplan DEF in synthesis avoids surprises when the design is placed.</td>
+</tr>
+<tr>
+<td><strong>Wire-load model (WLM)</strong><br><em>Liberty / legacy synthesis · Concept · Synthesis</em></td>
+<td>Old statistical estimate of wire capacitance by fan-out, inaccurate at modern nodes.</td>
+<td>Modern flows replace wire-load models with physical-aware synthesis.</td>
+</tr>
+<tr>
+<td><strong>Tcl</strong><br><em>John Ousterhout (1988) · Language · Whole flow · Open source</em></td>
+<td>Scripting language used to drive almost every EDA tool.</td>
+<td>A synthesis script is a Tcl file with commands like read_verilog and report_timing.</td>
+</tr>
+<tr>
+<td><strong>Synthesis reports</strong><br><em>Tool output · Concept · Synthesis</em></td>
+<td>Text reports of timing, area, power, cell usage and constraint violations.</td>
+<td>report_qor shows WNS, TNS and the number of violating paths per clock group.</td>
+</tr>
+<tr>
+<td><strong>check_design and check_timing</strong><br><em>Synthesis/STA commands · Concept · Synthesis</em></td>
+<td>Sanity checks reporting unresolved modules, floating pins, multiple drivers, unclocked flops and unconstrained endpoints.</td>
+<td>check_timing lists 40 unconstrained outputs, revealing a missing set_output_delay before anyone trusts the timing report.</td>
+</tr>
+<tr>
+<td><strong>Synthesis hand-off files</strong><br><em>Flow practice · Concept · Synthesis</em></td>
+<td>The outputs passed downstream: gate netlist, updated SDC, updated UPF, LEC guidance (SVF/dofile), scan definition and reports.</td>
+<td>The synthesis release folder contains top.v, top.sdc, top.upf, top.svf and top.scandef for the P&amp;R team.</td>
+</tr>
+<tr>
+<td><strong>SystemVerilog front ends for Yosys (yosys-slang, Synlig)</strong><br><em>Open-source plugins (yosys-slang; Synlig by CHIPS Alliance) · Tool · Synthesis · Open source</em></td>
+<td>Plugins that give Yosys much fuller SystemVerilog parsing than its built-in Verilog reader.</td>
+<td>Loading the slang plugin lets Yosys read a design using packages, interfaces and structs without rewriting it.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="43-standard-cell-libraries-and-liberty-lib-files">4.3 Standard-Cell Libraries and Liberty (.lib) Files<a class="headerlink" href="#43-standard-cell-libraries-and-liberty-lib-files" title="Permanent link">&para;</a></h2>
+<p>A standard-cell library is the foundry's or IP vendor's catalogue of logic cells (inverters, NANDs, flops, buffers...) all with the same height so they line up in rows. Each cell comes with several 'views': a Liberty (.lib) file describing timing, power and function; a LEF file describing its physical outline; a Verilog model; and the GDS layout. Synthesis and timing tools rely on the Liberty data.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-03-standard-cell-libraries-and-liberty-lib.svg" alt="Each tool reads the view it needs; all must describe the same cell consistently." loading="lazy" width="1000" height="500">
+<figcaption><strong>The views of one standard cell.</strong> Each tool reads the view it needs; all must describe the same cell consistently.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A standard-cell library is like a LEGO catalogue: every brick has the same height, a known shape, and a data sheet saying how strong and heavy it is.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Kenji opens sky130_fd_sc_hd__tt_025C_1v80.lib and finds the entry for nand2_1. It lists its area, its function '!(A&amp;B)', input pin capacitances, and tables giving delay and output transition for combinations of input slew and output load. When his synthesis run picks nand2_4 instead, it is because the table shows it is faster at the heavy load on that net.</p>
+</div>
+<h4 id="how-it-works_2">How it works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Cells are designed at transistor level and laid out with a fixed height (track count).</li>
+<li>Characterisation simulates each cell with SPICE across slews, loads and PVT corners.</li>
+<li>Results are written as Liberty tables (NLDM, CCS or ECSM, plus LVF for variation).</li>
+<li>Synthesis and STA look up delays by interpolating these tables.</li>
+<li>Libraries come in variants: Vt flavours, track heights, and different corners.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Library/characterisation engineers create them; synthesis, P&amp;R and STA engineers use them daily.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know what NLDM tables contain (delay and transition vs input slew and output load) and why each PVT corner needs its own .lib file.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A Liberty file has a library header (units, nominal PVT, slew thresholds), lookup-table templates, then one cell group per cell with pins, functions and timing/power arcs.</li>
+<li>NLDM tables are commonly 7×7 or 8×8, indexed by input transition and output load; tools interpolate inside and extrapolate outside, losing accuracy at the edges.</li>
+<li>Every corner needs its own .lib, so a library release can contain dozens to hundreds of files across process, voltage, temperature and Vt flavours.</li>
+<li>Libraries come in threshold-voltage flavours (such as ULVT, LVT, SVT, HVT) so synthesis can trade speed for leakage path by path.</li>
+<li>LVF adds sigma tables for delay, transition and constraints; generating them needs Monte Carlo-based characterisation, which is why it is costly.</li>
+<li>Characterisation tools run SPICE on every cell, arc, slew, load and corner, so one advanced-node library release consumes very large amounts of compute.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Mixing libraries from different corners or release versions in one run, giving meaningless timing.</li>
+<li>Ignoring extrapolation warnings when slews or loads exceed table ranges; fix the transitions in the design instead.</li>
+<li>Assuming the typical (TT) library is enough; timing must close at every required sign-off corner.</li>
+</ul>
+</div>
+<h3 id="try-it-part-of-a-liberty-cell-description-simplified">Try it: Part of a Liberty cell description (simplified)<a class="headerlink" href="#try-it-part-of-a-liberty-cell-description-simplified" title="Permanent link">&para;</a></h3>
+<div class="language-javascript highlight"><pre><span></span><code><span class="nx">cell</span><span class="w"> </span><span class="p">(</span><span class="nx">NAND2_X1</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nx">area</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0.798</span><span class="p">;</span>
+<span class="w">  </span><span class="nx">pin</span><span class="w"> </span><span class="p">(</span><span class="nx">A</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">direction</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">input</span><span class="p">;</span><span class="w"> </span><span class="nx">capacitance</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="mf">0.0016</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
+<span class="w">  </span><span class="nx">pin</span><span class="w"> </span><span class="p">(</span><span class="nx">Y</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="nx">direction</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="nx">output</span><span class="p">;</span>
+<span class="w">    </span><span class="kd">function</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">"!(A &amp; B)"</span><span class="p">;</span>
+<span class="w">    </span><span class="nx">timing</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<span class="w">      </span><span class="nx">related_pin</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="s2">"A"</span><span class="p">;</span>
+<span class="w">      </span><span class="nx">cell_rise</span><span class="w"> </span><span class="p">(</span><span class="nx">delay_template_7x7</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="nx">values</span><span class="w"> </span><span class="p">(</span><span class="s2">"..."</span><span class="p">);</span><span class="w"> </span><span class="p">}</span>
+<span class="w">    </span><span class="p">}</span>
+<span class="w">  </span><span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_2">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Standard cell</strong><br><em>Foundation IP · Concept · Synthesis</em></td>
+<td>A pre-designed logic gate or flop with fixed height, designed to tile in rows.</td>
+<td>A library may offer 800-2,000 cells in several drive strengths and Vt flavours.</td>
+</tr>
+<tr>
+<td><strong>Liberty (.lib)</strong><br><em>Synopsys (open Liberty format) · File format · Synthesis</em></td>
+<td>Text format describing each cell's function, timing, power and noise at one PVT corner.</td>
+<td>Synthesis reads ss_0p72v_125c.lib for slow-corner setup analysis.</td>
+</tr>
+<tr>
+<td><strong>NLDM (Non-Linear Delay Model)</strong><br><em>Liberty timing model · Concept · Synthesis</em></td>
+<td>Lookup tables of delay and output slew indexed by input slew and output load.</td>
+<td>The tool interpolates between table entries at 15 ps slew and 4 fF load.</td>
+</tr>
+<tr>
+<td><strong>CCS and ECSM current-source models</strong><br><em>Synopsys (CCS), Cadence (ECSM) · Concept · Signoff</em></td>
+<td>More accurate models storing output current waveforms instead of simple delays.</td>
+<td>Advanced-node signoff uses CCS models for better accuracy on long wires.</td>
+</tr>
+<tr>
+<td><strong>LVF (Liberty Variation Format)</strong><br><em>Liberty Technical Advisory Board · File format · Signoff</em></td>
+<td>Liberty extension that adds statistical sigma tables per timing arc, created during library characterisation for variation-aware timing.</td>
+<td>The 3 nm library release includes LVF tables, so each cell carries its own local-variation data instead of one flat derate.</td>
+</tr>
+<tr>
+<td><strong>Library characterisation</strong><br><em>Cadence Liberate, Synopsys PrimeLib, Siemens Solido · Methodology · Synthesis · Commercial</em></td>
+<td>Running many SPICE simulations of each cell to generate Liberty data.</td>
+<td>Characterising a full library across 30 corners uses thousands of CPU-hours.</td>
+</tr>
+<tr>
+<td><strong>Track height (7.5T, 9T, 12T...)</strong><br><em>Library architecture · Concept · Physical Design</em></td>
+<td>Cell height measured in routing tracks; shorter cells are denser, taller ones faster.</td>
+<td>A mobile chip uses dense 6T cells; a high-speed block uses taller cells.</td>
+</tr>
+<tr>
+<td><strong>Special cells (tie, filler, tap, decap, endcap)</strong><br><em>Standard-cell libraries · Concept · Physical Design</em></td>
+<td>Non-logic cells for constant values, gap filling, well taps, decoupling and row ends.</td>
+<td>Decap cells are added in empty space to stabilise the supply voltage.</td>
+</tr>
+<tr>
+<td><strong>Foundation IP vendors</strong><br><em>Foundries (TSMC, GF, Samsung), Synopsys, Cadence, others · Company · Synthesis · Commercial</em></td>
+<td>Suppliers of standard-cell libraries, memory compilers and I/O libraries.</td>
+<td>A team chooses between the foundry's own library and a third-party high-performance one.</td>
+</tr>
+<tr>
+<td><strong>SKY130 / GF180 open standard-cell libraries</strong><br><em>SkyWater &amp; Google; GlobalFoundries &amp; Google · IP · Synthesis · Open source</em></td>
+<td>Freely available standard-cell libraries with Liberty, LEF, GDS and Verilog views.</td>
+<td>sky130_fd_sc_hd is the high-density library used by most open-source designs.</td>
+</tr>
+<tr>
+<td><strong>Timing arc</strong><br><em>Liberty · Concept · Synthesis</em></td>
+<td>A pin-to-pin delay or check relationship in a cell, such as A to Y propagation or D-to-CLK setup.</td>
+<td>A NAND2 has two arcs, A→Y and B→Y, each with separate rise and fall delay tables.</td>
+</tr>
+<tr>
+<td><strong>Setup and hold constraint tables</strong><br><em>Liberty · Concept · Synthesis</em></td>
+<td>Tables giving a flop's required setup and hold times as functions of data and clock transition times.</td>
+<td>With a slow 120 ps clock edge, the library says the flop needs 35 ps setup instead of 22 ps.</td>
+</tr>
+<tr>
+<td><strong>Internal and leakage power tables</strong><br><em>Liberty · Concept · Synthesis</em></td>
+<td>Liberty data giving energy per transition (internal_power) and static leakage per input state, used for power analysis.</td>
+<td>Power tools multiply each cell's internal energy by its toggle rate and add leakage from the library.</td>
+</tr>
+<tr>
+<td><strong>Compiled library (.db)</strong><br><em>Synopsys Library Compiler · File format · Synthesis</em></td>
+<td>Binary version of a Liberty file that Synopsys tools load; Cadence and open-source tools usually read the .lib text.</td>
+<td>The PDK ships both sc_ss_0p72v_125c.lib and the compiled sc_ss_0p72v_125c.db for Design Compiler.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="44-pvt-corners-modes-and-mcmm">4.4 PVT Corners, Modes and MCMM<a class="headerlink" href="#44-pvt-corners-modes-and-mcmm" title="Permanent link">&para;</a></h2>
+<p>Transistor speed changes with Process (manufacturing variation), Voltage and Temperature: the PVT corners. A chip must work at every combination it may meet, from a slow chip at low voltage and high temperature to a fast chip at high voltage and low temperature. It must also work in every operating mode (functional, test, sleep). Tools analyse many corners and modes at once: MCMM.</p>
+<p><strong>Classic slow and fast corners</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Slow corner</th>
+<th>Fast corner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Process</strong></td>
+<td>SS (slow NMOS/PMOS)</td>
+<td>FF (fast NMOS/PMOS)</td>
+</tr>
+<tr>
+<td><strong>Voltage</strong></td>
+<td>Nominal −10 %</td>
+<td>Nominal +10 %</td>
+</tr>
+<tr>
+<td><strong>Temperature</strong></td>
+<td>125 °C (or −40 °C if inverted)</td>
+<td>−40 °C (125 °C for leakage)</td>
+</tr>
+<tr>
+<td><strong>Wire RC</strong></td>
+<td>Cworst / RCworst</td>
+<td>Cbest / RCbest</td>
+</tr>
+<tr>
+<td><strong>Main check</strong></td>
+<td>Setup</td>
+<td>Hold</td>
+</tr>
+<tr>
+<td><strong>Leakage</strong></td>
+<td>Low</td>
+<td>Highest when hot</td>
+</tr>
+</tbody>
+</table>
+<p><em>Setup usually fails at the slow corner and hold at the fast one, with exceptions at advanced nodes.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Like a car that must start on a freezing morning in Finland and not overheat in a desert summer, with either a new or a worn engine.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>For an automotive chip rated from -40 °C to 150 °C, Ingrid's team checks setup at the slow-slow corner, 0.72 V, 150 °C, and hold at fast-fast, 0.88 V, -40 °C. They also check 'temperature inversion', where at advanced nodes low temperature can actually be slower. With 3 modes and 12 corners, they analyse 36 scenarios in one MCMM run.</p>
+</div>
+<h4 id="how-it-works_3">How it works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Process corners: SS, TT, FF, plus skewed SF and FS (NMOS/PMOS different).</li>
+<li>Voltage: nominal and minus/plus tolerance (e.g. 0.8 V ± 10 %).</li>
+<li>Temperature: e.g. -40 °C to 125 °C (consumer) or 150 °C (automotive).</li>
+<li>Combine with RC (wire) corners: Cworst, Cbest, RCworst, RCbest, typical.</li>
+<li>Analyse all relevant mode-corner scenarios simultaneously (MCMM).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Synthesis, P&amp;R and STA engineers; library teams; foundry and product engineers define corners.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Setup is usually worst at slow corners; hold is usually worst at fast corners, but advanced nodes add exceptions like temperature inversion.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A scenario combines one mode with one corner (process, voltage, temperature, RC); advanced SoCs analyse dozens across functional, test and low-power modes.</li>
+<li>Corner voltages are typically nominal ±5–10 % to cover regulator tolerance and IR drop; temperatures span −40 °C to 125 °C for automotive and industrial parts.</li>
+<li>Global variation is covered by corners, local variation by OCV derates or statistical models such as POCV with LVF data.</li>
+<li>Wire corners matter as much as transistor corners at advanced nodes: Cworst stresses capacitance-dominated paths, RCworst stresses long resistive wires.</li>
+<li>Temperature inversion at low voltage means the worst setup corner can be cold, so both hot and cold slow corners are checked.</li>
+<li>Adding corners progressively—few during early optimisation, the full list at sign-off—keeps run times practical.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Closing setup only at the slow-hot corner and hold only at the fast corner, missing temperature-inversion and RC-corner exceptions.</li>
+<li>Forgetting test mode as its own mode; scan shift and capture use different clocks and paths needing their own constraints.</li>
+<li>Loading every scenario from the start of optimisation, slowing runs without improving results.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_3">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_3" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PVT (Process, Voltage, Temperature)</strong><br><em>Industry term · Concept · Signoff</em></td>
+<td>The three variables that change transistor speed and must be covered by analysis.</td>
+<td>A corner named ssg_0p72v_m40c means slow process, 0.72 V, -40 °C.</td>
+</tr>
+<tr>
+<td><strong>Process corners (SS, TT, FF, SF, FS)</strong><br><em>Foundry models · Concept · Signoff</em></td>
+<td>Statistical extremes of NMOS and PMOS speed from manufacturing variation.</td>
+<td>SF means slow NMOS and fast PMOS, which stresses some flop designs.</td>
+</tr>
+<tr>
+<td><strong>RC corners (Cworst, RCworst, Cbest...)</strong><br><em>Foundry extraction decks · Concept · Signoff</em></td>
+<td>Variation of wire resistance and capacitance due to metal thickness and width variation.</td>
+<td>Long wires are slowest at RCworst; short local paths at Cworst.</td>
+</tr>
+<tr>
+<td><strong>Operating modes</strong><br><em>Design practice · Concept · Synthesis</em></td>
+<td>Different functional configurations with different clocks and constraints.</td>
+<td>Mission mode, scan shift, scan capture and low-power sleep each have their own SDC.</td>
+</tr>
+<tr>
+<td><strong>MCMM (Multi-Corner Multi-Mode)</strong><br><em>EDA technique · Methodology · Physical Design</em></td>
+<td>Optimising and analysing all relevant mode/corner scenarios at the same time.</td>
+<td>P&amp;R fixes setup in 4 scenarios and hold in 6 scenarios concurrently.</td>
+</tr>
+<tr>
+<td><strong>Temperature inversion</strong><br><em>Device physics at low voltage / advanced nodes · Concept · Signoff</em></td>
+<td>At low supply voltages, transistors can get slower when colder, flipping the usual worst case.</td>
+<td>A 5 nm chip's worst setup corner is -40 °C, not 125 °C.</td>
+</tr>
+<tr>
+<td><strong>Voltage drop margin</strong><br><em>Signoff practice · Concept · Signoff</em></td>
+<td>Extra voltage reduction assumed in timing to cover IR drop on the power grid.</td>
+<td>The team analyses timing at 0.8 V minus 5 % to cover expected IR drop.</td>
+</tr>
+<tr>
+<td><strong>Aging corners</strong><br><em>Reliability practice · Concept · Signoff</em></td>
+<td>Libraries modelling transistors slowed by years of use (BTI, HCI).</td>
+<td>An automotive chip is timed with end-of-life 10-year aged libraries.</td>
+</tr>
+<tr>
+<td><strong>Signoff corner list</strong><br><em>Foundry and company methodology · Concept · Signoff</em></td>
+<td>The agreed set of scenarios that must pass before tapeout.</td>
+<td>The foundry's signoff guide mandates 8 corners for N5 consumer designs.</td>
+</tr>
+<tr>
+<td><strong>Scenario (mode + corner)</strong><br><em>MCMM term · Concept · Synthesis</em></td>
+<td>One combination of an operating mode and a PVT/RC corner that the tools analyse and optimise.</td>
+<td>'func_ss_0p72v_125c_rcworst' and 'scan_ff_0p88v_m40c_cbest' are two of 24 scenarios in the flow.</td>
+</tr>
+<tr>
+<td><strong>Global vs local variation</strong><br><em>Variation modelling · Concept · Signoff</em></td>
+<td>Global variation shifts a whole chip and is covered by corners; local variation differs transistor to transistor and needs derates or statistics.</td>
+<td>Corners handle a whole wafer being slow; OCV or POCV handles two neighbouring flops behaving differently.</td>
+</tr>
+<tr>
+<td><strong>Dominant scenario pruning</strong><br><em>EDA technique · Methodology · Physical Design</em></td>
+<td>Identifying the few scenarios that cause most violations and optimising those, while checking all scenarios at sign-off.</td>
+<td>Analysis shows 6 of 24 scenarios capture every violation, so placement optimises only those six.</td>
+</tr>
+<tr>
+<td><strong>Corner naming</strong><br><em>Foundry and company convention · Concept · Signoff</em></td>
+<td>Corner names encode process, voltage, temperature and RC, so files and reports are unambiguous.</td>
+<td>'ss_0p72v_125c' reads as slow-slow process, 0.72 V, 125 °C; 'ff_0p88v_m40c' is fast-fast at −40 °C.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="45-timing-constraints-with-sdc">4.5 Timing Constraints with SDC<a class="headerlink" href="#45-timing-constraints-with-sdc" title="Permanent link">&para;</a></h2>
+<p>SDC (Synopsys Design Constraints) is the Tcl-based language you use to tell tools your timing goals: the clocks and their frequencies, when inputs arrive and outputs are needed, and which paths are exceptions. Synthesis, place-and-route and STA all read the same SDC. Wrong constraints are a major cause of chip failures, because tools optimise exactly what you tell them.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-05-timing-constraints-with-sdc.svg" alt="Clocks first, exceptions last, then check that nothing is left unconstrained." loading="lazy" width="1000" height="341">
+<figcaption><strong>Writing an SDC file, in order.</strong> Clocks first, exceptions last, then check that nothing is left unconstrained.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>SDC is the timetable for a railway: it says when each train leaves, when it must arrive, and which lines are not used for passenger trains at all.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Marco writes SDC for a 500 MHz block: create_clock -period 2.0 on clk, input delays of 0.6 ns for signals coming from another block, output delay of 0.8 ns, a false path on a static configuration register, and a 2-cycle multicycle path on a slow divider. When a colleague forgot to declare a generated clock from a divider, half the design was unconstrained and STA showed false 'clean' results.</p>
+</div>
+<h4 id="how-it-works_4">How it works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Define clocks: create_clock and create_generated_clock with periods and sources.</li>
+<li>Add clock uncertainty (jitter + margin), latency and transition targets.</li>
+<li>Constrain I/O: set_input_delay and set_output_delay relative to clocks.</li>
+<li>Declare exceptions: set_false_path, set_multicycle_path, set_max_delay, clock groups.</li>
+<li>Add design rules (max transition, capacitance, fanout) and check for unconstrained paths.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>RTL designers write initial constraints; synthesis, PD and STA engineers refine and sign them off.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Every exception (false path, multicycle) must be justified and reviewed: a wrong false path hides real failures.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Setup check: data must arrive before the capture edge minus setup time and uncertainty; hold check: data must not change until hold time after the edge that launched it.</li>
+<li>I/O delays describe the outside world: with a 2 ns period and 0.6 ns input delay, the internal input path gets about 1.4 ns minus setup and uncertainty.</li>
+<li>Before CTS clocks are ideal and uncertainty covers expected skew; after CTS set_propagated_clock uses real tree delays and uncertainty is reduced to jitter and margin.</li>
+<li>A setup multicycle of N normally needs a hold multicycle of N−1 to move the hold check back to the launch edge.</li>
+<li>set_clock_groups -asynchronous stops timing between unrelated clocks, so those crossings must be made safe by CDC design and checked with CDC tools.</li>
+<li>Projects keep separate SDC sets per mode, such as functional, scan shift and scan capture, all checked by constraint-verification tools.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Using false paths to hide failing paths instead of fixing them; a wrong exception becomes a silicon bug.</li>
+<li>Adding a setup multicycle without the matching hold multicycle, creating huge false hold violations.</li>
+<li>Missing generated clocks on dividers or muxes, leaving derived-clock paths untimed or wrongly timed.</li>
+<li>Leaving inputs or outputs unconstrained; check_timing reports them and they will not be optimised.</li>
+</ul>
+</div>
+<h3 id="try-it-a-fuller-sdc-example">Try it: A fuller SDC example<a class="headerlink" href="#try-it-a-fuller-sdc-example" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># Clocks</span>
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>clk<span class="w">     </span><span class="o">-</span>period<span class="w"> </span><span class="mf">2.0</span><span class="w">    </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>clk<span class="k">]</span>
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>usb_clk<span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mf">16.667</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>usb_clk<span class="k">]</span>
+<span class="nv">create_generated_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>clk_div2<span class="w"> </span><span class="o">-</span>source<span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>clk<span class="k">]</span><span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-divide_by</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>u_div<span class="o">/</span>q_reg<span class="o">/</span>Q<span class="k">]</span>
+<span class="nv">set_clock_uncertainty</span><span class="w"> </span><span class="o">-</span>setup<span class="w"> </span><span class="mf">0.10</span><span class="w"> </span><span class="k">[</span><span class="nv">get_clocks</span><span class="w"> </span>clk<span class="k">]</span>
+<span class="nv">set_clock_uncertainty</span><span class="w"> </span><span class="o">-</span>hold<span class="w">  </span><span class="mf">0.03</span><span class="w"> </span><span class="k">[</span><span class="nv">get_clocks</span><span class="w"> </span>clk<span class="k">]</span>
+
+<span class="c"># I/O budget and environment</span>
+<span class="nv">set_input_delay</span><span class="w">  </span><span class="mf">0.6</span><span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>clk<span class="w"> </span><span class="k">[</span><span class="nv">remove_from_collection</span><span class="w"> </span><span class="k">[</span><span class="nv">all_inputs</span><span class="k">]</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="nv">clk</span><span class="w"> </span>usb_clk<span class="k">}]]</span>
+<span class="nv">set_output_delay</span><span class="w"> </span><span class="mf">0.8</span><span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>clk<span class="w"> </span><span class="k">[</span><span class="nv">all_outputs</span><span class="k">]</span>
+<span class="nv">set_driving_cell</span><span class="w"> </span><span class="o">-</span>lib_cell<span class="w"> </span>BUF_X4<span class="w"> </span><span class="k">[</span><span class="nv">all_inputs</span><span class="k">]</span>
+<span class="nv">set_load</span><span class="w"> </span><span class="mf">0.02</span><span class="w"> </span><span class="k">[</span><span class="nv">all_outputs</span><span class="k">]</span>
+
+<span class="c"># Mode selection and exceptions (review each one!)</span>
+<span class="nv">set_case_analysis</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>scan_mode<span class="k">]</span>
+<span class="nv">set_false_path</span><span class="w"> </span><span class="o">-</span>from<span class="w"> </span><span class="k">[</span><span class="nv">get_cells</span><span class="w"> </span>cfg_reg<span class="o">*</span><span class="k">]</span>
+<span class="nv">set_multicycle_path</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span>setup<span class="w"> </span><span class="o">-</span>to<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>u_mac<span class="o">/</span>acc_reg<span class="o">*/</span>D<span class="k">]</span>
+<span class="nv">set_multicycle_path</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span>hold<span class="w">  </span><span class="o">-</span>to<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>u_mac<span class="o">/</span>acc_reg<span class="o">*/</span>D<span class="k">]</span>
+<span class="nv">set_clock_groups</span><span class="w"> </span><span class="o">-</span>asynchronous<span class="w"> </span><span class="o">-</span>group<span class="w"> </span><span class="k">{</span><span class="nv">clk</span><span class="w"> </span>clk_div2<span class="k">}</span><span class="w"> </span><span class="o">-</span>group<span class="w"> </span>usb_clk
+
+<span class="c"># Design rules</span>
+<span class="nv">set_max_transition</span><span class="w"> </span><span class="mf">0.15</span><span class="w"> </span><span class="k">[</span><span class="nv">current_design</span><span class="k">]</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_4">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_4" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SDC (Synopsys Design Constraints)</strong><br><em>Synopsys (openly licensed format) · File format · Synthesis</em></td>
+<td>Tcl-based format describing clocks, I/O timing and exceptions, read by nearly all tools.</td>
+<td>The same top.sdc file is used by Genus, Innovus and Tempus.</td>
+</tr>
+<tr>
+<td><strong>create_clock / create_generated_clock</strong><br><em>SDC commands · Concept · Synthesis</em></td>
+<td>Define primary clocks and clocks derived from them (dividers, muxes).</td>
+<td>A divide-by-2 clock is declared as a generated clock with -divide_by 2.</td>
+</tr>
+<tr>
+<td><strong>set_input_delay / set_output_delay</strong><br><em>SDC commands · Concept · Synthesis</em></td>
+<td>Tell tools how much of the clock period is used outside the block on I/O paths.</td>
+<td>Input delay 0.6 ns at 2 ns period leaves 1.4 ns for internal logic.</td>
+</tr>
+<tr>
+<td><strong>False path</strong><br><em>SDC exception · Concept · Synthesis</em></td>
+<td>A path that exists structurally but never needs to meet timing in real operation.</td>
+<td>A test-mode-only mux path is set as false in functional mode.</td>
+</tr>
+<tr>
+<td><strong>Multicycle path</strong><br><em>SDC exception · Concept · Synthesis</em></td>
+<td>A path allowed more than one clock cycle because data is only sampled every N cycles.</td>
+<td>A divider that produces results every 4 cycles gets a 4-cycle setup multicycle.</td>
+</tr>
+<tr>
+<td><strong>Clock groups (asynchronous / exclusive)</strong><br><em>SDC command set_clock_groups · Concept · Synthesis</em></td>
+<td>Tells tools which clocks are unrelated or never active together, so their crossings are not timed.</td>
+<td>CPU clock and USB clock are declared asynchronous; CDC tools check those crossings instead.</td>
+</tr>
+<tr>
+<td><strong>Clock uncertainty</strong><br><em>SDC · Concept · Synthesis</em></td>
+<td>Margin subtracted from the period to cover jitter, skew estimates and safety.</td>
+<td>Pre-CTS uncertainty is larger because the clock tree does not exist yet.</td>
+</tr>
+<tr>
+<td><strong>Design rule constraints (max_transition, max_capacitance, max_fanout)</strong><br><em>SDC / Liberty · Concept · Synthesis</em></td>
+<td>Electrical limits that keep signals sharp and cells within characterised ranges.</td>
+<td>A net with 300 ps transition violates a 150 ps limit and gets buffered.</td>
+</tr>
+<tr>
+<td><strong>Constraint verification tools</strong><br><em>Synopsys Timing Constraints Manager, Siemens (Excellicon), Real Intent, others · Tool · Synthesis · Commercial</em></td>
+<td>Tools that check, generate and promote SDC to catch missing or wrong constraints.</td>
+<td>A checker reports 120 unclocked registers before synthesis starts.</td>
+</tr>
+<tr>
+<td><strong>Unconstrained path</strong><br><em>STA term · Concept · Signoff</em></td>
+<td>A path with no timing requirement because constraints are missing; it will not be optimised or checked.</td>
+<td>check_timing warns that 2,000 endpoints have no clock.</td>
+</tr>
+<tr>
+<td><strong>set_case_analysis</strong><br><em>SDC command · Concept · Synthesis</em></td>
+<td>Fixes a pin or port to a constant for timing analysis, selecting one mode and removing irrelevant paths.</td>
+<td>set_case_analysis 0 [get_ports scan_mode] times only functional paths through the scan muxes.</td>
+</tr>
+<tr>
+<td><strong>Environment constraints (set_driving_cell, set_load)</strong><br><em>SDC commands · Concept · Synthesis</em></td>
+<td>Describe what drives each input and what load each output sees, so boundary transitions and delays are realistic.</td>
+<td>Inputs are driven by a BUF_X4 and outputs see 20 fF, matching the neighbouring block's real cells.</td>
+</tr>
+<tr>
+<td><strong>Ideal vs propagated clocks</strong><br><em>SDC (set_propagated_clock, set_clock_latency) · Concept · Synthesis</em></td>
+<td>Before clock-tree synthesis clocks are ideal with estimated latency; afterwards tools use real propagated clock-tree delays.</td>
+<td>Synthesis assumes 0.4 ns ideal latency; after CTS, set_propagated_clock replaces it with each flop's actual arrival.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="46-static-timing-analysis-sta-fundamentals">4.6 Static Timing Analysis (STA) Fundamentals<a class="headerlink" href="#46-static-timing-analysis-sta-fundamentals" title="Permanent link">&para;</a></h2>
+<p>Static timing analysis checks every timing path in the design mathematically, without running test vectors. It adds up cell and wire delays along each path from a launching flop to a capturing flop and compares the arrival time with the required time set by the clock. Because it checks all paths exhaustively in minutes to hours, STA is the standard way to sign off timing.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-06-static-timing-analysis-sta-fundamentals.svg" alt="Slack is what is left after the data path, clock latencies, setup time and uncertainty are counted." loading="lazy" width="1000" height="389">
+<figcaption><strong>Anatomy of one setup check (2 ns clock).</strong> Slack is what is left after the data path, clock latencies, setup time and uncertainty are counted.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>STA is like checking every possible route on a map against a timetable, instead of sending a car down each road to see if it arrives in time.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Sana's STA report shows path: clock launch 0 ps, clock latency 220 ps, flop clk-to-Q 45 ps, 14 cells and wires 1,610 ps = arrival 1,875 ps. Required: next edge 2,000 ps + capture latency 205 ps - setup 30 ps - uncertainty 60 ps = 2,115 ps. Slack = +240 ps: passes. A different path with heavy crosstalk shows -12 ps and needs fixing.</p>
+</div>
+<h4 id="how-it-works_5">How it works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Break the design into timing paths: input-to-reg, reg-to-reg, reg-to-output, input-to-output.</li>
+<li>Compute arrival times by adding clock latency, cell delays and wire delays along each path.</li>
+<li>Compute required times from the capture clock edge, setup/hold and uncertainty.</li>
+<li>Slack = required - arrival (setup) or arrival - required (hold); report WNS and TNS.</li>
+<li>Account for variation (OCV/AOCV/POCV), crosstalk and clock reconvergence pessimism (CRPR).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>STA engineers, synthesis and PD engineers, and RTL designers fixing critical paths.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know WNS (worst negative slack), TNS (total negative slack) and how to read a timing report line by line; it is the most common PD interview question.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>STA builds a timing graph of pins and arcs, propagates arrival times forwards and required times backwards, then reports the worst paths per endpoint and path group.</li>
+<li>Setup uses late (max) delays on the data path and early (min) on the capture clock; hold does the opposite, which is why OCV derates come in early and late pairs.</li>
+<li>Reports list each cell and net increment with transition and capacitance; reading them line by line shows whether logic depth, long wires or clock skew dominate.</li>
+<li>Hold violations do not depend on clock frequency, so they break chips at any speed; setup failures can be avoided in the lab by slowing the clock.</li>
+<li>Graph-based analysis takes the worst slew at each pin and is pessimistic; path-based analysis re-times critical paths with their real slews to recover margin.</li>
+<li>Sign-off STA adds crosstalk, variation and IR-drop effects on top of these fundamentals, covered in the signoff chapter.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking hold violations can be fixed by lowering the frequency; only changing delays fixes hold.</li>
+<li>Watching only WNS; many small failures (high TNS, many failing endpoints) can be harder to close than one bad path.</li>
+<li>Treating synthesis-stage timing as final; without real clock trees and parasitics the numbers are estimates.</li>
+</ul>
+</div>
+<h3 id="try-it-basic-opensta-session-with-a-detailed-path-report">Try it: Basic OpenSTA session with a detailed path report<a class="headerlink" href="#try-it-basic-opensta-session-with-a-detailed-path-report" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">read_liberty</span><span class="w"> </span>sky130_fd_sc_hd__tt_025C_1v80.lib
+<span class="nv">read_verilog</span><span class="w"> </span>counter_netlist.v
+<span class="nv">link_design</span><span class="w"> </span>counter
+<span class="nv">read_sdc</span><span class="w"> </span>counter.sdc
+<span class="nv">report_checks</span><span class="w"> </span><span class="o">-</span>path_delay<span class="w"> </span>max<span class="w"> </span><span class="o">-</span>fields<span class="w"> </span><span class="k">{</span><span class="nv">slew</span><span class="w"> </span>cap<span class="w"> </span>input_pins<span class="k">}</span><span class="w"> </span><span class="o">-</span>digits<span class="w"> </span><span class="mi">3</span>
+<span class="nv">report_checks</span><span class="w"> </span><span class="o">-</span>path_delay<span class="w"> </span>min
+<span class="nv">report_tns</span>
+<span class="nv">report_wns</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_5">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Static timing analysis (STA)</strong><br><em>EDA technique · Methodology · Signoff</em></td>
+<td>Exhaustive vector-free check of all timing paths against constraints.</td>
+<td>STA on a 1-billion-instance design checks hundreds of millions of paths.</td>
+</tr>
+<tr>
+<td><strong>Timing path types</strong><br><em>STA term · Concept · Signoff</em></td>
+<td>Input-to-register, register-to-register, register-to-output and input-to-output paths.</td>
+<td>A reg-to-reg path starts at a flop's clock pin and ends at another flop's D pin.</td>
+</tr>
+<tr>
+<td><strong>WNS and TNS</strong><br><em>STA metrics · Concept · Signoff</em></td>
+<td>Worst negative slack (single worst path) and total negative slack (sum over failing endpoints).</td>
+<td>WNS -30 ps, TNS -1.2 ns means many paths fail slightly.</td>
+</tr>
+<tr>
+<td><strong>OCV (On-Chip Variation)</strong><br><em>STA technique · Concept · Signoff</em></td>
+<td>Applying derates so launch and capture paths are pessimistically different, modelling variation across the die.</td>
+<td>A 5 % late derate on data paths and 5 % early on clock capture paths.</td>
+</tr>
+<tr>
+<td><strong>AOCV / POCV</strong><br><em>Advanced OCV methods · Concept · Signoff</em></td>
+<td>Advanced variation models: depth/distance-based derates (AOCV) or statistical sigma per cell (POCV).</td>
+<td>POCV with LVF data reduces over-pessimism compared with flat derates.</td>
+</tr>
+<tr>
+<td><strong>CRPR (Clock Reconvergence Pessimism Removal)</strong><br><em>STA technique · Concept · Signoff</em></td>
+<td>Removes artificial pessimism when launch and capture clocks share part of the clock tree.</td>
+<td>CRPR credits back 18 ps on a path whose clocks split late in the tree.</td>
+</tr>
+<tr>
+<td><strong>Path-based vs graph-based analysis</strong><br><em>STA technique · Concept · Signoff</em></td>
+<td>Graph-based is fast but pessimistic; path-based recalculates individual paths more accurately.</td>
+<td>PBA recovers 15 ps on the top 1,000 failing paths at signoff.</td>
+</tr>
+<tr>
+<td><strong>OpenSTA</strong><br><em>Parallax Software (James Cherry); used in OpenROAD · Tool · Signoff · Open source</em></td>
+<td>Open-source gate-level static timing analyser used in open-source flows.</td>
+<td>LibreLane runs OpenSTA after routing to report final slack.</td>
+</tr>
+<tr>
+<td><strong>Recovery and removal checks</strong><br><em>STA term · Concept · Signoff</em></td>
+<td>Timing checks for asynchronous reset de-assertion, similar to setup and hold.</td>
+<td>A recovery violation shows reset releasing too close to the clock edge.</td>
+</tr>
+<tr>
+<td><strong>Timing ECO</strong><br><em>STA/PD practice · Methodology · Signoff</em></td>
+<td>Small targeted fixes (sizing, buffering, Vt swaps) to remove remaining violations.</td>
+<td>PrimeTime generates an ECO list swapping 300 cells to fix hold violations.</td>
+</tr>
+<tr>
+<td><strong>Setup and hold slack equations</strong><br><em>STA fundamentals · Concept · Signoff</em></td>
+<td>Setup slack = required − arrival (required = period + capture latency − setup − uncertainty); hold slack = arrival − capture latency − hold.</td>
+<td>Arrival 1.57 ns against required 2.16 ns gives +0.59 ns setup slack: the path passes.</td>
+</tr>
+<tr>
+<td><strong>Timing report anatomy</strong><br><em>STA practice · Concept · Signoff</em></td>
+<td>A path report lists start and end points, each cell and net increment, cumulative arrival, the clock's required time and the slack.</td>
+<td>Reading the report shows 0.45 ns spent on one long net, so the fix is buffering, not faster cells.</td>
+</tr>
+<tr>
+<td><strong>Latch time borrowing</strong><br><em>STA technique · Concept · Signoff</em></td>
+<td>With transparent latches, a late signal may borrow time from the next stage while the latch is open.</td>
+<td>A path arrives 150 ps after the latch opens; STA borrows 150 ps and charges it to the following path.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="47-power-aware-synthesis-clock-gating-multi-vt-and-upf">4.7 Power-Aware Synthesis: Clock Gating, Multi-Vt and UPF<a class="headerlink" href="#47-power-aware-synthesis-clock-gating-multi-vt-and-upf" title="Permanent link">&para;</a></h2>
+<p>Synthesis does not only chase timing; it also cuts power. It automatically inserts clock gates so idle registers stop switching, uses slower low-leakage cells wherever there is spare time, and reads the UPF power-intent file to add the special cells that switchable power domains need.</p>
+<p><strong>Three ways synthesis saves power</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Clock gating</th>
+<th>Multi-Vt swap</th>
+<th>Power gating (UPF)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Attacks</strong></td>
+<td>Dynamic power</td>
+<td>Leakage power</td>
+<td>Leakage when off</td>
+</tr>
+<tr>
+<td><strong>Inserted by</strong></td>
+<td>Synthesis, automatically</td>
+<td>Synthesis and P&amp;R optimisation</td>
+<td>UPF-driven synthesis + P&amp;R</td>
+</tr>
+<tr>
+<td><strong>Needs</strong></td>
+<td>Enable conditions</td>
+<td>Timing slack</td>
+<td>Power intent + control logic</td>
+</tr>
+<tr>
+<td><strong>Costs</strong></td>
+<td>ICG area, skew</td>
+<td>Slower cells</td>
+<td>Switches, isolation, wake time</td>
+</tr>
+<tr>
+<td><strong>Verified by</strong></td>
+<td>LEC, DFT checks</td>
+<td>STA</td>
+<td>Power-aware sim, LP checks</td>
+</tr>
+</tbody>
+</table>
+<p><em>Each technique attacks a different part of the power equation and has its own cost.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Like a smart building that switches off lights in empty rooms (clock gating), fits energy-saving bulbs where brightness does not matter (high-Vt cells) and installs breakers between circuits that can be turned off (isolation cells).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Leila synthesises a sensor-hub block for a smartwatch. With clock gating and leakage recovery enabled, the power report, using activity from a real workload, shows clearly lower dynamic and leakage power at the same 200 MHz target. The UPF adds isolation cells on every output of the switchable DSP domain, and power-aware equivalence checking confirms nothing else changed.</p>
+</div>
+<h4 id="how-it-works_6">How it works<a class="headerlink" href="#how-it-works_6" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Provide realistic switching activity (SAIF or FSDB from simulation) and the UPF power intent.</li>
+<li>Set a clock-gating style: ICG cell type, minimum register width, test-enable connection.</li>
+<li>Synthesise for timing, then let leakage recovery swap non-critical cells to high-Vt.</li>
+<li>Check the inserted isolation, level shifters and retention cells against the power intent.</li>
+<li>Compare power reports and verify with power-aware equivalence and simulation.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Synthesis and low-power implementation engineers at mobile, IoT, automotive and data-centre chip companies, working with power architects.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember the split: clock gating attacks dynamic power, while multi-Vt and power gating attack leakage.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>An ICG is a latch plus an AND gate: the latch holds the enable while the clock is high, so the gated clock cannot glitch.</li>
+<li>Clock networks often consume a large share of a block's dynamic power, which is why gating near the clock root saves more than gating individual registers.</li>
+<li>Leakage recovery normally runs after timing is met, swapping cells on positive-slack paths to high-Vt so leakage falls without losing frequency.</li>
+<li>Synthesis reads UPF to insert isolation cells, level shifters and retention flops, then writes an updated UPF; static low-power checkers verify the result before P&amp;R.</li>
+<li>Power optimisation needs realistic activity from representative workloads; default toggle rates can misrank which blocks and paths matter.</li>
+<li>Glitches from unequal path delays can be a significant share of dynamic power in deep arithmetic; pipelining and path balancing reduce them.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Using default toggle rates instead of real activity, which misleads both optimisation and power reports.</li>
+<li>Gating tiny register groups whose ICG overhead exceeds the savings; set a sensible minimum bit-width.</li>
+<li>Leaving the ICG test-enable unconnected, causing large drops in scan coverage.</li>
+</ul>
+</div>
+<h3 id="try-it-illustrative-design-compiler-style-power-settings-tcl">Try it: Illustrative Design Compiler-style power settings (Tcl)<a class="headerlink" href="#try-it-illustrative-design-compiler-style-power-settings-tcl" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">set_clock_gating_style</span><span class="w"> </span><span class="o">-</span>sequential_cell<span class="w"> </span>latch<span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-positive_edge_logic</span><span class="w"> </span><span class="k">{</span><span class="nv">integrated</span><span class="k">}</span><span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-control_point</span><span class="w"> </span>before<span class="w"> </span><span class="o">-</span>control_signal<span class="w"> </span>scan_enable<span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-minimum_bitwidth</span><span class="w"> </span><span class="mi">4</span>
+<span class="nv">load_upf</span><span class="w"> </span>sensor_hub.upf
+<span class="nv">read_saif</span><span class="w"> </span><span class="o">-</span>input<span class="w"> </span>workload.saif<span class="w"> </span><span class="o">-</span>instance_name<span class="w"> </span>tb<span class="o">/</span>u_dut
+<span class="nv">compile_ultra</span><span class="w"> </span><span class="o">-</span>gate_clock
+<span class="nv">report_clock_gating</span>
+<span class="nv">report_power</span><span class="w"> </span><span class="o">-</span>hierarchy
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_6">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_6" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Automatic clock-gating insertion</strong><br><em>Design Compiler, Fusion Compiler, Genus and other synthesis tools · Methodology · Synthesis</em></td>
+<td>Synthesis replaces a register bank's enable feedback multiplexers with one integrated clock-gating cell that stops its clock when idle.</td>
+<td>A 32-bit register loaded only when 'valid' is high gets one ICG, so its 32 flops stop toggling whenever valid is low.</td>
+</tr>
+<tr>
+<td><strong>ICG (integrated clock-gating) cell</strong><br><em>Standard-cell libraries · Concept · Synthesis</em></td>
+<td>A library cell combining a latch and an AND gate so the gated clock never glitches when the enable changes.</td>
+<td>The library's ICG_X2 cell is chosen for gating groups of up to 64 flops.</td>
+</tr>
+<tr>
+<td><strong>ICG test enable</strong><br><em>DFT/low-power practice · Concept · DFT</em></td>
+<td>An extra ICG input tied to scan enable or test mode so every gated flop still gets clocks during scan shift.</td>
+<td>Connecting test_en to scan_enable restores 3 % of lost scan coverage in a heavily gated block.</td>
+</tr>
+<tr>
+<td><strong>Clock-gating minimum bit-width</strong><br><em>Synthesis option · Concept · Synthesis</em></td>
+<td>A threshold so only register groups wide enough to save more power than the ICG costs get gated.</td>
+<td>With a minimum width of 4, a lone 1-bit flag register stays ungated while 8-bit counters are gated.</td>
+</tr>
+<tr>
+<td><strong>Coarse-grained clock gating</strong><br><em>Design and synthesis practice · Concept · Synthesis</em></td>
+<td>Gating the clock for a whole block or subsystem near the clock root, saving clock-tree power as well as flop power.</td>
+<td>When the video decoder is idle, one gate near the root stops clocks to 200,000 flops and their buffers.</td>
+</tr>
+<tr>
+<td><strong>Multi-Vt leakage recovery</strong><br><em>Synthesis and P&amp;R optimisation · Methodology · Synthesis</em></td>
+<td>After timing is met, swapping cells on paths with spare slack from low-Vt to high-Vt to cut leakage.</td>
+<td>Leakage recovery converts most cells to high-Vt, keeping low-Vt only on the 5 % of near-critical paths.</td>
+</tr>
+<tr>
+<td><strong>UPF-driven cell insertion</strong><br><em>IEEE 1801 UPF in synthesis tools · Methodology · Synthesis</em></td>
+<td>Synthesis reads UPF and inserts isolation cells, level shifters and retention flops, then writes an updated UPF.</td>
+<td>A domain crossing from 0.6 V to 0.9 V automatically gets a level shifter, and its outputs get isolation cells.</td>
+</tr>
+<tr>
+<td><strong>Operand isolation</strong><br><em>Low-power synthesis technique · Concept · Synthesis</em></td>
+<td>Holding the inputs of an arithmetic unit steady when its result is not used, so it does not burn switching power.</td>
+<td>AND gates freeze multiplier inputs whenever the result multiplexer selects the bypass path.</td>
+</tr>
+<tr>
+<td><strong>Activity-driven power optimisation</strong><br><em>SAIF/FSDB activity files · Methodology · Synthesis</em></td>
+<td>Using real toggle rates from simulation so the tool optimises the nets and blocks that actually consume power.</td>
+<td>SAIF from a video-playback test shows the scaler toggles most, so the tool focuses gating and sizing there.</td>
+</tr>
+<tr>
+<td><strong>Power correlation across the flow</strong><br><em>Low-power methodology · Concept · Synthesis</em></td>
+<td>Tracking how power estimates from RTL, synthesis and sign-off differ, so early numbers can be trusted for decisions.</td>
+<td>Synthesis reports 410 mW and sign-off 445 mW; the team adds a 10 % margin to all synthesis-stage estimates.</td>
+</tr>
+<tr>
+<td><strong>Power report breakdown</strong><br><em>Synthesis/power tools · Concept · Synthesis</em></td>
+<td>Reports split power into internal, switching and leakage parts per hierarchy, clock network and cell type.</td>
+<td>report_power shows clock network power is 38 % of the block total, pointing to more clock gating.</td>
+</tr>
+<tr>
+<td><strong>Memory low-power modes</strong><br><em>Memory compiler options · Concept · Synthesis</em></td>
+<td>SRAM pins for light sleep, deep sleep and shutdown that cut leakage when the memory is idle.</td>
+<td>The controller asserts light-sleep on idle cache banks, reducing their leakage while keeping contents.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="48-dft-concepts-faults-scan-and-controllability">4.8 DFT Concepts: Faults, Scan and Controllability<a class="headerlink" href="#48-dft-concepts-faults-scan-and-controllability" title="Permanent link">&para;</a></h2>
+<p>Manufacturing is imperfect: dust, defects and variation mean some chips come out broken. Design for Test (DFT) adds extra logic so every manufactured chip can be tested quickly. The core idea is scan: in test mode, all flip-flops are linked into long shift registers so a tester can load any state, run one clock, and read the results back, making internal logic controllable and observable.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-08-dft-concepts-faults-scan-and.svg" alt="Shift is slow and long; capture is one or two fast functional clocks." loading="lazy" width="1000" height="341">
+<figcaption><strong>One scan test pattern.</strong> Shift is slow and long; capture is one or two fast functional clocks.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Scan is like giving a car mechanic a diagnostic port: instead of guessing what is wrong from outside, they can plug in and read every sensor directly.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A microcontroller has 200,000 flops. Without DFT, testing internal logic from 64 pins would be practically impossible. DFT engineer Hiro replaces every flop with a scan flop and stitches them into 400 chains of 500 flops. On the tester, patterns shift in, the chip captures one functional cycle, and results shift out. The test takes 0.8 seconds per chip and detects 99.2 % of stuck-at faults.</p>
+</div>
+<h4 id="how-it-works_7">How it works<a class="headerlink" href="#how-it-works_7" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Replace normal flops with scan flops (an extra multiplexer selects scan input).</li>
+<li>Stitch scan flops into chains between scan-in and scan-out pins.</li>
+<li>In shift mode, load test values; in capture mode, run functional clock(s).</li>
+<li>Shift out captured values while loading the next pattern.</li>
+<li>The tester compares outputs with expected values computed by ATPG.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>DFT engineers (a distinct, in-demand role), test engineers and product engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Explain controllability (can I set this node?) and observability (can I see this node?): they are the foundation of DFT interviews.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Scan turns a sequential circuit into combinational test problems: ATPG only has to solve the logic between flops, because every flop can be loaded and read directly.</li>
+<li>Shift cycles per pattern equal the longest chain, so test time is roughly patterns × chain length × shift period, which is why short, balanced chains matter.</li>
+<li>Stuck-at coverage targets around 99 % are common; transition-fault tests add delay-defect detection, and cell-aware tests catch defects inside cells that classic models miss.</li>
+<li>Scan rules need test-mode control of clocks and asynchronous resets; latches, gated clocks and combinational loops need special handling.</li>
+<li>Launch-on-capture uses two functional pulses after shifting; launch-on-shift launches on the last shift edge and needs an at-speed scan enable but often gives higher coverage.</li>
+<li>DFT adds area (typically a few percent), extra timing modes and high switching power during shift, so test power and scan-mode timing are signed off too.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Leaving internally generated clocks or resets uncontrollable in test mode, making whole blocks untestable.</li>
+<li>Shifting at full speed with every flop toggling, causing IR-drop failures on the tester.</li>
+<li>Confusing DFT with functional verification: DFT finds manufacturing defects, not design bugs.</li>
+</ul>
+</div>
+<h3 id="try-it-what-scan-insertion-does-to-a-flip-flop">Try it: What scan insertion does to a flip-flop<a class="headerlink" href="#try-it-what-scan-insertion-does-to-a-flip-flop" title="Permanent link">&para;</a></h3>
+<div class="language-verilog highlight"><pre><span></span><code><span class="c1">// Mux-D scan flip-flop</span>
+<span class="k">module</span><span class="w"> </span><span class="n">scan_dff</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="n">si</span><span class="p">,</span><span class="w"> </span><span class="n">se</span><span class="p">,</span>
+<span class="w">                 </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">q</span><span class="p">);</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span>
+<span class="w">    </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">se</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">si</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="n">d</span><span class="p">;</span><span class="w">   </span><span class="c1">// se=1: shift from previous flop, se=0: capture logic</span>
+<span class="k">endmodule</span>
+<span class="c1">// Chain: si of flop N connects to q of flop N-1; first si = scan_in pin</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_7">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_7" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DFT (Design for Test / Testability)</strong><br><em>Industry practice · Methodology · DFT</em></td>
+<td>Adding test structures to a design so manufactured chips can be tested efficiently.</td>
+<td>Scan chains, MBIST and JTAG are all DFT features.</td>
+</tr>
+<tr>
+<td><strong>Stuck-at fault model</strong><br><em>Classic fault model · Concept · DFT</em></td>
+<td>Assumes a defect makes a node permanently 0 or 1; the basic model for test coverage.</td>
+<td>A net shorted to ground behaves as stuck-at-0.</td>
+</tr>
+<tr>
+<td><strong>Transition (delay) fault model</strong><br><em>Fault model · Concept · DFT</em></td>
+<td>Models a node too slow to switch in time, detected with at-speed launch and capture.</td>
+<td>A resistive via makes a path 200 ps slower; transition tests catch it.</td>
+</tr>
+<tr>
+<td><strong>Cell-aware and bridging faults</strong><br><em>Advanced fault models (e.g. Siemens Tessent CellAware) · Concept · DFT</em></td>
+<td>Models defects inside cells or shorts between neighbouring wires for higher quality.</td>
+<td>Cell-aware ATPG finds defects inside a complex flop that stuck-at tests miss.</td>
+</tr>
+<tr>
+<td><strong>Scan flip-flop</strong><br><em>DFT element · Concept · DFT</em></td>
+<td>A flop with a mux selecting either functional data or scan input, controlled by scan enable.</td>
+<td>SDFF cells replace DFF cells during scan insertion.</td>
+</tr>
+<tr>
+<td><strong>Scan chain</strong><br><em>DFT structure · Concept · DFT</em></td>
+<td>Scan flops connected in series to form a shift register for loading and unloading test data.</td>
+<td>A block has 64 chains of about 1,000 flops each.</td>
+</tr>
+<tr>
+<td><strong>Controllability and observability</strong><br><em>DFT theory · Concept · DFT</em></td>
+<td>How easily a node can be set to a value, and how easily its value can be seen at outputs.</td>
+<td>A test point is added to make a deep AND-tree output observable.</td>
+</tr>
+<tr>
+<td><strong>At-speed test (LOC/LOS)</strong><br><em>DFT technique · Methodology · DFT</em></td>
+<td>Launch-on-capture or launch-on-shift tests using the functional clock speed to detect delay defects.</td>
+<td>On-chip clock controllers produce two fast pulses for at-speed capture.</td>
+</tr>
+<tr>
+<td><strong>Test points</strong><br><em>DFT technique · Concept · DFT</em></td>
+<td>Extra control or observe logic inserted to improve coverage or reduce pattern count.</td>
+<td>Adding 2,000 test points cuts the pattern count by 30 %.</td>
+</tr>
+<tr>
+<td><strong>DPPM (Defective Parts Per Million)</strong><br><em>Quality metric · Concept · Packaging &amp; Test</em></td>
+<td>How many bad chips per million escape testing and reach customers.</td>
+<td>Automotive customers demand single-digit DPPM or even zero-defect goals.</td>
+</tr>
+<tr>
+<td><strong>Shift and capture</strong><br><em>Scan test operation · Concept · DFT</em></td>
+<td>The two scan phases: shift loads and unloads chains slowly; capture pulses the functional clock once or twice to record logic responses.</td>
+<td>With 500-flop chains, each pattern needs 500 shift cycles but only one or two capture clocks.</td>
+</tr>
+<tr>
+<td><strong>Scan DRC (test design rule checks)</strong><br><em>DFT tools · Concept · DFT</em></td>
+<td>Checks that every flop's clock, reset and data are controllable in test mode before scan insertion and ATPG.</td>
+<td>DRC flags 300 flops clocked by an internal divider, so a test-mode clock multiplexer is added.</td>
+</tr>
+<tr>
+<td><strong>Path-delay fault model</strong><br><em>Fault model · Concept · DFT</em></td>
+<td>Models an accumulated delay along a specific path, tested by launching a transition and checking it arrives in time.</td>
+<td>The 200 most critical STA paths are tested as path-delay faults to screen slow chips.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="49-scan-insertion-and-test-compression">4.9 Scan Insertion and Test Compression<a class="headerlink" href="#49-scan-insertion-and-test-compression" title="Permanent link">&para;</a></h2>
+<p>Large chips have millions of flops but only a few test pins and limited tester memory. Test compression puts a decompressor at the inputs and a compactor at the outputs of hundreds of short internal scan chains, so a few external pins feed many internal chains. This cuts test time and data volume by 10x to 100x or more. Newer approaches send test data over a packetised bus.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-09-scan-insertion-and-test-compression.svg" alt="A few tester pins feed hundreds of short internal chains." loading="lazy" width="1000" height="341">
+<figcaption><strong>Scan compression architecture.</strong> A few tester pins feed hundreds of short internal chains.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Compression is like zipping a big file before emailing it: you send far less data, and it is expanded at the other end.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>An AI chip with 50 million flops would need hours per chip with plain scan. Instead, Aditi's team uses Tessent TestKompress with 4,000 internal chains of about 12,500 flops, fed through 32 scan pins. They also adopt a streaming scan network so many cores are tested in parallel over a shared bus. Test time falls to about 2 seconds, saving millions of dollars per year in tester cost.</p>
+</div>
+<h4 id="how-it-works_8">How it works<a class="headerlink" href="#how-it-works_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Insert scan: replace flops, define chains, add scan enable and test-mode control.</li>
+<li>Insert compression logic: decompressor (input side) and compactor (output side).</li>
+<li>Handle X sources (memories, analog) with X-masking or bounding.</li>
+<li>Plan test access for hierarchical cores (wrappers, test buses, streaming networks).</li>
+<li>Verify DFT structures with DRC checks and simulation.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>DFT engineers; physical design engineers handle scan-chain reordering during placement.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know why scan chains are reordered after placement: to shorten wiring, while keeping the chain lengths balanced.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Compression ratio is roughly internal chains ÷ external channels; with 8 channels feeding 800 chains, chains are about 100× shorter, cutting shift cycles and data by a similar factor minus overheads.</li>
+<li>Decompressors work because ATPG patterns specify only a small fraction of bits; the rest can be whatever the decompressor produces.</li>
+<li>Unknown values from uninitialised memories, analogue blocks or false paths corrupt compacted outputs, so X-masking or X-tolerant compactors are essential.</li>
+<li>Chains crossing clock domains need lock-up latches; chains are usually grouped by clock domain and balanced to equal length.</li>
+<li>After placement, chains are reordered using SCANDEF to cut wire length, then checked with DFT rule checks and LEC.</li>
+<li>Hierarchical DFT generates each core's patterns once and retargets them at chip level, cutting ATPG run time on huge SoCs.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Pushing compression ratio too high, which can reduce coverage or raise pattern counts; find the sweet spot with trial ATPG.</li>
+<li>Ignoring X sources until late; one uninitialised memory output can mask large parts of the design.</li>
+<li>Mixing clock domains in one chain without lock-up latches, causing shift failures on the tester.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_8">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Scan insertion</strong><br><em>DFT step (usually in synthesis tools) · Methodology · DFT</em></td>
+<td>Replacing flops with scan flops and connecting chains automatically.</td>
+<td>Genus or Fusion Compiler inserts scan during synthesis with DFT settings.</td>
+</tr>
+<tr>
+<td><strong>Test compression (EDT)</strong><br><em>Siemens EDT/TestKompress, Synopsys DFTMAX, Cadence Modus · Concept · DFT</em></td>
+<td>On-chip decompression and compaction that greatly reduce test data and time.</td>
+<td>A 100x compression ratio turns 100 GB of test data into 1 GB.</td>
+</tr>
+<tr>
+<td><strong>Decompressor and compactor</strong><br><em>Compression architecture · Concept · DFT</em></td>
+<td>Logic that expands few input bits into many chains and compresses many outputs into few pins.</td>
+<td>XOR-based compactors combine 256 chain outputs into 8 pins.</td>
+</tr>
+<tr>
+<td><strong>X-masking</strong><br><em>Compression technique · Concept · DFT</em></td>
+<td>Blocking unknown values from corrupting compressed output signatures.</td>
+<td>Outputs from an uninitialised memory are masked during capture.</td>
+</tr>
+<tr>
+<td><strong>Scan chain reordering</strong><br><em>P&amp;R step · Methodology · Physical Design</em></td>
+<td>Reconnecting scan chains based on placement to minimise wire length.</td>
+<td>Innovus reorders chains using the SCANDEF file after placement.</td>
+</tr>
+<tr>
+<td><strong>SCANDEF</strong><br><em>DEF scan section · File format · Physical Design</em></td>
+<td>Describes scan chain structure so P&amp;R tools can legally reorder chains.</td>
+<td>Synthesis writes a SCANDEF file along with the netlist.</td>
+</tr>
+<tr>
+<td><strong>Hierarchical DFT / core wrapping</strong><br><em>DFT practice; IEEE 1500 · Methodology · DFT</em></td>
+<td>Making each core independently testable with wrappers, then reusing patterns at chip level.</td>
+<td>Patterns for one CPU core are generated once and reused for all 64 instances.</td>
+</tr>
+<tr>
+<td><strong>Streaming scan network (SSN)</strong><br><em>Siemens Tessent SSN (similar packetised approaches by others) · Concept · DFT</em></td>
+<td>Packet-based bus delivering scan data to many cores in parallel, decoupling cores from pins.</td>
+<td>SSN lets a 200-core AI chip be tested through just a few high-speed pins.</td>
+</tr>
+<tr>
+<td><strong>On-chip clock controller (OCC)</strong><br><em>DFT element · Concept · DFT</em></td>
+<td>Logic that switches between slow shift clocks and fast functional capture pulses during test.</td>
+<td>The OCC generates two 1 GHz pulses from the PLL for an at-speed capture.</td>
+</tr>
+<tr>
+<td><strong>Compression ratio</strong><br><em>DFT metric · Concept · DFT</em></td>
+<td>Roughly the number of internal scan chains divided by external scan channels; higher ratios shorten chains and cut test data.</td>
+<td>Eight channels feeding 800 internal chains gives about 100× shorter chains than eight plain scan chains.</td>
+</tr>
+<tr>
+<td><strong>Lock-up latch</strong><br><em>DFT element · Concept · DFT</em></td>
+<td>A latch inserted where a scan chain crosses clock domains or skewed clocks, preventing hold failures during shift.</td>
+<td>Where the chain passes from the CPU clock domain to the bus domain, a lock-up latch adds half a cycle of safety.</td>
+</tr>
+<tr>
+<td><strong>Chain balancing</strong><br><em>Scan insertion practice · Methodology · DFT</em></td>
+<td>Making all scan chains nearly equal length, because the longest chain sets the shift time for every pattern.</td>
+<td>Rebalancing from chains of 300-900 flops to 600 each cuts shift cycles by a third.</td>
+</tr>
+<tr>
+<td><strong>Low-power shift</strong><br><em>DFT/ATPG techniques · Methodology · DFT</em></td>
+<td>Reducing toggling during scan shift with filled patterns, gated chains or slower shift so tester power and IR drop stay safe.</td>
+<td>Low-toggle fill keeps shift switching below 20 % of flops, fixing failures seen at wafer sort.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="410-atpg-and-dft-tools-testmax-modus-and-tessent">4.10 ATPG and DFT Tools: TestMAX, Modus and Tessent<a class="headerlink" href="#410-atpg-and-dft-tools-testmax-modus-and-tessent" title="Permanent link">&para;</a></h2>
+<p>Automatic test pattern generation (ATPG) software works out the input values that will reveal each possible fault and what the correct outputs should be. The result is a set of test patterns in a tester-ready format. The three big DFT tool families are Siemens Tessent (the market leader in DFT), Synopsys TestMAX and Cadence Modus.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-10-atpg-and-dft-tools-testmax-modus-and.svg" alt="Fault simulation drops easy faults so the generator can focus on hard ones." loading="lazy" width="1000" height="389">
+<figcaption><strong>The ATPG flow.</strong> Fault simulation drops easy faults so the generator can focus on hard ones.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>ATPG is like writing the shortest possible set of exam questions that still reveals every gap in a student's knowledge.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Running Tessent ATPG on a 30-million-gate block, Lin gets 4,800 compressed stuck-at patterns with 99.3 % test coverage and 6,200 transition patterns at 94 %. She exports them in STIL for the Advantest tester. When coverage on one block is low, the report shows untestable faults behind a black-boxed analog macro; adding wrapper flops fixes it.</p>
+</div>
+<h4 id="how-it-works_9">How it works<a class="headerlink" href="#how-it-works_9" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Read the scan-inserted netlist, libraries and DFT setup (test procedures).</li>
+<li>Run DFT design rule checks (DRC) for scan chain integrity and clock control.</li>
+<li>Generate patterns per fault model: stuck-at, transition, cell-aware, path delay.</li>
+<li>Simulate patterns, compute coverage, compress and order them.</li>
+<li>Export patterns (STIL/WGL) and hand off to test engineering.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>DFT engineers and test engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the difference between fault coverage (all faults) and test coverage (excluding untestable faults); interviewers check this.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>ATPG picks an undetected fault, sets inputs so the faulty node differs from its fault value, then sensitises a path to a scan flop or output; the D-algorithm, PODEM and FAN are the classic algorithms.</li>
+<li>Each new pattern is fault-simulated against all remaining faults, so most faults are detected 'for free' and the generator targets only hard ones.</li>
+<li>Test coverage excludes provably untestable faults (tied, blocked, redundant) from the denominator; fault coverage keeps them, so it is always lower or equal.</li>
+<li>Pattern counts grow from thousands for stuck-at to tens of thousands with transition and cell-aware models, so tester time decides which fault models a product can afford.</li>
+<li>Patterns are written in STIL (IEEE 1450) with procedures for shift and capture timing, then converted by test engineers into ATE test programs.</li>
+<li>Diagnosis runs ATPG in reverse: failing tester cycles are mapped to suspect nets and cells to guide failure analysis and yield learning.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Using fault coverage and test coverage interchangeably; always state which one and how untestable faults were classified.</li>
+<li>Sending patterns to the tester without simulating them on the netlist with timing, wasting expensive tester debug time.</li>
+<li>Adding fault models without checking pattern-count growth against tester time and memory budgets.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_9">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ATPG (Automatic Test Pattern Generation)</strong><br><em>EDA technique · Methodology · DFT</em></td>
+<td>Algorithms that generate input patterns and expected outputs to detect modelled faults.</td>
+<td>ATPG finds a pattern that sets net n123 to 1 and propagates it to a scan flop.</td>
+</tr>
+<tr>
+<td><strong>Siemens Tessent</strong><br><em>Siemens EDA · Tool · DFT · Commercial</em></td>
+<td>Leading DFT suite: TestKompress ATPG, MemoryBIST, LogicBIST, SSN, IJTAG and silicon diagnosis.</td>
+<td>Most leading-edge SoCs use at least one Tessent product.</td>
+</tr>
+<tr>
+<td><strong>Synopsys TestMAX</strong><br><em>Synopsys · Tool · DFT · Commercial</em></td>
+<td>Synopsys DFT family: TestMAX ATPG (formerly TetraMAX), DFTMAX compression, SMS memory test and more.</td>
+<td>A team uses TestMAX ATPG integrated with Fusion Compiler DFT insertion.</td>
+</tr>
+<tr>
+<td><strong>Cadence Modus DFT Software Solution</strong><br><em>Cadence Design Systems · Tool · DFT · Commercial</em></td>
+<td>Cadence's ATPG, compression and diagnostics tool working with Genus DFT insertion.</td>
+<td>Modus generates patterns with 2D elastic compression for a networking chip.</td>
+</tr>
+<tr>
+<td><strong>STIL</strong><br><em>IEEE 1450 · File format · DFT</em></td>
+<td>Standard Test Interface Language: format for exchanging test patterns between ATPG and testers.</td>
+<td>Patterns are written as STIL and converted to the tester's native format.</td>
+</tr>
+<tr>
+<td><strong>WGL</strong><br><em>Waveform Generation Language (legacy, from TSSI) · File format · DFT</em></td>
+<td>Older pattern format still used by some test flows.</td>
+<td>A legacy tester program still loads WGL patterns.</td>
+</tr>
+<tr>
+<td><strong>Fault coverage vs test coverage</strong><br><em>DFT metrics · Concept · DFT</em></td>
+<td>Fault coverage counts all faults; test coverage excludes faults proven untestable.</td>
+<td>Test coverage 99.1 %, fault coverage 97.4 % because of redundant logic.</td>
+</tr>
+<tr>
+<td><strong>Fault simulation</strong><br><em>DFT technique · Methodology · DFT</em></td>
+<td>Simulating patterns with faults injected to see which faults each pattern detects.</td>
+<td>Functional patterns are fault-simulated to give credit for extra coverage.</td>
+</tr>
+<tr>
+<td><strong>Scan diagnosis</strong><br><em>Tessent Diagnosis, Synopsys Yield Explorer, Cadence Modus · Methodology · Packaging &amp; Test</em></td>
+<td>Using failing tester data to locate the likely defect inside the chip.</td>
+<td>Diagnosis points to a via in metal 3, guiding physical failure analysis.</td>
+</tr>
+<tr>
+<td><strong>Fault simulation for safety (ISO 26262)</strong><br><em>Synopsys Z01X, Cadence Xcelium Safety, Siemens · Methodology · Verification</em></td>
+<td>Injecting faults to measure how well safety mechanisms detect random hardware failures.</td>
+<td>An automotive team proves its ECC catches 99 % of single-point faults.</td>
+</tr>
+<tr>
+<td><strong>ATPG algorithms (D-algorithm, PODEM, FAN)</strong><br><em>Classic test generation research · Concept · DFT</em></td>
+<td>Search algorithms that activate a fault and propagate its effect to an observable point; modern tools add SAT solving.</td>
+<td>PODEM searches only on primary and scan inputs, backtracking when a choice blocks the fault's path.</td>
+</tr>
+<tr>
+<td><strong>Fault classes</strong><br><em>ATPG reporting · Concept · DFT</em></td>
+<td>Categories such as detected, possibly detected, untestable (tied, blocked, redundant) and ATPG-untestable used in coverage reports.</td>
+<td>The report lists 0.4 % redundant faults, excluded from test coverage, and 0.3 % ATPG-untestable faults needing investigation.</td>
+</tr>
+<tr>
+<td><strong>Pattern count and test data volume</strong><br><em>DFT metric · Concept · DFT</em></td>
+<td>Number of patterns and total bits stored on the tester, driving test time and tester memory cost.</td>
+<td>Adding cell-aware tests raises patterns from 6,000 to 15,000, so the team increases compression to fit tester memory.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="411-bist-memory-bist-and-repair">4.11 BIST, Memory BIST and Repair<a class="headerlink" href="#411-bist-memory-bist-and-repair" title="Permanent link">&para;</a></h2>
+<p>Built-in self-test (BIST) puts a small tester inside the chip. Memory BIST (MBIST) runs patterns like March algorithms through every SRAM, which are dense and defect-prone. Logic BIST uses pseudo-random patterns and signature registers. Many memories include spare rows and columns, and repair logic programs fuses to swap in spares for faulty cells, increasing yield.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-11-bist-memory-bist-and-repair.svg" alt="Repair data is found once at manufacturing test and reloaded at every power-up." loading="lazy" width="1000" height="341">
+<figcaption><strong>Memory BIST and repair.</strong> Repair data is found once at manufacturing test and reloaded at every power-up.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>BIST is like a car's self-check when you turn the key: the dashboard lights flash on and off while the car tests itself without a mechanic.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A GPU contains 3,000 SRAM instances. Tessent MemoryBIST controllers test them in parallel groups at power-up and on the tester. In production, 7 % of dies show a few failing bits; built-in repair analysis maps them onto spare columns and burns eFuses. Those dies become good chips, adding several percentage points of yield worth millions of dollars.</p>
+</div>
+<h4 id="how-it-works_10">How it works<a class="headerlink" href="#how-it-works_10" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Insert MBIST controllers and collars around memories.</li>
+<li>Run March algorithms (e.g. March C-) that write and read patterns in sequence.</li>
+<li>Analyse failures and compute repair solutions using spare rows/columns (BIRA).</li>
+<li>Program repair information into eFuses; reload it at every power-up.</li>
+<li>Optionally run logic BIST in the field for safety-critical self-checks.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>DFT engineers, memory designers, test and yield engineers; automotive safety teams.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Memories often dominate yield loss because they are the densest structures; that is why repair matters so much.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>March algorithms are written as elements such as ⇑(r0,w1); March C- needs 10 operations per address (10N) and detects stuck-at, transition, address-decoder and many coupling faults.</li>
+<li>MBIST controllers are inserted around memory wrappers and reached through IEEE 1687 networks, so the same tests run at wafer sort, final test and in the field.</li>
+<li>Logic BIST needs an X-free design because one unknown corrupts the MISR signature; test points raise coverage on random-pattern-resistant logic.</li>
+<li>Repairable memories carry spare rows and columns; BIRA picks an allocation, eFuses or OTP store it, and a repair-load step restores it at every power-up.</li>
+<li>Automotive SoCs run LBIST and MBIST at power-on and periodically to meet ISO 26262 latent-fault targets, often within millisecond time budgets.</li>
+<li>An n-bit LFSR with a primitive feedback polynomial cycles through 2^n − 1 states, making it a very cheap pseudo-random pattern source.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Running MBIST only at slow speed; many memory defects are speed-related, so test at functional frequency.</li>
+<li>Forgetting to budget fuse storage and repair-load time in the boot sequence.</li>
+<li>Expecting LBIST alone to reach high coverage; random-resistant logic needs test points or deterministic top-up patterns.</li>
+</ul>
+</div>
+<h3 id="try-it-an-8-bit-lfsr-pattern-generator-and-march-c-in-notation">Try it: An 8-bit LFSR pattern generator and March C- in notation<a class="headerlink" href="#try-it-an-8-bit-lfsr-pattern-generator-and-march-c-in-notation" title="Permanent link">&para;</a></h3>
+<div class="language-verilog highlight"><pre><span></span><code><span class="c1">// Maximal-length 8-bit LFSR (taps 8,6,5,4): 255 states before repeating</span>
+<span class="k">module</span><span class="w"> </span><span class="n">lfsr8</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="w">  </span><span class="kt">logic</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span><span class="w"> </span><span class="n">en</span><span class="p">,</span>
+<span class="w">              </span><span class="k">output</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">q</span><span class="p">);</span>
+<span class="w">  </span><span class="k">always_ff</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">negedge</span><span class="w"> </span><span class="n">rst_n</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="w">  </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">8'h01</span><span class="p">;</span><span class="w">                               </span><span class="c1">// any non-zero seed</span>
+<span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">en</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="p">{</span><span class="n">q</span><span class="p">[</span><span class="mh">6</span><span class="o">:</span><span class="mh">0</span><span class="p">],</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mh">7</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mh">5</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mh">4</span><span class="p">]</span><span class="w"> </span><span class="o">^</span><span class="w"> </span><span class="n">q</span><span class="p">[</span><span class="mh">3</span><span class="p">]};</span>
+<span class="k">endmodule</span>
+
+<span class="c1">// March C- (10N):  ⇕(w0) ⇑(r0,w1) ⇑(r1,w0) ⇓(r0,w1) ⇓(r1,w0) ⇕(r0)</span>
+<span class="c1">// ⇑ = ascending addresses, ⇓ = descending, ⇕ = either order</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_10">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_10" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BIST (Built-In Self-Test)</strong><br><em>DFT technique · Concept · DFT</em></td>
+<td>On-chip circuitry that generates test patterns and checks responses without an external tester.</td>
+<td>A car chip runs BIST at every ignition to check its safety logic.</td>
+</tr>
+<tr>
+<td><strong>Memory BIST (MBIST)</strong><br><em>Siemens Tessent MemoryBIST, Synopsys SMS/TestMAX, Cadence Modus · Methodology · DFT</em></td>
+<td>Built-in controllers that test embedded memories with algorithmic patterns.</td>
+<td>MBIST runs March C- on all caches in 10 milliseconds.</td>
+</tr>
+<tr>
+<td><strong>March algorithms</strong><br><em>Memory test theory · Concept · DFT</em></td>
+<td>Sequences of writes and reads marching up and down addresses to detect memory faults.</td>
+<td>March C- detects stuck-at, transition and many coupling faults.</td>
+</tr>
+<tr>
+<td><strong>Logic BIST (LBIST)</strong><br><em>DFT technique · Methodology · DFT</em></td>
+<td>Uses a pseudo-random pattern generator and signature register to test logic on-chip.</td>
+<td>An ADAS chip runs LBIST periodically while driving to detect latent faults.</td>
+</tr>
+<tr>
+<td><strong>LFSR and MISR</strong><br><em>BIST building blocks · Concept · DFT</em></td>
+<td>Linear-feedback shift registers generate pseudo-random patterns; MISRs compress responses to a signature.</td>
+<td>After 100,000 patterns the MISR signature must match the expected value.</td>
+</tr>
+<tr>
+<td><strong>Memory repair (BIRA/BISR)</strong><br><em>DFT technique · Methodology · DFT</em></td>
+<td>Built-in analysis and self-repair that replaces faulty memory cells with redundant rows or columns.</td>
+<td>A failing column in an L2 SRAM is swapped for a spare automatically.</td>
+</tr>
+<tr>
+<td><strong>eFuse / OTP repair storage</strong><br><em>Foundry/IP option · Concept · DFT</em></td>
+<td>One-time programmable bits that store repair data permanently.</td>
+<td>Repair data is burned at wafer sort and reloaded at boot.</td>
+</tr>
+<tr>
+<td><strong>In-system / in-field test</strong><br><em>Industry practice; ISO 26262 · Methodology · DFT</em></td>
+<td>Running tests during the product's life to catch faults that appear after manufacture.</td>
+<td>Data-centre chips run periodic in-field scan tests to detect silent data corruption.</td>
+</tr>
+<tr>
+<td><strong>Silicon lifecycle management (SLM)</strong><br><em>Synopsys SLM, Siemens Tessent embedded analytics, proteanTecs · Methodology · Packaging &amp; Test</em></td>
+<td>On-chip monitors and analytics tracking health, performance and aging throughout a chip's life.</td>
+<td>Path-margin monitors warn that a server chip is aging faster than expected.</td>
+</tr>
+<tr>
+<td><strong>Memory fault models</strong><br><em>Memory test theory · Concept · DFT</em></td>
+<td>Faults specific to memories: stuck-at cells, transition faults, coupling between neighbouring cells and address-decoder faults.</td>
+<td>A coupling fault where writing cell 12 flips cell 13 escapes simple tests but is caught by March C-.</td>
+</tr>
+<tr>
+<td><strong>Programmable MBIST controller</strong><br><em>Tessent MemoryBIST, Synopsys SMS, Cadence Modus · Concept · DFT</em></td>
+<td>A BIST engine whose algorithm can be changed after tapeout through JTAG, to target defects found in silicon.</td>
+<td>Silicon shows a new failure pattern, so test engineers load an extra March element without a respin.</td>
+</tr>
+<tr>
+<td><strong>Hybrid ATPG and logic BIST</strong><br><em>DFT vendors (e.g. Siemens Tessent hybrid TestKompress/LogicBIST) · Methodology · DFT</em></td>
+<td>Sharing the compression decompressor hardware with LBIST so the same logic supports deterministic manufacturing patterns and in-field self-test.</td>
+<td>An automotive SoC uses compressed ATPG on the tester and the same hardware for LBIST at every power-on.</td>
+</tr>
+<tr>
+<td><strong>X-bounding</strong><br><em>LBIST design rule · Concept · DFT</em></td>
+<td>Blocking every source of unknown values (memories, analogue outputs, uninitialised flops) so LBIST signatures stay deterministic.</td>
+<td>Bypass muxes around each SRAM output stop Xs reaching the MISR during logic BIST.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="412-jtag-and-test-access-standards-ieee-11491-1500-1687">4.12 JTAG and Test Access Standards (IEEE 1149.1, 1500, 1687)<a class="headerlink" href="#412-jtag-and-test-access-standards-ieee-11491-1500-1687" title="Permanent link">&para;</a></h2>
+<p>JTAG (IEEE 1149.1) is a standard 4-or-5-pin test port found on almost every chip. It began as a way to test solder connections on boards (boundary scan) and became the universal access point for test, debug and programming. IEEE 1500 standardises test wrappers around embedded cores, and IEEE 1687 (IJTAG) standardises access to the many internal instruments like BIST controllers and sensors.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-12-jtag-and-test-access-standards-ieee.svg" alt="One small JTAG port reaches everything from board pins to sensors inside each core." loading="lazy" width="1000" height="570">
+<figcaption><strong>Layers of test access.</strong> One small JTAG port reaches everything from board pins to sensors inside each core.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>JTAG is the building's service entrance with a master key: engineers use it to reach any room (instrument) inside without disturbing the front door (normal operation).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>On a new board, the factory runs a boundary-scan test through the processor's JTAG port, discovering that pin 47 is not soldered. Later, firmware engineers use the same port with a debug probe to halt the CPU. Inside the chip, an IEEE 1687 network lets test engineers start MBIST, read temperature sensors and tune PLLs through that one port.</p>
+</div>
+<h4 id="how-it-works_11">How it works<a class="headerlink" href="#how-it-works_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li>JTAG pins: TCK (clock), TMS (mode), TDI (data in), TDO (data out), optional TRST.</li>
+<li>A TAP controller state machine selects instruction and data registers.</li>
+<li>Boundary-scan cells at each I/O pin test board connections (EXTEST).</li>
+<li>IEEE 1500 wrappers isolate cores for independent testing.</li>
+<li>IEEE 1687 networks (described in ICL/PDL) reach embedded instruments flexibly.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>DFT engineers, board test engineers, firmware/debug engineers and silicon validation engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Memorise the JTAG pins and that the TAP controller is a 16-state FSM; 1149.1 = boundary scan, 1500 = core wrappers, 1687 = IJTAG.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>TMS values sampled on rising TCK edges walk the 16-state TAP controller; holding TMS high for five TCK cycles always returns it to Test-Logic-Reset.</li>
+<li>Boundary-scan cells let a board tester drive and capture every pin to find opens and shorts in solder joints without physical probes.</li>
+<li>IEEE 1687 networks use Segment Insertion Bits (SIBs) to open only the needed parts of a long scan path; ICL and PDL let tools retarget instrument procedures automatically.</li>
+<li>IEEE 1500 wrappers isolate a core with wrapper boundary cells and a Wrapper Instruction Register, described in Core Test Language (IEEE 1450.6).</li>
+<li>The same port often carries CPU debug (Arm CoreSight DAP, RISC-V Debug Module), so production parts lock or authenticate JTAG for security.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Leaving JTAG debug fully open in production parts, a common hardware security weakness; use lifecycle locks or authenticated debug.</li>
+<li>Confusing boundary scan with internal scan: boundary scan tests board connections, internal scan tests on-chip logic.</li>
+<li>Shipping a hand-written BSDL file that was never validated against silicon, breaking board test.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_11">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_11" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>JTAG / boundary scan</strong><br><em>IEEE 1149.1-2013 (first published 1990) · Standard · DFT</em></td>
+<td>Standard test access port and boundary-scan architecture for chips and boards.</td>
+<td>A board tester uses boundary scan to find open solder joints on a BGA.</td>
+</tr>
+<tr>
+<td><strong>TAP controller</strong><br><em>IEEE 1149.1 · Concept · DFT</em></td>
+<td>The 16-state state machine controlled by TMS that runs the JTAG port.</td>
+<td>Five TCK cycles with TMS high always return the TAP to Test-Logic-Reset.</td>
+</tr>
+<tr>
+<td><strong>BSDL (Boundary Scan Description Language)</strong><br><em>IEEE 1149.1 (VHDL-based) · File format · DFT</em></td>
+<td>File describing a chip's JTAG features and boundary-scan cells for board test tools.</td>
+<td>Chip vendors publish BSDL files so board makers can generate tests.</td>
+</tr>
+<tr>
+<td><strong>IEEE 1149.6 / 1149.10</strong><br><em>IEEE · Standard · DFT</em></td>
+<td>Extensions for AC-coupled high-speed I/O (1149.6) and high-speed test access over packets (1149.10).</td>
+<td>1149.6 tests AC-coupled SerDes links that classic boundary scan cannot.</td>
+</tr>
+<tr>
+<td><strong>IEEE 1500 (core test wrappers)</strong><br><em>IEEE 1500-2022 · Standard · DFT</em></td>
+<td>Standard wrapper architecture and Core Test Language for testing embedded cores.</td>
+<td>Each CPU core has a 1500 wrapper so it can be tested in isolation.</td>
+</tr>
+<tr>
+<td><strong>IEEE 1687 (IJTAG)</strong><br><em>IEEE 1687-2014 · Standard · DFT</em></td>
+<td>Standard for accessing embedded instruments through reconfigurable scan networks.</td>
+<td>A single IJTAG network reaches 500 instruments: BIST, sensors and PLL controls.</td>
+</tr>
+<tr>
+<td><strong>ICL and PDL</strong><br><em>IEEE 1687 · Language · DFT</em></td>
+<td>Instrument Connectivity Language describes the network; Procedural Description Language describes operations.</td>
+<td>PDL written for one MBIST controller is retargeted automatically to the chip pins.</td>
+</tr>
+<tr>
+<td><strong>IEEE 1838 (3D test)</strong><br><em>IEEE 1838-2019 · Standard · DFT</em></td>
+<td>Test access architecture for stacked dies in 3D integrated circuits.</td>
+<td>A 3D-stacked memory-on-logic chip tests each die through 1838 ports.</td>
+</tr>
+<tr>
+<td><strong>Debug probes and OpenOCD</strong><br><em>Lauterbach, SEGGER, Arm; OpenOCD (open source) · Tool · Packaging &amp; Test</em></td>
+<td>Hardware probes and software that use JTAG/SWD to debug and program chips.</td>
+<td>An engineer flashes firmware and sets breakpoints over JTAG with OpenOCD and GDB.</td>
+</tr>
+<tr>
+<td><strong>TAP signals (TCK, TMS, TDI, TDO, TRST)</strong><br><em>IEEE 1149.1 · Concept · DFT</em></td>
+<td>Test clock, mode select, data in, data out and an optional asynchronous reset: the pins of every JTAG port.</td>
+<td>A four-wire JTAG header on the board connects TCK, TMS, TDI and TDO to a debug probe.</td>
+</tr>
+<tr>
+<td><strong>Core 1149.1 instructions</strong><br><em>IEEE 1149.1 · Concept · DFT</em></td>
+<td>Required instructions include BYPASS, SAMPLE, PRELOAD and EXTEST; IDCODE is optional but nearly universal.</td>
+<td>The board tester reads each chip's 32-bit IDCODE to confirm the right parts were assembled.</td>
+</tr>
+<tr>
+<td><strong>Boundary-scan cell</strong><br><em>IEEE 1149.1 · Concept · DFT</em></td>
+<td>A cell between core logic and each I/O pad that can capture or drive the pin under JTAG control.</td>
+<td>EXTEST drives a 1 out of chip A's pin and checks chip B receives it, proving the solder joint works.</td>
+</tr>
+<tr>
+<td><strong>IEEE 1149.7 (compact JTAG)</strong><br><em>IEEE 1149.7 · Standard · DFT</em></td>
+<td>Reduced-pin JTAG using two wires (TCKC and TMSC) with star topologies, popular for debug in small devices.</td>
+<td>A wearable SoC exposes debug through two-pin cJTAG to save package pins.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="413-test-coverage-quality-and-yield">4.13 Test Coverage, Quality and Yield<a class="headerlink" href="#413-test-coverage-quality-and-yield" title="Permanent link">&para;</a></h2>
+<p>Test quality is measured by coverage: what fraction of possible faults the tests can detect. Higher coverage means fewer bad chips escape to customers. Yield is the fraction of manufactured chips that pass. Testing has a cost (tester time), so teams balance coverage, test time and the quality required by the market: consumer, data-centre and automotive have very different standards.</p>
+<figure class="fig fig-diagram">
+<img src="img/04-13-test-coverage-quality-and-yield.svg" alt="Williams–Brown model: each extra &#x27;nine&#x27; of coverage cuts escapes about tenfold." loading="lazy" width="1000" height="278">
+<figcaption><strong>Defect level vs fault coverage (yield 70 %).</strong> Williams–Brown model: each extra &#x27;nine&#x27; of coverage cuts escapes about tenfold.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like airport security: more thorough checks catch more problems but slow the queue, so the level of screening depends on how much is at stake.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A consumer audio chip ships with 98 % stuck-at coverage and 2 seconds of test time. An automotive brake-controller chip with the same logic needs 99.5 % stuck-at, 95 % transition, cell-aware tests, burn-in and test at three temperatures, costing four times more tester time, because one escape could endanger lives.</p>
+</div>
+<h4 id="how-it-works_12">How it works<a class="headerlink" href="#how-it-works_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Set coverage targets by market (consumer, industrial, automotive, data-centre).</li>
+<li>Generate patterns and measure coverage per fault model.</li>
+<li>Balance test time against quality; prune patterns that add little.</li>
+<li>Track yield and failure data from production; diagnose systematic issues.</li>
+<li>Feed learnings back into design (DFM, DFT) and process.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>DFT, test, product and yield engineers; quality teams for automotive (AEC-Q100, ISO 26262).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the relation: defect level falls as yield and coverage rise; high coverage matters most when yield is low.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>The Williams–Brown model DL = 1 − Y^(1−T) shows that at 70 % yield even 99 % fault coverage lets about 3,560 defective parts per million escape.</li>
+<li>Real escape rates are usually lower than the model predicts, because one defect often causes several faults, but the trend holds: coverage matters most when yield is low.</li>
+<li>Automotive suppliers target very low single-digit DPPM by combining high stuck-at and transition coverage, cell-aware tests, IDDQ, stress tests and outlier screening such as PAT.</li>
+<li>Test cost scales with tester seconds; multi-site testing and scan compression are the main levers for reducing cost per chip.</li>
+<li>ISO 26262 hardware metrics—SPFM and LFM—must reach at least 99 % and 90 % for ASIL D, measured with fault-injection campaigns on the design.</li>
+<li>Hyperscalers have reported silent data corruption from marginal defects in a small fraction of server CPUs, driving in-fleet testing and stronger screens.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Equating high yield with high quality; yield counts how many pass, not how many bad parts slipped through.</li>
+<li>Chasing the last 0.1 % of stuck-at coverage when delay or cell-aware tests would catch more real defects.</li>
+<li>Treating burn-in as free; it is costly, so many products replace it with voltage stress and outlier screening.</li>
+</ul>
+</div>
+<h3 id="try-it-compute-defect-level-with-the-williamsbrown-model-python">Try it: Compute defect level with the Williams–Brown model (Python)<a class="headerlink" href="#try-it-compute-defect-level-with-the-williamsbrown-model-python" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s2">"for T in (0.90, 0.99, 0.999): print(T, round((1 - 0.7**(1 - T)) * 1e6), 'DPPM at 70% yield')"</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_12">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Test coverage</strong><br><em>DFT metric · Concept · DFT</em></td>
+<td>Percentage of testable faults detected by the test patterns.</td>
+<td>Stuck-at test coverage above 99 % is a common target.</td>
+</tr>
+<tr>
+<td><strong>Test time and cost</strong><br><em>Test economics · Concept · Packaging &amp; Test</em></td>
+<td>Seconds on an expensive tester per chip, a major part of unit cost.</td>
+<td>Cutting test time from 4 s to 2 s halves the number of testers needed.</td>
+</tr>
+<tr>
+<td><strong>Burn-in</strong><br><em>Reliability test · Process · Packaging &amp; Test</em></td>
+<td>Running chips at high temperature and voltage to make weak parts fail before shipping.</td>
+<td>Automotive and server chips undergo burn-in to remove early-life failures.</td>
+</tr>
+<tr>
+<td><strong>AEC-Q100</strong><br><em>Automotive Electronics Council · Standard · Packaging &amp; Test</em></td>
+<td>Stress-test qualification standard for ICs used in cars.</td>
+<td>A chip must pass AEC-Q100 Grade 1 (-40 to 125 °C) to be sold for engine-bay use.</td>
+</tr>
+<tr>
+<td><strong>ISO 26262</strong><br><em>ISO (automotive functional safety, 2018 edition) · Standard · Whole flow</em></td>
+<td>Functional safety standard defining ASIL levels and requirements for hardware and software.</td>
+<td>An ASIL-D brake chip needs lockstep cores, ECC and very high diagnostic coverage.</td>
+</tr>
+<tr>
+<td><strong>IDDQ testing</strong><br><em>Test technique · Methodology · Packaging &amp; Test</em></td>
+<td>Measuring quiescent supply current to detect defects causing abnormal leakage.</td>
+<td>A die drawing 10x normal standby current is rejected as likely defective.</td>
+</tr>
+<tr>
+<td><strong>Silent data corruption (SDC) screening</strong><br><em>Hyperscaler research (Meta, Google) · Concept · Packaging &amp; Test</em></td>
+<td>Rare defects producing wrong results without crashing, found in large server fleets.</td>
+<td>Cloud operators run periodic tests to remove 'mercurial' CPU cores.</td>
+</tr>
+<tr>
+<td><strong>Adaptive test</strong><br><em>Test practice · Methodology · Packaging &amp; Test</em></td>
+<td>Changing test content or limits per lot or die based on statistical data.</td>
+<td>Dies near wafer edges get extra tests because they fail more often.</td>
+</tr>
+<tr>
+<td><strong>Defect level (Williams–Brown model)</strong><br><em>Williams and Brown (1981) · Concept · DFT</em></td>
+<td>Fraction of shipped chips that are defective: DL = 1 − Y^(1−T), linking yield Y and fault coverage T.</td>
+<td>At 70 % yield, 99 % coverage lets about 3,560 DPPM escape; 99.9 % coverage cuts that to about 360.</td>
+</tr>
+<tr>
+<td><strong>Test escape</strong><br><em>Quality term · Concept · Packaging &amp; Test</em></td>
+<td>A defective chip that passes all manufacturing tests and reaches a customer.</td>
+<td>A car maker returns a module; analysis shows a resistive via the transition tests never targeted.</td>
+</tr>
+<tr>
+<td><strong>Part Average Testing (PAT)</strong><br><em>AEC-Q001 · Methodology · Packaging &amp; Test</em></td>
+<td>Statistical screening that rejects chips whose test results are outliers compared with the rest of the lot, even if within limits.</td>
+<td>A die with leakage far above its lot's distribution is scrapped although it passes the datasheet limit.</td>
+</tr>
+<tr>
+<td><strong>Multi-site testing</strong><br><em>ATE practice · Methodology · Packaging &amp; Test</em></td>
+<td>Testing several dies or packaged chips in parallel on one tester to cut test cost per chip.</td>
+<td>Moving from 4-site to 16-site testing cuts the effective test time per microcontroller by more than half.</td>
+</tr>
+<tr>
+<td><strong>Hardware safety metrics (SPFM, LFM)</strong><br><em>ISO 26262-5 · Concept · Whole flow</em></td>
+<td>Single-point and latent fault metrics measuring how many random hardware faults safety mechanisms catch; ASIL D needs ≥99 % and ≥90 %.</td>
+<td>Fault-injection campaigns show SPFM of 99.2 %, meeting the ASIL D target for the braking controller.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="functional-verification.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Functional Verification">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Functional Verification
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="physical-design-floorplan-to-route.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Physical Design: Floorplan to Route">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                5. Physical Design: Floorplan to Route
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

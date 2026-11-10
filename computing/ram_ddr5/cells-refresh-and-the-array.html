@@ -1,0 +1,1398 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/cells-refresh-and-the-array.html">
+  
+  
+    <link rel="prev" href="what-ram-is.html">
+  
+  
+    <link rel="next" href="reading-writing-and-the-interface.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>2. Cells, Refresh and the Array - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#21-two-ways-to-store-a-bit" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Cells, Refresh and the Array
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what-ram-is.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21-two-ways-to-store-a-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Two ways to store a bit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-the-6t-sram-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 The 6T SRAM cell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-the-1t1c-dram-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 The 1T1C DRAM cell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Refresh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-how-a-dram-chip-is-organised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 How a DRAM chip is organised
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-addressing-a-real-chip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Addressing a real chip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lpddr-and-gddr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#21-two-ways-to-store-a-bit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 Two ways to store a bit
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#22-the-6t-sram-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 The 6T SRAM cell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#23-the-1t1c-dram-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 The 1T1C DRAM cell
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#24-refresh" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Refresh
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#25-how-a-dram-chip-is-organised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 How a DRAM chip is organised
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#26-addressing-a-real-chip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Addressing a real chip
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#27-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#28-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-2-cells-refresh-and-the-array">Chapter 2: Cells, Refresh and the Array<a class="headerlink" href="#chapter-2-cells-refresh-and-the-array" title="Permanent link">&para;</a></h1>
+<p>Every RAM is a grid of cells, and the two cells that matter most are the six-transistor SRAM cell and the one-transistor, one-capacitor DRAM cell. This chapter shows how each stores a bit, why the DRAM cell leaks and must be refreshed (and what that costs in time), and how billions of cells are organised into banks, rows and columns so that any one of them can be found in nanoseconds. It ends with a complete addressing example for a real 16 Gb chip. These ideas are the foundation for the timing and interface material of Chapter 3.</p>
+<h2 id="21-two-ways-to-store-a-bit">2.1 Two ways to store a bit<a class="headerlink" href="#21-two-ways-to-store-a-bit" title="Permanent link">&para;</a></h2>
+<p>The two main volatile technologies differ in how a single bit is held. <strong>SRAM</strong> (static RAM) stores a bit in a small latch, two inverters connected in a loop, that keeps its value for as long as power is applied. The standard cell uses six transistors and is called <strong>6T SRAM</strong>. <strong>DRAM</strong> (dynamic RAM) stores a bit as electric charge on a tiny capacitor, switched by one access transistor: the <strong>1T1C</strong> cell. Because the DRAM cell is so much smaller, DRAM is far denser and cheaper per bit. Because the SRAM cell actively drives its bitlines, SRAM is much faster.</p>
+<figure class="fig fig-diagram">
+<img src="img/sram-dram-cells.png" alt="Left: a 6T SRAM cell with two cross-coupled inverters and two access transistors M5 and M6 on bitlines BL and BLB. Right: a 1T1C DRAM cell with access transistor M1 and storage capacitor Cs" loading="lazy" width="1238" height="451">
+<figcaption><strong>Figure 2.1.</strong> Left: a 6T SRAM cell with two cross-coupled inverters and two access transistors M5 and M6 on bitlines BL and BLB. Right: a 1T1C DRAM cell with access transistor M1 and storage capacitor Cs</figcaption>
+</figure>
+
+<p>For scale, a high-density SRAM cell at a 7 nm logic process is about 0.027 µm², while a modern DRAM cell is roughly 0.001 µm², which is about 27 times smaller.</p>
+<h2 id="22-the-6t-sram-cell">2.2 The 6T SRAM cell<a class="headerlink" href="#22-the-6t-sram-cell" title="Permanent link">&para;</a></h2>
+<p>Two cross-coupled inverters (four transistors) form a latch. Each inverter's output drives the other's input, so the cell rests in one of two stable states, with complementary values on the internal nodes Q and QB. An analogy: two people leaning back to back, each holding the other upright. Two access transistors, M5 and M6, switched on by the wordline, connect Q and QB to the complementary bitlines BL and BLB.</p>
+<p><strong>Reading.</strong> Both bitlines are first precharged high. The wordline is then raised, and the side of the cell holding a 0 starts to pull its bitline down. A sense amplifier detects which bitline begins to fall.</p>
+<p><strong>Writing.</strong> Strong drivers force the bitlines to opposite values and overpower the latch, flipping it if necessary.</p>
+<p>These two operations pull in opposite directions. A read must not flip the cell, and a write must flip it, and the two goals conflict as the supply voltage drops. Designers describe the first with the <strong>cell ratio</strong>, the strength of the pull-down NMOS transistor compared with the access transistor, which must be comfortably greater than one. Writability depends on the <strong>pull-up ratio</strong>: the access transistor must be able to overpower the PMOS pull-up. The margins are measured as the static noise margin (SNM) in hold and in read, and as the write margin, often from "butterfly curves", the two inverter transfer curves plotted against each other.</p>
+<p><strong>Strengths and weaknesses.</strong> The 6T cell is very fast (well under a nanosecond for small first-level cache arrays), needs no refresh, and is made in the same process as logic, so it sits right beside the processor cores. But six transistors per bit make it many times larger than a DRAM cell, its area has shrunk only slowly at the newest process nodes, and idle cells still leak current.</p>
+<h2 id="23-the-1t1c-dram-cell">2.3 The 1T1C DRAM cell<a class="headerlink" href="#23-the-1t1c-dram-cell" title="Permanent link">&para;</a></h2>
+<p>A DRAM cell is a tiny bucket of charge: a full capacitor means 1, an empty one means 0. The access transistor is a tap that opens when the wordline is switched on. With only two parts per bit, billions fit on one chip. The capacitor's other plate, the cell plate, sits at about half the supply voltage.</p>
+<p>Two properties follow from this simple cell.</p>
+<p>First, <strong>the charge is tiny and it leaks.</strong> The charge on the capacitor, a few femtocoulombs, slowly drains away through the transistor and the surrounding silicon. If a stored 1 loses so much charge that it falls below the halfway line, the chip would read it as 0 and the data would be corrupted.</p>
+<p>Second, <strong>reading is destructive.</strong> When the access transistor opens, the cell shares its charge with the much larger capacitance of the bitline. The change in the bitline voltage is small, and the sense amplifier must amplify it and then write the full value back into the cell. Every read of a DRAM row therefore includes a rewrite.</p>
+<p>This is why DRAM needs a refresh, and why the circuits around a DRAM array (sense amplifiers, precharge and write-back) are as important as the cell itself.</p>
+<h2 id="24-refresh">2.4 Refresh<a class="headerlink" href="#24-refresh" title="Permanent link">&para;</a></h2>
+<p>To stop data fading, the memory controller, or the chip itself, must <strong>refresh</strong> every row (read it and write it back) within a fixed window, typically 32 or 64 milliseconds. A gardener walking along a row of leaky buckets and topping each up before it runs dry is the picture to hold. In hot weather the buckets leak faster, so the gardener must walk twice as often.</p>
+<p>For DDR5 the course gives these figures. Every row is refreshed within <strong>32 ms</strong>, using 8192 refresh commands, one about every</p>
+<div class="arithmatex">\[t_{REFI} = \frac{32\ \text{ms}}{8192} \approx 3.9\ \mu\text{s}.\]</div>
+<p>Above 85 °C the interval halves, because leakage roughly doubles for every 10 °C rise. During one refresh command the chip is busy for the refresh cycle time <span class="arithmatex">\(t_{RFC}\)</span>, about 295 ns for a 16 Gb chip, and 410 ns for a 32 Gb chip. The fraction of time lost to refresh is</p>
+<div class="arithmatex">\[\text{overhead} = \frac{t_{RFC}}{t_{REFI}}.\]</div>
+<div class="admonition example">
+<p class="admonition-title">Example 2.1: What refresh costs</p>
+<ol>
+<li>16 Gb chip, normal temperature: <span class="arithmatex">\(295 / 3900 = 0.0756\)</span>, so <strong>7.6 per cent</strong> of the time.</li>
+<li>16 Gb chip above 85 °C: <span class="arithmatex">\(t_{REFI}\)</span> halves to 1950 ns, so <span class="arithmatex">\(295 / 1950 = 0.151\)</span>, or <strong>15.1 per cent</strong>.</li>
+<li>32 Gb chip, normal: <span class="arithmatex">\(410 / 3900 = 0.105\)</span>, or <strong>10.5 per cent</strong>.</li>
+<li>32 Gb chip, hot: <span class="arithmatex">\(410 / 1950 = 0.210\)</span>, or <strong>21.0 per cent</strong>.</li>
+</ol>
+<p>Refresh costs time (the bank is busy) and energy, and the cost grows as chips get larger, since a larger chip has more rows to refresh per command. If the 65,536 rows of a bank are spread evenly over 8192 commands, each command must refresh 8 rows per bank.</p>
+</div>
+<figure class="fig fig-diagram">
+<img src="img/refresh-overhead.png" alt="A bar chart of refresh overhead: 7.6 per cent for a 16 Gb chip at normal temperature, 15.1 per cent when hot, 10.5 per cent and 21.0 per cent for a 32 Gb chip" loading="lazy" width="1280" height="680">
+<figcaption><strong>Figure 2.2.</strong> A bar chart of refresh overhead: 7.6 per cent for a 16 Gb chip at normal temperature, 15.1 per cent when hot, 10.5 per cent and 21.0 per cent for a 32 Gb chip</figcaption>
+</figure>
+
+<p>DDR5 reduces the damage with <strong>same-bank refresh</strong>, which refreshes one bank in each bank group while the others keep working, instead of stalling the whole chip. SRAM has no such problem, which is one reason it is used where speed and predictability matter most.</p>
+<div class="admonition note">
+<p class="admonition-title">Retention in numbers</p>
+<p>A cell that must hold a charge for 32 ms between refreshes has a tiny leakage budget. If the storage capacitor is 20 fF, charged to 1.1 V, and the sense amplifier can tolerate a droop of 0.3 V, the largest steady leakage current that survives the window is <span class="arithmatex">\(I = C\,\Delta V / t = 20\ \text{fF} \times 0.3\ \text{V} / 32\ \text{ms} \approx 188\)</span> fA. That is about a fifth of a picoampere, which is why the DRAM access transistor must leak almost nothing and why DRAM is made in a dedicated process (Chapter 15).</p>
+</div>
+<h2 id="25-how-a-dram-chip-is-organised">2.5 How a DRAM chip is organised<a class="headerlink" href="#25-how-a-dram-chip-is-organised" title="Permanent link">&para;</a></h2>
+<p>To find one bit the chip needs an address, like a postal address: which district (bank), which street (row) and which house (column). Rows run along wordlines and columns along bitlines. Several larger terms describe how chips are combined into a memory system.</p>
+<ul>
+<li><strong>Channel.</strong> An independent connection between the memory controller and a set of memory chips, with its own command and data wires. More channels means more bandwidth that can be used in parallel.</li>
+<li><strong>Sub-channel.</strong> DDR5 splits each 64-bit DIMM into two independent 32-bit sub-channels, so two different requests can be served at once.</li>
+<li><strong>Rank.</strong> A group of chips that together fill the channel width (for example, eight x8 chips make a 64-bit rank) and are selected together. A DIMM may have one, two or more ranks; only one rank on a channel talks at a time.</li>
+<li><strong>Bank.</strong> An independent array inside a chip with its own row buffer. While one bank is busy opening a row, another can be read, which hides latency.</li>
+<li><strong>Bank group.</strong> A cluster of banks that shares some internal wiring. Accesses to different bank groups can be issued back-to-back faster than accesses within the same group. Bank groups were introduced with DDR4.</li>
+<li><strong>Prefetch and burst length.</strong> The array is slow, so each internal access fetches several bits per data pin at once (the prefetch, for example 8n or 16n) and sends them out over consecutive transfers (the burst). DDR5 uses a burst length of 16, so a 32-bit sub-channel delivers <span class="arithmatex">\(16 \times 32 / 8 = 64\)</span> bytes per burst, exactly one processor cache line.</li>
+</ul>
+<p>When a row is read, the whole row is loaded into the sense amplifiers, one per column. The sense amplifiers therefore act as a small buffer, the <strong>row buffer</strong>, holding the entire row. Picking a column then selects the data out of that buffer.</p>
+<h2 id="26-addressing-a-real-chip">2.6 Addressing a real chip<a class="headerlink" href="#26-addressing-a-real-chip" title="Permanent link">&para;</a></h2>
+<p>The course's worked example uses a 16 Gb chip with four data pins (a "x4" chip), the Micron MT60B4G4RZ. Its organisation is:</p>
+<table>
+<thead>
+<tr>
+<th>Quantity</th>
+<th>Count</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bank groups × banks per group</td>
+<td>8 × 4 = 32 banks</td>
+</tr>
+<tr>
+<td>Rows per bank</td>
+<td>65,536 (16 address bits)</td>
+</tr>
+<tr>
+<td>Columns per row</td>
+<td>2048 (11 address bits)</td>
+</tr>
+<tr>
+<td>Bits per column (x4 chip)</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>The total is <span class="arithmatex">\(32 \times 65{,}536 \times 2048 \times 4 = 17{,}179{,}869{,}184\)</span> bits, which is <span class="arithmatex">\(2^{34}\)</span> bits or exactly 16 Gb. An address of <span class="arithmatex">\(3 + 2 + 16 + 11 = 32\)</span> bits therefore names one of <span class="arithmatex">\(2^{32}\)</span> locations, each holding 4 bits. A whole row holds <span class="arithmatex">\(2048 \times 4 = 8192\)</span> bits, 8 Kbit, per bank.</p>
+<p>A simple way to lay out the address bits, used in the assignment below, is:</p>
+<table>
+<thead>
+<tr>
+<th>Bits</th>
+<th>31–29</th>
+<th>28–27</th>
+<th>26–11</th>
+<th>10–0</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Field</td>
+<td>bank group (3 bits)</td>
+<td>bank (2 bits)</td>
+<td>row (16 bits)</td>
+<td>column (11 bits)</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Example 2.2: Decoding an address</p>
+<p>Decode the address <code>0x12345678</code>.</p>
+<ol>
+<li>Binary: <code>0001 0010 0011 0100 0101 0110 0111 1000</code>.</li>
+<li>Bits 31 to 29 are <code>000</code>, so the bank group is 0.</li>
+<li>Bits 28 to 27 are <code>10</code>, so the bank is 2.</li>
+<li>Shift right by 11 and keep 16 bits: <code>(0x12345678 &gt;&gt; 11) &amp; 0xFFFF = 18058</code>, the row.</li>
+<li>Keep the low 11 bits: <code>0x12345678 &amp; 0x7FF = 1656</code>, the column.</li>
+</ol>
+<p>The highest address, <code>0xFFFFFFFF</code>, decodes to bank group 7, bank 3, row 65,535, column 2047: all fields at their maximum.</p>
+</div>
+<h2 id="27-summary">2.7 Summary<a class="headerlink" href="#27-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>SRAM stores a bit in a six-transistor latch: fast, no refresh, large. DRAM stores it as charge on a capacitor behind one transistor: small and dense, but leaky.</li>
+<li>A DRAM read is destructive (the cell shares its charge with the bitline) and every read includes a write-back.</li>
+<li>DDR5 refreshes every row in 32 ms using 8192 commands, one about every 3.9 µs. The overhead is <span class="arithmatex">\(t_{RFC}/t_{REFI}\)</span>: 7.6 per cent for a 16 Gb chip, doubling when hot.</li>
+<li>Channels, sub-channels, ranks, banks and bank groups let several accesses overlap and hide latency. Prefetch and burst length let a slow array feed a fast interface.</li>
+<li>The 16 Gb x4 chip has 32 banks × 65,536 rows × 2048 columns × 4 bits.</li>
+</ul>
+<h2 id="28-exercises">2.8 Exercises<a class="headerlink" href="#28-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 2.1.</strong> A DRAM chip has 8 bank groups of 4 banks, 32,768 rows per bank, 1024 columns per row and 8 bits per column. What is its capacity in gigabits, and how many address bits are needed?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(32 \times 32{,}768 \times 1024 \times 8 = 2^{5} \cdot 2^{15} \cdot 2^{10} \cdot 2^{3} = 2^{33}\)</span> bits <span class="arithmatex">\(= 8\)</span> Gb. The address needs <span class="arithmatex">\(3 + 2 + 15 + 10 = 30\)</span> bits (bank group, bank, row, column), each naming 8 bits.</p>
+</details>
+<p><strong>Exercise 2.2 (Assignment 2: an address decoder).</strong> Using the layout in Section 2.6, write <code>decode(addr)</code> returning (bank group, bank, row, column) and <code>encode(bg, ba, row, col)</code>. Check that <code>encode(decode(a)) == a</code> for 10,000 random addresses.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">decode</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="mi">29</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x7</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="mi">27</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0x3</span><span class="p">,</span> <span class="p">(</span><span class="n">a</span> <span class="o">&gt;&gt;</span> <span class="mi">11</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span><span class="p">,</span> <span class="n">a</span> <span class="o">&amp;</span> <span class="mh">0x7FF</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">encode</span><span class="p">(</span><span class="n">bg</span><span class="p">,</span> <span class="n">ba</span><span class="p">,</span> <span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">bg</span> <span class="o">&lt;&lt;</span> <span class="mi">29</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">ba</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span><span class="p">)</span> <span class="o">|</span> <span class="p">(</span><span class="n">row</span> <span class="o">&lt;&lt;</span> <span class="mi">11</span><span class="p">)</span> <span class="o">|</span> <span class="n">col</span>
+
+<span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">getrandbits</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">encode</span><span class="p">(</span><span class="o">*</span><span class="n">decode</span><span class="p">(</span><span class="n">a</span><span class="p">))</span> <span class="o">==</span> <span class="n">a</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">decode</span><span class="p">(</span><span class="mh">0xFFFFFFFF</span><span class="p">))</span>   <span class="c1"># (7, 3, 65535, 2047)</span>
+</code></pre></div>
+Check values: <code>0xFFFFFFFF</code> gives bank group 7, bank 3, row 65,535, column 2047, and <span class="arithmatex">\(2^{32}\)</span> addresses <span class="arithmatex">\(\times\)</span> 4 bits <span class="arithmatex">\(= 17{,}179{,}869{,}184\)</span> bits <span class="arithmatex">\(= 16\)</span> Gb.</p>
+</details>
+<p><strong>Exercise 2.3 (Assignment 3: refresh overhead).</strong> Compute <span class="arithmatex">\(t_{RFC}/t_{REFI}\)</span> for <span class="arithmatex">\(t_{REFI}\)</span> of 3.9 µs (normal) and 1.95 µs (above 85 °C), with <span class="arithmatex">\(t_{RFC}\)</span> of 295 ns (16 Gb) and 410 ns (32 Gb). Plot the four cases as a bar chart and write one paragraph on why bigger chips refresh longer.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The results are 7.6 and 15.1 per cent for 16 Gb, 10.5 and 21.0 per cent for 32 Gb (Figure 2.2 shows the chart). A bigger chip has more rows per bank, so each refresh command must restore more rows, and the bank is busy for longer (<span class="arithmatex">\(t_{RFC}\)</span> grows). Because the command interval stays the same, the busy fraction rises. Heat halves the interval and so doubles the overhead.</p>
+</details>
+<p><strong>Exercise 2.4 (Assignment 4: how long can a DRAM cell remember?).</strong> Model a 20 fF capacitor charged to 1.1 V and discharged by a constant leakage current source in ngspice. Run a transient to 50 ms and measure when the voltage has dropped by 0.3 V. Find the largest leakage that survives the 32 ms refresh window.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>By hand, <span class="arithmatex">\(I = C\,\Delta V / t = 20\ \text{fF} \times 0.3\ \text{V} / 32\ \text{ms} \approx 188\)</span> fA. A netlist uses <code>.ic v(cell)=1.1</code>, a capacitor from <code>cell</code> to ground, a current source of the leakage value from <code>cell</code> to ground, <code>.tran</code> to 50 ms, and <code>.meas tran tdrop WHEN v(cell)=0.8</code>. The simulation should agree with 188 fA within a few per cent, giving a drop time of 32 ms.</p>
+</details>
+<p><strong>Exercise 2.5 (Assignment 5: SRAM butterfly curve).</strong> Using ngspice (and optionally Xschem) with SKY130 models, build one CMOS inverter, sweep its input with <code>.dc</code>, mirror the curve and overlay it to form the butterfly. The side of the largest square inside a lobe is the static noise margin. Repeat with the access transistor turned on to see the read condition.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Both noise margins should be positive, and the read SNM is smaller than the hold SNM, because the access transistor disturbs the stored node. If the read SNM reaches zero, the cell flips when read. Making the pull-down transistor stronger than the access transistor (a higher cell ratio) improves the read SNM.</p>
+</details>
+<p><strong>Exercise 2.6 (Assignment 6: sense amplifier race).</strong> Build a cross-coupled latch with an enable transistor. Start the two sides 50 mV apart, enable it, and measure the time to reach 90 per cent of the supply. Repeat for 100, 25 and 10 mV, then add a 10 mV threshold mismatch to one transistor.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The resolve time grows as the initial difference shrinks, roughly with its logarithm. With the mismatch, small differences resolve the wrong way, because the input offset exceeds the signal. This is why designers run Monte Carlo simulations and ensure the sense amplifier's offset is well below the bitline difference that has developed when it fires. Use <code>.ic</code> to set the starting voltages on the two nodes.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="what-ram-is.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. What RAM Is and Why There Are Several Kinds">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1. What RAM Is and Why There Are Several Kinds
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="reading-writing-and-the-interface.html" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Reading, Writing and the Interface">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                3. Reading, Writing and the Interface
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

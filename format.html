@@ -1,0 +1,3219 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Book Format, which describes how a book is laid out in its repository, how its chapters are written, and how it is checked and attached to the library.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/format.html">
+  
+  
+    <link rel="prev" href="publish.html">
+  
+  
+    <link rel="next" href="science/drones_missiles/index.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>Book format - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="assets/extra.css">
+    
+      <link rel="stylesheet" href="assets/reader.css">
+    
+      <link rel="stylesheet" href="assets/viz.css">
+    
+      <link rel="stylesheet" href="assets/app.css">
+    
+      <link rel="stylesheet" href="assets/theme.css">
+    
+      <link rel="stylesheet" href="assets/slides.css">
+    
+      <link rel="stylesheet" href="assets/remote.css">
+    
+      <link rel="stylesheet" href="assets/scans.css">
+    
+    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#1-repository-layout" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Book format
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--shelf" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+  
+    
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  
+    
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="books.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    All books
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  
+    
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="subjects/index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  
+    
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="about.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    About this library
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  
+    
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="install.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Get the app
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  
+    
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="publish.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Publish your book
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  
+    
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Book format
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="format.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Book format
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-repository-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Repository layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pustakalayayml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. pustakalaya.yml
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. pustakalaya.yml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#top-level-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys-of-a-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys of a book
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-markdown-book-bookyml-and-the-chapter-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The Markdown book: book.yml and the chapter files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The Markdown book: book.yml and the chapter files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bookyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        book.yml
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-markdown-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Markdown conventions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Markdown conventions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chapter-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boxes-admonitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boxes (admonitions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercises-with-folded-answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises with folded answers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figures-with-captions-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Figures with captions and labels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mathematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mathematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#footnotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Footnotes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-references
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glossary-definition-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glossary (definition lists)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-allowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not allowed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-images-and-covers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Images and covers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Languages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-latex-and-html-books" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. LaTeX and HTML books
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-makes-a-book-build-cleanly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. What makes a book build cleanly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-attaching-a-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Attaching a book
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-generating-a-book-a-minimal-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Generating a book: a minimal example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-animations-and-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Animations and visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Animations and visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-through-figures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-through figures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interactive-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive visualizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagrams-as-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagrams as text
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bookspy-check-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What books.py check tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-category-level-and-kind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Category, level and kind
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Category, level and kind">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-categories-and-their-subcategories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The categories and their subcategories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bookspy-check-tests_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What books.py check tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-slides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Slides
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Slides">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-slide-marker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A slide marker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-slide-for-the-presentation-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A slide for the presentation only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-deck-of-its-own" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A deck of its own
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-is-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it is built
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bookspy-check-tests_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What books.py check tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-linked-books" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Linked books
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Linked books">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scanned-books-the-archive-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scanned books: the archive source
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  
+    
+      
+        <li class="md-nav__item bjp-nav-coll">
+          <span class="bjp-nav-head">Science and Technology</span>
+          <ul class="md-nav__list bjp-nav-books">
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="science/drones_missiles/index.html" class="md-nav__link">
+            <span class="md-ellipsis">Drones and Missiles</span>
+          </a>
+        </li>
+      
+    
+  
+</ul>
+        </li>
+      
+    
+  
+    
+      
+        <li class="md-nav__item bjp-nav-coll">
+          <span class="bjp-nav-head">Computing and Networks</span>
+          <ul class="md-nav__list bjp-nav-books">
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="computing/asic/index.html" class="md-nav__link">
+            <span class="md-ellipsis">ASIC Design: A Field Guide</span>
+          </a>
+        </li>
+      
+    
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="computing/rtl_to_gdsii/index.html" class="md-nav__link">
+            <span class="md-ellipsis">From RTL to GDSII</span>
+          </a>
+        </li>
+      
+    
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="computing/ram_ddr5/index.html" class="md-nav__link">
+            <span class="md-ellipsis">RAM Types and DDR5 Memory</span>
+          </a>
+        </li>
+      
+    
+  
+</ul>
+        </li>
+      
+    
+  
+    
+      
+        <li class="md-nav__item bjp-nav-coll">
+          <span class="bjp-nav-head">Cyber Security</span>
+          <ul class="md-nav__list bjp-nav-books">
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="cyber/trust/index.html" class="md-nav__link">
+            <span class="md-ellipsis">Roots of Trust, TPM & PKI</span>
+          </a>
+        </li>
+      
+    
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="cyber/datacentre_security_ip/index.html" class="md-nav__link">
+            <span class="md-ellipsis">Security IP in Data Centres</span>
+          </a>
+        </li>
+      
+    
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="cyber/randomness_testing/index.html" class="md-nav__link">
+            <span class="md-ellipsis">Randomness Testing</span>
+          </a>
+        </li>
+      
+    
+  
+</ul>
+        </li>
+      
+    
+  
+    
+      
+        <li class="md-nav__item bjp-nav-coll">
+          <span class="bjp-nav-head">Courses</span>
+          <ul class="md-nav__list bjp-nav-books">
+  
+    
+      
+        <li class="md-nav__item">
+          <a href="courses/web_programming/index.html" class="md-nav__link">
+            <span class="md-ellipsis">Advanced Web Programming</span>
+          </a>
+        </li>
+      
+    
+  
+</ul>
+        </li>
+      
+    
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1-repository-layout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. Repository layout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-pustakalayayml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. pustakalaya.yml
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. pustakalaya.yml">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#top-level-keys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Top-level keys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#keys-of-a-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Keys of a book
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-the-markdown-book-bookyml-and-the-chapter-files" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. The Markdown book: book.yml and the chapter files
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. The Markdown book: book.yml and the chapter files">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bookyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        book.yml
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-markdown-conventions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. Markdown conventions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. Markdown conventions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chapter-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Chapter structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boxes-admonitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boxes (admonitions)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exercises-with-folded-answers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises with folded answers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#figures-with-captions-and-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Figures with captions and labels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#code" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Code
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mathematics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Mathematics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#footnotes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Footnotes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cross-references" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cross-references
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glossary-definition-lists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Glossary (definition lists)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-allowed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Not allowed
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-images-and-covers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. Images and covers
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-languages" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. Languages
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-latex-and-html-books" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. LaTeX and HTML books
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-what-makes-a-book-build-cleanly" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. What makes a book build cleanly
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-attaching-a-book" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. Attaching a book
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-generating-a-book-a-minimal-example" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10. Generating a book: a minimal example
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11-animations-and-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11. Animations and visualizations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. Animations and visualizations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#video" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Video
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#step-through-figures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Step-through figures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#interactive-visualizations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Interactive visualizations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#diagrams-as-text" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Diagrams as text
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bookspy-check-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What books.py check tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-category-level-and-kind" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        12. Category, level and kind
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="12. Category, level and kind">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-categories-and-their-subcategories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The categories and their subcategories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bookspy-check-tests_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What books.py check tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-slides" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Slides
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Slides">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-slide-marker" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A slide marker
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-slide-for-the-presentation-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A slide for the presentation only
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-deck-of-its-own" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A deck of its own
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-is-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it is built
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-bookspy-check-tests_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What books.py check tests
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-linked-books" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        13. Linked books
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="13. Linked books">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#scanned-books-the-archive-source" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Scanned books: the archive source
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<div class="pk-format" markdown="0"></div>
+
+<h1 id="the-pustakalaya-book-format-version-12">The Pustakālaya Book Format, version 1.2<a class="headerlink" href="#the-pustakalaya-book-format-version-12" title="Permanent link">&para;</a></h1>
+<p>This document is the specification of the format in which a book is handed to Pustakālaya, a library of books that are
+read page by page, online or offline. It is written for two readers: an author who writes a book by hand, and a program
+that generates books (a converter, a course tool, a script that turns notes into chapters). A book that follows this
+format can be attached to any Pustakālaya library and is published without further work.</p>
+<p>A book is a <strong>git repository</strong> (or a plain folder). The library never changes it. Two things describe it:</p>
+<ul>
+<li><code>pustakalaya.yml</code>, which says what the repository contains (the book's id, title, author, cover, language);</li>
+<li>the book itself, in one of three formats: <strong>Markdown</strong> (the normalized Markdown book, described in full below, the
+  format to generate), <strong>LaTeX</strong> or <strong>HTML</strong> (described briefly, with pointers).</li>
+</ul>
+<p>To check a book, run <code>python tools/books.py check &lt;folder or git address&gt;</code> in the product repository. To start one, run
+<code>python tools/books.py new &lt;folder&gt; --title "..."</code>, or copy the template repository (<code>book-template</code>). To attach one,
+run <code>python tools/books.py attach &lt;folder or git address&gt; --collection &lt;id&gt;</code>.</p>
+<p>Words in this document: <strong>must</strong> is checked by <code>books.py check</code> as an error (the book would not build or would display
+wrongly); <strong>should</strong> is a warning.</p>
+<p>Contents</p>
+<ol>
+<li><a href="#1-repository-layout">Repository layout</a></li>
+<li><a href="#2-pustakalayayml">pustakalaya.yml</a></li>
+<li><a href="#3-the-markdown-book-bookyml-and-the-chapter-files">The Markdown book: book.yml and the chapter files</a></li>
+<li><a href="#4-markdown-conventions">Markdown conventions</a></li>
+<li><a href="#5-images-and-covers">Images and covers</a></li>
+<li><a href="#6-languages">Languages</a></li>
+<li><a href="#7-latex-and-html-books">LaTeX and HTML books</a></li>
+<li><a href="#8-what-makes-a-book-build-cleanly">What makes a book build cleanly</a></li>
+<li><a href="#9-attaching-a-book">Attaching a book</a></li>
+<li><a href="#10-generating-a-book-a-minimal-example">Generating a book: a minimal example</a></li>
+<li><a href="#11-animations-and-visualizations">Animations and visualizations</a> (new in 1.1)</li>
+<li><a href="#12-category-level-and-kind">Category, level and kind</a> (new in 1.2)</li>
+<li><a href="#13-slides">Slides</a> (new in 1.2)</li>
+</ol>
+<hr />
+<h2 id="1-repository-layout">1. Repository layout<a class="headerlink" href="#1-repository-layout" title="Permanent link">&para;</a></h2>
+<p>A repository with one Markdown book:</p>
+<div class="language-text highlight"><pre><span></span><code>my-book/
+  pustakalaya.yml        what the repository contains (section 2)            required
+  book.yml               the chapter list, in reading order (section 3)       required
+  chapters/              one Markdown file per chapter                        required
+    01_preface.md
+    02_first-chapter.md
+    03_second-chapter.md
+  images/                figures and photographs the chapters use             optional
+    workflow.svg
+  README.md              for people browsing the repository                   optional
+  .gitignore             editor files and the like                            optional
+</code></pre></div>
+<ul>
+<li>File and folder names use letters, digits, <code>-</code>, <code>_</code> and <code>.</code>, no spaces. Names are case-sensitive: a book that works on
+  Windows must also work on Linux, so <code>images/Fig1.png</code> is not <code>images/fig1.png</code>.</li>
+<li>All text files are UTF-8 (a byte order mark is tolerated), with <code>\n</code> or <code>\r\n</code> line ends.</li>
+<li>The repository holds no build output. The library builds the book; nothing in the repository is executed.</li>
+<li>A repository may hold several books, each in a folder of its own, listed in one <code>pustakalaya.yml</code> with a <code>path:</code> for
+  each (section 2). The layout above is then repeated per folder.</li>
+</ul>
+<h2 id="2-pustakalayayml">2. pustakalaya.yml<a class="headerlink" href="#2-pustakalayayml" title="Permanent link">&para;</a></h2>
+<p><code>pustakalaya.yml</code> is at the root of the repository. It is a YAML mapping with a list of books.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">pustakalaya</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span><span class="w">                  </span><span class="c1"># schema version</span>
+<span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">markdown</span><span class="w">                </span><span class="c1"># default format of the books below</span>
+<span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ada Example</span><span class="w">             </span><span class="c1"># defaults for the books below</span>
+<span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en</span>
+<span class="nt">books</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">my_book</span>
+<span class="w">    </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Book</span>
+<span class="w">    </span><span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A short line under the title</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">One or two sentences for the cover card and the book's first page.</span>
+<span class="w">    </span><span class="nt">chapter_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chapter</span>
+<span class="w">    </span><span class="nt">subjects</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">programming</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">algorithms</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># section 12: subcategories from the list, the main one first</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">beginner</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textbook</span>
+<span class="w">    </span><span class="nt">cover</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">background</span><span class="p">:</span><span class="w"> </span><span class="s">"#1f3a5f"</span>
+<span class="w">      </span><span class="nt">accent</span><span class="p">:</span><span class="w"> </span><span class="s">"#f2b84b"</span>
+<span class="w">      </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="s">"#f6f8fb"</span>
+</code></pre></div>
+<h3 id="top-level-keys">Top-level keys<a class="headerlink" href="#top-level-keys" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>pustakalaya</code></td>
+<td>integer</td>
+<td></td>
+<td>The schema version. Must be <code>1</code> when present; should be present.</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td><code>latex</code> | <code>markdown</code> | <code>html</code></td>
+<td><code>latex</code></td>
+<td>Default format of the books. <strong>A Markdown book must say <code>markdown</code></strong>, here or on the book.</td>
+</tr>
+<tr>
+<td><code>main</code></td>
+<td>text</td>
+<td><code>main.tex</code></td>
+<td>Default LaTeX main file.</td>
+</tr>
+<tr>
+<td><code>author</code>, <code>affiliation</code>, <code>generated_by</code>, <code>language</code>, <code>chapter_label</code>, <code>conventions</code>, <code>subjects</code>, <code>level</code>, <code>kind</code>, <code>tags</code></td>
+<td>as on a book</td>
+<td></td>
+<td>Defaults for every book that does not set its own.</td>
+</tr>
+<tr>
+<td><code>collection</code></td>
+<td>text</td>
+<td></td>
+<td>The collection the books would like to be in. A suggestion: the library decides.</td>
+</tr>
+<tr>
+<td><code>books</code></td>
+<td>list</td>
+<td></td>
+<td><strong>Required.</strong> At least one book.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="keys-of-a-book">Keys of a book<a class="headerlink" href="#keys-of-a-book" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Default</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>id</code></td>
+<td>text</td>
+<td></td>
+<td><strong>Required.</strong> Letters <code>a-z</code>, digits, <code>_</code> or <code>-</code>; starts with a letter or digit. Unique in the repository and in the library. It is the book's folder in the site (<code>&lt;collection&gt;/&lt;id&gt;/</code>), so it is never changed after publication: readers' saved places and links depend on it. The names <code>assets</code>, <code>search</code>, <code>img</code>, <code>index</code>, <code>about</code>, <code>offline</code>, <code>sitemap</code>, <code>library</code>, <code>sw</code>, <code>install</code>, <code>publish</code>, <code>format</code>, <code>books</code>, <code>subjects</code>, <code>lists</code> are reserved.</td>
+</tr>
+<tr>
+<td><code>path</code></td>
+<td>text</td>
+<td><code>.</code></td>
+<td>The book's folder inside the repository. Must stay inside the repository.</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td><code>latex</code> | <code>markdown</code> | <code>html</code></td>
+<td>the top-level <code>format</code></td>
+<td>See sections 3 to 7.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>text</td>
+<td>the id, in capitals</td>
+<td>The book's title. Should be set.</td>
+</tr>
+<tr>
+<td><code>subtitle</code></td>
+<td>text</td>
+<td>empty</td>
+<td>A line under the title, on the cover and the first page.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>text</td>
+<td>empty</td>
+<td>One or two sentences, on the cover card and under the title. Should be set; keep it under 500 characters.</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>text</td>
+<td>the owner of the library</td>
+<td>Author's name, on the cover. Always set it.</td>
+</tr>
+<tr>
+<td><code>affiliation</code></td>
+<td>text</td>
+<td>empty</td>
+<td>The author's institution.</td>
+</tr>
+<tr>
+<td><code>generated_by</code></td>
+<td>text</td>
+<td>empty</td>
+<td>For a book whose <code>author</code> is shown as "AI generated": the name of the person behind it. The engine writes "Generated by <name>" inside the book: under the author on the book's first page (and at the top of its "About this book" section), in the reader's contents panel, and on the title slide of the presentation. It is not shown on covers, shelf cards or in search; they show the <code>author</code>.</td>
+</tr>
+<tr>
+<td><code>language</code></td>
+<td>text</td>
+<td><code>en</code></td>
+<td>Language code (<code>en</code>, <code>hi</code>, <code>sa</code>, <code>ta</code>, ...). Sets the page language, fonts and hyphenation (section 6).</td>
+</tr>
+<tr>
+<td><code>chapter_label</code></td>
+<td>text</td>
+<td><code>Chapter</code></td>
+<td>What a numbered chapter is called in headings and contents: <code>Chapter</code>, <code>Lesson</code>, <code>Unit</code>, <code>Part</code>, or a word in the book's language.</td>
+</tr>
+<tr>
+<td><code>cover</code></td>
+<td>mapping</td>
+<td>maroon cover</td>
+<td>Section 5.</td>
+</tr>
+<tr>
+<td><code>conventions</code></td>
+<td>mapping</td>
+<td></td>
+<td>LaTeX books only (section 7).</td>
+</tr>
+<tr>
+<td><code>main</code></td>
+<td>text</td>
+<td><code>main.tex</code></td>
+<td>LaTeX books only: the root file.</td>
+</tr>
+<tr>
+<td><code>importer</code>, <code>edition</code>, <code>file</code></td>
+<td>text</td>
+<td></td>
+<td>HTML books only (section 7).</td>
+</tr>
+<tr>
+<td><code>contents</code></td>
+<td>list of paths</td>
+<td></td>
+<td>Plain Markdown books only: the chapter files, in order, instead of detecting them.</td>
+</tr>
+<tr>
+<td><code>collection</code></td>
+<td>text</td>
+<td>the library entry's</td>
+<td>Overrides the collection for this book.</td>
+</tr>
+<tr>
+<td><code>order</code></td>
+<td>integer</td>
+<td>order of listing</td>
+<td>Position of the book in its collection. Books are ordered as listed unless <code>order</code> is set.</td>
+</tr>
+<tr>
+<td><code>public</code></td>
+<td>boolean</td>
+<td><code>true</code></td>
+<td><code>false</code> keeps the book out of the published site (it can still be read in a local private build).</td>
+</tr>
+<tr>
+<td><code>published_elsewhere</code></td>
+<td>boolean</td>
+<td><code>false</code></td>
+<td>With <code>public: false</code>: the book is published on another portal (a book kept on a portal's reserve shelf, for example), so its title may be cited in the text of the books of this portal; <code>check.py</code> then looks only for its addresses.</td>
+</tr>
+<tr>
+<td><code>subjects</code></td>
+<td>list of subject ids</td>
+<td></td>
+<td>Section 12. The categories of the book: ids of subcategories (or of a category) from the list in section 12, the main one first. Should be set.</td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td><code>beginner</code> | <code>intermediate</code> | <code>advanced</code></td>
+<td></td>
+<td>Section 12. Who the book is written for.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td><code>textbook</code> | <code>course</code> | <code>field-guide</code> | <code>reference</code> | <code>workbook</code> | <code>series-volume</code></td>
+<td></td>
+<td>Section 12. What sort of book it is.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>list of words</td>
+<td></td>
+<td>Section 12. Words that help a search find the book (names, abbreviations, other spellings).</td>
+</tr>
+</tbody>
+</table>
+<p>Unknown keys are reported as warnings: they are usually typos.</p>
+<p>A repository that cannot hold the file (it is not yours to change) is described by an inline <code>manifest:</code> in the
+library's <code>library.yml</code>, with the same keys. When there is neither a file nor a manifest, the repository is
+auto-detected: a normalized Markdown book (<code>book.yml</code> and <code>chapters/</code>), a LaTeX main file, plain Markdown, or an HTML
+book. Auto-detection is a convenience; write the file, so that the id, the title and the cover are yours.</p>
+<h2 id="3-the-markdown-book-bookyml-and-the-chapter-files">3. The Markdown book: book.yml and the chapter files<a class="headerlink" href="#3-the-markdown-book-bookyml-and-the-chapter-files" title="Permanent link">&para;</a></h2>
+<p>This is the format to generate. A book folder holds <code>book.yml</code>, <code>chapters/</code> and <code>images/</code>.</p>
+<h3 id="bookyml">book.yml<a class="headerlink" href="#bookyml" title="Permanent link">&para;</a></h3>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">My Book</span><span class="w">                  </span><span class="c1"># informational; the library takes title and author from pustakalaya.yml</span>
+<span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">A short line</span>
+<span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ada Example</span>
+<span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en</span>
+<span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span>
+<span class="w">  </span><span class="no">A fuller text about the book. It is shown on the book's first page, under "About this book".</span>
+<span class="nt">numbering</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sections</span>
+<span class="nt">chapters</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chapters/01_preface.md</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Preface</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">front</span>
+<span class="w">    </span><span class="nt">sections</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">3</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chapters/02_first-chapter.md</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">The First Chapter</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chapter</span>
+<span class="w">    </span><span class="nt">number</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="w">    </span><span class="nt">label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Part I</span>
+<span class="w">    </span><span class="nt">sections</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">chapters/09_glossary.md</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Glossary</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">back</span>
+<span class="w">    </span><span class="nt">sections</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>chapters</code></td>
+<td>list</td>
+<td><strong>Required</strong>, not empty. The pages of the book in reading order. The order of this list is the order of the book; the file names do not decide it.</td>
+</tr>
+<tr>
+<td><code>description</code></td>
+<td>text</td>
+<td>The fuller description on the book's first page. The one-line description on the cover card is <code>description</code> in <code>pustakalaya.yml</code>.</td>
+</tr>
+<tr>
+<td><code>title</code>, <code>subtitle</code>, <code>author</code>, <code>language</code>, <code>numbering</code></td>
+<td></td>
+<td>Informational. <code>numbering: sections</code> says that sections carry the numbers written in their headings.</td>
+</tr>
+<tr>
+<td><code>id</code>, <code>collection</code>, <code>importer</code>, <code>source</code></td>
+<td></td>
+<td>Written by the converters of the library; ignored.</td>
+</tr>
+</tbody>
+</table>
+<p>Each entry of <code>chapters</code>:</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Type</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>file</code></td>
+<td>path</td>
+<td><strong>Required.</strong> The chapter's file, relative to the book folder; normally <code>chapters/NN_slug.md</code>. Must exist, and be listed once.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>text</td>
+<td><strong>Required.</strong> The title in the contents and the navigation. Should equal the <code>#</code> heading of the file.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td><code>front</code> | <code>chapter</code> | <code>back</code></td>
+<td>Default <code>chapter</code>. <code>front</code>: unnumbered pages before the chapters (preface, how to read this book). <code>chapter</code>: a numbered chapter. <code>back</code>: unnumbered pages after the chapters (glossary, bibliography, solutions).</td>
+</tr>
+<tr>
+<td><code>number</code></td>
+<td>integer</td>
+<td><strong>Required for <code>chapter</code></strong>, ignored otherwise. The chapter's number: <code>3</code> makes the page heading "Chapter 3: Title". Numbers should increase.</td>
+</tr>
+<tr>
+<td><code>label</code></td>
+<td>text</td>
+<td>A label for the contents: <code>Unit 2</code>, <code>Part III</code>. See <em>Grouping</em> below.</td>
+</tr>
+<tr>
+<td><code>sections</code></td>
+<td>integer</td>
+<td>The number of <code>##</code> sections of the file. Informational.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Chapter file names.</strong> Name the files <code>NN_slug.md</code>: two digits (three for a book of more than 99 pages), an underscore,
+a lowercase slug of letters, digits and hyphens. The slug, without the number, is the page's address
+(<code>&lt;book&gt;/first-chapter.html</code>), so slugs should be unique; a repeated slug gets <code>-2</code>. Do not use <code>index</code>, <code>about</code>,
+<code>bibliography</code> or <code>offline</code> as a slug. Use ASCII slugs even for books in other scripts.</p>
+<p><strong>Kinds.</strong> A book needs at least one <code>chapter</code>. The contents list the pages under <em>Front matter</em>, <em>Chapters</em> and
+<em>Back matter</em>.</p>
+<p><strong>Grouping.</strong> When two or more chapters share a <code>label</code>, the contents group the chapters by label ("Unit 1", "Part II").
+Chapters with a label of their own then form a group of one. Without shared labels, the label is not used.</p>
+<p><strong>The first page.</strong> The library writes the book's first page itself, from the descriptions and the contents (every
+chapter, with its sections and subsections). The <code>front</code> chapters follow it as ordinary pages; the reader opens at the
+first front chapter or, without one, at the first chapter.</p>
+<h2 id="4-markdown-conventions">4. Markdown conventions<a class="headerlink" href="#4-markdown-conventions" title="Permanent link">&para;</a></h2>
+<p>The text is Markdown as understood by Python-Markdown with these extensions: tables, fenced code with highlighting,
+attribute lists, definition lists, footnotes, admonitions, folded details, Markdown inside HTML, and MathJax
+mathematics. Each convention below has an example; the template book (<code>book-template</code>) uses all of them.</p>
+<h3 id="chapter-structure">Chapter structure<a class="headerlink" href="#chapter-structure" title="Permanent link">&para;</a></h3>
+<p>A chapter file starts with one title line and then sections:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span class="gh"># Querying with SELECT</span>
+
+<span class="ge">*Filtering, operators and ordering*</span>
+
+<span class="gu">## 3.1 The SELECT statement</span>
+
+Text...
+
+<span class="gu">### Basic forms</span>
+
+Text...
+
+<span class="gu">## 3.2 The WHERE clause</span>
+</code></pre></div>
+<ul>
+<li><code># Title</code> is the first line of the file (blank lines may come before it). It has no number: the build writes the
+  chapter's number (from <code>book.yml</code>) into the page heading. Only one <code>#</code> heading.</li>
+<li>A chapter <strong>must have at least one <code>##</code> section</strong>. Sections of a numbered chapter are written <code>## N.M Title</code>, with
+  the chapter number <code>N</code> and a running number <code>M</code>, typed by hand: the library does not renumber them. Front and back
+  matter use unnumbered <code>## Title</code>.</li>
+<li><code>###</code> subsections and deeper headings are not numbered. The contents and the reader's "Go to" box list <code>##</code> and <code>###</code>.</li>
+<li>Headings get anchors made from their text. To keep a link stable when a title changes, give the heading an explicit
+  anchor: <code>## 3.1 The SELECT statement {#select}</code> (letters, digits, <code>-</code>, <code>_</code>).</li>
+<li>Blank lines separate blocks. Paragraphs are plain lines; <code>*italic*</code>, <code>**bold**</code>, <code>`code`</code>, lists with <code>-</code> or <code>1.</code>.
+  A list or block that follows a paragraph needs a blank line before it.</li>
+</ul>
+<h3 id="boxes-admonitions">Boxes (admonitions)<a class="headerlink" href="#boxes-admonitions" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>!!! warning "Common mistake"
+
+    The body is indented by four spaces. It may hold paragraphs, lists, code and mathematics.
+</code></pre></div>
+<ul>
+<li>The header is <code>!!!</code>, a <strong>type</strong> and an optional title in double quotes. A blank line before and after the box.</li>
+<li>Types: <code>note</code>, <code>tip</code>, <code>info</code>, <code>warning</code>, <code>example</code>, <code>quote</code>, <code>abstract</code>, <code>success</code>, <code>question</code>, <code>failure</code>, <code>danger</code>,
+  <code>bug</code>. (<code>summary</code>, <code>hint</code>, <code>important</code>, <code>caution</code>, <code>error</code> and a few more are accepted as aliases.) Other types are
+  shown as plain boxes and reported as a warning.</li>
+<li>Use <code>abstract</code> for "In brief" and chapter summaries, <code>note</code> for learning outcomes, <code>example</code> for worked examples and
+  exercises, <code>quote</code> for quotations (give the source in the box), <code>warning</code> for common mistakes, <code>tip</code> for advice.</li>
+<li><code>???</code> instead of <code>!!!</code> makes the box folded until the reader opens it; <code>???+</code> makes it open at first.</li>
+</ul>
+<h3 id="exercises-with-folded-answers">Exercises with folded answers<a class="headerlink" href="#exercises-with-folded-answers" title="Permanent link">&para;</a></h3>
+<p>An exercise is an <code>example</code> box titled "Exercise N"; its answer is a folded box that follows it directly.</p>
+<div class="language-markdown highlight"><pre><span></span><code>!!! example "Exercise 1"
+
+    Name the file in which the list of chapters is kept.
+
+??? note "Answer"
+
+    <span class="gs">**`book.yml`.**</span> It lists the chapters in reading order.
+</code></pre></div>
+<h3 id="figures-with-captions-and-labels">Figures with captions and labels<a class="headerlink" href="#figures-with-captions-and-labels" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>![<span class="nt">The caption of the figure, as a full sentence.</span>](<span class="na">images/workflow.svg "Figure 1.1 Short label"</span>)
+</code></pre></div>
+<ul>
+<li>The figure goes on a line of its own. The text in brackets is the caption; the optional quoted text after the file name
+  is the <strong>label</strong>, printed in bold before the caption ("Figure 1.1 Short label. The caption..."). Type the figure
+  number into the label; it is not counted for you.</li>
+<li>The path is <code>images/name.ext</code>. Write the caption: it is also the text for readers who cannot see the picture.</li>
+<li>An image inside a sentence, or with any other path form, is shown as an ordinary image without caption.</li>
+</ul>
+<h3 id="tables">Tables<a class="headerlink" href="#tables" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>| Element | Written as | Appears as |
+|---|:---:|---|
+| Section | <span class="sb">`## 1.1 Title`</span> | numbered section |
+| Box | <span class="sb">`!!! note "Title"`</span> | coloured box |
+
+<span class="ge">*Table 1.1. The main elements of a chapter.*</span>
+</code></pre></div>
+<p>Pipe tables with a header row. The second row sets alignment (<code>:---</code>, <code>:---:</code>, <code>---:</code>). A cell is one line; use
+<code>&lt;br&gt;</code> for a line break. A table wider than the page scrolls inside the page. Put the caption on a line of its own after
+the table, in italics, with the number typed into it. A blank line before the table.</p>
+<h3 id="code">Code<a class="headerlink" href="#code" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code><span class="sb">```python</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">mean</span><span class="p">(</span><span class="n">values</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+<span class="sb">```</span>
+</code></pre></div>
+<p>Fence code with three backticks (or <code>~~~</code>) <strong>and a language</strong>: any Pygments name (<code>python</code>, <code>c</code>, <code>cpp</code>, <code>java</code>, <code>sql</code>,
+<code>bash</code>, <code>json</code>, <code>yaml</code>, <code>verilog</code>, ...); use <code>text</code> for output and anything that is not a programming language. To show a
+fence inside a fence, use a longer outer fence (four backticks). Inline code is <code>`like this`</code>.</p>
+<h3 id="mathematics">Mathematics<a class="headerlink" href="#mathematics" title="Permanent link">&para;</a></h3>
+<p>Write TeX between dollar signs. MathJax typesets it in the page.</p>
+<div class="language-markdown highlight"><pre><span></span><code>A formula in a sentence, $E = mc^2$, and one on a line of its own:
+
+$$
+\int_0^1 x^2\,dx = \frac{1}{3}
+$$
+</code></pre></div>
+<ul>
+<li><code>$...$</code> is inline; <code>$$...$$</code> is display. <code>\begin{align}...\end{align}</code> and the other amsmath environments work in
+  display mode. <code>\( ... \)</code> and <code>\[ ... \]</code> are accepted too.</li>
+<li>Delimiters must be balanced in a paragraph. A dollar sign that is only a dollar sign is written <code>&amp;#36;</code> ("the price was &#36;5").</li>
+<li>Mathematics is typeset from the MathJax CDN; the page shows the TeX until it has loaded.</li>
+</ul>
+<h3 id="footnotes">Footnotes<a class="headerlink" href="#footnotes" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>A claim that needs a source.[^src]
+
+[<span class="nl">^src</span>]: <span class="na">Author, *Title*, chapter 3.</span>
+</code></pre></div>
+<p>The marker <code>[^name]</code> and its definition <code>[^name]: text</code> are on the same page; names are local to the page. Every marker
+needs a definition and every definition a marker. The reader shows footnotes as pop-ups.</p>
+<h3 id="cross-references">Cross-references<a class="headerlink" href="#cross-references" title="Permanent link">&para;</a></h3>
+<p>Link to another chapter by its file name, and to a heading by its anchor:</p>
+<div class="language-markdown highlight"><pre><span></span><code>See [<span class="nt">Writing a Chapter</span>](<span class="na">02_writing-a-chapter.md</span>), and [<span class="nt">the section on figures</span>](<span class="na">02_writing-a-chapter.md#figures</span>).
+Within a page: [<span class="nt">section 2.1</span>](<span class="na">#exercises</span>).
+</code></pre></div>
+<ul>
+<li><code>file.md</code> is the file name from <code>book.yml</code> (with or without <code>chapters/</code> or <code>./</code>); the link also works when the
+  repository is browsed on a git host. The link must name a chapter that is in <code>book.yml</code>.</li>
+<li>Prefer explicit anchors (<code>{#figures}</code>) for targets of links. The anchor of a heading without one is its text in
+  lowercase, with punctuation removed and spaces turned into <code>-</code> (<code>## 1.3 Figures</code> becomes <code>#13-figures</code>).</li>
+<li>References to numbered figures, tables and equations are typed as text ("Figure 1.1"); the label is the number.</li>
+<li>Links to other sites are ordinary Markdown links.</li>
+</ul>
+<h3 id="glossary-definition-lists">Glossary (definition lists)<a class="headerlink" href="#glossary-definition-lists" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>Admonition
+:   A box with a title, written with <span class="sb">`!!!`</span> and a body indented by four spaces.
+
+Front matter
+:   The unnumbered chapters before the first numbered one.
+</code></pre></div>
+<p>The term on a line of its own, then a line that starts with a colon and three spaces. A glossary is a <code>back</code> chapter with
+one or more <code>##</code> sections (<code>## A</code>, <code>## B</code>, ...).</p>
+<h3 id="not-allowed">Not allowed<a class="headerlink" href="#not-allowed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Raw <code>&lt;script&gt;</code> and <code>&lt;style&gt;</code> elements. Nothing in a book is executed, and styles belong to the library.</li>
+<li><code>&lt;iframe&gt;</code>, <code>&lt;object&gt;</code> and <code>&lt;embed&gt;</code> do not work offline and in the reader; avoid them. For a program that the reader can use, write a <code>viz</code> block (section 11).</li>
+<li>Remote images (<code>https://...</code>): they are not available offline. Put a copy in <code>images/</code>.</li>
+</ul>
+<h2 id="5-images-and-covers">5. Images and covers<a class="headerlink" href="#5-images-and-covers" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Folder and names.</strong> Images are in <code>images/</code>, referenced as <code>images/name.ext</code>. Use lowercase names with hyphens.
+  Subfolders are allowed.</li>
+<li><strong>Formats.</strong> SVG for diagrams (small, sharp at every size, theme-neutral colours); PNG for screenshots; JPEG or WebP
+  for photographs; GIF only when unavoidable. MP4 or WebM for video, and the other moving figures of section 11.</li>
+<li><strong>Size.</strong> A raster image should be at most <strong>1600 pixels wide</strong> and a file at most <strong>2 MB</strong>; larger files slow the page and
+  the offline copy. <code>books.py check</code> warns about both. Figures are scaled to the page.</li>
+<li><strong>Photographs and licences.</strong> For Markdown books every file in <code>images/</code> is published as it is. Only include images that
+  you may publish, and put the credit in the caption: <code>![Sanchi stupa. Photo: A. Photographer, CC BY-SA 4.0.](...)</code>.</li>
+<li><strong>Cover.</strong> The cover on the shelf is typographic: the collection name, the book's number if the collection numbers
+  its books, the title, the subtitle and the author on a coloured background.</li>
+</ul>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">cover</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">background</span><span class="p">:</span><span class="w"> </span><span class="s">"#1f3a5f"</span><span class="w">   </span><span class="c1"># the cover</span>
+<span class="w">  </span><span class="nt">accent</span><span class="p">:</span><span class="w"> </span><span class="s">"#f2b84b"</span><span class="w">       </span><span class="c1"># the rule and small details</span>
+<span class="w">  </span><span class="nt">text</span><span class="p">:</span><span class="w"> </span><span class="s">"#f6f8fb"</span><span class="w">         </span><span class="c1"># the title and author</span>
+</code></pre></div>
+<p>Colours are <code>#</code> followed by six hexadecimal digits, in quotes. Choose a text colour with a contrast of at least 4.5:1
+  against the background (the checker warns). The defaults are maroon, gold and cream.</p>
+<p>A picture can be the cover instead: <code>cover: {image: images/cover.jpg}</code>, a JPEG, PNG or WebP file, relative to the book
+  folder, portrait (it is scaled to 600 pixels wide). With an image the title text is hidden on the
+  shelf, so the picture should carry the title.</p>
+<h2 id="6-languages">6. Languages<a class="headerlink" href="#6-languages" title="Permanent link">&para;</a></h2>
+<p>Set <code>language</code> in <code>pustakalaya.yml</code> (<code>en</code>, <code>hi</code>, <code>sa</code>, <code>ta</code>, ...). It sets the <code>lang</code> of every page and of the reader,
+which selects the fonts and the hyphenation rules: Devanagari text (<code>hi</code>, <code>sa</code>, <code>mr</code>) uses Noto Serif Devanagari when the
+reader is online and the installed Devanagari faces otherwise, with hyphenation off and a larger line spacing.</p>
+<ul>
+<li>Write the text, the titles and the <code>chapter_label</code> (for example <code>अध्याय</code>, <code>पाठ</code>) in the language of the book.</li>
+<li>Keep <strong>file names, slugs and the <code>id</code> in ASCII</strong>: they become addresses.</li>
+<li>Headings in a non-Latin script get automatic anchors that are empty or identical. Give the headings that you link to an
+  explicit anchor (<code>## परिचय {#parichay}</code>).</li>
+<li>Mixed text (Sanskrit words in an English book) needs no markup; give transliteration in IAST if the book uses it.</li>
+<li>The words that the library itself shows (Contents, Read, Library) are in English.</li>
+</ul>
+<h2 id="7-latex-and-html-books">7. LaTeX and HTML books<a class="headerlink" href="#7-latex-and-html-books" title="Permanent link">&para;</a></h2>
+<p>The Markdown book is the format to generate. The library also reads two other kinds of repository; they are described in
+<code>README.md</code>, which is the reference for them.</p>
+<p><strong>LaTeX</strong> (<code>format: latex</code>). A book class (<code>book</code>, <code>report</code>, <code>memoir</code>, <code>scrbook</code>) with a main file (<code>main.tex</code> or
+<code>main: name.tex</code>), <code>\include</code> or <code>\input</code> files, <code>\frontmatter</code>, <code>\mainmatter</code>, <code>\appendix</code>, <code>\backmatter</code>, and an
+optional BibLaTeX database. Each <code>\chapter</code> becomes a page; boxes, TikZ figures, tables, code listings, mathematics and
+bibliography are converted, and the numbers are those of the print edition. <code>conventions:</code> in <code>pustakalaya.yml</code> switches
+on the generic conversion for books with their own macros and preamble (<code>expand_macros</code>, <code>equation_numbering</code>, <code>slugs</code>,
+<code>box_titles</code>, <code>strip_words</code>, <code>bibliography</code>, <code>preface_title</code>, <code>boxes</code>). See "LaTeX conventions" and "Books of any layout"
+in <code>README.md</code>. pandoc and a TeX distribution must be installed where the library is built.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">pustakalaya</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+<span class="nt">format</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">latex</span>
+<span class="nt">books</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hardware_security</span>
+<span class="w">    </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hardware_security_book.tex</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Hardware Security</span>
+<span class="w">    </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Ada Example</span>
+<span class="w">    </span><span class="nt">conventions</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">expand_macros</span><span class="p">:</span><span class="w"> </span><span class="nv">true</span><span class="p p-Indicator">,</span><span class="nt"> equation_numbering</span><span class="p">:</span><span class="w"> </span><span class="nv">chapter</span><span class="p p-Indicator">,</span><span class="nt"> slugs</span><span class="p">:</span><span class="w"> </span><span class="nv">title</span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<p><strong>HTML</strong> (<code>format: html</code>). Two layouts are understood: <code>importer: english</code> with <code>edition: en | hinglish | hi</code> (a folder
+per edition with <code>assets/toc.js</code>; one repository gives three books) and <code>importer: toc-book</code> with <code>edition: en | hinglish | hi</code> (the same, for a course whose English edition is at the root of the
+repository and whose other editions are in <code>hinglish/</code> and <code>hi/</code>) and <code>importer: guide</code> with <code>file: guide.html</code> (a
+single page with a cover section). Both are converted into a normalized Markdown book when the library is built. A new
+HTML book should rather be generated as Markdown.</p>
+<p><strong>Plain Markdown</strong> (<code>format: markdown</code> without <code>book.yml</code>). An mkdocs, mdBook or GitBook layout, or numbered chapter files
+(<code>01-intro.md</code>, ...), with an optional <code>contents:</code> list. It is converted to a normalized Markdown book when the library
+is built, and the result is only as good as the guesses made from the layout. Generating <code>book.yml</code> and <code>chapters/</code> is
+better.</p>
+<h2 id="8-what-makes-a-book-build-cleanly">8. What makes a book build cleanly<a class="headerlink" href="#8-what-makes-a-book-build-cleanly" title="Permanent link">&para;</a></h2>
+<p><code>python tools/books.py check &lt;folder&gt;</code> tests the points marked (c). The others are for you.</p>
+<p><strong>Repository and manifest</strong></p>
+<ul>
+<li>[ ] <code>pustakalaya.yml</code> is valid YAML, has <code>pustakalaya: 1</code>, <code>format: markdown</code> and a <code>books:</code> list (c)</li>
+<li>[ ] every book has an <code>id</code> that matches <code>[a-z0-9][a-z0-9_-]*</code>, is unique and is not the id of another book in the library (c)</li>
+<li>[ ] <code>title</code>, <code>author</code>, <code>description</code> and <code>language</code> are set (c, as warnings)</li>
+<li>[ ] the cover colours are <code>#rrggbb</code> in quotes, and the text is readable on the background (c)</li>
+<li>[ ] <code>path</code> exists and lies inside the repository (c)</li>
+</ul>
+<p><strong>book.yml and chapters</strong></p>
+<ul>
+<li>[ ] <code>chapters</code> lists every chapter file once, in reading order; no file exists in <code>chapters/</code> that is not listed (c)</li>
+<li>[ ] every entry has <code>file</code> (existing) and <code>title</code>; <code>kind</code> is <code>front</code>, <code>chapter</code> or <code>back</code>; every <code>chapter</code> has a whole <code>number</code>, increasing (c)</li>
+<li>[ ] every file starts with <code># Title</code> and has at least one <code>##</code> section (c)</li>
+<li>[ ] section numbers <code>## N.M</code> agree with the chapter number (c)</li>
+<li>[ ] file names are ASCII, and case matches (c)</li>
+</ul>
+<p><strong>Content</strong></p>
+<ul>
+<li>[ ] every image link is <code>images/...</code> and the file exists, with the same upper and lower case (c)</li>
+<li>[ ] raster images are at most 1600 px wide and 2 MB; remote images are not used (c)</li>
+<li>[ ] no raw <code>&lt;script&gt;</code> or <code>&lt;style&gt;</code> (c)</li>
+<li>[ ] every fenced code block has a language, and every fence is closed (c)</li>
+<li>[ ] every box is written <code>!!! type "Title"</code> with a body indented by four spaces (c)</li>
+<li>[ ] <code>$</code> and <code>$$</code> are balanced; literal dollar signs are <code>&amp;#36;</code> (c)</li>
+<li>[ ] every footnote marker has a definition on the same page (c)</li>
+<li>[ ] every link to another chapter names a chapter in <code>book.yml</code>, and its anchor exists (c)</li>
+<li>[ ] a table has a header row and a separator row, with a blank line before it</li>
+<li>[ ] quotations are attributed and figures have captions</li>
+<li>[ ] every <code>viz</code> block names an existing <code>viz/&lt;name&gt;/index.html</code>, every <code>steps</code> frame exists, videos are MP4 or WebM, and nothing in <code>viz/</code> loads from another site (c, section 11)</li>
+</ul>
+<p>Beyond the checker, the library's own build (<code>python tools/build.py</code>, then <code>python tools/check.py --build</code>) must report
+no issues for the whole site.</p>
+<h2 id="9-attaching-a-book">9. Attaching a book<a class="headerlink" href="#9-attaching-a-book" title="Permanent link">&para;</a></h2>
+<p>From the product repository (the one with <code>library.yml</code>):</p>
+<div class="language-text highlight"><pre><span></span><code>python tools/books.py check ../my-book                         # validate
+python tools/books.py attach ../my-book --collection courses   # a folder: used where it is
+python tools/books.py attach https://github.com/me/my-book.git --collection courses
+python tools/build.py                                          # pages
+python -m mkdocs serve                                         # read it at http://127.0.0.1:8000
+</code></pre></div>
+<p><code>attach</code> fetches the repository (a git address is cloned into <code>books/</code>), reads <code>pustakalaya.yml</code>, adds an entry under
+<code>repos:</code> in <code>library.yml</code> (with the collection), checks the library and prints the books it found with their order and
+address. If the check fails, <code>library.yml</code> is put back. <code>--private</code> attaches the books as not public. The collection is
+one of the collections of <code>library.yml</code>; without <code>--collection</code>, the repository's own suggestion or the collection
+<code>more</code> is used. To update a book, commit to its repository and run <code>python tools/books.py sync</code>, then
+<code>python tools/build.py</code>, or run <code>python tools/publish.py</code>, which also checks and deploys.</p>
+<h2 id="10-generating-a-book-a-minimal-example">10. Generating a book: a minimal example<a class="headerlink" href="#10-generating-a-book-a-minimal-example" title="Permanent link">&para;</a></h2>
+<p>A generator writes three kinds of file: the chapters, <code>book.yml</code>, and <code>pustakalaya.yml</code>. This script makes a complete
+book from a list of titles and texts, then it can be checked and attached like any other.</p>
+<div class="language-python highlight"><pre><span></span><code><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">"""Write a Pustakālaya book from a list of (title, [(section title, markdown text), ...])."""</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">slug</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s2">"[^a-z0-9]+"</span><span class="p">,</span> <span class="s2">"-"</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s2">"-"</span><span class="p">)</span> <span class="ow">or</span> <span class="s2">"chapter"</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">q</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>                                  <span class="c1"># a YAML string</span>
+    <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">write_book</span><span class="p">(</span><span class="n">folder</span><span class="p">,</span> <span class="n">book_id</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">author</span><span class="p">,</span> <span class="n">chapters</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span> <span class="n">language</span><span class="o">=</span><span class="s2">"en"</span><span class="p">):</span>
+    <span class="n">root</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">folder</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">"chapters"</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">"images"</span><span class="p">)</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">entries</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">n</span><span class="p">,</span> <span class="p">(</span><span class="n">ctitle</span><span class="p">,</span> <span class="n">sections</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">chapters</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">fname</span> <span class="o">=</span> <span class="s2">"chapters/</span><span class="si">%02d</span><span class="s2">_</span><span class="si">%s</span><span class="s2">.md"</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">slug</span><span class="p">(</span><span class="n">ctitle</span><span class="p">))</span>
+        <span class="n">body</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"# "</span> <span class="o">+</span> <span class="n">ctitle</span><span class="p">,</span> <span class="s2">""</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">m</span><span class="p">,</span> <span class="p">(</span><span class="n">stitle</span><span class="p">,</span> <span class="n">text</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sections</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">body</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">"## </span><span class="si">%d</span><span class="s2">.</span><span class="si">%d</span><span class="s2"> </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">stitle</span><span class="p">),</span> <span class="s2">""</span><span class="p">,</span> <span class="n">text</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="s2">""</span><span class="p">]</span>
+        <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="n">fname</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">body</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">entries</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">"  - file: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">    title: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">    kind: chapter</span><span class="se">\n</span><span class="s2">    number: </span><span class="si">%d</span><span class="se">\n</span><span class="s2">    sections: </span><span class="si">%d</span><span class="se">\n</span><span class="s2">"</span>
+                       <span class="o">%</span> <span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">q</span><span class="p">(</span><span class="n">ctitle</span><span class="p">),</span> <span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">sections</span><span class="p">)))</span>
+    <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">"book.yml"</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+        <span class="s2">"title: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">author: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">language: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">description: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">numbering: sections</span><span class="se">\n</span><span class="s2">chapters:</span><span class="se">\n</span><span class="si">%s</span><span class="s2">"</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">q</span><span class="p">(</span><span class="n">title</span><span class="p">),</span> <span class="n">q</span><span class="p">(</span><span class="n">author</span><span class="p">),</span> <span class="n">q</span><span class="p">(</span><span class="n">language</span><span class="p">),</span> <span class="n">q</span><span class="p">(</span><span class="n">description</span><span class="p">),</span> <span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">entries</span><span class="p">)),</span>
+        <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+    <span class="p">(</span><span class="n">root</span> <span class="o">/</span> <span class="s2">"pustakalaya.yml"</span><span class="p">)</span><span class="o">.</span><span class="n">write_text</span><span class="p">(</span>
+        <span class="s2">"pustakalaya: 1</span><span class="se">\n</span><span class="s2">format: markdown</span><span class="se">\n</span><span class="s2">books:</span><span class="se">\n</span><span class="s2">  - id: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">    path: .</span><span class="se">\n</span><span class="s2">    title: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">    author: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">"</span>
+        <span class="s2">"    language: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">    description: </span><span class="si">%s</span><span class="se">\n</span><span class="s2">    cover:</span><span class="se">\n</span><span class="s2">      background: </span><span class="se">\"</span><span class="s2">#1f3a5f</span><span class="se">\"\n</span><span class="s2">"</span>
+        <span class="s2">"      accent: </span><span class="se">\"</span><span class="s2">#f2b84b</span><span class="se">\"\n</span><span class="s2">      text: </span><span class="se">\"</span><span class="s2">#f6f8fb</span><span class="se">\"\n</span><span class="s2">"</span>
+        <span class="o">%</span> <span class="p">(</span><span class="n">book_id</span><span class="p">,</span> <span class="n">q</span><span class="p">(</span><span class="n">title</span><span class="p">),</span> <span class="n">q</span><span class="p">(</span><span class="n">author</span><span class="p">),</span> <span class="n">q</span><span class="p">(</span><span class="n">language</span><span class="p">),</span> <span class="n">q</span><span class="p">(</span><span class="n">description</span><span class="p">)),</span>
+        <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+
+
+<span class="n">write_book</span><span class="p">(</span><span class="s2">"my-book"</span><span class="p">,</span> <span class="s2">"my_book"</span><span class="p">,</span> <span class="s2">"My Book"</span><span class="p">,</span> <span class="s2">"Ada Example"</span><span class="p">,</span>
+           <span class="p">[(</span><span class="s2">"First Steps"</span><span class="p">,</span> <span class="p">[(</span><span class="s2">"Beginning"</span><span class="p">,</span> <span class="s2">"Some text with $x^2$."</span><span class="p">),</span> <span class="p">(</span><span class="s2">"Going on"</span><span class="p">,</span> <span class="s2">"!!! note </span><span class="se">\"</span><span class="s2">Note</span><span class="se">\"\n\n</span><span class="s2">    A box."</span><span class="p">)])],</span>
+           <span class="n">description</span><span class="o">=</span><span class="s2">"A book made by a script."</span><span class="p">)</span>
+</code></pre></div>
+<p>Then:</p>
+<div class="language-text highlight"><pre><span></span><code>python tools/books.py check my-book
+python tools/books.py attach my-book --collection courses
+</code></pre></div>
+<p>Rules of thumb for generators:</p>
+<ul>
+<li>Write <code>pustakalaya.yml</code> last, after the chapters, so that the section counts and the file list are known.</li>
+<li>Escape the text of the source: a literal <code>$</code> becomes <code>&amp;#36;</code>, a line that begins with <code>#</code>, <code>-</code>, <code>+</code> or <code>1.</code> and is not a
+  heading or a list item gets a backslash, <code>|</code> inside a table cell becomes <code>&amp;#124;</code>, <code>&lt;</code> and <code>&gt;</code> in text become <code>&amp;lt;</code> and
+  <code>&amp;gt;</code> unless they are real HTML you intend.</li>
+<li>Fence code with a language and use a fence longer than any run of backticks inside it.</li>
+<li>Give each box a type from section 4 and indent its body by four spaces, blank lines included (an empty line in a box body
+  may be empty).</li>
+<li>Write images to <code>images/</code> with ASCII names, scale rasters to 1600 px, and reference them as <code>images/name.ext</code>.</li>
+<li>Keep ids stable between runs: the id is the book's address.</li>
+<li>Run <code>books.py check</code> on the output as part of the generator's tests, and treat errors as bugs of the generator.</li>
+</ul>
+<h2 id="11-animations-and-visualizations">11. Animations and visualizations<a class="headerlink" href="#11-animations-and-visualizations" title="Permanent link">&para;</a></h2>
+<p><em>Added in version 1.1. Optional, and nothing in sections 1 to 10 changes: a book without these blocks is a version 1 book.</em></p>
+<p>A Markdown book can hold four kinds of moving figure. All of them work on the chapter pages and in the paginated reader, in
+light and dark, and are kept with the book for offline reading. Examples of each are in the template book, section 1.8.</p>
+<table>
+<thead>
+<tr>
+<th>You write</th>
+<th>You get</th>
+<th>Needs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>![caption](images/clip.mp4)</code></td>
+<td>a video (muted, looping, with controls)</td>
+<td>an <code>.mp4</code>, <code>.webm</code>, <code>.m4v</code> or <code>.ogv</code> file in <code>images/</code></td>
+</tr>
+<tr>
+<td>a <code>steps</code> block</td>
+<td>frames with previous, next and play controls and a counter</td>
+<td>images in <code>images/</code></td>
+</tr>
+<tr>
+<td>a <code>viz</code> block</td>
+<td>an interactive visualization in a sandboxed frame</td>
+<td>a folder <code>viz/&lt;name&gt;/</code> with an <code>index.html</code></td>
+</tr>
+<tr>
+<td>a <code>mermaid</code> block</td>
+<td>a diagram drawn from text</td>
+<td>nothing</td>
+</tr>
+</tbody>
+</table>
+<p>Animated GIF, APNG, animated WebP and SVG files with animation (SMIL or CSS) are ordinary images (section 5): write them as
+figures and they move. Prefer a video for anything longer than a few seconds.</p>
+<h3 id="video">Video<a class="headerlink" href="#video" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>![<span class="nt">A short caption for the clip.</span>](<span class="na">images/pipeline-fill.mp4 "Figure 4.2 Short label"</span>)
+![<span class="nt">A clip that plays while it is on screen.</span>](<span class="na">images/loop.webm#autoplay "Figure 4.3 Short label"</span>)
+</code></pre></div>
+<ul>
+<li>The figure line is written as for an image (section 5). A file ending in <code>.mp4</code>, <code>.webm</code>, <code>.m4v</code> or <code>.ogv</code> becomes a
+  <code>&lt;video&gt;</code> with controls, muted, looping, <code>playsinline</code> and <code>preload="metadata"</code>.</li>
+<li>A picture with the same name and the extension <code>.jpg</code>, <code>.png</code> or <code>.webp</code> (<code>pipeline-fill.jpg</code>) is the poster.</li>
+<li><code>#autoplay</code> after the file name plays the video while at least half of it is on screen and pauses it otherwise. It is
+  never played automatically for readers who ask their device for reduced motion.</li>
+<li>Use H.264 with AAC (MP4) or VP9 (WebM), at most 1280 pixels wide and 15 MB. MOV, AVI, MKV and the like are errors: browsers do
+  not play them. A video is part of the offline copy of the book when the reader keeps the book, so keep clips short.</li>
+</ul>
+<h3 id="step-through-figures">Step-through figures<a class="headerlink" href="#step-through-figures" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code><span class="sb">```steps</span>
+<span class="s">title: Building a K-map grouping</span>
+<span class="s">label: Figure 2.4 Grouping the minterms</span>
+<span class="s">interval: 2000</span>
+<span class="s">- images/kmap-1.svg: Plot the minterms.</span>
+<span class="s">- images/kmap-2.svg: Group the pairs.</span>
+<span class="s">- images/kmap-3.svg: Group the quad and read the terms.</span>
+<span class="sb">```</span>
+</code></pre></div>
+<ul>
+<li>The block starts at a line of three backticks and the word <code>steps</code>, and ends at the closing fence.</li>
+<li>The header is <code>key: value</code> lines: <code>title</code> (names the figure for screen readers), <code>label</code> and <code>caption</code> (printed under the
+  figure, like a figure's label and caption; <code>caption</code> defaults to the title), <code>interval</code> (milliseconds between frames when
+  playing, default 1800) and <code>loop: true</code> (play round and round). The value is the rest of the line, so it may hold colons.</li>
+<li>Each frame is a line <code>- images/name.svg: text</code>. The text is the frame's caption and its description for screen readers.
+  At least two frames. A frame may be SVG, PNG, JPEG, GIF or WebP; use frames of the same size.</li>
+<li>The reader has previous, play and next buttons, a counter and a slider; the left and right arrow keys step through the
+  figure when it has the keyboard focus. Without scripts all frames are shown one under the other.</li>
+</ul>
+<h3 id="interactive-visualizations">Interactive visualizations<a class="headerlink" href="#interactive-visualizations" title="Permanent link">&para;</a></h3>
+<p>A visualization is a small web page that belongs to the book. It is kept in its own folder:</p>
+<div class="language-text highlight"><pre><span></span><code>my-book/
+  viz/
+    pipeline/
+      index.html          the visualization: HTML, CSS and JavaScript, self-contained
+      poster.png          optional picture shown before it is opened
+</code></pre></div>
+<p>and is embedded with a <code>viz</code> block:</p>
+<div class="language-markdown highlight"><pre><span></span><code><span class="sb">```viz</span>
+<span class="s">src: viz/pipeline/index.html</span>
+<span class="s">title: Five-stage instruction pipeline</span>
+<span class="s">label: Figure 13.4 Hazards and stalls</span>
+<span class="s">caption: Step through the pipeline cycle by cycle.</span>
+<span class="s">height: 420</span>
+<span class="s">poster: viz/pipeline/poster.png</span>
+<span class="sb">```</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>src</code></td>
+<td><strong>Required.</strong> <code>viz/&lt;name&gt;/index.html</code>; the file must exist.</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>Names the figure (the card, the frame, the full-screen view). Should be set.</td>
+</tr>
+<tr>
+<td><code>caption</code>, <code>label</code></td>
+<td>Printed under the figure, like a figure's caption and label. Say what the reader can do.</td>
+</tr>
+<tr>
+<td><code>height</code></td>
+<td>The height of the frame in pixels, 200 to 1200, default 420. A visualization that calls <code>VizKit.autoHeight()</code> (below) is as tall as its content, and <code>height</code> only reserves the space until it has loaded.</td>
+</tr>
+<tr>
+<td><code>poster</code></td>
+<td>An image in <code>viz/</code> or <code>images/</code>, shown on the card before the visualization is opened.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How it is shown.</strong> On a chapter page the visualization is a frame that is loaded when it comes near the screen, with the
+buttons <em>Full screen</em> and <em>Restart</em> under it. In the paginated reader it is a card (the poster, the title and a <em>Play</em>
+button), because a reading page cannot hold a program; <em>Play</em> opens the visualization full screen. Escape, the <em>Close</em>
+button and the back button of a phone close it. Nothing runs until the reader asks for it.</p>
+<p><strong>What it may do.</strong> The frame is sandboxed (<code>sandbox="allow-scripts"</code>, without <code>allow-same-origin</code>). The page has an opaque
+origin: it cannot read or write the library's storage or cookies, cannot reach the page around it, and cannot open windows
+or submit forms. So:</p>
+<ul>
+<li>put everything the visualization needs in its folder: scripts, styles, images, data. The library fetches <code>index.html</code>,
+  puts the files it names with <code>&lt;script src&gt;</code>, <code>&lt;link rel="stylesheet"&gt;</code> and <code>&lt;img src&gt;</code> into the page, and shows the
+  result, so that it works offline. Write the script tags at the end of <code>&lt;body&gt;</code>;</li>
+<li>load nothing from another site (no CDN, no web font, no <code>https://</code> address). It would fail offline and is reported by the
+  checker;</li>
+<li>do not use <code>localStorage</code>, cookies or <code>IndexedDB</code> (they throw in the frame) and do not call <code>fetch</code> or
+  <code>XMLHttpRequest</code> (the frame cannot reach the book's files; put data in the script);</li>
+<li>keep it small: each file under 600 KB, the folder under 4 MB. It is part of the offline copy of the book;</li>
+<li>make it work from the keyboard, from 320 pixels wide, and in light and dark.</li>
+</ul>
+<p><strong>The helper <code>viz-kit.js</code>.</strong> Include it with <code>&lt;script src="viz-kit.js"&gt;&lt;/script&gt;</code>. The library puts its own copy there (copy
+<code>tools/assets/viz-kit.js</code> next to your file to try the page in a plain browser; the copy in the book is never used). It
+provides, as <code>window.VizKit</code>:</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>VizKit.palette</code>, <code>VizKit.theme</code></td>
+<td>the colours of the page that shows the figure (<code>bg</code>, <code>fg</code>, <code>muted</code>, <code>line</code>, <code>surface</code>, <code>accent</code>, <code>accent2</code>, <code>ok</code>, <code>bad</code>, <code>warn</code>) and the theme, <code>"light"</code> or <code>"dark"</code>. The same colours are the CSS variables <code>--viz-bg</code>, <code>--viz-fg</code>, ... and <code>VizKit.series(i)</code> gives distinguishable colours for charts.</td>
+</tr>
+<tr>
+<td><code>VizKit.onTheme(fn)</code></td>
+<td><code>fn(palette)</code> now and whenever the reader changes the theme or the type size. Redraw canvases here; HTML and SVG that use the variables need nothing.</td>
+</tr>
+<tr>
+<td><code>VizKit.full</code>, <code>VizKit.reader</code></td>
+<td>whether the figure is shown full screen, or inside the paginated reader.</td>
+</tr>
+<tr>
+<td><code>VizKit.autoHeight()</code></td>
+<td>the frame takes the height of the content.</td>
+</tr>
+<tr>
+<td><code>VizKit.stepper(el, {count, interval, loop, onStep})</code></td>
+<td>restart, previous, play/pause and next buttons with a counter and a speed slider, for anything that runs in steps; returns <code>{go, next, prev, play, pause, index}</code>.</td>
+</tr>
+<tr>
+<td><code>VizKit.el(tag, attrs, children)</code></td>
+<td>a small DOM helper.</td>
+</tr>
+</tbody>
+</table>
+<p>The kit also adds base styles for the body, buttons, inputs and tables (using the colours above) and sets the type size of the
+page to follow the reader's type size, so sizes written in <code>rem</code> scale with it.</p>
+<p><strong>The protocol</strong> (for a visualization that does not use the kit). The page and the frame talk with <code>postMessage</code>. Every
+message is an object with <code>bjpViz: 1</code> and a <code>type</code>. The frame must check that <code>event.source === window.parent</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Direction</th>
+<th>Message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>page to frame</td>
+<td><code>{type: "theme", theme: "light" or "dark", bg, fg, muted, line, surface, accent, accent2, fontSize, full, reader}</code>: colours as CSS colours, <code>fontSize</code> in pixels. Sent when the frame has loaded, when it answers <code>ready</code>, and whenever the theme or type size changes. The first theme is also in the <code>data-viz-init</code> attribute (JSON) of <code>&lt;html&gt;</code>.</td>
+</tr>
+<tr>
+<td>frame to page</td>
+<td><code>{type: "ready"}</code> when the frame is ready for the theme.</td>
+</tr>
+<tr>
+<td>frame to page</td>
+<td><code>{type: "height", value: 640}</code>: the height wanted, in pixels (160 to 1600; ignored full screen).</td>
+</tr>
+<tr>
+<td>frame to page</td>
+<td><code>{type: "close"}</code>: close the full-screen view (the kit sends it on Escape).</td>
+</tr>
+</tbody>
+</table>
+<h3 id="diagrams-as-text">Diagrams as text<a class="headerlink" href="#diagrams-as-text" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code><span class="sb">```mermaid</span>
+<span class="s">%% label: Figure 1.6 The path of a book</span>
+<span class="s">%% caption: A book is written, checked, attached and read.</span>
+<span class="s">flowchart LR</span>
+<span class="s">    W[Write] --&gt; C[Check] --&gt; A[Attach] --&gt; R[Read]</span>
+<span class="sb">```</span>
+</code></pre></div>
+<p>The block is <a href="https://mermaid.js.org/">mermaid</a> syntax: flowcharts, sequence diagrams, state machines, class diagrams, Gantt
+charts. The first lines, if they are <code>%% label:</code> and <code>%% caption:</code>, caption the figure. The diagram is drawn in the reader's
+browser with a copy of mermaid that the library ships (it is loaded only on a page with a diagram, and kept with the book for
+offline reading). The text is shown as it is if the diagram cannot be drawn. For a figure that has to look exactly right,
+draw an SVG.</p>
+<h3 id="what-bookspy-check-tests">What <code>books.py check</code> tests<a class="headerlink" href="#what-bookspy-check-tests" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Errors:</strong> a <code>viz</code> block without <code>src</code>, with a <code>src</code> that is not <code>viz/.../*.html</code> or does not exist, or with a poster that
+  does not exist; a <code>steps</code> block with fewer than two frames, a frame that is not written <code>- images/file: text</code> or whose file
+  does not exist; a video in a format that browsers do not play; a folder <code>viz/&lt;name&gt;/</code> without <code>index.html</code>; a script,
+  style sheet or image of a visualization that does not exist.</li>
+<li><strong>Warnings:</strong> unknown keys; a <code>viz</code> block without title or caption, or with a height outside 200 to 1200; a frame without a
+  caption; a video over 15 MB; a visualization file over 600 KB or a folder over 4 MB; a visualization that loads anything from
+  another site, uses browser storage, or makes network requests.</li>
+</ul>
+<p>Blocks written as examples inside a longer code fence (four backticks, as above) are not blocks and are not checked.</p>
+<h2 id="12-category-level-and-kind">12. Category, level and kind<a class="headerlink" href="#12-category-level-and-kind" title="Permanent link">&para;</a></h2>
+<p><em>Added in version 1.2. Optional and backward compatible: a book without these keys builds as before. A library asks for at
+least one category per book, and can give it in its own <code>library.yml</code> when the repository does not.</em></p>
+<p>Readers find books by <strong>category</strong> and <strong>subcategory</strong>: the <strong>Categories</strong> button in the header of every page, <strong>Browse
+categories</strong> on the front page, a page for each category and subcategory (<code>subjects/&lt;id&gt;.html</code>) listing its books as covers
+or as a compact list with filters for level, kind and language, and <strong>All books</strong> (<code>books.html</code>), where a reader chooses a
+category, then a subcategory. Three keys of a book in <code>pustakalaya.yml</code> describe it:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">books</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">linear_algebra</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Linear Algebra</span>
+<span class="w">    </span><span class="nt">subjects</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">algebra-geometry</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">statistics</span><span class="p p-Indicator">]</span><span class="w">   </span><span class="c1"># subcategories from the list below, the main one first</span>
+<span class="w">    </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">intermediate</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">textbook</span>
+<span class="w">    </span><span class="nt">tags</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">matrices</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">eigenvalues</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p><strong>Choosing the category.</strong> Find the category of the book in the list below, then the subcategory that fits it best, and
+write its id (the code in <code>backticks</code>) first under <code>subjects</code>. A book that belongs to more than one field may name one or
+two more subcategories, of the same category or of others: it is then listed under each. Name a category itself
+(<code>mathematics</code>) only when none of its subcategories fits. The key is called <code>subjects</code> for compatibility with earlier
+versions; its values are these ids.</p>
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Values</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subjects</code></td>
+<td>ids from the list below</td>
+<td>The categories of the book, <strong>the main one first</strong>: the book is listed under each subcategory named and under its category. Usually one to three.</td>
+</tr>
+<tr>
+<td><code>level</code></td>
+<td><code>beginner</code>, <code>intermediate</code>, <code>advanced</code></td>
+<td><strong>Beginner</strong>: no background needed beyond school; <strong>Intermediate</strong>: for readers who know the basics of the field, such as university students; <strong>Advanced</strong>: for specialists and practitioners.</td>
+</tr>
+<tr>
+<td><code>kind</code></td>
+<td><code>textbook</code>, <code>course</code>, <code>field-guide</code>, <code>reference</code>, <code>workbook</code>, <code>series-volume</code>, <code>classic-text</code></td>
+<td><strong>Textbook</strong>: teaches a subject chapter by chapter, usually with exercises; <strong>Course</strong>: follows a course or syllabus lesson by lesson; <strong>Field guide</strong>: a broad survey in plain language, to look things up and get oriented; <strong>Reference</strong>: a comprehensive work to consult; <strong>Workbook</strong>: mostly exercises and practice; <strong>Series volume</strong>: one volume of a numbered series; <strong>Classic text</strong>: a classic or primary text, such as a scripture, an epic or an older literary work.</td>
+</tr>
+<tr>
+<td><code>tags</code></td>
+<td>words</td>
+<td>Free words a reader might type: names, abbreviations, other spellings (<code>TPM</code>, <code>Ramayana</code>). They are searched, not shown.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-categories-and-their-subcategories">The categories and their subcategories<a class="headerlink" href="#the-categories-and-their-subcategories" title="Permanent link">&para;</a></h3>
+<p>Readers see only the categories and subcategories that have books. A library can add categories or subcategories of its
+own (see "Categories and reading lists" in README.md of the product repository); a book may name them once the library
+has them. The list is kept in <code>tools/subjects.yml</code>.</p>
+<!-- categories: written by python tools/subjects.py --format; do not edit by hand -->
+
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Its subcategories (<code>id</code>: title)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>computer-science</code>: <strong>Computers &amp; Technology</strong></td>
+<td><code>programming</code>: Programming<br><code>algorithms</code>: Algorithms &amp; Data Structures<br><code>web-development</code>: Web Development<br><code>computer-architecture</code>: Computer Architecture &amp; Chips<br><code>operating-systems</code>: Operating Systems<br><code>cloud-data-centres</code>: Cloud &amp; Data Centres<br><code>networks</code>: Networks &amp; Telecom<br><code>databases</code>: Databases<br><code>artificial-intelligence</code>: AI &amp; Machine Learning<br><code>cyber-security</code>: Cyber Security<br><code>quantum</code>: Quantum Computing</td>
+</tr>
+<tr>
+<td><code>science</code>: <strong>Science</strong></td>
+<td><code>physics</code>: Physics<br><code>chemistry</code>: Chemistry<br><code>biology</code>: Biology<br><code>astronomy</code>: Astronomy &amp; Space<br><code>earth-environment</code>: Earth &amp; Environment<br><code>agriculture</code>: Agriculture &amp; Food</td>
+</tr>
+<tr>
+<td><code>mathematics</code>: <strong>Mathematics</strong></td>
+<td><code>algebra-geometry</code>: Algebra &amp; Geometry<br><code>calculus</code>: Calculus &amp; Analysis<br><code>discrete-mathematics</code>: Discrete Mathematics &amp; Logic<br><code>statistics</code>: Statistics &amp; Data Science<br><code>optimization</code>: Optimization</td>
+</tr>
+<tr>
+<td><code>engineering</code>: <strong>Engineering</strong></td>
+<td><code>electronics</code>: Electronics &amp; Electrical<br><code>mechanical-engineering</code>: Mechanical Engineering<br><code>civil-engineering</code>: Civil Engineering<br><code>metallurgy</code>: Materials &amp; Metallurgy<br><code>aerospace-defence</code>: Aerospace &amp; Defence</td>
+</tr>
+<tr>
+<td><code>medicine</code>: <strong>Health &amp; Medicine</strong></td>
+<td><code>human-body</code>: The Human Body<br><code>public-health</code>: Public Health &amp; Nutrition<br><code>psychology</code>: Psychology &amp; Mind<br><code>traditional-medicine</code>: Traditional Medicine</td>
+</tr>
+<tr>
+<td><code>history</code>: <strong>History</strong></td>
+<td><code>indian-history</code>: Indian History<br><code>world-history</code>: World History<br><code>history-of-science</code>: History of Science &amp; Technology<br><code>military-history</code>: War &amp; Military History<br><code>geography</code>: Geography &amp; Travel</td>
+</tr>
+<tr>
+<td><code>philosophy-religion</code>: <strong>Philosophy &amp; Religion</strong></td>
+<td><code>philosophy</code>: Philosophy<br><code>religion</code>: Religion &amp; Spirituality<br><code>sacred-texts</code>: Scriptures &amp; Sacred Texts<br><code>yoga</code>: Yoga &amp; Meditation</td>
+</tr>
+<tr>
+<td><code>language-literature</code>: <strong>Language &amp; Literature</strong></td>
+<td><code>english</code>: English<br><code>french</code>: French<br><code>indian-languages</code>: Hindi &amp; Indian Languages<br><code>sanskrit</code>: Sanskrit &amp; Classical Languages<br><code>languages</code>: Linguistics &amp; Grammar<br><code>literature</code>: Novels, Plays &amp; Stories<br><code>poetry</code>: Poetry<br><code>epics</code>: Epics &amp; Mythology</td>
+</tr>
+<tr>
+<td><code>arts</code>: <strong>Arts &amp; Music</strong></td>
+<td><code>visual-arts</code>: Painting &amp; Sculpture<br><code>crafts</code>: Crafts &amp; Textiles<br><code>architecture</code>: Architecture &amp; Design<br><code>music-performance</code>: Music, Dance &amp; Theatre</td>
+</tr>
+<tr>
+<td><code>social-sciences</code>: <strong>Society, Law &amp; Economics</strong></td>
+<td><code>society-culture</code>: Society &amp; Culture<br><code>law-polity</code>: Law, Politics &amp; Government<br><code>economics</code>: Economics &amp; Business<br><code>trade</code>: Trade &amp; Seafaring<br><code>anthropology</code>: Tribal &amp; Folk Cultures</td>
+</tr>
+<tr>
+<td><code>education</code>: <strong>Education</strong></td>
+<td><code>teaching</code>: Teaching &amp; Learning<br><code>history-of-education</code>: History of Education</td>
+</tr>
+<tr>
+<td><code>iks</code>: <strong>Indian Knowledge Systems</strong></td>
+<td><code>iks-veda</code>: Veda &amp; Upaniṣad<br><code>iks-darsana</code>: Darśana (Philosophy)<br><code>iks-traditions</code>: Buddhist, Jain &amp; Tantric Traditions<br><code>iks-yoga</code>: Yoga<br><code>iks-itihasa</code>: Itihāsa &amp; Purāṇa<br><code>iks-kavya</code>: Kāvya (Literature)<br><code>iks-sabda</code>: Language &amp; Grammar<br><code>iks-ganita</code>: Jyotiṣa &amp; Gaṇita<br><code>iks-ayurveda</code>: Āyurveda<br><code>iks-science</code>: Science, Farming &amp; Geography<br><code>iks-arts</code>: Arts &amp; Crafts<br><code>iks-polity</code>: Polity &amp; Society<br><code>iks-mind</code>: Mind &amp; Education</td>
+</tr>
+</tbody>
+</table>
+<p>Retired ids that are still accepted (the book is listed under the new one): <code>chip-design</code> (now <code>computer-architecture</code>), <code>cryptography</code> (now <code>cyber-security</code>), <code>ecology</code> (now <code>earth-environment</code>), <code>embedded-systems</code> (now <code>electronics</code>), <code>hardware-security</code> (now <code>cyber-security</code>), <code>memory-storage</code> (now <code>computer-architecture</code>), <code>quantum-machine-learning</code> (now <code>quantum</code>), <code>security-operations</code> (now <code>cyber-security</code>), <code>telecommunications</code> (now <code>networks</code>).</p>
+<!-- end of categories -->
+
+<p>The same keys at the top of <code>pustakalaya.yml</code> are defaults for every book of the repository. A library may also set them in
+<code>library.yml</code>, for a collection (defaults for its books) or for one book (an override), without changing the repository.</p>
+<h3 id="what-bookspy-check-tests_1">What <code>books.py check</code> tests<a class="headerlink" href="#what-bookspy-check-tests_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Errors:</strong> <code>subjects</code> that is not a list of ids, a <code>level</code> or <code>kind</code> that is not one of the values above, <code>tags</code> that is
+  not a list of words.</li>
+<li><strong>Warnings:</strong> an id that is neither in the list above nor among the library's own subjects, with the nearest id
+  ("did you mean <code>cyber-security</code> (Cyber Security)?"); the library may still add it.</li>
+<li><strong>Notes:</strong> a book without subjects; a retired id (it still works: the book is listed under the id that replaced it).</li>
+</ul>
+<h2 id="13-slides">13. Slides<a class="headerlink" href="#13-slides" title="Permanent link">&para;</a></h2>
+<p><em>Added with version 1.2 ("1.2-slides"). Optional and backward compatible: a book without these conventions is presented
+from its text, and nothing in sections 1 to 12 changes.</em></p>
+<p>Every chapter of every book (Markdown, LaTeX or HTML) can be shown as slides: <strong>Present</strong> in the header of a chapter, in
+the reader's toolbar (or the key P), or on the book's page. An address with <code>?slides=1</code> (<code>?slides=12</code> for slide 12) opens
+a chapter as slides directly. The slides are made in the reader's browser from the chapter as it is written:</p>
+<table>
+<thead>
+<tr>
+<th>The chapter has</th>
+<th>The slides show</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the <code>#</code> title, the italic line under it, the book's title and author</td>
+<td>a title slide in the book's cover colours</td>
+</tr>
+<tr>
+<td>three or more <code>##</code> sections</td>
+<td>a slide with the chapter's sections</td>
+</tr>
+<tr>
+<td>a <code>##</code> section</td>
+<td>a section slide, with its <code>###</code> subsections</td>
+</tr>
+<tr>
+<td>paragraphs</td>
+<td>the key sentence of each paragraph as a bullet point, at most about six bullets and sixty words on a slide; the full paragraphs are the speaker's notes</td>
+</tr>
+<tr>
+<td>a list, a definition list</td>
+<td>its items (long items shortened to their first sentence)</td>
+</tr>
+<tr>
+<td>a figure, a table, a code block, a large equation</td>
+<td>a slide each; a long table or listing goes on over several slides</td>
+</tr>
+<tr>
+<td>a <code>viz</code>, <code>steps</code> or <code>mermaid</code> block, a video</td>
+<td>a slide each; a visualization runs in place, a step-through figure steps with the arrow keys</td>
+</tr>
+<tr>
+<td>a box (<code>!!!</code>)</td>
+<td>a callout slide; an <code>example</code> box titled "Example ..." is revealed piece by piece</td>
+</tr>
+<tr>
+<td>an exercise and its folded answer (section 4)</td>
+<td>a question slide; the answer appears with the next key press (and the right option of a multiple-choice question is marked)</td>
+</tr>
+<tr>
+<td>a section titled Summary, Key points, Conclusion ...</td>
+<td>the closing slide, with the next chapter</td>
+</tr>
+</tbody>
+</table>
+<p>So a book that follows sections 3 and 4 needs nothing more. Write a paragraph so that its <strong>first sentence states its
+point</strong>: that sentence is the bullet. Give tables and figures captions, and keep a code block to the lines that matter.</p>
+<p>An author who wants more control writes one of the following.</p>
+<h3 id="a-slide-marker">A slide marker<a class="headerlink" href="#a-slide-marker" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>&lt;!-- slide: The four steps --&gt;
+
+<span class="k">1.</span> Write the chapters.
+<span class="k">2.</span> Check the book.
+<span class="k">3.</span> Attach it.
+
+&lt;!-- /slide --&gt;
+</code></pre></div>
+<p>The blocks after <code>&lt;!-- slide --&gt;</code> (or <code>&lt;!-- slide: Title --&gt;</code>), up to the next marker, a <code>&lt;!-- /slide --&gt;</code>, a <code>##</code> or
+<code>###</code> heading or a <code>::: slide</code> block, are put together on one slide <strong>as written</strong> (not shortened), under the title given
+or the heading of the section. The comment is invisible on the page and in the reader.</p>
+<h3 id="a-slide-for-the-presentation-only">A slide for the presentation only<a class="headerlink" href="#a-slide-for-the-presentation-only" title="Permanent link">&para;</a></h3>
+<div class="language-markdown highlight"><pre><span></span><code>::: slide "The four steps"
+
+<span class="k">1.</span> Write the chapters.
+<span class="k">2.</span> Check the book.
+<span class="k">3.</span> Attach it.
+
+Notes: Point at the figure of section 1.3 while you go through the steps.
+
+:::
+</code></pre></div>
+<ul>
+<li>The block starts at a line <code>::: slide</code>, with an optional title in double quotes, and ends at a line <code>:::</code>.</li>
+<li>It is a slide of its own at that place in the deck, and is <strong>not shown</strong> on the page or in the reader.</li>
+<li>Inside, anything of section 4 may be used: paragraphs, lists, figures, tables, code, mathematics, boxes, <code>viz</code> and
+  <code>steps</code> blocks. A first <code>#</code> or <code>##</code> heading is the slide's title when the opening line gives none; other headings become
+  bold lines.</li>
+<li>A paragraph that starts with <code>Notes:</code> begins the <strong>speaker's notes</strong>, to the end of the block. They are shown in the
+  speaker view (key S), with a timer and the next slide.</li>
+</ul>
+<h3 id="a-deck-of-its-own">A deck of its own<a class="headerlink" href="#a-deck-of-its-own" title="Permanent link">&para;</a></h3>
+<p>A file in <code>slides/</code> with the name of a chapter file <strong>replaces</strong> that chapter's slides:</p>
+<div class="language-text highlight"><pre><span></span><code>my-book/
+  chapters/
+    03_querying.md
+  slides/
+    03_querying.md        the slides of chapter 3
+</code></pre></div>
+<div class="language-markdown highlight"><pre><span></span><code><span class="gh"># Querying with SELECT</span>
+
+Notes: Start with the question the chapter answers.
+
+---
+
+<span class="gu">## The SELECT statement</span>
+
+<span class="k">-</span><span class="w"> </span>choose the columns
+<span class="k">-</span><span class="w"> </span>filter with WHERE
+
+![<span class="nt">A query and its result.</span>](<span class="na">images/select.svg</span>)
+
+---
+
+<span class="gu">## Ordering</span>
+
+<span class="sb">`ORDER BY`</span> sorts the result.
+</code></pre></div>
+<ul>
+<li>Slides are separated by lines of three dashes (<code>---</code>).</li>
+<li>A slide's first <code>#</code> or <code>##</code> heading is its title; a paragraph that starts with <code>Notes:</code> begins its notes.</li>
+<li>Pictures are in <code>images/</code>, as for the chapters. The deck opens with the chapter's title slide and ends with its closing
+  slide (the summary and the next chapter).</li>
+</ul>
+<p>The template book (<code>book-template</code>) has a slide marker and a <code>::: slide</code> block in section 1.9, and a deck of its own for
+the preface (<code>slides/01_preface.md</code>).</p>
+<h3 id="how-it-is-built">How it is built<a class="headerlink" href="#how-it-is-built" title="Permanent link">&para;</a></h3>
+<p><code>tools/slides.py</code> in the product repository writes a <code>::: slide</code> block into the page as a hidden
+<code>&lt;div class="pk-slide" data-title="..."&gt;</code> (with a <code>&lt;div class="pk-slide-notes"&gt;</code> for the notes), and a slides file as a
+hidden <code>&lt;div class="pk-slides"&gt;</code> at the end of the chapter's page. <code>assets/slides-deck.js</code> reads them. A program that
+generates books may write these elements directly (section 10), with Markdown inside them.</p>
+<h3 id="what-bookspy-check-tests_2">What <code>books.py check</code> tests<a class="headerlink" href="#what-bookspy-check-tests_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Errors:</strong> a <code>::: slide</code> block without its closing <code>:::</code>.</li>
+<li><strong>Warnings:</strong> a file in <code>slides/</code> without a chapter file of the same name in <code>book.yml</code>; a slides file without slides.</li>
+</ul>
+<p>LaTeX and HTML books are presented from their text; the conventions of this section are for Markdown books.</p>
+<hr />
+<p><em>Version 1.2. The format changes only by adding optional keys and conventions; <code>pustakalaya: 1</code> stays valid, and a book written
+for version 1 builds unchanged. Version 1.1 added section 11 (video, <code>steps</code>, <code>viz</code> and <code>mermaid</code> blocks); version 1.2 added section 12 (<code>subjects</code>, <code>level</code>,
+<code>kind</code> and <code>tags</code>).
+<code>tools/importers/common.py</code>, <code>tools/mdbook.py</code> and <code>tools/vizblocks.py</code> in the product repository are the reference implementation.</em></p>
+<h2 id="13-linked-books">13. Linked books<a class="headerlink" href="#13-linked-books" title="Permanent link">&para;</a></h2>
+<p>A <strong>linked book</strong> is a freely licensed book that lives on another site and is shown in the library in its own format and
+reader, without its text being stored in the library. The library keeps:</p>
+<ul>
+<li>the <strong>catalogue entry</strong> in library.yml (title, author, cover colours, description, licence, attribution);</li>
+<li>the <strong>contents</strong>: the chapters' titles, the source's names of their pages and their section headings. This is metadata,
+  fetched when the site is built (<code>tools/remote.py</code>) and cached in the git-ignored <code>.cache/remote/&lt;id&gt;.json</code>;</li>
+<li>one <strong>empty page per chapter</strong> (a shell) at the library's own address, with the chapter's heading and the headings of
+  its sections, so that the navigation, the book's contents, the reader's "Whole book" tab and the shelf work as for any
+  other book.</li>
+</ul>
+<p>When a reader opens a chapter, <code>assets/remote.js</code> fetches its text from the source's API in the reader's browser, removes
+the source site's chrome (edit links, navigation boxes, templates, page numbers), converts it to the library's chapter
+HTML and fills the shell; the page and the reader then show it like any other chapter. The address stays on the library's
+site: nothing of the source site is embedded or opened, and no reader is sent there. Sections are numbered as in the
+contents, figures get their captions, tables, code (with its language), mathematics (typeset by MathJax), footnotes and
+pictures (loaded from the source's image servers, with their sizes) are kept, links to other chapters of the book lead to
+the library's pages, and other links open in a new tab when they are clicked. Each chapter ends with its attribution: the
+page it comes from, its contributors and history, the licence and the note "Modified: converted to this format". These
+links, and those of the badge on the book's page, are the only links to the source.</p>
+<p>Sources. Only sources whose API allows a page of another site to read it (CORS) can be linked:</p>
+<table>
+<thead>
+<tr>
+<th><code>type</code></th>
+<th>Site</th>
+<th>Contents rules</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>wikibooks</code></td>
+<td><code>&lt;lang&gt;.wikibooks.org</code> (CC BY-SA 4.0)</td>
+<td><code>collection</code>, <code>links</code>, <code>subpages</code>, <code>list</code></td>
+</tr>
+<tr>
+<td><code>wikisource</code></td>
+<td><code>&lt;lang&gt;.wikisource.org</code> (public-domain texts)</td>
+<td><code>links</code>, <code>subpages</code>, <code>list</code></td>
+</tr>
+<tr>
+<td><code>standardebooks</code></td>
+<td>the public GitHub repository of a <a href="https://standardebooks.org">Standard Ebooks</a> edition (CC0)</td>
+<td><code>toc</code></td>
+</tr>
+<tr>
+<td><code>archive</code></td>
+<td>scanned books of <code>archive.org</code> (public domain in India, judged title by title)</td>
+<td>page ranges, or <code>chapters</code></td>
+</tr>
+</tbody>
+</table>
+<p>Project Gutenberg and LibreTexts do not allow it and cannot be linked.</p>
+<p><strong>EPUBs on GitHub (<code>standardebooks</code>).</strong> The editions of Standard Ebooks (carefully produced public-domain texts, many of them
+transcriptions first made by Project Gutenberg) are dedicated to the public domain (CC0), and the repository of each one serves its
+files with <code>Access-Control-Allow-Origin: *</code> at <code>raw.githubusercontent.com/standardebooks/&lt;repo&gt;/master/src/epub/</code>. A linked book of
+this type needs only the repository's name:</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">pride-and-prejudice</span>
+<span class="w">    </span><span class="nt">collection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">literature-classics</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Pride and Prejudice</span>
+<span class="w">    </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Jane Austen</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">One sentence for the cover card.</span>
+<span class="w">    </span><span class="nt">subjects</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">literature</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="nv">standardebooks</span><span class="p p-Indicator">,</span><span class="nt"> repo</span><span class="p">:</span><span class="w"> </span><span class="nv">jane-austen_pride-and-prejudice</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">attribution</span><span class="p">:</span><span class="w"> </span><span class="s">"Jane</span><span class="nv"> </span><span class="s">Austen,</span><span class="nv"> </span><span class="s">Pride</span><span class="nv"> </span><span class="s">and</span><span class="nv"> </span><span class="s">Prejudice</span><span class="nv"> </span><span class="s">(1813)"</span>
+</code></pre></div>
+<p>The licence (CC0 1.0) and the book's page on Standard Ebooks (the <code>url</code>) have defaults. The contents are read at build time from
+the repository's <code>toc.xhtml</code> and <code>content.opf</code>: a table-of-contents entry with entries of other files below it is a group (a part
+or book of the work), entries that point into the entry's own file are its sections (the scenes of an act), entries before the
+half-title page are front matter and those after the body back matter; the title page, imprint, colophon and licence pages are
+left out. A chapter known only by its Roman number is called "Chapter I". Keys of <code>source</code>: <code>repo</code>, <code>branch</code> (default <code>master</code>),
+<code>skip</code> (file names, without extension, to leave out), <code>numbering</code> (<code>none</code> for plays: "Act I" without a number). When a chapter is
+opened, its XHTML file (and the book's <code>endnotes.xhtml</code> when the chapter has notes) is fetched in the browser and converted:
+the file's own heading is dropped (the page shows the chapter's title), verse and stage directions keep their layout, a table of
+speakers and speeches becomes a list of speeches, endnotes become footnotes, pictures are loaded from the repository, and links to
+the book's other chapters lead to the library's pages. Each chapter ends with its attribution: the edition, its source file on
+GitHub, "CC0 1.0 (public domain dedication)" and the original transcription it names (Project Gutenberg, Wikisource, ...), with
+links that open only when they are clicked. "Keep for offline reading" keeps the chapters' files and pictures on the device.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">linked</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wb-data-structures</span><span class="w">               </span><span class="c1"># the book's id (its address: &lt;collection path&gt;/&lt;id&gt;/)</span>
+<span class="w">    </span><span class="nt">collection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">open-textbooks</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Data Structures</span>
+<span class="w">    </span><span class="nt">subtitle</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Fundamental tools</span>
+<span class="w">    </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Wikibooks contributors</span><span class="w">        </span><span class="c1"># or the historical author and the translator</span>
+<span class="w">    </span><span class="nt">description</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">One sentence for the cover card.</span>
+<span class="w">    </span><span class="nt">about</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">&gt;-</span><span class="w">                             </span><span class="c1"># optional: the longer text of "About this book"</span>
+<span class="w">      </span><span class="no">...</span>
+<span class="w">    </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en</span><span class="w">                          </span><span class="c1"># default: the source's language</span>
+<span class="w">    </span><span class="nt">chapter_label</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Chapter</span><span class="w">                </span><span class="c1"># "Section", "अध्यायः", ...; empty for the title alone</span>
+<span class="w">    </span><span class="nt">cover</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">background</span><span class="p">:</span><span class="w"> </span><span class="s">"#1d4e5f"</span><span class="p p-Indicator">,</span><span class="nt"> accent</span><span class="p">:</span><span class="w"> </span><span class="s">"#f2b544"</span><span class="p p-Indicator">,</span><span class="nt"> text</span><span class="p">:</span><span class="w"> </span><span class="s">"#f4f1e8"</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">subjects</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">algorithms</span><span class="p p-Indicator">]</span><span class="w">                </span><span class="c1"># level, kind and tags as for every book (section 12)</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wikibooks</span><span class="w">                     </span><span class="c1"># wikibooks | wikisource</span>
+<span class="w">      </span><span class="nt">lang</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">en</span><span class="w">                            </span><span class="c1"># the language of the site</span>
+<span class="w">      </span><span class="nt">root</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Data Structures</span><span class="w">               </span><span class="c1"># the book's main page on the site</span>
+<span class="w">      </span><span class="nt">contents</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">collection</span><span class="w">                </span><span class="c1"># see below</span>
+<span class="w">    </span><span class="nt">licence</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="nv">CC BY-SA 4.0</span><span class="p p-Indicator">,</span><span class="nt"> url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://creativecommons.org/licenses/by-sa/4.0/"</span><span class="p p-Indicator">}</span>
+<span class="w">    </span><span class="nt">attribution</span><span class="p">:</span><span class="w"> </span><span class="s">"Data</span><span class="nv"> </span><span class="s">Structures,</span><span class="nv"> </span><span class="s">a</span><span class="nv"> </span><span class="s">Wikibooks</span><span class="nv"> </span><span class="s">textbook,</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">its</span><span class="nv"> </span><span class="s">contributors"</span>
+<span class="w">    </span><span class="nt">url</span><span class="p">:</span><span class="w"> </span><span class="s">"https://en.wikibooks.org/wiki/Data_Structures"</span><span class="w">     </span><span class="c1"># the book on its site (for the attribution only)</span>
+</code></pre></div>
+<p><code>licence</code> (an id and a URL), <code>attribution</code> and <code>url</code> are required: the licences of these books ask that their authors
+are credited and the licence is named. The badge on the cover and the book's page reads "From Wikibooks · CC BY-SA 4.0".</p>
+<p><strong>Contents rules</strong> (<code>source.contents</code>):</p>
+<ul>
+<li><code>collection</code>: the book's saved collection, <code>Wikibooks:Collections/&lt;root&gt;</code>: a <code>;Heading</code> line groups the pages listed
+  after it (<code>:[[Page|Title]]</code>); a group of two or more chapters becomes a part of the contents.</li>
+<li><code>links</code>: the links of the root page to its subpages, in order; a level-2 heading or a line in bold names a group.</li>
+<li><code>subpages</code>: all the subpages of the root, ordered by their number (<code>सेवासदन/१</code>, <code>सेवासदन/२</code>, ...).</li>
+<li><code>list</code>: an explicit list, <code>chapters: [{page: ..., title: ..., group: ...}]</code>.</li>
+</ul>
+<p>Other keys of <code>source</code>: <code>exclude</code> (pages to leave out), <code>front</code> (pages shown unnumbered before the chapters),
+<code>numbering</code> (<code>sequence</code>, the default; <code>group</code>: I.1, I.2, ... within each group; <code>none</code>: chapters by title only),
+<code>digits: devanagari</code> (chapter numbers in Devanagari), <code>parts: links</code> (a chapter whose page links to two or more of its own
+subpages is made of them: each subpage becomes a section of the chapter, as the hymns of a book), <code>sections: false</code> (no
+section headings in the contents), <code>math: true</code> (the book has mathematics: MathJax is loaded early and kept for offline
+reading) and <code>drop</code> (CSS selectors of elements of the source's pages to remove). A chapter whose title is only a number
+is called by the label and the number ("अध्याय १").</p>
+<p><strong>Offline.</strong> "Keep for offline reading" keeps the shells like any book's pages; for a linked book the source's answers for
+every chapter, and its pictures, are then kept on the reader's device as well (never in the library), and removed with
+the book.</p>
+<p><strong>Search.</strong> The library holds no text of a linked book: the titles of its chapters and sections are found by the search,
+and the reader's search of the book's text is not offered.</p>
+<p><strong>Commands.</strong> <code>python tools/remote.py list | refresh [id ...] | show &lt;id&gt;</code>; <code>python tools/build.py</code> fetches the contents of
+a linked book whose cache is missing or older than 30 days, and <code>python tools/books.py sync</code> fetches them all again.
+<code>python tools/check.py</code> verifies that every linked book has its licence and attribution, that its chapter pages are
+shells (no text of the book in the site) and that its search index holds only headings.</p>
+<h3 id="scanned-books-the-archive-source">Scanned books: the <code>archive</code> source<a class="headerlink" href="#scanned-books-the-archive-source" title="Permanent link">&para;</a></h3>
+<p>A book that exists as scanned pages on the Internet Archive (the books of the Archaeological Survey of India and the Digital
+Library of India, <code>in.gov.ignca.*</code> and <code>in.ernet.dli.*</code>) is linked in the same way, with <code>source.type: archive</code>. Its
+catalogue entry carries the <strong>basis of its public-domain status</strong>; its <code>licence</code> and <code>attribution</code> are filled in from the
+item (the licence is "Public domain in India", the attribution the digitisers and the host), so the entry needs neither.
+Only titles in the public domain in India are linked: published by 1940 and, where the author or editor is known, dead
+before 1965 (life plus sixty years); a title that is in doubt is left out.</p>
+<div class="language-yaml highlight"><pre><span></span><code><span class="nt">linked</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ayurvedasutram</span>
+<span class="w">    </span><span class="nt">collection</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rare-books</span>
+<span class="w">    </span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Āyurvedasūtram</span>
+<span class="w">    </span><span class="nt">author</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">R. Shama Sastry (editor)</span>
+<span class="w">    </span><span class="nt">language</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">sa</span>
+<span class="w">    </span><span class="nt">chapter_label</span><span class="p">:</span><span class="w"> </span><span class="s">""</span><span class="w">                     </span><span class="c1"># chapters are page ranges: "Pages 1-25"</span>
+<span class="w">    </span><span class="nt">kind</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">rare-book</span><span class="w">                       </span><span class="c1"># the kind of a scanned book (section 12)</span>
+<span class="w">    </span><span class="nt">subjects</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">traditional-medicine</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">sanskrit</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">source</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">archive</span>
+<span class="w">      </span><span class="nt">identifier</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">in.gov.ignca.8087</span><span class="w">       </span><span class="c1"># the item on archive.org</span>
+<span class="w">      </span><span class="nt">pd_basis</span><span class="p">:</span><span class="w"> </span><span class="s">"Published</span><span class="nv"> </span><span class="s">1922;</span><span class="nv"> </span><span class="s">edited</span><span class="nv"> </span><span class="s">by</span><span class="nv"> </span><span class="s">R.</span><span class="nv"> </span><span class="s">Shama</span><span class="nv"> </span><span class="s">Sastry</span><span class="nv"> </span><span class="s">(died</span><span class="nv"> </span><span class="s">1944);</span><span class="nv"> </span><span class="s">public</span><span class="nv"> </span><span class="s">domain</span><span class="nv"> </span><span class="s">in</span><span class="nv"> </span><span class="s">India"</span>
+<span class="w">      </span><span class="nt">display</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">scans</span><span class="w">                      </span><span class="c1"># text | scans (default: automatic, see below)</span>
+<span class="w">      </span><span class="nt">chapter_pages</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">25</span><span class="w">                   </span><span class="c1"># scanned pages in a chapter (default 25)</span>
+<span class="w">      </span><span class="nt">chapters</span><span class="p">:</span><span class="w">                           </span><span class="c1"># optional: the chapters by scan number, instead of ranges</span>
+<span class="w">        </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="p p-Indicator">{</span><span class="nt">title</span><span class="p">:</span><span class="w"> </span><span class="nv">Introduction</span><span class="p p-Indicator">,</span><span class="nt"> from</span><span class="p">:</span><span class="w"> </span><span class="nv">1</span><span class="p p-Indicator">,</span><span class="nt"> to</span><span class="p">:</span><span class="w"> </span><span class="nv">30</span><span class="p p-Indicator">}</span>
+</code></pre></div>
+<ul>
+<li><code>identifier</code> and <code>pd_basis</code> are required. The build asks <code>archive.org/metadata/&lt;identifier&gt;</code> for the title, creator, date,
+  language, the names of the files and the number of scanned pages, and the image service for the size of a page; the
+  results are cached in <code>.cache/remote/&lt;id&gt;.json</code>. Nothing else of the item is kept: no image, no text.</li>
+<li><strong>Chapters</strong> are page ranges ("Pages 1–25", "Pages 26–50", ...), each a shell like those of the other linked books, or the
+  chapters the entry lists in <code>chapters</code> (<code>title</code>, <code>from</code>, <code>to</code>: scan numbers, the first scan being 1).</li>
+<li><strong>Display.</strong> In <code>scans</code> mode a chapter is its pages as images; in <code>text</code> mode it is the OCR text of its pages, cleaned
+  lightly (running heads and folios removed, hyphenated words joined, lines made paragraphs) and set in the library's
+  typography, with a "View page scan" button on every page. <code>text</code> needs the item's <code>*_hocr_searchtext.txt.gz</code> and
+  <code>*_hocr_pageindex.json.gz</code>; by default a book is shown as text when its language is English, it has them and the OCR's
+  confidence (<code>*_page_numbers.json</code>) is at least 90, otherwise as scans (Sanskrit and Hindi in Devanagari cannot be read
+  by the OCR). <code>display:</code> overrides the choice (for a book whose language is wrongly recorded).</li>
+<li><strong>The viewer</strong> (<code>assets/scans.js</code>, <code>scans.css</code>) is the library's own: page images come from the image service of the
+  Internet Archive (IIIF, which answers pages of another site), at a size that fits the screen and a larger one on zoom,
+  with pinch, Ctrl+wheel, button and double-tap zoom, pan, fit to width or to the page, a jump to a page number, a strip of
+  thumbnails, the keyboard (arrows, space, plus, minus, 0, f, t, g, Home, End, Escape), swipes, and light, dark or sepia
+  surroundings. The Internet Archive's own reader is never embedded or opened; the links to the item (on the book's page
+  and at the end of every chapter) open only when they are clicked.</li>
+<li><strong>Credit.</strong> The book's page and each chapter carry the digitisers' credit ("Digitised by the Indira Gandhi National
+  Centre for the Arts / Archaeological Survey of India; hosted by the Internet Archive"), the item's own details and the
+  public-domain basis (<code>pd_basis</code>).</li>
+<li><strong>Offline.</strong> "Keep these pages offline" on a chapter (the viewer has "Keep this page offline") stores the chapter's
+  page images, their thumbnails and, for a text book, the text of the book in the browser's cache of the reader's device
+  only (<code>pk-scans-kept</code>), after saying how much room it takes (about 0.2 MB a page); "Remove" takes them out again.</li>
+<li><strong>Search.</strong> The library holds no text of these books: their titles and authors are in the search of titles
+  (<code>search/titles.json</code>), and the chapters' titles in the book's own index.</li>
+</ul>
+<hr />
+<p><a href="publish.html">Back to Publish your book</a></p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="publish.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Publish your book">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Publish your book
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="science/drones_missiles/index.html" class="md-footer__link md-footer__link--next" aria-label="Next: Overview and preface">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Overview and preface
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="about.html">About this library</a> &middot;
+      <a href="publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": ".", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="assets/mathjax.js"></script>
+      
+        <script src="assets/viz.js"></script>
+      
+        <script src="assets/remote.js"></script>
+      
+        <script src="assets/scans.js"></script>
+      
+        <script src="assets/reader.js"></script>
+      
+        <script src="assets/app.js"></script>
+      
+        <script src="assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

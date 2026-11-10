@@ -1,0 +1,3027 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/asic/fabrication-packaging-test-bring-up.html">
+  
+  
+    <link rel="prev" href="signoff-tapeout.html">
+  
+  
+    <link rel="next" href="eda-industry-open-source-silicon-analog-ai-in-eda-careers.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>7. Fabrication, Packaging, Test & Bring-up - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#71-the-foundries-tsmc-samsung-intel-globalfoundries-umc-smic-rapidus" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Fabrication, Packaging, Test & Bring-up
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">ASIC Design: A Field Guide</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to-read-this-guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to read this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chip-design-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Chip Design Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="specification-architecture-rtl-design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Specification, Architecture & RTL Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="functional-verification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Functional Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logic-synthesis-design-for-test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Logic Synthesis & Design for Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="physical-design-floorplan-to-route.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Physical Design: Floorplan to Route
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signoff-tapeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Signoff & Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Fabrication, Packaging, Test & Bring-up
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="fabrication-packaging-test-bring-up.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Fabrication, Packaging, Test & Bring-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-the-foundries-tsmc-samsung-intel-globalfoundries-umc-smic-rapidus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 The Foundries: TSMC, Samsung, Intel, GlobalFoundries, UMC, SMIC, Rapidus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-process-nodes-and-transistor-evolution-planar-finfet-gaa-backside-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Process Nodes and Transistor Evolution (Planar → FinFET → GAA → Backside Power)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-pdks-process-design-kits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 PDKs: Process Design Kits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-how-a-wafer-is-made-simply-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 How a Wafer Is Made (Simply Explained)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-lithography-duv-euv-and-high-na-euv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Lithography: DUV, EUV and High-NA EUV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-yield-and-defect-density" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Yield and Defect Density
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-packaging-basics-wire-bond-flip-chip-bga-and-wlcsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Packaging Basics: Wire-Bond, Flip-Chip, BGA and WLCSP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-advanced-packaging-cowos-info-soic-foveros-emib-and-hbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 Advanced Packaging: CoWoS, InFO, SoIC, Foveros, EMIB and HBM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-osats-assembly-and-test-houses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 OSATs: Assembly and Test Houses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-wafer-sort-final-test-and-ate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 Wafer Sort, Final Test and ATE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-post-silicon-validation-and-bring-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 Post-Silicon Validation and Bring-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-product-qualification-proving-a-chip-will-last" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 Product Qualification: Proving a Chip Will Last
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#713-rma-and-failure-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.13 RMA and Failure Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#714-supply-chain-geopolitics-and-export-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.14 Supply Chain, Geopolitics and Export Controls
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="eda-industry-open-source-silicon-analog-ai-in-eda-careers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. EDA Industry, Open-Source Silicon, Analog, AI-in-EDA & Careers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ten-things-every-asic-student-should-master.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ten Things Every ASIC Student Should Master
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-of-terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary of Terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-the-foundries-tsmc-samsung-intel-globalfoundries-umc-smic-rapidus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 The Foundries: TSMC, Samsung, Intel, GlobalFoundries, UMC, SMIC, Rapidus
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-process-nodes-and-transistor-evolution-planar-finfet-gaa-backside-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Process Nodes and Transistor Evolution (Planar → FinFET → GAA → Backside Power)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-pdks-process-design-kits" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 PDKs: Process Design Kits
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-how-a-wafer-is-made-simply-explained" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 How a Wafer Is Made (Simply Explained)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-lithography-duv-euv-and-high-na-euv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Lithography: DUV, EUV and High-NA EUV
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-yield-and-defect-density" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Yield and Defect Density
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-packaging-basics-wire-bond-flip-chip-bga-and-wlcsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Packaging Basics: Wire-Bond, Flip-Chip, BGA and WLCSP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-advanced-packaging-cowos-info-soic-foveros-emib-and-hbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 Advanced Packaging: CoWoS, InFO, SoIC, Foveros, EMIB and HBM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-osats-assembly-and-test-houses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 OSATs: Assembly and Test Houses
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-wafer-sort-final-test-and-ate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 Wafer Sort, Final Test and ATE
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-post-silicon-validation-and-bring-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 Post-Silicon Validation and Bring-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-product-qualification-proving-a-chip-will-last" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 Product Qualification: Proving a Chip Will Last
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#713-rma-and-failure-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.13 RMA and Failure Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#714-supply-chain-geopolitics-and-export-controls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.14 Supply Chain, Geopolitics and Export Controls
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-7-fabrication-packaging-test-bring-up">Chapter 7: Fabrication, Packaging, Test &amp; Bring-up<a class="headerlink" href="#chapter-7-fabrication-packaging-test-bring-up" title="Permanent link">&para;</a></h1>
+<p>After tapeout, the design leaves the world of software and enters the factory. This chapter explains who manufactures chips, how process nodes and transistors have evolved up to 2026, what a PDK contains, and how a wafer is made step by step, including EUV lithography. It then follows the chip through yield, packaging (from simple wire-bond to CoWoS and Foveros), wafer sort and final test on ATE, lab bring-up, product qualification, failure analysis, and the global supply chain and export controls that shape the industry.</p>
+<h2 id="71-the-foundries-tsmc-samsung-intel-globalfoundries-umc-smic-rapidus">7.1 The Foundries: TSMC, Samsung, Intel, GlobalFoundries, UMC, SMIC, Rapidus<a class="headerlink" href="#71-the-foundries-tsmc-samsung-intel-globalfoundries-umc-smic-rapidus" title="Permanent link">&para;</a></h2>
+<p>A foundry manufactures chips for other companies. TSMC is by far the largest and leads in advanced nodes. Samsung Foundry and Intel Foundry also offer leading-edge processes. GlobalFoundries, UMC, SMIC and others focus on mature and specialty nodes, and Japan's Rapidus is building a new 2 nm fab. Choosing a foundry and node is one of the biggest early decisions for any chip project.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-01-the-foundries-tsmc-samsung-intel.svg" alt="Only a handful of companies can manufacture at the leading edge; most chips are made on mature and specialty processes." loading="lazy" width="1000" height="328">
+<figcaption><strong>The foundry landscape by capability.</strong> Only a handful of companies can manufacture at the leading edge; most chips are made on mature and specialty processes.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Foundries are like printing houses: a few can print glossy, ultra-fine art books, while many others print excellent everyday books at lower cost.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A fabless company plans three chips: an AI accelerator on TSMC N3 for best performance, an automotive microcontroller on a 28 nm process with embedded non-volatile memory, and a power-management IC on a 130 nm BCD process at a specialty foundry. Each foundry has its own PDK, IP ecosystem, pricing and capacity, so the team works with three different sets of rules.</p>
+</div>
+<h4 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Compare nodes on PPA, cost per wafer, IP availability and maturity.</li>
+<li>Check capacity, geography and supply-chain risk.</li>
+<li>Sign NDAs and agreements to get the PDK and design rules.</li>
+<li>Use foundry-certified EDA flows and qualified IP.</li>
+<li>Plan prototypes (MPW) and production volumes with the foundry.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Architects, programme managers, operations/supply-chain teams and foundry account and application engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>TSMC N2 entered volume production in late 2025; Intel 18A is in high-volume production; Samsung SF2 shipped in the Exynos 2600.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Pure-play foundries such as TSMC, UMC, GlobalFoundries and SMIC only manufacture for customers; Samsung and Intel also design their own chips, so they must convince customers that designs and data stay separate.</li>
+<li>Choosing a foundry locks in much of a project: PDK, standard cells, memory compilers and interface IP are node-specific, so porting a design to another foundry means largely redoing physical design and IP.</li>
+<li>Wafer prices rise steeply at each leading node; press reports put 2 nm-class wafers at roughly US&#36;30,000, several times the price of a 28 nm wafer, so die area matters enormously.</li>
+<li>Leading-edge capacity is concentrated in a handful of fabs, mostly in Taiwan; newer fabs in Arizona, Kumamoto (Japan) and Dresden (Germany) spread capacity but often run slightly older nodes.</li>
+<li>A typical engagement runs: NDA and PDK access, test chips and MPW prototypes, risk production, then volume production under a supply agreement fixing prices, capacity and quality targets.</li>
+<li>Foundries publish roadmaps at annual events such as TSMC's Technology Symposium and Intel Foundry Direct Connect; architects use them to decide years ahead which node a chip will use.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Comparing node names across foundries as if equal: '3 nm' at one foundry is not the same as at another, so compare density, speed, power and cost data.</li>
+<li>Assuming you can switch foundry late in a project; IP, PDK and qualification ties make that a major redesign.</li>
+<li>Ignoring capacity: a perfect design can still ship late if wafer or advanced-packaging capacity was not reserved in time.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TSMC</strong><br><em>Taiwan Semiconductor Manufacturing Company (Hsinchu, Taiwan) · Company · Fabrication</em></td>
+<td>Pure-play foundry with roughly 70 % of global foundry revenue; fabs in Taiwan plus Arizona, Japan (JASM) and, from about 2029, Germany (ESMC).</td>
+<td>TSMC N2 began volume production in Q4 2025; A16 volume production is now planned for 2027.</td>
+</tr>
+<tr>
+<td><strong>Samsung Foundry</strong><br><em>Samsung Electronics (South Korea) · Company · Fabrication</em></td>
+<td>Leading-edge foundry, first to ship GAA transistors (3 nm, 2022), now producing SF2.</td>
+<td>Samsung's Exynos 2600 is built on its SF2 2 nm-class process.</td>
+</tr>
+<tr>
+<td><strong>Intel Foundry</strong><br><em>Intel Corporation (US) · Company · Fabrication</em></td>
+<td>Intel's manufacturing and foundry-services business, offering 18A and planning 14A for external customers.</td>
+<td>Intel's Panther Lake processors are the first high-volume 18A products.</td>
+</tr>
+<tr>
+<td><strong>GlobalFoundries (GF)</strong><br><em>GlobalFoundries Inc. (US) · Company · Fabrication</em></td>
+<td>Specialty foundry focused on 12 nm and above, FD-SOI (22FDX), RF and silicon photonics; owns MIPS and, since June 2026, Synopsys's former ARC IP.</td>
+<td>Many RF front-end and IoT chips are made on GF 22FDX.</td>
+</tr>
+<tr>
+<td><strong>UMC</strong><br><em>United Microelectronics Corporation (Taiwan) · Company · Fabrication</em></td>
+<td>Major mature-node foundry for 28 nm and above, displays, power and IoT.</td>
+<td>A display driver IC is manufactured on UMC 28 nm.</td>
+</tr>
+<tr>
+<td><strong>SMIC</strong><br><em>Semiconductor Manufacturing International Corporation (China) · Company · Fabrication</em></td>
+<td>China's largest foundry; produces 7 nm- and 5 nm-class chips using DUV multi-patterning.</td>
+<td>Huawei's Kirin 9030 was reported to use SMIC's N+3 5 nm-class process.</td>
+</tr>
+<tr>
+<td><strong>Rapidus</strong><br><em>Rapidus Corporation (Japan, government-backed) · Company · Fabrication</em></td>
+<td>New Japanese foundry building 2 nm GAA production in Hokkaido, targeting mass production in 2027.</td>
+<td>Rapidus started its 2 nm pilot line in 2025 and released an early PDK to customers.</td>
+</tr>
+<tr>
+<td><strong>Specialty foundries</strong><br><em>Tower Semiconductor, X-FAB, Hua Hong, VIS, PSMC, SkyWater (IonQ), IHP · Company · Fabrication</em></td>
+<td>Foundries focused on analog, power, MEMS, RF, image sensors or research processes.</td>
+<td>SkyWater, acquired by IonQ in July 2026, still manufactures the open SKY130 process.</td>
+</tr>
+<tr>
+<td><strong>Foundry 2.0 / systems foundry</strong><br><em>Industry trend (TSMC, Intel terms) · Concept · Fabrication</em></td>
+<td>Foundries offering wafers plus advanced packaging, test and IP as one service.</td>
+<td>A customer buys wafers, CoWoS packaging and HBM integration from one supplier.</td>
+</tr>
+<tr>
+<td><strong>Wafer price</strong><br><em>Foundry economics · Concept · Fabrication</em></td>
+<td>Cost per processed wafer, rising steeply at each advanced node.</td>
+<td>Leading-edge wafers are reported to cost several times more than 28 nm wafers.</td>
+</tr>
+<tr>
+<td><strong>Mature nodes (28 nm and above)</strong><br><em>Foundry market segment · Concept · Fabrication</em></td>
+<td>Older, largely depreciated processes that still make most chips by unit volume: MCUs, power, analog, display drivers and sensors.</td>
+<td>A modern car contains hundreds of chips, most of them made on mature 28-180 nm processes.</td>
+</tr>
+<tr>
+<td><strong>Capacity allocation and long-term agreements (LTAs)</strong><br><em>Foundry business practice · Concept · Fabrication</em></td>
+<td>When demand exceeds supply, foundries allocate wafers; customers sign multi-year agreements, sometimes with prepayments, to secure capacity.</td>
+<td>During the 2021 shortage, carmakers waited months for microcontroller wafers because capacity was already committed to other customers.</td>
+</tr>
+<tr>
+<td><strong>Wafer starts per month (WSPM)</strong><br><em>Fab capacity metric · Concept · Fabrication</em></td>
+<td>Standard measure of fab capacity, usually counted in 300 mm-equivalent wafers started each month.</td>
+<td>TSMC's planned Dresden fab (ESMC) targets about 40,000 300 mm wafers per month.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="72-process-nodes-and-transistor-evolution-planar-finfet-gaa-backside-power">7.2 Process Nodes and Transistor Evolution (Planar → FinFET → GAA → Backside Power)<a class="headerlink" href="#72-process-nodes-and-transistor-evolution-planar-finfet-gaa-backside-power" title="Permanent link">&para;</a></h2>
+<p>Each process node brings smaller, better transistors, but the transistor's shape has changed to keep control of leakage. Planar transistors gave way to FinFETs around 22/16 nm, and FinFETs are now giving way to gate-all-around (GAA) nanosheets at 2 nm-class nodes. The next big change is backside power delivery, which moves power wires underneath the transistors.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-02-process-nodes-and-transistor-evolution.svg" alt="Each change in material or shape kept the gate in control of the channel as dimensions shrank." loading="lazy" width="1000" height="237">
+<figcaption><strong>How the transistor kept scaling.</strong> Each change in material or shape kept the gate in control of the channel as dimensions shrank.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like improving a water tap: first a simple flat valve, then a valve that grips the pipe on three sides (FinFET), then one that wraps all the way round (GAA), and finally moving the water mains under the floor (backside power).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A phone SoC family shows the history: 2014 on 20 nm planar, 2016-2023 on 16, 10, 7, 5 and 3 nm FinFET, 2025-2026 on 2 nm-class GAA (TSMC N2, Samsung SF2). Intel's 18A combines RibbonFET GAA transistors with PowerVia backside power, while TSMC's A16 adds Super Power Rail backside power, now scheduled for 2027.</p>
+</div>
+<h4 id="how-it-works_1">How it works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Planar MOSFET: gate on top of a flat channel (to about 28/20 nm).</li>
+<li>FinFET: channel raised into fins, gate on three sides (about 22/16 nm to 3 nm).</li>
+<li>GAA nanosheet: stacked sheets fully wrapped by the gate (2 nm-class).</li>
+<li>Backside power: power network on the wafer back (Intel 18A, TSMC A16).</li>
+<li>Future: forksheet and CFET (stacked NMOS/PMOS), new materials, High-NA EUV.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Process and device engineers, foundry technologists, architects choosing nodes, and every PD engineer who works with the rules.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know which companies call their GAA what: Samsung MBCFET, Intel RibbonFET, TSMC nanosheet.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Gate control explains each change: a planar gate touches one side of the channel, a FinFET three sides and a nanosheet all four, so leakage stays low as dimensions shrink.</li>
+<li>FinFET drive strength comes in whole fins, so widths are quantised; nanosheet widths can vary between devices, giving standard-cell designers finer power-performance trade-offs.</li>
+<li>Backside power moves the power grid under the transistors through nano-TSVs; it frees front-side routing tracks and cuts IR drop, but needs wafer thinning, carrier bonding and new debug methods.</li>
+<li>Full-node gains are now modest: TSMC quoted N2 versus N3E as 10-15 % more speed or 25-30 % less power, with roughly 15 % more density.</li>
+<li>Within one node, variants target different markets, e.g. TSMC N3E (baseline), N3P (improved PPA) and N3X (high-performance computing), each with its own PDK and libraries.</li>
+<li>DTCO (design-technology co-optimisation) now delivers much of each node's benefit: shorter standard-cell track heights, single diffusion breaks and contact-over-active-gate shrink area beyond raw pitch scaling.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Believing a '2 nm' chip has 2 nm gates: node names are marketing labels, and real gate and metal pitches are tens of nanometres.</li>
+<li>Assuming SRAM, analog and I/O shrink like logic; they scale far less, which is one reason chiplets mix nodes.</li>
+<li>Assuming the newest node is always best: higher wafer and NRE costs and immature yields make older nodes right for many products.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_1">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TSMC N3 family (N3E, N3P)</strong><br><em>TSMC (volume from 2022-2023) · Process · Fabrication</em></td>
+<td>TSMC's 3 nm-class FinFET nodes, its last FinFET generation.</td>
+<td>Many 2024-2025 flagship phone and laptop chips used N3E or N3P.</td>
+</tr>
+<tr>
+<td><strong>TSMC N2 / N2P</strong><br><em>TSMC (N2 volume Q4 2025; N2P H2 2026) · Process · Fabrication</em></td>
+<td>TSMC's first nanosheet GAA nodes, improving speed and power over N3.</td>
+<td>High-end mobile and HPC chips moved to N2 in 2026.</td>
+</tr>
+<tr>
+<td><strong>TSMC A16</strong><br><em>TSMC (volume production moved to 2027) · Process · Fabrication</em></td>
+<td>Node combining nanosheets with Super Power Rail backside power delivery, aimed at HPC; volume production slipped to 2027.</td>
+<td>AI and data-centre chips with dense power needs are the target customers.</td>
+</tr>
+<tr>
+<td><strong>Intel 18A</strong><br><em>Intel Foundry (high-volume production 2025-2026) · Process · Fabrication</em></td>
+<td>Intel's node with RibbonFET GAA transistors and PowerVia backside power.</td>
+<td>Panther Lake laptop processors launched on 18A in early 2026.</td>
+</tr>
+<tr>
+<td><strong>Intel 14A</strong><br><em>Intel Foundry (in development; timing tied to external customer commitments) · Process · Fabrication</em></td>
+<td>Intel's next node, planned to use High-NA EUV lithography.</td>
+<td>Intel expects 14A customer commitments from late 2026; it is the first node to use High-NA EUV in volume.</td>
+</tr>
+<tr>
+<td><strong>Samsung SF2 / SF2P</strong><br><em>Samsung Foundry (SF2 mass production late 2025; SF2P 2026) · Process · Fabrication</em></td>
+<td>Samsung's 2 nm-class GAA (MBCFET) processes.</td>
+<td>Exynos 2600 uses SF2; SF2P targets 2026-2027 phone chips.</td>
+</tr>
+<tr>
+<td><strong>RibbonFET / MBCFET / nanosheet</strong><br><em>Intel / Samsung / TSMC names for GAA · Concept · Fabrication</em></td>
+<td>Vendor names for gate-all-around stacked-sheet transistors.</td>
+<td>All three leading foundries now ship GAA transistors.</td>
+</tr>
+<tr>
+<td><strong>PowerVia / Super Power Rail</strong><br><em>Intel / TSMC · Concept · Fabrication</em></td>
+<td>Backside power-delivery technologies freeing front-side metal for signals.</td>
+<td>Intel reported better cell utilisation and lower IR drop with PowerVia.</td>
+</tr>
+<tr>
+<td><strong>CFET and forksheet</strong><br><em>Research roadmap (imec, foundries) · Concept · Fabrication</em></td>
+<td>Future transistors stacking NMOS on PMOS (CFET) or separating them with a wall (forksheet).</td>
+<td>imec roadmaps show CFET arriving at around the 'A7' generation in the 2030s.</td>
+</tr>
+<tr>
+<td><strong>imec</strong><br><em>Interuniversity Microelectronics Centre (Leuven, Belgium) · Organisation · Fabrication</em></td>
+<td>World-leading semiconductor research centre developing future process technologies.</td>
+<td>imec runs a High-NA EUV lab with ASML to prepare future nodes.</td>
+</tr>
+<tr>
+<td><strong>Strained silicon</strong><br><em>Introduced in volume by Intel at 90 nm (2003) · Concept · Fabrication</em></td>
+<td>Stretching or compressing the silicon crystal so electrons and holes move faster, boosting transistor current without shrinking it.</td>
+<td>SiGe in PMOS source/drain regions squeezes the channel and speeds up holes; the technique is still used today.</td>
+</tr>
+<tr>
+<td><strong>Short-channel effects</strong><br><em>Device physics · Concept · Fabrication</em></td>
+<td>As gates shrink, the drain starts to control the channel (e.g. DIBL), raising leakage; the main reason planar transistors were replaced.</td>
+<td>Around 20 nm, planar leakage became so high that foundries moved to FinFETs for better gate control.</td>
+</tr>
+<tr>
+<td><strong>Contacted poly pitch (CPP) and metal pitch</strong><br><em>Real density metrics (IRDS, foundry papers) · Concept · Fabrication</em></td>
+<td>Spacing of gates and of the tightest metal wires; together they describe logic density far better than the node name.</td>
+<td>Engineers compare nodes by CPP × minimum metal pitch, because nothing on a '3 nm' chip actually measures 3 nm.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="73-pdks-process-design-kits">7.3 PDKs: Process Design Kits<a class="headerlink" href="#73-pdks-process-design-kits" title="Permanent link">&para;</a></h2>
+<p>A PDK is everything a designer needs from the foundry to design for one process: device models for simulation, design rules and rule decks for DRC/LVS, technology files for P&amp;R and extraction, layer maps, parameterised cells (PCells) for transistors and passives, and documentation. Standard-cell libraries and IP usually come alongside. Commercial PDKs need NDAs; open PDKs like SKY130 are free for anyone.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-03-pdks-process-design-kits.svg" alt="Every EDA tool in the flow reads a different part of the same PDK, so all parts must come from one release." loading="lazy" width="1000" height="580">
+<figcaption><strong>What is inside a PDK.</strong> Every EDA tool in the flow reads a different part of the same PDK, so all parts must come from one release.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A PDK is like a complete kit for building furniture that fits a specific house: measurements of every room, rules about what fits where, and pre-made parts.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>When Jun starts an analog design on GF180MCU, he installs the open PDK with Ciel, opens Xschem with the PDK's symbols, simulates with ngspice using the BSIM4 models, draws layout in KLayout with PCells, and runs the PDK's DRC and LVS decks. In industry, his colleague downloads a 22 nm PDK from the foundry portal after legal signs the NDA.</p>
+</div>
+<h4 id="how-it-works_2">How it works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Obtain the PDK (foundry portal under NDA, or download an open PDK).</li>
+<li>Install for your tools: SPICE models, tech files, rule decks, PCells.</li>
+<li>Use PDK device models in simulation and corner analysis.</li>
+<li>Draw layout with PCells and run DRC/LVS/extraction with PDK decks.</li>
+<li>Track PDK versions; foundries release updates that may change rules.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Analog and digital designers, CAD engineers who install and maintain PDKs, foundry PDK teams.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Always record the PDK version used for tapeout; mixing versions is a classic source of foundry rejections.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A commercial PDK supports several EDA vendors at once: SKILL PCells for Virtuoso, other PCell formats for other editors, rule decks for Calibre, IC Validator and Pegasus, and technology files for each P&amp;R and extraction tool.</li>
+<li>Transistor models use BSIM4 for planar devices and BSIM-CMG for FinFET and GAA; they include corners, Monte Carlo mismatch and layout-dependent effects such as well proximity and stress.</li>
+<li>Commercial PDKs come from foundry portals under NDA and export-control screening; universities usually obtain them through programmes such as Europractice or the foundry's own university programme.</li>
+<li>Version discipline matters: release notes list rule and model changes, and the tapeout checklist records the exact PDK, deck and library versions so the foundry can reproduce your results.</li>
+<li>Open PDKs are built for open tools by open_pdks or IHP's scripts, producing views for Magic, KLayout, Netgen, ngspice, Xschem and OpenROAD from the foundry's source data.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Mixing versions, such as a new DRC deck with old models or LEF, gives results that disagree; pin and record every PDK component.</li>
+<li>Treating early (v0.x) models as final; silicon can miss targets if signoff is not repeated on the production release.</li>
+<li>Editing PDK files locally to 'fix' errors; report issues to the foundry or CAD team instead, or tapeout checks may fail.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_2">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SPICE device models (BSIM)</strong><br><em>UC Berkeley BSIM group; foundries · File format · Fabrication</em></td>
+<td>Mathematical transistor models (BSIM4, BSIM-CMG for FinFET/GAA) used in circuit simulation.</td>
+<td>BSIM-CMG models capture FinFET behaviour in SPICE.</td>
+</tr>
+<tr>
+<td><strong>PCells (parameterised cells)</strong><br><em>PDK component (SKILL, Python) · Concept · Physical Design</em></td>
+<td>Layout generators that draw devices from parameters like width and length.</td>
+<td>Entering W=2 µm, L=0.18 µm draws a correct NMOS layout instantly.</td>
+</tr>
+<tr>
+<td><strong>Ciel / Volare / open_pdks</strong><br><em>FOSSi Foundation (Ciel, based on Efabless's Volare); Tim Edwards (open_pdks) · Tool · Fabrication · Open source</em></td>
+<td>Tools that build, version and install open PDKs (SKY130, GF180MCU, IHP SG13G2) for open-source EDA flows.</td>
+<td>LibreLane uses Ciel to fetch the exact PDK build pinned for a design, so results are reproducible.</td>
+</tr>
+<tr>
+<td><strong>Design rule manual (DRM)</strong><br><em>Foundry documentation · Concept · Physical Design</em></td>
+<td>The human-readable document defining every design rule for the process.</td>
+<td>Layout engineers look up via-enclosure rules in the DRM.</td>
+</tr>
+<tr>
+<td><strong>iPDK / OpenAccess PDK formats</strong><br><em>IPL Alliance (iPDK); Cadence (SKILL PDKs) · Standard · Physical Design</em></td>
+<td>PDK formats letting PCells and tech data work across different layout tools.</td>
+<td>An interoperable PDK runs in both Virtuoso and other OA-based editors.</td>
+</tr>
+<tr>
+<td><strong>Open PDKs on GitHub</strong><br><em>SkyWater/Google, GlobalFoundries/Google, IHP · Concept · Fabrication · Open source</em></td>
+<td>Public PDKs whose every file can be read freely: the best way for a student to see what a real PDK contains.</td>
+<td>Browsing the IHP-Open-PDK repository shows its SPICE models, KLayout DRC decks, LEF files and standard-cell libraries.</td>
+</tr>
+<tr>
+<td><strong>PDK maturity versions (v0.1 to v1.0)</strong><br><em>Foundry release practice · Concept · Fabrication</em></td>
+<td>Early PDKs use predicted models and draft rules; later versions are correlated to silicon and frozen for production tapeouts.</td>
+<td>A team starts on a v0.5 PDK, then re-runs signoff on v1.0 before tapeout because some rules and models changed.</td>
+</tr>
+<tr>
+<td><strong>DRC/LVS/PEX rule decks</strong><br><em>Foundry, written for Calibre (SVRF), IC Validator, Pegasus, KLayout or Magic · File format · Signoff</em></td>
+<td>Tool-specific scripts encoding the design rules, device recognition and extraction setup used in physical verification.</td>
+<td>The foundry ships a Calibre DRC deck with thousands of checks and a matching LVS deck that recognises every device type.</td>
+</tr>
+<tr>
+<td><strong>Extraction technology files</strong><br><em>Foundry (Synopsys ITF/nxtgrd, Cadence ICT/qrcTechFile) · File format · Signoff</em></td>
+<td>Describe each layer's thickness, width, dielectric constant and resistivity so extractors can compute wire resistance and capacitance.</td>
+<td>StarRC reads an nxtgrd file generated from the foundry's ITF to extract SPEF at each corner.</td>
+</tr>
+<tr>
+<td><strong>Device corners and statistical models</strong><br><em>PDK SPICE model sets · Concept · Fabrication</em></td>
+<td>Model sets for process corners (TT, FF, SS, FS, SF) plus Monte Carlo mismatch data for variation analysis.</td>
+<td>An analog designer simulates a comparator at all five corners and 500 Monte Carlo runs before layout.</td>
+</tr>
+<tr>
+<td><strong>Process options and metal stacks</strong><br><em>Foundry PDK options · Concept · Fabrication</em></td>
+<td>Per-project choices: number of metal layers, thick top metal, MIM capacitors, threshold-voltage flavours and I/O device voltages.</td>
+<td>Choosing 9 instead of 11 metal layers saves mask cost but makes routing a large SoC much harder.</td>
+</tr>
+<tr>
+<td><strong>Symbols and CDF parameters</strong><br><em>Cadence Component Description Format; Xschem symbol libraries · Concept · Whole flow</em></td>
+<td>Schematic symbols for each device plus parameter definitions that link schematic, simulation netlist and PCell layout.</td>
+<td>Changing a resistor's length in the schematic updates its SPICE value and its PCell layout through shared parameters.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="74-how-a-wafer-is-made-simply-explained">7.4 How a Wafer Is Made (Simply Explained)<a class="headerlink" href="#74-how-a-wafer-is-made-simply-explained" title="Permanent link">&para;</a></h2>
+<p>A chip is built layer by layer on a silicon wafer through hundreds to over a thousand steps. The basic loop repeats: deposit a thin film, coat it with light-sensitive resist, expose a pattern through a mask (lithography), develop, etch away unprotected material, implant dopants where needed, strip the resist and polish flat (CMP). Transistors are made first (front-end-of-line), then the metal wiring (back-end-of-line).</p>
+<figure class="fig fig-diagram">
+<img src="img/07-04-how-a-wafer-is-made-simply-explained.svg" alt="A leading-edge wafer goes round this loop dozens of times, with variations for each layer." loading="lazy" width="1000" height="560">
+<figcaption><strong>The patterning loop.</strong> A leading-edge wafer goes round this loop dozens of times, with variations for each layer.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like screen-printing a T-shirt many times over with different stencils and inks, except each layer is thinner than a virus and must line up within a few nanometres.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A wafer at a 5 nm fab spends about three months moving between hundreds of tools in a cleanroom. For one metal layer, it gets a dielectric deposited, resist coated, an EUV exposure, etching of trenches, copper deposited by electroplating, and CMP to polish away excess copper, leaving wires in the trenches (the damascene process). This repeats for each of more than a dozen metal layers.</p>
+</div>
+<h4 id="how-it-works_3">How it works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Wafer preparation: polished single-crystal silicon wafers (300 mm).</li>
+<li>Front-end-of-line (FEOL): isolation, wells, gates, source/drain, transistors.</li>
+<li>Middle-of-line (MOL): contacts connecting transistors to wiring.</li>
+<li>Back-end-of-line (BEOL): metal layers and vias built with copper damascene.</li>
+<li>Passivation, bond pads/bumps, then wafer-level testing.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Process engineers, equipment engineers, integration and yield engineers in fabs; designers benefit from understanding it.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember the loop: deposit, pattern (lithography), etch, implant/dope, clean, CMP — repeated for every layer.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A leading-edge logic wafer passes through well over a thousand process steps and dozens of mask layers, taking roughly three to four months from bare wafer to finished wafer.</li>
+<li>Fabs track cycle time in 'days per mask layer', so every extra mask adds days as well as cost; this is one reason EUV single exposure replaced multi-patterning on critical layers.</li>
+<li>Gate-all-around adds new steps: Si/SiGe superlattice epitaxy, inner spacers and a selective etch that removes SiGe to release the silicon nanosheets before the gate wraps around them.</li>
+<li>Statistical process control and inline metrology (CD-SEM, optical scatterometry, overlay and defect inspection) catch drifting tools within hours, before thousands of wafers are affected.</li>
+<li>Wafers travel in sealed FOUPs and mini-environments, so the air touching wafers is far cleaner than the general cleanroom, which still needs strict particle control.</li>
+<li>A leading-edge fab costs tens of billions of dollars and uses vast amounts of electricity and ultra-pure water, which is why only a few companies can build one.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Confusing fab 'front-end-of-line' with design 'front end': FEOL means building transistors, not writing RTL.</li>
+<li>Thinking chips are made one at a time; whole wafers, in lots of up to 25, are processed together.</li>
+<li>Assuming lithography is the only critical step; a defect from any deposition, etch, clean or CMP step can kill a die.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_3">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_3" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cleanroom</strong><br><em>Fab infrastructure (ISO 14644 classes) · Concept · Fabrication</em></td>
+<td>Ultra-clean factory space with extremely low particle counts to avoid defects.</td>
+<td>Workers wear full 'bunny suits' and wafers move in sealed FOUP containers.</td>
+</tr>
+<tr>
+<td><strong>Deposition (CVD, PVD, ALD)</strong><br><em>Applied Materials, Lam Research, Tokyo Electron, ASM International · Process · Fabrication</em></td>
+<td>Depositing thin films of insulators, metals or semiconductors, down to single atomic layers (ALD).</td>
+<td>ALD deposits the high-k gate dielectric a few atoms thick.</td>
+</tr>
+<tr>
+<td><strong>Photolithography</strong><br><em>ASML, Nikon, Canon (scanners) · Process · Fabrication</em></td>
+<td>Transferring a mask pattern onto light-sensitive resist on the wafer.</td>
+<td>A scanner exposes the pattern for one layer across the whole wafer, field by field.</td>
+</tr>
+<tr>
+<td><strong>Etching (dry/plasma, wet)</strong><br><em>Lam Research, Tokyo Electron, Applied Materials · Process · Fabrication</em></td>
+<td>Removing material not protected by resist to transfer the pattern into the film.</td>
+<td>Plasma etching cuts deep, narrow trenches with vertical walls.</td>
+</tr>
+<tr>
+<td><strong>Ion implantation</strong><br><em>Applied Materials, Axcelis · Process · Fabrication</em></td>
+<td>Firing dopant ions into silicon to create N- and P-type regions.</td>
+<td>Boron implants form the source and drain of PMOS transistors.</td>
+</tr>
+<tr>
+<td><strong>CMP (Chemical Mechanical Planarisation)</strong><br><em>Applied Materials, Ebara · Process · Fabrication</em></td>
+<td>Polishing the wafer flat with chemical slurry so the next layer can be built.</td>
+<td>CMP removes excess copper, leaving wires only in trenches.</td>
+</tr>
+<tr>
+<td><strong>Copper damascene</strong><br><em>Introduced by IBM (1997) · Process · Fabrication</em></td>
+<td>Wiring process that etches trenches in dielectric, fills them with copper and polishes flat.</td>
+<td>Every metal layer of a modern chip is built with dual damascene.</td>
+</tr>
+<tr>
+<td><strong>FEOL / MOL / BEOL</strong><br><em>Fab terminology · Concept · Fabrication</em></td>
+<td>Front-end (transistors), middle (contacts) and back-end (wiring) stages of manufacturing.</td>
+<td>A metal-only ECO changes only BEOL masks.</td>
+</tr>
+<tr>
+<td><strong>Metrology and inspection</strong><br><em>KLA, Applied Materials, Hitachi High-Tech, ASML (HMI) · Process · Fabrication</em></td>
+<td>Measuring dimensions and finding defects during processing.</td>
+<td>Inspection tools scan wafers for particles after each critical step.</td>
+</tr>
+<tr>
+<td><strong>FOUP and automation</strong><br><em>Fab automation suppliers · Hardware · Fabrication</em></td>
+<td>Sealed pods carrying 25 wafers, moved by overhead robots between tools.</td>
+<td>An overhead hoist carries a FOUP from the etcher to the CMP tool.</td>
+</tr>
+<tr>
+<td><strong>Silicon wafers (Czochralski growth)</strong><br><em>Shin-Etsu, SUMCO, GlobalWafers, Siltronic, SK siltron · Process · Fabrication</em></td>
+<td>Single-crystal silicon ingots pulled from molten silicon, sliced and polished into mirror-flat 300 mm wafers about 0.775 mm thick.</td>
+<td>One ingot yields hundreds of wafers, and each finished wafer may carry hundreds of chips.</td>
+</tr>
+<tr>
+<td><strong>Epitaxy</strong><br><em>Applied Materials, ASM International, Tokyo Electron · Process · Fabrication</em></td>
+<td>Growing crystalline layers that continue the wafer's crystal structure, such as SiGe source/drain regions or Si/SiGe stacks.</td>
+<td>Nanosheet transistors start as alternating Si and SiGe epitaxial layers; the SiGe is later etched away to free the sheets.</td>
+</tr>
+<tr>
+<td><strong>Thermal processing (oxidation, anneal)</strong><br><em>Applied Materials, Tokyo Electron, Kokusai Electric · Process · Fabrication</em></td>
+<td>Heating wafers to grow oxides, activate implanted dopants and repair crystal damage, sometimes in milliseconds (rapid or laser anneal).</td>
+<td>A spike anneal after implantation activates dopants while limiting how far they diffuse.</td>
+</tr>
+<tr>
+<td><strong>Wafer fab equipment (WFE) makers</strong><br><em>Applied Materials, ASML, Lam Research, Tokyo Electron, KLA · Company · Fabrication</em></td>
+<td>The five largest suppliers of fab tools, together selling most of the world's chipmaking equipment.</td>
+<td>Most of a new leading-edge fab's multi-billion-dollar budget is spent on tools from these companies.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="75-lithography-duv-euv-and-high-na-euv">7.5 Lithography: DUV, EUV and High-NA EUV<a class="headerlink" href="#75-lithography-duv-euv-and-high-na-euv" title="Permanent link">&para;</a></h2>
+<p>Lithography is the most critical and expensive step: it defines the smallest features. Deep ultraviolet (DUV) scanners use 193 nm light, with immersion and multi-patterning to print features far smaller than the wavelength. Extreme ultraviolet (EUV) uses 13.5 nm light and is essential for leading nodes. High-NA EUV, with a larger lens aperture, prints even finer lines and is being introduced for Intel 14A and future nodes. ASML is the only EUV supplier.</p>
+<p><strong>DUV vs EUV vs High-NA EUV</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DUV ArF immersion</th>
+<th>EUV (0.33 NA)</th>
+<th>High-NA EUV (0.55)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wavelength</strong></td>
+<td>193 nm</td>
+<td>13.5 nm</td>
+<td>13.5 nm</td>
+</tr>
+<tr>
+<td><strong>Numerical aperture</strong></td>
+<td>1.35 (with water)</td>
+<td>0.33</td>
+<td>0.55</td>
+</tr>
+<tr>
+<td><strong>Optics</strong></td>
+<td>Lenses</td>
+<td>Mirrors in vacuum</td>
+<td>Anamorphic mirrors</td>
+</tr>
+<tr>
+<td><strong>Exposure field</strong></td>
+<td>26 × 33 mm</td>
+<td>26 × 33 mm</td>
+<td>26 × 16.5 mm</td>
+</tr>
+<tr>
+<td><strong>Single-exposure half-pitch</strong></td>
+<td>~40 nm</td>
+<td>~13 nm</td>
+<td>~8 nm</td>
+</tr>
+<tr>
+<td><strong>Typical use</strong></td>
+<td>Most layers; multi-patterning</td>
+<td>Critical layers, 7 nm and below</td>
+<td>Intel 14A, future nodes</td>
+</tr>
+<tr>
+<td><strong>Tool price</strong></td>
+<td>Tens of millions €</td>
+<td>Over €150 million</td>
+<td>~€350 million (reported)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Shorter wavelength or larger NA prints smaller features, at a steep rise in tool cost.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Lithography is like painting fine lines: DUV is a thicker brush you can use several times in clever ways, EUV is a much finer brush, and High-NA EUV is an even finer one.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>To print a 7 nm-class metal layer with DUV, a fab needed four exposure-and-etch passes (SAQP), adding cost and error risk. With EUV the same layer needs one exposure. Intel installed the first commercial High-NA EUV system, ASML's EXE:5200B, to prepare for 14A. Each EUV scanner costs well over 100 million euros, and High-NA systems cost considerably more.</p>
+</div>
+<h4 id="how-it-works_4">How it works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Light passes through (DUV) or reflects off (EUV) a mask.</li>
+<li>Projection optics shrink the pattern, typically 4x.</li>
+<li>The pattern exposes resist on the wafer field by field.</li>
+<li>Resolution depends on wavelength and numerical aperture (Rayleigh criterion).</li>
+<li>Overlay must align each layer with previous ones to within a few nanometres.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Lithography and OPC engineers, mask shops, equipment engineers; designers feel lithography through design rules.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember: EUV wavelength is 13.5 nm; DUV ArF is 193 nm; High-NA EUV raises NA from 0.33 to 0.55.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Rayleigh: half-pitch ≈ k1 × λ / NA. With k1 ≈ 0.3, ArF immersion (193 nm, NA 1.35) reaches about 40 nm, EUV at NA 0.33 about 12-13 nm and High-NA about 8 nm.</li>
+<li>Below roughly 40 nm half-pitch, DUV needs multi-patterning (LELE, SADP, SAQP); SMIC's 7 nm- and 5 nm-class processes rely on it because EUV scanners cannot be exported to China.</li>
+<li>EUV optics are all reflective: each Mo/Si mirror reflects only about 70 % of the light, so after many mirrors only a small fraction of the source power reaches the wafer.</li>
+<li>Scanners shrink the mask image four times; High-NA uses anamorphic 4x/8x reduction, halving the field to 26 × 16.5 mm, so the largest dies need stitching or chiplets.</li>
+<li>Throughput depends on dose: low-dose exposures are faster but suffer more stochastic defects, so resist chemistry and source power are constant battles.</li>
+<li>TSMC says it does not need High-NA for A16, A14 or even its 2029 A13 and A12 nodes, while Intel plans to insert it at 14A, showing that cost per wafer, not resolution alone, drives adoption.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking EUV replaced DUV: even at 2 nm most layers are still printed with DUV, and EUV is reserved for the critical ones.</li>
+<li>Equating wavelength with feature size: optical tricks print features far smaller than 193 nm, while EUV pitches are larger than 13.5 nm.</li>
+<li>Assuming High-NA is a free upgrade: half-field size, shallower depth of focus and tool cost all affect design and economics.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_4">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_4" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASML</strong><br><em>ASML Holding (Veldhoven, Netherlands) · Company · Fabrication</em></td>
+<td>Dominant lithography equipment maker and the only supplier of EUV scanners.</td>
+<td>Every leading-edge fab depends on ASML EUV tools.</td>
+</tr>
+<tr>
+<td><strong>DUV immersion lithography (ArFi)</strong><br><em>ASML, Nikon · Process · Fabrication</em></td>
+<td>193 nm lithography with water between lens and wafer to improve resolution.</td>
+<td>Most layers at 28 nm and many at advanced nodes still use ArF immersion.</td>
+</tr>
+<tr>
+<td><strong>EUV scanners (ASML NXE, 0.33 NA)</strong><br><em>ASML NXE series · Hardware · Fabrication</em></td>
+<td>ASML machines using 13.5 nm light from laser-hit tin droplets, reflected by multilayer mirrors in vacuum; the only EUV production tools.</td>
+<td>TSMC N5, N3 and N2 use NXE scanners for their most critical layers.</td>
+</tr>
+<tr>
+<td><strong>High-NA EUV (0.55 NA)</strong><br><em>ASML EXE:5000 / EXE:5200B · Process · Fabrication</em></td>
+<td>Next-generation EUV with larger numerical aperture for finer single-exposure patterns.</td>
+<td>Intel completed acceptance of an EXE:5200B for 14A development.</td>
+</tr>
+<tr>
+<td><strong>Numerical aperture (NA) and Rayleigh criterion</strong><br><em>Optics · Concept · Fabrication</em></td>
+<td>Resolution ≈ k1 × wavelength / NA; higher NA or shorter wavelength prints smaller features.</td>
+<td>Moving from NA 0.33 to 0.55 allows roughly 1.7x finer resolution.</td>
+</tr>
+<tr>
+<td><strong>Overlay</strong><br><em>Lithography metric · Concept · Fabrication</em></td>
+<td>How accurately each layer aligns with layers underneath.</td>
+<td>Overlay errors of a couple of nanometres can break via connections.</td>
+</tr>
+<tr>
+<td><strong>Photoresist</strong><br><em>JSR, Tokyo Ohka Kogyo, Shin-Etsu, others · Concept · Fabrication</em></td>
+<td>Light-sensitive material that records the exposed pattern.</td>
+<td>EUV uses chemically amplified or metal-oxide resists.</td>
+</tr>
+<tr>
+<td><strong>Pellicle</strong><br><em>Mask protection film · Concept · Fabrication</em></td>
+<td>Thin membrane over a mask that keeps particles out of focus.</td>
+<td>EUV pellicles must survive intense radiation and heat.</td>
+</tr>
+<tr>
+<td><strong>Anamorphic half-field</strong><br><em>High-NA EUV characteristic · Concept · Physical Design</em></td>
+<td>High-NA optics halve the exposure field size, affecting maximum die size and stitching.</td>
+<td>Very large dies may need stitching or chiplets under High-NA.</td>
+</tr>
+<tr>
+<td><strong>Nanoimprint and other alternatives</strong><br><em>Canon (nanoimprint), research groups · Process · Fabrication</em></td>
+<td>Alternative patterning methods pressing a template into resist.</td>
+<td>Canon ships nanoimprint tools for some memory and specialty uses.</td>
+</tr>
+<tr>
+<td><strong>EUV light source (laser-produced plasma)</strong><br><em>ASML (Cymer) · Concept · Fabrication</em></td>
+<td>A high-power CO2 laser hits about 50,000 tiny tin droplets per second, creating a plasma that emits 13.5 nm light.</td>
+<td>Source power directly sets scanner throughput, so ASML raises it with each NXE generation.</td>
+</tr>
+<tr>
+<td><strong>EUV masks and blanks</strong><br><em>Blanks from AGC and Hoya; mask shops at foundries · Concept · Fabrication</em></td>
+<td>Reflective masks: a low-expansion substrate with about 40 Mo/Si mirror layer pairs and a patterned absorber on top.</td>
+<td>A single buried defect in an EUV blank could print on every die, so blanks are inspected exhaustively.</td>
+</tr>
+<tr>
+<td><strong>Coater/developer track</strong><br><em>Tokyo Electron (dominant), SCREEN · Hardware · Fabrication</em></td>
+<td>Machine linked to the scanner that spins on resist, bakes the wafer and develops the exposed pattern.</td>
+<td>Almost every EUV scanner is paired in line with a TEL track that coats and develops its wafers.</td>
+</tr>
+<tr>
+<td><strong>Stochastic defects</strong><br><em>EUV patterning challenge · Concept · Fabrication</em></td>
+<td>Random failures from the small number of photons and resist molecules per tiny feature: missing contacts, bridges and rough edges.</td>
+<td>Raising the exposure dose reduces missing-contact defects but slows the scanner and raises cost per wafer.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="76-yield-and-defect-density">7.6 Yield and Defect Density<a class="headerlink" href="#76-yield-and-defect-density" title="Permanent link">&para;</a></h2>
+<p>Yield is the fraction of dies that work. Random defects (particles, tiny flaws) kill dies at a rate described by defect density (D0, defects per square centimetre). Larger dies are more likely to contain a defect, so yield drops quickly with die size. Systematic problems (design-process interactions) also reduce yield and are fixed by learning and DFM. Yield drives chip cost directly.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-06-yield-and-defect-density.svg" alt="At the same defect density, an 8 cm² die yields only half as well as a 1 cm² die." loading="lazy" width="1000" height="260">
+<figcaption><strong>Poisson yield vs die area (D0 = 0.1 per cm²).</strong> At the same defect density, an 8 cm² die yields only half as well as a 1 cm² die.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Throwing darts at a board covered in stamps: the bigger each stamp, the more likely a dart (defect) hits it and ruins it.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>With a defect density of 0.1 per cm², a 1 cm² die has about 90 % yield under the simple Poisson model, while an 8 cm² die has only about 45 %. That is why NVIDIA, AMD and others build large AI products from several smaller dies, and why they include redundant cores and memory repair to recover partially defective dies.</p>
+</div>
+<h4 id="how-it-works_5">How it works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Measure yield at wafer sort; map failing dies across the wafer.</li>
+<li>Separate random defect yield from systematic and parametric yield loss.</li>
+<li>Use yield models (Poisson, Murphy, negative binomial) to predict yield vs die size.</li>
+<li>Diagnose failures with scan diagnosis and physical failure analysis.</li>
+<li>Improve with process fixes, DFM changes, redundancy and repair.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Yield engineers, product engineers, process engineers and finance/operations teams.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Simple Poisson yield model: Y = e^(-A × D0), where A is die area and D0 is defect density.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Poisson Y = e^(−A·D0) assumes randomly scattered defects; real defects cluster, so the negative-binomial model Y = (1 + A·D0/α)^(−α) is preferred for large dies.</li>
+<li>Gross dies per wafer: DPW ≈ π·d²/(4·A) − π·d/√(2·A). For a 300 mm wafer and a 100 mm² die this gives about 707 − 67 ≈ 640; scribe lines and edge exclusion reduce it further.</li>
+<li>Overall yield multiplies stage yields (line, sort, assembly, final test), so a small loss at each step compounds into a large cost difference.</li>
+<li>D0 counts only killer defects: a particle landing on empty field oxide does no harm, which is why critical-area analysis predicts yield better than raw die area.</li>
+<li>Chiplets raise die yield because each die is small, but packaging adds assembly yield loss and needs known-good-die testing, so total cost must be modelled carefully.</li>
+<li>Systematic yield loss, such as litho hot spots, CMP dishing or via opens, is fixed by DFM rules, redundant vias, OPC updates and process tuning rather than by a cleaner fab.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Using the Poisson model for very large dies gives overly pessimistic yields; use clustering models calibrated to fab data.</li>
+<li>Forgetting edge loss and scribe lines when estimating dies per wafer, making die cost look lower than reality.</li>
+<li>Treating yield as only the fab's problem; design choices such as DFM, redundancy and test quality strongly affect it.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_5">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Line, sort and final yield</strong><br><em>Manufacturing metrics · Concept · Fabrication</em></td>
+<td>Yield measured at each stage: wafers surviving the fab (line), good dies at wafer sort, and good units after assembly and final test.</td>
+<td>Line yield 98 % × sort yield 82 % × final test yield 97 % gives about 78 % overall.</td>
+</tr>
+<tr>
+<td><strong>Defect density (D0)</strong><br><em>Fab metric · Concept · Fabrication</em></td>
+<td>Average number of killer defects per unit area, falling as a process matures.</td>
+<td>A new node starts with high D0 that falls month by month during ramp.</td>
+</tr>
+<tr>
+<td><strong>Poisson yield model</strong><br><em>Yield theory · Concept · Fabrication</em></td>
+<td>Y = e^(-A × D0): yield falls exponentially with die area times defect density.</td>
+<td>Doubling die area from 1 to 2 cm² at D0=0.2 drops yield from 82 % to 67 %.</td>
+</tr>
+<tr>
+<td><strong>Systematic vs random yield loss</strong><br><em>Yield analysis · Concept · Fabrication</em></td>
+<td>Systematic losses come from repeatable design-process issues; random from particles.</td>
+<td>A litho hot spot failing in every die is systematic.</td>
+</tr>
+<tr>
+<td><strong>Parametric yield</strong><br><em>Yield analysis · Concept · Packaging &amp; Test</em></td>
+<td>Dies that work but miss speed or power targets due to variation.</td>
+<td>Slow dies are binned and sold as lower-frequency products.</td>
+</tr>
+<tr>
+<td><strong>Wafer map</strong><br><em>Test data · Concept · Packaging &amp; Test</em></td>
+<td>Picture of pass/fail and bin results for each die position on a wafer.</td>
+<td>A ring of failures at the wafer edge points to a process uniformity issue.</td>
+</tr>
+<tr>
+<td><strong>Redundancy and harvesting</strong><br><em>Design practice · Methodology · Spec/Architecture</em></td>
+<td>Including spare cores or units so dies with defects can still be sold.</td>
+<td>A GPU with 2 of 144 units disabled is sold as a lower-tier product.</td>
+</tr>
+<tr>
+<td><strong>Yield management software</strong><br><em>PDF Solutions (Exensio), Synopsys (Yield Explorer), others · Tool · Fabrication · Commercial</em></td>
+<td>Software that collects fab and test data to find yield problems.</td>
+<td>Exensio correlates a yield drop with one specific etch chamber.</td>
+</tr>
+<tr>
+<td><strong>Good dies per wafer</strong><br><em>Manufacturing economics · Concept · Fabrication</em></td>
+<td>Gross dies per wafer multiplied by yield; determines die cost.</td>
+<td>300 gross dies × 75 % yield = 225 good dies per wafer.</td>
+</tr>
+<tr>
+<td><strong>Murphy and negative-binomial yield models</strong><br><em>Yield theory · Concept · Fabrication</em></td>
+<td>Models that allow for defects clustering together; less pessimistic than Poisson for large dies.</td>
+<td>With clustering factor α = 2, a 4 cm² die at D0 = 0.1 yields about 69 % instead of Poisson's 67 %.</td>
+</tr>
+<tr>
+<td><strong>Yield ramp (learning curve)</strong><br><em>Fab and product engineering · Concept · Fabrication</em></td>
+<td>The rise in yield over months as defect sources are found and fixed while a new node or product is introduced.</td>
+<td>A new 2 nm-class product starts production at modest yield that improves steadily as D0 falls.</td>
+</tr>
+<tr>
+<td><strong>Volume diagnosis (yield learning)</strong><br><em>Siemens Tessent YieldInsight, Synopsys and PDF Solutions tools · Methodology · Packaging &amp; Test</em></td>
+<td>Running scan diagnosis on thousands of failing dies and correlating suspects statistically to expose systematic layout or process weaknesses.</td>
+<td>Volume diagnosis shows one via pattern on metal 3 in 30 % of failures, prompting a new DFM rule.</td>
+</tr>
+<tr>
+<td><strong>Cost per good die</strong><br><em>Manufacturing economics · Concept · Fabrication</em></td>
+<td>Wafer cost divided by good dies per wafer; the number linking die size, yield and product margin.</td>
+<td>A US&#36;17,000 wafer with 225 good dies costs about US&#36;76 per good die before packaging and test.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="77-packaging-basics-wire-bond-flip-chip-bga-and-wlcsp">7.7 Packaging Basics: Wire-Bond, Flip-Chip, BGA and WLCSP<a class="headerlink" href="#77-packaging-basics-wire-bond-flip-chip-bga-and-wlcsp" title="Permanent link">&para;</a></h2>
+<p>A bare die is fragile and tiny, so it is put in a package that protects it, connects it to the circuit board and removes heat. Traditional wire-bond packages connect pads at the die edge with fine gold or copper wires. Flip-chip packages flip the die over and connect it with solder bumps across its whole area, giving more connections and better electrical performance. Wafer-level packages are barely larger than the die itself.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-07-packaging-basics-wire-bond-flip-chip.svg" alt="Heat leaves through the top while signals and power travel down through bumps, substrate and balls." loading="lazy" width="1000" height="533">
+<figcaption><strong>Cross-section of a flip-chip BGA.</strong> Heat leaves through the top while signals and power travel down through bumps, substrate and balls.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>The package is like a phone case with a built-in adapter: it protects the delicate device and turns its tiny connectors into ones the outside world can use.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A sensor chip uses a 5 × 5 mm QFN wire-bond package costing a few cents. A phone SoC uses flip-chip on a multilayer substrate with thousands of bumps, then a package-on-package memory stacked on top. A wearable's Bluetooth chip uses a wafer-level chip-scale package (WLCSP) that is the same size as the die to save space.</p>
+</div>
+<h4 id="how-it-works_6">How it works<a class="headerlink" href="#how-it-works_6" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Wafers are thinned (back-grind) and diced into dies.</li>
+<li>Wire-bond: die attached face-up, wires bonded from pads to lead frame or substrate.</li>
+<li>Flip-chip: bumps formed on wafer; die flipped and soldered to substrate; underfilled.</li>
+<li>Molding or lid/heat-spreader attachment; solder balls added for BGA.</li>
+<li>Package tested, marked and shipped in trays or reels.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Package designers, packaging/assembly engineers, signal and power integrity engineers, thermal engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Wire-bond = cheap, I/O at die edge; flip-chip = area I/O, better power/speed; WLCSP = smallest.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Package choice balances I/O count, power, signal speed, heat, size and cost: wire-bond suits up to a few hundred pads, flip-chip thousands, and WLCSP is limited by the die's own area.</li>
+<li>Bond wires add roughly 1 nH of inductance per millimetre, causing supply bounce when many outputs switch; flip-chip bumps have far lower inductance, helping fast, high-current chips.</li>
+<li>Junction temperature Tj = Ta + P × θJA: a 5 W chip with θJA of 20 °C/W in 45 °C air would reach about 145 °C, so it needs a better package or a heatsink.</li>
+<li>Substrates for large chips use ABF (Ajinomoto Build-up Film) dielectric layers; substrate supply was a serious bottleneck during the 2021-2022 chip shortage.</li>
+<li>Chip, package and board are co-designed: the pad or bump map is fixed during floorplanning, and package SI, PI and thermal models feed back into the chip's power grid and I/O plan.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Choosing the package at the end; pad ring, bump map and power-pin count must be planned together with the floorplan.</li>
+<li>Too few power and ground pins causes simultaneous-switching noise and IR drop that no on-chip fix can fully cure.</li>
+<li>Quoting θJA as a universal number; it is measured on a standard JEDEC test board and changes with your board and airflow.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_6">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_6" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Wire bonding</strong><br><em>Kulicke &amp; Soffa, ASMPT (equipment) · Process · Packaging &amp; Test</em></td>
+<td>Connecting die pads to the package with very thin gold, copper or aluminium wires.</td>
+<td>A microcontroller in a QFP package has 64 wire bonds.</td>
+</tr>
+<tr>
+<td><strong>Flip-chip</strong><br><em>Originally IBM C4 (1960s) · Process · Packaging &amp; Test</em></td>
+<td>Die mounted face-down on bumps connecting directly to the substrate.</td>
+<td>CPUs and GPUs use flip-chip with tens of thousands of bumps.</td>
+</tr>
+<tr>
+<td><strong>BGA (Ball Grid Array)</strong><br><em>Package type · Concept · Packaging &amp; Test</em></td>
+<td>Package with an array of solder balls underneath for board connection.</td>
+<td>A laptop SoC in a 1,500-ball BGA is soldered directly to the motherboard.</td>
+</tr>
+<tr>
+<td><strong>QFN / QFP</strong><br><em>Package types (JEDEC outlines) · Concept · Packaging &amp; Test</em></td>
+<td>Low-cost lead-frame packages with leads on the sides (QFP) or pads underneath (QFN).</td>
+<td>Many sensors and power chips use QFN packages.</td>
+</tr>
+<tr>
+<td><strong>WLCSP (Wafer-Level Chip-Scale Package)</strong><br><em>Package type · Concept · Packaging &amp; Test</em></td>
+<td>Packaging done on the whole wafer, leaving a package the same size as the die.</td>
+<td>Earbud chips use WLCSP to save board space.</td>
+</tr>
+<tr>
+<td><strong>Package substrate</strong><br><em>Ibiden, Unimicron, Shinko, AT&amp;S, others · Concept · Packaging &amp; Test</em></td>
+<td>Multilayer laminate (often ABF build-up) routing signals from bumps to package balls.</td>
+<td>An AI accelerator uses a large 20-layer ABF substrate.</td>
+</tr>
+<tr>
+<td><strong>Underfill</strong><br><em>Packaging materials · Process · Packaging &amp; Test</em></td>
+<td>Epoxy filling the gap under a flip-chip die to protect bumps from stress.</td>
+<td>Underfill stops bump cracks from thermal cycling.</td>
+</tr>
+<tr>
+<td><strong>Package-on-package (PoP)</strong><br><em>Package architecture · Concept · Packaging &amp; Test</em></td>
+<td>Stacking a memory package on top of a logic package.</td>
+<td>Phone SoCs often have LPDDR memory stacked directly on top.</td>
+</tr>
+<tr>
+<td><strong>Thermal design (TIM, heat spreader)</strong><br><em>Packaging/thermal engineering · Concept · Packaging &amp; Test</em></td>
+<td>Materials and lids that conduct heat from the die to the cooler.</td>
+<td>A metal lid and thermal interface material move 300 W from a GPU die.</td>
+</tr>
+<tr>
+<td><strong>Package design tools</strong><br><em>Cadence Allegro X APD, Siemens Xpedition, Synopsys · Tool · Packaging &amp; Test · Commercial</em></td>
+<td>Software for designing package substrates and co-designing with dies and boards.</td>
+<td>A package designer routes 3,000 nets from bumps to balls in Allegro X.</td>
+</tr>
+<tr>
+<td><strong>Back-grinding (wafer thinning)</strong><br><em>DISCO, Tokyo Seimitsu (equipment) · Process · Packaging &amp; Test</em></td>
+<td>Grinding the wafer back from about 775 µm to between tens and a few hundred micrometres before dicing and assembly.</td>
+<td>Memory dies are thinned to tens of micrometres so 12 or 16 can stack inside one HBM package.</td>
+</tr>
+<tr>
+<td><strong>Die attach</strong><br><em>Assembly step · Process · Packaging &amp; Test</em></td>
+<td>Bonding the back of a die to the lead frame or substrate with epoxy, film or solder for support and a heat path.</td>
+<td>A power chip uses solder die attach to carry heat into the exposed pad of its QFN package.</td>
+</tr>
+<tr>
+<td><strong>Lead frame</strong><br><em>Copper-alloy frames from Mitsui High-tec, Shinko and others · Hardware · Packaging &amp; Test</em></td>
+<td>Stamped or etched metal frame providing the leads and die pad of low-cost QFN, QFP and SOIC packages.</td>
+<td>Hundreds of QFN packages are assembled on one lead-frame strip, then molded and sawn apart.</td>
+</tr>
+<tr>
+<td><strong>Mold compound (encapsulation)</strong><br><em>Epoxy compounds from Sumitomo Bakelite, Resonac and others · Process · Packaging &amp; Test</em></td>
+<td>Silica-filled epoxy resin molded around the die and wires to protect them from moisture, light and handling.</td>
+<td>Transfer molding encapsulates a whole strip of wire-bonded dies in a single shot.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="78-advanced-packaging-cowos-info-soic-foveros-emib-and-hbm">7.8 Advanced Packaging: CoWoS, InFO, SoIC, Foveros, EMIB and HBM<a class="headerlink" href="#78-advanced-packaging-cowos-info-soic-foveros-emib-and-hbm" title="Permanent link">&para;</a></h2>
+<p>Advanced packaging connects multiple dies with far denser and faster links than a normal package. TSMC's CoWoS places dies and HBM stacks on a silicon interposer; InFO uses fan-out redistribution layers; SoIC stacks dies with hybrid bonding. Intel's EMIB embeds small silicon bridges in the substrate, and Foveros stacks dies in 3D. These technologies are the backbone of today's AI accelerators.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-08-advanced-packaging-cowos-info-soic.svg" alt="Halving the pitch quadruples the connections per mm², which is why hybrid bonding enables true 3D stacking." loading="lazy" width="1000" height="278">
+<figcaption><strong>Connection pitch by packaging style.</strong> Halving the pitch quadruples the connections per mm², which is why hybrid bonding enables true 3D stacking.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>If ordinary packaging is a house with one room, advanced packaging is a block of flats where rooms are connected by private lifts and corridors far faster than going outside and back in.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A leading AI GPU combines two reticle-sized compute dies and eight HBM3E stacks on a TSMC CoWoS-L package with local silicon interconnect bridges. HBM sits millimetres from the compute dies, delivering several terabytes per second. CoWoS capacity has been a major bottleneck for AI chip supply since 2023, driving huge expansions by TSMC and its partners.</p>
+</div>
+<h4 id="how-it-works_7">How it works<a class="headerlink" href="#how-it-works_7" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Choose the integration style: interposer (2.5D), bridge, fan-out, or 3D stacking.</li>
+<li>Design die-to-die interfaces and bump/hybrid-bond maps.</li>
+<li>Integrate HBM stacks next to compute dies where bandwidth is needed.</li>
+<li>Co-design power, signal integrity, thermal and warpage.</li>
+<li>Test known-good dies, assemble, and test the full package.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Package architects, 3D-IC designers, foundry/OSAT packaging engineers, AI chip teams.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the families: TSMC 3DFabric (CoWoS, InFO, SoIC), Intel (EMIB, Foveros), Samsung (I-Cube, X-Cube).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>CoWoS-S uses a monolithic silicon interposer, CoWoS-R an organic RDL interposer, and CoWoS-L small silicon bridges inside an RDL interposer, allowing packages several times the reticle size.</li>
+<li>HBM3E stacks use a 1024-bit interface at about 1-1.2 TB/s each; HBM4 doubles the interface to 2048 bits for up to 2 TB/s, so eight HBM4 stacks can exceed 10 TB/s.</li>
+<li>Hybrid bonding joins copper pads and dielectric directly with no solder, reaching pitches below 10 µm and hundreds of times the connection density of flip-chip bumps.</li>
+<li>Large AI packages can draw over a kilowatt, so substrate power delivery, warpage control and liquid cooling are designed together with the dies.</li>
+<li>Every die must be known-good before assembly, because one bad die scraps an expensive package; HBM stacks and chiplets are tested, and sometimes repaired, before integration.</li>
+<li>Foundries and OSATs share the work: TSMC builds the chip-on-wafer part of CoWoS and has outsourced some substrate-attach steps to partners such as ASE/SPIL and Amkor.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming chiplets are always cheaper: interposers, bonding, test and compound assembly yield can outweigh the die-yield gain.</li>
+<li>Treating HBM bandwidth as free: HBM adds cost, power, heat and supply risk, and its placement constrains the floorplan.</li>
+<li>Ignoring thermal coupling in 3D stacks; a hot logic die under memory can push the memory beyond its temperature limit.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_7">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_7" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TSMC CoWoS (-S, -R, -L)</strong><br><em>TSMC 3DFabric · Process · Packaging &amp; Test</em></td>
+<td>Chip-on-Wafer-on-Substrate 2.5D packaging with silicon interposer (S), RDL (R) or bridges (L).</td>
+<td>Most leading AI accelerators with HBM use CoWoS packaging.</td>
+</tr>
+<tr>
+<td><strong>TSMC InFO</strong><br><em>TSMC 3DFabric · Process · Packaging &amp; Test</em></td>
+<td>Integrated Fan-Out wafer-level packaging using redistribution layers instead of a substrate.</td>
+<td>iPhone application processors have used InFO packaging since 2016.</td>
+</tr>
+<tr>
+<td><strong>TSMC SoIC</strong><br><em>TSMC 3DFabric · Process · Packaging &amp; Test</em></td>
+<td>System on Integrated Chips: 3D die stacking with bumpless hybrid bonding.</td>
+<td>AMD's 3D V-Cache stacks SRAM on CPU dies using SoIC.</td>
+</tr>
+<tr>
+<td><strong>Intel EMIB</strong><br><em>Intel Foundry · Process · Packaging &amp; Test</em></td>
+<td>Embedded Multi-die Interconnect Bridge: small silicon bridges in the substrate linking adjacent dies.</td>
+<td>Intel data-centre processors connect compute tiles using EMIB.</td>
+</tr>
+<tr>
+<td><strong>Intel Foveros</strong><br><em>Intel Foundry · Process · Packaging &amp; Test</em></td>
+<td>3D face-to-face die stacking technology, with Foveros Direct adding hybrid bonding.</td>
+<td>Intel client processors stack compute tiles on a base die with Foveros.</td>
+</tr>
+<tr>
+<td><strong>Samsung I-Cube / X-Cube</strong><br><em>Samsung Foundry · Process · Packaging &amp; Test</em></td>
+<td>Samsung's 2.5D interposer (I-Cube) and 3D stacking (X-Cube) technologies.</td>
+<td>A customer uses I-Cube to pair a logic die with HBM.</td>
+</tr>
+<tr>
+<td><strong>HBM stack</strong><br><em>SK hynix, Samsung, Micron; JEDEC HBM3E/HBM4 · Concept · Packaging &amp; Test</em></td>
+<td>Several DRAM dies stacked with TSVs on a base logic die, placed beside the processor.</td>
+<td>A 12-high HBM3E stack provides 36 GB of memory.</td>
+</tr>
+<tr>
+<td><strong>Silicon interposer and RDL</strong><br><em>Packaging technology · Concept · Packaging &amp; Test</em></td>
+<td>A passive silicon or organic layer with fine wiring connecting dies placed on it.</td>
+<td>Interposers larger than the reticle are made by stitching several exposures.</td>
+</tr>
+<tr>
+<td><strong>Co-packaged optics (CPO)</strong><br><em>Industry trend (NVIDIA, Broadcom, TSMC COUPE, others) · Concept · Packaging &amp; Test</em></td>
+<td>Integrating optical engines in the same package as switch or compute chips.</td>
+<td>CPO switches cut power by replacing pluggable optical modules.</td>
+</tr>
+<tr>
+<td><strong>Glass and panel-level packaging</strong><br><em>Emerging technology (Intel, others) · Concept · Packaging &amp; Test</em></td>
+<td>Using glass cores or large rectangular panels instead of round wafers for bigger packages.</td>
+<td>Glass substrates promise flatter, larger packages for future AI chips.</td>
+</tr>
+<tr>
+<td><strong>Fan-out packaging from OSATs</strong><br><em>ASE (FOCoS), Amkor (SWIFT), JCET and others · Process · Packaging &amp; Test</em></td>
+<td>Fan-out and RDL-interposer packages from OSATs, offered as alternatives to foundry packaging for multi-die designs.</td>
+<td>A networking chip pairs a switch die with I/O chiplets in an ASE FOCoS package.</td>
+</tr>
+<tr>
+<td><strong>Microbumps</strong><br><em>2.5D/3D interconnect · Concept · Packaging &amp; Test</em></td>
+<td>Tiny solder-capped copper bumps at a few tens of micrometres pitch, joining dies to interposers or to each other.</td>
+<td>Each HBM stack connects to the interposer through more than a thousand signal microbumps.</td>
+</tr>
+<tr>
+<td><strong>HBM4 and custom base dies</strong><br><em>JEDEC JESD270-4 (April 2025); SK hynix, Samsung, Micron · Concept · Packaging &amp; Test</em></td>
+<td>HBM generation with a 2048-bit interface and up to 2 TB/s per stack; base dies increasingly use foundry logic processes.</td>
+<td>AI accelerators launching in 2026 pair compute dies with HBM4 stacks for multi-terabyte-per-second bandwidth.</td>
+</tr>
+<tr>
+<td><strong>Warpage</strong><br><em>Packaging reliability challenge · Concept · Packaging &amp; Test</em></td>
+<td>Bending of large packages as materials with different thermal expansion heat and cool, risking cracked bumps and bad board joints.</td>
+<td>A very large AI package uses a stiffener ring and lid to keep warpage within assembly limits.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="79-osats-assembly-and-test-houses">7.9 OSATs: Assembly and Test Houses<a class="headerlink" href="#79-osats-assembly-and-test-houses" title="Permanent link">&para;</a></h2>
+<p>OSATs (Outsourced Semiconductor Assembly and Test companies) package and test chips for fabless companies and IDMs. They bump and dice wafers, assemble packages, run final test and ship finished parts. The largest are ASE, Amkor and JCET. Foundries like TSMC and Intel also do advanced packaging in-house, and the OSATs increasingly offer advanced packaging too.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-09-osats-assembly-and-test-houses.svg" alt="The chip company rarely touches the parts; data such as wafer maps and test results travel with them." loading="lazy" width="1000" height="350">
+<figcaption><strong>From finished wafer to shipped chip.</strong> The chip company rarely touches the parts; data such as wafer maps and test results travel with them.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>OSATs are like the bindery and quality-control department after the printing press: they turn printed sheets into finished, checked books.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A fabless company's finished wafers travel from TSMC in Taiwan to an Amkor facility, where they are bumped, probed, diced and assembled into flip-chip BGAs, then final-tested on Advantest testers. Some products go to ASE for system-in-package modules. The company never touches the wafers; it manages everything through data and contracts.</p>
+</div>
+<h4 id="how-it-works_8">How it works<a class="headerlink" href="#how-it-works_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Receive wafers from the foundry; bump if needed.</li>
+<li>Wafer sort (probe test), map good dies.</li>
+<li>Dice, pick good dies and assemble packages.</li>
+<li>Final test, burn-in if required, marking and packing.</li>
+<li>Ship to distributors or customers; return data to the chip company.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Operations, supply-chain and product engineers at chip companies; process, test and packaging engineers at OSATs.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember the 'big three' OSATs: ASE (Taiwan), Amkor (US-headquartered), JCET (China).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Wafer maps travel with the wafers in standard formats such as SEMI E142, so the assembly line picks only the dies that passed wafer sort.</li>
+<li>Automotive products require OSAT sites certified to IATF 16949 and a production part approval process (PPAP), with frozen process flows and documented control plans.</li>
+<li>For low-cost chips, packaging and test can cost more than the silicon die itself, so test time and package choice are optimised as hard as die area.</li>
+<li>Advanced packaging is the fastest-growing segment; OSATs now offer fan-out, 2.5D and SiP while foundries build CoWoS-class lines, blurring the boundary between fab and OSAT.</li>
+<li>Back-end capacity is spread across Taiwan, China, Malaysia, Vietnam, the Philippines, South Korea and others, with new advanced-packaging plants being built in the US and Europe.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming the foundry returns packaged chips; most fabless companies contract assembly and test separately unless they buy a turnkey service.</li>
+<li>Sending wrong or outdated wafer maps, so failing dies get packaged and shipped.</li>
+<li>Designing pads or bumps without the OSAT's assembly rules, forcing late layout changes.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_8">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASE Technology Holding</strong><br><em>ASE Group (Taiwan, includes SPIL) · Company · Packaging &amp; Test</em></td>
+<td>The world's largest OSAT, offering packaging, test and system-in-package services.</td>
+<td>ASE assembles system-in-package modules for wearables.</td>
+</tr>
+<tr>
+<td><strong>Amkor Technology</strong><br><em>Amkor (US-headquartered, factories in Asia, building in Arizona) · Company · Packaging &amp; Test</em></td>
+<td>Major OSAT offering flip-chip, fan-out, SiP and advanced packaging.</td>
+<td>Amkor is building an advanced packaging plant in Arizona.</td>
+</tr>
+<tr>
+<td><strong>JCET Group</strong><br><em>JCET (China) · Company · Packaging &amp; Test</em></td>
+<td>China's largest OSAT and one of the top three worldwide.</td>
+<td>JCET packages chips for many domestic and international customers.</td>
+</tr>
+<tr>
+<td><strong>Other OSATs</strong><br><em>Tongfu Microelectronics, Powertech Technology, Hana Micron, UTAC, others · Company · Packaging &amp; Test</em></td>
+<td>Additional assembly and test providers, often specialised by product type.</td>
+<td>Memory makers use Powertech for DRAM packaging and test.</td>
+</tr>
+<tr>
+<td><strong>Bumping</strong><br><em>OSATs and foundries · Process · Packaging &amp; Test</em></td>
+<td>Forming solder or copper-pillar bumps on wafer pads for flip-chip assembly.</td>
+<td>Copper pillars with solder caps allow finer bump pitch than solder balls.</td>
+</tr>
+<tr>
+<td><strong>Dicing</strong><br><em>DISCO (equipment), OSATs · Process · Packaging &amp; Test</em></td>
+<td>Cutting the wafer into individual dies by blade, laser or plasma.</td>
+<td>Stealth laser dicing reduces chipping on thin wafers.</td>
+</tr>
+<tr>
+<td><strong>System-in-Package (SiP)</strong><br><em>Packaging architecture · Concept · Packaging &amp; Test</em></td>
+<td>Several chips and passives combined into one package forming a subsystem.</td>
+<td>A smartwatch's main module is an SiP with processor, memory and radios.</td>
+</tr>
+<tr>
+<td><strong>Back-end manufacturing</strong><br><em>Industry term · Concept · Packaging &amp; Test</em></td>
+<td>Assembly, packaging and test steps after wafer fabrication ('back end' in manufacturing).</td>
+<td>Back-end capacity in Southeast Asia is expanding rapidly.</td>
+</tr>
+<tr>
+<td><strong>Traceability and lot tracking</strong><br><em>Manufacturing practice · Concept · Packaging &amp; Test</em></td>
+<td>Recording which wafer, lot and test data belong to each shipped chip.</td>
+<td>A customer return can be traced back to its wafer and die position.</td>
+</tr>
+<tr>
+<td><strong>Pure test houses</strong><br><em>KYEC (King Yuan Electronics), Sigurd and others · Company · Packaging &amp; Test</em></td>
+<td>Companies specialising in wafer sort and final test services rather than assembly.</td>
+<td>A fabless firm sends its wafers to KYEC in Taiwan for probing before assembly elsewhere.</td>
+</tr>
+<tr>
+<td><strong>Marking, tape and reel</strong><br><em>Final back-end steps · Process · Packaging &amp; Test</em></td>
+<td>Laser-marking each package with part and lot codes, then packing into trays or tape reels for automated board assembly.</td>
+<td>A reel of 5,000 QFN parts loads straight onto a customer's pick-and-place machine.</td>
+</tr>
+<tr>
+<td><strong>Turnkey vs consigned supply model</strong><br><em>Supply-chain practice · Concept · Packaging &amp; Test</em></td>
+<td>Either one partner manages wafers, assembly and test end to end (turnkey), or the chip company buys and manages each step (consigned).</td>
+<td>A start-up uses an ASIC partner's turnkey service; a large fabless firm consigns wafers to OSATs it chooses itself.</td>
+</tr>
+<tr>
+<td><strong>Assembly design rules</strong><br><em>OSAT and substrate-supplier guidelines · Concept · Packaging &amp; Test</em></td>
+<td>OSAT rules for pad sizes, bump pitch, wire length, die thickness and keep-out zones that chip and package must follow.</td>
+<td>The bond-pad pitch is widened from 50 to 60 µm to meet the OSAT's copper-wire bonding rules.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="710-wafer-sort-final-test-and-ate">7.10 Wafer Sort, Final Test and ATE<a class="headerlink" href="#710-wafer-sort-final-test-and-ate" title="Permanent link">&para;</a></h2>
+<p>Every chip is tested at least twice. Wafer sort (probe test) checks dies on the wafer using a probe card with tiny needles, so bad dies are not packaged. Final test checks packaged parts, often at multiple temperatures, and sorts them into speed or quality bins. Both use expensive automatic test equipment (ATE) from companies like Advantest and Teradyne, running test programs built from ATPG patterns, BIST and functional tests.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-10-wafer-sort-final-test-and-ate.svg" alt="Each insertion catches different defects; data from all of them feeds yield analysis." loading="lazy" width="1000" height="389">
+<figcaption><strong>A typical production test flow.</strong> Each insertion catches different defects; data from all of them feeds yield analysis.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Wafer sort is like checking eggs in the tray for cracks before boxing them; final test is the inspection of each sealed box before it goes to the shop.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A smartphone SoC's test flow: wafer sort on an Advantest V93000 at 25 °C (scan, MBIST, IDDQ, repair fuse programming), then packaging, then final test at hot and cold temperatures with at-speed scan, SerDes loopback and functional tests. Parts that pass at 3.2 GHz are binned as top tier; parts passing only at 2.8 GHz go to a lower tier. Test data from millions of parts feeds yield analysis.</p>
+</div>
+<h4 id="how-it-works_9">How it works<a class="headerlink" href="#how-it-works_9" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Develop the test program: patterns, limits, flows and bins.</li>
+<li>Wafer sort: probe each die, run tests, program fuses, ink or map bad dies.</li>
+<li>Assemble good dies into packages.</li>
+<li>Final test (and burn-in/system-level test if needed) at specified temperatures.</li>
+<li>Bin, mark and ship; analyse test data for yield and quality.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Test engineers, product engineers, DFT engineers and ATE application engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the test stages: wafer sort (CP), final test (FT) and system-level test (SLT), and what each catches.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Test cost is roughly tester cost per second × test time; testers cost millions of dollars, so engineers fight for every millisecond with compression, multi-site and adaptive test.</li>
+<li>Each stage catches different faults: wafer sort finds process defects and programs repair fuses and trims; final test finds assembly and speed problems; SLT catches system-level marginalities.</li>
+<li>ATPG patterns leave the DFT tool as STIL (IEEE 1450) or WGL, are converted to the tester's format and run inside test programs written in Advantest SmarTest or Teradyne IG-XL.</li>
+<li>Analog trimming at wafer sort adjusts bandgap voltages, oscillator frequencies and sensor offsets by blowing eFuses or OTP bits, tightening specs that process variation would spread.</li>
+<li>Automotive parts are often tested at three temperatures (cold, room and hot), because their defect targets are measured in parts per million or less.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Confusing design verification with manufacturing test: DV finds design bugs once, while test screens every part for fabrication defects.</li>
+<li>Setting limits too tight (yield loss) or too loose (field escapes) without characterisation data and sensible guardbands.</li>
+<li>Ignoring tester limits such as channel count, vector memory and frequency when planning scan pins and pattern volume.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_9">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ATE (Automatic Test Equipment)</strong><br><em>Advantest, Teradyne, Cohu · Hardware · Packaging &amp; Test</em></td>
+<td>Large, precise test systems that apply patterns and measure chip responses.</td>
+<td>An ATE drives 2,000 pins at hundreds of Mb/s per pin.</td>
+</tr>
+<tr>
+<td><strong>Advantest V93000 / T2000</strong><br><em>Advantest (Japan) · Hardware · Packaging &amp; Test</em></td>
+<td>Widely used SoC test platforms; V93000 is a standard for high-end digital and mixed-signal chips.</td>
+<td>AI accelerators are tested on V93000 testers with high-power device supplies.</td>
+</tr>
+<tr>
+<td><strong>Teradyne UltraFLEX / J750</strong><br><em>Teradyne (US) · Hardware · Packaging &amp; Test</em></td>
+<td>Teradyne test platforms for complex SoCs (UltraFLEX) and cost-sensitive devices (J750).</td>
+<td>A microcontroller is tested in parallel, 32 sites at a time, on a J750.</td>
+</tr>
+<tr>
+<td><strong>Probe card</strong><br><em>FormFactor, Technoprobe, MJC · Hardware · Packaging &amp; Test</em></td>
+<td>Precision card with thousands of tiny probes contacting die pads or bumps during wafer sort.</td>
+<td>A probe card for a large GPU has over 20,000 probes.</td>
+</tr>
+<tr>
+<td><strong>Prober and handler</strong><br><em>Tokyo Electron, Accretech (probers); Cohu, Advantest (handlers) · Hardware · Packaging &amp; Test</em></td>
+<td>Machines that move wafers under the probe card or feed packaged parts into test sockets.</td>
+<td>A handler tests packaged parts at -40 °C and 125 °C.</td>
+</tr>
+<tr>
+<td><strong>Wafer sort (CP)</strong><br><em>Test stage · Process · Packaging &amp; Test</em></td>
+<td>Circuit probe testing of dies on the wafer before packaging.</td>
+<td>Wafer sort finds 12 % of dies failing, which are not packaged.</td>
+</tr>
+<tr>
+<td><strong>Final test (FT)</strong><br><em>Test stage · Process · Packaging &amp; Test</em></td>
+<td>Testing packaged chips, often at temperature, before shipping.</td>
+<td>Final test catches assembly defects like broken bonds.</td>
+</tr>
+<tr>
+<td><strong>System-level test (SLT)</strong><br><em>Test stage (Advantest, Teradyne, Cohu SLT systems) · Process · Packaging &amp; Test</em></td>
+<td>Booting the chip in a real system-like board and running software to catch subtle defects.</td>
+<td>CPUs boot an OS and run stress tests on SLT racks.</td>
+</tr>
+<tr>
+<td><strong>Speed binning</strong><br><em>Test practice · Methodology · Packaging &amp; Test</em></td>
+<td>Sorting chips by maximum working frequency or power into product tiers.</td>
+<td>The same die becomes three SKUs with different clock speeds.</td>
+</tr>
+<tr>
+<td><strong>STDF (Standard Test Data Format)</strong><br><em>Originally Teradyne; industry standard · File format · Packaging &amp; Test</em></td>
+<td>Binary format for storing test results from ATE.</td>
+<td>Yield software reads STDF files from every tester worldwide.</td>
+</tr>
+<tr>
+<td><strong>Test program</strong><br><em>Test engineering · Concept · Packaging &amp; Test</em></td>
+<td>Software controlling the tester: setups, patterns, limits, flow and binning.</td>
+<td>The test program runs 40 test blocks in 1.8 seconds per device.</td>
+</tr>
+<tr>
+<td><strong>Load board and test socket</strong><br><em>Custom DUT boards; sockets from Cohu, Smiths Interconnect and others · Hardware · Packaging &amp; Test</em></td>
+<td>Custom board linking tester channels to the chip, with a socket or probe interface holding each device.</td>
+<td>A SerDes chip's load board includes relays and high-speed traces that loop transmit back to receive.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="711-post-silicon-validation-and-bring-up">7.11 Post-Silicon Validation and Bring-up<a class="headerlink" href="#711-post-silicon-validation-and-bring-up" title="Permanent link">&para;</a></h2>
+<p>When first silicon arrives, the team must bring it to life in the lab: power it up safely, get clocks running, boot firmware, then systematically check every feature, interface and corner of operation. Post-silicon validation finds bugs that escaped pre-silicon verification and characterises real performance, power and margins. It ends with the chip being qualified for production.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-11-post-silicon-validation-and-bring-up.svg" alt="Most of the work happens before silicon arrives, so the lab can move fast once it does." loading="lazy" width="1000" height="350">
+<figcaption><strong>From first silicon to production.</strong> Most of the work happens before silicon arrives, so the lab can move fast once it does.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Bring-up is like the first test drive of a new car prototype: start the engine carefully, check that each system works, then push it on the track to find its limits.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Day 1: Bluewave's Wi-Fi chip draws the expected current at power-on. Day 2: JTAG connects and the CPU executes ROM code. Day 5: firmware boots and the radio transmits. Week 3: validation finds a rare DMA hang under heavy traffic; using on-chip trace, engineers locate an arbitration bug and find a firmware workaround. By month three, characterisation across voltage and temperature shows good margins, and production qualification begins.</p>
+</div>
+<h4 id="how-it-works_10">How it works<a class="headerlink" href="#how-it-works_10" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Prepare boards, power supplies, debug probes and test software before silicon arrives.</li>
+<li>Power on with current limits; check supplies, clocks, resets and JTAG.</li>
+<li>Boot ROM, firmware and OS; bring up interfaces one by one.</li>
+<li>Run validation suites, stress tests and compliance tests; debug failures.</li>
+<li>Characterise across PVT (shmoo plots); qualify for production.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Post-silicon validation engineers, bring-up engineers, firmware/software engineers, characterisation and application engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know what a shmoo plot is: a grid of pass/fail results across voltage and frequency (or other parameters).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Readiness starts long before silicon: firmware and drivers run on emulators or FPGA prototypes, and boards, sockets and lab scripts are debugged against golden models.</li>
+<li>Observability is the hard part: engineers rely on JTAG, on-chip trace, performance counters, scan dumps and, when needed, FIB edits or laser probing to see inside the die.</li>
+<li>Characterisation sweeps voltage, frequency and temperature (often −40 °C to 125 °C) across corner lots and many units to set datasheet limits with statistical margin.</li>
+<li>Electrical validation checks analog and high-speed interfaces, such as SerDes eye diagrams, jitter, PLL lock and ADC linearity, before compliance workshops.</li>
+<li>Bugs are triaged into fix-in-firmware, fix-in-metal-respin or document-as-erratum, balancing cost and schedule against customer impact.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Waiting for silicon before designing boards and software, so bring-up starts weeks late.</li>
+<li>Powering up without current limits or sequencing checks, risking damage to scarce first samples.</li>
+<li>Declaring success from one good chip; margins must be proven across many parts, corners and temperatures.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_10">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_10" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Bring-up</strong><br><em>Industry practice · Methodology · Packaging &amp; Test</em></td>
+<td>First power-on and step-by-step activation of a new chip in the lab.</td>
+<td>The first milestone is 'hello world' printed over UART.</td>
+</tr>
+<tr>
+<td><strong>Post-silicon validation</strong><br><em>Industry practice · Methodology · Packaging &amp; Test</em></td>
+<td>Systematic testing of real silicon for functional bugs, electrical margins and compliance.</td>
+<td>Validation runs billions of cycles of random tests overnight on real chips.</td>
+</tr>
+<tr>
+<td><strong>Shmoo plot</strong><br><em>Characterisation tool (named after a cartoon creature) · Concept · Packaging &amp; Test</em></td>
+<td>Chart of pass/fail across two swept parameters such as voltage and frequency.</td>
+<td>The shmoo shows the chip passing 2 GHz down to 0.72 V.</td>
+</tr>
+<tr>
+<td><strong>Characterisation</strong><br><em>Product engineering · Methodology · Packaging &amp; Test</em></td>
+<td>Measuring a chip's real behaviour across voltage, temperature and process variation.</td>
+<td>Characterisation sets datasheet limits like maximum leakage at 85 °C.</td>
+</tr>
+<tr>
+<td><strong>Evaluation / validation board</strong><br><em>Company-designed boards · Hardware · Packaging &amp; Test</em></td>
+<td>Custom board with sockets, power control, connectors and debug access for testing chips.</td>
+<td>A socketed board lets engineers swap chips from different process corners.</td>
+</tr>
+<tr>
+<td><strong>On-chip debug and trace</strong><br><em>Arm CoreSight, RISC-V trace, custom logic analysers · Concept · Packaging &amp; Test</em></td>
+<td>Built-in hardware for observing internal events in silicon.</td>
+<td>A trace buffer captures the last 4,096 bus transactions before a hang.</td>
+</tr>
+<tr>
+<td><strong>Lab instruments</strong><br><em>Keysight, Tektronix, Rohde &amp; Schwarz · Hardware · Packaging &amp; Test</em></td>
+<td>Oscilloscopes, logic analysers, BERTs and spectrum analysers used in validation.</td>
+<td>A high-speed scope checks the PCIe eye diagram.</td>
+</tr>
+<tr>
+<td><strong>Compliance and interoperability testing</strong><br><em>PCI-SIG, USB-IF, Bluetooth SIG, Wi-Fi Alliance programmes · Methodology · Packaging &amp; Test</em></td>
+<td>Formal testing that the chip meets standards and works with other vendors' devices.</td>
+<td>A USB4 chip is taken to a USB-IF compliance workshop.</td>
+</tr>
+<tr>
+<td><strong>First power-on (smoke test)</strong><br><em>Bring-up practice · Methodology · Packaging &amp; Test</em></td>
+<td>Powering a new chip from current-limited supplies, ramping rails in order and checking currents before anything else.</td>
+<td>Engineers ramp the core rail to 0.75 V with a 1 A limit and watch for shorts before enabling I/O supplies.</td>
+</tr>
+<tr>
+<td><strong>Silicon steppings (A0, A1, B0)</strong><br><em>Common industry naming convention · Concept · Packaging &amp; Test</em></td>
+<td>Revision names: a number change usually means a metal-only fix, a letter change a base-layer change.</td>
+<td>Bugs found on A0 are fixed in an A1 metal respin; a larger fix becomes B0.</td>
+</tr>
+<tr>
+<td><strong>Bring-up plan and readiness review</strong><br><em>Project practice · Methodology · Packaging &amp; Test</em></td>
+<td>Plan of who tests what and in which order, with boards, software and scripts ready before silicon arrives.</td>
+<td>A readiness review two months before first silicon checks that firmware already boots on the emulator.</td>
+</tr>
+<tr>
+<td><strong>Speed-path debug</strong><br><em>Post-silicon debug technique · Methodology · Packaging &amp; Test</em></td>
+<td>Finding the real slowest paths in silicon by shrinking individual clock cycles and capturing state with scan dumps.</td>
+<td>Clock-shrink tests show an adder path failing first, and it is fixed in the next stepping.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="712-product-qualification-proving-a-chip-will-last">7.12 Product Qualification: Proving a Chip Will Last<a class="headerlink" href="#712-product-qualification-proving-a-chip-will-last" title="Permanent link">&para;</a></h2>
+<p>Before mass production, a chip must show it will survive years of use. Qualification puts hundreds of parts through accelerated stress tests (long operation at high temperature, temperature cycling, humidity, ESD and latch-up) following standards such as JEDEC JESD47 for consumer and industrial products or AEC-Q100 for cars. The results give failure-rate estimates (FIT) that customers rely on.</p>
+<p><strong>The bathtub curve, region by region</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Infant mortality</th>
+<th>Useful life</th>
+<th>Wear-out</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Failure rate</strong></td>
+<td>Falling</td>
+<td>Low and constant</td>
+<td>Rising</td>
+</tr>
+<tr>
+<td><strong>Typical cause</strong></td>
+<td>Latent manufacturing defects</td>
+<td>Random events, overstress</td>
+<td>BTI, HCI, TDDB, electromigration</td>
+</tr>
+<tr>
+<td><strong>Measured by</strong></td>
+<td>ELFR</td>
+<td>HTOL data converted to FIT</td>
+<td>Extended HTOL, ageing models</td>
+</tr>
+<tr>
+<td><strong>Controlled by</strong></td>
+<td>Burn-in, PAT, high test coverage</td>
+<td>Robust design, ESD protection</td>
+<td>Design margins, ageing-aware signoff</td>
+</tr>
+</tbody>
+</table>
+<p><em>Qualification measures all three regions; production screening can only remove infant mortality.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like crash-testing and weathering a new car in a lab: heat, cold, humidity and shaking compress ten years of wear into a few weeks.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Bluewave's automotive radar chip targets AEC-Q100 Grade 1 (−40 to 125 °C ambient). Three lots of 77 parts each run 1,000 hours of HTOL at 125 °C with zero failures allowed, while other samples go through temperature cycling, biased HAST, ESD and latch-up tests. After passing, the team calculates a failure rate in FIT and includes the qualification report in its PPAP submission to the car-parts customer.</p>
+</div>
+<h4 id="how-it-works_11">How it works<a class="headerlink" href="#how-it-works_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Define the mission profile and target standard (JESD47, AEC-Q100 or a customer specification).</li>
+<li>Build qualification lots, ideally including process-corner material.</li>
+<li>Run accelerated stresses: HTOL, ELFR, temperature cycling, HAST/THB, HTSL, ESD and latch-up.</li>
+<li>Retest parts at read points after each stress and analyse any failures.</li>
+<li>Calculate FIT and MTTF, write the qualification report and release to production.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Reliability and quality engineers, product and packaging engineers, and customer quality teams, especially in automotive.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the bathtub curve and the AEC-Q100 temperature grades: Grade 0 (−40 to 150 °C), 1 (to 125 °C), 2 (to 105 °C) and 3 (to 85 °C).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A typical AEC-Q100 HTOL uses three lots of 77 parts with zero failures; zero fails in 231 parts shows a lot defect rate below about 1 % at 90 % confidence.</li>
+<li>Arrhenius: AF = exp[(Ea/k)(1/Tuse − 1/Tstress)] with k = 8.617×10⁻⁵ eV/K. For Ea = 0.7 eV, stressing at 125 °C instead of 55 °C accelerates ageing about 78 times.</li>
+<li>FIT from zero failures uses the chi-squared distribution: 231 parts × 1,000 h × AF 78 ≈ 18 million equivalent hours, giving about 51 FIT at 60 % confidence.</li>
+<li>Environmental stresses follow preconditioning (JESD22-A113): bake, moisture soak and simulated reflow, so packages are tested in the state they reach after board assembly.</li>
+<li>ESD (HBM and CDM) and latch-up (JESD78) tests are also part of qualification, checking the protection structures designed and verified during signoff.</li>
+<li>Any significant change, such as a new fab, process, package material or assembly site, usually needs a PCN and partial re-qualification, so changes are planned well ahead.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Treating qualification as proof each part is good: it is a statistical sample, and production test and screening protect individual parts.</li>
+<li>Choosing an unrealistically high activation energy to make FIT look better; use justified, mechanism-specific values.</li>
+<li>Forgetting re-qualification after a supplier, fab or package change, which can block automotive shipments.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_11">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_11" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Qualification (reliability)</strong><br><em>JEDEC JESD47, AEC-Q100, customer specifications · Methodology · Packaging &amp; Test</em></td>
+<td>Formal campaign of stress tests and analysis proving a product is reliable enough to release to production.</td>
+<td>A qualification report lists every stress, sample size, read point and result before production release.</td>
+</tr>
+<tr>
+<td><strong>JEDEC JESD47</strong><br><em>JEDEC Solid State Technology Association · Standard · Packaging &amp; Test</em></td>
+<td>Stress-test-driven qualification standard for integrated circuits, defining baseline tests, conditions and sample sizes for commercial and industrial products.</td>
+<td>A consumer SoC qualifies to JESD47 with HTOL, temperature cycling, humidity, ESD and latch-up tests.</td>
+</tr>
+<tr>
+<td><strong>AEC-Q100 temperature grades</strong><br><em>Automotive Electronics Council · Standard · Packaging &amp; Test</em></td>
+<td>Ambient-temperature grades: Grade 0 −40 to 150 °C, Grade 1 to 125 °C, Grade 2 to 105 °C, Grade 3 to 85 °C.</td>
+<td>An engine-bay controller chip needs Grade 0 or 1; an infotainment chip in the cabin may need only Grade 2 or 3.</td>
+</tr>
+<tr>
+<td><strong>HTOL (High-Temperature Operating Life)</strong><br><em>JEDEC JESD22-A108 · Methodology · Packaging &amp; Test</em></td>
+<td>Running powered parts at high temperature and elevated voltage, typically for 1,000 hours, to accelerate wear-out mechanisms.</td>
+<td>Three lots of 77 parts run 1,000 hours at 125 °C, with read points at 168 and 500 hours.</td>
+</tr>
+<tr>
+<td><strong>ELFR (Early-Life Failure Rate)</strong><br><em>JEDEC JESD74; AEC-Q100-008 · Methodology · Packaging &amp; Test</em></td>
+<td>Short stress of a large sample of parts to measure infant mortality from latent manufacturing defects.</td>
+<td>Thousands of parts are stressed briefly at high temperature; zero failures supports a low early-life failure rate.</td>
+</tr>
+<tr>
+<td><strong>Temperature cycling (TC)</strong><br><em>JEDEC JESD22-A104 · Methodology · Packaging &amp; Test</em></td>
+<td>Repeatedly cycling parts between hot and cold extremes to expose package, bump and solder-joint fatigue.</td>
+<td>Parts survive 1,000 cycles between −55 °C and 125 °C, then are retested and inspected for cracks.</td>
+</tr>
+<tr>
+<td><strong>HAST and THB (humidity tests)</strong><br><em>JEDEC JESD22-A110 (HAST), JESD22-A101 (THB) · Methodology · Packaging &amp; Test</em></td>
+<td>Biased tests in hot, humid conditions that accelerate corrosion and other moisture-related failures.</td>
+<td>Biased HAST at 130 °C and 85 % relative humidity for 96 hours replaces the slower 1,000-hour 85 °C/85 % test.</td>
+</tr>
+<tr>
+<td><strong>HTSL (High-Temperature Storage Life)</strong><br><em>JEDEC JESD22-A103 · Methodology · Packaging &amp; Test</em></td>
+<td>Storing unpowered parts at high temperature to test the stability of bonds, intermetallics and materials.</td>
+<td>Parts baked at 150 °C for 1,000 hours are checked for weakened wire bonds.</td>
+</tr>
+<tr>
+<td><strong>MSL (Moisture Sensitivity Level)</strong><br><em>IPC/JEDEC J-STD-020 · Standard · Packaging &amp; Test</em></td>
+<td>Rating, from level 1 to 6, of how long a package can sit in factory air before reflow soldering without cracking.</td>
+<td>An MSL 3 BGA must be soldered within 168 hours of opening its dry pack, or baked first.</td>
+</tr>
+<tr>
+<td><strong>Bathtub curve</strong><br><em>Reliability engineering · Concept · Packaging &amp; Test</em></td>
+<td>Failure rate over a product's life: falling infant mortality, a long flat useful life, then rising wear-out.</td>
+<td>Burn-in removes the infant-mortality part of the curve before parts reach customers.</td>
+</tr>
+<tr>
+<td><strong>FIT and MTTF</strong><br><em>Reliability metrics · Concept · Packaging &amp; Test</em></td>
+<td>FIT counts failures per billion device-hours; MTTF, the mean time to failure, is about 10⁹/FIT hours for a constant failure rate.</td>
+<td>A 10 FIT chip in one million always-on servers predicts about 88 failures per year.</td>
+</tr>
+<tr>
+<td><strong>Arrhenius acceleration factor</strong><br><em>Reliability physics · Concept · Packaging &amp; Test</em></td>
+<td>Model converting hours at stress temperature into equivalent hours at use temperature, using an activation energy (Ea).</td>
+<td>With Ea = 0.7 eV, 1,000 hours at 125 °C equals roughly 78,000 hours at 55 °C.</td>
+</tr>
+<tr>
+<td><strong>PPAP and IATF 16949</strong><br><em>AIAG (PPAP); International Automotive Task Force (IATF 16949) · Standard · Packaging &amp; Test</em></td>
+<td>Automotive production part approval package and the quality-management standard that suppliers must meet.</td>
+<td>A chip supplier submits qualification data, control plans and process flows in its PPAP to a car-parts maker.</td>
+</tr>
+<tr>
+<td><strong>Product change notification (PCN)</strong><br><em>JEDEC J-STD-046 · Standard · Packaging &amp; Test</em></td>
+<td>Formal notice to customers of changes in process, fab site, materials or package, often requiring re-qualification.</td>
+<td>Moving a product to a second fab triggers a PCN and new qualification data for automotive customers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="713-rma-and-failure-analysis">7.13 RMA and Failure Analysis<a class="headerlink" href="#713-rma-and-failure-analysis" title="Permanent link">&para;</a></h2>
+<p>When a chip fails, at test, in qualification or in a customer's product (an RMA, return material authorisation), engineers investigate why. Electrical failure analysis narrows the location using test data, scan diagnosis and special microscopes; physical failure analysis then opens the chip and slices or images it to see the actual defect. The goal is a root cause and a corrective action.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-13-rma-and-failure-analysis.svg" alt="Each step narrows the search area; destructive steps come last so evidence is not lost." loading="lazy" width="1000" height="389">
+<figcaption><strong>The failure-analysis funnel.</strong> Each step narrows the search area; destructive steps come last so evidence is not lost.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Failure analysis is forensic science for chips: from symptoms to suspects to a microscope image of the culprit.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A car maker returns three controller chips that failed after 18 months. Electrical tests show one output stuck. Scan diagnosis points to a via on metal 4. The FA lab uses lock-in thermography to confirm a hot spot, then a focused ion beam (FIB) cross-section and electron microscope reveal a void in the via. The foundry traces it to a deposition issue in one lot and tightens monitoring.</p>
+</div>
+<h4 id="how-it-works_12">How it works<a class="headerlink" href="#how-it-works_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Verify the failure and collect history (lot, wafer, test data, application conditions).</li>
+<li>Non-destructive analysis: X-ray, acoustic microscopy, electrical tests.</li>
+<li>Fault isolation: scan diagnosis, emission microscopy, thermography, laser probing.</li>
+<li>Physical analysis: decapsulation, delayering, FIB cross-section, SEM/TEM imaging.</li>
+<li>Root cause report and corrective/preventive actions (8D).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Failure analysis engineers, product and quality engineers, reliability engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>The 8D problem-solving method and 'root cause + corrective action' language are common in quality and product engineering interviews.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Silicon is transparent to infrared light, so emission microscopy, thermography and laser probing are done through the thinned back of flip-chip dies without disturbing the metal stack.</li>
+<li>Backside power delivery puts metal on the back of the die as well, making traditional backside optical techniques harder and pushing FA labs toward new methods.</li>
+<li>Many returned parts are 'no fault found' or show electrical overstress from the application, so careful verification and history collection come before blaming the chip or the fab.</li>
+<li>8D reports move from team formation and problem description through containment, root cause and corrective actions to prevention and closure; automotive customers expect fast containment.</li>
+<li>FA labs combine FIB, SEM and TEM tools (e.g. Thermo Fisher), emission and laser systems (e.g. Hamamatsu), acoustic and X-ray microscopes; a full analysis can take days to weeks.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Doing destructive steps first and destroying the evidence; always finish non-destructive analysis before decapsulation.</li>
+<li>Skipping failure verification; if you cannot reproduce the failure, root-cause claims are guesses.</li>
+<li>Assuming every field return is a manufacturing defect, when many are caused by electrical overstress in the customer's system.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_12">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>RMA (Return Material Authorisation)</strong><br><em>Quality process · Concept · Packaging &amp; Test</em></td>
+<td>Process for customers to return failed parts for analysis or replacement.</td>
+<td>An RMA request includes failure symptoms and operating conditions.</td>
+</tr>
+<tr>
+<td><strong>Failure analysis (FA)</strong><br><em>Quality/reliability engineering · Methodology · Packaging &amp; Test</em></td>
+<td>Investigation to find the physical cause of a chip failure.</td>
+<td>FA finds a cracked bond wire caused by excessive vibration.</td>
+</tr>
+<tr>
+<td><strong>FIB (Focused Ion Beam)</strong><br><em>Thermo Fisher Scientific, Zeiss, others · Hardware · Packaging &amp; Test</em></td>
+<td>Tool that mills and images at nanoscale; also used to cut and reconnect wires on prototypes.</td>
+<td>A FIB edit rewires a prototype chip to test a bug fix before a respin.</td>
+</tr>
+<tr>
+<td><strong>SEM and TEM</strong><br><em>Thermo Fisher, Hitachi High-Tech, JEOL, Zeiss · Hardware · Packaging &amp; Test</em></td>
+<td>Electron microscopes imaging surfaces (SEM) or ultra-thin slices (TEM) at atomic scale.</td>
+<td>TEM images reveal a defect in a gate oxide a few atoms thick.</td>
+</tr>
+<tr>
+<td><strong>Emission microscopy and thermography</strong><br><em>FA techniques · Methodology · Packaging &amp; Test</em></td>
+<td>Detecting light or heat emitted at defect sites to locate them.</td>
+<td>A lock-in thermography image shows a hot spot at a shorted transistor.</td>
+</tr>
+<tr>
+<td><strong>X-ray and acoustic microscopy</strong><br><em>FA techniques · Methodology · Packaging &amp; Test</em></td>
+<td>Non-destructive imaging of package internals, bonds, bumps and delamination.</td>
+<td>Acoustic microscopy shows delamination between die and mould compound.</td>
+</tr>
+<tr>
+<td><strong>Laser voltage probing (LVP)</strong><br><em>FA technique · Methodology · Packaging &amp; Test</em></td>
+<td>Measuring internal signal waveforms through the back of the die using a laser.</td>
+<td>LVP shows a clock signal missing inside a failing block.</td>
+</tr>
+<tr>
+<td><strong>8D problem solving</strong><br><em>Quality methodology (originally Ford) · Methodology · Packaging &amp; Test</em></td>
+<td>Eight-discipline process for structured root cause analysis and corrective action.</td>
+<td>The 8D report details containment, root cause and permanent fix.</td>
+</tr>
+<tr>
+<td><strong>Decapsulation and delayering</strong><br><em>FA preparation · Process · Packaging &amp; Test</em></td>
+<td>Removing package material and chip layers one by one to reach the defect.</td>
+<td>Chemical decap exposes the die; polishing removes metal layers down to M3.</td>
+</tr>
+<tr>
+<td><strong>Curve tracing and I-V analysis</strong><br><em>Electrical FA technique · Methodology · Packaging &amp; Test</em></td>
+<td>Sweeping voltage on pins and comparing current curves with good parts to detect shorts, opens and leaky junctions.</td>
+<td>A curve tracer shows one I/O pin leaking 10 mA, pointing to ESD damage.</td>
+</tr>
+<tr>
+<td><strong>OBIRCH and laser stimulation</strong><br><em>FA technique (e.g. Hamamatsu systems) · Methodology · Packaging &amp; Test</em></td>
+<td>Scanning a laser across the die while monitoring current; local resistance changes reveal shorts and resistive defects.</td>
+<td>OBIRCH highlights a resistive via in the power grid that thermography could not resolve.</td>
+</tr>
+<tr>
+<td><strong>Nanoprobing</strong><br><em>FA technique (SEM- or AFM-based probers) · Methodology · Packaging &amp; Test</em></td>
+<td>Landing tiny probes on individual contacts inside a delayered die to measure single transistors.</td>
+<td>Nanoprobing shows one transistor with an abnormally high threshold voltage, explaining a slow path.</td>
+</tr>
+<tr>
+<td><strong>EDX and material analysis</strong><br><em>FA technique in SEM and TEM · Methodology · Packaging &amp; Test</em></td>
+<td>Energy-dispersive X-ray spectroscopy identifies which chemical elements are present at a defect site.</td>
+<td>EDX finds chlorine at a corroded bond pad, pointing to contamination during assembly.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="714-supply-chain-geopolitics-and-export-controls">7.14 Supply Chain, Geopolitics and Export Controls<a class="headerlink" href="#714-supply-chain-geopolitics-and-export-controls" title="Permanent link">&para;</a></h2>
+<p>Chipmaking is a global chain: EDA and IP mostly from the US and UK, equipment from the US, Netherlands and Japan, materials from Japan and elsewhere, leading-edge fabs concentrated in Taiwan and South Korea, and packaging largely in Asia. Governments now treat chips as strategic, so subsidies (US CHIPS Act, EU Chips Act) and export controls (especially between the US and China) shape what can be designed, made and sold where.</p>
+<figure class="fig fig-diagram">
+<img src="img/07-14-supply-chain-geopolitics-and-export.svg" alt="A single chip often crosses many borders before it reaches a customer, which is why export rules matter to engineers." loading="lazy" width="1000" height="580">
+<figcaption><strong>Who does what, where.</strong> A single chip often crosses many borders before it reaches a customer, which is why export rules matter to engineers.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>The chip supply chain is like a relay race run across many countries: if any runner stops or is blocked at a border, the whole team slows down.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>In May 2025 the US restricted exports of EDA software to China, then lifted those restrictions in July 2025 after trade talks, though companies on the Entity List still need licences. A chip start-up must therefore check export classifications (ECCNs) for its own chips and the tools, IP and technology it shares with partners, and consult its compliance team before any international collaboration.</p>
+</div>
+<h4 id="how-it-works_13">How it works<a class="headerlink" href="#how-it-works_13" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Map the supply chain: EDA, IP, foundry, materials, packaging, test, logistics.</li>
+<li>Check export-control classifications (e.g. US EAR ECCNs) for products, tools and technology.</li>
+<li>Screen customers and partners against restricted lists (e.g. US Entity List).</li>
+<li>Plan for resilience: second sources, regional capacity, inventory buffers.</li>
+<li>Track policy changes: rules change frequently and differ by country.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Supply-chain managers, compliance/legal teams, executives, and engineers sharing technology internationally.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Rules change often; never rely on old summaries. Engineers should ask their compliance team before sharing technical data across borders.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Since October 2022 the US has repeatedly tightened controls on advanced AI chips (ECCN 3A090), supercomputer end uses and advanced fab equipment, changing the rules almost every year.</li>
+<li>In August 2022 the US added controls on EDA software specially designed for developing GAAFET-based chips, showing that controls reach design tools as well as hardware.</li>
+<li>Publicly available open-source software and published research are generally outside the EAR, but unpublished designs, proprietary tools and technical assistance can still be controlled; ask compliance.</li>
+<li>The US CHIPS Act provides about US&#36;39 billion in manufacturing incentives plus an investment tax credit; the EU Chips Act aims to mobilise over €43 billion of public and private investment.</li>
+<li>Materials matter too: China introduced export licensing for gallium and germanium in 2023 and has since extended controls to other critical minerals.</li>
+<li>Policy swings quickly: the US rescinded the planned AI Diffusion Rule in May 2025, imposed and lifted EDA curbs in mid-2025, and suspended its new 50 % Affiliates Rule for a year from November 2025.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking export controls cover only shipped boxes; emails, file transfers, cloud access and conversations with foreign nationals can be exports.</li>
+<li>Relying on old summaries or news articles; rules change frequently and differ between countries.</li>
+<li>Assuming open-source status exempts everything a team shares; check unpublished work and services with compliance.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_13">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_13" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>US Export Administration Regulations (EAR)</strong><br><em>US Department of Commerce, Bureau of Industry and Security (BIS) · Standard · Whole flow</em></td>
+<td>US rules controlling export of goods, software and technology, including advanced chips and tools.</td>
+<td>Controls since 2022 restrict exports of advanced AI chips and chipmaking tools to China.</td>
+</tr>
+<tr>
+<td><strong>Entity List</strong><br><em>US BIS · Concept · Whole flow</em></td>
+<td>List of foreign organisations requiring a US licence for most exports to them.</td>
+<td>Supplying EDA tools to a listed company requires a specific licence.</td>
+</tr>
+<tr>
+<td><strong>EDA export restrictions (2025)</strong><br><em>US Department of Commerce · Concept · Whole flow</em></td>
+<td>Temporary 2025 restrictions on EDA software sales to China, imposed in May and lifted in July.</td>
+<td>Synopsys, Cadence and Siemens restored Chinese customer access in July 2025.</td>
+</tr>
+<tr>
+<td><strong>Affiliates rule (50 % rule)</strong><br><em>US BIS (September 2025; suspended 10 Nov 2025 to 9 Nov 2026) · Standard · Whole flow</em></td>
+<td>US rule extending Entity List restrictions to companies at least 50 % owned by listed entities; suspended for one year after US-China talks.</td>
+<td>Compliance teams re-check customer ownership because the suspension ends on 9 November 2026 unless it is extended.</td>
+</tr>
+<tr>
+<td><strong>Equipment export controls (Netherlands, Japan, US)</strong><br><em>National governments · Concept · Fabrication</em></td>
+<td>Rules limiting exports of advanced lithography and fab tools to certain countries.</td>
+<td>ASML cannot ship EUV scanners to China.</td>
+</tr>
+<tr>
+<td><strong>US CHIPS and Science Act</strong><br><em>US law (2022) · Standard · Fabrication</em></td>
+<td>Funding and incentives for semiconductor manufacturing and research in the US.</td>
+<td>Grants and incentives supported new fabs by TSMC, Intel, Samsung and others in the US.</td>
+</tr>
+<tr>
+<td><strong>EU Chips Act</strong><br><em>European Union (2023) · Standard · Fabrication</em></td>
+<td>EU framework to strengthen European chip research, design and manufacturing.</td>
+<td>Pilot lines and design platforms are funded under the EU Chips Act.</td>
+</tr>
+<tr>
+<td><strong>Critical materials</strong><br><em>Global supply chain · Concept · Fabrication</em></td>
+<td>Key inputs such as neon, gallium, germanium, rare earths, high-purity gases and photoresists.</td>
+<td>China introduced export controls on gallium and germanium in 2023.</td>
+</tr>
+<tr>
+<td><strong>Geographic concentration</strong><br><em>Industry structure · Concept · Fabrication</em></td>
+<td>Most leading-edge logic manufacturing is concentrated in Taiwan and South Korea.</td>
+<td>New fabs in Arizona, Japan and Germany aim to spread capacity geographically.</td>
+</tr>
+<tr>
+<td><strong>ECCN (Export Control Classification Number)</strong><br><em>US EAR Commerce Control List · Concept · Whole flow</em></td>
+<td>Code classifying a product or technology to determine export licence requirements.</td>
+<td>A chip's ECCN appears on its datasheet or compliance documentation.</td>
+</tr>
+<tr>
+<td><strong>SIA and SEMI</strong><br><em>Semiconductor Industry Association; SEMI (global industry association) · Organisation · Whole flow</em></td>
+<td>Industry associations publishing market data, standards and policy positions.</td>
+<td>SEMI publishes equipment-market reports and the SEMI standards used by fabs.</td>
+</tr>
+<tr>
+<td><strong>Wassenaar Arrangement</strong><br><em>Multilateral export-control regime (founded 1996; about 42 participating states) · Organisation · Whole flow</em></td>
+<td>Agreement through which member states coordinate control lists for dual-use goods and technologies, including many semiconductor items.</td>
+<td>National dual-use control lists in the EU, UK and Japan largely implement the Wassenaar list.</td>
+</tr>
+<tr>
+<td><strong>Deemed export</strong><br><em>US EAR concept · Concept · Whole flow</em></td>
+<td>Sharing controlled technology with a foreign national inside the US counts as exporting it to that person's home country.</td>
+<td>A company may need a licence before a newly hired foreign-national engineer can access certain controlled process data.</td>
+</tr>
+<tr>
+<td><strong>Foreign Direct Product Rule (FDPR)</strong><br><em>US EAR · Standard · Whole flow</em></td>
+<td>Extends US controls to some foreign-made items produced with US software, technology or equipment.</td>
+<td>Chips made abroad with US tools can still need a US licence before shipment to listed companies.</td>
+</tr>
+<tr>
+<td><strong>Other national chip programmes</strong><br><em>Japan, South Korea, Taiwan, India, China · Concept · Fabrication</em></td>
+<td>Subsidy and industrial-policy programmes outside the US and EU supporting fabs, packaging and design.</td>
+<td>Japan funds Rapidus and TSMC's Kumamoto fabs; the India Semiconductor Mission subsidises new fab and assembly projects.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="signoff-tapeout.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Signoff &amp; Tapeout">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. Signoff & Tapeout
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="eda-industry-open-source-silicon-analog-ai-in-eda-careers.html" class="md-footer__link md-footer__link--next" aria-label="Next: 8. EDA Industry, Open-Source Silicon, Analog, AI-in-EDA &amp; Careers">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                8. EDA Industry, Open-Source Silicon, Analog, AI-in-EDA & Careers
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

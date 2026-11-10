@@ -1,0 +1,1756 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/designing-an-sram-pdks-and-process-nodes.html">
+  
+  
+    <link rel="prev" href="board-spd-testing-and-manufacture.html">
+  
+  
+    <link rel="next" href="controllers-dram-chips-and-the-tools-behind-them.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>15. Designing an SRAM, Process Kits and Process Nodes - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#151-why-sram-and-not-dram" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              15. Designing an SRAM, Process Kits and Process Nodes
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what-ram-is.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lpddr-and-gddr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#151-why-sram-and-not-dram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Why SRAM, and not DRAM?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#152-the-design-flow-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 The design flow, step by step
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#153-the-shortcut-openram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 The shortcut: OpenRAM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#154-files-given-to-the-fabricator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Files given to the fabricator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#155-the-factorys-rule-book-the-pdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 The factory's rule book: the PDK
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#156-what-nm-means-for-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.6 What "nm" means for memory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#157-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.7 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#158-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.8 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#151-why-sram-and-not-dram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.1 Why SRAM, and not DRAM?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#152-the-design-flow-step-by-step" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.2 The design flow, step by step
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#153-the-shortcut-openram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.3 The shortcut: OpenRAM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#154-files-given-to-the-fabricator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.4 Files given to the fabricator
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#155-the-factorys-rule-book-the-pdk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.5 The factory's rule book: the PDK
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#156-what-nm-means-for-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.6 What "nm" means for memory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#157-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.7 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#158-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        15.8 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-15-designing-an-sram-process-kits-and-process-nodes">Chapter 15: Designing an SRAM, Process Kits and Process Nodes<a class="headerlink" href="#chapter-15-designing-an-sram-process-kits-and-process-nodes" title="Permanent link">&para;</a></h1>
+<p>The earlier chapters treated chips as products. This chapter looks at how a memory chip is designed and made, using the one memory that a student team can realistically take all the way to silicon: a small SRAM block. It walks through the design flow step by step, from specification to tapeout, shows the shortcut offered by the OpenRAM compiler, lists the files handed to the fabricator, and then explains the two ideas that decide what is possible: the process design kit (the factory's rule book) and the process node (and why a DRAM "12 nm" is not a logic "7 nm"). It ends with the trend that makes SRAM a growing problem for processor designers: its cell has almost stopped shrinking.</p>
+<h2 id="151-why-sram-and-not-dram">15.1 Why SRAM, and not DRAM?<a class="headerlink" href="#151-why-sram-and-not-dram" title="Permanent link">&para;</a></h2>
+<p>A 6T SRAM cell is made only of ordinary transistors, so it can be built on any standard CMOS logic process, including the open, academic processes such as SKY130, GF180MCU and IHP SG13G2 that students can actually fabricate on. A DRAM 1T1C cell is different: it needs a capacitor that is very tall and thin (built as a deep trench or a stacked cylinder) and a special low-leakage access transistor. These need a dedicated DRAM process that only memory fabs such as Samsung, SK hynix and Micron run. As a result, designing a DRAM from scratch is not possible on normal or academic shuttle runs, while designing an SRAM is a realistic and very instructive project.</p>
+<h2 id="152-the-design-flow-step-by-step">15.2 The design flow, step by step<a class="headerlink" href="#152-the-design-flow-step-by-step" title="Permanent link">&para;</a></h2>
+<p>Designing a chip is like building a house with a very strict inspector. The stages are: specification (how big, how fast, how much power: "a three-bedroom house"), architecture (banks, decoders, sense amplifiers, I/O: the floor plan), circuit design (transistor schematics simulated in SPICE: wiring each room), layout (the exact shapes on each layer, in nanometres: the blueprint), verification with DRC and LVS (rule checks and "layout equals schematic": the inspector), tapeout (sending the GDSII file to the factory), fabrication (about three months and hundreds of process steps) and packaging and test (every chip is tested, and bad bits are repaired with spare rows).</p>
+<div class="admonition note">
+<p class="admonition-title">Why so much checking?</p>
+<p>A mistake found in simulation costs minutes. Found after fabrication, it costs a new set of masks (millions of dollars at advanced nodes) and months. So designers simulate every corner: hot, cold, fast silicon, slow silicon, high and low voltage.</p>
+</div>
+<p>The sections below take the stages for a small SRAM macro (a hard block that is placed in a larger chip) in eleven steps.</p>
+<p><strong>Step 1: Specification.</strong> Write down what the memory must do before drawing anything: the capacity and organisation (for example 1K × 32: 1024 words of 32 bits, 32 Kbit in total); the number and type of ports (single-port, true dual-port, or one read plus one write port, 1R1W); the target clock frequency and access time; the power budget (energy per access and standby leakage); the supply voltage; and the process with its PDK, for example SKY130, GF180MCU, IHP SG13G2 or a commercial TSMC 65 nm process. Every later decision is checked against this specification.</p>
+<p><strong>Step 2: Architecture.</strong> Decide how the bits are arranged. A 1K × 32 memory could be 1024 rows of 32 cells, but such a tall, thin array has very long bitlines (slow) and a large decoder. Designers usually fold it: with a 4:1 column multiplexer it becomes 256 rows × 128 columns, and each output bit chooses one of four neighbouring columns (8:1 is also common). Large memories are split into banks to keep wordlines and bitlines short. Timing can come directly from the clock (simple, but every step must allow for the worst case) or from a self-timed <strong>replica bitline</strong>: a dummy column built to discharge like the slowest real column, which fires the sense amplifiers at just the right moment and automatically tracks process, voltage and temperature.</p>
+<figure class="fig fig-diagram">
+<img src="img/sram-macro-blocks.png" alt="Main blocks of an SRAM macro: row decoder and wordline drivers, bitcell array of 256 rows by 128 columns, precharge and equalisation, column mux, sense amplifiers, write drivers, data latches, a replica bitline and a control and timing block that generates the sense-amplifier enable" loading="lazy" width="1238" height="533">
+<figcaption><strong>Figure 15.1.</strong> Main blocks of an SRAM macro: row decoder and wordline drivers, bitcell array of 256 rows by 128 columns, precharge and equalisation, column mux, sense amplifiers, write drivers, data latches, a replica bitline and a control and timing block that generates the sense-amplifier enable</figcaption>
+</figure>
+
+<div class="admonition example">
+<p class="admonition-title">Example 15.1: Folding a 1K × 32 SRAM</p>
+<ol>
+<li>Capacity: <span class="arithmatex">\(1024 \times 32 = 32{,}768\)</span> bits <span class="arithmatex">\(= 32\)</span> Kbit. The address has <span class="arithmatex">\(\log_2 1024 = 10\)</span> bits.</li>
+<li>Folding with a 4:1 column multiplexer: the array has <span class="arithmatex">\(1024/4 = 256\)</span> rows and <span class="arithmatex">\(32 \times 4 = 128\)</span> columns, and <span class="arithmatex">\(256 \times 128 = 32{,}768\)</span> cells as required.</li>
+<li>The row decoder takes 8 address bits (<span class="arithmatex">\(2^8 = 256\)</span> rows); the column multiplexer takes the other 2 bits to choose one of four neighbouring columns for each of the 32 output bits.</li>
+<li>Area estimate on SKY130, using the numbers of Chapter 17: a 6T cell is about 2 µm², and the area per bit including periphery is about 3.3 µm² (about 60 per cent array efficiency). So the block is about <span class="arithmatex">\(32{,}768 \times 3.3 = 108{,}000\)</span> µm², or about 0.11 mm².</li>
+</ol>
+</div>
+<p><strong>Step 3: Bitcell design.</strong> The 6T cell must be read-stable (a read must not flip it) and writable (a write must flip it). Read stability depends on the cell ratio, which must be comfortably greater than one; writability depends on the pull-up ratio (Section 2.2). Designers measure the static noise margin (SNM) in hold and read, and the write margin, often from butterfly curves. Because transistors vary randomly and a memory holds millions of cells, Monte Carlo simulation over many random samples checks that the margins hold far out into the statistical tail. If the foundry offers a <strong>pushed-rule bitcell</strong>, a cell drawn with special tighter rules that the foundry has qualified, use it: it is much smaller than anything that can be drawn with normal rules.</p>
+<p><strong>Step 4: Peripheral circuits.</strong> Design the circuits around the array: a predecoder and decoder that turn the row address into one active row; wordline drivers strong enough to switch a long, heavily loaded wordline quickly; bitline precharge and equalisation transistors that set both bitlines to the same voltage before each access; a latch-type sense amplifier that resolves a small bitline difference into a full logic level when sense-enable fires; write drivers that pull one bitline low; the column multiplexer; and the control logic with its replica timing path.</p>
+<p><strong>Step 5: SPICE simulation.</strong> Simulate the critical path (address input, decoder, wordline, bitline discharge, sense amplifier and output) with a SPICE circuit simulator: ngspice or Xyce (open source), HSPICE or Spectre (commercial). Check read, write and hold at every PVT corner (process, voltage, temperature): process corners TT, FF, SS, FS and SF (typical, fast or slow NMOS and PMOS), supply ±10 per cent, and temperature from −40 to 125 °C. Measure access time, minimum cycle time, energy per read and write, and leakage. Run Monte Carlo on the sense amplifier: its input offset must be safely smaller than the bitline difference that has developed when sense-enable fires.</p>
+<p><strong>Step 6: Layout.</strong> Draw the physical shapes in a layout editor: Magic or KLayout (open source) or Cadence Virtuoso (commercial). Start with the leaf cells (bitcell, sense amplifier, drivers) and tile them. The periphery must be pitch-matched: each sense amplifier or wordline driver must fit exactly into the width or height of one or a few bitcells so that the blocks line up. Add a power grid, well taps (which tie the wells to the supply and prevent latch-up), guard rings around sensitive circuits, and dummy rows and columns at the array edge so that the outermost real cells see the same surroundings as the inner ones.</p>
+<p><strong>Step 7: Physical verification.</strong> DRC (design rule check) confirms that every shape obeys the foundry's width, spacing and enclosure rules; the result must be clean or covered by foundry-approved waivers. LVS (layout versus schematic) extracts a circuit from the layout and proves that it matches the schematic. Antenna, ERC (electrical rule check) and density checks complete the set. Tools: Magic, KLayout and Netgen (open source); Siemens Calibre or Cadence Pegasus (commercial).</p>
+<p><strong>Step 8: Parasitic extraction and post-layout simulation.</strong> Real wires have resistance and capacitance. PEX (parasitic extraction) adds them to the netlist; long bitlines and wordlines in particular become slower. Re-simulate the critical paths with parasitics, then fix and iterate: resize drivers, adjust the replica timing or change the floorplan.</p>
+<p><strong>Step 9: Characterisation and views.</strong> Digital tools cannot simulate the whole SRAM at transistor level, so abstract views are generated: a Liberty <code>.lib</code> file with timing and power tables for each corner, a LEF abstract (outline, pin positions and blocked metal) for place-and-route tools, and a Verilog behavioural model for logic simulation.</p>
+<p><strong>Step 10: Chip integration.</strong> Place the macro in a full chip: a pad ring with ESD (electrostatic discharge) protection on every pin, power and ground pads, a seal ring around the die edge, and usually a BIST (built-in self-test) engine that writes and reads test patterns. Then run full-chip DRC and LVS, add metal and polysilicon fill to meet density rules, and complete the signoff checklist.</p>
+<p><strong>Step 11: Tapeout.</strong> Send the final layout to the foundry, or to a multi-project wafer (MPW) shuttle in which many designs share one mask set and wafer run to split the cost. Academic routes include Europractice, MOSIS and IHP's own shuttles. Chips typically come back some months later for packaging and lab testing.</p>
+<h2 id="153-the-shortcut-openram">15.3 The shortcut: OpenRAM<a class="headerlink" href="#153-the-shortcut-openram" title="Permanent link">&para;</a></h2>
+<p>OpenRAM is an open-source SRAM compiler that automates steps 2 to 9. You give it the word size, the number of words and the number of ports, and it generates the netlist, layout, <code>.lib</code>, <code>.lef</code> and Verilog model and runs DRC and LVS. It supports SKY130, GF180MCU and the predictive FreePDK45, among others. A good learning plan is to generate a memory with OpenRAM first, then study, simulate and modify the circuits it produced.</p>
+<p>A student route through the open tools has five steps: simulate a 6T cell (Xschem and ngspice); generate an SRAM (the OpenRAM compiler); check the layout (Magic or KLayout, with Netgen); build the chip (LibreLane, the successor of OpenLane); and tape out to a shuttle, then test the silicon.</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Open-source option</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Process design kit (PDK)</td>
+<td>SKY130, GF180MCU, IHP SG13G2</td>
+</tr>
+<tr>
+<td>Schematic capture</td>
+<td>Xschem</td>
+</tr>
+<tr>
+<td>Circuit simulation</td>
+<td>ngspice, Xyce</td>
+</tr>
+<tr>
+<td>Layout</td>
+<td>Magic, KLayout</td>
+</tr>
+<tr>
+<td>DRC / LVS</td>
+<td>Magic, KLayout, Netgen</td>
+</tr>
+<tr>
+<td>SRAM compiler</td>
+<td>OpenRAM</td>
+</tr>
+<tr>
+<td>Full chip (RTL to GDS)</td>
+<td>OpenLane / LibreLane</td>
+</tr>
+</tbody>
+</table>
+<h2 id="154-files-given-to-the-fabricator">15.4 Files given to the fabricator<a class="headerlink" href="#154-files-given-to-the-fabricator" title="Permanent link">&para;</a></h2>
+<p>At tapeout the foundry or shuttle operator needs a small, well-defined set of files. The layout file is the real product; the rest proves that it is correct and tells the fab how to handle it.</p>
+<table>
+<thead>
+<tr>
+<th>File</th>
+<th>Purpose</th>
+<th>Required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GDSII (.gds) or OASIS (.oas)</td>
+<td>Final layout with all mask layers; the main deliverable</td>
+<td>Mandatory</td>
+</tr>
+<tr>
+<td>Layer map / mask layer list</td>
+<td>Maps GDS layer numbers to foundry mask layers</td>
+<td>Usually</td>
+</tr>
+<tr>
+<td>DRC report (clean) and waiver list</td>
+<td>Proves compliance with the design rules</td>
+<td>Usually</td>
+</tr>
+<tr>
+<td>LVS report</td>
+<td>Shows the layout matches the netlist</td>
+<td>Often requested</td>
+</tr>
+<tr>
+<td>Tapeout form / checklist</td>
+<td>Die size, top-cell name, process options, metal stack, number of dies, shuttle ID</td>
+<td>Mandatory</td>
+</tr>
+<tr>
+<td>Density / fill report</td>
+<td>Metal and poly density rules met (some foundries add fill themselves)</td>
+<td>Usually</td>
+</tr>
+<tr>
+<td>Seal ring and scribe information</td>
+<td>Die boundary for dicing</td>
+<td>Usually built into the GDS</td>
+</tr>
+<tr>
+<td>Bonding diagram / pad list</td>
+<td>For the packaging house</td>
+<td>If packaging is ordered</td>
+</tr>
+<tr>
+<td>Netlist (CDL/SPICE)</td>
+<td>Some foundries run their own LVS</td>
+<td>Sometimes</td>
+</tr>
+</tbody>
+</table>
+<p>Kept in-house, not sent to the fab: schematics; SPICE netlists and simulation results; the <code>.lib</code>, <code>.lef</code> and Verilog models; and the test plan and test vectors used when the chips come back.</p>
+<h2 id="155-the-factorys-rule-book-the-pdk">15.5 The factory's rule book: the PDK<a class="headerlink" href="#155-the-factorys-rule-book-the-pdk" title="Permanent link">&para;</a></h2>
+<p>A <strong>PDK</strong> (process design kit) is the rulebook and the set of models for one fab's process: it tells designers and tools what can be drawn and how the resulting devices will behave. Commercial PDKs (TSMC, Samsung) are secret and need an agreement. The open PDKs SkyWater SKY130, GlobalFoundries GF180 and IHP SG13G2 are free on GitHub. Because a PDK is derived from measurements of real wafers, you cannot create a PDK for TSMC or Samsung without their process data.</p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>What it is</th>
+<th>Formats / tools</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Device models</td>
+<td>SPICE models with corners and Monte Carlo statistics</td>
+<td>BSIM4, BSIM-CMG, BSIM-BULK; .lib / .scs files</td>
+</tr>
+<tr>
+<td>Design rule manual</td>
+<td>Human-readable rules: widths, spacings, enclosures</td>
+<td>PDF</td>
+</tr>
+<tr>
+<td>DRC deck</td>
+<td>Machine-readable design rules</td>
+<td>Calibre SVRF, KLayout DRC, Magic techfile</td>
+</tr>
+<tr>
+<td>LVS deck</td>
+<td>Device recognition and netlist comparison</td>
+<td>Calibre, Netgen, KLayout LVS</td>
+</tr>
+<tr>
+<td>PEX deck</td>
+<td>Parasitic extraction rules</td>
+<td>StarRC ITF / nxtgrd, Quantus ICT / qrcTechFile, Magic extraction</td>
+</tr>
+<tr>
+<td>Techfile and layer map</td>
+<td>Layer definitions and display</td>
+<td>Virtuoso techfile, KLayout .lyp / .lyt, LEF technology</td>
+</tr>
+<tr>
+<td>PCells</td>
+<td>Parameterised device layouts</td>
+<td>SKILL, PyCell, KLayout Python, gdsfactory</td>
+</tr>
+<tr>
+<td>Symbols</td>
+<td>Schematic symbols for each device</td>
+<td>Virtuoso, Xschem</td>
+</tr>
+<tr>
+<td>Standard-cell library</td>
+<td>Logic gates for digital design</td>
+<td>GDS, LEF, Liberty .lib, Verilog</td>
+</tr>
+<tr>
+<td>I/O and ESD library</td>
+<td>Pads and protection</td>
+<td>GDS, LEF, .lib</td>
+</tr>
+<tr>
+<td>Reliability rules</td>
+<td>Electromigration limits, ageing, ESD</td>
+<td>Documents and decks</td>
+</tr>
+<tr>
+<td>DFM rules</td>
+<td>Fill and lithography-hotspot rules</td>
+<td>Decks</td>
+</tr>
+<tr>
+<td>Memory compilers (optional)</td>
+<td>Generate SRAM blocks</td>
+<td>Compiler software</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How a PDK is built.</strong> There are nine steps. (1) Define the process: choose the masks, layer thicknesses, doping and gate oxide, and draft the first design rules from what the lithography and etch tools can reliably achieve. (2) Simulate with TCAD (technology computer-aided design), which gives first estimates of device behaviour before any silicon exists. (3) Design test chips: transistors of many widths and lengths, resistors, capacitors, diodes, ring oscillators, contact and via chains, yield structures, and structures that test each design rule. (4) Measure wafers with a probe station and parameter analyser (I–V and C–V curves, sheet resistance and leakage across many wafers and lots). (5) Extract models by fitting BSIM parameters to the measurements and creating corner and statistical models. (6) Write the DRC, LVS and PEX decks. (7) Build the design libraries: PCells, symbols and standard cells, characterised for timing and power. (8) Qualify and correlate with a test design (ring oscillators, an SRAM, a small CPU) and check that silicon matches simulation. (9) Release, document, version and maintain.</p>
+<table>
+<thead>
+<tr>
+<th>Kind of PDK</th>
+<th>Team</th>
+<th>Time</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Academic or older process (1 µm–180 nm)</td>
+<td>2–10 people</td>
+<td>1–2 years</td>
+</tr>
+<tr>
+<td>Predictive / educational (ASAP7, FreePDK)</td>
+<td>3–10 researchers</td>
+<td>1–2 years</td>
+</tr>
+<tr>
+<td>Commercial advanced node</td>
+<td>100–300+ engineers</td>
+<td>Years, with continuous updates</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>PDK</th>
+<th>Type</th>
+<th>Node</th>
+<th>Manufacturable?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SKY130 (SkyWater)</td>
+<td>Real, open</td>
+<td>130 nm</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>GF180MCU (GlobalFoundries)</td>
+<td>Real, open</td>
+<td>180 nm</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>IHP SG13G2</td>
+<td>Real, open, SiGe BiCMOS</td>
+<td>130 nm</td>
+<td>Yes, via IHP shuttles</td>
+</tr>
+<tr>
+<td>ASAP7 (ASU and Arm)</td>
+<td>Predictive</td>
+<td>7 nm FinFET</td>
+<td>No</td>
+</tr>
+<tr>
+<td>FreePDK45 / FreePDK15 (NC State)</td>
+<td>Predictive</td>
+<td>45 / 15 nm</td>
+<td>No</td>
+</tr>
+<tr>
+<td>PTM models (ASU)</td>
+<td>Predictive models only</td>
+<td>130 nm down to 7 nm</td>
+<td>No</td>
+</tr>
+<tr>
+<td>LibreSilicon</td>
+<td>Community, experimental</td>
+<td>~1 µm</td>
+<td>Experimental</td>
+</tr>
+</tbody>
+</table>
+<p>What does this mean for RAM projects? No public DRAM PDK exists, so DRAM cell design can only be studied, not fabricated, outside the memory companies. SRAM is fully possible on SKY130, GF180MCU and IHP SG13G2, and OpenRAM supports SKY130 and GF180MCU. ASAP7 lets you simulate a 7 nm FinFET SRAM cell and see modern scaling effects. Building a small PDK for a college or institute nanofab (for example a 1 to 2 µm CMOS process) makes an excellent final-year or research project.</p>
+<h2 id="156-what-nm-means-for-memory">15.6 What "nm" means for memory<a class="headerlink" href="#156-what-nm-means-for-memory" title="Permanent link">&para;</a></h2>
+<p>Logic chips are sold as "7 nm", "3 nm" or "2 nm". DRAM uses a completely different naming system, and the numbers cannot be compared directly.</p>
+<p><strong>DRAM node names.</strong> Since about 2016 DRAM makers have named their processes as generations of a "10 nm class": 1x, 1y, 1z, then the Greek letters 1α, 1β, 1γ. The number loosely tracks the <strong>half-pitch</strong> of the memory array, half the distance between repeated lines such as wordlines, which is a real physical dimension. EUV (extreme ultraviolet) lithography, which prints the finest patterns in one exposure, entered DRAM production at 1z/1α.</p>
+<table>
+<thead>
+<tr>
+<th>Node</th>
+<th>Approx. half-pitch</th>
+<th>Mass production</th>
+<th>EUV used?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1x</td>
+<td>~18–19 nm</td>
+<td>~2016</td>
+<td>No</td>
+</tr>
+<tr>
+<td>1y</td>
+<td>~17 nm</td>
+<td>~2018</td>
+<td>No</td>
+</tr>
+<tr>
+<td>1z</td>
+<td>~15–16 nm</td>
+<td>~2019–20</td>
+<td>Samsung: 1 layer</td>
+</tr>
+<tr>
+<td>1α (1a)</td>
+<td>~14 nm</td>
+<td>~2021</td>
+<td>Samsung and SK hynix yes; Micron no</td>
+</tr>
+<tr>
+<td>1β (1b)</td>
+<td>~12–13 nm</td>
+<td>~2022–23</td>
+<td>Samsung and SK hynix yes; Micron no</td>
+</tr>
+<tr>
+<td>1γ (1c)</td>
+<td>~11–12 nm</td>
+<td>~2024–25</td>
+<td>Yes (Micron's first EUV node)</td>
+</tr>
+<tr>
+<td>1δ / 0a</td>
+<td>~10 nm and below</td>
+<td>~2026–27+</td>
+<td>Yes, more layers</td>
+</tr>
+<tr>
+<td>3D DRAM / 4F² vertical-channel cells</td>
+<td>Below 10 nm equivalent</td>
+<td>~2028–2030+</td>
+<td>In research and development</td>
+</tr>
+</tbody>
+</table>
+<p>Feature sizes are approximate: vendors do not publish exact dimensions. Micron uses Greek letters (1α, 1β, 1γ), while Samsung and SK hynix use 1a, 1b, 1c; Samsung also markets its 1b node as "12 nm-class". 4F² refers to a cell area of four times the square of the feature size, smaller than today's 6F² cells.</p>
+<p><strong>Why DRAM "12 nm" is not logic "7 nm".</strong></p>
+<table>
+<thead>
+<tr>
+<th>Aspect</th>
+<th>DRAM "12 nm-class"</th>
+<th>Logic "7 nm" (e.g. TSMC N7)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>What the number means</td>
+<td>Roughly a real half-pitch of the memory array</td>
+<td>A marketing name; actual gate pitch is about 57 nm and tightest metal pitch about 40 nm</td>
+</tr>
+<tr>
+<td>Optimised for</td>
+<td>Density, ultra-low leakage, very tall capacitors</td>
+<td>Transistor speed and drive current</td>
+</tr>
+<tr>
+<td>Array transistor</td>
+<td>Buried-channel array transistor (buried wordline)</td>
+<td>FinFET, now gate-all-around (GAA) nanosheets</td>
+</tr>
+<tr>
+<td>Hardest structure</td>
+<td>Storage capacitor with aspect ratio above 50:1</td>
+<td>Transistor and dense metal wiring</td>
+</tr>
+</tbody>
+</table>
+<p>A DRAM cell must hold a tiny charge for around 64 ms between refreshes, so its access transistor must leak almost nothing and its capacitor must be as large as possible in a tiny footprint. That leads to capacitors more than fifty times taller than they are wide, and to buried wordline transistors (BCAT) whose gate sits in a trench below the silicon surface to give a long effective channel. Logic processes make the opposite trade: fast, leaky transistors and many layers of wiring. This is why DRAM and logic are made in different fabs, and why their "nm" numbers measure different things.</p>
+<p><strong>Which node each RAM type uses (2025 to 2026).</strong></p>
+<table>
+<thead>
+<tr>
+<th>RAM type</th>
+<th>Typical process node</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDR4</td>
+<td>1x / 1y / 1z</td>
+</tr>
+<tr>
+<td>DDR5</td>
+<td>1α, 1β, now 1γ / 1c</td>
+</tr>
+<tr>
+<td>LPDDR5X</td>
+<td>1β, 1γ / 1c</td>
+</tr>
+<tr>
+<td>LPDDR6</td>
+<td>1γ / 1c</td>
+</tr>
+<tr>
+<td>GDDR6</td>
+<td>1y–1α</td>
+</tr>
+<tr>
+<td>GDDR7</td>
+<td>1β (some 1γ)</td>
+</tr>
+<tr>
+<td>HBM3E (DRAM dies)</td>
+<td>1β</td>
+</tr>
+<tr>
+<td>HBM4 (DRAM dies)</td>
+<td>1β / 1c</td>
+</tr>
+<tr>
+<td>HBM4 (base die)</td>
+<td>A logic process (for example TSMC 12 nm, 5 nm or 3 nm, or Samsung 4 nm), the first time HBM uses a logic node for its base die</td>
+</tr>
+<tr>
+<td>On-chip SRAM</td>
+<td>Same node as the processor (5 nm, 3 nm, 2 nm, Intel 18A)</td>
+</tr>
+<tr>
+<td>Standalone SRAM</td>
+<td>28–90 nm</td>
+</tr>
+<tr>
+<td>PSRAM</td>
+<td>~25–65 nm</td>
+</tr>
+<tr>
+<td>RLDRAM</td>
+<td>Older DRAM nodes</td>
+</tr>
+<tr>
+<td>Embedded MRAM</td>
+<td>28 / 22 / 16 / 12 nm, moving to 14 / 8 nm</td>
+</tr>
+<tr>
+<td>Standalone MRAM</td>
+<td>28–40 nm</td>
+</tr>
+<tr>
+<td>FeRAM</td>
+<td>~130 nm</td>
+</tr>
+<tr>
+<td>ReRAM (embedded)</td>
+<td>40 / 28 / 22 nm</td>
+</tr>
+<tr>
+<td>LPDDR6 controller + PHY (inside the SoC)</td>
+<td>3 nm / 2 nm</td>
+</tr>
+</tbody>
+</table>
+<p><strong>SRAM scaling has stalled.</strong> For decades each new logic node shrank the SRAM bitcell substantially. That has slowed sharply: the high-density 6T cell barely shrank from TSMC N5 to N3E, and gate-all-around transistors at N2 brought only a modest gain (Figure 15.2, approximate published figures). Because caches are a large share of a modern processor's area, this is a serious problem. One response is to build SRAM on a separate, cheaper die and stack it on the processor, as AMD does with 3D V-Cache.</p>
+<figure class="fig fig-diagram">
+<img src="img/sram-bitcell-scaling.png" alt="Approximate high-density 6T SRAM bitcell area in square micrometres: TSMC N7 about 0.027 (FinFET), N5 about 0.021 (FinFET), N3E about 0.021 (FinFET, no shrink against N5), N2 about 0.0175 (GAA nanosheet)" loading="lazy" width="1238" height="340">
+<figcaption><strong>Figure 15.2.</strong> Approximate high-density 6T SRAM bitcell area in square micrometres: TSMC N7 about 0.027 (FinFET), N5 about 0.021 (FinFET), N3E about 0.021 (FinFET, no shrink against N5), N2 about 0.0175 (GAA nanosheet)</figcaption>
+</figure>
+
+<div class="admonition example">
+<p class="admonition-title">Example 15.2: How much did the SRAM cell really shrink?</p>
+<ol>
+<li>N7 to N5: <span class="arithmatex">\(0.027 \to 0.021\)</span> µm², an area ratio of <span class="arithmatex">\(0.021/0.027 = 0.78\)</span>, a 22 per cent reduction.</li>
+<li>N5 to N3E: <span class="arithmatex">\(0.021 \to 0.021\)</span>, ratio 1.0: no shrink at all.</li>
+<li>N3E to N2: <span class="arithmatex">\(0.021 \to 0.0175\)</span>, ratio 0.83, a 17 per cent reduction.</li>
+<li>N7 to N2 overall: <span class="arithmatex">\(0.0175/0.027 = 0.65\)</span>, so the cell is 35 per cent smaller after three node steps, about 1.5 times denser.</li>
+<li>For comparison, the SKY130 6T cell of about 2 µm² is <span class="arithmatex">\(2/0.027 = 74\)</span> times larger than the N7 cell, and a DRAM cell of about 0.001 µm² is 27 times smaller than the N7 SRAM cell.</li>
+</ol>
+</div>
+<h2 id="157-summary">15.7 Summary<a class="headerlink" href="#157-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>SRAM is the only memory a student team can take to silicon: it needs only ordinary logic transistors, while DRAM needs a dedicated process with very tall capacitors that only memory fabs run.</li>
+<li>The SRAM flow has eleven steps: specification, architecture, bitcell, periphery, SPICE simulation, layout, physical verification, extraction, characterisation, integration and tapeout. OpenRAM automates steps 2 to 9.</li>
+<li>The PDK holds device models, design rules, rule decks and cell libraries; the open PDKs are SKY130 (130 nm), GF180MCU (180 nm) and IHP SG13G2 (130 nm SiGe BiCMOS).</li>
+<li>DRAM node names (1α, 1β, 1γ) track a real half-pitch of the array; logic "nm" names are marketing. DRAM and logic differ in what they optimise (leakage and tall capacitors against speed).</li>
+<li>The 6T SRAM cell has almost stopped shrinking: no shrink from N5 to N3E, 17 per cent from N3E to N2.</li>
+</ul>
+<h2 id="158-exercises">15.8 Exercises<a class="headerlink" href="#158-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 15.1.</strong> A 2K × 16 SRAM is folded with an 8:1 column multiplexer. How many address bits, rows and columns does it have, and how many bits go to the row decoder?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Words: 2048, so 11 address bits. Array: rows <span class="arithmatex">\(= 2048/8 = 256\)</span>, columns <span class="arithmatex">\(= 16 \times 8 = 128\)</span> (<span class="arithmatex">\(256 \times 128 = 32{,}768\)</span> cells, 32 Kbit). Row decoder: 8 bits; the column multiplexer takes the other 3 bits.</p>
+</details>
+<p><strong>Exercise 15.2.</strong> Using 3.3 µm² per bit on SKY130, estimate the area of a 4 KB (32 Kbit) SRAM macro, and how many such macros fit into a 10 mm² shuttle slot?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(4\ \text{KB} = 32{,}768\)</span> bits. Area <span class="arithmatex">\(= 32{,}768 \times 3.3 = 108{,}000\)</span> µm² <span class="arithmatex">\(= 0.108\)</span> mm². In 10 mm²: <span class="arithmatex">\(10/0.108 \approx 92\)</span> macros, ignoring pad ring, routing and test logic.</p>
+</details>
+<p><strong>Exercise 15.3.</strong> Why does the SRAM flow use a replica bitline for timing?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The replica bitline is a dummy column that discharges like the slowest real column, so it fires the sense amplifiers at just the right moment. Because it is built from the same devices, it tracks process, voltage and temperature automatically, without allowing a fixed worst-case delay at every step.</p>
+</details>
+<p><strong>Exercise 15.4.</strong> Match each file to the stage that needs it: (a) Gerber files; (b) GDSII; (c) ATE test program; (d) bonding diagram. Stages: PCB fab, DRAM fab, OSAT, tester.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>(a) PCB fab and assembly. (b) The DRAM fab (silicon). (c) The tester. (d) The OSAT (packaging).</p>
+</details>
+<p><strong>Exercise 15.5.</strong> A student wants to design a 4 Gb DRAM chip on a SKY130 shuttle. Explain why this cannot work, using the cell and the process.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>A DRAM 1T1C cell needs a very tall, thin capacitor (aspect ratio above 50:1) and a low-leakage access transistor. The open processes have no deep-capacitor or buried-wordline technology; only memory fabs have such a process, and no open DRAM PDK exists. The metal-insulator-metal capacitors available on open PDKs are far too large. Even with SRAM in place of DRAM, 4 Gb would need about 115,000 mm² at SKY130, about 130 times the largest chip a factory can print (Chapter 17).</p>
+</details>
+<p><strong>Exercise 15.6 (Assignment 13: generate and inspect a real SRAM).</strong> Configure OpenRAM for 256 words × 32 bits on SKY130. Open the GDS in KLayout and find the bitcell array, the decoders and the sense amplifiers. Run DRC (Magic) and LVS (Netgen) and read the <code>.lib</code> timing file.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>A configuration file is as short as <code>word_size = 32</code>, <code>num_words = 256</code>, <code>tech_name = "sky130"</code>, run with <code>python3 sram_compiler.py myconfig.py</code> from the OpenRAM checkout (start from an example configuration shipped with OpenRAM and change only the size). Success means the GDS opens, LVS reports a match, and you can name each region of the layout. Deliver screenshots of each block, the DRC and LVS results and the macro area. The block is 1 KB, in the range of 1 KB to a few hundred KB that suits a test chip.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="board-spd-testing-and-manufacture.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 14. The Board, the SPD and Making a Module">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                14. The Board, the SPD and Making a Module
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-footer__link md-footer__link--next" aria-label="Next: 16. Controllers, DRAM Chips and the Tools Behind Them">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                16. Controllers, DRAM Chips and the Tools Behind Them
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

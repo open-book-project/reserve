@@ -1,0 +1,3773 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch10-software-autonomy-and-artificial-intelligence.html">
+  
+  
+    <link rel="prev" href="ch09-payloads-and-sensors.html">
+  
+  
+    <link rel="next" href="ch11-swarm-systems.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>10. Software, Autonomy and Artificial Intelligence - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-sw_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10. Software, Autonomy and Artificial Intelligence
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Introduction to UAV Software Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Flight Control Software Stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.2 Flight Control Software Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ardupilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.1 ArduPilot Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-px4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.2 PX4 Architecture and uORB Middleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-rtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.3 RTOS Fundamentals for Flight Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.4 Middleware: ROS and microROS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sitl_hitl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.5 Software-in-the-Loop and Hardware-in-the-Loop Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mission_planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Mission Planning Software
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.3 Mission Planning Software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mavlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3.1 MAVLink Mission Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-path_planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3.2 Path Planning Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-computer_vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Computer Vision for UAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.4 Computer Vision for UAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cv_pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.1 Image Processing Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.2 Classical Feature Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-yolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.3 Deep Learning Object Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.4 Multi-Object Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-slam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 Simultaneous Localisation and Mapping (SLAM)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.5 Simultaneous Localisation and Mapping (SLAM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-orbslam3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5.1 Feature-Based Visual SLAM: ORB-SLAM3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lio_sam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5.2 LiDAR SLAM: LIO-SAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-vio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5.3 Visual-Inertial Odometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-autonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 Autonomy Levels and Decision Making
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.6 Autonomy Levels and Decision Making">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-autonomy_levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6.1 Autonomy Level Frameworks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-bt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6.2 Behaviour Trees
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-rl_control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6.3 Reinforcement Learning for Drone Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ml_uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7 Machine Learning for UAV Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.7 Machine Learning for UAV Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-nn_architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.1 Neural Network Architectures for Onboard Inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-edge_ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.2 Edge AI Hardware for UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-model_compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.3 Model Compression for Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-federated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.4 Federated Learning for Swarm Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8 Swarm Intelligence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.8 Swarm Intelligence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-reynolds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8.1 Reynolds’ Flocking Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8.2 Consensus and Task Allocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9 Simulation Environments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.9 Simulation Environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9.1 Gazebo and ROS2 Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-airsim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9.2 Microsoft AirSim and Unreal Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-digital_twin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9.3 Digital Twin Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10 Cybersecurity for UAS Software
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.10 Cybersecurity for UAS Software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-attack_surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.1 UAS Attack Surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-secure_boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.2 Secure Boot and Code Signing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gps_spoofing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.3 GPS Spoofing Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mavlink_security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.4 MAVLink Protocol Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11 Software Certification and Airworthiness
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.11 Software Certification and Airworthiness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-do178c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.1 DO-178C Software Assurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-do254" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.2 DO-254 Hardware Assurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-easa_sora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.3 EASA SORA and SAIL Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-oss_cert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.4 Open-Source Autopilots in Certified Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_diagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.12 Software Architecture Block Diagrams
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-slam_comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.13 SLAM and State Estimation Algorithm Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.14 Integrated Software Performance Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.15 Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 Introduction to UAV Software Architecture
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fcs_software" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Flight Control Software Stack
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.2 Flight Control Software Stack">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ardupilot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.1 ArduPilot Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-px4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.2 PX4 Architecture and uORB Middleware
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-rtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.3 RTOS Fundamentals for Flight Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ros" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.4 Middleware: ROS and microROS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sitl_hitl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2.5 Software-in-the-Loop and Hardware-in-the-Loop Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mission_planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Mission Planning Software
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.3 Mission Planning Software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mavlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3.1 MAVLink Mission Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-path_planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3.2 Path Planning Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-computer_vision" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Computer Vision for UAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.4 Computer Vision for UAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cv_pipeline" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.1 Image Processing Pipeline
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-features" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.2 Classical Feature Descriptors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-yolo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.3 Deep Learning Object Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-tracking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4.4 Multi-Object Tracking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-slam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 Simultaneous Localisation and Mapping (SLAM)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.5 Simultaneous Localisation and Mapping (SLAM)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-orbslam3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5.1 Feature-Based Visual SLAM: ORB-SLAM3
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lio_sam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5.2 LiDAR SLAM: LIO-SAM
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-vio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5.3 Visual-Inertial Odometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-autonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 Autonomy Levels and Decision Making
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.6 Autonomy Levels and Decision Making">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-autonomy_levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6.1 Autonomy Level Frameworks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-bt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6.2 Behaviour Trees
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-rl_control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6.3 Reinforcement Learning for Drone Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ml_uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7 Machine Learning for UAV Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.7 Machine Learning for UAV Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-nn_architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.1 Neural Network Architectures for Onboard Inference
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-edge_ai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.2 Edge AI Hardware for UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-model_compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.3 Model Compression for Deployment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-federated" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7.4 Federated Learning for Swarm Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8 Swarm Intelligence
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.8 Swarm Intelligence">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-reynolds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8.1 Reynolds’ Flocking Rules
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8.2 Consensus and Task Allocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9 Simulation Environments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.9 Simulation Environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gazebo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9.1 Gazebo and ROS2 Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-airsim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9.2 Microsoft AirSim and Unreal Engine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-digital_twin" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9.3 Digital Twin Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10 Cybersecurity for UAS Software
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.10 Cybersecurity for UAS Software">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-attack_surface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.1 UAS Attack Surface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-secure_boot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.2 Secure Boot and Code Signing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gps_spoofing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.3 GPS Spoofing Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mavlink_security" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10.4 MAVLink Protocol Security
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11 Software Certification and Airworthiness
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10.11 Software Certification and Airworthiness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-do178c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.1 DO-178C Software Assurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-do254" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.2 DO-254 Hardware Assurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-easa_sora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.3 EASA SORA and SAIL Levels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-oss_cert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.11.4 Open-Source Autopilots in Certified Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_diagrams" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.12 Software Architecture Block Diagrams
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-slam_comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.13 SLAM and State Estimation Algorithm Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_performance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.14 Integrated Software Performance Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sw_conclusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.15 Conclusion
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-software">Chapter 10: Software, Autonomy and Artificial Intelligence<a class="headerlink" href="#ch-software" title="Permanent link">&para;</a></h1>
+<h2 id="sec-sw_intro"><span class="secnum">10.1</span> Introduction to UAV Software Architecture<a class="headerlink" href="#sec-sw_intro" title="Permanent link">&para;</a></h2>
+<p>The software stack of a modern unmanned aerial vehicle is among the most complex embedded systems in production engineering. It must concurrently execute hard real-time control loops at 400 Hz, run sensor fusion algorithms at 50–200 Hz, interface with heterogeneous hardware peripherals over a dozen bus protocols, support mission management logic, stream gigabytes of sensor data to onboard storage and downlinks, and increasingly, run deep neural network inference for real-time perception — all within severe constraints on mass (<span class="arithmatex">\(&lt;200\)</span> g compute node), power (<span class="arithmatex">\(&lt;15\)</span> W), and vibration, temperature, and EMI tolerance.</p>
+<p>This chapter develops the full software stack from the hardware abstraction layer through flight control algorithms, mission planning, computer vision, SLAM, AI/ML inference, swarm coordination, simulation, cybersecurity, and airworthiness certification. Every subsystem is treated quantitatively, with reference to open-source implementations (ArduPilot, PX4, ROS2, ORB-SLAM3), academic literature, and military standards.</p>
+<h2 id="sec-fcs_software"><span class="secnum">10.2</span> Flight Control Software Stack<a class="headerlink" href="#sec-fcs_software" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-ardupilot"><span class="secnum">10.2.1</span> ArduPilot Architecture<a class="headerlink" href="#subsec-ardupilot" title="Permanent link">&para;</a></h3>
+<p>ArduPilot is the world’s most widely deployed open-source autopilot framework, with over one million vehicles flying on ArduPilot firmware as of 2024. Its architecture is structured into three tiers:</p>
+<p><strong>Tier 1 — Hardware Abstraction Layer (HAL).</strong> The <code>AP_HAL</code> namespace defines a pure-virtual C++ interface for every hardware resource: UART, I2C, SPI, PWM, ADC, storage, and scheduler. Platform-specific implementations (<code>AP_HAL_ChibiOS</code> for Pixhawk hardware running ChibiOS RTOS, <code>AP_HAL_Linux</code> for Raspberry Pi/Navio2, <code>AP_HAL_SITL</code> for software-in-the-loop simulation) inherit from <code>AP_HAL::HAL</code> and implement the virtual methods. This strict separation means that vehicle code (Copter, Plane, Rover, Sub) is portable across hardware without modification.</p>
+<p><strong>Tier 2 — Libraries.</strong> The <code>libraries/</code> directory contains sensor drivers (<code>AP_InertialSensor</code>, <code>AP_GPS</code>, <code>AP_Baro</code>, <code>AP_Compass</code>), state estimators (<code>AP_NavEKF3</code> — a 24-state extended Kalman filter), controllers (<code>AC_PID</code>, <code>AC_AttitudeControl</code>, <code>AC_PosControl</code>), and utilities (<code>AP_Math</code>, <code>AP_AHRS</code>, <code>AP_Mission</code>). The EKF3 state vector includes: position (3), velocity (3), attitude quaternion (4), IMU bias (6), earth magnetic field (3), and body magnetic field (3), plus optional wind velocity (3) and terrain height (1).</p>
+<p><strong>Tier 3 — Vehicle code.</strong> <code>ArduCopter/</code>, <code>ArduPlane/</code>, etc. define the top-level vehicle loop (<code>loop()</code>/<code>fast_loop()</code> structure), flight mode FSM, and vehicle-specific control mixing.</p>
+<p>The ArduPilot scheduler runs tasks at fixed rates using a cooperative scheduler built on the HAL timer. Each task has a declared period and maximum execution time (budget):</p>
+<div id="eq-cpu_utilisation"></div>
+<div class="arithmatex">\[U_\mathrm{CPU} = \sum_{i=1}^{N} \frac{C_i}{T_i} \leq 1\tag{10.1}\]</div>
+<p>where <span class="arithmatex">\(C_i\)</span> is worst-case execution time and <span class="arithmatex">\(T_i\)</span> is period of task <span class="arithmatex">\(i\)</span>. ArduPilot’s fast loop (400 Hz, <span class="arithmatex">\(T = 2.5\)</span> ms) executes attitude control and motor output with a budget of <span class="arithmatex">\(&lt;400\)</span> µ s, leaving headroom for medium (50 Hz) and slow (10 Hz) tasks.</p>
+<h3 id="subsec-px4"><span class="secnum">10.2.2</span> PX4 Architecture and uORB Middleware<a class="headerlink" href="#subsec-px4" title="Permanent link">&para;</a></h3>
+<p>PX4 Autopilot uses a fundamentally different architecture centred on the <code>uORB</code> (Micro Object Request Broker) publish-subscribe middleware. Modules communicate exclusively by publishing to and subscribing from named message topics (defined as <code>.msg</code> files), with no direct function calls between modules. This enforces modularity and testability.</p>
+<p>Each module runs as an independent NuttX (RTOS) task or workqueue callback, publishing its outputs at a defined rate. Key modules:</p>
+<ul>
+<li>
+<p><code>sensors</code>: reads and calibrates all IMU, barometer, magnetometer; publishes <code>sensor_combined</code></p>
+</li>
+<li>
+<p><code>ekf2</code>: 23-state iterated EKF; subscribes <code>sensor_combined</code>, publishes <code>vehicle_odometry</code>, <code>estimator_status</code></p>
+</li>
+<li>
+<p><code>mc_att_control</code>: multi-copter attitude controller; subscribes <code>vehicle_attitude_setpoint</code>, publishes <code>actuator_controls</code></p>
+</li>
+<li>
+<p><code>mc_pos_control</code>: position/velocity controller; publishes attitude setpoints</p>
+</li>
+<li>
+<p><code>commander</code>: flight mode FSM, arming logic, health monitoring</p>
+</li>
+<li>
+<p><code>navigator</code>: waypoint sequencing, geofence enforcement</p>
+</li>
+<li>
+<p><code>mavlink</code>: MAVLink protocol bridge to GCS</p>
+</li>
+</ul>
+<p>The uORB layer implements lock-free single-producer multi-consumer queues with priority-based semaphore signalling. Publication latency is <span class="arithmatex">\(&lt;10\)</span> µ s on NuttX; copy overhead for a 256-byte message is <span class="arithmatex">\(&lt;5\)</span> µ s.</p>
+<h3 id="subsec-rtos"><span class="secnum">10.2.3</span> RTOS Fundamentals for Flight Control<a class="headerlink" href="#subsec-rtos" title="Permanent link">&para;</a></h3>
+<p>Real-Time Operating Systems used in flight control (NuttX, ChibiOS, FreeRTOS, VxWorks) implement preemptive priority-based scheduling. The rate-monotonic scheduling (RMS) algorithm assigns priorities inversely proportional to period; for <span class="arithmatex">\(N\)</span> periodic tasks, the CPU utilisation bound for guaranteed schedulability is:</p>
+<div id="eq-rms_utilisation"></div>
+<div class="arithmatex">\[U \leq N\left(2^{1/N} - 1\right) \xrightarrow{N\to\infty} \ln 2 \approx 0.693\tag{10.2}\]</div>
+<p>The deadline monotonic scheduling (DMS) algorithm extends RMS to tasks with deadlines <span class="arithmatex">\(D_i &lt; T_i\)</span>. Worst-case response time analysis (WCRT) for task <span class="arithmatex">\(i\)</span>:</p>
+<div id="eq-wcrt"></div>
+<div class="arithmatex">\[R_i^{(n+1)} = C_i + \sum_{j \in \mathcal{H}(i)} \left\lceil \frac{R_i^{(n)}}{T_j} \right\rceil C_j\tag{10.3}\]</div>
+<p>where <span class="arithmatex">\(\mathcal{H}(i)\)</span> is the set of tasks with higher priority than <span class="arithmatex">\(i\)</span>. Convergence is achieved when <span class="arithmatex">\(R_i^{(n+1)} = R_i^{(n)}\)</span>. For flight control, the attitude control task at 400 Hz (<span class="arithmatex">\(T = 2.5\)</span> ms) requires <span class="arithmatex">\(R_\mathrm{attitude} &lt; 2.5\)</span> ms; WCRT analysis with ChibiOS interrupt latency and context switch time (<span class="arithmatex">\(&lt;10\)</span> µ s) confirms feasibility.</p>
+<p><strong>Interrupt latency</strong> is the delay from hardware interrupt assertion to first instruction of the ISR. With a Cortex-M7 at 480 MHz, interrupt latency is 12 cycles <span class="arithmatex">\(= 25\)</span> ns, satisfying even microsecond-level timing requirements.</p>
+<h3 id="subsec-ros"><span class="secnum">10.2.4</span> Middleware: ROS and microROS<a class="headerlink" href="#subsec-ros" title="Permanent link">&para;</a></h3>
+<p>The Robot Operating System (ROS2) provides a full-featured middleware layer above the RTOS, using the DDS (Data Distribution Service) standard for IPC. ROS2 nodes communicate via topics (publish/subscribe), services (request/reply), and actions (goal/result/feedback). The quality-of-service (QoS) settings (reliability, durability, deadline) allow tuning for real-time applications.</p>
+<p><strong>microROS</strong> ports the ROS2 client library to microcontrollers (<span class="arithmatex">\(&lt;1\)</span> MB RAM) running bare-metal or RTOS, using the micro-XRCE-DDS transport to bridge UART/USB to a ROS2-enabled host computer. This allows a Cortex-M4 flight controller to appear as a ROS2 node, publishing <code>sensor_msgs/Imu</code> and subscribing to <code>geometry_msgs/TwistStamped</code> setpoints — a common pattern for integrating PX4 with a companion computer running ROS2 mission logic.</p>
+<h3 id="subsec-sitl_hitl"><span class="secnum">10.2.5</span> Software-in-the-Loop and Hardware-in-the-Loop Simulation<a class="headerlink" href="#subsec-sitl_hitl" title="Permanent link">&para;</a></h3>
+<p>SITL runs the full autopilot firmware binary (ArduPilot or PX4) on a Linux host with a simulated flight dynamics model (JSBSim for fixed-wing, MultiRotor dynamics for copters). The firmware receives simulated sensor data and outputs actuator commands to the dynamics model, forming a closed simulation loop:</p>
+<div id="eq-dynamics_model"></div>
+<div class="arithmatex">\[\mathbf{x}_{k+1} = f(\mathbf{x}_k, \mathbf{u}_k, \mathbf{w}_k)\tag{10.4}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{x}\)</span> is the flight dynamics state (position, velocity, attitude, angular rates), <span class="arithmatex">\(\mathbf{u}\)</span> is the actuator command vector, and <span class="arithmatex">\(\mathbf{w}\)</span> is environmental disturbance (wind, turbulence). SITL enables regression testing of mission planning logic, geofence enforcement, failsafe behaviours, and navigation algorithms without hardware risk.</p>
+<p>HITL uses real autopilot hardware but injects simulated sensor data via the hardware’s serial ports, exercising the firmware on real silicon to test timing behaviour and hardware-dependent code paths. HITL is mandatory before first flights of new firmware on new hardware.</p>
+<h2 id="sec-mission_planning"><span class="secnum">10.3</span> Mission Planning Software<a class="headerlink" href="#sec-mission_planning" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-mavlink"><span class="secnum">10.3.1</span> MAVLink Mission Protocol<a class="headerlink" href="#subsec-mavlink" title="Permanent link">&para;</a></h3>
+<p>MAVLink is the de-facto standard lightweight messaging protocol for UAV ground control. Version 2 (MAVLink 2.0) provides a 14-byte header with 24-bit message ID space and optional signing. Mission commands follow the MAV_CMD namespace (<a href="#tab-mavlink_commands">Table 10.1</a>).</p>
+<div class="tbl" id="tab-mavlink_commands">
+<div class="tbl-caption"><strong>Table 10.1.</strong> Key MAVLink Mission Commands (MAV_CMD)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Command ID</strong></th>
+<th style="text-align: left;"><strong>Name</strong></th>
+<th style="text-align: left;"><strong>Parameters</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">16</td>
+<td style="text-align: left;">NAV_WAYPOINT</td>
+<td style="text-align: left;">Hold time (s), acceptance radius (m), pass-through, yaw (°), lat, lon, alt</td>
+</tr>
+<tr>
+<td style="text-align: left;">17</td>
+<td style="text-align: left;">NAV_LOITER_UNLIM</td>
+<td style="text-align: left;">Radius (m), yaw, lat, lon, alt</td>
+</tr>
+<tr>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">NAV_LOITER_TURNS</td>
+<td style="text-align: left;">Turns, radius, lat, lon, alt</td>
+</tr>
+<tr>
+<td style="text-align: left;">19</td>
+<td style="text-align: left;">NAV_LOITER_TIME</td>
+<td style="text-align: left;">Time (s), radius, lat, lon, alt</td>
+</tr>
+<tr>
+<td style="text-align: left;">20</td>
+<td style="text-align: left;">NAV_RETURN_TO_LAUNCH</td>
+<td style="text-align: left;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">21</td>
+<td style="text-align: left;">NAV_LAND</td>
+<td style="text-align: left;">Abort alt (m), land mode, lat, lon, yaw</td>
+</tr>
+<tr>
+<td style="text-align: left;">22</td>
+<td style="text-align: left;">NAV_TAKEOFF</td>
+<td style="text-align: left;">Min pitch, yaw, lat, lon, alt</td>
+</tr>
+<tr>
+<td style="text-align: left;">93</td>
+<td style="text-align: left;">NAV_DELAY</td>
+<td style="text-align: left;">Delay (s), hour, minute, second</td>
+</tr>
+<tr>
+<td style="text-align: left;">177</td>
+<td style="text-align: left;">DO_SET_SERVO</td>
+<td style="text-align: left;">Servo number, PWM value</td>
+</tr>
+<tr>
+<td style="text-align: left;">178</td>
+<td style="text-align: left;">DO_REPEAT_SERVO</td>
+<td style="text-align: left;">Servo, PWM, repeat count, delay (s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">181</td>
+<td style="text-align: left;">DO_DIGICAM_CONTROL</td>
+<td style="text-align: left;">On/off, zoom step, zoom pos, focus lock, shot, command ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">201</td>
+<td style="text-align: left;">DO_SET_ROI</td>
+<td style="text-align: left;">ROI mode, WP index, ROI index, lat, lon, alt</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The MAVLink mission upload sequence: GCS sends <code>MISSION_COUNT</code> (total items); UAV acknowledges; GCS sends each <code>MISSION_ITEM_INT</code> (integer lat/lon in <span class="arithmatex">\(10^{-7}\)</span> degrees for precision); UAV ACKs each item; GCS sends <code>MISSION_ACK</code>. The current waypoint index is broadcast in heartbeat telemetry.</p>
+<h3 id="subsec-path_planning"><span class="secnum">10.3.2</span> Path Planning Algorithms<a class="headerlink" href="#subsec-path_planning" title="Permanent link">&para;</a></h3>
+<p><strong>A* Algorithm:</strong> Finds the minimum-cost path from start node <span class="arithmatex">\(s\)</span> to goal <span class="arithmatex">\(g\)</span> in a graph. The heuristic evaluation function:</p>
+<div id="eq-astar_f"></div>
+<div class="arithmatex">\[f(n) = g(n) + h(n)\tag{10.5}\]</div>
+<p>where <span class="arithmatex">\(g(n)\)</span> is the known cost from <span class="arithmatex">\(s\)</span> to node <span class="arithmatex">\(n\)</span>, and <span class="arithmatex">\(h(n)\)</span> is an admissible heuristic estimate of cost from <span class="arithmatex">\(n\)</span> to <span class="arithmatex">\(g\)</span>. For grid-based obstacle maps, the Euclidean distance heuristic <span class="arithmatex">\(h(n) = \|n - g\|_2\)</span> is admissible (never overestimates). A* is optimal and complete when <span class="arithmatex">\(h\)</span> is admissible and consistent.</p>
+<p><strong>Rapidly-exploring Random Tree (RRT):</strong> A sampling-based planner that builds a tree by random sampling of the configuration space. At each iteration, a random point <span class="arithmatex">\(q_\mathrm{rand}\)</span> is sampled; the nearest tree node <span class="arithmatex">\(q_\mathrm{near}\)</span> is extended by step <span class="arithmatex">\(\delta\)</span> toward <span class="arithmatex">\(q_\mathrm{rand}\)</span>:</p>
+<div id="eq-rrt_extend"></div>
+<div class="arithmatex">\[q_\mathrm{new} = q_\mathrm{near} + \delta \cdot \frac{q_\mathrm{rand} - q_\mathrm{near}}{\|q_\mathrm{rand} - q_\mathrm{near}\|}\tag{10.6}\]</div>
+<p>If <span class="arithmatex">\(q_\mathrm{new}\)</span> is collision-free, it is added to the tree. RRT* adds a rewiring step that asymptotically converges to the optimal path:</p>
+<div id="eq-rrtstar_rewire"></div>
+<div class="arithmatex">\[\text{Rewire: if } c(q_\mathrm{near}) + d(q_\mathrm{near}, q') &lt; c(q'), \text{ set } \mathrm{parent}(q') = q_\mathrm{near}\tag{10.7}\]</div>
+<p><strong>Minimum-Snap Trajectory</strong> for quadrotors: The minimum-snap formulation minimises the integral of snap (4th derivative of position) to produce smooth, dynamically feasible trajectories. For a segment from <span class="arithmatex">\(t_0\)</span> to <span class="arithmatex">\(t_f\)</span>, position is represented as a degree-7 polynomial:</p>
+<div id="eq-min_snap_poly"></div>
+<div class="arithmatex">\[p(t) = \sum_{k=0}^{7} c_k t^k\tag{10.8}\]</div>
+<p>The cost functional:</p>
+<div id="eq-min_snap_cost"></div>
+<div class="arithmatex">\[J = \int_0^T \left\| \frac{d^4 \mathbf{p}}{dt^4} \right\|^2 dt\tag{10.9}\]</div>
+<p>is minimised subject to boundary conditions (position, velocity, acceleration, jerk at waypoints). This yields a quadratic programme (QP) that can be solved efficiently with standard QP solvers (OSQP, qpOASES).</p>
+<h2 id="sec-computer_vision"><span class="secnum">10.4</span> Computer Vision for UAVs<a class="headerlink" href="#sec-computer_vision" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-cv_pipeline"><span class="secnum">10.4.1</span> Image Processing Pipeline<a class="headerlink" href="#subsec-cv_pipeline" title="Permanent link">&para;</a></h3>
+<p>The standard computer vision pipeline for a UAV perception system consists of:</p>
+<ol>
+<li>
+<p><strong>Capture and synchronisation:</strong> Hardware trigger synchronises camera frame with IMU timestamp (<span class="arithmatex">\(&lt;1\)</span> µ s accuracy); rolling shutter correction requires IMU interpolation.</p>
+</li>
+<li>
+<p><strong>Preprocessing:</strong> Debayering (Malvar-He-Cutler algorithm for <span class="arithmatex">\(3\times\)</span> faster vs bilinear with less aliasing); lens distortion correction using calibrated <span class="arithmatex">\(\mathbf{K}\)</span> intrinsic matrix and <span class="arithmatex">\((k_1, k_2, p_1, p_2, k_3)\)</span> distortion coefficients.</p>
+</li>
+<li>
+<p><strong>Feature extraction or detection inference.</strong></p>
+</li>
+<li>
+<p><strong>Downstream task:</strong> Detection, tracking, segmentation, depth estimation, or flow.</p>
+</li>
+</ol>
+<p>Camera calibration: the projection of a 3D point <span class="arithmatex">\(\mathbf{P}_w = [X, Y, Z]^T\)</span> in world frame to pixel <span class="arithmatex">\(\mathbf{p} = [u, v]^T\)</span>:</p>
+<div id="eq-camera_projection"></div>
+<div class="arithmatex">\[\begin{pmatrix} u \\ v \\ 1 \end{pmatrix} = \mathbf{K} \left[ \mathbf{R} \mid \mathbf{t} \right] \begin{pmatrix} X \\ Y \\ Z \\ 1 \end{pmatrix}, \quad \mathbf{K} = \begin{pmatrix} f_x &amp; 0 &amp; c_x \\ 0 &amp; f_y &amp; c_y \\ 0 &amp; 0 &amp; 1 \end{pmatrix}\tag{10.10}\]</div>
+<p>where <span class="arithmatex">\(f_x, f_y\)</span> are focal lengths in pixels, <span class="arithmatex">\((c_x, c_y)\)</span> is the principal point, and <span class="arithmatex">\([\mathbf{R}|\mathbf{t}]\)</span> is the extrinsic pose (rotation and translation from world to camera).</p>
+<h3 id="subsec-features"><span class="secnum">10.4.2</span> Classical Feature Descriptors<a class="headerlink" href="#subsec-features" title="Permanent link">&para;</a></h3>
+<p><strong>SIFT (Scale-Invariant Feature Transform):</strong> Detects keypoints at scale-space extrema of the DoG (Difference of Gaussians). Descriptor: 128-dimensional histogram of gradient orientations over <span class="arithmatex">\(4\times4\)</span> sub-regions. SIFT is robust to scale and rotation but computationally expensive (patented until 2020, now free).</p>
+<p><strong>ORB (Oriented FAST and Rotated BRIEF):</strong> Combines FAST corner detector (intensity threshold comparison on a Bresenham circle) with BRIEF descriptor (binary comparison of pixel pairs at a learned sampling pattern). ORB is rotation-invariant (orientation computed from intensity centroid) and 100<span class="arithmatex">\(\times\)</span> faster than SIFT at comparable matching precision, making it the standard for real-time mobile and UAV applications.</p>
+<p>The optical flow (Lucas-Kanade) algorithm estimates pixel displacement <span class="arithmatex">\(\mathbf{v} = [v_x, v_y]^T\)</span> between frames by solving the brightness constancy equation:</p>
+<div id="eq-brightness_constancy"></div>
+<div class="arithmatex">\[I_x v_x + I_y v_y + I_t = 0\tag{10.11}\]</div>
+<p>In a local window of <span class="arithmatex">\(N\)</span> pixels, the least-squares solution is:</p>
+<div id="eq-lucas_kanade"></div>
+<div class="arithmatex">\[\begin{pmatrix} v_x \\ v_y \end{pmatrix} = \begin{pmatrix} \sum I_x^2 &amp; \sum I_x I_y \\ \sum I_x I_y &amp; \sum I_y^2 \end{pmatrix}^{-1} \begin{pmatrix} -\sum I_x I_t \\ -\sum I_y I_t \end{pmatrix}\tag{10.12}\]</div>
+<p>The <span class="arithmatex">\(2\times2\)</span> matrix (the Harris matrix <span class="arithmatex">\(\mathbf{M}\)</span>) must be well-conditioned — the minimum eigenvalue <span class="arithmatex">\(\lambda_\mathrm{min} &gt; \tau\)</span> ensures reliable flow (Harris corner condition).</p>
+<h3 id="subsec-yolo"><span class="secnum">10.4.3</span> Deep Learning Object Detection<a class="headerlink" href="#subsec-yolo" title="Permanent link">&para;</a></h3>
+<p>The YOLO (You Only Look Once) family of detectors has become the default for onboard UAV inference due to its single-forward-pass architecture. YOLOv8 processes an input image in a single pass through a convolutional backbone (CSPDarknet), neck (PAN-FPN), and detection head.</p>
+<p>The detection output for each grid cell <span class="arithmatex">\((i,j)\)</span> and anchor <span class="arithmatex">\(k\)</span> is a tensor:</p>
+<div id="eq-yolo_output"></div>
+<div class="arithmatex">\[\hat{\mathbf{y}}_{i,j,k} = \left[ \hat{t}_x, \hat{t}_y, \hat{t}_w, \hat{t}_h, \hat{p}_\mathrm{obj}, \hat{p}_1, …, \hat{p}_C \right]\tag{10.13}\]</div>
+<p>where <span class="arithmatex">\((t_x, t_y)\)</span> are box centre offsets relative to cell, <span class="arithmatex">\((t_w, t_h)\)</span> are log-scale width/height relative to anchor, <span class="arithmatex">\(p_\mathrm{obj}\)</span> is objectness score, and <span class="arithmatex">\(p_c\)</span> are class probabilities. Decoded bounding box coordinates:</p>
+<div id="eq-yolo_bx"></div>
+<div id="eq-yolo_by"></div>
+<div id="eq-yolo_bw"></div>
+<div id="eq-yolo_bh"></div>
+<div class="arithmatex">\[\begin{align*}
+b_x &amp;= \sigma(\hat{t}_x) + c_x  \\
+b_y &amp;= \sigma(\hat{t}_y) + c_y  \\
+b_w &amp;= a_w \cdot e^{\hat{t}_w}  \\
+b_h &amp;= a_h \cdot e^{\hat{t}_h}
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\((c_x, c_y)\)</span> are grid cell offsets and <span class="arithmatex">\((a_w, a_h)\)</span> are anchor dimensions.</p>
+<p>The multi-task loss function:</p>
+<div id="eq-yolo_loss"></div>
+<div class="arithmatex">\[\mathcal{L} = \lambda_\mathrm{coord} \mathcal{L}_\mathrm{box} + \lambda_\mathrm{obj} \mathcal{L}_\mathrm{obj} + \lambda_\mathrm{cls} \mathcal{L}_\mathrm{cls}\tag{10.18}\]</div>
+<p>where <span class="arithmatex">\(\mathcal{L}_\mathrm{box}\)</span> is CIoU (Complete IoU) loss, <span class="arithmatex">\(\mathcal{L}_\mathrm{obj}\)</span> is binary cross-entropy on objectness, and <span class="arithmatex">\(\mathcal{L}_\mathrm{cls}\)</span> is cross-entropy on class probabilities. Mean Average Precision (mAP) at IoU threshold 0.5 (mAP@0.5) is the standard benchmark metric.</p>
+<p><strong>Representative performance on VisDrone dataset (small object detection):</strong> YOLOv8-nano: 18.4 mAP@0.5, 3.2 ms inference (Jetson Orin); YOLOv8-x: 36.2 mAP@0.5, 28 ms inference (Jetson Orin).</p>
+<h3 id="subsec-tracking"><span class="secnum">10.4.4</span> Multi-Object Tracking<a class="headerlink" href="#subsec-tracking" title="Permanent link">&para;</a></h3>
+<p><strong>SORT (Simple Online and Real-time Tracking)</strong> combines Kalman filter prediction with IoU-based Hungarian assignment. The Kalman state for each track is <span class="arithmatex">\(\mathbf{x} = [u, v, s, r, \dot{u}, \dot{v}, \dot{s}]^T\)</span> where <span class="arithmatex">\((u,v)\)</span> is box centre, <span class="arithmatex">\(s\)</span> is area, <span class="arithmatex">\(r = w/h\)</span> is aspect ratio (assumed constant). Prediction:</p>
+<div id="eq-kalman_predict"></div>
+<div class="arithmatex">\[\hat{\mathbf{x}}_k = \mathbf{F} \mathbf{x}_{k-1}, \quad \hat{\mathbf{P}}_k = \mathbf{F} \mathbf{P}_{k-1} \mathbf{F}^T + \mathbf{Q}\tag{10.19}\]</div>
+<p>Update with detection <span class="arithmatex">\(\mathbf{z}_k\)</span> (4-element bounding box vector):</p>
+<div id="eq-kalman_gain"></div>
+<div id="eq-kalman_update"></div>
+<div id="eq-kalman_cov"></div>
+<div class="arithmatex">\[\begin{align*}
+\mathbf{K}_k &amp;= \hat{\mathbf{P}}_k \mathbf{H}^T (\mathbf{H} \hat{\mathbf{P}}_k \mathbf{H}^T + \mathbf{R})^{-1}  \\
+\mathbf{x}_k &amp;= \hat{\mathbf{x}}_k + \mathbf{K}_k (\mathbf{z}_k - \mathbf{H}\hat{\mathbf{x}}_k)  \\
+\mathbf{P}_k &amp;= (\mathbf{I} - \mathbf{K}_k \mathbf{H}) \hat{\mathbf{P}}_k
+\end{align*}\]</div>
+<p>The Hungarian algorithm solves the minimum-cost bipartite matching between <span class="arithmatex">\(M\)</span> existing tracks and <span class="arithmatex">\(N\)</span> detections in <span class="arithmatex">\(O(\max(M,N)^3)\)</span> time. IoU is used as the cost (affinity) metric; tracks with IoU <span class="arithmatex">\(&lt;0.3\)</span> are rejected.</p>
+<p><strong>DeepSORT</strong> augments SORT with a CNN-based appearance descriptor (128-dimensional), using Mahalanobis distance for Kalman-gate filtering and cosine distance in appearance embedding space for track association, dramatically reducing ID switches in crowded scenes.</p>
+<h2 id="sec-slam"><span class="secnum">10.5</span> Simultaneous Localisation and Mapping (SLAM)<a class="headerlink" href="#sec-slam" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-orbslam3"><span class="secnum">10.5.1</span> Feature-Based Visual SLAM: ORB-SLAM3<a class="headerlink" href="#subsec-orbslam3" title="Permanent link">&para;</a></h3>
+<p>ORB-SLAM3 is the state-of-the-art monocular, stereo, and RGB-D visual SLAM system. Its architecture divides into three parallel threads:</p>
+<ol>
+<li>
+<p><strong>Tracking:</strong> Extracts ORB features; matches to local map; estimates camera pose using EPnP + RANSAC (Perspective-n-Point): <span id="eq-pnp"></span></p>
+<div class="arithmatex">\[\mathbf{T}_\mathrm{cw} = \arg\min_{\mathbf{T}} \sum_i \rho\!\left(\left\| \mathbf{p}_i - \pi\!\left(\mathbf{T} \mathbf{P}_i\right) \right\|^2\right)\tag{10.23}\]</div>
+<p>where <span class="arithmatex">\(\pi(\cdot)\)</span> is the camera projection, <span class="arithmatex">\(\rho(\cdot)\)</span> is a robust (Huber) loss.</p>
+</li>
+<li>
+<p><strong>Local mapping:</strong> Triangulates new map points from new keyframes; runs local Bundle Adjustment (BA) optimising a window of recent keyframes and their observed map points.</p>
+</li>
+<li>
+<p><strong>Loop closing:</strong> Detects revisited locations using DBoW2 (Bag-of-Words); performs global BA to correct accumulated drift.</p>
+</li>
+</ol>
+<p>Bundle Adjustment minimises the total reprojection error:</p>
+<div id="eq-bundle_adjustment"></div>
+<div class="arithmatex">\[E_\mathrm{BA} = \sum_{i \in \mathcal{K}} \sum_{j \in \mathcal{P}_i} \rho\!\left(\left\| \mathbf{p}_{ij} - \pi\!\left(\mathbf{T}_i \mathbf{P}_j\right) \right\|_\mathbf{\Sigma}^2\right)\tag{10.24}\]</div>
+<p>over all keyframes <span class="arithmatex">\(\mathcal{K}\)</span> and their observed map points <span class="arithmatex">\(\mathcal{P}_i\)</span>. Gauss-Newton or Levenberg-Marquardt solves this large sparse nonlinear least-squares problem; g2o and Ceres Solver are the standard back-ends.</p>
+<h3 id="subsec-lio_sam"><span class="secnum">10.5.2</span> LiDAR SLAM: LIO-SAM<a class="headerlink" href="#subsec-lio_sam" title="Permanent link">&para;</a></h3>
+<p>LIO-SAM (LiDAR-Inertial Odometry via Smoothing and Mapping) tightly couples LiDAR scan matching with IMU preintegration in a factor graph framework. The factor graph has four factor types:</p>
+<ul>
+<li>
+<p><strong>IMU preintegration factors:</strong> Integrate IMU measurements between keyframes into a compact preintegrated measurement <span class="arithmatex">\(\Delta\mathbf{R}, \Delta\mathbf{v}, \Delta\mathbf{p}\)</span> with associated covariance.</p>
+</li>
+<li>
+<p><strong>LiDAR odometry factors:</strong> Estimate relative pose between consecutive LiDAR scans using NDT (Normal Distribution Transform) or LOAM feature matching.</p>
+</li>
+<li>
+<p><strong>GPS factors:</strong> Absolute position constraints from RTK GPS.</p>
+</li>
+<li>
+<p><strong>Loop closure factors:</strong> Geometric verification of revisited locations using ICP.</p>
+</li>
+</ul>
+<p>The maximum-a-posteriori (MAP) estimate of the pose trajectory <span class="arithmatex">\(\mathcal{X} = \{T_0, T_1, …, T_n\}\)</span> is found by minimising:</p>
+<div id="eq-map_estimate"></div>
+<div class="arithmatex">\[\mathcal{X}^* = \arg\min_\mathcal{X} \sum_k \left\| \mathbf{r}_k(\mathcal{X}) \right\|_{\boldsymbol{\Sigma}_k^{-1}}^2\tag{10.25}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{r}_k\)</span> are residuals and <span class="arithmatex">\(\boldsymbol{\Sigma}_k\)</span> are covariance matrices for each factor. GTSAM (Georgia Tech Smoothing and Mapping) solves this using iSAM2 (incremental smoothing), which maintains a Bayes tree and updates only affected nodes on each new measurement.</p>
+<h3 id="subsec-vio"><span class="secnum">10.5.3</span> Visual-Inertial Odometry<a class="headerlink" href="#subsec-vio" title="Permanent link">&para;</a></h3>
+<p>VINS-Mono achieves metric-scale pose estimation from a monocular camera and IMU by exploiting the IMU for scale. The IMU preintegration between times <span class="arithmatex">\(t_i\)</span> and <span class="arithmatex">\(t_j\)</span> yields:</p>
+<div id="eq-imu_preint_pos"></div>
+<div class="arithmatex">\[\Delta\hat{\mathbf{p}}_{ij} = \iint_{t_i}^{t_j} \left(\mathbf{R}_\tau \mathbf{a}_\tau - \mathbf{g}\right) d\tau^2\tag{10.26}\]</div>
+<div id="eq-imu_preint_vel"></div>
+<div class="arithmatex">\[\Delta\hat{\mathbf{v}}_{ij} = \int_{t_i}^{t_j} \left(\mathbf{R}_\tau \mathbf{a}_\tau - \mathbf{g}\right) d\tau\tag{10.27}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{a}_\tau\)</span> is IMU accelerometer measurement (with bias subtracted) and <span class="arithmatex">\(\mathbf{g}\)</span> is gravity. The residual of the IMU factor:</p>
+<div id="eq-imu_residual"></div>
+<div class="arithmatex">\[\mathbf{r}_{\mathcal{B}_{ij}} = \begin{pmatrix} \mathbf{R}_i^T (\mathbf{p}_j - \mathbf{p}_i - \mathbf{v}_i \Delta t_{ij} - \frac{1}{2}\mathbf{g}\Delta t_{ij}^2) - \Delta\hat{\mathbf{p}}_{ij} \\ \mathbf{R}_i^T (\mathbf{v}_j - \mathbf{v}_i - \mathbf{g}\Delta t_{ij}) - \Delta\hat{\mathbf{v}}_{ij} \\ 2[\mathbf{q}_i^{-1} \otimes \mathbf{q}_j \otimes \Delta\hat{\mathbf{q}}_{ij}^{-1}]_{xyz} \end{pmatrix}\tag{10.28}\]</div>
+<p>is optimised jointly with visual reprojection residuals in a sliding window nonlinear optimiser.</p>
+<h2 id="sec-autonomy"><span class="secnum">10.6</span> Autonomy Levels and Decision Making<a class="headerlink" href="#sec-autonomy" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-autonomy_levels"><span class="secnum">10.6.1</span> Autonomy Level Frameworks<a class="headerlink" href="#subsec-autonomy_levels" title="Permanent link">&para;</a></h3>
+<p>STANAG 4586 defines ten levels of autonomy (LOA) for UAV human-machine interaction, from LOA 1 (remotely piloted) through LOA 10 (fully autonomous, no human in/on loop). The US Air Force Research Laboratory (AFRL) Autonomous Control Levels (ACL) provide a parallel ten-level hierarchy focused on control functions. For a full taxonomy, see Chapter 2.</p>
+<h3 id="subsec-bt"><span class="secnum">10.6.2</span> Behaviour Trees<a class="headerlink" href="#subsec-bt" title="Permanent link">&para;</a></h3>
+<p>Behaviour Trees (BTs) have emerged as the preferred architectural pattern for UAV mission logic, superseding hierarchical FSMs in most modern robotics systems (PX4 Navigator, Dronecode Mission BT, BT.cpp library). A BT is a rooted tree where:</p>
+<ul>
+<li>
+<p><strong>Control flow nodes:</strong> Sequence (runs children left-to-right, returns SUCCESS only if all succeed), Fallback/Selector (runs children left-to-right, returns SUCCESS on first child success), Parallel (runs all children simultaneously).</p>
+</li>
+<li>
+<p><strong>Execution nodes:</strong> Condition (evaluates a predicate, SUCCESS/FAILURE), Action (executes a task, returns RUNNING/SUCCESS/FAILURE).</p>
+</li>
+<li>
+<p><strong>Decorator nodes:</strong> Modify the return status or control flow of a child (Retry, Inverter, ForceSuccess).</p>
+</li>
+</ul>
+<p>The BT is ticked at a fixed rate (10–50 Hz). Each tick traverses the tree from root. The status propagation follows:</p>
+<div id="eq-bt_sequence"></div>
+<div class="arithmatex">\[\sigma_\mathrm{Sequence} = \begin{cases} \mathrm{SUCCESS} &amp; \text{if } \forall i: \sigma_i = \mathrm{SUCCESS} \\ \mathrm{FAILURE} &amp; \text{if } \exists i: \sigma_i = \mathrm{FAILURE} \\ \mathrm{RUNNING} &amp; \text{otherwise} \end{cases}\tag{10.29}\]</div>
+<p>The BT.cpp library (Davide Faconti, MIT licence) implements BTs with reactive event handling, blackboard memory, and XML tree loading, and is used in DJI, ArduPilot, and academic SLAM robots.</p>
+<h3 id="subsec-rl_control"><span class="secnum">10.6.3</span> Reinforcement Learning for Drone Control<a class="headerlink" href="#subsec-rl_control" title="Permanent link">&para;</a></h3>
+<p>Reinforcement Learning (RL) trains a control policy <span class="arithmatex">\(\pi_\theta(\mathbf{a}|\mathbf{s})\)</span> (parameterised by neural network weights <span class="arithmatex">\(\theta\)</span>) to maximise cumulative discounted reward:</p>
+<div id="eq-rl_objective"></div>
+<div class="arithmatex">\[J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta}\!\left[\sum_{t=0}^{T} \gamma^t r(\mathbf{s}_t, \mathbf{a}_t)\right]\tag{10.30}\]</div>
+<p>where <span class="arithmatex">\(\gamma \in (0,1)\)</span> is the discount factor and <span class="arithmatex">\(r(\mathbf{s}_t, \mathbf{a}_t)\)</span> is the reward at step <span class="arithmatex">\(t\)</span>. Proximal Policy Optimisation (PPO) updates the policy using a clipped surrogate objective to limit step size:</p>
+<div id="eq-ppo_loss"></div>
+<div class="arithmatex">\[\mathcal{L}^\mathrm{PPO}(\theta) = \mathbb{E}_t\!\left[\min\!\left(r_t(\theta) \hat{A}_t,\; \mathrm{clip}(r_t(\theta), 1-\epsilon, 1+\epsilon) \hat{A}_t\right)\right]\tag{10.31}\]</div>
+<p>where <span class="arithmatex">\(r_t(\theta) = \pi_\theta(\mathbf{a}_t|\mathbf{s}_t) / \pi_{\theta_\mathrm{old}}(\mathbf{a}_t|\mathbf{s}_t)\)</span> is the probability ratio and <span class="arithmatex">\(\hat{A}_t\)</span> is the generalised advantage estimate. PPO is used for quadrotor aggressive manoeuvre learning (Kaufmann et al., 2023 — RL policy exceeding human champion lap times in drone racing), agile perching, and wind-disturbance rejection.</p>
+<p>The reward shaping for UAV navigation typically includes: <span id="eq-reward_shaping"></span></p>
+<div class="arithmatex">\[r_t = w_\mathrm{dist}(-\|\mathbf{p}_t - \mathbf{p}_\mathrm{goal}\|) + w_\mathrm{coll}(-c_t) + w_\mathrm{vel}(-\|\boldsymbol{\omega}_t\|) + w_\mathrm{prog}(d_\mathrm{progress})\tag{10.32}\]</div>
+<p>where <span class="arithmatex">\(c_t = 1\)</span> if collision occurred, <span class="arithmatex">\(\boldsymbol{\omega}_t\)</span> is angular velocity (penalising aggressive attitude), and <span class="arithmatex">\(d_\mathrm{progress}\)</span> is progress toward goal (sparse reward augmentation).</p>
+<h2 id="sec-ml_uavs"><span class="secnum">10.7</span> Machine Learning for UAV Applications<a class="headerlink" href="#sec-ml_uavs" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-nn_architectures"><span class="secnum">10.7.1</span> Neural Network Architectures for Onboard Inference<a class="headerlink" href="#subsec-nn_architectures" title="Permanent link">&para;</a></h3>
+<p>Airborne ML inference must balance accuracy against strict latency (<span class="arithmatex">\(&lt;50\)</span> ms for detection) and power (<span class="arithmatex">\(&lt;15\)</span> W) constraints. The dominant architecture families:</p>
+<p><strong>MobileNetV3</strong> (Howard et al., 2019): depthwise separable convolutions reduce FLOPs by a factor <span class="arithmatex">\(\approx 1/(k^2)\)</span> vs standard convolutions for kernel size <span class="arithmatex">\(k\)</span>. For a <span class="arithmatex">\(3\times3\)</span> depthwise separable conv:</p>
+<div id="eq-mobilenet_flops"></div>
+<div class="arithmatex">\[\frac{\mathrm{FLOPs}_\mathrm{DWS}}{\mathrm{FLOPs}_\mathrm{standard}} = \frac{1}{N} + \frac{1}{k^2} \approx \frac{1}{9} \text{ for } k=3\tag{10.33}\]</div>
+<p>where <span class="arithmatex">\(N\)</span> is the number of output channels (typically 256–512). MobileNetV3-Small achieves 67.4% top-1 accuracy on ImageNet at 56 ms on Cortex-A72, 0.60 B FLOPs.</p>
+<p><strong>EfficientNet</strong> scales width, depth, and resolution with compound coefficient <span class="arithmatex">\(\phi\)</span>: <span id="eq-efficientnet_scaling"></span></p>
+<div class="arithmatex">\[\text{width} = \alpha^\phi, \quad \text{depth} = \beta^\phi, \quad \text{resolution} = \gamma^\phi, \quad \alpha\beta^2\gamma^2 \approx 2\tag{10.34}\]</div>
+<p><strong>Vision Transformer (ViT) and DeiT:</strong> For larger onboard processors (Jetson Orin), transformer-based backbones provide state-of-the-art accuracy. The self-attention operation for sequence length <span class="arithmatex">\(N\)</span> has <span class="arithmatex">\(O(N^2)\)</span> complexity, motivating efficient variants (Swin Transformer, DETR with spatial reduction).</p>
+<h3 id="subsec-edge_ai"><span class="secnum">10.7.2</span> Edge AI Hardware for UAVs<a class="headerlink" href="#subsec-edge_ai" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-edge_ai">Table 10.2</a> compares the principal edge inference accelerators used in UAV companion computers.</p>
+<div class="tbl" id="tab-edge_ai">
+<div class="tbl-caption"><strong>Table 10.2.</strong> Edge AI Hardware for UAV Onboard Inference (2024)</div>
+<div class="tbl-scroll">
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Module</strong></td>
+<td style="text-align: left;"><strong>Architecture</strong></td>
+<td style="text-align: right;"><strong>TOPS</strong></td>
+<td style="text-align: right;"><strong>Power</strong></td>
+<td style="text-align: right;"><strong>Mass</strong></td>
+<td style="text-align: right;"><strong>INT8 BW</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>(W)</strong></td>
+<td style="text-align: right;"><strong>(g)</strong></td>
+<td style="text-align: right;">(GB/s)</td>
+</tr>
+<tr>
+<td style="text-align: left;">NVIDIA Jetson Nano</td>
+<td style="text-align: left;">128-core Maxwell + 4-core A57</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">5–10</td>
+<td style="text-align: right;">140</td>
+<td style="text-align: right;">25.6</td>
+</tr>
+<tr>
+<td style="text-align: left;">NVIDIA Jetson Xavier NX</td>
+<td style="text-align: left;">384-core Volta + 6-core Carmel</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">10–20</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">51.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">NVIDIA Jetson Orin NX</td>
+<td style="text-align: left;">1024-core Ampere + 8-core Cortex-A78</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">10–25</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">102.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">NVIDIA Jetson AGX Orin</td>
+<td style="text-align: left;">2048-core Ampere + DLA <span class="math inline">\(\times2\)</span></td>
+<td style="text-align: right;">275</td>
+<td style="text-align: right;">15–60</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">204.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">Google Coral USB</td>
+<td style="text-align: left;">Edge TPU (8-bit only)</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Intel Myriad X</td>
+<td style="text-align: left;">16<span class="math inline">\(\times\)</span> SHAVE + NN engine</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">1–4</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hailo-8</td>
+<td style="text-align: left;">Dataflow processor</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hailo-8L</td>
+<td style="text-align: left;">Dataflow processor</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Qualcomm QCS8550</td>
+<td style="text-align: left;">Hexagon NPU</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">5–15</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="subsec-model_compression"><span class="secnum">10.7.3</span> Model Compression for Deployment<a class="headerlink" href="#subsec-model_compression" title="Permanent link">&para;</a></h3>
+<p><strong>Post-training quantisation (PTQ):</strong> Converts FP32 weights and activations to INT8 using a calibration dataset. Weight quantisation error:</p>
+<div id="eq-quantisation_step"></div>
+<div class="arithmatex">\[\Delta w = \frac{w_\mathrm{max} - w_\mathrm{min}}{2^b - 1}\tag{10.35}\]</div>
+<p>where <span class="arithmatex">\(b\)</span> is the bit-width. For INT8 (<span class="arithmatex">\(b=8\)</span>), the step size <span class="arithmatex">\(\Delta w\)</span> introduces quantisation noise with variance <span class="arithmatex">\(\sigma^2 \approx \Delta w^2/12\)</span>. Quantisation-aware training (QAT) simulates INT8 quantisation during training (straight-through estimator for gradients), recovering 1–2% accuracy vs PTQ.</p>
+<p><strong>Structured pruning:</strong> Removes entire convolutional filters with lowest <span class="arithmatex">\(L_1\)</span>-norm. After pruning fraction <span class="arithmatex">\(p\)</span> of filters in a layer, inference FLOPs reduce by approximately <span class="arithmatex">\(p\)</span> for that layer. Fine-tuning after pruning recovers accuracy:</p>
+<div id="eq-pruning_loss"></div>
+<div class="arithmatex">\[\mathcal{L}_\mathrm{prune} = \mathcal{L}_\mathrm{task} + \lambda \sum_k \|\mathbf{W}_k\|_1\tag{10.36}\]</div>
+<p><strong>Knowledge Distillation:</strong> A large teacher model <span class="arithmatex">\(f_T\)</span> supervises a small student model <span class="arithmatex">\(f_S\)</span> using soft targets (softened logits):</p>
+<div id="eq-knowledge_distillation"></div>
+<div class="arithmatex">\[\mathcal{L}_\mathrm{KD} = \alpha \mathcal{L}_\mathrm{CE}(\mathbf{y}, \hat{\mathbf{y}}_S) + (1-\alpha) \tau^2 \cdot \mathcal{L}_\mathrm{CE}\!\left(\mathrm{softmax}\!\left(\frac{\mathbf{z}_T}{\tau}\right), \mathrm{softmax}\!\left(\frac{\mathbf{z}_S}{\tau}\right)\right)\tag{10.37}\]</div>
+<p>where <span class="arithmatex">\(\tau\)</span> is the temperature (typical value 4–10), <span class="arithmatex">\(\mathbf{z}\)</span> are logits before softmax, and <span class="arithmatex">\(\alpha \in [0,1]\)</span> balances hard and soft targets. Distillation typically achieves 80% of teacher accuracy with 10<span class="arithmatex">\(\times\)</span> fewer parameters.</p>
+<h3 id="subsec-federated"><span class="secnum">10.7.4</span> Federated Learning for Swarm Applications<a class="headerlink" href="#subsec-federated" title="Permanent link">&para;</a></h3>
+<p>Federated learning (FL) enables distributed model training across a UAV swarm without sharing raw sensor data, addressing both bandwidth and privacy constraints. In the FedAvg algorithm, each drone <span class="arithmatex">\(i\)</span> trains a local model <span class="arithmatex">\(\theta_i\)</span> on local data <span class="arithmatex">\(\mathcal{D}_i\)</span> for <span class="arithmatex">\(E\)</span> local epochs, then sends only model weights (not data) to an aggregator:</p>
+<div id="eq-fedavg"></div>
+<div class="arithmatex">\[\theta_\mathrm{global} = \sum_{i=1}^{K} \frac{|\mathcal{D}_i|}{\sum_j |\mathcal{D}_j|} \theta_i\tag{10.38}\]</div>
+<p>The aggregated global model is broadcast back to all drones. Challenges for airborne FL: non-IID data distributions (each drone observes different terrain), communication link dropouts, and heterogeneous compute capability across swarm nodes.</p>
+<h2 id="sec-swarm"><span class="secnum">10.8</span> Swarm Intelligence<a class="headerlink" href="#sec-swarm" title="Permanent link">&para;</a></h2>
+<p>A full treatment of swarm systems is provided in Chapter 11. The following summarises the key algorithms.</p>
+<h3 id="subsec-reynolds"><span class="secnum">10.8.1</span> Reynolds’ Flocking Rules<a class="headerlink" href="#subsec-reynolds" title="Permanent link">&para;</a></h3>
+<p>Craig Reynolds’ three rules for emergent flocking behaviour in a continuous agent:</p>
+<div id="eq-reynolds_sep"></div>
+<div id="eq-reynolds_ali"></div>
+<div id="eq-reynolds_coh"></div>
+<div class="arithmatex">\[\begin{align*}
+\mathbf{v}_\mathrm{sep,i} &amp;= -\sum_{j \in \mathcal{N}_i, d_{ij}&lt;r_s} \frac{\mathbf{p}_i - \mathbf{p}_j}{\|\mathbf{p}_i - \mathbf{p}_j\|^2}  \\
+\mathbf{v}_\mathrm{ali,i} &amp;= \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{v}_j - \mathbf{v}_i  \\
+\mathbf{v}_\mathrm{coh,i} &amp;= \frac{1}{|\mathcal{N}_i|} \sum_{j \in \mathcal{N}_i} \mathbf{p}_j - \mathbf{p}_i
+\end{align*}\]</div>
+<p>The composite velocity command: <span class="arithmatex">\(\mathbf{v}_i = w_s \mathbf{v}_\mathrm{sep,i} + w_a \mathbf{v}_\mathrm{ali,i} + w_c \mathbf{v}_\mathrm{coh,i}\)</span>.</p>
+<h3 id="subsec-consensus"><span class="secnum">10.8.2</span> Consensus and Task Allocation<a class="headerlink" href="#subsec-consensus" title="Permanent link">&para;</a></h3>
+<p>Average consensus converges the states of all agents to the group mean. The Laplacian consensus protocol for agent <span class="arithmatex">\(i\)</span> with state <span class="arithmatex">\(x_i\)</span>:</p>
+<div id="eq-laplacian_consensus"></div>
+<div class="arithmatex">\[\dot{x}_i = -\sum_{j \in \mathcal{N}_i} a_{ij}(x_i - x_j)\tag{10.42}\]</div>
+<p>where <span class="arithmatex">\(a_{ij}\)</span> is the weight of edge <span class="arithmatex">\((i,j)\)</span> in the communication graph. In matrix form: <span class="arithmatex">\(\dot{\mathbf{x}} = -\mathbf{L}\mathbf{x}\)</span>, where <span class="arithmatex">\(\mathbf{L}\)</span> is the graph Laplacian. Convergence rate is determined by <span class="arithmatex">\(\lambda_2(\mathbf{L})\)</span> (the algebraic connectivity or Fiedler eigenvalue) — larger <span class="arithmatex">\(\lambda_2\)</span> gives faster consensus.</p>
+<p>The Consensus-Based Bundle Algorithm (CBBA) for multi-UAV task allocation iterates between bundle construction (greedy addition of highest-value task to each agent’s bundle) and consensus (resolving conflicts through bid comparison), converging to a conflict-free assignment in at most <span class="arithmatex">\(n-1\)</span> communication rounds for <span class="arithmatex">\(n\)</span> agents.</p>
+<h2 id="sec-simulation"><span class="secnum">10.9</span> Simulation Environments<a class="headerlink" href="#sec-simulation" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-gazebo"><span class="secnum">10.9.1</span> Gazebo and ROS2 Integration<a class="headerlink" href="#subsec-gazebo" title="Permanent link">&para;</a></h3>
+<p>Gazebo (now gz-sim, Ignition) is an open-source 3D robotics simulator using ODE/Bullet/DART physics engines. Key capabilities for UAV simulation:</p>
+<ul>
+<li>
+<p>Aerodynamics plugin: lift, drag, angular damping forces on surfaces</p>
+</li>
+<li>
+<p>IMU, GPS, barometer, camera, LiDAR sensor plugins with configurable noise models</p>
+</li>
+<li>
+<p>ROS2-gz bridge: bidirectional topic bridging between Gazebo topics and ROS2</p>
+</li>
+<li>
+<p>Multi-vehicle support: simulate swarms of 10–100 vehicles (performance-limited)</p>
+</li>
+</ul>
+<p>Sensor noise models: Gaussian additive noise on IMU (<span class="arithmatex">\(\sigma_\mathrm{acc} = 0.01\)</span> m/s<span class="arithmatex">\(^2\)</span>, <span class="arithmatex">\(\sigma_\mathrm{gyro} = 0.001\)</span> rad/s in SITL defaults). Real-time factor (RTF) <span class="arithmatex">\(= \mathrm{sim\ time} / \mathrm{wall\ time}\)</span>; for a quadrotor at 400 Hz control rate, RTF <span class="arithmatex">\(\approx 1.0\)</span> on a modern CPU.</p>
+<h3 id="subsec-airsim"><span class="secnum">10.9.2</span> Microsoft AirSim and Unreal Engine<a class="headerlink" href="#subsec-airsim" title="Permanent link">&para;</a></h3>
+<p>AirSim (Aerial Informatics and Robotics Simulation, Microsoft Research) renders photorealistic environments via Unreal Engine 4/5, providing high-fidelity camera, depth, and IMU data. Key features:</p>
+<ul>
+<li>
+<p>Multirotor and fixed-wing vehicle physics (simplified aerodynamics, not FDM-accurate)</p>
+</li>
+<li>
+<p>Python/C++ API: <code>client.moveToPositionAsync()</code>, <code>client.simGetImages()</code></p>
+</li>
+<li>
+<p>Domain randomisation support for training ML models transferable to real hardware</p>
+</li>
+<li>
+<p>Multi-rotor wind and turbulence injection</p>
+</li>
+</ul>
+<p>The sim-to-real (sim2real) transfer gap is addressed through domain randomisation of visual appearance, lighting, sensor noise parameters, and vehicle dynamics within SITL/AirSim, training models robust to distributional shift.</p>
+<h3 id="subsec-digital_twin"><span class="secnum">10.9.3</span> Digital Twin Architecture<a class="headerlink" href="#subsec-digital_twin" title="Permanent link">&para;</a></h3>
+<p>A digital twin of a UAV synchronises a real-time simulation model with telemetry from the physical aircraft, enabling predictive health monitoring and in-flight mission replanning. The synchronisation residual:</p>
+<div id="eq-digital_twin_residual"></div>
+<div class="arithmatex">\[\boldsymbol{\varepsilon}_\mathrm{twin}(t) = \mathbf{x}_\mathrm{physical}(t) - \mathbf{x}_\mathrm{model}(t)\tag{10.43}\]</div>
+<p>is used to update model parameters (e.g., estimated battery degradation, motor wear coefficient) via a recursive least-squares or UKF parameter estimator. When <span class="arithmatex">\(\|\boldsymbol{\varepsilon}_\mathrm{twin}\| &gt; \epsilon_\mathrm{threshold}\)</span>, a fault is flagged and adaptive replanning initiated.</p>
+<h2 id="sec-cybersecurity"><span class="secnum">10.10</span> Cybersecurity for UAS Software<a class="headerlink" href="#sec-cybersecurity" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-attack_surface"><span class="secnum">10.10.1</span> UAS Attack Surface<a class="headerlink" href="#subsec-attack_surface" title="Permanent link">&para;</a></h3>
+<p>The UAS communication and computation architecture presents multiple attack surfaces:</p>
+<ul>
+<li>
+<p><strong>RC link (2.4 GHz/5.8 GHz):</strong> DSM2/DSMX, SBUS, CRSF — unencrypted in legacy systems; vulnerable to replay and injection.</p>
+</li>
+<li>
+<p><strong>Telemetry (900 MHz/2.4 GHz):</strong> MAVLink typically transmitted in plaintext; trivially interceptable with SDR.</p>
+</li>
+<li>
+<p><strong>GPS:</strong> Civil GPS signals (L1 C/A) are unauthenticated; vulnerable to spoofing (false GPS signal injection); jamming with <span class="arithmatex">\(&lt;1\)</span> W within 10 km.</p>
+</li>
+<li>
+<p><strong>GCS software:</strong> Mission Planner, QGC have had SQL injection and XML parsing vulnerabilities; dependency supply-chain risks.</p>
+</li>
+<li>
+<p><strong>Onboard computer:</strong> If running embedded Linux, exposed to network-layer attacks via Ethernet or WiFi; privilege escalation, rootkit injection.</p>
+</li>
+<li>
+<p><strong>Payload data link:</strong> STANAG 4609/7023 downlinks often unencrypted in legacy systems (Global Hawk early variants had unencrypted video feeds intercepted by insurgents in Iraq, 2008).</p>
+</li>
+</ul>
+<h3 id="subsec-secure_boot"><span class="secnum">10.10.2</span> Secure Boot and Code Signing<a class="headerlink" href="#subsec-secure_boot" title="Permanent link">&para;</a></h3>
+<p>Secure boot ensures only authorised firmware executes on the flight controller. The chain of trust:</p>
+<ol>
+<li>
+<p><strong>ROM bootloader</strong> (burned into silicon, immutable): verifies signature of Stage 1 bootloader using manufacturer public key in OTP fuses.</p>
+</li>
+<li>
+<p><strong>Stage 1 bootloader:</strong> verifies signature of Stage 2 / RTOS image.</p>
+</li>
+<li>
+<p><strong>RTOS:</strong> verifies signatures of application modules before loading.</p>
+</li>
+</ol>
+<p>ECDSA-256 (elliptic curve digital signature algorithm over P-256) provides 128-bit security with 32-byte signatures and is computationally feasible on Cortex-M7 (<span class="arithmatex">\(&lt;1\)</span> ms verify time). The signature verification:</p>
+<div id="eq-ecdsa_verify"></div>
+<div class="arithmatex">\[\mathrm{Verify}(m, r, s, Q) : \text{check } (r, s) \text{ is valid ECDSA signature of } H(m) \text{ under public key } Q\tag{10.44}\]</div>
+<p>Firmware update packages are signed by the OEM’s private key; any tampered or unofficial firmware is rejected at boot.</p>
+<h3 id="subsec-gps_spoofing"><span class="secnum">10.10.3</span> GPS Spoofing Detection<a class="headerlink" href="#subsec-gps_spoofing" title="Permanent link">&para;</a></h3>
+<p>GPS spoofing injects counterfeit GPS signals to mislead the receiver’s position solution. Detection methods:</p>
+<ul>
+<li>
+<p><strong>Receiver Autonomous Integrity Monitoring (RAIM):</strong> Cross-checks pseudo-range measurements across redundant satellites; detects gross errors (<span class="arithmatex">\(&gt;50\)</span> m) but not sophisticated spoofing.</p>
+</li>
+<li>
+<p><strong>IMU/GPS consistency check:</strong> The INS-propagated position <span class="arithmatex">\(\hat{\mathbf{p}}_\mathrm{INS}\)</span> diverges from the GPS position <span class="arithmatex">\(\mathbf{p}_\mathrm{GPS}\)</span> when GPS is spoofed (IMU drift rate <span class="arithmatex">\(&lt;1\)</span> m/min for tactical IMU). The Mahalanobis distance:</p>
+</li>
+</ul>
+<div id="eq-mahalanobis"></div>
+<div class="arithmatex">\[d_M = \sqrt{(\mathbf{p}_\mathrm{GPS} - \hat{\mathbf{p}}_\mathrm{INS})^T \boldsymbol{\Sigma}_\mathrm{INS}^{-1} (\mathbf{p}_\mathrm{GPS} - \hat{\mathbf{p}}_\mathrm{INS})}\tag{10.45}\]</div>
+<p>A threshold <span class="arithmatex">\(d_M &gt; \chi^2_{0.95}(3)\)</span> (chi-squared with 3 DOF at 95% confidence, <span class="arithmatex">\(\approx 7.81\)</span>) triggers a spoofing alert.</p>
+<ul>
+<li>
+<p><strong>Multi-antenna carrier phase monitoring:</strong> Sudden changes in carrier phase differences between closely-spaced antennas indicate a spoofed signal.</p>
+</li>
+<li>
+<p><strong>Signal power monitoring:</strong> A spoofed signal typically has higher power than genuine satellite signals, detectable as anomalous AGC (automatic gain control) shift.</p>
+</li>
+</ul>
+<h3 id="subsec-mavlink_security"><span class="secnum">10.10.4</span> MAVLink Protocol Security<a class="headerlink" href="#subsec-mavlink_security" title="Permanent link">&para;</a></h3>
+<p>MAVLink 2 introduced optional signing (authentication) using a shared 48-bit link ID and 64-bit timestamp. The HMAC-SHA256 truncated to 48 bits is appended to each message:</p>
+<div id="eq-mavlink_sign"></div>
+<div class="arithmatex">\[\mathrm{signature} = \mathrm{HMAC\text{-}SHA256}_\mathrm{key}(\mathrm{header} \| \mathrm{payload} \| \mathrm{link\_id} \| \mathrm{timestamp})[0:5]\tag{10.46}\]</div>
+<p>Replay attacks are mitigated by the monotonically increasing 48-bit timestamp; messages with timestamp below the highest received value are rejected. However, signing is optional and rarely enabled in practice for ground-to-UAV links due to latency overhead. Encrypted tunnelling (TLS over TCP, or WireGuard VPN) is the recommended approach for mission-critical GCS links.</p>
+<h2 id="sec-certification"><span class="secnum">10.11</span> Software Certification and Airworthiness<a class="headerlink" href="#sec-certification" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-do178c"><span class="secnum">10.11.1</span> DO-178C Software Assurance<a class="headerlink" href="#subsec-do178c" title="Permanent link">&para;</a></h3>
+<p>DO-178C (Software Considerations in Airborne Systems and Equipment Certification) is the FAA/EASA-accepted means of compliance for airborne software. It defines five software levels (Design Assurance Levels, DAL) based on the severity of failure conditions:</p>
+<div class="tbl" id="tab-do178c">
+<div class="tbl-caption"><strong>Table 10.3.</strong> DO-178C Software Levels and Requirements</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Level</strong></th>
+<th style="text-align: left;"><strong>Failure Condition</strong></th>
+<th style="text-align: left;"><strong>Probability</strong></th>
+<th style="text-align: left;"><strong>Key Requirements</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">Catastrophic</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;10^{-9}\)</span>/hr</td>
+<td style="text-align: left;">Full structural coverage (MC/DC); independence between development and verification; formal methods supplement</td>
+</tr>
+<tr>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">Hazardous</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;10^{-7}\)</span>/hr</td>
+<td style="text-align: left;">Decision and condition coverage; independent review of all artefacts</td>
+</tr>
+<tr>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">Major</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;10^{-5}\)</span>/hr</td>
+<td style="text-align: left;">Statement and decision coverage; software verification procedures</td>
+</tr>
+<tr>
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">Minor</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;10^{-3}\)</span>/hr</td>
+<td style="text-align: left;">Independence at system level; limited software review</td>
+</tr>
+<tr>
+<td style="text-align: left;">E</td>
+<td style="text-align: left;">No Effect</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">No requirements (unrelated to safety)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The DO-178C lifecycle generates the following mandatory artefacts:</p>
+<ul>
+<li>
+<p><strong>PSAC</strong> (Plan for Software Aspects of Certification)</p>
+</li>
+<li>
+<p><strong>SDP/SVP/SCMP/SQAP</strong> (Software Development, Verification, Configuration Management, Quality Assurance Plans)</p>
+</li>
+<li>
+<p><strong>SRS/SDS</strong> (Software Requirements/Design Standards)</p>
+</li>
+<li>
+<p><strong>Source code</strong> with traceability from requirements through design to code to test cases</p>
+</li>
+<li>
+<p><strong>Test cases and procedures</strong> with structural coverage evidence (gcov/bullseye for statement coverage; MC/DC requires specialised tools: LDRA, VectorCAST, PRQA QA-C)</p>
+</li>
+</ul>
+<p><strong>Modified Condition/Decision Coverage (MC/DC):</strong> Each condition in a Boolean expression must independently affect the expression outcome. For an expression with <span class="arithmatex">\(N\)</span> conditions, MC/DC requires at minimum <span class="arithmatex">\(N+1\)</span> test cases (vs <span class="arithmatex">\(2^N\)</span> for full truth table coverage). This makes Level A certification tractable for large codebases.</p>
+<h3 id="subsec-do254"><span class="secnum">10.11.2</span> DO-254 Hardware Assurance<a class="headerlink" href="#subsec-do254" title="Permanent link">&para;</a></h3>
+<p>DO-254 (Design Assurance Guidance for Airborne Electronic Hardware) applies the same DAL hierarchy to FPGAs, ASICs, and PCBs. For a Level A FPGA (e.g., an FPGA-based flight control computer), the following are required:</p>
+<ul>
+<li>
+<p>Formal verification of HDL logic (model checking with Cadence JasperGold)</p>
+</li>
+<li>
+<p>Exhaustive gate-level simulation with fault injection</p>
+</li>
+<li>
+<p>Traceability from hardware requirements through RTL to netlist to implementation</p>
+</li>
+<li>
+<p>Environmental stress testing (RTCA DO-160G: temperature, vibration, humidity, EMI)</p>
+</li>
+</ul>
+<h3 id="subsec-easa_sora"><span class="secnum">10.11.3</span> EASA SORA and SAIL Levels<a class="headerlink" href="#subsec-easa_sora" title="Permanent link">&para;</a></h3>
+<p>EASA’s Specific Operations Risk Assessment (SORA) framework quantifies UAS operation risk using a Safety Risk Matrix (SRM) combining Air Risk Class (ARC) and Ground Risk Class (GRC). The resulting SAIL (Specific Assurance and Integrity Level, 1–6) determines the set of Operational Safety Objectives (OSOs) required:</p>
+<div id="eq-sail"></div>
+<div class="arithmatex">\[\mathrm{SAIL} = f(\mathrm{GRC}_\mathrm{final}, \mathrm{ARC}_\mathrm{residual})\tag{10.47}\]</div>
+<p>SAIL VI (highest) requires robust command and control link (TLOS7), detect-and-avoid capability meeting ASTM F3442, and DAL B or higher for safety-critical software — effectively demanding near-DO-178C compliance for commercial BVLOS operations over populated areas.</p>
+<h3 id="subsec-oss_cert"><span class="secnum">10.11.4</span> Open-Source Autopilots in Certified Applications<a class="headerlink" href="#subsec-oss_cert" title="Permanent link">&para;</a></h3>
+<p>Using ArduPilot or PX4 in certified applications presents specific challenges:</p>
+<ul>
+<li>
+<p><strong>Traceability:</strong> Open-source codebases typically lack requirements-to-code-to-test traceability artefacts required by DO-178C. Third-party vendors (Dronecode Foundation partners, Auterion) have developed proprietary certified wrappers.</p>
+</li>
+<li>
+<p><strong>Configuration management:</strong> Git-based VCS is acceptable; specific hash-pinned releases must be documented; modifications require re-regression testing.</p>
+</li>
+<li>
+<p><strong>Tool qualification:</strong> GCC compiler must be qualified (DO-178C tool qualification or code inspection to verify absence of compiler-introduced errors). LLVM/Clang has published tool qualification artefacts.</p>
+</li>
+<li>
+<p><strong>Military use:</strong> Many national defence authorities accept STANAG 4671 (UAV airworthiness requirements) rather than full DO-178C, with less stringent MC/DC coverage requirements at lower consequence levels.</p>
+</li>
+</ul>
+<h2 id="sec-sw_diagrams"><span class="secnum">10.12</span> Software Architecture Block Diagrams<a class="headerlink" href="#sec-sw_diagrams" title="Permanent link">&para;</a></h2>
+<figure class="fig fig-diagram" id="fig-sw_stack">
+<img class="tikz" src="img/tikz-d049d4f2f98a.svg" alt="ArduPilot / PX4 software stack architecture showing five layers: hardware, hardware abstraction layer (HAL), sensor/control libraries, vehicle-specific code, and mission/GCS interface. The uORB…" loading="lazy" width="372" height="214">
+<figcaption><strong>Figure 10.1.</strong> ArduPilot / PX4 software stack architecture showing five layers: hardware, hardware abstraction layer (HAL), sensor/control libraries, vehicle-specific code, and mission/GCS interface. The uORB publish-subscribe middleware in PX4 replaces the direct function call structure shown here for ArduPilot.</figcaption>
+</figure>
+
+<figure class="fig fig-diagram" id="fig-yolo_pipeline">
+<img class="tikz" src="img/tikz-0055139f0acf.svg" alt="YOLOv8 object detection inference pipeline for UAV onboard deployment. The model is quantised to INT8 and compiled to TensorRT for deployment on the Jetson Orin NPU. Total inference latency is…" loading="lazy" width="432" height="236">
+<figcaption><strong>Figure 10.2.</strong> YOLOv8 object detection inference pipeline for UAV onboard deployment. The model is quantised to INT8 and compiled to TensorRT for deployment on the Jetson Orin NPU. Total inference latency is approximately 20 ms for 640<span class="math inline">\(\times\)</span>640 input, meeting the 50 ms target for real-time detection.</figcaption>
+</figure>
+
+<h2 id="sec-slam_comparison"><span class="secnum">10.13</span> SLAM and State Estimation Algorithm Comparison<a class="headerlink" href="#sec-slam_comparison" title="Permanent link">&para;</a></h2>
+<p><a href="#tab-slam_comparison">Table 10.4</a> provides a quantitative comparison of the leading open-source SLAM and visual-inertial odometry systems evaluated for UAV deployment, assessed on the EuRoC MAV benchmark dataset (ASL ETH Zurich, sequences V1_01 to MH_05).</p>
+<div class="tbl" id="tab-slam_comparison">
+<div class="tbl-caption"><strong>Table 10.4.</strong> SLAM / VIO Algorithm Comparison for UAV Deployment (EuRoC MAV Benchmark)</div>
+<div class="tbl-scroll">
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>System</strong></td>
+<td style="text-align: left;"><strong>Sensor</strong></td>
+<td style="text-align: left;"><strong>Method</strong></td>
+<td style="text-align: left;"><strong>RMSE</strong></td>
+<td style="text-align: right;"><strong>CPU</strong></td>
+<td style="text-align: right;"><strong>Memory</strong></td>
+<td style="text-align: left;"><strong>Licence</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;"><strong>(cm)</strong></td>
+<td style="text-align: right;"><strong>(cores)</strong></td>
+<td style="text-align: right;"><strong>(MB)</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">ORB-SLAM3 (mono-inertial)</td>
+<td style="text-align: left;">Mono + IMU</td>
+<td style="text-align: left;">Feature BA</td>
+<td style="text-align: left;">3.5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">180</td>
+<td style="text-align: left;">GPLv3</td>
+</tr>
+<tr>
+<td style="text-align: left;">ORB-SLAM3 (stereo-inertial)</td>
+<td style="text-align: left;">Stereo + IMU</td>
+<td style="text-align: left;">Feature BA</td>
+<td style="text-align: left;">1.8</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">220</td>
+<td style="text-align: left;">GPLv3</td>
+</tr>
+<tr>
+<td style="text-align: left;">VINS-Mono</td>
+<td style="text-align: left;">Mono + IMU</td>
+<td style="text-align: left;">Sliding window NLS</td>
+<td style="text-align: left;">5.1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">120</td>
+<td style="text-align: left;">GPLv3</td>
+</tr>
+<tr>
+<td style="text-align: left;">VINS-Fusion (stereo)</td>
+<td style="text-align: left;">Stereo + IMU</td>
+<td style="text-align: left;">Sliding window NLS</td>
+<td style="text-align: left;">2.3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: left;">GPLv3</td>
+</tr>
+<tr>
+<td style="text-align: left;">MSCKF (EKF-based)</td>
+<td style="text-align: left;">Stereo + IMU</td>
+<td style="text-align: left;">Multi-state EKF</td>
+<td style="text-align: left;">6.8</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: left;">BSD</td>
+</tr>
+<tr>
+<td style="text-align: left;">OpenVINS</td>
+<td style="text-align: left;">Mono/Stereo + IMU</td>
+<td style="text-align: left;">Factor graph</td>
+<td style="text-align: left;">3.9</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: left;">GPLv3</td>
+</tr>
+<tr>
+<td style="text-align: left;">LIO-SAM (LiDAR+IMU)</td>
+<td style="text-align: left;">LiDAR + IMU</td>
+<td style="text-align: left;">Factor graph</td>
+<td style="text-align: left;">1.2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">350</td>
+<td style="text-align: left;">BSD</td>
+</tr>
+<tr>
+<td style="text-align: left;">LOAM / LeGO-LOAM</td>
+<td style="text-align: left;">LiDAR only</td>
+<td style="text-align: left;">Feature matching</td>
+<td style="text-align: left;">4.5</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">280</td>
+<td style="text-align: left;">BSD</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cartographer (2D)</td>
+<td style="text-align: left;">LiDAR + IMU</td>
+<td style="text-align: left;">Pose graph</td>
+<td style="text-align: left;">3.0</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">200</td>
+<td style="text-align: left;">Apache 2.0</td>
+</tr>
+<tr>
+<td colspan="7" style="text-align: left;">RMSE: root mean square translation error on EuRoC MH_01/02 (easy) sequences; CPU: approximate thread usage.</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-sw_performance"><span class="secnum">10.14</span> Integrated Software Performance Summary<a class="headerlink" href="#sec-sw_performance" title="Permanent link">&para;</a></h2>
+<div class="tbl" id="tab-sw_timing">
+<div class="tbl-caption"><strong>Table 10.5.</strong> UAV Software Stack Timing and Resource Budget (Representative Small MALE UAV)</div>
+<div class="tbl-scroll">
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Task / Module</strong></td>
+<td style="text-align: right;"><strong>Rate</strong></td>
+<td style="text-align: right;"><strong>Period</strong></td>
+<td style="text-align: right;"><strong>WCET</strong></td>
+<td style="text-align: left;"><strong>CPU</strong></td>
+<td style="text-align: left;"><strong>Notes</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">(Hz)</td>
+<td style="text-align: right;">(ms)</td>
+<td style="text-align: right;">(ms)</td>
+<td style="text-align: left;">(%)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">IMU read + calibrate</td>
+<td style="text-align: right;">400</td>
+<td style="text-align: right;">2.50</td>
+<td style="text-align: right;">0.05</td>
+<td style="text-align: left;">2.0</td>
+<td style="text-align: left;">SPI DMA</td>
+</tr>
+<tr>
+<td style="text-align: left;">Attitude control (inner loop)</td>
+<td style="text-align: right;">400</td>
+<td style="text-align: right;">2.50</td>
+<td style="text-align: right;">0.10</td>
+<td style="text-align: left;">4.0</td>
+<td style="text-align: left;">Cortex-M7</td>
+</tr>
+<tr>
+<td style="text-align: left;">EKF3 prediction step</td>
+<td style="text-align: right;">400</td>
+<td style="text-align: right;">2.50</td>
+<td style="text-align: right;">0.15</td>
+<td style="text-align: left;">6.0</td>
+<td style="text-align: left;">CMSIS-DSP SIMD</td>
+</tr>
+<tr>
+<td style="text-align: left;">EKF3 GPS fusion</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.50</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Position + velocity control</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">0.40</td>
+<td style="text-align: left;">2.0</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Mission sequencer</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: left;">0.2</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">MAVLink Tx/Rx</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.30</td>
+<td style="text-align: left;">0.3</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Obstacle avoidance</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">0.80</td>
+<td style="text-align: left;">0.8</td>
+<td style="text-align: left;">Companion CPU</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>FCS total</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;"><strong><span class="math inline">\(\approx\)</span>16</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">SLAM front-end (visual odometry)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Cortex-A78</td>
+</tr>
+<tr>
+<td style="text-align: left;">Object detection (YOLOv8-nano)</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Jetson Orin NPU</td>
+</tr>
+<tr>
+<td style="text-align: left;">Video encoding (H.265)</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Hardware encoder</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mission logic (BT tick)</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;">Cortex-A78</td>
+</tr>
+<tr>
+<td style="text-align: left;">Datalink management</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Companion total (Orin)</strong></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: left;"><strong><span class="math inline">\(\approx\)</span>60</strong></td>
+<td style="text-align: left;">100 TOPS budget</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-sw_conclusion"><span class="secnum">10.15</span> Conclusion<a class="headerlink" href="#sec-sw_conclusion" title="Permanent link">&para;</a></h2>
+<p>The UAV software stack represents a hierarchy of increasing abstraction: from nanosecond-precision RTOS scheduling of hardware access, through frequency-domain attitude control loops, probabilistic state estimation via extended Kalman filters, sample-efficient reinforcement learning of agile manoeuvres, real-time convolutional object detection, and graph-optimised SLAM mapping, to high-level behaviour trees encoding mission logic — all operating concurrently on heterogeneous compute hardware ranging from bare-metal Cortex-M microcontrollers to 275-TOPS GPU/NPU accelerators.</p>
+<p>The critical engineering trade-offs at each layer are:</p>
+<ul>
+<li>
+<p><strong>FCS:</strong> WCRT analysis must guarantee all hard real-time deadlines; ArduPilot and PX4 achieve this through cooperative and preemptive scheduling on proven RTOS platforms.</p>
+</li>
+<li>
+<p><strong>Perception:</strong> INT8 quantisation and structured pruning reduce YOLOv8 inference latency below 50 ms on <span class="arithmatex">\(&lt;5\)</span> W accelerators; sim-to-real transfer via domain randomisation closes the synthetic training gap.</p>
+</li>
+<li>
+<p><strong>SLAM:</strong> Tight IMU/LiDAR coupling in LIO-SAM/VINS-Mono achieves <span class="arithmatex">\(&lt;5\)</span> cm localisation accuracy without GPS, critical for GPS-denied military and indoor operations.</p>
+</li>
+<li>
+<p><strong>Certification:</strong> DO-178C Level B/C compliance for commercial BVLOS operations demands MC/DC structural coverage and full artefact traceability — achievable for open-source platforms but requiring significant additional engineering investment by the integrator.</p>
+</li>
+<li>
+<p><strong>Cybersecurity:</strong> Secure boot, MAVLink signing, and GPS-IMU consistency monitoring form the minimum credible defence against the most operationally significant cyber threats to UAS.</p>
+</li>
+</ul>
+<p>As autonomy levels increase toward STANAG 4586 LOA 8–10, the software assurance burden grows rapidly — formal verification methods (TLA+, Coq, Frama-C) for critical decision-making modules, combined with run-time monitoring of learned policies, represent the frontier of UAS software engineering research as of 2026.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch09-payloads-and-sensors.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 9. Payloads and Sensors">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                9. Payloads and Sensors
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch11-swarm-systems.html" class="md-footer__link md-footer__link--next" aria-label="Next: 11. Swarm Systems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                11. Swarm Systems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

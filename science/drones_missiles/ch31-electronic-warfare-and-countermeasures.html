@@ -1,0 +1,4053 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch31-electronic-warfare-and-countermeasures.html">
+  
+  
+    <link rel="prev" href="ch30-hypersonic-vehicles.html">
+  
+  
+    <link rel="next" href="ch32-directed-energy-weapons.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>31. Electronic Warfare and Countermeasures - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-ew_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              31. Electronic Warfare and Countermeasures
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.1 Introduction to Electronic Warfare
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_disciplines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2 EW Disciplines and the Electromagnetic Spectrum
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.2 EW Disciplines and the Electromagnetic Spectrum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3121-the-three-pillars-of-electronic-warfare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.1 The Three Pillars of Electronic Warfare
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3122-the-electromagnetic-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.2 The Electromagnetic Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3123-probability-of-intercept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.3 Probability of Intercept
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3124-receiver-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.4 Receiver Sensitivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-jamming_theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.3 Jamming Theory and the J/S Ratio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.3 Jamming Theory and the J/S Ratio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3131-the-jamming-to-signal-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.3.1 The Jamming-to-Signal Ratio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3132-burn-through-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.3.2 Burn-Through Range
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-rwr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4 Radar Warning Receivers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.4 Radar Warning Receivers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3141-receiver-architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.1 Receiver Architectures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3142-emitter-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.2 Emitter Identification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3143-geolocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.3 Geolocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3144-operational-rwr-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.4 Operational RWR Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5 Jamming Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.5 Jamming Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3151-noise-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5.1 Noise Jamming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3152-digital-radio-frequency-memory-drfm-deceptive-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5.2 Digital Radio Frequency Memory (DRFM) Deceptive Jamming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3153-self-protection-escort-and-stand-off-jammers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5.3 Self-Protection, Escort, and Stand-Off Jammers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ircm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.6 Infrared Countermeasures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.6 Infrared Countermeasures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3161-flare-countermeasures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.6.1 Flare Countermeasures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3162-directed-infrared-countermeasures-dircm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.6.2 Directed Infrared Countermeasures (DIRCM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-chaff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7 Chaff
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.7 Chaff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3171-principles-of-chaff-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7.1 Principles of Chaff Operation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3172-chaff-rcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7.2 Chaff RCS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3173-chaff-deployment-tactics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7.3 Chaff Deployment Tactics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8 Electronic Protection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.8 Electronic Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3181-frequency-agility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.1 Frequency Agility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3182-pulse-compression-and-lpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.2 Pulse Compression and LPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3183-monopulse-resistance-to-angle-deception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.3 Monopulse Resistance to Angle Deception
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3184-adaptive-beamforming-and-null-steering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.4 Adaptive Beamforming and Null Steering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-gps_ew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9 GPS Jamming and Anti-Jamming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.9 GPS Jamming and Anti-Jamming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3191-gps-signal-vulnerability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.1 GPS Signal Vulnerability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3192-jamming-coverage-radius" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.2 Jamming Coverage Radius
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3193-gps-spoofing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.3 GPS Spoofing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3194-anti-jamming-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.4 Anti-Jamming Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-missile_cm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.10 Missile Countermeasures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.10 Missile Countermeasures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31101-against-ir-guided-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.10.1 Against IR-Guided Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31102-against-radar-guided-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.10.2 Against Radar-Guided Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_aircraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11 Electronic Warfare Aircraft and Integrated Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.11 Electronic Warfare Aircraft and Integrated Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31111-ea-18g-growler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.1 EA-18G Growler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31112-f-35-anasq-239-barracuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.2 F-35 AN/ASQ-239 Barracuda
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31113-rc-135vw-rivet-joint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.3 RC-135V/W Rivet Joint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31114-drone-electronic-warfare-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.4 Drone Electronic Warfare Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12 Cyber-Electromagnetic Activities (CEMA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.12 Cyber-Electromagnetic Activities (CEMA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31121-the-convergence-of-ew-and-cyber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.1 The Convergence of EW and Cyber
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31122-rf-enabled-cyber-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.2 RF-Enabled Cyber Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31123-cognitive-and-ai-driven-ew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.3 Cognitive and AI-Driven EW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31124-quantum-radar-and-future-ew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.4 Quantum Radar and Future EW
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13 EW System Design Trade-offs and Performance Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.13 EW System Design Trade-offs and Performance Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31131-eirp-vs-coverage-vs-platform-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13.1 EIRP vs Coverage vs Platform Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31132-integrated-ew-architecture-for-combat-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13.2 Integrated EW Architecture for Combat UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31133-ew-test-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13.3 EW Test and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.14 Summary and Key Performance Metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.1 Introduction to Electronic Warfare
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_disciplines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2 EW Disciplines and the Electromagnetic Spectrum
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.2 EW Disciplines and the Electromagnetic Spectrum">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3121-the-three-pillars-of-electronic-warfare" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.1 The Three Pillars of Electronic Warfare
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3122-the-electromagnetic-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.2 The Electromagnetic Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3123-probability-of-intercept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.3 Probability of Intercept
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3124-receiver-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.2.4 Receiver Sensitivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-jamming_theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.3 Jamming Theory and the J/S Ratio
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.3 Jamming Theory and the J/S Ratio">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3131-the-jamming-to-signal-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.3.1 The Jamming-to-Signal Ratio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3132-burn-through-range" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.3.2 Burn-Through Range
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-rwr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4 Radar Warning Receivers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.4 Radar Warning Receivers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3141-receiver-architectures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.1 Receiver Architectures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3142-emitter-identification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.2 Emitter Identification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3143-geolocation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.3 Geolocation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3144-operational-rwr-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.4.4 Operational RWR Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5 Jamming Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.5 Jamming Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3151-noise-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5.1 Noise Jamming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3152-digital-radio-frequency-memory-drfm-deceptive-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5.2 Digital Radio Frequency Memory (DRFM) Deceptive Jamming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3153-self-protection-escort-and-stand-off-jammers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.5.3 Self-Protection, Escort, and Stand-Off Jammers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ircm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.6 Infrared Countermeasures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.6 Infrared Countermeasures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3161-flare-countermeasures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.6.1 Flare Countermeasures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3162-directed-infrared-countermeasures-dircm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.6.2 Directed Infrared Countermeasures (DIRCM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-chaff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7 Chaff
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.7 Chaff">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3171-principles-of-chaff-operation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7.1 Principles of Chaff Operation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3172-chaff-rcs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7.2 Chaff RCS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3173-chaff-deployment-tactics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.7.3 Chaff Deployment Tactics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ep" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8 Electronic Protection
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.8 Electronic Protection">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3181-frequency-agility" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.1 Frequency Agility
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3182-pulse-compression-and-lpi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.2 Pulse Compression and LPI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3183-monopulse-resistance-to-angle-deception" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.3 Monopulse Resistance to Angle Deception
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3184-adaptive-beamforming-and-null-steering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.8.4 Adaptive Beamforming and Null Steering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-gps_ew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9 GPS Jamming and Anti-Jamming
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.9 GPS Jamming and Anti-Jamming">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3191-gps-signal-vulnerability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.1 GPS Signal Vulnerability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3192-jamming-coverage-radius" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.2 Jamming Coverage Radius
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3193-gps-spoofing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.3 GPS Spoofing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3194-anti-jamming-techniques" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.9.4 Anti-Jamming Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-missile_cm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.10 Missile Countermeasures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.10 Missile Countermeasures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31101-against-ir-guided-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.10.1 Against IR-Guided Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31102-against-radar-guided-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.10.2 Against Radar-Guided Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_aircraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11 Electronic Warfare Aircraft and Integrated Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.11 Electronic Warfare Aircraft and Integrated Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31111-ea-18g-growler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.1 EA-18G Growler
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31112-f-35-anasq-239-barracuda" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.2 F-35 AN/ASQ-239 Barracuda
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31113-rc-135vw-rivet-joint" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.3 RC-135V/W Rivet Joint
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31114-drone-electronic-warfare-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.11.4 Drone Electronic Warfare Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12 Cyber-Electromagnetic Activities (CEMA)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.12 Cyber-Electromagnetic Activities (CEMA)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31121-the-convergence-of-ew-and-cyber" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.1 The Convergence of EW and Cyber
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31122-rf-enabled-cyber-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.2 RF-Enabled Cyber Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31123-cognitive-and-ai-driven-ew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.3 Cognitive and AI-Driven EW
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31124-quantum-radar-and-future-ew" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.12.4 Quantum Radar and Future EW
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13 EW System Design Trade-offs and Performance Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="31.13 EW System Design Trade-offs and Performance Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31131-eirp-vs-coverage-vs-platform-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13.1 EIRP vs Coverage vs Platform Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31132-integrated-ew-architecture-for-combat-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13.2 Integrated EW Architecture for Combat UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#31133-ew-test-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.13.3 EW Test and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ew_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        31.14 Summary and Key Performance Metrics
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-ew">Chapter 31: Electronic Warfare and Countermeasures<a class="headerlink" href="#ch-ew" title="Permanent link">&para;</a></h1>
+<h2 id="sec-ew_intro"><span class="secnum">31.1</span> Introduction to Electronic Warfare<a class="headerlink" href="#sec-ew_intro" title="Permanent link">&para;</a></h2>
+<p>Electronic warfare (EW) is the military discipline concerned with the use of the electromagnetic spectrum (EMS) to sense, protect, and deny. Modern combat platforms — whether crewed aircraft, unmanned aerial vehicles (UAVs), cruise missiles, or surface vessels — operate in a contested electromagnetic environment in which adversaries actively seek to detect, identify, and defeat them through their own radio-frequency (RF) emissions and signatures. Understanding EW is therefore inseparable from understanding the survivability and lethality of aerospace weapons.</p>
+<p>The fundamental contest in electronic warfare is one of physics: any system that radiates energy to accomplish a mission (radar, datalink, transponder, active seeker) simultaneously provides an adversary with the means to detect, locate, and ultimately destroy that system. Conversely, a system that remains electromagnetically silent reduces its own detectability but often sacrifices situational awareness and precision guidance. Every modern platform must navigate this trade-space continuously.</p>
+<p>This chapter presents a rigorous, quantitative treatment of electronic warfare as it applies to drones, missiles, and their associated ground and airborne support systems. Topics span the three canonical EW disciplines (Electronic Support, Electronic Attack, Electronic Protection), specific hardware implementations, and the analytical frameworks required to predict system performance.</p>
+<h2 id="sec-ew_disciplines"><span class="secnum">31.2</span> EW Disciplines and the Electromagnetic Spectrum<a class="headerlink" href="#sec-ew_disciplines" title="Permanent link">&para;</a></h2>
+<h3 id="3121-the-three-pillars-of-electronic-warfare"><span class="secnum">31.2.1</span> The Three Pillars of Electronic Warfare<a class="headerlink" href="#3121-the-three-pillars-of-electronic-warfare" title="Permanent link">&para;</a></h3>
+<p>The United States Department of Defense and NATO both formalise electronic warfare into three mutually complementary disciplines:</p>
+<ul>
+<li>
+<p><strong>Electronic Support (ES):</strong> Passive collection, interception, identification, and geo-location of electromagnetic emissions. Also termed Electronic Warfare Support Measures (ESM) in older NATO doctrine. ES provides the situational awareness that drives both EA and EP decisions.</p>
+</li>
+<li>
+<p><strong>Electronic Attack (EA):</strong> Actions that use electromagnetic energy or anti-radiation weapons to attack personnel, facilities, or equipment with intent to degrade, neutralise, or destroy enemy combat capability. EA includes jamming, deception, and directed energy weapons.</p>
+</li>
+<li>
+<p><strong>Electronic Protection (EP):</strong> Actions taken to protect personnel, facilities, and equipment from any effects of friendly or enemy use of the EMS that degrade, neutralise, or destroy friendly combat capability. EP includes frequency agility, low probability of intercept waveform design, and hardening against high-power microwave attack.</p>
+</li>
+</ul>
+<p>These three disciplines are deeply interdependent. Effective EA requires accurate ES intelligence about threat emission parameters. Effective EP requires understanding of both friendly and adversary EA capabilities. The concept of Cyber-Electromagnetic Activities (CEMA) extends this interdependence into the cyber domain, as discussed in <a href="#sec-cema">Section 31.12</a>.</p>
+<h3 id="3122-the-electromagnetic-spectrum"><span class="secnum">31.2.2</span> The Electromagnetic Spectrum<a class="headerlink" href="#3122-the-electromagnetic-spectrum" title="Permanent link">&para;</a></h3>
+<p>The EMS spans an enormous range of frequencies, each with distinct propagation characteristics, hardware requirements, and military applications. <a href="#tab-ems_bands">Table 31.1</a> presents the internationally recognised frequency bands and their primary EW relevance.</p>
+<div class="tbl" id="tab-ems_bands">
+<div class="tbl-caption"><strong>Table 31.1.</strong> Electromagnetic Spectrum Bands and EW Relevance</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Band</strong></th>
+<th style="text-align: left;"><strong>Frequency Range</strong></th>
+<th style="text-align: left;"><strong>Wavelength</strong></th>
+<th style="text-align: left;"><strong>Primary EW Application</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HF</td>
+<td style="text-align: left;">3–30 MHz</td>
+<td style="text-align: left;">10–100 m</td>
+<td style="text-align: left;">OTH radar; HF communications jamming; COMMJAM</td>
+</tr>
+<tr>
+<td style="text-align: left;">VHF</td>
+<td style="text-align: left;">30–300 MHz</td>
+<td style="text-align: left;">1–10 m</td>
+<td style="text-align: left;">Early-warning radar; VHF comm jamming; RWR</td>
+</tr>
+<tr>
+<td style="text-align: left;">UHF</td>
+<td style="text-align: left;">300–1000 MHz</td>
+<td style="text-align: left;">30 cm–1 m</td>
+<td style="text-align: left;">Surveillance radar; UHF datalink; GPS L1/L2</td>
+</tr>
+<tr>
+<td style="text-align: left;">L</td>
+<td style="text-align: left;">1–2 GHz</td>
+<td style="text-align: left;">15–30 cm</td>
+<td style="text-align: left;">ATC radar; GPS; long-range surveillance; SAR</td>
+</tr>
+<tr>
+<td style="text-align: left;">S</td>
+<td style="text-align: left;">2–4 GHz</td>
+<td style="text-align: left;">7.5–15 cm</td>
+<td style="text-align: left;">Weather radar; naval fire control; ATC</td>
+</tr>
+<tr>
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">4–8 GHz</td>
+<td style="text-align: left;">3.75–7.5 cm</td>
+<td style="text-align: left;">Fire control; civilian comm; SATCOM</td>
+</tr>
+<tr>
+<td style="text-align: left;">X</td>
+<td style="text-align: left;">8–12 GHz</td>
+<td style="text-align: left;">2.5–3.75 cm</td>
+<td style="text-align: left;">Fire control radar; missile seekers; SAR</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ku</td>
+<td style="text-align: left;">12–18 GHz</td>
+<td style="text-align: left;">1.67–2.5 cm</td>
+<td style="text-align: left;">Airborne intercept; precision guidance; SATCOM</td>
+</tr>
+<tr>
+<td style="text-align: left;">K</td>
+<td style="text-align: left;">18–26.5 GHz</td>
+<td style="text-align: left;">1.13–1.67 cm</td>
+<td style="text-align: left;">Police radar; short-range sensors</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ka</td>
+<td style="text-align: left;">26.5–40 GHz</td>
+<td style="text-align: left;">7.5 mm–1.13 cm</td>
+<td style="text-align: left;">mmW seekers; automotive radar; ATM</td>
+</tr>
+<tr>
+<td style="text-align: left;">V</td>
+<td style="text-align: left;">40–75 GHz</td>
+<td style="text-align: left;">4–7.5 mm</td>
+<td style="text-align: left;">mmW imaging; vehicle-borne radar</td>
+</tr>
+<tr>
+<td style="text-align: left;">W</td>
+<td style="text-align: left;">75–110 GHz</td>
+<td style="text-align: left;">2.7–4 mm</td>
+<td style="text-align: left;">High-resolution imaging; FMCW altimeter</td>
+</tr>
+<tr>
+<td style="text-align: left;">EHF</td>
+<td style="text-align: left;">30–300 GHz</td>
+<td style="text-align: left;">1 mm–1 cm</td>
+<td style="text-align: left;">MILSATCOM (EHF); future mmW weapons</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The free-space propagation loss for an electromagnetic wave is given by the Friis transmission equation:</p>
+<div id="eq-friis_loss"></div>
+<div class="arithmatex">\[L_{fs} = \left(\frac{4\pi R}{\lambda}\right)^2 = \left(\frac{4\pi R f}{c}\right)^2\tag{31.1}\]</div>
+<p>where <span class="arithmatex">\(R\)</span> is the propagation range (m), <span class="arithmatex">\(\lambda\)</span> is wavelength (m), <span class="arithmatex">\(f\)</span> is frequency (Hz), and <span class="arithmatex">\(c = 3\times10^8\)</span> m/s is the speed of light. In decibels:</p>
+<div id="eq-friis_db"></div>
+<div class="arithmatex">\[L_{fs}\,[\mathrm{dB}] = 20\log_{10}(R) + 20\log_{10}(f) + 20\log_{10}\!\left(\frac{4\pi}{c}\right)
+                      \approx 20\log_{10}(R) + 20\log_{10}(f) - 147.55\tag{31.2}\]</div>
+<p>with <span class="arithmatex">\(R\)</span> in metres and <span class="arithmatex">\(f\)</span> in hertz. This equation is fundamental: it shows that doubling frequency increases free-space loss by 6 dB, imposing severe constraints on high-frequency jamming at extended ranges.</p>
+<h3 id="3123-probability-of-intercept"><span class="secnum">31.2.3</span> Probability of Intercept<a class="headerlink" href="#3123-probability-of-intercept" title="Permanent link">&para;</a></h3>
+<p>The probability of intercept (POI) describes the likelihood that a scanning ES receiver detects a target emission within a given observation interval. For a receiver with scan period <span class="arithmatex">\(\tau_{scan}\)</span> observing a continuously emitting radar over time <span class="arithmatex">\(t\)</span>, the POI follows:</p>
+<div id="eq-poi"></div>
+<div class="arithmatex">\[\mathrm{POI} = 1 - \exp\!\left(-\frac{t}{\tau_{scan}}\right)\tag{31.3}\]</div>
+<p>For a pulsed emitter with pulse repetition interval <span class="arithmatex">\(T_{PRI}\)</span> and pulse width <span class="arithmatex">\(\tau_{PW}\)</span>, the probability that the ES receiver intercepts at least one pulse given its receiver dwell time <span class="arithmatex">\(t_{dwell}\)</span> per frequency bin is:</p>
+<div id="eq-poi_pulse"></div>
+<div class="arithmatex">\[\mathrm{POI}_{pulse} = 1 - \left(1 - \frac{\tau_{PW}}{T_{PRI}}\right)^{\!\lfloor t_{dwell}/T_{PRI}\rfloor}\tag{31.4}\]</div>
+<p>Low probability of intercept (LPI) radar designs minimise POI against ES receivers by reducing peak power and spreading energy over wide bandwidth (see <a href="#sec-ep">Section 31.8</a>).</p>
+<h3 id="3124-receiver-sensitivity"><span class="secnum">31.2.4</span> Receiver Sensitivity<a class="headerlink" href="#3124-receiver-sensitivity" title="Permanent link">&para;</a></h3>
+<p>The minimum detectable signal (MDS) of an ES receiver determines the maximum range at which it can detect a target emitter. Thermal noise sets the fundamental floor:</p>
+<div id="eq-mds"></div>
+<div class="arithmatex">\[\mathrm{MDS} = -174 + \mathrm{NF} + 10\log_{10}(\mathrm{BW}) \quad [\mathrm{dBm}]\tag{31.5}\]</div>
+<p>where <span class="arithmatex">\(-174\)</span> dBm/Hz is the thermal noise floor (<span class="arithmatex">\(kT_0\)</span> at <span class="arithmatex">\(T_0 = 290\)</span> K), NF is the receiver noise figure (dB), and BW is the instantaneous noise bandwidth (Hz). A high-performance ES receiver with NF = 5 dB and BW = 10 MHz achieves MDS = <span class="arithmatex">\(-174+5+70 = -99\)</span> dBm. This drives the requirement for high-gain antennas and low-noise front-ends in modern ESM systems.</p>
+<h2 id="sec-jamming_theory"><span class="secnum">31.3</span> Jamming Theory and the J/S Ratio<a class="headerlink" href="#sec-jamming_theory" title="Permanent link">&para;</a></h2>
+<h3 id="3131-the-jamming-to-signal-ratio"><span class="secnum">31.3.1</span> The Jamming-to-Signal Ratio<a class="headerlink" href="#3131-the-jamming-to-signal-ratio" title="Permanent link">&para;</a></h3>
+<p>The effectiveness of any jamming system is governed by the jamming-to-signal (J/S) ratio at the victim receiver. Deriving J/S from first principles for the general bistatic geometry:</p>
+<p>The target signal power at the radar receiver is given by the radar range equation:</p>
+<div id="eq-radar_signal"></div>
+<div class="arithmatex">\[P_{signal} = \frac{P_t G_t G_r \lambda^2 \sigma}{(4\pi)^3 R_t^4}\tag{31.6}\]</div>
+<p>where <span class="arithmatex">\(P_t\)</span> is transmit power (W), <span class="arithmatex">\(G_t\)</span> and <span class="arithmatex">\(G_r\)</span> are transmit and receive antenna gains, <span class="arithmatex">\(\sigma\)</span> is target radar cross-section (m<span class="arithmatex">\(^2\)</span>), <span class="arithmatex">\(R_t\)</span> is range from radar to target (m), and <span class="arithmatex">\(\lambda\)</span> is wavelength (m).</p>
+<p>The jammer power at the radar receiver is:</p>
+<div id="eq-jammer_power"></div>
+<div class="arithmatex">\[P_{jammer} = \frac{P_j G_j G_{r,j}}{(4\pi)^2 R_j^2} \cdot \frac{\lambda^2}{4\pi}
+= \frac{P_j G_j G_{r,j} \lambda^2}{(4\pi)^3 R_j^2}\tag{31.7}\]</div>
+<p>where <span class="arithmatex">\(P_j\)</span> is jammer radiated power (W), <span class="arithmatex">\(G_j\)</span> is jammer antenna gain, <span class="arithmatex">\(G_{r,j}\)</span> is the radar receive gain in the direction of the jammer, and <span class="arithmatex">\(R_j\)</span> is jammer-to-radar range (m). The J/S ratio is therefore:</p>
+<div id="eq-js_general"></div>
+<div class="arithmatex">\[\frac{J}{S} = \frac{P_j G_j G_{r,j}}{P_t G_t \sigma} \cdot \frac{(4\pi) R_t^4}{G_r R_j^2}\tag{31.8}\]</div>
+<p>For a self-protection jammer (SPJ) co-located with the target (<span class="arithmatex">\(R_j = R_t\)</span>, <span class="arithmatex">\(G_{r,j} = G_r\)</span>):</p>
+<div id="eq-js_spj"></div>
+<div class="arithmatex">\[\frac{J}{S}\bigg|_{SPJ} = \frac{P_j G_j (4\pi) R_t^2}{P_t G_t \sigma}\tag{31.9}\]</div>
+<p>This result is critical: <em>J/S for a self-protect jammer improves as the square of range</em>, since the jammer and target are at the same range. As the threat radar closes in, J/S degrades, eventually falling below the minimum effective J/S.</p>
+<p>For an escort jammer at a different range <span class="arithmatex">\(R_j\)</span> from the radar, protecting a target at range <span class="arithmatex">\(R_t\)</span>:</p>
+<div id="eq-js_escort"></div>
+<div class="arithmatex">\[\frac{J}{S}\bigg|_{escort} = \frac{P_j G_j (4\pi) R_t^4}{P_t G_t \sigma R_j^2}\tag{31.10}\]</div>
+<p>The escort jammer gains a <span class="arithmatex">\(R_t^4/R_j^2\)</span> advantage when it can position itself closer to the radar than the protected aircraft — but this requires the escort to penetrate the threat envelope.</p>
+<h3 id="3132-burn-through-range"><span class="secnum">31.3.2</span> Burn-Through Range<a class="headerlink" href="#3132-burn-through-range" title="Permanent link">&para;</a></h3>
+<p>The burn-through range <span class="arithmatex">\(R_{BT}\)</span> is the range at which the radar can detect the target despite jamming, i.e., when J/S falls below the minimum jamming effectiveness threshold <span class="arithmatex">\((J/S)_{min}\)</span>. Setting <a href="#eq-js_spj">Equation (31.9)</a> equal to <span class="arithmatex">\((J/S)_{min}\)</span> and solving for <span class="arithmatex">\(R_t\)</span>:</p>
+<div id="eq-rbt"></div>
+<div class="arithmatex">\[R_{BT} = \sqrt{\frac{P_j G_j (4\pi)}{P_t G_t \sigma (J/S)_{min}}}\tag{31.11}\]</div>
+<p>Below <span class="arithmatex">\(R_{BT}\)</span>, the radar burns through the jammer and detects the target. A missile designer must therefore ensure the on-board SPJ maintains J/S above threshold at all threat engagement ranges of interest. In practice, <span class="arithmatex">\((J/S)_{min}\)</span> is typically 0 dB (noise jamming) to <span class="arithmatex">\(+10\)</span> dB (deceptive jamming), depending on the radar’s ECCM design.</p>
+<p><a href="#tab-js_typical">Table 31.2</a> provides typical J/S requirements for different jamming modes against modern radar types.</p>
+<div class="tbl" id="tab-js_typical">
+<div class="tbl-caption"><strong>Table 31.2.</strong> Minimum J/S Requirements by Jamming Mode and Radar Type</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Jamming Mode</strong></th>
+<th style="text-align: left;"><strong>Radar Type</strong></th>
+<th style="text-align: left;"><strong>Min J/S (dB)</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Barrage noise</td>
+<td style="text-align: left;">Search radar</td>
+<td style="text-align: left;">0 to +6</td>
+<td style="text-align: left;">Wide bandwidth dilutes power</td>
+</tr>
+<tr>
+<td style="text-align: left;">Spot noise</td>
+<td style="text-align: left;">Fire control radar</td>
+<td style="text-align: left;">+6 to +12</td>
+<td style="text-align: left;">High spectral density; must track freq</td>
+</tr>
+<tr>
+<td style="text-align: left;">DRFM deceptive</td>
+<td style="text-align: left;">Monopulse FC</td>
+<td style="text-align: left;">0 to +3</td>
+<td style="text-align: left;">False target injection</td>
+</tr>
+<tr>
+<td style="text-align: left;">DRFM RGPO</td>
+<td style="text-align: left;">Range-gated tracker</td>
+<td style="text-align: left;">0 to +6</td>
+<td style="text-align: left;">Must exceed skin return</td>
+</tr>
+<tr>
+<td style="text-align: left;">DRFM VGPO</td>
+<td style="text-align: left;">Doppler tracker</td>
+<td style="text-align: left;">+3 to +10</td>
+<td style="text-align: left;">Must exceed target Doppler</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cross-eye</td>
+<td style="text-align: left;">Monopulse angle</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Phase-based; geometry dependent</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chaff</td>
+<td style="text-align: left;">Track-while-scan</td>
+<td style="text-align: left;"><span class="math inline">\(\sigma_{chaff} &gt; \sigma_{target}\)</span></td>
+<td style="text-align: left;">RCS competition</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-rwr"><span class="secnum">31.4</span> Radar Warning Receivers<a class="headerlink" href="#sec-rwr" title="Permanent link">&para;</a></h2>
+<p>A radar warning receiver (RWR) is the ES component that detects, identifies, and provides threat warning from hostile radar emissions. The RWR must simultaneously satisfy contradictory requirements: broad instantaneous frequency coverage, high sensitivity, fast response, and accurate parameter measurement — all in a small, low-power, low-cost package.</p>
+<h3 id="3141-receiver-architectures"><span class="secnum">31.4.1</span> Receiver Architectures<a class="headerlink" href="#3141-receiver-architectures" title="Permanent link">&para;</a></h3>
+<h4 id="crystal-video-receiver-cvr">Crystal Video Receiver (CVR)<a class="headerlink" href="#crystal-video-receiver-cvr" title="Permanent link">&para;</a></h4>
+<p>The crystal video receiver is the simplest RWR architecture. An RF bandpass filter is followed directly by a square-law detector (Schottky diode), and the video output drives a threshold detector. The CVR offers:</p>
+<ul>
+<li>
+<p><strong>Bandwidth:</strong> Instantaneous coverage of entire RF band (1–18 GHz or wider) simultaneously.</p>
+</li>
+<li>
+<p><strong>Response time:</strong> Nanoseconds — captures every pulse.</p>
+</li>
+<li>
+<p><strong>Sensitivity:</strong> Poor, typically <span class="arithmatex">\(-50\)</span> to <span class="arithmatex">\(-60\)</span> dBm due to lack of amplification and frequency selectivity.</p>
+</li>
+<li>
+<p><strong>Frequency accuracy:</strong> None — measures only amplitude envelope, not frequency.</p>
+</li>
+</ul>
+<p>The CVR is used as a broadband blanket detector, providing rapid warning but requiring a separate IFM channel for frequency measurement. Its dynamic range is limited to <span class="arithmatex">\(\sim\)</span>40 dB due to detector compression.</p>
+<h4 id="superheterodyne-receiver">Superheterodyne Receiver<a class="headerlink" href="#superheterodyne-receiver" title="Permanent link">&para;</a></h4>
+<p>The superheterodyne architecture mixes the RF signal with a local oscillator (LO) to produce an intermediate frequency (IF), which is then filtered, amplified, and detected. Scanning the LO across the threat band provides frequency coverage:</p>
+<div id="eq-superhet"></div>
+<div class="arithmatex">\[f_{IF} = f_{RF} - f_{LO} \quad \text{(or } f_{LO} - f_{RF} \text{ for image rejection)}\tag{31.12}\]</div>
+<p>The superheterodyne achieves sensitivity of <span class="arithmatex">\(-90\)</span> to <span class="arithmatex">\(-100\)</span> dBm and frequency accuracy of <span class="arithmatex">\(&lt;\)</span>1 MHz, but its instantaneous bandwidth is only 10–100 MHz. Scan rates must be fast enough not to miss short-duty cycle emitters — a 100 MHz IF bandwidth scanning a 15 GHz band requires <span class="arithmatex">\(&gt;\)</span>150 dwells per sweep.</p>
+<h4 id="instantaneous-frequency-measurement-ifm-receiver">Instantaneous Frequency Measurement (IFM) Receiver<a class="headerlink" href="#instantaneous-frequency-measurement-ifm-receiver" title="Permanent link">&para;</a></h4>
+<p>The IFM receiver uses a microwave delay line and phase comparator to measure the frequency of any signal present at its input within nanoseconds. The fundamental relationship is:</p>
+<div id="eq-ifm_phase"></div>
+<div class="arithmatex">\[\phi = 2\pi f \tau_d\tag{31.13}\]</div>
+<p>where <span class="arithmatex">\(\phi\)</span> is the measured phase difference (rad) and <span class="arithmatex">\(\tau_d\)</span> is the delay line length (s). Multiple delay lines with lengths in ratio 1:2:4:8 provide ambiguity-free frequency measurement. The IFM offers:</p>
+<ul>
+<li>
+<p>Frequency measurement latency <span class="arithmatex">\(&lt;\)</span>20 ns.</p>
+</li>
+<li>
+<p>Frequency accuracy: 1–5 MHz across 2–18 GHz.</p>
+</li>
+<li>
+<p>Bandwidth: simultaneous measurement possible only for single-signal environments.</p>
+</li>
+<li>
+<p>Limitation: fails with simultaneous signals (two emitters cause false frequency readings).</p>
+</li>
+</ul>
+<h4 id="channelised-receiver">Channelised Receiver<a class="headerlink" href="#channelised-receiver" title="Permanent link">&para;</a></h4>
+<p>The channelised receiver divides the frequency band into parallel sub-bands, each processed simultaneously by a dedicated filter, amplifier, and detector chain. A 2–18 GHz receiver may use 128 or more contiguous channels. The channelised architecture achieves:</p>
+<ul>
+<li>
+<p>Instantaneous frequency measurement without scanning.</p>
+</li>
+<li>
+<p>Sensitivity approaching the superheterodyne in each channel: <span class="arithmatex">\(-80\)</span> to <span class="arithmatex">\(-90\)</span> dBm.</p>
+</li>
+<li>
+<p>Simultaneous signal capability (each channel is independent).</p>
+</li>
+<li>
+<p>Frequency resolution equal to channel bandwidth (typically 100–500 MHz per channel).</p>
+</li>
+</ul>
+<p>The channelised receiver is the preferred architecture for modern high-performance RWRs. Digital implementations using fast Fourier transforms (FFT) approach arbitrary channelisation:</p>
+<div id="eq-fft_res"></div>
+<div class="arithmatex">\[\Delta f_{FFT} = \frac{f_s}{N_{FFT}}\tag{31.14}\]</div>
+<p>where <span class="arithmatex">\(f_s\)</span> is the ADC sample rate and <span class="arithmatex">\(N_{FFT}\)</span> is the FFT size. A 4 GHz ADC with <span class="arithmatex">\(N_{FFT} = 4096\)</span> achieves <span class="arithmatex">\(\Delta f = 976\)</span> kHz frequency resolution.</p>
+<h3 id="3142-emitter-identification"><span class="secnum">31.4.2</span> Emitter Identification<a class="headerlink" href="#3142-emitter-identification" title="Permanent link">&para;</a></h3>
+<p>RWR emitter identification (EID) matches measured pulse parameters against a threat library. The key parameters extracted from each intercept are:</p>
+<ul>
+<li>
+<p><strong>Radio frequency (RF):</strong> Carrier frequency; may be agile — measured via IFM or channelised receiver.</p>
+</li>
+<li>
+<p><strong>Pulse width (PW):</strong> Duration of individual pulse; 0.1–100 <span class="arithmatex">\(\mu\)</span>s typical.</p>
+</li>
+<li>
+<p><strong>Pulse repetition interval (PRI):</strong> Time between successive pulses; staggered, jittered, or dwell-and-switch waveforms complicate measurement.</p>
+</li>
+<li>
+<p><strong>Scan period/type:</strong> Antenna rotation; sector scan; track-while-scan; conical scan modulates pulse amplitude with scan frequency.</p>
+</li>
+<li>
+<p><strong>Intra-pulse modulation:</strong> LFM chirp; phase coding; detected by baseband digitiser.</p>
+</li>
+</ul>
+<p>The emitter identification score function is typically a weighted Mahalanobis distance in parameter space:</p>
+<div id="eq-mahalanobis"></div>
+<div class="arithmatex">\[d_M = \sqrt{(\mathbf{x} - \boldsymbol{\mu}_i)^T \boldsymbol{\Sigma}_i^{-1} (\mathbf{x} - \boldsymbol{\mu}_i)}\tag{31.15}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{x}\)</span> is the measured parameter vector, <span class="arithmatex">\(\boldsymbol{\mu}_i\)</span> is the library centroid for emitter <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(\boldsymbol{\Sigma}_i\)</span> is the covariance matrix capturing measurement uncertainty and emitter variability. The identity assigned is <span class="arithmatex">\(\hat{i} = \arg\min_i d_M\)</span>.</p>
+<h3 id="3143-geolocation"><span class="secnum">31.4.3</span> Geolocation<a class="headerlink" href="#3143-geolocation" title="Permanent link">&para;</a></h3>
+<h4 id="time-difference-of-arrival-tdoa">Time Difference of Arrival (TDOA)<a class="headerlink" href="#time-difference-of-arrival-tdoa" title="Permanent link">&para;</a></h4>
+<p>Two ES receivers at known positions <span class="arithmatex">\(\mathbf{r}_1\)</span> and <span class="arithmatex">\(\mathbf{r}_2\)</span> measure the arrival time of the same emitter pulse with times <span class="arithmatex">\(t_1\)</span> and <span class="arithmatex">\(t_2\)</span>. The time difference <span class="arithmatex">\(\Delta t = t_1 - t_2\)</span> constrains the emitter to a hyperbola:</p>
+<div id="eq-tdoa"></div>
+<div class="arithmatex">\[\|\mathbf{r} - \mathbf{r}_1\| - \|\mathbf{r} - \mathbf{r}_2\| = c\,\Delta t\tag{31.16}\]</div>
+<p>Three receivers produce two hyperbolas whose intersection yields a position fix. TDOA accuracy is governed by the timing resolution:</p>
+<div id="eq-tdoa_accuracy"></div>
+<div class="arithmatex">\[\sigma_{pos} \approx \frac{c\,\sigma_{\Delta t}}{2\sin(\theta/2)}\tag{31.17}\]</div>
+<p>where <span class="arithmatex">\(\sigma_{\Delta t}\)</span> is the timing measurement noise and <span class="arithmatex">\(\theta\)</span> is the baseline-to-target subtended angle. Modern TDOA systems achieve <span class="arithmatex">\(&lt;\)</span>10 ns timing resolution, yielding <span class="arithmatex">\(&lt;\)</span>1 km position accuracy at 100 km range.</p>
+<h4 id="angle-of-arrival-interferometry">Angle of Arrival Interferometry<a class="headerlink" href="#angle-of-arrival-interferometry" title="Permanent link">&para;</a></h4>
+<p>Phase interferometry measures the phase difference between two antenna elements separated by baseline <span class="arithmatex">\(d\)</span>:</p>
+<div id="eq-interferometry"></div>
+<div class="arithmatex">\[\Delta\phi = \frac{2\pi d \sin\theta}{\lambda}\tag{31.18}\]</div>
+<p>where <span class="arithmatex">\(\theta\)</span> is the angle of arrival. Ambiguity-free angle measurement requires <span class="arithmatex">\(d &lt; \lambda/2\)</span>, but accuracy improves with longer baselines. Multi-baseline interferometers resolve ambiguities while achieving angle accuracy of <span class="arithmatex">\(\sigma_\theta \approx \lambda / (2\pi d \cdot \mathrm{SNR}^{1/2})\)</span>.</p>
+<h3 id="3144-operational-rwr-systems"><span class="secnum">31.4.4</span> Operational RWR Systems<a class="headerlink" href="#3144-operational-rwr-systems" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-rwr_systems">Table 31.3</a> summarises representative operational RWR systems.</p>
+<div class="tbl" id="tab-rwr_systems">
+<div class="tbl-caption"><strong>Table 31.3.</strong> Representative Operational Radar Warning Receivers</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>System</strong></th>
+<th style="text-align: left;"><strong>Platform</strong></th>
+<th style="text-align: left;"><strong>Freq. Range</strong></th>
+<th style="text-align: left;"><strong>Sensitivity</strong></th>
+<th style="text-align: left;"><strong>Architecture</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">AN/ALR-69A</td>
+<td style="text-align: left;">F-16; A-10</td>
+<td style="text-align: left;">0.5–18 GHz</td>
+<td style="text-align: left;"><span class="math inline">\(-65\)</span> dBm</td>
+<td style="text-align: left;">CVR + IFM</td>
+</tr>
+<tr>
+<td style="text-align: left;">AN/ALR-56M</td>
+<td style="text-align: left;">F-15C/D</td>
+<td style="text-align: left;">0.7–18 GHz</td>
+<td style="text-align: left;"><span class="math inline">\(-75\)</span> dBm</td>
+<td style="text-align: left;">Channelised + IFM</td>
+</tr>
+<tr>
+<td style="text-align: left;">AN/ALR-67(V)3</td>
+<td style="text-align: left;">F/A-18C/D</td>
+<td style="text-align: left;">2–18 GHz</td>
+<td style="text-align: left;"><span class="math inline">\(-80\)</span> dBm</td>
+<td style="text-align: left;">Channelised</td>
+</tr>
+<tr>
+<td style="text-align: left;">Elisra SPS-65</td>
+<td style="text-align: left;">Various export</td>
+<td style="text-align: left;">2–18 GHz</td>
+<td style="text-align: left;"><span class="math inline">\(-70\)</span> dBm</td>
+<td style="text-align: left;">CVR + superheterodyne</td>
+</tr>
+<tr>
+<td style="text-align: left;">AN/ALQ-218</td>
+<td style="text-align: left;">EA-18G</td>
+<td style="text-align: left;">0.5–40 GHz</td>
+<td style="text-align: left;"><span class="math inline">\(-85\)</span> dBm</td>
+<td style="text-align: left;">Advanced channelised</td>
+</tr>
+<tr>
+<td style="text-align: left;">SPECTRA (Thales)</td>
+<td style="text-align: left;">Rafale</td>
+<td style="text-align: left;">2–40 GHz</td>
+<td style="text-align: left;"><span class="math inline">\(-85\)</span> dBm</td>
+<td style="text-align: left;">Integrated ESM/ELINT</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-jamming"><span class="secnum">31.5</span> Jamming Systems<a class="headerlink" href="#sec-jamming" title="Permanent link">&para;</a></h2>
+<h3 id="3151-noise-jamming"><span class="secnum">31.5.1</span> Noise Jamming<a class="headerlink" href="#3151-noise-jamming" title="Permanent link">&para;</a></h3>
+<p>Noise jamming degrades radar detection by raising the noise floor at the radar receiver. Three variants are in common use:</p>
+<h4 id="barrage-noise-jamming">Barrage Noise Jamming<a class="headerlink" href="#barrage-noise-jamming" title="Permanent link">&para;</a></h4>
+<p>Barrage jamming spreads power across a wide bandwidth <span class="arithmatex">\(B_{barrage}\)</span> simultaneously, ensuring coverage regardless of threat radar frequency. The noise spectral density injected into the threat radar is:</p>
+<div id="eq-barrage_noise"></div>
+<div class="arithmatex">\[N_0^{(j)} = \frac{P_j G_j}{B_{barrage}} \cdot \frac{G_{r,j} \lambda^2}{(4\pi)^2 R_j^2} \quad [\text{W/Hz}]\tag{31.19}\]</div>
+<p>The J/S penalty for barrage relative to spot jamming is:</p>
+<div id="eq-barrage_penalty"></div>
+<div class="arithmatex">\[\Delta_{JS}\,[\text{dB}] = 10\log_{10}\!\left(\frac{B_{barrage}}{B_{radar}}\right)\tag{31.20}\]</div>
+<p>A barrage jammer covering 8–12 GHz (4 GHz) against a 10 MHz-bandwidth fire control radar wastes <span class="arithmatex">\(10\log(400) = 26\)</span> dB of jamming effectiveness.</p>
+<h4 id="spot-noise-jamming">Spot Noise Jamming<a class="headerlink" href="#spot-noise-jamming" title="Permanent link">&para;</a></h4>
+<p>Spot jamming concentrates all available power into the radar’s operating bandwidth, maximising J/S. However, it requires precise knowledge of the threat frequency and an agile tuner fast enough to track frequency-hopping emitters. The frequency tracking residual introduces a J/S degradation:</p>
+<div id="eq-spot_error"></div>
+<div class="arithmatex">\[J/S_{effective} = J/S_{peak} - \Delta f_{error}^2 \cdot \left(\frac{\partial(J/S)}{\partial f}\right)^2\tag{31.21}\]</div>
+<p>where <span class="arithmatex">\(\Delta f_{error}\)</span> is the frequency tracking error. Modern threat radars with frequency agility at pulse-to-pulse rates of 1–10 GHz/s can defeat slow-tuning spot jammers.</p>
+<h4 id="swept-noise-jamming">Swept Noise Jamming<a class="headerlink" href="#swept-noise-jamming" title="Permanent link">&para;</a></h4>
+<p>Swept jamming represents a compromise: a narrow jammer bandwidth sweeps across the threat band at rate <span class="arithmatex">\(\dot{f}\)</span>, spending dwell time <span class="arithmatex">\(t_{dwell} = B_{radar}/\dot{f}\)</span> per radar frequency. The duty cycle against a specific radar frequency determines the effective J/S:</p>
+<div id="eq-swept_js"></div>
+<div class="arithmatex">\[J/S_{swept} = J/S_{spot} \cdot \frac{B_{radar}}{\dot{f} \cdot T_{return}}\tag{31.22}\]</div>
+<h3 id="3152-digital-radio-frequency-memory-drfm-deceptive-jamming"><span class="secnum">31.5.2</span> Digital Radio Frequency Memory (DRFM) Deceptive Jamming<a class="headerlink" href="#3152-digital-radio-frequency-memory-drfm-deceptive-jamming" title="Permanent link">&para;</a></h3>
+<p>The DRFM is the enabling technology for modern deceptive electronic attack. It digitises the intercepted radar pulse at the carrier frequency, stores it in a high-speed RAM, and retransmits the stored waveform with controlled modifications to produce false targets. The key DRFM performance parameters are:</p>
+<div id="eq-drfm_nyquist"></div>
+<div class="arithmatex">\[f_{ADC} \geq 2 \cdot B_{IF} \quad \text{(Nyquist criterion)}\tag{31.23}\]</div>
+<div id="eq-sfdr"></div>
+<div class="arithmatex">\[\text{SFDR} = 6.02 N_{bits} + 1.76 \quad [\text{dBc}] \quad \text{(ideal ADC spurious-free dynamic range)}\tag{31.24}\]</div>
+<p>A 12-bit DRFM achieves <span class="arithmatex">\(\sim\)</span>74 dBc SFDR, sufficient to generate false targets that are indistinguishable in amplitude from real targets.</p>
+<h4 id="range-gate-pull-off-rgpo">Range Gate Pull-Off (RGPO)<a class="headerlink" href="#range-gate-pull-off-rgpo" title="Permanent link">&para;</a></h4>
+<p>RGPO exploits the range-tracking loop of a pulse Doppler or range-gated radar. The DRFM first retransmits the intercepted pulse synchronously with the received pulse (zero delay), creating a false target at the true range. It then progressively increases the retransmission delay <span class="arithmatex">\(\Delta\tau\)</span>:</p>
+<div id="eq-rgpo_range"></div>
+<div class="arithmatex">\[R_{false}(t) = R_{true} + \frac{c}{2}\Delta\tau(t)\tag{31.25}\]</div>
+<p>The delay ramp rate is matched to the radar tracking loop bandwidth <span class="arithmatex">\(B_{TL}\)</span> to ensure capture:</p>
+<div id="eq-rgpo_rate"></div>
+<div class="arithmatex">\[\dot{R}_{false} = \frac{c}{2}\dot{\Delta\tau} \leq \frac{c}{2} \cdot \frac{1}{\pi B_{TL} \tau_{PW}}\tag{31.26}\]</div>
+<p>Once the range gate has been pulled far enough from the true range, the DRFM cuts transmission, leaving the radar tracker tracking empty space. The aircraft manoeuvres during this window.</p>
+<h4 id="velocity-gate-pull-off-vgpo">Velocity Gate Pull-Off (VGPO)<a class="headerlink" href="#velocity-gate-pull-off-vgpo" title="Permanent link">&para;</a></h4>
+<p>VGPO operates analogously in the Doppler domain. The DRFM introduces a frequency offset <span class="arithmatex">\(\Delta f_D\)</span> to the retransmitted pulse, mimicking a Doppler shift corresponding to a false velocity. The false radial velocity is:</p>
+<div id="eq-vgpo"></div>
+<div class="arithmatex">\[v_{false} = v_{true} + \frac{\lambda \Delta f_D}{2}\tag{31.27}\]</div>
+<p>The DRFM sweeps <span class="arithmatex">\(\Delta f_D\)</span> at a rate just within the Doppler tracking loop bandwidth, capturing the velocity gate and pulling it to the clutter region, where the CFAR threshold rises and detection is lost.</p>
+<h4 id="cross-eye-angle-deception">Cross-Eye Angle Deception<a class="headerlink" href="#cross-eye-angle-deception" title="Permanent link">&para;</a></h4>
+<p>Cross-eye jamming exploits the monopulse angle-measurement mechanism. Two re-transmitter antennas separated by baseline <span class="arithmatex">\(\ell\)</span> retransmit the intercepted signal with a phase difference <span class="arithmatex">\(\Delta\phi_{CE}\)</span>. The apparent angle error induced at the monopulse radar is:</p>
+<div id="eq-cross_eye"></div>
+<div class="arithmatex">\[\delta\theta_{CE} = \frac{\lambda}{2\pi k_{mon} d_{mon}} \cdot \frac{\Delta\phi_{CE}}{2}\tag{31.28}\]</div>
+<p>where <span class="arithmatex">\(k_{mon}\)</span> is the monopulse ratio slope and <span class="arithmatex">\(d_{mon}\)</span> is the monopulse antenna aperture. When <span class="arithmatex">\(\Delta\phi_{CE} = \pi\)</span> (180° phase difference), the apparent target position is driven to the null of the sum beam, causing maximum angle error. The two retransmitters must have near-equal amplitudes (within <span class="arithmatex">\(\pm\)</span>0.5 dB) and the phase difference must be stable to <span class="arithmatex">\(\pm\)</span>5° for effective deception.</p>
+<h3 id="3153-self-protection-escort-and-stand-off-jammers"><span class="secnum">31.5.3</span> Self-Protection, Escort, and Stand-Off Jammers<a class="headerlink" href="#3153-self-protection-escort-and-stand-off-jammers" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Self-Protection Jammer (SPJ):</strong> Carried aboard the protected platform. Jammer EIRP limited by volume and power constraints. EIRP = <span class="arithmatex">\(P_j G_j\)</span> typically 1–5 kW for combat aircraft SPJs. J/S improves as <span class="arithmatex">\(R^2\)</span> (<a href="#eq-js_spj">Equation (31.9)</a>).</p>
+</li>
+<li>
+<p><strong>Escort Jammer:</strong> Dedicated EA aircraft flying in close formation with strike package. Higher EIRP (10–100 kW) from larger platform. AN/ALQ-99 on EA-18G Growler: five pods, each 200 W per band, 10 transmitters, 1–18 GHz coverage. J/S depends on escort geometry.</p>
+</li>
+<li>
+<p><strong>Stand-Off Jammer (SOJ):</strong> Orbits outside threat engagement zone, providing area suppression. Must achieve required J/S at long range; requires very high EIRP (1 MW effective). EC-130H Compass Call: 150 kW average transmit power across communication bands.</p>
+</li>
+</ul>
+<p>Power management in multi-threat environments requires prioritisation. The threat priority function is typically:</p>
+<div id="eq-threat_priority"></div>
+<div class="arithmatex">\[P_{threat,i} = w_1 \cdot \text{lethality}_i + w_2 \cdot \text{engagement\_prob}_i
+               + w_3 \cdot (R_{BT,i}/R_i) + w_4 \cdot \text{track\_quality}_i\tag{31.29}\]</div>
+<p>The jammer allocates its time budget inversely proportional to <span class="arithmatex">\(P_{threat}\)</span> ranking, ensuring the most lethal immediate threat receives maximum jamming attention.</p>
+<h2 id="sec-ircm"><span class="secnum">31.6</span> Infrared Countermeasures<a class="headerlink" href="#sec-ircm" title="Permanent link">&para;</a></h2>
+<h3 id="3161-flare-countermeasures"><span class="secnum">31.6.1</span> Flare Countermeasures<a class="headerlink" href="#3161-flare-countermeasures" title="Permanent link">&para;</a></h3>
+<p>Infrared-guided missiles are a primary threat to aircraft and large UAVs. Flares remain the most widely deployed IR countermeasure due to their simplicity, low cost, and effectiveness against older single-band seekers.</p>
+<h4 id="mtv-flare-composition-and-spectral-characteristics">MTV Flare Composition and Spectral Characteristics<a class="headerlink" href="#mtv-flare-composition-and-spectral-characteristics" title="Permanent link">&para;</a></h4>
+<p>The standard flare composition is magnesium/Teflon/Viton (MTV), which burns at 2000–2500 K. The spectral radiance follows Planck’s law:</p>
+<div id="eq-planck"></div>
+<div class="arithmatex">\[L_\lambda(T) = \frac{2hc^2}{\lambda^5} \cdot \frac{\varepsilon(\lambda)}{\exp\!\left(\frac{hc}{\lambda k_B T}\right) - 1}\tag{31.30}\]</div>
+<p>where <span class="arithmatex">\(h = 6.626\times10^{-34}\)</span> J<span class="arithmatex">\(\cdot\)</span>s, <span class="arithmatex">\(c = 3\times10^8\)</span> m/s, <span class="arithmatex">\(k_B = 1.381\times10^{-23}\)</span> J/K, and <span class="arithmatex">\(\varepsilon(\lambda)\)</span> is the spectral emissivity of the burning material. For a 2300 K MTV flare, peak emission occurs at:</p>
+<div id="eq-wien"></div>
+<div class="arithmatex">\[\lambda_{peak} = \frac{2898\,\mu\text{m}\cdot\text{K}}{T} = \frac{2898}{2300} \approx 1.26\,\mu\text{m}\tag{31.31}\]</div>
+<p>However, the MTV composition contains MgF<span class="arithmatex">\(_2\)</span> and CO<span class="arithmatex">\(_2\)</span> spectral lines that produce strong emission bands at 2.7 <span class="arithmatex">\(\mu\)</span>m (the primary MWIR seeker window), making flares effective decoys in this band. The jet engine plume temperature is typically 600–900 K (commercial) to 1200–1500 K (military afterburner), and the plume radiance in the 3–5 <span class="arithmatex">\(\mu\)</span>m band is well-matched by the flare’s broad emission spectrum.</p>
+<h4 id="seeker-discrimination-against-flares">Seeker Discrimination Against Flares<a class="headerlink" href="#seeker-discrimination-against-flares" title="Permanent link">&para;</a></h4>
+<p>Modern dual-band and imaging IR (IIR) seekers discriminate flares from aircraft using several techniques:</p>
+<ol>
+<li>
+<p><strong>Spectral ratio discrimination:</strong> The ratio of radiance in two spectral bands (e.g., 2.7 <span class="arithmatex">\(\mu\)</span>m vs 4.3 <span class="arithmatex">\(\mu\)</span>m) differs between the aircraft exhaust (<span class="arithmatex">\(\mathrm{CO}_2\)</span> absorption at 4.3 <span class="arithmatex">\(\mu\)</span>m) and an MTV flare. The discrimination parameter is: <span id="eq-spectral_disc"></span></p>
+<div class="arithmatex">\[D_{spec} = \frac{L_{band1}}{L_{band2}}\tag{31.32}\]</div>
+<p>Aircraft have <span class="arithmatex">\(D_{spec} \gg 1\)</span> (engine hot); flares have <span class="arithmatex">\(D_{spec} \approx 0.5\)</span>–2 depending on composition.</p>
+</li>
+<li>
+<p><strong>Kinematic discrimination:</strong> A flare decelerates at <span class="arithmatex">\(\sim g\)</span> after ejection and follows a ballistic trajectory; the aircraft continues powered flight. The angular acceleration of a flare relative to the missile’s seeker diverges from a manoeuvring target signature.</p>
+</li>
+<li>
+<p><strong>Spatial discrimination:</strong> IIR seekers resolve the aircraft body from the point-source flare at ranges <span class="arithmatex">\(&lt; 5\)</span> km, enabling rejection of spatially separated decoys.</p>
+</li>
+</ol>
+<h3 id="3162-directed-infrared-countermeasures-dircm"><span class="secnum">31.6.2</span> Directed Infrared Countermeasures (DIRCM)<a class="headerlink" href="#3162-directed-infrared-countermeasures-dircm" title="Permanent link">&para;</a></h3>
+<p>DIRCM systems replace or supplement flares with a pointed, modulated laser beam that overwhelms or confuses the IR seeker’s tracking loop. The system consists of:</p>
+<ol>
+<li>
+<p><strong>Missile Approach Warning System (MAWS):</strong> UV or mid-wave IR sensor detecting missile plume; cues DIRCM within <span class="arithmatex">\(\sim\)</span>1 s of launch.</p>
+</li>
+<li>
+<p><strong>Fine Tracker:</strong> Narrow-FOV imaging sensor; acquires and tracks the incoming missile to <span class="arithmatex">\(&lt;\)</span>0.1 mrad pointing accuracy.</p>
+</li>
+<li>
+<p><strong>Laser:</strong> Modulated laser (1–5 <span class="arithmatex">\(\mu\)</span>m band) pointed at the seeker; disrupts tracking by saturating the detector or inducing false modulation in the seeker’s angle error loop.</p>
+</li>
+</ol>
+<p>The DIRCM laser must achieve sufficient irradiance at the seeker aperture to saturate it:</p>
+<div id="eq-dircm_irradiance"></div>
+<div class="arithmatex">\[E_{seeker} = \frac{P_{laser} G_{laser}}{4\pi R^2} \cdot T_{atm}(R) \geq E_{sat}\tag{31.33}\]</div>
+<p>where <span class="arithmatex">\(G_{laser}\)</span> is the laser beam gain (related to divergence <span class="arithmatex">\(\theta_{beam}\)</span> by <span class="arithmatex">\(G_{laser} = 4\pi/\theta_{beam}^2\)</span>), <span class="arithmatex">\(T_{atm}\)</span> is atmospheric transmission, and <span class="arithmatex">\(E_{sat}\)</span> is the seeker saturation irradiance (typically <span class="arithmatex">\(10^{-5}\)</span>–<span class="arithmatex">\(10^{-3}\)</span> W/cm<span class="arithmatex">\(^2\)</span>). Representative DIRCM systems include:</p>
+<ul>
+<li>
+<p><strong>AN/AAQ-24(V) Nemesis (Northrop Grumman):</strong> First generation DIRCM; 1–3 <span class="arithmatex">\(\mu\)</span>m Nd:YAG pumped OPO; fielded on C-130, C-17, special operations aircraft.</p>
+</li>
+<li>
+<p><strong>LAIRCM (Large Aircraft IRCM):</strong> Upgraded Nemesis with advanced MAWS integration; covers threats from 360° in azimuth via multiple turrets.</p>
+</li>
+<li>
+<p><strong>DIRCM/IDAS (Thales/ELTA):</strong> European standard; dual-band laser; modulation codes tailored to known seeker AGC and track loop parameters.</p>
+</li>
+</ul>
+<h2 id="sec-chaff"><span class="secnum">31.7</span> Chaff<a class="headerlink" href="#sec-chaff" title="Permanent link">&para;</a></h2>
+<h3 id="3171-principles-of-chaff-operation"><span class="secnum">31.7.1</span> Principles of Chaff Operation<a class="headerlink" href="#3171-principles-of-chaff-operation" title="Permanent link">&para;</a></h3>
+<p>Chaff consists of a large number of thin, electrically conductive dipole elements dispersed in the air to create a region of high radar reflectivity that can mask or decoy radar-guided weapons. Each chaff element is a half-wave dipole at the threat radar frequency:</p>
+<div id="eq-chaff_length"></div>
+<div class="arithmatex">\[\ell_{element} = \frac{\lambda}{2} = \frac{c}{2f}\tag{31.34}\]</div>
+<p>For a 10 GHz (X-band) radar: <span class="arithmatex">\(\ell = c/(2 \times 10^{10}) = 15\)</span> mm. Chaff cartridges contain millions of elements cut to cover multiple threat frequency bands.</p>
+<h3 id="3172-chaff-rcs"><span class="secnum">31.7.2</span> Chaff RCS<a class="headerlink" href="#3172-chaff-rcs" title="Permanent link">&para;</a></h3>
+<p>The radar cross-section of a resonant half-wave dipole is approximately <span class="arithmatex">\(0.86\lambda^2\)</span>. For a cloud of <span class="arithmatex">\(N\)</span> randomly oriented dipoles (uniform random orientation, averaging over polarisations):</p>
+<div id="eq-chaff_rcs"></div>
+<div class="arithmatex">\[\sigma_{chaff} = N \cdot 0.15\,\lambda^2 \quad [\text{m}^2]\tag{31.35}\]</div>
+<p>The factor 0.15 (rather than 0.86) accounts for the random orientation averaging. A chaff round containing <span class="arithmatex">\(N = 10^6\)</span> elements at <span class="arithmatex">\(\lambda = 0.03\)</span> m (X-band):</p>
+<div id="eq-chaff_example"></div>
+<div class="arithmatex">\[\sigma_{chaff} = 10^6 \times 0.15 \times (0.03)^2 = 135\,\text{m}^2\tag{31.36}\]</div>
+<p>This greatly exceeds the RCS of a typical combat aircraft (1–10 m<span class="arithmatex">\(^2\)</span>), producing a dominant return. The effectiveness ratio must satisfy:</p>
+<div id="eq-chaff_effectiveness"></div>
+<div class="arithmatex">\[\frac{\sigma_{chaff}}{\sigma_{aircraft}} \geq (J/S)_{required}\tag{31.37}\]</div>
+<h3 id="3173-chaff-deployment-tactics"><span class="secnum">31.7.3</span> Chaff Deployment Tactics<a class="headerlink" href="#3173-chaff-deployment-tactics" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Seduction:</strong> The aircraft fires chaff at the moment of missile launch detection, then manoeuvres sharply. The radar seeker, tracking the large chaff cloud, continues tracking the cloud while the aircraft escapes.</p>
+</li>
+<li>
+<p><strong>Distraction:</strong> Pre-emptive chaff deployment before the aircraft enters a threat engagement zone, saturating the radar with multiple false targets and degrading track-while-scan capacity.</p>
+</li>
+<li>
+<p><strong>Confusion:</strong> Multiple aircraft simultaneously firing chaff creates a complex multi-target scenario that overwhelms radar signal processing capacity.</p>
+</li>
+</ol>
+<p>Bloom time (the period during which chaff is an effective decoy) is typically 20–60 s depending on wind shear, element fall rate, and cloud dispersion. The chaff cloud angular subtense at the threat radar must exceed the radar’s angle tracking gate width for seduction to succeed.</p>
+<h2 id="sec-ep"><span class="secnum">31.8</span> Electronic Protection<a class="headerlink" href="#sec-ep" title="Permanent link">&para;</a></h2>
+<p>Electronic Protection (EP) encompasses all measures that maintain the effectiveness of friendly electromagnetic systems in the face of adversary EA. Modern radar and communication systems employ multiple complementary EP techniques.</p>
+<h3 id="3181-frequency-agility"><span class="secnum">31.8.1</span> Frequency Agility<a class="headerlink" href="#3181-frequency-agility" title="Permanent link">&para;</a></h3>
+<p>A frequency-agile radar changes its carrier frequency from pulse to pulse (or burst to burst), hopping across a wide bandwidth. The jamming degradation against a spot jammer is:</p>
+<div id="eq-freq_agility"></div>
+<div class="arithmatex">\[\Delta_{JS,agility}\,[\text{dB}] = 10\log_{10}\!\left(\frac{B_{hop}}{B_{spot}}\right)\tag{31.38}\]</div>
+<p>where <span class="arithmatex">\(B_{hop}\)</span> is the frequency hopping bandwidth and <span class="arithmatex">\(B_{spot}\)</span> is the jammer bandwidth. An X-band radar hopping across 500 MHz against a 10 MHz spot jammer degrades jammer effectiveness by 17 dB. Frequency agility also provides intrinsic scintillation averaging (reduced <span class="arithmatex">\(\sigma\)</span> fluctuations) and range sidelobe suppression in pulse compression.</p>
+<h3 id="3182-pulse-compression-and-lpi"><span class="secnum">31.8.2</span> Pulse Compression and LPI<a class="headerlink" href="#3182-pulse-compression-and-lpi" title="Permanent link">&para;</a></h3>
+<p>Pulse compression allows a radar to transmit a long pulse (high energy) while achieving the range resolution of a short pulse. The compression is achieved by modulating the transmitted pulse (LFM chirp, phase coding) and matched-filtering the received signal:</p>
+<div id="eq-range_res"></div>
+<div class="arithmatex">\[R_{res} = \frac{c}{2B}\tag{31.39}\]</div>
+<div id="eq-pulse_compression_gain"></div>
+<div class="arithmatex">\[G_{PC} = B \cdot \tau_{PW} \quad [\text{time-bandwidth product}]\tag{31.40}\]</div>
+<p>where <span class="arithmatex">\(B\)</span> is the chirp bandwidth and <span class="arithmatex">\(\tau_{PW}\)</span> is the pulse width. A waveform with <span class="arithmatex">\(B = 50\)</span> MHz and <span class="arithmatex">\(\tau_{PW} = 100\)</span> <span class="arithmatex">\(\mu\)</span>s achieves <span class="arithmatex">\(G_{PC} = 5000\)</span> (37 dB). The peak power required is reduced by <span class="arithmatex">\(G_{PC}\)</span> relative to an uncompressed pulse of the same energy, drastically lowering the peak power observable by ES receivers.</p>
+<p>An FMCW (Frequency-Modulated Continuous Wave) LPI radar transmits continuously with low peak power:</p>
+<div id="eq-fmcw_power"></div>
+<div class="arithmatex">\[P_{peak,FMCW} = P_{avg,FMCW}\tag{31.41}\]</div>
+<div id="eq-pulse_power"></div>
+<div class="arithmatex">\[P_{peak,pulse} = P_{avg,pulse} / \text{duty cycle} \gg P_{avg,pulse}\tag{31.42}\]</div>
+<p>The ES receiver using MDS (<a href="#eq-mds">Equation (31.5)</a>) must integrate over the FMCW sweep time <span class="arithmatex">\(T_{sweep}\)</span> to detect it, requiring <span class="arithmatex">\(\sim G_{PC}\)</span> longer integration than for a pulsed radar — providing a fundamental intercept advantage.</p>
+<h3 id="3183-monopulse-resistance-to-angle-deception"><span class="secnum">31.8.3</span> Monopulse Resistance to Angle Deception<a class="headerlink" href="#3183-monopulse-resistance-to-angle-deception" title="Permanent link">&para;</a></h3>
+<p>Conical scan and lobing radars measure angle by comparing amplitude modulation of received pulses. A jammer can modulate its output at the scan frequency to inject false angle error — the inverse gain jamming technique. Monopulse eliminates this vulnerability by measuring the angle error from a <em>single pulse</em> using simultaneous sum (<span class="arithmatex">\(\Sigma\)</span>) and difference (<span class="arithmatex">\(\Delta\)</span>) beams:</p>
+<div id="eq-monopulse"></div>
+<div class="arithmatex">\[\theta_{error} = k_{mon} \cdot \frac{\Delta}{\Sigma}\tag{31.43}\]</div>
+<p>where <span class="arithmatex">\(k_{mon}\)</span> is the monopulse ratio slope (rad<span class="arithmatex">\(^{-1}\)</span>). Because both <span class="arithmatex">\(\Sigma\)</span> and <span class="arithmatex">\(\Delta\)</span> are measured simultaneously, inter-pulse amplitude modulation cannot inject angle error. Monopulse is highly resistant to all amplitude-based jamming, which is why cross-eye (phase-based deception, <a href="#sec-jamming">Section 31.5</a>) is required against it.</p>
+<h3 id="3184-adaptive-beamforming-and-null-steering"><span class="secnum">31.8.4</span> Adaptive Beamforming and Null Steering<a class="headerlink" href="#3184-adaptive-beamforming-and-null-steering" title="Permanent link">&para;</a></h3>
+<p>AESA (Active Electronically Scanned Array) radars can place precise nulls in their receive pattern in the direction of jammers. The weight vector <span class="arithmatex">\(\mathbf{w}\)</span> that maximises SINR is given by the minimum variance distortionless response (MVDR) beamformer:</p>
+<div id="eq-mvdr"></div>
+<div class="arithmatex">\[\mathbf{w}_{opt} = \frac{\mathbf{R}_{xx}^{-1} \mathbf{a}(\theta_0)}
+                        {\mathbf{a}^H(\theta_0) \mathbf{R}_{xx}^{-1} \mathbf{a}(\theta_0)}\tag{31.44}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{R}_{xx}\)</span> is the measured received signal covariance matrix and <span class="arithmatex">\(\mathbf{a}(\theta_0)\)</span> is the steering vector toward the target direction <span class="arithmatex">\(\theta_0\)</span>. The null depth achievable against a jammer at angle <span class="arithmatex">\(\theta_j\)</span> is limited by the array calibration accuracy to approximately <span class="arithmatex">\(10\log_{10}(1/N_{elements}^2)\)</span> relative to the main beam, typically 30–50 dB for large arrays.</p>
+<p><a href="#tab-ep_techniques">Table 31.4</a> summarises EP technique effectiveness against major EA modes.</p>
+<div class="tbl" id="tab-ep_techniques">
+<div class="tbl-caption"><strong>Table 31.4.</strong> EP Technique Effectiveness Against EA Modes</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>EP Technique</strong></th>
+<th style="text-align: center;"><strong>Barrage</strong></th>
+<th style="text-align: center;"><strong>Spot</strong></th>
+<th style="text-align: center;"><strong>DRFM</strong></th>
+<th style="text-align: center;"><strong>Cross-eye</strong></th>
+<th style="text-align: center;"><strong>Chaff</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Frequency agility</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pulse compression</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">FMCW/LPI</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">Monopulse</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">Null steering (AESA)</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">PRF agility</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">High</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">MTI/DPCA</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">Medium</td>
+<td style="text-align: center;">Low</td>
+<td style="text-align: center;">High</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-gps_ew"><span class="secnum">31.9</span> GPS Jamming and Anti-Jamming<a class="headerlink" href="#sec-gps_ew" title="Permanent link">&para;</a></h2>
+<h3 id="3191-gps-signal-vulnerability"><span class="secnum">31.9.1</span> GPS Signal Vulnerability<a class="headerlink" href="#3191-gps-signal-vulnerability" title="Permanent link">&para;</a></h3>
+<p>The GPS L1 C/A signal arrives at a receiver antenna with power:</p>
+<div id="eq-gps_power"></div>
+<div class="arithmatex">\[P_{GPS} \approx -130\,\text{dBm}\tag{31.45}\]</div>
+<p>This extremely low received power makes GPS inherently vulnerable to jamming. Any narrowband or broadband jammer operating near 1575.42 MHz (L1) or 1227.6 MHz (L2) with even modest power can deny GPS service over a wide area.</p>
+<h3 id="3192-jamming-coverage-radius"><span class="secnum">31.9.2</span> Jamming Coverage Radius<a class="headerlink" href="#3192-jamming-coverage-radius" title="Permanent link">&para;</a></h3>
+<p>The range at which a GPS jammer can deny service to a standard receiver is:</p>
+<div id="eq-gps_jammer_range"></div>
+<div class="arithmatex">\[R_{j,GPS} = \frac{\lambda}{4\pi} \sqrt{\frac{P_j G_j}{(J/S)_{req} \cdot P_{GPS}}}\tag{31.46}\]</div>
+<p>where <span class="arithmatex">\((J/S)_{req}\)</span> is the minimum J/S to suppress the receiver’s tracking loops (typically 20–40 dB for a C/A code receiver). A 10 W omnidirectional jammer achieves:</p>
+<div id="eq-gps_range_example"></div>
+<div class="arithmatex">\[R_{j,GPS} = \frac{0.19}{4\pi}\sqrt{\frac{10 \times 1}{1000 \times 10^{-16}}} \approx 50\,\text{km}\tag{31.47}\]</div>
+<p>This explains the devastating effect of even small commercially available GPS jammers, and the operational significance of GPS anti-jamming measures.</p>
+<h3 id="3193-gps-spoofing"><span class="secnum">31.9.3</span> GPS Spoofing<a class="headerlink" href="#3193-gps-spoofing" title="Permanent link">&para;</a></h3>
+<p>GPS spoofing transmits counterfeit GPS signals with higher power than authentic satellites, causing the receiver’s code tracking loops to lock onto the false signals. The spoofer must:</p>
+<ol>
+<li>
+<p>Match the signal structure of authentic GPS (C/A code, L1 carrier, navigation message).</p>
+</li>
+<li>
+<p>Gradually increase signal power to capture the tracking loop without causing loss-of-lock.</p>
+</li>
+<li>
+<p>Introduce position/time errors consistent with the desired navigation deception.</p>
+</li>
+</ol>
+<p>The spoofing power advantage required over the authentic signal is typically only 3–6 dB, since the spoofer can transmit from a nearby position while authentic satellites are 20,200 km away.</p>
+<h3 id="3194-anti-jamming-techniques"><span class="secnum">31.9.4</span> Anti-Jamming Techniques<a class="headerlink" href="#3194-anti-jamming-techniques" title="Permanent link">&para;</a></h3>
+<h4 id="controlled-radiation-pattern-antenna-crpa">Controlled Radiation Pattern Antenna (CRPA)<a class="headerlink" href="#controlled-radiation-pattern-antenna-crpa" title="Permanent link">&para;</a></h4>
+<p>A CRPA (typically 7-element phased array in a 25 cm aperture) nulls jammers in the receive pattern while maintaining gain toward GPS satellites. The null depth against a jammer is:</p>
+<div id="eq-crpa_null"></div>
+<div class="arithmatex">\[G_{null} = -10\log_{10}\!\left(\frac{1 + P_j G_j / (4\pi R_j^2 \cdot N_0 B)}{(J/S)_{receiver}}\right)\tag{31.48}\]</div>
+<p>Operational CRPAs achieve 40–55 dB of jammer suppression per null. With <span class="arithmatex">\(N = 7\)</span> elements, up to 6 simultaneous jammers can be nulled. The GPS military antenna (GAS-1 or similar) provides additional jamming resistance.</p>
+<h4 id="m-code-and-selective-availability-anti-spoofing-module-saasm">M-Code and Selective Availability Anti-Spoofing Module (SAASM)<a class="headerlink" href="#m-code-and-selective-availability-anti-spoofing-module-saasm" title="Permanent link">&para;</a></h4>
+<p>The GPS M-code military signal provides:</p>
+<ul>
+<li>
+<p>24 dB higher effective signal power than C/A code.</p>
+</li>
+<li>
+<p>Cryptographic authentication preventing signal spoofing.</p>
+</li>
+<li>
+<p>Binary offset carrier (BOC) modulation providing sharper code correlation peaks.</p>
+</li>
+<li>
+<p>Direct acquisition without dependency on C/A code.</p>
+</li>
+</ul>
+<h4 id="anti-spoofing-measures">Anti-Spoofing Measures<a class="headerlink" href="#anti-spoofing-measures" title="Permanent link">&para;</a></h4>
+<div id="eq-raim"></div>
+<div class="arithmatex">\[\text{RAIM threshold} = \frac{P_{alert}\text{-equivalent pseudorange error}}{K_{RAIM}\sqrt{N_{sv}}}\tag{31.49}\]</div>
+<p>Receiver Autonomous Integrity Monitoring (RAIM) detects anomalous pseudorange measurements statistically inconsistent with the true satellite geometry. Complementary anti-spoofing measures include:</p>
+<ul>
+<li>
+<p>INS cross-check: GPS position solution verified against INS dead reckoning; large position jumps (spoofing artifacts) trigger alert.</p>
+</li>
+<li>
+<p>Multi-constellation: Simultaneous GPS + GLONASS + Galileo + BeiDou; a spoofer must simultaneously spoof all constellations on different frequencies.</p>
+</li>
+<li>
+<p>Angle-of-arrival: Spoofed signals arrive from a ground transmitter at low elevation; authentic satellites are above the horizon.</p>
+</li>
+</ul>
+<p><a href="#tab-gps_antijam">Table 31.5</a> compares anti-jamming techniques.</p>
+<div class="tbl" id="tab-gps_antijam">
+<div class="tbl-caption"><strong>Table 31.5.</strong> GPS Anti-Jamming and Anti-Spoofing Technique Comparison</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Technique</strong></th>
+<th style="text-align: left;"><strong>Anti-Jam (dB)</strong></th>
+<th style="text-align: left;"><strong>Anti-Spoof</strong></th>
+<th style="text-align: left;"><strong>Cost/Complexity</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Standard C/A receiver</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">P(Y)-code receiver</td>
+<td style="text-align: left;">+20</td>
+<td style="text-align: left;">Partial</td>
+<td style="text-align: left;">Medium</td>
+</tr>
+<tr>
+<td style="text-align: left;">M-code receiver</td>
+<td style="text-align: left;">+24</td>
+<td style="text-align: left;">Yes (crypto)</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">CRPA (7-element)</td>
+<td style="text-align: left;">40–55</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">CRPA + M-code</td>
+<td style="text-align: left;">55–75</td>
+<td style="text-align: left;">Yes</td>
+<td style="text-align: left;">Very high</td>
+</tr>
+<tr>
+<td style="text-align: left;">RAIM</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Partial</td>
+<td style="text-align: left;">Low (software)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Multi-constellation</td>
+<td style="text-align: left;">0</td>
+<td style="text-align: left;">Partial</td>
+<td style="text-align: left;">Low–Medium</td>
+</tr>
+<tr>
+<td style="text-align: left;">INS integration</td>
+<td style="text-align: left;">Graceful degradation</td>
+<td style="text-align: left;">Partial</td>
+<td style="text-align: left;">Medium</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-missile_cm"><span class="secnum">31.10</span> Missile Countermeasures<a class="headerlink" href="#sec-missile_cm" title="Permanent link">&para;</a></h2>
+<h3 id="31101-against-ir-guided-missiles"><span class="secnum">31.10.1</span> Against IR-Guided Missiles<a class="headerlink" href="#31101-against-ir-guided-missiles" title="Permanent link">&para;</a></h3>
+<p>Infrared-homing missiles are defeated by a combination of kinematic and electromagnetic countermeasures. The fundamental requirement is to present the seeker with one or more false targets whose IR intensity exceeds that of the real target.</p>
+<h4 id="flare-employment-sequence">Flare Employment Sequence<a class="headerlink" href="#flare-employment-sequence" title="Permanent link">&para;</a></h4>
+<p>A fully integrated IR countermeasures sequence for an aircraft under MANPADS attack:</p>
+<ol>
+<li>
+<p>MAWS detects missile launch (UV flash or MWIR plume signature); fires alert within 0.5 s.</p>
+</li>
+<li>
+<p>System assesses engagement geometry; selects countermeasure sequence.</p>
+</li>
+<li>
+<p>Flare cartridges dispensed at optimised rate (typically 4–6 per burst) and timing relative to manoeuvre initiation.</p>
+</li>
+<li>
+<p>Aircraft executes high-g break turn (loading the seeker with angular rate beyond its track bandwidth).</p>
+</li>
+<li>
+<p>DIRCM laser (if fitted) engages seeker continuously throughout.</p>
+</li>
+</ol>
+<p>The probability of aircraft survival given flare employment is modelled by:</p>
+<div id="eq-survival_prob"></div>
+<div class="arithmatex">\[P_{survival} = 1 - P_{kill|no\,CM} \cdot P_{kill|CM\,fail} \cdot (1-P_{CM\,success})\tag{31.50}\]</div>
+<h3 id="31102-against-radar-guided-missiles"><span class="secnum">31.10.2</span> Against Radar-Guided Missiles<a class="headerlink" href="#31102-against-radar-guided-missiles" title="Permanent link">&para;</a></h3>
+<h4 id="active-radar-homing-arh-missiles">Active Radar Homing (ARH) Missiles<a class="headerlink" href="#active-radar-homing-arh-missiles" title="Permanent link">&para;</a></h4>
+<p>Against missiles with ARH seekers (e.g., AIM-120 AMRAAM, R-77, Meteor):</p>
+<ul>
+<li>
+<p><strong>Noise jamming:</strong> Raise noise floor in seeker’s IF bandwidth; reduce <span class="arithmatex">\(P_d/P_{fa}\)</span>.</p>
+</li>
+<li>
+<p><strong>DRFM deception:</strong> Inject false range/velocity targets; attempt RGPO/VGPO.</p>
+</li>
+<li>
+<p><strong>Chaff:</strong> Dispense chaff cloud; seeker must discriminate aircraft from cloud.</p>
+</li>
+<li>
+<p><strong>Terrain masking:</strong> Descend to terrain; place ground clutter in seeker passband; clutter return overwhelms Doppler discrimination.</p>
+</li>
+<li>
+<p><strong>Notch filter evasion:</strong> Manoeuvre to zero radial velocity relative to missile; drives target Doppler into notch; seeker loses track.</p>
+</li>
+</ul>
+<h4 id="semi-active-radar-homing-sarh">Semi-Active Radar Homing (SARH)<a class="headerlink" href="#semi-active-radar-homing-sarh" title="Permanent link">&para;</a></h4>
+<p>SARH missiles require continuous illumination of the target by the launching radar. Countermeasures target the illuminating radar rather than the missile seeker:</p>
+<ul>
+<li>
+<p>Jam the CW illumination frequency with spot jamming.</p>
+</li>
+<li>
+<p>Physically engage the illuminating radar with anti-radiation missile (ARM).</p>
+</li>
+<li>
+<p>Terrain masking to break illumination line of sight.</p>
+</li>
+</ul>
+<h4 id="towed-decoys">Towed Decoys<a class="headerlink" href="#towed-decoys" title="Permanent link">&para;</a></h4>
+<p>A towed decoy is a small RF repeater deployed on a long fibre-optic tether behind the aircraft. The decoy amplifies the threat radar signal and retransmits it with an RCS that exceeds the aircraft:</p>
+<div id="eq-decoy_rcs"></div>
+<div class="arithmatex">\[\sigma_{decoy} = \left(\frac{P_{retx} G_{retx}^2 \lambda^2}{(4\pi)^3 P_{radar} G_{radar}^2}\right)^{1/2}\tag{31.51}\]</div>
+<p>The towed decoy draws an ARH or SARH missile away from the aircraft. The ALE-50 (unmodulated) and ALE-55 (fibre-optic, DRFM-capable) are the primary USAF systems. The decoy must present a continuously larger apparent RCS, achieved by increasing retransmission gain as the missile closes.</p>
+<h4 id="miniature-air-launched-decoy-mald">Miniature Air-Launched Decoy (MALD)<a class="headerlink" href="#miniature-air-launched-decoy-mald" title="Permanent link">&para;</a></h4>
+<p>The ADM-160B MALD (L-3 / Raytheon) is a powered, free-flying decoy:</p>
+<ul>
+<li>
+<p>Turbojet propulsion; 500+ km range; Mach 0.9 cruise.</p>
+</li>
+<li>
+<p>RCS equivalent to a tactical fighter via calibrated retransmit.</p>
+</li>
+<li>
+<p>Emulates fighter radar/communications emissions (MALD-J variant adds jamming).</p>
+</li>
+<li>
+<p>Expendable; saturates integrated air defence systems (IADS) with false tracks.</p>
+</li>
+</ul>
+<h2 id="sec-ew_aircraft"><span class="secnum">31.11</span> Electronic Warfare Aircraft and Integrated Systems<a class="headerlink" href="#sec-ew_aircraft" title="Permanent link">&para;</a></h2>
+<h3 id="31111-ea-18g-growler"><span class="secnum">31.11.1</span> EA-18G Growler<a class="headerlink" href="#31111-ea-18g-growler" title="Permanent link">&para;</a></h3>
+<p>The EA-18G Growler is the US Navy’s dedicated carrier-based EW aircraft, derived from the F/A-18F. Its primary EW systems are:</p>
+<ul>
+<li>
+<p><strong>AN/ALQ-99 Tactical Jamming System (TJS):</strong> External jamming pods covering 0.1–18 GHz in five bands; each pod contains two jamming transmitters; peak EIRP exceeds 1 MW per band. The ALQ-99 is a noise and modulated noise jammer; DRFM capability is limited.</p>
+</li>
+<li>
+<p><strong>AN/ALQ-218(V)2 Tactical Jamming Receiver:</strong> Wideband ESM system providing real-time threat characterisation, geo-location, and cueing for the ALQ-99.</p>
+</li>
+<li>
+<p><strong>AN/APG-79 AESA Radar:</strong> Used for normal A-A and A-G modes; provides passive track via AESA receive-only mode when ALQ-218 is active.</p>
+</li>
+<li>
+<p><strong>AGM-88E AARGM:</strong> Anti-Radiation Guided Missile; homes on threat radar emissions; attacks radiating SAM batteries.</p>
+</li>
+</ul>
+<p>The Growler’s next-generation replacement, the Next Generation Jammer (NGJ), incorporates DRFM-based deceptive jamming in all three bands (low, mid, high), beam agility via AESA transmit arrays, and cognitive EW processing for adaptive waveform selection.</p>
+<h3 id="31112-f-35-anasq-239-barracuda"><span class="secnum">31.11.2</span> F-35 AN/ASQ-239 Barracuda<a class="headerlink" href="#31112-f-35-anasq-239-barracuda" title="Permanent link">&para;</a></h3>
+<p>The F-35’s integrated EW suite (AN/ASQ-239) demonstrates the fusion of EW with the aircraft’s sensor suite:</p>
+<ul>
+<li>
+<p>Full 360° azimuth ESM coverage from multiple antenna apertures distributed around the aircraft airframe (no dedicated external pod).</p>
+</li>
+<li>
+<p>Passive ranging via TDOA using widely-spaced apertures and the aircraft’s INS timing reference.</p>
+</li>
+<li>
+<p>Integrated with AN/AAQ-37 DAS (Distributed Aperture System): six IR cameras providing missile approach warning and passive tracking without dedicated MAWS.</p>
+</li>
+<li>
+<p>SPJ function via internal transmit antennas; power limited compared to pod-mounted systems but fully integrated in track-while-jam operation.</p>
+</li>
+</ul>
+<h3 id="31113-rc-135vw-rivet-joint"><span class="secnum">31.11.3</span> RC-135V/W Rivet Joint<a class="headerlink" href="#31113-rc-135vw-rivet-joint" title="Permanent link">&para;</a></h3>
+<p>The Rivet Joint is the USAF’s primary SIGINT collection platform, providing:</p>
+<ul>
+<li>
+<p>Broadband ELINT collection: 0.1–40 GHz; characterises radar emission parameters for threat library updates.</p>
+</li>
+<li>
+<p>COMINT collection: communication intercept; COMINT geolocation.</p>
+</li>
+<li>
+<p>On-board analysis by specialised operators; real-time intelligence dissemination via datalink to theatre commanders.</p>
+</li>
+<li>
+<p>High-accuracy TDOA/AOA geolocation of emitters to support targeting.</p>
+</li>
+</ul>
+<h3 id="31114-drone-electronic-warfare-systems"><span class="secnum">31.11.4</span> Drone Electronic Warfare Systems<a class="headerlink" href="#31114-drone-electronic-warfare-systems" title="Permanent link">&para;</a></h3>
+<p>Small UAVs are increasingly employed as EW platforms due to their low cost and expendability:</p>
+<div class="tbl" id="tab-drone_ew">
+<div class="tbl-caption"><strong>Table 31.6.</strong> Drone-Borne Electronic Warfare Systems</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>System</strong></th>
+<th style="text-align: left;"><strong>Platform</strong></th>
+<th style="text-align: left;"><strong>Function</strong></th>
+<th style="text-align: left;"><strong>Frequency Range</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MALD-J ADM-160C</td>
+<td style="text-align: left;">Expendable UAV</td>
+<td style="text-align: left;">Stand-in jamming + decoy</td>
+<td style="text-align: left;">2–18 GHz</td>
+</tr>
+<tr>
+<td style="text-align: left;">SkyShield (Elbit)</td>
+<td style="text-align: left;">Pod on HALE/MALE</td>
+<td style="text-align: left;">SPJ; DIRCM</td>
+<td style="text-align: left;">2–18 GHz + IR</td>
+</tr>
+<tr>
+<td style="text-align: left;">Coyote Block 3</td>
+<td style="text-align: left;">Small UAV swarm</td>
+<td style="text-align: left;">Escort jammer; EA</td>
+<td style="text-align: left;">Custom</td>
+</tr>
+<tr>
+<td style="text-align: left;">CHAMP (AFRL)</td>
+<td style="text-align: left;">Cruise missile</td>
+<td style="text-align: left;">HPM payload; disable electronics</td>
+<td style="text-align: left;">Wideband</td>
+</tr>
+<tr>
+<td style="text-align: left;">Perdix swarm</td>
+<td style="text-align: left;">3-in. expendable</td>
+<td style="text-align: left;">RF survey; C2 jamming</td>
+<td style="text-align: left;">0.4–6 GHz</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-cema"><span class="secnum">31.12</span> Cyber-Electromagnetic Activities (CEMA)<a class="headerlink" href="#sec-cema" title="Permanent link">&para;</a></h2>
+<h3 id="31121-the-convergence-of-ew-and-cyber"><span class="secnum">31.12.1</span> The Convergence of EW and Cyber<a class="headerlink" href="#31121-the-convergence-of-ew-and-cyber" title="Permanent link">&para;</a></h3>
+<p>The distinction between electronic warfare and cyber operations has largely dissolved in modern conflict. Any system with digital hardware accessible via electromagnetic coupling — an RF interface, conducted emission, or intentional injection — is simultaneously a cyber target. The CEMA concept formalises this convergence.</p>
+<h3 id="31122-rf-enabled-cyber-operations"><span class="secnum">31.12.2</span> RF-Enabled Cyber Operations<a class="headerlink" href="#31122-rf-enabled-cyber-operations" title="Permanent link">&para;</a></h3>
+<p>Several attack vectors exist for cyber operations conducted via RF:</p>
+<ul>
+<li>
+<p><strong>RF side-channel attack:</strong> Compromised processor emits RF emissions correlated with classified cryptographic operations; TEMPEST attacks exploit this.</p>
+</li>
+<li>
+<p><strong>Intentional RF injection:</strong> High-power narrowband signal couples into circuit board traces; modulates supply rail; injects false data into ADC. IEMI (Intentional Electromagnetic Interference) is the civilian analogue.</p>
+</li>
+<li>
+<p><strong>Protocol-layer exploit:</strong> Craft malformed datalink packet (e.g., MAVLink for UAV, TADIL-J for JTIDS) received by standard RF interface; exploit parser vulnerability in firmware.</p>
+</li>
+<li>
+<p><strong>Software Defined Radio (SDR) gateway:</strong> A compromised SDR node in a mesh network serves as a RF-to-IP bridge enabling cyber intrusion via the radio link.</p>
+</li>
+</ul>
+<h3 id="31123-cognitive-and-ai-driven-ew"><span class="secnum">31.12.3</span> Cognitive and AI-Driven EW<a class="headerlink" href="#31123-cognitive-and-ai-driven-ew" title="Permanent link">&para;</a></h3>
+<p>The exponential growth in adversary emitter diversity and waveform complexity is driving a shift toward machine-learning-based EW:</p>
+<ul>
+<li>
+<p><strong>Deep learning emitter identification:</strong> Convolutional neural networks trained on I/Q sample libraries achieve emitter ID accuracy <span class="arithmatex">\(&gt;\)</span>97% on known emitters with SNR <span class="arithmatex">\(&gt;5\)</span> dB, and generalise to novel modulations through transfer learning.</p>
+</li>
+<li>
+<p><strong>Reinforcement learning jammer:</strong> The jammer is modelled as an agent in a Markov decision process; the reward function is the radar detection degradation. RL-trained jammers adapt their waveform against unknown radar ECCM in real time.</p>
+</li>
+<li>
+<p><strong>Cognitive spectrum access:</strong> EW system senses spectrum occupancy and dynamically selects jamming frequency, waveform, and power to maximise effectiveness while minimising interference to friendly systems.</p>
+</li>
+</ul>
+<p>The performance of an ML-based emitter classifier can be characterised by the confusion matrix and the minimum SNR for a target accuracy <span class="arithmatex">\(P_c\)</span>:</p>
+<div id="eq-ml_snr"></div>
+<div class="arithmatex">\[\text{SNR}_{min} = \frac{\sigma_n^2 \cdot Q^{-1}(1-P_c)^2}{2\|\boldsymbol{\Delta\mu}\|^2}\tag{31.52}\]</div>
+<p>where <span class="arithmatex">\(\boldsymbol{\Delta\mu}\)</span> is the feature vector difference between classes and <span class="arithmatex">\(\sigma_n^2\)</span> is the feature noise variance.</p>
+<h3 id="31124-quantum-radar-and-future-ew"><span class="secnum">31.12.4</span> Quantum Radar and Future EW<a class="headerlink" href="#31124-quantum-radar-and-future-ew" title="Permanent link">&para;</a></h3>
+<p>Quantum illumination radar exploits entangled photon pairs to achieve theoretically <span class="arithmatex">\(6e\)</span> dB (where <span class="arithmatex">\(e\)</span> is the base of natural logarithm) advantage in target detection SNR over classical radar at the same transmitted power in thermal noise environments. The quantum illumination SNR ratio is:</p>
+<div id="eq-quantum_radar"></div>
+<div class="arithmatex">\[\frac{d^2_{QI}}{d^2_{classical}} \approx e^{-1}\tag{31.53}\]</div>
+<p>The practical implication is that quantum radar, if realised, would be nearly impossible to jam via conventional noise injection, since it relies on quantum correlation rather than classical coherence. The microwave quantum illumination experiment at MIT (Shapiro/Lloyd, 2009) demonstrated the principle at optical frequencies; microwave implementation remains a major research challenge.</p>
+<p>Photonic EW represents another frontier: photonic RF filters, photonic ADCs sampling at 100 GHz+, and fibre-optical beamforming enable EW systems operating into the EHF and THz bands where conventional electronic components reach their limits. THz sensing (0.3–3 THz) enables imaging through non-metallic concealment and new ELINT collection against emerging mmW systems.</p>
+<h2 id="sec-ew_design"><span class="secnum">31.13</span> EW System Design Trade-offs and Performance Analysis<a class="headerlink" href="#sec-ew_design" title="Permanent link">&para;</a></h2>
+<h3 id="31131-eirp-vs-coverage-vs-platform-constraints"><span class="secnum">31.13.1</span> EIRP vs Coverage vs Platform Constraints<a class="headerlink" href="#31131-eirp-vs-coverage-vs-platform-constraints" title="Permanent link">&para;</a></h3>
+<p>The fundamental EW design equation balances EIRP requirements against platform constraints. For a stand-in jammer achieving required J/S at range <span class="arithmatex">\(R_{max}\)</span>:</p>
+<div id="eq-eirp_req"></div>
+<div class="arithmatex">\[\mathrm{EIRP}_{required} = P_j G_j = (J/S)_{req} \cdot P_t G_t \sigma \cdot \frac{R_j^2}{(4\pi) R_t^4}\tag{31.54}\]</div>
+<p>The antenna aperture is limited by platform dimensions; gain is:</p>
+<div id="eq-ant_gain"></div>
+<div class="arithmatex">\[G_j = \eta \cdot \frac{4\pi A_{ant}}{\lambda^2}\tag{31.55}\]</div>
+<p>For a 0.3 m<span class="arithmatex">\(\times\)</span>0.3 m aperture at 10 GHz: <span class="arithmatex">\(G_j = 0.6 \times 4\pi \times 0.09 / (0.03)^2 = 754 = 28.8\)</span> dBi.</p>
+<p>Power amplifier efficiency <span class="arithmatex">\(\eta_{PA}\)</span> converts DC power to RF:</p>
+<div id="eq-pa_efficiency"></div>
+<div class="arithmatex">\[P_{DC} = \frac{P_j}{\eta_{PA}}; \quad \eta_{PA} = 30\%\text{--}50\%\text{ (GaN PA)}\tag{31.56}\]</div>
+<p>Thermal management is the critical constraint: a 1 kW average RF output jammer dissipates <span class="arithmatex">\(\sim\)</span>1.5 kW of heat, requiring dedicated thermal management in a constrained airborne installation.</p>
+<h3 id="31132-integrated-ew-architecture-for-combat-uavs"><span class="secnum">31.13.2</span> Integrated EW Architecture for Combat UAVs<a class="headerlink" href="#31132-integrated-ew-architecture-for-combat-uavs" title="Permanent link">&para;</a></h3>
+<p>Modern combat UAVs (e.g., XQ-58 Valkyrie, Loyal Wingman) must integrate EW with other mission functions. <a href="#tab-uav_ew">Table 31.7</a> illustrates a conceptual EW suite mass budget for a medium-class combat UAV.</p>
+<div class="tbl" id="tab-uav_ew">
+<div class="tbl-caption"><strong>Table 31.7.</strong> Conceptual EW Suite Mass Budget for Medium Combat UAV</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Subsystem</strong></th>
+<th style="text-align: left;"><strong>Mass (kg)</strong></th>
+<th style="text-align: left;"><strong>Power (W)</strong></th>
+<th style="text-align: left;"><strong>Vol. (L)</strong></th>
+<th style="text-align: left;"><strong>Function</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ESM/RWR antennas (8×)</td>
+<td style="text-align: left;">1.2</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">0.4</td>
+<td style="text-align: left;">Threat warning; freq measurement</td>
+</tr>
+<tr>
+<td style="text-align: left;">ESM processing unit</td>
+<td style="text-align: left;">3.5</td>
+<td style="text-align: left;">80</td>
+<td style="text-align: left;">3.0</td>
+<td style="text-align: left;">Pulse processing; emitter ID</td>
+</tr>
+<tr>
+<td style="text-align: left;">DRFM module</td>
+<td style="text-align: left;">4.0</td>
+<td style="text-align: left;">120</td>
+<td style="text-align: left;">3.5</td>
+<td style="text-align: left;">Deceptive EA waveform generation</td>
+</tr>
+<tr>
+<td style="text-align: left;">SPJ transmitter (GaN)</td>
+<td style="text-align: left;">8.0</td>
+<td style="text-align: left;">800</td>
+<td style="text-align: left;">6.0</td>
+<td style="text-align: left;">200 W RF output; 8–12 GHz</td>
+</tr>
+<tr>
+<td style="text-align: left;">DIRCM unit</td>
+<td style="text-align: left;">6.0</td>
+<td style="text-align: left;">300</td>
+<td style="text-align: left;">5.0</td>
+<td style="text-align: left;">IR laser; missile approach warning</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chaff/flare dispenser</td>
+<td style="text-align: left;">5.0</td>
+<td style="text-align: left;">10</td>
+<td style="text-align: left;">8.0</td>
+<td style="text-align: left;">32-round dispenser; DIRCM interface</td>
+</tr>
+<tr>
+<td style="text-align: left;">EW management computer</td>
+<td style="text-align: left;">2.0</td>
+<td style="text-align: left;">60</td>
+<td style="text-align: left;">1.5</td>
+<td style="text-align: left;">Threat correlation; priority; control</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;"><strong>29.7</strong></td>
+<td style="text-align: left;"><strong>1375</strong></td>
+<td style="text-align: left;"><strong>27.4</strong></td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="31133-ew-test-and-evaluation"><span class="secnum">31.13.3</span> EW Test and Evaluation<a class="headerlink" href="#31133-ew-test-and-evaluation" title="Permanent link">&para;</a></h3>
+<p>EW system validation requires specialised test facilities:</p>
+<ul>
+<li>
+<p><strong>Anechoic chamber:</strong> RF-absorber lined room; eliminates multipath; characterises antenna patterns and jammer EIRP. Must accommodate full-size aircraft (30 m<span class="arithmatex">\(\times\)</span>15 m minimum for fighter-class).</p>
+</li>
+<li>
+<p><strong>Open-range threat simulator:</strong> Known-geometry range with programmable radar threat emulators; tests full EW system against representative threat waveforms.</p>
+</li>
+<li>
+<p><strong>Hardware-in-the-loop (HWIL):</strong> Full missile seeker in closed-loop simulation; IRCM/DIRCM system tested against simulated missile trajectory and seeker response.</p>
+</li>
+<li>
+<p><strong>Electronic Combat Range (ECR):</strong> Dedicated airspace (e.g., Utah Test and Training Range) with distributed threat radar network; live-fly EW effectiveness measurement.</p>
+</li>
+</ul>
+<h2 id="sec-ew_summary"><span class="secnum">31.14</span> Summary and Key Performance Metrics<a class="headerlink" href="#sec-ew_summary" title="Permanent link">&para;</a></h2>
+<p>Electronic warfare encompasses a broad spectrum of technologies and techniques, all governed by the fundamental physics of electromagnetic propagation. Key design parameters and their typical operational values are summarised below:</p>
+<ul>
+<li>
+<p><strong>RWR sensitivity:</strong> <span class="arithmatex">\(-65\)</span> to <span class="arithmatex">\(-90\)</span> dBm (CVR to channelised); drives intercept range.</p>
+</li>
+<li>
+<p><strong>Self-protection J/S:</strong> <span class="arithmatex">\(&gt;0\)</span> dB noise; <span class="arithmatex">\(&gt;+6\)</span> dB deceptive; at maximum threat range.</p>
+</li>
+<li>
+<p><strong>DRFM dynamic range:</strong> <span class="arithmatex">\(&gt;\)</span>60 dB; 10–14 bit ADC; <span class="arithmatex">\(&lt;\)</span>100 ns latency.</p>
+</li>
+<li>
+<p><strong>DIRCM irradiance:</strong> <span class="arithmatex">\(&gt;10^{-4}\)</span> W/cm<span class="arithmatex">\(^2\)</span> at 3 km for seeker saturation.</p>
+</li>
+<li>
+<p><strong>Chaff RCS:</strong> <span class="arithmatex">\(&gt;10 \times \sigma_{aircraft}\)</span> for 30 s bloom duration.</p>
+</li>
+<li>
+<p><strong>GPS CRPA null depth:</strong> 40–55 dB; protects against 1–100 W jammers at <span class="arithmatex">\(&lt;\)</span>5 km.</p>
+</li>
+<li>
+<p><strong>Towed decoy advantage:</strong> <span class="arithmatex">\(\sigma_{decoy}/\sigma_{aircraft} &gt; 10\)</span> (10 dB); draws seeker homing point 50–100 m aft of aircraft.</p>
+</li>
+</ul>
+<p>The trajectory of EW development follows three converging trends: increasing digitalisation (all-digital DRFM, SDR-based ESM), cognitive adaptation (AI-driven waveform selection and emitter identification), and platform miniaturisation (sub-10 kg EW suites for UCAV class vehicles). The adversary dynamics — driven by AESA radar proliferation, advanced IIR seekers with dual-band discrimination, and GPS-independent precision navigation — ensure that electronic warfare will remain one of the most technically demanding and rapidly evolving disciplines in aerospace defence engineering.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch30-hypersonic-vehicles.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 30. Hypersonic Vehicles">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                30. Hypersonic Vehicles
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch32-directed-energy-weapons.html" class="md-footer__link md-footer__link--next" aria-label="Next: 32. Directed Energy Weapons">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                32. Directed Energy Weapons
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

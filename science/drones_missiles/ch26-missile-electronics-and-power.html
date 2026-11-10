@@ -1,0 +1,3153 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch26-missile-electronics-and-power.html">
+  
+  
+    <link rel="prev" href="ch25-flight-control-systems.html">
+  
+  
+    <link rel="next" href="ch27-launch-systems-and-integration.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>26. Missile Electronics and Power - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-elec_overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              26. Missile Electronics and Power
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-elec_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.1 Electronics Overview and Avionics Bay Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.1 Electronics Overview and Avionics Bay Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-avionics_bay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.1.1 Avionics Bay Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-emi_shielding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.1.2 Electromagnetic Interference Shielding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-power_systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2 Power Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.2 Power Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-thermal_batteries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.1 Thermal Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-turbogen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.2 Turbogenerators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-ag_zn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.3 Silver-Zinc Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-power_cond" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.4 Power Conditioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-guidance_computer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3 Guidance Computer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.3 Guidance Computer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-proc_arch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3.1 Processing Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3.2 Memory Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-rtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3.3 Real-Time Operating System
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-imu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4 Inertial Measurement Unit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.4 Inertial Measurement Unit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-fog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.1 Fibre-Optic Gyroscope (FOG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-rlg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.2 Ring Laser Gyroscope (RLG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.3 MEMS Gyroscopes and Accelerometers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-thermal_stab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.4 Thermal Stabilisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-dsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.5 Digital Signal Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.5 Digital Signal Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-seeker_dsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.5.1 Seeker DSP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-dbf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.5.2 Digital Beamforming for AESA Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-data_buses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.6 Data Buses and Communication Interfaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.6 Data Buses and Communication Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mil1553" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.6.1 MIL-STD-1553B
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-other_buses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.6.2 Other Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-thermal_mgmt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.7 Thermal Management of Electronics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emi_hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8 EMI Hardening and Radiation Hardness
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.8 EMI Hardening and Radiation Hardness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mil461" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8.1 MIL-STD-461 Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-emp_hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8.2 EMP Hardening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-rad_hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8.3 Nuclear Radiation Hardness
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-datalink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9 Datalink Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.9 Datalink Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-twoway_dl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9.1 Two-Way Datalink
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-loal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9.2 LOAL and Lock-On Before Launch (LOBL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-gps_int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9.3 GPS Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10 Reliability and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.10 Reliability and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mtbf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.1 MTBF Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-derating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.2 Component Derating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-burn_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.3 Burn-In and Screening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.4 Storage Life
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-elec_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.5 Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-elec_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.1 Electronics Overview and Avionics Bay Architecture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.1 Electronics Overview and Avionics Bay Architecture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-avionics_bay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.1.1 Avionics Bay Layout
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-emi_shielding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.1.2 Electromagnetic Interference Shielding
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-power_systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2 Power Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.2 Power Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-thermal_batteries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.1 Thermal Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-turbogen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.2 Turbogenerators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-ag_zn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.3 Silver-Zinc Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-power_cond" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.2.4 Power Conditioning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-guidance_computer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3 Guidance Computer
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.3 Guidance Computer">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-proc_arch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3.1 Processing Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3.2 Memory Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-rtos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.3.3 Real-Time Operating System
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-imu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4 Inertial Measurement Unit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.4 Inertial Measurement Unit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-fog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.1 Fibre-Optic Gyroscope (FOG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-rlg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.2 Ring Laser Gyroscope (RLG)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.3 MEMS Gyroscopes and Accelerometers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-thermal_stab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.4.4 Thermal Stabilisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-dsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.5 Digital Signal Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.5 Digital Signal Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-seeker_dsp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.5.1 Seeker DSP
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-dbf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.5.2 Digital Beamforming for AESA Seekers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-data_buses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.6 Data Buses and Communication Interfaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.6 Data Buses and Communication Interfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mil1553" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.6.1 MIL-STD-1553B
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-other_buses" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.6.2 Other Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-thermal_mgmt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.7 Thermal Management of Electronics
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emi_hardening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8 EMI Hardening and Radiation Hardness
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.8 EMI Hardening and Radiation Hardness">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mil461" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8.1 MIL-STD-461 Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-emp_hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8.2 EMP Hardening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-rad_hard" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.8.3 Nuclear Radiation Hardness
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-datalink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9 Datalink Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.9 Datalink Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-twoway_dl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9.1 Two-Way Datalink
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-loal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9.2 LOAL and Lock-On Before Launch (LOBL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-gps_int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.9.3 GPS Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-reliability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10 Reliability and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="26.10 Reliability and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ssec-mtbf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.1 MTBF Prediction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-derating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.2 Component Derating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-burn_in" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.3 Burn-In and Screening
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-storage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.4 Storage Life
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ssec-elec_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        26.10.5 Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-missile_elec">Chapter 26: Missile Electronics and Power<a class="headerlink" href="#ch-missile_elec" title="Permanent link">&para;</a></h1>
+<h2 id="sec-elec_overview"><span class="secnum">26.1</span> Electronics Overview and Avionics Bay Architecture<a class="headerlink" href="#sec-elec_overview" title="Permanent link">&para;</a></h2>
+<p>Modern guided missiles are, in essence, precision electromechanical systems whose lethality is dominated by the sophistication of their electronics. From the moment the fire-control system closes the launch authority to terminal impact, a dense chain of sensing, computing, and actuation electronics must function flawlessly across temperature extremes of <span class="arithmatex">\(-55\,^\circ\text{C}\)</span> to <span class="arithmatex">\(+125\,^\circ\text{C}\)</span>, under acoustic loads exceeding 165 dB SPL, and through shock inputs of 100–1500 <span class="arithmatex">\(g\)</span>. This chapter surveys the major electronic subsystems, their physical architecture, power conditioning requirements, computational platforms, data buses, thermal management, and electromagnetic compatibility (EMC) provisions.</p>
+<h3 id="ssec-avionics_bay"><span class="secnum">26.1.1</span> Avionics Bay Layout<a class="headerlink" href="#ssec-avionics_bay" title="Permanent link">&para;</a></h3>
+<p>The avionics bay — also called the guidance section or electronics bay — is typically located immediately forward of the warhead section and immediately aft of the seeker dome. Packaging density is extreme: a 150 m m-diameter tactical missile may contain all guidance, navigation, control, and power electronics within a cylindrical volume of roughly <span class="arithmatex">\(150\,\text{mm} \times 400\,\text{mm}\)</span>.</p>
+<p>Principal layout philosophies include:</p>
+<p><strong>Modular chassis with card-edge connectors.</strong> Each functional circuit (navigation processor, power converter, motor drive, FPGA DSP) resides on a standardised card that slides into an aluminium chassis rail. This mirrors aerospace practice derived from VMEbus or CompactPCI, modified for environmental ruggedness. Card pitch is typically 10 m m–15 m m.</p>
+<p><strong>Stacked PCB assembly.</strong> For very small missiles (e.g., MANPADS, miniature precision munitions), individual PCBs are stacked along the missile axis, interconnected by flexible circuits or rigid-flex boards, and potted in syntactic foam for vibration isolation.</p>
+<p><strong>Cold-rail chassis.</strong> An aluminium or beryllium–copper structural rail serves simultaneously as a structural member and a primary thermal conduction path, drawing heat from component hot-spots to an external heat sink or phase-change material absorber. This is the dominant architecture for AMRAAM-class missiles.</p>
+<p>The avionics chassis must withstand:</p>
+<ul>
+<li>
+<p>Axial acceleration at launch: <span class="arithmatex">\(20\)</span>–<span class="arithmatex">\(60\,g\)</span> (gun-launched rounds up to <span class="arithmatex">\(15{,}000\,g\)</span>)</p>
+</li>
+<li>
+<p>Sustained boost acceleration: up to <span class="arithmatex">\(60\,g\)</span> for <span class="arithmatex">\(2\)</span>–<span class="arithmatex">\(4\,\text{s}\)</span></p>
+</li>
+<li>
+<p>Vibroacoustic environment: <span class="arithmatex">\(20\)</span>–<span class="arithmatex">\(2000\,\text{Hz}\)</span>, <span class="arithmatex">\(0.04\,g^2/\text{Hz}\)</span> power spectral density</p>
+</li>
+<li>
+<p>Thermal cycling: <span class="arithmatex">\(-55\,^\circ\text{C}\)</span> to <span class="arithmatex">\(+85\,^\circ\text{C}\)</span> storage; <span class="arithmatex">\(-40\,^\circ\text{C}\)</span> to <span class="arithmatex">\(+70\,^\circ\text{C}\)</span> operational</p>
+</li>
+</ul>
+<h3 id="ssec-emi_shielding"><span class="secnum">26.1.2</span> Electromagnetic Interference Shielding<a class="headerlink" href="#ssec-emi_shielding" title="Permanent link">&para;</a></h3>
+<p>Missile electronics occupy a uniquely hostile electromagnetic environment. They must receive coherent RF signals in the microvolt range while in close proximity to a high-power radar or datalink transmitter and a motor driver producing fast <span class="arithmatex">\(dV/dt\)</span> edges. The governing standard is MIL-STD-461G, <em>Requirements for the Control of Electromagnetic Interference Characteristics of Subsystems and Equipment</em>.</p>
+<p>Key shielding provisions:</p>
+<ul>
+<li>
+<p>The outer skin acts as the primary Faraday cage; skin-to-bulkhead bonding resistance <span class="arithmatex">\(&lt; 2.5\,\text{m}\Omega\)</span>.</p>
+</li>
+<li>
+<p>Individual sub-enclosures (seeker electronics, power converters) are secondary shields, achieving <span class="arithmatex">\(\geq 60\,\text{dB}\)</span> attenuation from 10 k H z to 10 G H z.</p>
+</li>
+<li>
+<p>Cable penetrations pass through EMI filters (feed-through capacitors, ferrite chokes) mounted at the bulkhead.</p>
+</li>
+<li>
+<p>Fibre-optic links replace copper for critical data paths traversing high-gradient EM fields.</p>
+</li>
+</ul>
+<p>MIL-STD-704F specifies aircraft electrical power quality: frequency <span class="arithmatex">\(400\,\text{Hz}\pm5\,\text{Hz}\)</span>, voltage <span class="arithmatex">\(115/200\,\text{V}\)</span> AC, <span class="arithmatex">\(28\,\text{V}\)</span> DC; these specifications are the origin for the power conditioning requirements applied internally to the missile after it is powered from the platform umbilical prior to launch.</p>
+<p>MIL-STD-1553B is the primary data highway, operating at 1 Mbps on a dual-redundant twisted-shielded pair; it is detailed in <a href="#sec-data_buses">Section 26.6</a>.</p>
+<div class="tbl" id="tab-avionics_env">
+<div class="tbl-caption"><strong>Table 26.1.</strong> Avionics Bay Environmental Design Requirements</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Requirement</strong></th>
+<th style="text-align: left;"><strong>Reference</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Operating temperature</td>
+<td style="text-align: left;"><span class="math inline">\(-40\,^\circ\text{C}\)</span> to <span class="math inline">\(+71\,^\circ\text{C}\)</span></td>
+<td style="text-align: left;">MIL-STD-810H, Method 501/502</td>
+</tr>
+<tr>
+<td style="text-align: left;">Storage temperature</td>
+<td style="text-align: left;"><span class="math inline">\(-55\,^\circ\text{C}\)</span> to <span class="math inline">\(+85\,^\circ\text{C}\)</span></td>
+<td style="text-align: left;">MIL-STD-810H</td>
+</tr>
+<tr>
+<td style="text-align: left;">Vibration (random)</td>
+<td style="text-align: left;"><span class="math inline">\(0.04\,g^2/\text{Hz}\)</span>, <span class="math inline">\(20\)</span>–<span class="math inline">\(2000\,\text{Hz}\)</span></td>
+<td style="text-align: left;">MIL-STD-810H, Method 514</td>
+</tr>
+<tr>
+<td style="text-align: left;">Shock</td>
+<td style="text-align: left;"><span class="math inline">\(40\,g\)</span>, <span class="math inline">\(11\,\text{ms}\)</span>, half-sine</td>
+<td style="text-align: left;">MIL-STD-810H, Method 516</td>
+</tr>
+<tr>
+<td style="text-align: left;">EMI — conducted emissions</td>
+<td style="text-align: left;">RE102 limit, <span class="math inline">\(10\,\text{kHz}\)</span>–<span class="math inline">\(18\,\text{GHz}\)</span></td>
+<td style="text-align: left;">MIL-STD-461G</td>
+</tr>
+<tr>
+<td style="text-align: left;">EMI — radiated emissions</td>
+<td style="text-align: left;">RE102 limit</td>
+<td style="text-align: left;">MIL-STD-461G</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bonding resistance</td>
+<td style="text-align: left;"><span class="math inline">\(&lt; 2.5\,\text{m}\Omega\)</span> to chassis</td>
+<td style="text-align: left;">MIL-B-5087B</td>
+</tr>
+<tr>
+<td style="text-align: left;">Altitude (unpressurised)</td>
+<td style="text-align: left;"><span class="math inline">\(0\)</span>–<span class="math inline">\(21\,\text{km}\)</span></td>
+<td style="text-align: left;">MIL-STD-810H, Method 500</td>
+</tr>
+<tr>
+<td style="text-align: left;">Humidity</td>
+<td style="text-align: left;"><span class="math inline">\(95\%\)</span> RH, non-condensing</td>
+<td style="text-align: left;">MIL-STD-810H, Method 507</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-power_systems"><span class="secnum">26.2</span> Power Systems<a class="headerlink" href="#sec-power_systems" title="Permanent link">&para;</a></h2>
+<p>A missile power system must deliver stable, conditioned electrical energy from the moment of launch through terminal guidance — a mission time spanning from <span class="arithmatex">\(&lt;2\,\text{s}\)</span> (short-range AAM) to several minutes (cruise missile). Three primary source technologies are employed: thermal batteries, turbogenerators, and silver-zinc batteries, often in combination.</p>
+<h3 id="ssec-thermal_batteries"><span class="secnum">26.2.1</span> Thermal Batteries<a class="headerlink" href="#ssec-thermal_batteries" title="Permanent link">&para;</a></h3>
+<p>Thermal batteries are the universal choice for short-duration, high-power missile applications. They are inert at ambient temperature and are activated by a pyrotechnic heat pellet, reaching full operating voltage in fewer than 50 ms. The electrochemistry is typically lithium–aluminium anode / iron disulphide (<span class="arithmatex">\(\text{FeS}_2\)</span>) cathode (Li-Al/FeS<span class="arithmatex">\(_2\)</span>), with a molten salt (<span class="arithmatex">\(\text{LiCl}\)</span>–<span class="arithmatex">\(\text{KCl}\)</span> eutectic, melting point <span class="arithmatex">\(352\,^\circ\text{C}\)</span>) electrolyte.</p>
+<p><strong>Key performance parameters:</strong></p>
+<ul>
+<li>
+<p>Specific energy: <span class="arithmatex">\(350\)</span>–<span class="arithmatex">\(450\,\text{Wh/kg}\)</span> (system level, <span class="arithmatex">\(\approx 400\,\text{Wh/kg}\)</span> typical)</p>
+</li>
+<li>
+<p>Specific power: up to <span class="arithmatex">\(1\,\text{kW/kg}\)</span> for short-duration cells</p>
+</li>
+<li>
+<p>Activation time: <span class="arithmatex">\(&lt; 50\,\text{ms}\)</span> (specification per NAVSWC TR 89-333)</p>
+</li>
+<li>
+<p>Operating temperature: <span class="arithmatex">\(400\,^\circ\text{C}\)</span>–<span class="arithmatex">\(550\,^\circ\text{C}\)</span> internally (the missile electronics see regulated DC output, not this temperature)</p>
+</li>
+<li>
+<p>Storage life: <span class="arithmatex">\(\geq 20\,\text{years}\)</span> (inert, no self-discharge)</p>
+</li>
+<li>
+<p>Mission duration: from <span class="arithmatex">\(2\,\text{s}\)</span> to <span class="arithmatex">\(\approx 180\,\text{s}\)</span> depending on cell stack size</p>
+</li>
+</ul>
+<p>The available energy from a thermal battery stack of <span class="arithmatex">\(n\)</span> cells, each of open-circuit voltage <span class="arithmatex">\(V_0\)</span> and internal resistance <span class="arithmatex">\(r\)</span>, delivering current <span class="arithmatex">\(I\)</span> is:</p>
+<div id="eq-thermal_bat_energy"></div>
+<div class="arithmatex">\[E_{\text{avail}} = n\,\int_0^{t_f} \left(V_0 - I\,r(T,t)\right)\,I\,\mathrm{d}t\tag{26.1}\]</div>
+<p>where <span class="arithmatex">\(r(T,t)\)</span> is the time- and temperature-varying internal resistance, decreasing rapidly after activation as electrolyte reaches full molten state.</p>
+<p>The terminal voltage regulation across the mission is:</p>
+<div id="eq-terminal_voltage"></div>
+<div class="arithmatex">\[V_{\text{term}}(t) = V_0(t) - I(t)\,r(T,t)\tag{26.2}\]</div>
+<p>Battery designers specify a <em>minimum terminal voltage</em> <span class="arithmatex">\(V_{\min}\)</span> at end-of-life (typically <span class="arithmatex">\(80\%\)</span> of nominal) and a <em>maximum terminal voltage</em> <span class="arithmatex">\(V_{\max}\)</span> at start of mission, both of which must be accommodated by the downstream power conditioning circuitry.</p>
+<h3 id="ssec-turbogen"><span class="secnum">26.2.2</span> Turbogenerators<a class="headerlink" href="#ssec-turbogen" title="Permanent link">&para;</a></h3>
+<p>Longer-range missiles — cruise missiles, anti-ship missiles, long-range AAMs — require sustained electrical power for durations of <span class="arithmatex">\(60\,\text{s}\)</span> to <span class="arithmatex">\(30\,\text{min}\)</span> that is impractical from thermal batteries. Two turbogenerator architectures are used:</p>
+<p><strong>Ram Air Turbine (RAT).</strong> A small turbine is deployed into the airstream, extracting kinetic energy from the dynamic pressure. Output scales with:</p>
+<div id="eq-rat_power"></div>
+<div class="arithmatex">\[P_{\text{RAT}} = \eta_{\text{RAT}}\,\frac{1}{2}\,\rho\,V_\infty^3\,A_{\text{disc}}\tag{26.3}\]</div>
+<p>where <span class="arithmatex">\(\eta_{\text{RAT}} \approx 0.25\)</span>–<span class="arithmatex">\(0.35\)</span> (Betz limit tempered by practical losses), <span class="arithmatex">\(\rho\)</span> is air density, <span class="arithmatex">\(V_\infty\)</span> is free-stream velocity, and <span class="arithmatex">\(A_{\text{disc}}\)</span> is turbine disc area. A missile flying at Ma 0.8 at sea level achieves <span class="arithmatex">\(q \approx 38\,\text{kPa}\)</span>; a RAT of <span class="arithmatex">\(A_{\text{disc}} = 0.008\,\text{m}^2\)</span> produces approximately <span class="arithmatex">\(1.5\,\text{kW}\)</span>.</p>
+<p><strong>Exhaust-driven turbogenerator.</strong> In turbojet or turbofan-powered cruise missiles, a small auxiliary turbine taps bleed air from the engine compressor or the hot exhaust. Output range: <span class="arithmatex">\(200\,\text{W}\)</span>–<span class="arithmatex">\(2{,}000\,\text{W}\)</span> depending on engine size. This architecture is used in Tomahawk (Williams F107 engine, <span class="arithmatex">\(\approx 400\,\text{W}\)</span> generation).</p>
+<p>The turbine power specific to a bleed-air generator is:</p>
+<div id="eq-bleed_power"></div>
+<div class="arithmatex">\[P_{\text{bleed}} = \dot{m}_{\text{bleed}}\,c_p\,T_{t2}\left[1 - \left(\frac{p_3}{p_{t2}}\right)^{(\gamma-1)/\gamma}\right]\,\eta_{\text{mech}}\,\eta_{\text{gen}}\tag{26.4}\]</div>
+<p>where <span class="arithmatex">\(\dot{m}_{\text{bleed}}\)</span> is bleed mass flow rate, <span class="arithmatex">\(c_p\)</span> the specific heat at constant pressure, <span class="arithmatex">\(T_{t2}\)</span> total temperature at extraction point, <span class="arithmatex">\(p_3/p_{t2}\)</span> pressure ratio, and <span class="arithmatex">\(\eta_{\text{mech}}\)</span>, <span class="arithmatex">\(\eta_{\text{gen}}\)</span> are mechanical and generator efficiencies respectively.</p>
+<h3 id="ssec-ag_zn"><span class="secnum">26.2.3</span> Silver-Zinc Batteries<a class="headerlink" href="#ssec-ag_zn" title="Permanent link">&para;</a></h3>
+<p>Silver-zinc (Ag-Zn) batteries occupy a middle ground: higher specific energy than thermal batteries at system level for durations <span class="arithmatex">\(&gt;120\,\text{s}\)</span>, pre-activated (electrolyte filled immediately before use or shipped wet-charged), and capable of high pulse currents. Specific energy: <span class="arithmatex">\(130\)</span>–<span class="arithmatex">\(200\,\text{Wh/kg}\)</span> (system level). They are used in early-generation AAMs (AIM-7 Sparrow) and some torpedo systems.</p>
+<h3 id="ssec-power_cond"><span class="secnum">26.2.4</span> Power Conditioning<a class="headerlink" href="#ssec-power_cond" title="Permanent link">&para;</a></h3>
+<p>Raw output from any of the above sources is noisy, variable, and must be conditioned before distribution to sensitive electronics. The power conditioning unit (PCU) performs:</p>
+<ul>
+<li>
+<p><strong>Step-down DC-DC conversion:</strong> input <span class="arithmatex">\(18\)</span>–<span class="arithmatex">\(36\,\text{V}\)</span> (thermal battery range), output <span class="arithmatex">\(+5\,\text{V}\)</span>, <span class="arithmatex">\(+3.3\,\text{V}\)</span>, <span class="arithmatex">\(+1.8\,\text{V}\)</span> (digital logic), <span class="arithmatex">\(\pm 15\,\text{V}\)</span> (analogue), <span class="arithmatex">\(\pm 28\,\text{V}\)</span> (actuation bus)</p>
+</li>
+<li>
+<p><strong>PWM switching frequency:</strong> <span class="arithmatex">\(200\,\text{kHz}\)</span>–<span class="arithmatex">\(2\,\text{MHz}\)</span> (synchronised across channels to avoid intermodulation with IF frequencies in seeker)</p>
+</li>
+<li>
+<p><strong>Line regulation:</strong> <span class="arithmatex">\(\pm 1\%\)</span> from no-load to full load</p>
+</li>
+<li>
+<p><strong>Transient response:</strong> <span class="arithmatex">\(&lt; 5\,\text{ms}\)</span> recovery to <span class="arithmatex">\(\pm 2\%\)</span> for a <span class="arithmatex">\(50\%\)</span> step load change</p>
+</li>
+<li>
+<p><strong>EMI filtering:</strong> LC low-pass filter at each converter output, <span class="arithmatex">\(C_{\text{bulk}}\)</span> at input; ferrite beads at cable exit points</p>
+</li>
+</ul>
+<p>The switching converter efficiency is characterised by:</p>
+<div id="eq-converter_eff"></div>
+<div class="arithmatex">\[\eta_{\text{converter}} = \frac{P_{\text{out}}}{P_{\text{in}}} = \frac{V_{\text{out}}\,I_{\text{out}}}{V_{\text{in}}\,I_{\text{in}}} = 1 - \frac{P_{\text{sw}} + P_{\text{cond}} + P_{\text{core}}}{P_{\text{in}}}\tag{26.5}\]</div>
+<p>where <span class="arithmatex">\(P_{\text{sw}}\)</span> are switching losses (proportional to <span class="arithmatex">\(f_{\text{sw}}\)</span>), <span class="arithmatex">\(P_{\text{cond}}\)</span> are conduction losses (proportional to <span class="arithmatex">\(I_{\text{out}}^2\)</span>), and <span class="arithmatex">\(P_{\text{core}}\)</span> are magnetic core losses.</p>
+<h2 id="sec-guidance_computer"><span class="secnum">26.3</span> Guidance Computer<a class="headerlink" href="#sec-guidance_computer" title="Permanent link">&para;</a></h2>
+<h3 id="ssec-proc_arch"><span class="secnum">26.3.1</span> Processing Architecture<a class="headerlink" href="#ssec-proc_arch" title="Permanent link">&para;</a></h3>
+<p>The guidance computer (GC) executes the navigation filter, guidance law, autopilot, seeker tracking loop, built-in test (BIT), and telemetry formatting — typically at a deterministic control loop rate of <span class="arithmatex">\(100\,\text{Hz}\)</span>–<span class="arithmatex">\(1\,\text{kHz}\)</span>.</p>
+<p>Three processor families dominate military missile programmes:</p>
+<p><strong>PowerPC (e.g., Freescale MPC8640D).</strong> RISC architecture, radiation-tolerant commercial variants available, used in AMRAAM, JASSM. Operates at <span class="arithmatex">\(1\,\text{GHz}\)</span>, dual-core, with integrated DDR2 controller. Radiation-hardened variants (e.g., BAE Systems RAD750) are derived from PowerPC 750 and provide <span class="arithmatex">\(&lt;100\,\text{krad}\)</span> TID tolerance.</p>
+<p><strong>SPARC (e.g., Aeroflex UT699).</strong> SPARC V8 ISA, designed explicitly for space/missile radiation environments. Clock: <span class="arithmatex">\(66\,\text{MHz}\)</span>. Total ionising dose (TID): <span class="arithmatex">\(300\,\text{krad}\)</span>. Latch-up immune. Used in strategic long-range missiles.</p>
+<p><strong>ARM Cortex-R (real-time) and Cortex-A (applications).</strong> The Cortex-R4F is used in tactical munitions for deterministic real-time control. The Cortex-A9 and A53 appear in programmable munitions with software-defined guidance. Radiation-hardened Cortex-R5 is available (STMicroelectronics STHV3200).</p>
+<p><strong>FPGA co-processor.</strong> Virtually all modern missile guidance computers pair a central processor with one or more FPGAs for:</p>
+<ul>
+<li>
+<p>Seeker signal processing (pulse Doppler processing, angle tracking)</p>
+</li>
+<li>
+<p>AESA radar waveform generation and beamforming</p>
+</li>
+<li>
+<p>Navigation filter hardware acceleration (matrix multiply)</p>
+</li>
+<li>
+<p>Interface logic for MIL-STD-1553, RS-422, SpaceWire</p>
+</li>
+</ul>
+<p>The Xilinx (AMD) Kintex-7 and Kintex UltraScale+ are representative high-end FPGAs. For rad-hard applications, Microsemi/Actel ProASIC3 and RTAX families are used.</p>
+<h3 id="ssec-memory"><span class="secnum">26.3.2</span> Memory Architecture<a class="headerlink" href="#ssec-memory" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>EEPROM (mission data):</strong> stores flight plan waypoints, target coordinates, frequency plan, authentication keys. Write endurance: <span class="arithmatex">\(\geq 10^5\)</span> cycles. Retention: 10 years. Size: <span class="arithmatex">\(256\,\text{kB}\)</span>–<span class="arithmatex">\(4\,\text{MB}\)</span>. Example: Microchip AT28C256.</p>
+</li>
+<li>
+<p><strong>Flash (program store):</strong> stores the guidance software image, typically <span class="arithmatex">\(8\)</span>–<span class="arithmatex">\(64\,\text{MB}\)</span>. Rad-hard NOR flash: Cypress GL512S18 series. Executed in-place (XIP) or loaded to SDRAM at boot.</p>
+</li>
+<li>
+<p><strong>SDRAM (computation):</strong> DDR2/DDR3 SDRAM at <span class="arithmatex">\(256\,\text{MB}\)</span>–<span class="arithmatex">\(1\,\text{GB}\)</span> for navigation filter workspace, radar data cube processing. Access latency: <span class="arithmatex">\(&lt;10\,\text{ns}\)</span>.</p>
+</li>
+<li>
+<p><strong>Scratchpad SRAM:</strong> fast zero-latency workspace for inner control loops (<span class="arithmatex">\(64\,\text{kB}\)</span>–<span class="arithmatex">\(512\,\text{kB}\)</span>), radiation-hardened SRAM (e.g., Cypress CY7C1470) with single-event upset (SEU) scrubbing.</p>
+</li>
+</ul>
+<h3 id="ssec-rtos"><span class="secnum">26.3.3</span> Real-Time Operating System<a class="headerlink" href="#ssec-rtos" title="Permanent link">&para;</a></h3>
+<p>The RTOS provides deterministic scheduling, interrupt management, and inter-task communication. Common choices:</p>
+<ul>
+<li>
+<p><strong>VxWorks</strong> (Wind River): preemptive priority scheduling, <span class="arithmatex">\(&lt;1\,\mu\text{s}\)</span> interrupt latency, certified to DO-178C DAL A, used in AMRAAM, Patriot PAC-3.</p>
+</li>
+<li>
+<p><strong>LynxOS-178</strong>: POSIX-compliant, ARINC 653 partitioning, used in avionics applications.</p>
+</li>
+<li>
+<p><strong>RTEMS</strong> (open-source, DARPA-funded): used in missile and spacecraft programmes. Supports PowerPC, SPARC, ARM targets.</p>
+</li>
+<li>
+<p><strong>Bare-metal with AUTOSAR-style scheduling:</strong> simple missiles use a cyclic executive with no OS overhead.</p>
+</li>
+</ul>
+<p>The worst-case execution time (WCET) of the guidance loop must satisfy:</p>
+<div id="eq-wcet"></div>
+<div class="arithmatex">\[T_{\text{WCET}} \leq T_{\text{loop}} - T_{\text{margin}}\tag{26.6}\]</div>
+<p>where <span class="arithmatex">\(T_{\text{loop}} = 1/f_{\text{control}}\)</span> and <span class="arithmatex">\(T_{\text{margin}} \geq 20\%\)</span> of <span class="arithmatex">\(T_{\text{loop}}\)</span>.</p>
+<h2 id="sec-imu"><span class="secnum">26.4</span> Inertial Measurement Unit<a class="headerlink" href="#sec-imu" title="Permanent link">&para;</a></h2>
+<p>The IMU provides the six degree-of-freedom state (three-axis specific force, three-axis angular rate) that feeds the navigation filter. Requirements differ sharply by missile class.</p>
+<h3 id="ssec-fog"><span class="secnum">26.4.1</span> Fibre-Optic Gyroscope (FOG)<a class="headerlink" href="#ssec-fog" title="Permanent link">&para;</a></h3>
+<p>The FOG exploits the Sagnac effect: counter-propagating light beams in a fibre coil of length <span class="arithmatex">\(L\)</span> and radius <span class="arithmatex">\(R\)</span> acquire a phase difference:</p>
+<div id="eq-sagnac"></div>
+<div class="arithmatex">\[\Delta\phi = \frac{8\pi\,N\,A\,\Omega}{c\,\lambda}\tag{26.7}\]</div>
+<p>where <span class="arithmatex">\(N\)</span> is the number of turns, <span class="arithmatex">\(A\)</span> is the coil area (<span class="arithmatex">\(A = \pi R^2\)</span>), <span class="arithmatex">\(\Omega\)</span> is the input rotation rate, <span class="arithmatex">\(c\)</span> is the speed of light, and <span class="arithmatex">\(\lambda\)</span> is the source wavelength.</p>
+<p>The Northrop Grumman LN-200 FOG IMU is the canonical tactical missile IMU: gyro bias stability <span class="arithmatex">\(&lt; 1\,\text{deg/h}\)</span>, random walk <span class="arithmatex">\(0.05\,\text{deg}/\sqrt{\text{h}}\)</span>, accelerometer bias <span class="arithmatex">\(&lt;0.3\,\text{mg}\)</span>. The LN-200 occupies a volume of <span class="arithmatex">\(\approx 737\,\text{cm}^3\)</span> and weighs <span class="arithmatex">\(\approx 0.75\,\text{kg}\)</span>.</p>
+<h3 id="ssec-rlg"><span class="secnum">26.4.2</span> Ring Laser Gyroscope (RLG)<a class="headerlink" href="#ssec-rlg" title="Permanent link">&para;</a></h3>
+<p>The RLG uses two laser beams circulating in opposite directions in a closed optical path; rotation causes a frequency difference (beat frequency) <span class="arithmatex">\(\Delta f\)</span>:</p>
+<div id="eq-rlg_beat"></div>
+<div class="arithmatex">\[\Delta f = \frac{4A}{\lambda\,P}\,\Omega\tag{26.8}\]</div>
+<p>where <span class="arithmatex">\(P\)</span> is the optical path length. The Honeywell GG1342 RLG is representative of the class: scale factor stability <span class="arithmatex">\(&lt;5\,\text{ppm}\)</span>, bias <span class="arithmatex">\(&lt;0.003\,\text{deg/h}\)</span>, used in Patriot PAC-2, Standard Missile-3.</p>
+<p>RLGs have a <em>lock-in</em> problem at very low rotation rates, mitigated by mechanical dithering. FOGs do not have this limitation, making them preferable for newer designs.</p>
+<h3 id="ssec-mems"><span class="secnum">26.4.3</span> MEMS Gyroscopes and Accelerometers<a class="headerlink" href="#ssec-mems" title="Permanent link">&para;</a></h3>
+<p>MEMS inertial sensors occupy <span class="arithmatex">\(&lt;1\,\text{cm}^3\)</span> and consume <span class="arithmatex">\(&lt;50\,\text{mW}\)</span>, making them attractive for small munitions and roll-stabilised dispenser sub-munitions. Typical MEMS gyro performance: bias <span class="arithmatex">\(5\)</span>–<span class="arithmatex">\(100\,\text{deg/h}\)</span>, ARW <span class="arithmatex">\(0.1\)</span>–<span class="arithmatex">\(1\,\text{deg}/\sqrt{\text{h}}\)</span>. They are adequate for GPS-aided navigation or short-range (<span class="arithmatex">\(&lt;20\,\text{km}\)</span>) ballistic trajectories where navigation accuracy requirements are relaxed.</p>
+<p>MEMS accelerometers for short-range tactical missiles: bias <span class="arithmatex">\(1\)</span>–<span class="arithmatex">\(10\,\text{mg}\)</span>. For strategic missiles, the Pendulous Integrating Gyro Accelerometer (PIGA) provides bias <span class="arithmatex">\(&lt;10\,\mu g\)</span> and is the sensor of choice in strategic ballistic missiles (Minuteman III, Trident D5).</p>
+<h3 id="ssec-thermal_stab"><span class="secnum">26.4.4</span> Thermal Stabilisation<a class="headerlink" href="#ssec-thermal_stab" title="Permanent link">&para;</a></h3>
+<p>IMU bias is a strong function of temperature. The gyro bias thermal coefficient is typically:</p>
+<div id="eq-gyro_temp"></div>
+<div class="arithmatex">\[B(T) = B_0 + k_T\,(T - T_{\text{ref}})\tag{26.9}\]</div>
+<p>where <span class="arithmatex">\(k_T \approx 0.01\)</span>–<span class="arithmatex">\(0.1\,\text{deg/h/}^\circ\text{C}\)</span> for FOG and RLG sensors. IMUs are thermally stabilised using resistive heaters and proportional-integral (PI) temperature controllers to maintain the sensor at a constant <span class="arithmatex">\(T_{\text{ref}}\)</span>, typically <span class="arithmatex">\(+50\,^\circ\text{C}\)</span>. Warm-up time: <span class="arithmatex">\(2\)</span>–<span class="arithmatex">\(15\,\text{min}\)</span> for strategic-grade IMUs (unacceptable for quick-reaction aircraft-launched missiles, which rely on pre-warmed canister storage). Tactical missile IMUs accept the thermal uncertainty and calibrate in-flight.</p>
+<p>Navigation accuracy from a pure inertial system degrades with time according to the Schuler period and random walk; position error for a FOG IMU:</p>
+<div id="eq-ins_drift"></div>
+<div class="arithmatex">\[\sigma_{\text{pos}}(t) \approx \frac{1}{2}\,B_{\text{acc}}\,t^2 + \frac{1}{\sqrt{3}}\,N_g\,g\,t^{3/2}\tag{26.10}\]</div>
+<p>where <span class="arithmatex">\(B_{\text{acc}}\)</span> is accelerometer bias and <span class="arithmatex">\(N_g\)</span> is gyro angle random walk coefficient.</p>
+<h2 id="sec-dsp"><span class="secnum">26.5</span> Digital Signal Processing<a class="headerlink" href="#sec-dsp" title="Permanent link">&para;</a></h2>
+<h3 id="ssec-seeker_dsp"><span class="secnum">26.5.1</span> Seeker DSP<a class="headerlink" href="#ssec-seeker_dsp" title="Permanent link">&para;</a></h3>
+<p>The seeker DSP performs matched filtering, Doppler processing, angle estimation, and target tracking. For a pulsed Doppler radar seeker:</p>
+<p><strong>Range processing:</strong> the received pulse after dechirp (stretch processing for LFM waveform):</p>
+<div id="eq-stretch"></div>
+<div class="arithmatex">\[s_{\text{IF}}(t) = A\,\exp\!\left[j2\pi\left(f_{\text{IF}}\,t + \frac{B}{T}\,\tau\,t\right)\right]\tag{26.11}\]</div>
+<p>where <span class="arithmatex">\(f_{\text{IF}}\)</span> is intermediate frequency, <span class="arithmatex">\(B\)</span> is chirp bandwidth, <span class="arithmatex">\(T\)</span> pulse duration, <span class="arithmatex">\(\tau = 2R/c\)</span> two-way time delay. An FFT of <span class="arithmatex">\(s_{\text{IF}}(t)\)</span> yields a range spectrum where target bin <span class="arithmatex">\(k = \lfloor B\tau/\Delta f \rfloor\)</span>.</p>
+<p><strong>Doppler processing:</strong> a coherent burst of <span class="arithmatex">\(N\)</span> pulses at PRF <span class="arithmatex">\(f_r\)</span> is Doppler-processed by a second FFT across slow time:</p>
+<div id="eq-doppler_vel"></div>
+<div class="arithmatex">\[v_r = \frac{f_D\,\lambda}{2}\tag{26.12}\]</div>
+<p>where <span class="arithmatex">\(f_D\)</span> is the Doppler frequency bin and <span class="arithmatex">\(\lambda\)</span> is wavelength.</p>
+<p>The Texas Instruments TMS320C66x (C66x) multi-core DSP is optimised for this processing: 8 cores, each delivering 32 GFLOPS SP, for a total of 256 GFLOPS at 1.25 GHz. The Xilinx Zynq UltraScale+ SoC (ARM Cortex-A53 + FPGA fabric) is increasingly used as a single-chip solution that unifies the GC processing and seeker DSP.</p>
+<h3 id="ssec-dbf"><span class="secnum">26.5.2</span> Digital Beamforming for AESA Seekers<a class="headerlink" href="#ssec-dbf" title="Permanent link">&para;</a></h3>
+<p>Active electronically scanned array (AESA) seekers digitise received signals at each element (or subarray) and form beams in software. For an <span class="arithmatex">\(N\)</span>-element linear array with element spacing <span class="arithmatex">\(d\)</span>, the array steering vector for angle <span class="arithmatex">\(\theta\)</span> is:</p>
+<div id="eq-steering_vector"></div>
+<div class="arithmatex">\[\mathbf{a}(\theta) = \left[1,\, e^{j\psi},\, e^{j2\psi},\, …,\, e^{j(N-1)\psi}\right]^T,\quad \psi = \frac{2\pi\,d\,\sin\theta}{\lambda}\tag{26.13}\]</div>
+<p>The beamformed output for steering angle <span class="arithmatex">\(\theta_0\)</span> is <span class="arithmatex">\(y(t) = \mathbf{w}^H\,\mathbf{x}(t)\)</span> where <span class="arithmatex">\(\mathbf{w} = \mathbf{a}(\theta_0)/N\)</span>. Adaptive nulling (MVDR/Capon beamformer) suppresses jamming: <span class="arithmatex">\(\mathbf{w}_{\text{MVDR}} = \mathbf{R}_{xx}^{-1}\,\mathbf{a}(\theta_0) / \left(\mathbf{a}^H\,\mathbf{R}_{xx}^{-1}\,\mathbf{a}\right)\)</span> where <span class="arithmatex">\(\mathbf{R}_{xx}\)</span> is the received signal covariance matrix.</p>
+<p>FPGA implementation processes real-time covariance matrix estimation and inversion for arrays up to 64 elements at PRFs of <span class="arithmatex">\(50\)</span>–<span class="arithmatex">\(200\,\text{kHz}\)</span>.</p>
+<h2 id="sec-data_buses"><span class="secnum">26.6</span> Data Buses and Communication Interfaces<a class="headerlink" href="#sec-data_buses" title="Permanent link">&para;</a></h2>
+<h3 id="ssec-mil1553"><span class="secnum">26.6.1</span> MIL-STD-1553B<a class="headerlink" href="#ssec-mil1553" title="Permanent link">&para;</a></h3>
+<p>MIL-STD-1553B defines a command/response, time-division multiplexed, half-duplex serial communication bus operating at <span class="arithmatex">\(1\,\text{Mbps}\)</span> on a shielded twisted pair (impedance <span class="arithmatex">\(70\)</span>–<span class="arithmatex">\(85\,\Omega\)</span>). The bus topology is dual-redundant (Bus A and Bus B); both carry identical traffic and the Bus Controller (BC) switches to Bus B on detected errors.</p>
+<p>Architecture roles:</p>
+<ul>
+<li>
+<p><strong>Bus Controller (BC):</strong> one per bus; initiates all transfers; issues RT-to-RT, BC-to-RT (transmit), and RT-to-BC (receive) command words.</p>
+</li>
+<li>
+<p><strong>Remote Terminal (RT):</strong> up to 31 RTs per bus; each has a 5-bit address (0–30; address 31 reserved for broadcast); responds to BC commands.</p>
+</li>
+<li>
+<p><strong>Bus Monitor (MT):</strong> passive listener for test/telemetry; does not transmit.</p>
+</li>
+</ul>
+<p>Word format: 20-bit Manchester II biphase encoded word = 3 sync bits + 16 data bits + 1 odd parity bit. End-to-end message latency: <span class="arithmatex">\(\leq 32\,\mu\text{s}\)</span> for a 32-word message. Bit error rate: <span class="arithmatex">\(&lt;10^{-7}\)</span> (with hardware error detection).</p>
+<p>The 1553 message cycle rate in a typical missile application: guidance loop data (IMU, seeker angle) at 100 Hz; actuation commands at 200 Hz; telemetry at 50 Hz.</p>
+<h3 id="ssec-other_buses"><span class="secnum">26.6.2</span> Other Interfaces<a class="headerlink" href="#ssec-other_buses" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>ARINC 429:</strong> unidirectional, simplex, 12.5 or 100 kbps; label-based, 32-bit words; used for navigation sensor outputs in larger missiles with avionic heritage.</p>
+</li>
+<li>
+<p><strong>RS-422:</strong> balanced differential serial, up to 10 Mbps, point-to-point; used for seeker digital interface, GPS receiver, altimeter.</p>
+</li>
+<li>
+<p><strong>CAN bus (ISO 11898):</strong> up to 1 Mbps; used for non-flight-critical subsystems such as thermal battery monitor, fin actuator diagnostics; lower complexity than 1553.</p>
+</li>
+<li>
+<p><strong>SpaceWire (ECSS-E-ST-50-12C):</strong> up to 400 Mbps, synchronous serial, point-to-point or network; used for high-bandwidth seeker data transfer in imaging IR seeker interfaces.</p>
+</li>
+<li>
+<p><strong>Ethernet (10/100 GbE):</strong> emerging in ground test and some developmental flight hardware; not yet standard for in-flight missile buses due to non-determinism concerns.</p>
+</li>
+</ul>
+<div class="tbl" id="tab-data_bus">
+<div class="tbl-caption"><strong>Table 26.2.</strong> Missile Data Bus Comparison</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Standard</strong></th>
+<th style="text-align: left;"><strong>Speed</strong></th>
+<th style="text-align: left;"><strong>Topology</strong></th>
+<th style="text-align: left;"><strong>Max Nodes</strong></th>
+<th style="text-align: left;"><strong>Determinism</strong></th>
+<th style="text-align: left;"><strong>Typical Use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MIL-STD-1553B</td>
+<td style="text-align: left;">1 Mbps</td>
+<td style="text-align: left;">Dual-red. bus</td>
+<td style="text-align: left;">31 RTs</td>
+<td style="text-align: left;">Hard real-time</td>
+<td style="text-align: left;">Primary avionics bus</td>
+</tr>
+<tr>
+<td style="text-align: left;">ARINC 429</td>
+<td style="text-align: left;">12.5/100 kbps</td>
+<td style="text-align: left;">Simplex point-to-point</td>
+<td style="text-align: left;">N/A</td>
+<td style="text-align: left;">Deterministic</td>
+<td style="text-align: left;">Nav sensor output</td>
+</tr>
+<tr>
+<td style="text-align: left;">RS-422</td>
+<td style="text-align: left;">Up to 10 Mbps</td>
+<td style="text-align: left;">Point-to-point</td>
+<td style="text-align: left;">1 receiver</td>
+<td style="text-align: left;">Deterministic</td>
+<td style="text-align: left;">Seeker, GPS</td>
+</tr>
+<tr>
+<td style="text-align: left;">CAN 2.0B</td>
+<td style="text-align: left;">1 Mbps</td>
+<td style="text-align: left;">Multi-drop bus</td>
+<td style="text-align: left;">112</td>
+<td style="text-align: left;">Probabilistic</td>
+<td style="text-align: left;">Non-critical subsys</td>
+</tr>
+<tr>
+<td style="text-align: left;">SpaceWire</td>
+<td style="text-align: left;">Up to 400 Mbps</td>
+<td style="text-align: left;">Point-to-point / network</td>
+<td style="text-align: left;">32</td>
+<td style="text-align: left;">Deterministic</td>
+<td style="text-align: left;">High-BW seeker data</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-thermal_mgmt"><span class="secnum">26.7</span> Thermal Management of Electronics<a class="headerlink" href="#sec-thermal_mgmt" title="Permanent link">&para;</a></h2>
+<p>Electronics in a sealed missile bay generate heat that cannot escape by natural convection (no airflow, sealed structure). The dominant heat transfer mechanisms are:</p>
+<ol>
+<li>
+<p><strong>Conduction</strong> through the PCB, mounting screws, and chassis rail to the missile skin.</p>
+</li>
+<li>
+<p><strong>Radiation</strong> (minor contribution at the temperature deltas involved).</p>
+</li>
+<li>
+<p><strong>Phase-change material (PCM) absorption</strong> — thermal energy is stored in the latent heat of fusion of a PCM (e.g., n-eicosane, melting point <span class="arithmatex">\(36.7\,^\circ\text{C}\)</span>, <span class="arithmatex">\(L_f = 247\,\text{kJ/kg}\)</span>).</p>
+</li>
+</ol>
+<p>The fundamental thermal resistance network from junction to ambient is:</p>
+<div id="eq-thermal_resistance"></div>
+<div class="arithmatex">\[T_j = T_{\text{skin}} + P_d\,\left(\theta_{jc} + \theta_{cs} + \theta_{sa}\right)\tag{26.14}\]</div>
+<p>where <span class="arithmatex">\(\theta_{jc}\)</span> is junction-to-case resistance, <span class="arithmatex">\(\theta_{cs}\)</span> is case-to-chassis, <span class="arithmatex">\(\theta_{sa}\)</span> is chassis-to-ambient (skin), and <span class="arithmatex">\(P_d\)</span> is component power dissipation. The design limit is <span class="arithmatex">\(T_j \leq 125\,^\circ\text{C}\)</span> for COTS/JAN Class B parts, <span class="arithmatex">\(\leq 150\,^\circ\text{C}\)</span> for Class S (space grade).</p>
+<p>Heat pipe thermal management is increasingly applied in larger missiles: the heat pipe transports heat from the hot spot (FPGA, DSP) to a condenser plate at the missile outer wall with an effective thermal conductivity <span class="arithmatex">\(10\)</span>–<span class="arithmatex">\(100\times\)</span> that of copper, with no moving parts. Operating temperature range: <span class="arithmatex">\(-50\,^\circ\text{C}\)</span> to <span class="arithmatex">\(+200\,^\circ\text{C}\)</span> (ammonia working fluid for low-temperature ranges; water for ambient range).</p>
+<p>The heat pipe effective conductivity:</p>
+<div id="eq-heat_pipe"></div>
+<div class="arithmatex">\[Q_{\text{hp}} = \frac{k_{\text{eff}}\,A_{\text{cs}}\,\Delta T}{L}\tag{26.15}\]</div>
+<p>where <span class="arithmatex">\(k_{\text{eff}}\)</span> can exceed <span class="arithmatex">\(10{,}000\,\text{W/(m\cdot K)}\)</span> for ammonia heat pipes compared to <span class="arithmatex">\(400\,\text{W/(m\cdot K)}\)</span> for copper.</p>
+<h2 id="sec-emi_hardening"><span class="secnum">26.8</span> EMI Hardening and Radiation Hardness<a class="headerlink" href="#sec-emi_hardening" title="Permanent link">&para;</a></h2>
+<h3 id="ssec-mil461"><span class="secnum">26.8.1</span> MIL-STD-461 Compliance<a class="headerlink" href="#ssec-mil461" title="Permanent link">&para;</a></h3>
+<p>MIL-STD-461G defines conducted and radiated emission/susceptibility requirements for equipment on military platforms. For missile electronics, the critical tests are:</p>
+<ul>
+<li>
+<p><strong>CE102:</strong> conducted emissions on power leads, <span class="arithmatex">\(10\,\text{kHz}\)</span>–<span class="arithmatex">\(10\,\text{MHz}\)</span>.</p>
+</li>
+<li>
+<p><strong>RE102:</strong> radiated emissions electric field, <span class="arithmatex">\(10\,\text{kHz}\)</span>–<span class="arithmatex">\(18\,\text{GHz}\)</span>.</p>
+</li>
+<li>
+<p><strong>CS101:</strong> conducted susceptibility, power leads, <span class="arithmatex">\(30\,\text{Hz}\)</span>–<span class="arithmatex">\(150\,\text{kHz}\)</span> (for aircraft-mounted systems).</p>
+</li>
+<li>
+<p><strong>RS103:</strong> radiated susceptibility, <span class="arithmatex">\(10\,\text{kHz}\)</span>–<span class="arithmatex">\(40\,\text{GHz}\)</span>; worst case: high-power radar on ship deck, field strength up to <span class="arithmatex">\(200\,\text{V/m}\)</span>.</p>
+</li>
+</ul>
+<h3 id="ssec-emp_hard"><span class="secnum">26.8.2</span> EMP Hardening<a class="headerlink" href="#ssec-emp_hard" title="Permanent link">&para;</a></h3>
+<p>Nuclear electromagnetic pulse (HEMP) produces an extremely fast field: rise time <span class="arithmatex">\(&lt;2.5\,\text{ns}\)</span>, peak field <span class="arithmatex">\(50\,\text{kV/m}\)</span> at line-of-sight from a high-altitude burst. Protection measures:</p>
+<ul>
+<li>
+<p>Shielded enclosures achieving <span class="arithmatex">\(\geq 100\,\text{dB}\)</span> shielding effectiveness (all seams, penetrations continuously welded or gasketted with beryllium-copper EMI gaskets).</p>
+</li>
+<li>
+<p>Metal oxide varistors (MOVs) and transient voltage suppression (TVS) diodes on all external cable entry points; response time <span class="arithmatex">\(&lt;1\,\text{ns}\)</span>.</p>
+</li>
+<li>
+<p>Fibre optic data links for signals between sections, eliminating antenna coupling on conductive runs.</p>
+</li>
+<li>
+<p>Dielectric windows rather than metallic conduit for antenna feeds, with ferrite-loaded absorbers lining waveguide transitions.</p>
+</li>
+</ul>
+<h3 id="ssec-rad_hard"><span class="secnum">26.8.3</span> Nuclear Radiation Hardness<a class="headerlink" href="#ssec-rad_hard" title="Permanent link">&para;</a></h3>
+<p>Strategic missiles must function through the nuclear-radiation environment of a nuclear airburst. Critical effects:</p>
+<ul>
+<li>
+<p><strong>Total Ionising Dose (TID):</strong> accumulated dose degrades gate oxide threshold voltage; radiation-hardened parts (RHBD — Radiation Hardened By Design) tolerate <span class="arithmatex">\(300\,\text{krad}\)</span>–<span class="arithmatex">\(1\,\text{Mrad}\)</span> (Si).</p>
+</li>
+<li>
+<p><strong>Single-Event Effects (SEE):</strong> heavy ions or protons strike a logic node causing single-event upset (SEU — bit flip), single-event latch-up (SEL — destructive), or single-event burnout (SEB). SEU mitigation: triple modular redundancy (TMR), EDAC (Error Detection and Correction) memory scrubbing at <span class="arithmatex">\(&lt; 10\,\text{ms}\)</span> intervals.</p>
+</li>
+<li>
+<p><strong>Dose-Rate Effects:</strong> prompt radiation from a nearby burst causes transient photocurrents in all junctions; current-limiting resistors and bulk CMOS logic designs (not bipolar) are preferred.</p>
+</li>
+</ul>
+<p>Radiation hardness requirements for a strategic ICBM guidance electronics package are typically:</p>
+<ul>
+<li>
+<p>TID: <span class="arithmatex">\(\geq 1\,\text{Mrad(Si)}\)</span></p>
+</li>
+<li>
+<p>SEU cross-section: <span class="arithmatex">\(&lt; 10^{-10}\,\text{cm}^2/\text{bit}\)</span> at LET <span class="arithmatex">\(80\,\text{MeV\,cm}^2/\text{mg}\)</span></p>
+</li>
+<li>
+<p>Dose rate: <span class="arithmatex">\(10^{10}\,\text{rad(Si)/s}\)</span> survival</p>
+</li>
+</ul>
+<p>Conformal coating (acrylic, silicone, polyurethane to IPC-CC-830) protects PCBs from condensation, fungal growth, and partial radiation shielding.</p>
+<h2 id="sec-datalink"><span class="secnum">26.9</span> Datalink Integration<a class="headerlink" href="#sec-datalink" title="Permanent link">&para;</a></h2>
+<p>Many modern missiles are equipped with two-way datalinks enabling mid-course target update, man-in-the-loop control, and post-launch retargeting. The datalink architecture varies by missile class.</p>
+<h3 id="ssec-twoway_dl"><span class="secnum">26.9.1</span> Two-Way Datalink<a class="headerlink" href="#ssec-twoway_dl" title="Permanent link">&para;</a></h3>
+<p>Missiles such as AMRAAM (AIM-120D) and Brimstone carry a two-way datalink:</p>
+<ul>
+<li>
+<p><strong>Uplink (platform-to-missile):</strong> target position update (inertial coordinates), mid-course guidance corrections, terminal phase enable, waypoint updates. Bit rate: <span class="arithmatex">\(1\)</span>–<span class="arithmatex">\(100\,\text{kbps}\)</span>.</p>
+</li>
+<li>
+<p><strong>Downlink (missile-to-platform):</strong> seeker status, current position/velocity, BIT health, handover request. Bit rate: <span class="arithmatex">\(1\)</span>–<span class="arithmatex">\(100\,\text{kbps}\)</span>.</p>
+</li>
+</ul>
+<p>The link budget for the uplink:</p>
+<div id="eq-link_budget"></div>
+<div class="arithmatex">\[\text{SNR}_{\text{uplink}} = \frac{P_t\,G_t\,G_r\,\lambda^2}{(4\pi R)^2\,k_B\,T_s\,B_n\,L_{\text{sys}}}\tag{26.16}\]</div>
+<p>where <span class="arithmatex">\(P_t\)</span> is transmit power, <span class="arithmatex">\(G_t\)</span>/<span class="arithmatex">\(G_r\)</span> are transmit/receive antenna gains, <span class="arithmatex">\(R\)</span> is range, <span class="arithmatex">\(k_B\)</span> is Boltzmann’s constant, <span class="arithmatex">\(T_s\)</span> system noise temperature, <span class="arithmatex">\(B_n\)</span> noise bandwidth, and <span class="arithmatex">\(L_{\text{sys}}\)</span> system losses.</p>
+<h3 id="ssec-loal"><span class="secnum">26.9.2</span> LOAL and Lock-On Before Launch (LOBL)<a class="headerlink" href="#ssec-loal" title="Permanent link">&para;</a></h3>
+<p><strong>Lock-On Before Launch (LOBL):</strong> seeker acquires and tracks target before launch; pilot must see the target. Classic fire-and-forget for short-range AAMs (AIM-9L/M).</p>
+<p><strong>Lock-On After Launch (LOAL):</strong> missile is launched without seeker lock; mid-course inertial/datalink guidance positions the missile for seeker acquisition in the terminal phase. LOAL-Direct (LOAL-D) and LOAL-Indirect (LOAL-I) describe whether the missile has a direct or indirect line of sight on launch. LOAL is essential for beyond-visual-range (BVR) shots and is standard on AMRAAM, Meteor, Aster.</p>
+<h3 id="ssec-gps_int"><span class="secnum">26.9.3</span> GPS Integration<a class="headerlink" href="#ssec-gps_int" title="Permanent link">&para;</a></h3>
+<p>GPS provides one-way position updates for cruise missiles and GPS/INS hybrid guidance. The GPS receiver outputs position and velocity at 1–10 Hz; these are fed into the navigation Kalman filter to reset accumulated IMU drift. Anti-jam provisions:</p>
+<ul>
+<li>
+<p>Controlled reception pattern antenna (CRPA): null-steering antenna array rejects jammers with <span class="arithmatex">\(25\)</span>–<span class="arithmatex">\(40\,\text{dB}\)</span> rejection.</p>
+</li>
+<li>
+<p>Selective Availability Anti-Spoofing Module (SAASM): military P(Y) and M-code reception.</p>
+</li>
+<li>
+<p>Inertial coasting: missile continues on pure INS if GPS is jammed; accuracy degrades at the IMU drift rate.</p>
+</li>
+</ul>
+<p>The GPS/INS coupled position estimation:</p>
+<div id="eq-kalman"></div>
+<div class="arithmatex">\[\hat{\mathbf{x}}_{k|k} = \hat{\mathbf{x}}_{k|k-1} + \mathbf{K}_k\,\left(\mathbf{z}_k - \mathbf{H}\,\hat{\mathbf{x}}_{k|k-1}\right)\tag{26.17}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{K}_k = \mathbf{P}_{k|k-1}\,\mathbf{H}^T\,\left(\mathbf{H}\,\mathbf{P}_{k|k-1}\,\mathbf{H}^T + \mathbf{R}\right)^{-1}\)</span> is the Kalman gain.</p>
+<h2 id="sec-reliability"><span class="secnum">26.10</span> Reliability and Testing<a class="headerlink" href="#sec-reliability" title="Permanent link">&para;</a></h2>
+<h3 id="ssec-mtbf"><span class="secnum">26.10.1</span> MTBF Prediction<a class="headerlink" href="#ssec-mtbf" title="Permanent link">&para;</a></h3>
+<p>Reliability prediction follows MIL-HDBK-217F (Notice 2), <em>Reliability Prediction of Electronic Equipment</em>. The parts count method gives a system failure rate:</p>
+<div id="eq-mtbf"></div>
+<div class="arithmatex">\[\lambda_{\text{sys}} = \sum_{i=1}^{N} N_i\,\lambda_{b,i}\,\pi_{Q,i}\,\pi_{E,i}\tag{26.18}\]</div>
+<p>where <span class="arithmatex">\(\lambda_{b,i}\)</span> is the base failure rate for component <span class="arithmatex">\(i\)</span>, <span class="arithmatex">\(\pi_{Q,i}\)</span> is the quality factor (Class S parts: <span class="arithmatex">\(\pi_Q = 0.25\)</span>; COTS: <span class="arithmatex">\(\pi_Q = 10\)</span>), and <span class="arithmatex">\(\pi_{E,i}\)</span> is the environment factor (<span class="arithmatex">\(\pi_E = 4\)</span> for airborne, inhabited; <span class="arithmatex">\(\pi_E = 8\)</span> for airborne, uninhabited). <span class="arithmatex">\(\text{MTBF} = 1/\lambda_{\text{sys}}\)</span>.</p>
+<h3 id="ssec-derating"><span class="secnum">26.10.2</span> Component Derating<a class="headerlink" href="#ssec-derating" title="Permanent link">&para;</a></h3>
+<p>Components are derated to reduce operating stress below rated values, following MIL-STD-975 and NASA EEE-INST-002:</p>
+<ul>
+<li>
+<p>Resistors: operate at <span class="arithmatex">\(\leq 50\%\)</span> rated power.</p>
+</li>
+<li>
+<p>Capacitors: operate at <span class="arithmatex">\(\leq 50\%\)</span> rated voltage (electrolytic: <span class="arithmatex">\(\leq 60\%\)</span>).</p>
+</li>
+<li>
+<p>Semiconductors: junction temperature <span class="arithmatex">\(\leq 110\,^\circ\text{C}\)</span> (Class S parts rated to <span class="arithmatex">\(125\,^\circ\text{C}\)</span>).</p>
+</li>
+<li>
+<p>Switching transistors: <span class="arithmatex">\(V_{DS}\)</span> or <span class="arithmatex">\(V_{CE}\)</span> at <span class="arithmatex">\(\leq 70\%\)</span> rated value.</p>
+</li>
+</ul>
+<h3 id="ssec-burn_in"><span class="secnum">26.10.3</span> Burn-In and Screening<a class="headerlink" href="#ssec-burn_in" title="Permanent link">&para;</a></h3>
+<p>Individual ICs are burned in at <span class="arithmatex">\(125\,^\circ\text{C}\)</span> for <span class="arithmatex">\(168\,\text{h}\)</span> to remove infant mortality failures (early life of the bathtub reliability curve). Assembled PCBs undergo environmental stress screening (ESS):</p>
+<ul>
+<li>
+<p>Thermal cycling: <span class="arithmatex">\(-55\,^\circ\text{C}\)</span> to <span class="arithmatex">\(+85\,^\circ\text{C}\)</span>, 10 cycles, rate <span class="arithmatex">\(\geq 5\,^\circ\text{C}/\text{min}\)</span>.</p>
+</li>
+<li>
+<p>Random vibration: <span class="arithmatex">\(0.04\,g^2/\text{Hz}\)</span>, <span class="arithmatex">\(20\)</span>–<span class="arithmatex">\(2000\,\text{Hz}\)</span>, <span class="arithmatex">\(\geq 5\,\text{min}\)</span> per axis.</p>
+</li>
+<li>
+<p>Functional test at temperature extremes.</p>
+</li>
+</ul>
+<p>Highly Accelerated Life Testing (HALT) pushes beyond design margins (temperature: <span class="arithmatex">\(-100\,^\circ\text{C}\)</span> to <span class="arithmatex">\(+200\,^\circ\text{C}\)</span>; vibration: <span class="arithmatex">\(&gt;50\,g_{\text{rms}}\)</span>) to precipitate design weaknesses rapidly. HASS (Highly Accelerated Stress Screening) applies a less aggressive HALT-like screen in production.</p>
+<h3 id="ssec-storage"><span class="secnum">26.10.4</span> Storage Life<a class="headerlink" href="#ssec-storage" title="Permanent link">&para;</a></h3>
+<p>Arrhenius model for chemical/thermal degradation of non-metallic materials (conformal coat, potting, O-rings):</p>
+<div id="eq-arrhenius"></div>
+<div class="arithmatex">\[t_{\text{life}}(T_{\text{storage}}) = A\,\exp\!\left(\frac{E_a}{k_B\,T_{\text{storage}}}\right)\tag{26.19}\]</div>
+<p>where <span class="arithmatex">\(E_a\)</span> is the activation energy (<span class="arithmatex">\(\approx 0.7\)</span>–<span class="arithmatex">\(1.1\,\text{eV}\)</span> for typical elastomers), <span class="arithmatex">\(k_B = 8.617\times10^{-5}\,\text{eV/K}\)</span>, and <span class="arithmatex">\(T_{\text{storage}}\)</span> is absolute storage temperature. Accelerated aging at <span class="arithmatex">\(+70\,^\circ\text{C}\)</span> for 1000 h is used to verify 20-year storage life at <span class="arithmatex">\(+20\,^\circ\text{C}\)</span>. Electronic components with solid-state construction have inherently longer storage life; electrolytic capacitors and batteries are the dominant life-limiters.</p>
+<div class="tbl" id="tab-mtbf_budget">
+<div class="tbl-caption"><strong>Table 26.3.</strong> Representative Missile Electronics Component MTBF Budget</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Subsystem</strong></th>
+<th style="text-align: left;"><strong>MTBF (hours)</strong></th>
+<th style="text-align: left;"><strong>Quality Level</strong></th>
+<th style="text-align: left;"><strong>Key Life Limiter</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Guidance processor (FPGA+CPU)</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;50{,}000\)</span></td>
+<td style="text-align: left;">Class S / RHBD</td>
+<td style="text-align: left;">Single-event latch-up</td>
+</tr>
+<tr>
+<td style="text-align: left;">Inertial measurement unit</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;10{,}000\)</span></td>
+<td style="text-align: left;">Mil grade</td>
+<td style="text-align: left;">FOG source (LED/SLD) ageing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Power conditioning module</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;15{,}000\)</span></td>
+<td style="text-align: left;">MIL-PRF-38534</td>
+<td style="text-align: left;">Electrolytic capacitor ESR</td>
+</tr>
+<tr>
+<td style="text-align: left;">Seeker electronics</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;20{,}000\)</span></td>
+<td style="text-align: left;">Mil grade</td>
+<td style="text-align: left;">Detector array dark current</td>
+</tr>
+<tr>
+<td style="text-align: left;">Thermal battery</td>
+<td style="text-align: left;">20-yr shelf</td>
+<td style="text-align: left;">N/A (inert)</td>
+<td style="text-align: left;">Heat pellet damp penetration</td>
+</tr>
+<tr>
+<td style="text-align: left;">Actuation electronics</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;30{,}000\)</span></td>
+<td style="text-align: left;">Mil grade</td>
+<td style="text-align: left;">MOSFET gate oxide</td>
+</tr>
+<tr>
+<td style="text-align: left;">Datalink RF module</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;15{,}000\)</span></td>
+<td style="text-align: left;">Mil grade</td>
+<td style="text-align: left;">PA GaN HEMT reliability</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="ssec-elec_summary"><span class="secnum">26.10.5</span> Summary<a class="headerlink" href="#ssec-elec_summary" title="Permanent link">&para;</a></h3>
+<p>Missile electronics engineering is a discipline defined by extremes: extreme packaging density, extreme environmental conditions, extreme reliability demands for a one-shot system, and extreme performance requirements from guidance computers that must execute advanced tracking algorithms in microseconds. The convergence of COTS-heritage FPGA/SoC technology with radiation-hardened, mil-qualified packaging is the dominant trend, enabling unprecedented guidance precision while containing the non-recurring engineering cost. The data bus ecosystem centred on MIL-STD-1553B has proven remarkably durable and will coexist with SpaceWire and fibre Ethernet as bandwidth demands escalate with AESA seekers and synthetic aperture modes. Power system design remains dominated by the thermal battery for tactical systems, with turbogenerators reserving their role for sustained-cruise applications. Reliability assurance through HALT, HASS, and Arrhenius-validated storage life remains the cornerstone of programmatic risk reduction for missile electronics programmes.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch25-flight-control-systems.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 25. Flight Control Systems">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                25. Flight Control Systems
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch27-launch-systems-and-integration.html" class="md-footer__link md-footer__link--next" aria-label="Next: 27. Launch Systems and Integration">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                27. Launch Systems and Integration
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

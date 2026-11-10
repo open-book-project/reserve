@@ -1,0 +1,3829 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch33-counter-uas-and-counter-drone-systems.html">
+  
+  
+    <link rel="prev" href="ch32-directed-energy-weapons.html">
+  
+  
+    <link rel="next" href="ch34-autonomous-lethal-systems-and-ethics.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>33. Counter-UAS and Counter-Drone Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-cuas_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              33. Counter-UAS and Counter-Drone Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1 Introduction: The Counter-UAS Challenge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.1 Introduction: The Counter-UAS Challenge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3311-threat-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.1 Threat Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3312-attack-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.2 Attack Vectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3313-the-asymmetric-cost-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.3 The Asymmetric Cost Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3314-historical-incidents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.4 Historical Incidents
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2 Detection Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.2 Detection Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3321-radar-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.1 Radar Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3322-electro-optical-and-infrared-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.2 Electro-Optical and Infrared Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3323-rf-detection-and-direction-finding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.3 RF Detection and Direction Finding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3324-acoustic-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.4 Acoustic Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3325-multi-sensor-fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.5 Multi-Sensor Fusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.3 Identification and Classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.3 Identification and Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3331-classification-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.3.1 Classification Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3332-ai-based-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.3.2 AI-Based Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-kinetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4 Kinetic Defeat Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.4 Kinetic Defeat Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3341-dedicated-gun-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4.1 Dedicated Gun Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3342-interceptor-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4.2 Interceptor Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3343-net-capture-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4.3 Net Capture Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-dew_cuas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.5 Directed Energy Defeat Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.5 Directed Energy Defeat Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3351-high-energy-laser-hel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.5.1 High Energy Laser (HEL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3352-high-power-microwave-hpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.5.2 High Power Microwave (HPM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ea_cuas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6 Electronic Attack for C-UAS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.6 Electronic Attack for C-UAS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3361-rc-link-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.1 RC Link Jamming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3362-gps-jamming-and-spoofing-for-c-uas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.2 GPS Jamming and Spoofing for C-UAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3363-protocol-level-and-cyber-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.3 Protocol-Level and Cyber Attacks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3364-effective-jamming-range-vs-friendly-force-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.4 Effective Jamming Range vs Friendly Force Risk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7 C-UAS System Integration and Kill Chain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.7 C-UAS System Integration and Kill Chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3371-the-c-uas-kill-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.1 The C-UAS Kill Chain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3372-layered-defence-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.2 Layered Defence Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3373-command-and-control-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.3 Command and Control Automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3374-mobile-c-uas-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.4 Mobile C-UAS Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3375-naval-c-uas-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.5 Naval C-UAS Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_defeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8 Swarm Defeat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.8 Swarm Defeat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3381-the-swarm-saturation-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8.1 The Swarm Saturation Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3382-counter-swarm-uas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8.2 Counter-Swarm UAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3383-swarm-c2-network-targeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8.3 Swarm C2 Network Targeting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_regs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9 Regulations, Standards, and Policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.9 Regulations, Standards, and Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3391-faa-remote-id-14-cfr-part-89" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.1 FAA Remote ID (14 CFR Part 89)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3392-nato-stanag-4703-and-c-uas-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.2 NATO STANAG 4703 and C-UAS Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3393-airport-protection-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.3 Airport Protection Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3394-c-uas-legal-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.4 C-UAS Legal Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3395-geofencing-and-technical-countermeasures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.5 Geofencing and Technical Countermeasures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10 C-UAS Performance Metrics and System Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.10 C-UAS Performance Metrics and System Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#33101-key-performance-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10.1 Key Performance Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33102-test-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10.2 Test and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33103-cost-effectiveness-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10.3 Cost-Effectiveness Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11 Emerging Trends and Future Directions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.11 Emerging Trends and Future Directions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#33111-ai-enhanced-autonomous-c-uas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11.1 AI-Enhanced Autonomous C-UAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33112-counter-counter-uas-c2uas-the-adversary-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11.2 Counter-Counter-UAS (C2UAS) — The Adversary Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33113-integrated-air-defence-system-iads-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11.3 Integrated Air Defence System (IADS) Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.12 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1 Introduction: The Counter-UAS Challenge
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.1 Introduction: The Counter-UAS Challenge">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3311-threat-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.1 Threat Taxonomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3312-attack-vectors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.2 Attack Vectors
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3313-the-asymmetric-cost-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.3 The Asymmetric Cost Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3314-historical-incidents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.1.4 Historical Incidents
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2 Detection Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.2 Detection Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3321-radar-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.1 Radar Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3322-electro-optical-and-infrared-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.2 Electro-Optical and Infrared Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3323-rf-detection-and-direction-finding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.3 RF Detection and Direction Finding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3324-acoustic-detection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.4 Acoustic Detection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3325-multi-sensor-fusion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.2.5 Multi-Sensor Fusion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_id" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.3 Identification and Classification
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.3 Identification and Classification">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3331-classification-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.3.1 Classification Hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3332-ai-based-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.3.2 AI-Based Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-kinetic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4 Kinetic Defeat Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.4 Kinetic Defeat Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3341-dedicated-gun-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4.1 Dedicated Gun Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3342-interceptor-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4.2 Interceptor Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3343-net-capture-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.4.3 Net Capture Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-dew_cuas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.5 Directed Energy Defeat Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.5 Directed Energy Defeat Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3351-high-energy-laser-hel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.5.1 High Energy Laser (HEL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3352-high-power-microwave-hpm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.5.2 High Power Microwave (HPM)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ea_cuas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6 Electronic Attack for C-UAS
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.6 Electronic Attack for C-UAS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3361-rc-link-jamming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.1 RC Link Jamming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3362-gps-jamming-and-spoofing-for-c-uas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.2 GPS Jamming and Spoofing for C-UAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3363-protocol-level-and-cyber-attacks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.3 Protocol-Level and Cyber Attacks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3364-effective-jamming-range-vs-friendly-force-risk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.6.4 Effective Jamming Range vs Friendly Force Risk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7 C-UAS System Integration and Kill Chain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.7 C-UAS System Integration and Kill Chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3371-the-c-uas-kill-chain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.1 The C-UAS Kill Chain
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3372-layered-defence-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.2 Layered Defence Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3373-command-and-control-automation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.3 Command and Control Automation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3374-mobile-c-uas-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.4 Mobile C-UAS Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3375-naval-c-uas-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.7.5 Naval C-UAS Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_defeat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8 Swarm Defeat
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.8 Swarm Defeat">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3381-the-swarm-saturation-problem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8.1 The Swarm Saturation Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3382-counter-swarm-uas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8.2 Counter-Swarm UAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3383-swarm-c2-network-targeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.8.3 Swarm C2 Network Targeting
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_regs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9 Regulations, Standards, and Policy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.9 Regulations, Standards, and Policy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#3391-faa-remote-id-14-cfr-part-89" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.1 FAA Remote ID (14 CFR Part 89)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3392-nato-stanag-4703-and-c-uas-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.2 NATO STANAG 4703 and C-UAS Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3393-airport-protection-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.3 Airport Protection Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3394-c-uas-legal-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.4 C-UAS Legal Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3395-geofencing-and-technical-countermeasures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.9.5 Geofencing and Technical Countermeasures
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10 C-UAS Performance Metrics and System Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.10 C-UAS Performance Metrics and System Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#33101-key-performance-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10.1 Key Performance Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33102-test-and-evaluation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10.2 Test and Evaluation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33103-cost-effectiveness-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.10.3 Cost-Effectiveness Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11 Emerging Trends and Future Directions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="33.11 Emerging Trends and Future Directions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#33111-ai-enhanced-autonomous-c-uas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11.1 AI-Enhanced Autonomous C-UAS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33112-counter-counter-uas-c2uas-the-adversary-response" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11.2 Counter-Counter-UAS (C2UAS) — The Adversary Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33113-integrated-air-defence-system-iads-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.11.3 Integrated Air Defence System (IADS) Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cuas_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        33.12 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-cuas">Chapter 33: Counter-UAS and Counter-Drone Systems<a class="headerlink" href="#ch-cuas" title="Permanent link">&para;</a></h1>
+<h2 id="sec-cuas_intro"><span class="secnum">33.1</span> Introduction: The Counter-UAS Challenge<a class="headerlink" href="#sec-cuas_intro" title="Permanent link">&para;</a></h2>
+<p>The proliferation of unmanned aerial systems (UAS) across commercial, recreational, and military domains has created an asymmetric threat of unprecedented scale. A decade ago, air defence doctrine focused almost exclusively on crewed aircraft and ballistic missiles. Today, operational commanders must simultaneously defend against a threat spectrum ranging from sub-250 g toy quadrotors carrying improvised explosives to military-grade group 4/5 unmanned combat aerial vehicles (UCAVs) with precision strike capability, and — most challenging of all — coordinated swarms of hundreds to thousands of autonomous vehicles executing distributed attack profiles.</p>
+<p>Counter-UAS (C-UAS) is the collective term for all measures, systems, and operational concepts designed to detect, identify, track, and defeat hostile unmanned systems. The discipline is characterised by extreme cost asymmetry, multi-domain complexity (kinetic, electronic, cyber, legal), and the need to operate in densely populated civil environments where collateral damage constraints are severe.</p>
+<h3 id="3311-threat-taxonomy"><span class="secnum">33.1.1</span> Threat Taxonomy<a class="headerlink" href="#3311-threat-taxonomy" title="Permanent link">&para;</a></h3>
+<p>The UAS threat spans five DoD Group classifications:</p>
+<div class="tbl" id="tab-uas_groups">
+<div class="tbl-caption"><strong>Table 33.1.</strong> DoD UAS Group Classification and Counter-UAS Implications</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Group</strong></th>
+<th style="text-align: left;"><strong>Max GW (kg)</strong></th>
+<th style="text-align: left;"><strong>Alt (ft AGL)</strong></th>
+<th style="text-align: left;"><strong>Speed (kt)</strong></th>
+<th style="text-align: left;"><strong>RCS (m<span class="math inline">\(^2\)</span>)</strong></th>
+<th style="text-align: left;"><strong>C-UAS Challenge</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 9</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 1200</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 100</td>
+<td style="text-align: left;">0.001–0.01</td>
+<td style="text-align: left;">Micro-Doppler; clutter; no ADS-B</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">9.5–25</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 3500</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 250</td>
+<td style="text-align: left;">0.01–0.1</td>
+<td style="text-align: left;">Low RCS; speed; small target</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">25–600</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> FL180</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 250</td>
+<td style="text-align: left;">0.1–1.0</td>
+<td style="text-align: left;">Manoeuvre; standoff payload</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 600</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> FL180</td>
+<td style="text-align: left;">Any</td>
+<td style="text-align: left;">0.5–5.0</td>
+<td style="text-align: left;">Similar to crewed aircraft</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> 600</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> FL180</td>
+<td style="text-align: left;">Any</td>
+<td style="text-align: left;">5–50</td>
+<td style="text-align: left;">UCAV; stealth possible</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Groups 1–3 represent the most challenging C-UAS problem: their small size yields radar cross-sections of <span class="arithmatex">\(0.001\)</span>–<span class="arithmatex">\(1.0\)</span> m<span class="arithmatex">\(^2\)</span>, compared to <span class="arithmatex">\(1\)</span>–<span class="arithmatex">\(10\)</span> m<span class="arithmatex">\(^2\)</span> for fighter aircraft. Combined with flight at low altitude in terrain and urban clutter, and with no cooperative identification, they are exceptionally difficult to detect and engage.</p>
+<h3 id="3312-attack-vectors"><span class="secnum">33.1.2</span> Attack Vectors<a class="headerlink" href="#3312-attack-vectors" title="Permanent link">&para;</a></h3>
+<p>Hostile UAS exploit multiple attack vectors:</p>
+<ol>
+<li>
+<p><strong>Intelligence, Surveillance and Reconnaissance (ISR):</strong> Persistent overhead observation of positions, routes, and activities; enables accurate mortar/artillery fire correction.</p>
+</li>
+<li>
+<p><strong>Precision payload delivery:</strong> Dropping grenades, IEDs, or chemical/biological agents from altitude; highly effective when defender’s perimeter sensor coverage is incomplete.</p>
+</li>
+<li>
+<p><strong>Kamikaze (loitering munition) impact:</strong> Commercial FPV drone modified with explosive payload; direct-impact attack on vehicles, personnel, and light infrastructure. Widely used in Ukraine (2022–present): FPV drones with RPG warheads disabled dozens of armoured vehicles at a material cost of &#36;500–&#36;2000 per drone.</p>
+</li>
+<li>
+<p><strong>Swarm saturation:</strong> Coordinated multi-vehicle attack; overwhelms point-defence engagement rates; forces defender to exhaust expensive interceptors against cheap threats.</p>
+</li>
+<li>
+<p><strong>EW/SIGINT drone:</strong> Drone equipped with SDR to map defender’s RF emissions; locate radio communications; jam C2 nets.</p>
+</li>
+</ol>
+<h3 id="3313-the-asymmetric-cost-problem"><span class="secnum">33.1.3</span> The Asymmetric Cost Problem<a class="headerlink" href="#3313-the-asymmetric-cost-problem" title="Permanent link">&para;</a></h3>
+<p>The fundamental economic problem in C-UAS is the exchange ratio. A Raytheon Coyote interceptor costs approximately &#36;25,000. The Stinger missile costs &#36;38,000. A Patriot interceptor costs &#36;3–4 M. Against a &#36;500 commercial quadrotor loaded with a grenade, the defender faces:</p>
+<div id="eq-cer"></div>
+<div class="arithmatex">\[\text{Cost Exchange Ratio} = \frac{C_{interceptor}}{C_{threat}} = \frac{\$38{,}000}{\$500} = 76:1\tag{33.1}\]</div>
+<p>At swarm scale (100 drones), the attacker spends &#36;50,000 while forcing the defender to expend &#36;3.8 M in missiles — and the defender may simply run out of interceptors. This asymmetry drives the C-UAS community toward directed energy (speed-of-light; essentially zero marginal cost per shot) and electronic attack (reversible; low cost) solutions rather than kinetic intercept missiles.</p>
+<h3 id="3314-historical-incidents"><span class="secnum">33.1.4</span> Historical Incidents<a class="headerlink" href="#3314-historical-incidents" title="Permanent link">&para;</a></h3>
+<p>Key operational incidents that shaped C-UAS requirements:</p>
+<ul>
+<li>
+<p><strong>Hmeimim Airbase, Syria (January 2018):</strong> Russian forces at Hmeimim AB repelled a coordinated attack by 13 fixed-wing UAS carrying GPS-guided sub-munitions. Pantsir-S1 systems engaged several; electronic spoofing diverted others. First documented large-scale swarm attack against a defended military base.</p>
+</li>
+<li>
+<p><strong>Abqaiq-Khurais, Saudi Arabia (September 2019):</strong> Saudi Aramco oil processing facilities attacked by a combination of cruise missiles and UAS; 17 drone strikes caused fires that temporarily halved Saudi oil production. Attributed to Iranian-backed forces. Demonstrated UAS effectiveness against critical infrastructure.</p>
+</li>
+<li>
+<p><strong>Nagorno-Karabakh (2020):</strong> Azerbaijan’s TB2 Bayraktar and Israeli Harop loitering munitions systematically destroyed Armenian air defence radar and artillery. Demonstrated Group 4/5 UAS lethality against integrated air defence systems.</p>
+</li>
+<li>
+<p><strong>Ukraine conflict (2022–present):</strong> Ubiquitous FPV drone use by both sides; Russian Shahed-136 kamikaze drones targeting Ukrainian infrastructure; Ukrainian commercial DJI Mavics for fire correction; Lancet loitering munitions destroying armoured vehicles. Forced rapid fielding of improvised and formal C-UAS systems.</p>
+</li>
+</ul>
+<h2 id="sec-cuas_detection"><span class="secnum">33.2</span> Detection Systems<a class="headerlink" href="#sec-cuas_detection" title="Permanent link">&para;</a></h2>
+<p>Detection is the first and most critical layer of any C-UAS system. A target that cannot be detected cannot be defeated. Detection must provide sufficient track quality (position, velocity, heading) to cue identification, and ultimately engagement systems, with false alarm rates low enough to avoid saturation of human operators.</p>
+<h3 id="3321-radar-detection"><span class="secnum">33.2.1</span> Radar Detection<a class="headerlink" href="#3321-radar-detection" title="Permanent link">&para;</a></h3>
+<p>Radar is the primary all-weather, 24/7 sensor for C-UAS at ranges beyond visual. Conventional air traffic control and air defence radars are poorly suited to small UAS detection for several reasons: their clutter filters (MTI, Doppler notch) often notch out slow-moving drones along with terrain clutter; their volume search dwell times are too long to track agile mini-UAS; and their angular resolution is insufficient to resolve small targets from nearby clutter.</p>
+<h4 id="dedicated-c-uas-radar-design-requirements">Dedicated C-UAS Radar Design Requirements<a class="headerlink" href="#dedicated-c-uas-radar-design-requirements" title="Permanent link">&para;</a></h4>
+<p>For reliable detection of a Group 1 UAS with <span class="arithmatex">\(\sigma = 0.01\)</span> m<span class="arithmatex">\(^2\)</span>:</p>
+<div id="eq-radar_range_cuas"></div>
+<div class="arithmatex">\[R_{det} = \left(\frac{P_t G_t G_r \lambda^2 \sigma}{(4\pi)^3 k T_0 F B_n S_{min}}\right)^{1/4}\tag{33.2}\]</div>
+<p>where <span class="arithmatex">\(S_{min} = S/N_{min} \cdot kT_0 F B_n\)</span> is the minimum detectable signal. Setting <span class="arithmatex">\(P_t = 2\)</span> kW, <span class="arithmatex">\(G_t = G_r = 25\)</span> dBi, <span class="arithmatex">\(\lambda = 0.03\)</span> m (X-band), <span class="arithmatex">\(\sigma = 0.01\)</span> m<span class="arithmatex">\(^2\)</span>, NF <span class="arithmatex">\(= 5\)</span> dB, <span class="arithmatex">\(B_n = 5\)</span> MHz, <span class="arithmatex">\(S/N_{min} = 13\)</span> dB:</p>
+<div id="eq-radar_range_example"></div>
+<div class="arithmatex">\[R_{det} = \left(\frac{2000 \times 316 \times 316 \times 9\times10^{-4} \times 0.01}
+               {(4\pi)^3 \times 4\times10^{-21} \times 3.16 \times 5\times10^6 \times 20}\right)^{1/4}
+        \approx 4.7\,\text{km}\tag{33.3}\]</div>
+<p>This represents a modest detection range for a Group 1 target; real systems compensate with longer coherent integration, which increases effective <span class="arithmatex">\(S/N\)</span> by <span class="arithmatex">\(\sqrt{N_{pulses}}\)</span>:</p>
+<div id="eq-cpi_gain"></div>
+<div class="arithmatex">\[S/N_{CPI} = S/N_{single} \cdot N_{pulses}\tag{33.4}\]</div>
+<p>for coherent integration of <span class="arithmatex">\(N_{pulses}\)</span> pulses in a coherent processing interval (CPI).</p>
+<h4 id="micro-doppler-signature">Micro-Doppler Signature<a class="headerlink" href="#micro-doppler-signature" title="Permanent link">&para;</a></h4>
+<p>The rotating blades of a multi-rotor UAS produce a characteristic micro-Doppler signature that is uniquely identifiable and separable from bird returns. A rotor blade of length <span class="arithmatex">\(L\)</span> rotating at angular velocity <span class="arithmatex">\(\Omega\)</span> (rad/s) produces a Doppler frequency modulation:</p>
+<div id="eq-micro_doppler"></div>
+<div class="arithmatex">\[f_{micro}(t) = \frac{2\Omega L \cos(\theta)}{\lambda} \cos(\Omega t + \phi_0)\tag{33.5}\]</div>
+<p>where <span class="arithmatex">\(\theta\)</span> is the angle between the rotor disk normal and the radar LOS, and <span class="arithmatex">\(\phi_0\)</span> is the initial blade phase. The peak-to-peak micro-Doppler extent is:</p>
+<div id="eq-micro_doppler_bw"></div>
+<div class="arithmatex">\[\Delta f_{D,max} = \frac{4\Omega L \cos\theta}{\lambda}\tag{33.6}\]</div>
+<p>For a DJI Phantom 4 (quad-rotor; blade span <span class="arithmatex">\(L = 0.23\)</span> m; <span class="arithmatex">\(\Omega = 2\pi \times 100\)</span> rad/s) at <span class="arithmatex">\(\theta = 30°\)</span>, at X-band (<span class="arithmatex">\(\lambda = 0.03\)</span> m):</p>
+<div id="eq-micro_doppler_example"></div>
+<div class="arithmatex">\[\Delta f_{D} = \frac{4 \times 2\pi \times 100 \times 0.23 \times \cos(30°)}{0.03}
+             \approx 16{,}700\,\text{Hz} = 16.7\,\text{kHz}\tag{33.7}\]</div>
+<p>This micro-Doppler spread (<span class="arithmatex">\(\pm\)</span>8.3 kHz around the body Doppler) is clearly distinguishable in a range-Doppler map. Machine learning classifiers trained on micro-Doppler spectrograms (Short-Time Fourier Transform, STFT) achieve classification accuracy exceeding 95% between bird, quadrotor, fixed-wing UAS, and helicopter in benign environments (SNR <span class="arithmatex">\(&gt;\)</span> 10 dB).</p>
+<p>Dedicated C-UAS radar systems include the Fortem Technologies SkyDome (X-band FMCW; 2.5 km detection range for Group 1), Robin Radar Systems IRIS (S/X dual-band; 3 km for micro-drones), and the Dedrone DroneTracker Radar (FMCW; 1.5 km; integrated sensor fusion platform).</p>
+<h3 id="3322-electro-optical-and-infrared-detection"><span class="secnum">33.2.2</span> Electro-Optical and Infrared Detection<a class="headerlink" href="#3322-electro-optical-and-infrared-detection" title="Permanent link">&para;</a></h3>
+<p>EO/IR sensors provide passive detection and high-resolution classification capability but are limited by range, field of regard (scanning requirement), and adverse weather.</p>
+<p>Detection range of an EO sensor for a drone of cross-sectional area <span class="arithmatex">\(A_{target}\)</span> against a sky background of radiance <span class="arithmatex">\(L_{sky}\)</span>:</p>
+<div id="eq-eo_range"></div>
+<div class="arithmatex">\[R_{EO} = \frac{D_{aperture}}{2.44\lambda} \cdot \sqrt{\frac{A_{target}}{\pi}} \cdot \frac{\text{MRC}}{\Delta L}\tag{33.8}\]</div>
+<p>where <span class="arithmatex">\(\text{MRC}\)</span> is the minimum resolvable contrast of the sensor, <span class="arithmatex">\(D_{aperture}\)</span> is aperture diameter, and <span class="arithmatex">\(\Delta L\)</span> is the target-background radiance contrast. In practice, AI-based object detection algorithms operating on HD video achieve drone detection at 2–5 km against clear sky backgrounds and 0.5–1 km in cluttered urban scenes.</p>
+<p>Thermal IR offers superior contrast for drones with warm motors and electronics against cool sky backgrounds, particularly at dawn and dusk. MWIR (3–5 <span class="arithmatex">\(\mu\)</span>m) cameras achieve 1.5<span class="arithmatex">\(\times\)</span>–3<span class="arithmatex">\(\times\)</span> greater detection range than comparable SWIR sensors against Group 1 UAS.</p>
+<h3 id="3323-rf-detection-and-direction-finding"><span class="secnum">33.2.3</span> RF Detection and Direction Finding<a class="headerlink" href="#3323-rf-detection-and-direction-finding" title="Permanent link">&para;</a></h3>
+<p>The vast majority of commercial and small military UAS operate control links in the ISM bands at 2.4 GHz or 5.8 GHz. RF detection identifies these transmissions, computes direction of arrival, and correlates with known drone protocols to identify model and operator location.</p>
+<h4 id="direction-finding">Direction Finding<a class="headerlink" href="#direction-finding" title="Permanent link">&para;</a></h4>
+<p>An interferometric direction finding array with <span class="arithmatex">\(N\)</span> elements and inter-element spacing <span class="arithmatex">\(d_{ij}\)</span> measures angle of arrival <span class="arithmatex">\(\psi\)</span> by comparing signal phase:</p>
+<div id="eq-df_angle"></div>
+<div class="arithmatex">\[\psi = \arcsin\!\left(\frac{\lambda \Delta\phi_{ij}}{2\pi d_{ij}}\right)\tag{33.9}\]</div>
+<p>Multiple baselines resolve the ambiguity (same as <a href="ch31-electronic-warfare-and-countermeasures.html#sec-rwr">Section 31.4</a>) and improve angular accuracy. With a 4-element array of 1 m baseline at 2.4 GHz (<span class="arithmatex">\(\lambda = 0.125\)</span> m):</p>
+<div id="eq-df_accuracy"></div>
+<div class="arithmatex">\[\sigma_\psi = \frac{\lambda}{2\pi d \sqrt{2\,\text{SNR}}} = \frac{0.125}{2\pi \times 1 \times \sqrt{2\times100}} \approx 1.4°\tag{33.10}\]</div>
+<p>at SNR = 20 dB. Combining two DF stations with known separation enables TDOA-based geolocation of both the drone and its ground control station (GCS).</p>
+<h4 id="droneid-and-protocol-identification">DroneID and Protocol Identification<a class="headerlink" href="#droneid-and-protocol-identification" title="Permanent link">&para;</a></h4>
+<p>DJI’s OcuSync/O3 link broadcasts a proprietary telemetry frame including drone serial number, GPS position, and operator position in the 2.4/5.8 GHz ISM bands. Purpose-built RF sensors (Dedrone DroneTracker, Aaronia AARTOS, DJI AeroScope) passively monitor these transmissions and decode the embedded identification data at ranges up to 5 km. The decoded serial number cross-references DJI’s drone registration database (where available), potentially identifying the operator.</p>
+<p>The FAA’s Remote ID regulation (14 CFR Part 89), effective September 2023, mandates that all drones <span class="arithmatex">\(&gt;\)</span>250 g manufactured or operated in the US broadcast:</p>
+<ul>
+<li>
+<p>UAV serial number or session ID (privacy-preserving for recreational operators).</p>
+</li>
+<li>
+<p>Drone GPS position, altitude, and velocity.</p>
+</li>
+<li>
+<p>Operator GPS position (or take-off point).</p>
+</li>
+<li>
+<p>Broadcast via Wi-Fi (IEEE 802.11) or Bluetooth 5 at 1-second intervals.</p>
+</li>
+</ul>
+<h3 id="3324-acoustic-detection"><span class="secnum">33.2.4</span> Acoustic Detection<a class="headerlink" href="#3324-acoustic-detection" title="Permanent link">&para;</a></h3>
+<p>Acoustic sensor arrays detect the characteristic propeller noise of multi-rotor UAS. The fundamental propeller tone frequency is:</p>
+<div id="eq-prop_freq"></div>
+<div class="arithmatex">\[f_{prop} = \frac{n \cdot N_{blades}}{60} \quad [\text{Hz}]\tag{33.11}\]</div>
+<p>where <span class="arithmatex">\(n\)</span> is rotational speed in RPM and <span class="arithmatex">\(N_{blades}\)</span> is the number of blades per rotor. A DJI Phantom 4 at 7000 RPM with 2-blade propellers: <span class="arithmatex">\(f_{prop} = 7000 \times 2 / 60 = 233\)</span> Hz. Harmonics extend to 5 kHz; the characteristic signature occupies 100 Hz–10 kHz.</p>
+<p>The signal-to-noise ratio for an acoustic sensor at range <span class="arithmatex">\(R\)</span> from a UAS with source level <span class="arithmatex">\(SL\)</span> (dB re 20 <span class="arithmatex">\(\mu\)</span>Pa at 1 m):</p>
+<div id="eq-acoustic_snr"></div>
+<div class="arithmatex">\[\text{SNR}_{acoustic} = SL - 20\log_{10}(R) - \alpha R - L_{ambient}\tag{33.12}\]</div>
+<p>where <span class="arithmatex">\(\alpha\)</span> is the atmospheric absorption coefficient (0.001–0.01 dB/m at 1–10 kHz) and <span class="arithmatex">\(L_{ambient}\)</span> is the ambient noise level (dB). In urban environments, <span class="arithmatex">\(L_{ambient}\)</span> = 65–80 dB, limiting reliable acoustic detection to ranges of <span class="arithmatex">\(&lt; 200\)</span> m. Acoustic is therefore useful only as a short-range cueing sensor or for perimeter close-in detection.</p>
+<p>Beamforming with a microphone array of <span class="arithmatex">\(M\)</span> elements and aperture <span class="arithmatex">\(D_{mic}\)</span> achieves directional gain:</p>
+<div id="eq-beamforming_gain"></div>
+<div class="arithmatex">\[G_{BF} = 10\log_{10}(M) \quad [\text{dB}]\tag{33.13}\]</div>
+<p>and angular resolution:</p>
+<div id="eq-bf_resolution"></div>
+<div class="arithmatex">\[\Delta\theta_{BF} = \frac{\lambda_{acoustic}}{D_{mic}} = \frac{c_{sound}}{f \cdot D_{mic}}\tag{33.14}\]</div>
+<h3 id="3325-multi-sensor-fusion"><span class="secnum">33.2.5</span> Multi-Sensor Fusion<a class="headerlink" href="#3325-multi-sensor-fusion" title="Permanent link">&para;</a></h3>
+<p>No single sensor is adequate for reliable C-UAS in all environments. A robust system fuses radar, EO/IR, RF, and (optionally) acoustic detections using a probabilistic track-before-detect framework. The fused probability of detection is:</p>
+<div id="eq-fused_pd"></div>
+<div class="arithmatex">\[P_{D,fused} = 1 - \prod_{i=1}^{N_{sensors}} (1 - P_{D,i})\tag{33.15}\]</div>
+<p>and the fused false alarm rate (assuming independent sensors):</p>
+<div id="eq-fused_pfa"></div>
+<div class="arithmatex">\[P_{FA,fused} = \prod_{i=1}^{N_{sensors}} P_{FA,i}\tag{33.16}\]</div>
+<p>For four sensors each with <span class="arithmatex">\(P_{D,i} = 0.7\)</span> and <span class="arithmatex">\(P_{FA,i} = 0.01\)</span>: <span class="arithmatex">\(P_{D,fused} = 1 - 0.3^4 = 0.992\)</span> and <span class="arithmatex">\(P_{FA,fused} = 10^{-8}\)</span> — dramatically better than any single sensor. The penalty is system complexity and the requirement for precise time and space registration across sensor modalities.</p>
+<h2 id="sec-cuas_id"><span class="secnum">33.3</span> Identification and Classification<a class="headerlink" href="#sec-cuas_id" title="Permanent link">&para;</a></h2>
+<p>Detection produces a track; identification assigns a class (drone type, friendly/hostile/unknown) and ideally a specific identity (serial number, registration). Classification drives rules of engagement and appropriate countermeasure selection.</p>
+<h3 id="3331-classification-hierarchy"><span class="secnum">33.3.1</span> Classification Hierarchy<a class="headerlink" href="#3331-classification-hierarchy" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Object vs. non-object:</strong> Reject birds, paper, weather targets.</p>
+</li>
+<li>
+<p><strong>UAS vs. crewed aircraft:</strong> Flight profile, speed, altitude, manoeuvre signatures.</p>
+</li>
+<li>
+<p><strong>UAS group classification:</strong> Groups 1–5 by size/performance.</p>
+</li>
+<li>
+<p><strong>Type classification:</strong> Fixed-wing, multi-rotor, hybrid VTOL, loitering munition.</p>
+</li>
+<li>
+<p><strong>Model identification:</strong> Match RF signature, visual signature, performance to database entry (e.g., DJI Phantom 4, Shahed-136, TB2 Bayraktar).</p>
+</li>
+<li>
+<p><strong>Intent classification:</strong> Surveillance, payload carrier, kamikaze; requires behavioural analysis and context (altitude, heading, proximity to assets).</p>
+</li>
+</ol>
+<h3 id="3332-ai-based-classification"><span class="secnum">33.3.2</span> AI-Based Classification<a class="headerlink" href="#3332-ai-based-classification" title="Permanent link">&para;</a></h3>
+<p>Deep learning classifiers operating on radar micro-Doppler spectrograms, EO images, and RF signals achieve high-accuracy classification with sub-second latency:</p>
+<ul>
+<li>
+<p><strong>Micro-Doppler CNN:</strong> Short-time Fourier transform (STFT) of radar I/Q produces a time-frequency image; ResNet-50 or similar CNN achieves <span class="arithmatex">\(&gt;\)</span>93% accuracy on 5-class (bird/quadrotor/fixed-wing/heli/other) at SNR <span class="arithmatex">\(\geq\)</span> 5 dB.</p>
+</li>
+<li>
+<p><strong>RF fingerprinting:</strong> Neural network trained on I/Q samples of known drone link signals; identifies manufacturer and model from hardware-specific emission characteristics (frequency offset, phase noise, turn-on transient) even without packet decoding.</p>
+</li>
+<li>
+<p><strong>Multi-modal fusion CNN:</strong> Joint processing of radar, EO, and RF features through a shared embedding space; improves robustness when any single modality is degraded.</p>
+</li>
+</ul>
+<h2 id="sec-kinetic"><span class="secnum">33.4</span> Kinetic Defeat Systems<a class="headerlink" href="#sec-kinetic" title="Permanent link">&para;</a></h2>
+<p>Kinetic defeat physically destroys or captures the target UAS. Kinetic solutions are reliable and effective but face constraints of cost, collateral damage, engagement rate, and ammunition supply.</p>
+<h3 id="3341-dedicated-gun-systems"><span class="secnum">33.4.1</span> Dedicated Gun Systems<a class="headerlink" href="#3341-dedicated-gun-systems" title="Permanent link">&para;</a></h3>
+<p>Short-range gun systems offer high engagement rates against Group 1–3 UAS at low cost per round:</p>
+<ul>
+<li>
+<p><strong>General Dynamics Phalanx CIWS (adapted):</strong> 20 mm M61 Vulcan; 4500 rd/min; effective range <span class="arithmatex">\(\sim\)</span>1.5 km against UAS; radar guidance; adapted for land C-UAS.</p>
+</li>
+<li>
+<p><strong>Rheinmetall Skyranger 30:</strong> 30 mm Ahead programmable ammunition; detonates a time-fused sub-projectile cloud in front of the target; effective against Group 1–3 without direct hit requirement; 1200 rd/min.</p>
+</li>
+<li>
+<p><strong>Leonardo Dragonfire (HEL) / MANTIS (30 mm):</strong> German Oerlikon MANTIS counter-rocket system; 6<span class="arithmatex">\(\times\)</span>35 mm guns; radar-cued; demonstrated vs small UAS.</p>
+</li>
+</ul>
+<p>The hit probability for a gun system against a maneuvering UAS depends on target maneuver rate <span class="arithmatex">\(\dot{\theta}\)</span> and fire control latency <span class="arithmatex">\(\tau_{FC}\)</span>:</p>
+<div id="eq-phit_gun"></div>
+<div class="arithmatex">\[P_{hit} = \exp\!\left(-\frac{(\dot{\theta}\,\tau_{FC})^2}{2\sigma_{aimpoint}^2}\right)\tag{33.17}\]</div>
+<p>where <span class="arithmatex">\(\sigma_{aimpoint}\)</span> is the gun aiming standard deviation. With <span class="arithmatex">\(\dot{\theta} = 10°/\text{s}\)</span>, <span class="arithmatex">\(\tau_{FC} = 0.5\)</span> s, and <span class="arithmatex">\(\sigma_{aimpoint} = 5°\)</span>: <span class="arithmatex">\(P_{hit} = \exp(-1) = 0.37\)</span> per burst — poor for a single round, but high with a burst of <span class="arithmatex">\(N_r\)</span> rounds:</p>
+<div id="eq-phit_burst"></div>
+<div class="arithmatex">\[P_{hit,burst} = 1 - (1-P_{hit})^{N_r}\tag{33.18}\]</div>
+<h3 id="3342-interceptor-missiles"><span class="secnum">33.4.2</span> Interceptor Missiles<a class="headerlink" href="#3342-interceptor-missiles" title="Permanent link">&para;</a></h3>
+<p>Dedicated mini-missiles for C-UAS applications:</p>
+<ul>
+<li>
+<p><strong>Raytheon Coyote Block 2:</strong> Modified quad-rotor interceptor; launched from canister; active radar + EO seeker; manoeuvrable; 1 km+ intercept range. Cost: <span class="arithmatex">\(\sim\)</span>&#36;25,000.</p>
+</li>
+<li>
+<p><strong>IAI Drone Dome missile interceptor:</strong> 1 kg interceptor; semi-active laser guidance; 2 km range; designed for large commercial drone defeat.</p>
+</li>
+<li>
+<p><strong>Moog MRIC (Multi-Role Interceptor):</strong> Modular; swappable seeker; targets Groups 1–3; fielded on SHORAD vehicles.</p>
+</li>
+<li>
+<p><strong>MBDA Mistral VSHORAD:</strong> IR-guided; adapted proximity fuze for UAS; <span class="arithmatex">\(&gt;\)</span>90% <span class="arithmatex">\(P_k\)</span> against Group 3+; cost: <span class="arithmatex">\(\sim\)</span>&#36;300,000 per round.</p>
+</li>
+</ul>
+<p>The minimum intercept range for a missile engaging a UAS with closing speed <span class="arithmatex">\(v_c\)</span> and missile time-of-flight <span class="arithmatex">\(t_{TOF}\)</span> is:</p>
+<div id="eq-min_intercept_range"></div>
+<div class="arithmatex">\[R_{min} = v_c \cdot (t_{TOF} + t_{reaction})\tag{33.19}\]</div>
+<p>where <span class="arithmatex">\(t_{reaction}\)</span> includes detection-to-launch decision time. For <span class="arithmatex">\(v_c = 100\)</span> m/s, <span class="arithmatex">\(t_{TOF} = 5\)</span> s, <span class="arithmatex">\(t_{reaction} = 3\)</span> s: <span class="arithmatex">\(R_{min} = 800\)</span> m — large compared to the physical perimeter most C-UAS systems must protect.</p>
+<h3 id="3343-net-capture-systems"><span class="secnum">33.4.3</span> Net Capture Systems<a class="headerlink" href="#3343-net-capture-systems" title="Permanent link">&para;</a></h3>
+<p>Net guns and net-carrying interceptors capture drones intact (forensic value):</p>
+<ul>
+<li>
+<p><strong>Net gun:</strong> CO<span class="arithmatex">\(_2\)</span> or pyrotechnic-propelled net cartridge; range <span class="arithmatex">\(&lt; 30\)</span> m; operator-aimed or robot-mounted; reliable for slow-moving drones.</p>
+</li>
+<li>
+<p><strong>Net-carrying drone interceptor:</strong> "Drone-to-drone" intercept; net deployed beneath or above target; entangles rotors; forces controlled descent. OpenWorks Engineering SkyWall 100 (shoulder-launch); SkyWall 300 (tripod-mounted).</p>
+</li>
+<li>
+<p><strong>Drone-deployed net:</strong> Larger UAV deploys a wide net on a trajectory that intercepts the target; effective against fast-moving FPV drones when net deployment timing is accurate.</p>
+</li>
+</ul>
+<p><a href="#tab-kinetic_comparison">Table 33.2</a> provides a consolidated comparison of kinetic C-UAS defeat options.</p>
+<div class="tbl" id="tab-kinetic_comparison">
+<div class="tbl-caption"><strong>Table 33.2.</strong> Kinetic C-UAS Defeat Method Comparison</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Method</strong></th>
+<th style="text-align: left;"><strong>Range (m)</strong></th>
+<th style="text-align: left;"><strong>Cost/Shot</strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(P_k\)</span></strong></th>
+<th style="text-align: left;"><strong>Collateral Risk</strong></th>
+<th style="text-align: left;"><strong>Target Groups</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Small arms (rifle)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>500</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>$1</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">High (falling rounds)</td>
+<td style="text-align: left;">1–2 (slow)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Shotgun / slugs</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>50</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>$5</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Net gun (ground)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>30</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>$100</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">Very low; captures intact</td>
+<td style="text-align: left;">1–2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Net-carrying interceptor</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>300</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>$1,000</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">1–2</td>
+</tr>
+<tr>
+<td style="text-align: left;">20 mm CIWS (adapted)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>1,500</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>$50/rd</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Medium (urban)</td>
+<td style="text-align: left;">1–3</td>
+</tr>
+<tr>
+<td style="text-align: left;">30 mm AHEAD (Skyranger)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>2,000</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>$200/rd</td>
+<td style="text-align: left;">High</td>
+<td style="text-align: left;">Low (proximity fuze)</td>
+<td style="text-align: left;">1–3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Coyote Block 2 mini-missile</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>2,000</td>
+<td style="text-align: left;">$25,000</td>
+<td style="text-align: left;">Very high</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">1–3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mistral VSHORAD missile</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>6,000</td>
+<td style="text-align: left;">$300,000</td>
+<td style="text-align: left;">Very high</td>
+<td style="text-align: left;">Low (proximity fuze)</td>
+<td style="text-align: left;">2–5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Trained raptor</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>100</td>
+<td style="text-align: left;">Low (training)</td>
+<td style="text-align: left;">Medium</td>
+<td style="text-align: left;">Very low</td>
+<td style="text-align: left;">1 (slow)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-dew_cuas"><span class="secnum">33.5</span> Directed Energy Defeat Systems<a class="headerlink" href="#sec-dew_cuas" title="Permanent link">&para;</a></h2>
+<p>Directed energy weapons (DEW) are uniquely suited to C-UAS for three reasons: the effective cost per shot is negligible (electrical power only); the engagement rate is limited by thermal management rather than magazine depth; and a single DEW system can defeat swarms that would exhaust kinetic interceptors.</p>
+<h3 id="3351-high-energy-laser-hel"><span class="secnum">33.5.1</span> High Energy Laser (HEL)<a class="headerlink" href="#3351-high-energy-laser-hel" title="Permanent link">&para;</a></h3>
+<p>A HEL weapon defeats a UAS by sustained irradiance of a vulnerable point (motor, battery, control surface) until structural failure or thermal runaway occurs.</p>
+<h4 id="required-fluence-and-engagement-time">Required Fluence and Engagement Time<a class="headerlink" href="#required-fluence-and-engagement-time" title="Permanent link">&para;</a></h4>
+<p>The fluence required to fail a given material is:</p>
+<div id="eq-fluence_req"></div>
+<div class="arithmatex">\[F_{req} = \frac{E_{threshold}}{A_{spot}} \quad [\text{J/cm}^2]\tag{33.20}\]</div>
+<p>where <span class="arithmatex">\(E_{threshold}\)</span> is the energy density needed to reach material failure temperature and <span class="arithmatex">\(A_{spot}\)</span> is the laser spot area on target. For the engagement time at laser power <span class="arithmatex">\(P_L\)</span>:</p>
+<div id="eq-engage_time"></div>
+<div class="arithmatex">\[t_{engage} = \frac{F_{req} \cdot A_{spot}}{P_L \cdot \eta_{beam} \cdot T_{atm}(R)}\tag{33.21}\]</div>
+<p>where <span class="arithmatex">\(\eta_{beam}\)</span> accounts for beam quality (M<span class="arithmatex">\(^2\)</span> factor) and <span class="arithmatex">\(T_{atm}\)</span> is atmospheric transmission. For a 20 kW laser with <span class="arithmatex">\(M^2 = 1.5\)</span>, targeting a CFRP airframe (<span class="arithmatex">\(F_{req} = 500\)</span> J/cm<span class="arithmatex">\(^2\)</span>) at 1 km with <span class="arithmatex">\(T_{atm} = 0.8\)</span> and spot diameter 10 cm (<span class="arithmatex">\(A_{spot} = 78.5\)</span> cm<span class="arithmatex">\(^2\)</span>):</p>
+<div id="eq-engage_time_example"></div>
+<div class="arithmatex">\[t_{engage} = \frac{500 \times 78.5}{20{,}000 \times (1/1.5) \times 0.8} \approx 3.7\,\text{s}\tag{33.22}\]</div>
+<h4 id="atmospheric-effects-on-laser-propagation">Atmospheric Effects on Laser Propagation<a class="headerlink" href="#atmospheric-effects-on-laser-propagation" title="Permanent link">&para;</a></h4>
+<p>Atmospheric turbulence degrades laser beam quality through random refractive index fluctuations. The Fried coherence length <span class="arithmatex">\(r_0\)</span> characterises the turbulence strength:</p>
+<div id="eq-fried_param"></div>
+<div class="arithmatex">\[r_0 = 0.185\left(\frac{\lambda^2}{\int_0^L C_n^2(z)\,dz}\right)^{3/5}\tag{33.23}\]</div>
+<p>where <span class="arithmatex">\(C_n^2(z)\)</span> is the atmospheric refractive index structure parameter profile. When the laser beam diameter exceeds <span class="arithmatex">\(r_0\)</span>, wavefront distortion limits the achievable on-target irradiance. Adaptive optics systems measure the wavefront error and compensate via deformable mirror, recovering near-diffraction-limited performance.</p>
+<p>The diffraction-limited spot size at range <span class="arithmatex">\(R\)</span> for an aperture <span class="arithmatex">\(D_L\)</span> is:</p>
+<div id="eq-spot_size"></div>
+<div class="arithmatex">\[d_{spot} = \frac{2.44\,\lambda R}{D_L}\tag{33.24}\]</div>
+<p>and the on-target irradiance (neglecting atmospheric effects):</p>
+<div id="eq-on_target_irradiance"></div>
+<div class="arithmatex">\[I_{target} = \frac{4 P_L}{\pi d_{spot}^2} = \frac{P_L D_L^2}{\pi (1.22\lambda R)^2}\tag{33.25}\]</div>
+<h4 id="operational-hel-c-uas-systems">Operational HEL C-UAS Systems<a class="headerlink" href="#operational-hel-c-uas-systems" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><strong>Raytheon HELWS-MRZR:</strong> 15 kW fibre laser; vehicle-mounted; precision-track; demonstrated kills on Group 1–3 UAS at <span class="arithmatex">\(&gt;\)</span>1 km; deployed in Middle East.</p>
+</li>
+<li>
+<p><strong>Rheinmetall HEL (20 kW):</strong> Integrated with Skyranger platform; radar-cued; high track bandwidth for fast-manoeuvring targets.</p>
+</li>
+<li>
+<p><strong>Boeing Compact Laser Weapon System (CLWS):</strong> 2 kW; man-portable; primarily Group 1 defeat at <span class="arithmatex">\(&lt;\)</span>500 m; battery powered; recoiless.</p>
+</li>
+<li>
+<p><strong>Rafael Iron Beam:</strong> 100 kW class; intended to complement Iron Dome against rockets, drones, and mortar rounds; demonstrated operational use (2024).</p>
+</li>
+<li>
+<p><strong>HELIOS (Lockheed Martin):</strong> Ship-mounted; 60 kW; USN DDG-class integration; UAS and small boat defeat.</p>
+</li>
+</ul>
+<h3 id="3352-high-power-microwave-hpm"><span class="secnum">33.5.2</span> High Power Microwave (HPM)<a class="headerlink" href="#3352-high-power-microwave-hpm" title="Permanent link">&para;</a></h3>
+<p>HPM systems generate intense microwave pulses that couple energy into drone electronics through apertures (sensor windows, ventilation holes, circuit board traces, cables), causing logic upset, data corruption, or permanent component damage.</p>
+<h4 id="hpm-energy-coupling">HPM Energy Coupling<a class="headerlink" href="#hpm-energy-coupling" title="Permanent link">&para;</a></h4>
+<p>The energy coupled into a target electronic system scales with peak power and pulse duration:</p>
+<div id="eq-hpm_energy"></div>
+<div class="arithmatex">\[E_{coupled} = P_{peak} \cdot \tau_{pulse} \cdot C_{coupling}\tag{33.26}\]</div>
+<p>where <span class="arithmatex">\(C_{coupling}\)</span> is the coupling efficiency, which depends on target aperture size relative to wavelength, incidence angle, and shielding:</p>
+<div id="eq-coupling_eff"></div>
+<div class="arithmatex">\[C_{coupling} = \frac{A_{eff,aperture} \cdot (1 - \Gamma^2)}{A_{beam}}\tag{33.27}\]</div>
+<p>where <span class="arithmatex">\(A_{eff,aperture}\)</span> is the effective aperture area of the target entry point and <span class="arithmatex">\(\Gamma\)</span> is the reflective loss. The threshold for electronic component damage is typically:</p>
+<div id="eq-hpm_threshold"></div>
+<div class="arithmatex">\[E_{threshold} = \frac{V_{damage}^2}{R_{imp}} \cdot \tau_{pulse} \approx 0.1 \text{--} 1\,\mu\text{J}\tag{33.28}\]</div>
+<p>for typical CMOS logic (<span class="arithmatex">\(V_{damage} \approx 2 \times V_{supply}\)</span>, <span class="arithmatex">\(R_{imp} \approx 50\,\Omega\)</span>).</p>
+<h4 id="hpm-system-architecture">HPM System Architecture<a class="headerlink" href="#hpm-system-architecture" title="Permanent link">&para;</a></h4>
+<p>An HPM C-UAS system consists of:</p>
+<ol>
+<li>
+<p><strong>Prime power:</strong> Diesel generator or capacitor bank; peak power 1–100 MW for microsecond pulses.</p>
+</li>
+<li>
+<p><strong>Pulse-forming network (PFN):</strong> Stores energy; discharges through high-power switch (spark gap, thyratron, or solid-state) to generate the HPM pulse.</p>
+</li>
+<li>
+<p><strong>Microwave source:</strong> Magnetron (narrow band; <span class="arithmatex">\(&lt;\)</span>1 GHz), gyrotron (mm-wave; high power), or solid-state GaN array (low peak power but wideband).</p>
+</li>
+<li>
+<p><strong>Phased array antenna:</strong> Steers beam electronically; avoids mechanical pointing; illuminates multiple targets in rapid succession.</p>
+</li>
+</ol>
+<h4 id="jnlwd-leonidas">JNLWD Leonidas<a class="headerlink" href="#jnlwd-leonidas" title="Permanent link">&para;</a></h4>
+<p>The Joint Non-Lethal Weapons Directorate Leonidas pod (Epirus Inc.) is an airborne or vehicle-mounted HPM system operating across a broad microwave band. Key characteristics:</p>
+<ul>
+<li>
+<p>Phased array antenna; electronic beam steering over <span class="arithmatex">\(\pm\)</span>60° cone.</p>
+</li>
+<li>
+<p>Effective range: <span class="arithmatex">\(\sim\)</span>1 km; demonstrated simultaneous defeat of 100+ drones in testing.</p>
+</li>
+<li>
+<p>Pulse repetition rate: hundreds of pulses per second; effective engagement rate limited only by beam steering speed.</p>
+</li>
+<li>
+<p>Friendly force risk: HPM must be deconflicted with friendly UAS and ground electronics.</p>
+</li>
+<li>
+<p>Podded configuration: fits on MQ-9, F-16, C-130 aircraft; vehicle-mounted variant on HMMWV.</p>
+</li>
+</ul>
+<p><a href="ch35-future-technologies.html#tab-dew_comparison">Table 35.1</a> compares DEW options for C-UAS.</p>
+<div class="tbl" id="tab-dew_comparison">
+<div class="tbl-caption"><strong>Table 33.3.</strong> Directed Energy C-UAS System Comparison</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>DEW Type</strong></th>
+<th style="text-align: left;"><strong>Power (kW)</strong></th>
+<th style="text-align: left;"><strong>Range (km)</strong></th>
+<th style="text-align: left;"><strong>vs Swarm</strong></th>
+<th style="text-align: left;"><strong>Atm. Effect</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HEL (fibre, 15 kW)</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">0.5–2.0</td>
+<td style="text-align: left;">Limited</td>
+<td style="text-align: left;">Significant</td>
+<td style="text-align: left;">Single target; precise dwell</td>
+</tr>
+<tr>
+<td style="text-align: left;">HEL (fibre, 100 kW)</td>
+<td style="text-align: left;">100</td>
+<td style="text-align: left;">1.0–5.0</td>
+<td style="text-align: left;">Limited</td>
+<td style="text-align: left;">Significant</td>
+<td style="text-align: left;">Multiple rapid engagements</td>
+</tr>
+<tr>
+<td style="text-align: left;">HPM (broadband)</td>
+<td style="text-align: left;">10–100</td>
+<td style="text-align: left;">0.3–1.5</td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">Negligible</td>
+<td style="text-align: left;">Area denial; electronics kill</td>
+</tr>
+<tr>
+<td style="text-align: left;">HPM (narrowband)</td>
+<td style="text-align: left;">100–1000</td>
+<td style="text-align: left;">0.5–2.0</td>
+<td style="text-align: left;">Excellent</td>
+<td style="text-align: left;">Negligible</td>
+<td style="text-align: left;">Deep penetration; hard kill</td>
+</tr>
+<tr>
+<td style="text-align: left;">EMP (non-directed)</td>
+<td style="text-align: left;">Variable</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 0.5</td>
+<td style="text-align: left;">Good</td>
+<td style="text-align: left;">Negligible</td>
+<td style="text-align: left;">Affects all electronics</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-ea_cuas"><span class="secnum">33.6</span> Electronic Attack for C-UAS<a class="headerlink" href="#sec-ea_cuas" title="Permanent link">&para;</a></h2>
+<p>Electronic attack is arguably the most cost-effective C-UAS defeat mechanism for Groups 1–3, as it operates at zero marginal cost per engagement, does not produce kinetic hazard from falling debris, and can be reversible (jam only, no destruction).</p>
+<h3 id="3361-rc-link-jamming"><span class="secnum">33.6.1</span> RC Link Jamming<a class="headerlink" href="#3361-rc-link-jamming" title="Permanent link">&para;</a></h3>
+<p>The RC command link and video downlink operating in the 2.4/5.8 GHz ISM bands can be jammed to force the drone into a fail-safe state (land or return-to-home). The jamming power required to suppress the RC link at drone range <span class="arithmatex">\(R_d\)</span> from the jammer:</p>
+<div id="eq-rc_jam_power"></div>
+<div class="arithmatex">\[P_j \geq \frac{P_{link} \cdot (J/S)_{req} \cdot G_{link} \cdot R_j^2}{G_j \cdot R_d^2 \cdot G_{rx,j}}\tag{33.29}\]</div>
+<p>where <span class="arithmatex">\(P_{link}\)</span> is the RC transmitter power, <span class="arithmatex">\(G_{link}\)</span> is the GCS antenna gain, <span class="arithmatex">\(R_j\)</span> is jammer-to-drone range, and <span class="arithmatex">\((J/S)_{req}\)</span> is the minimum J/S to suppress the receiver (typically 6–20 dB for FHSS systems). A 10 W omnidirectional jammer can suppress a 100 mW DJI RC link at:</p>
+<div id="eq-jam_radius"></div>
+<div class="arithmatex">\[R_{j,eff} = R_{link,max} \sqrt{\frac{P_j G_j}{P_{link} G_{link} \cdot (J/S)_{req}}}
+           = 5000 \sqrt{\frac{10 \times 1}{0.1 \times 1 \times 10}} = 5000\,\text{m}\tag{33.30}\]</div>
+<p>However, frequency-hopping spread spectrum (FHSS) links used by DJI OcuSync and many military UAS hop pseudorandomly across 2.4 GHz sub-channels. Barrage jamming the entire band is required, incurring the power penalty of <a href="ch31-electronic-warfare-and-countermeasures.html#eq-barrage_penalty">Equation (31.20)</a>. For a 83 MHz band (2.4 GHz ISM) jammer against a 1 MHz hop channel: penalty = <span class="arithmatex">\(10\log(83) = 19\)</span> dB.</p>
+<h3 id="3362-gps-jamming-and-spoofing-for-c-uas"><span class="secnum">33.6.2</span> GPS Jamming and Spoofing for C-UAS<a class="headerlink" href="#3362-gps-jamming-and-spoofing-for-c-uas" title="Permanent link">&para;</a></h3>
+<p>GPS jamming denies the drone’s navigation. Most commercial autopilots enter a fail-safe mode (hover and land, or return-to-home) when GPS is lost. However, GPS-denied drones operating on inertial navigation continue flying and may home on pre-programmed waypoints. GPS spoofing is more effective: by providing false position data, the drone is steered away from the defended area or made to land in a controlled location.</p>
+<p>The spoofing signal must exceed the authentic GPS signal by 3–6 dB to capture the tracking loop:</p>
+<div id="eq-spoof_power"></div>
+<div class="arithmatex">\[P_{spoof} \geq P_{GPS,receiver} + (J/S)_{capture} = -130 + 5 = -125\,\text{dBm}\tag{33.31}\]</div>
+<p>at the drone antenna, requiring only <span class="arithmatex">\(\sim\)</span>1 mW of transmitted power from a nearby ground station.</p>
+<h3 id="3363-protocol-level-and-cyber-attacks"><span class="secnum">33.6.3</span> Protocol-Level and Cyber Attacks<a class="headerlink" href="#3363-protocol-level-and-cyber-attacks" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>MAVLink injection:</strong> Many open-source autopilots (ArduPilot, PX4) use the MAVLink protocol over the datalink. An attacker who can inject forge packets can send a <code>SET_MODE</code> command (disarm, RTL) or <code>SET_POSITION_TARGET</code> redirect. MAVLink v2 supports AES-128 message signing, which prevents injection against signed links.</p>
+</li>
+<li>
+<p><strong>Wi-Fi deauthentication:</strong> Wi-Fi-linked drones (DJI Spark; early DJI Phantom) can be disconnected by transmitting IEEE 802.11 deauthentication frames spoofed from the GCS MAC address; management frame protection (IEEE 802.11w) mitigates this.</p>
+</li>
+<li>
+<p><strong>Protocol reverse-engineering and takeover:</strong> DJI’s OcuSync protocol has been partially reverse-engineered by researchers; demonstration of unauthenticated control injection has been published. DJI has addressed some vulnerabilities via firmware updates, but legacy hardware remains vulnerable.</p>
+</li>
+</ul>
+<h3 id="3364-effective-jamming-range-vs-friendly-force-risk"><span class="secnum">33.6.4</span> Effective Jamming Range vs Friendly Force Risk<a class="headerlink" href="#3364-effective-jamming-range-vs-friendly-force-risk" title="Permanent link">&para;</a></h3>
+<p>Electronic jamming is non-discriminating: it affects all drones in the jammers’ coverage area, including friendly ISR drones, civil aviation GPS, and emergency communications. Frequency deconfliction planning is mandatory before deploying C-UAS jammers, and directional antennas are preferred over omnidirectional to minimise the fratricide zone.</p>
+<p>The effective jamming radius in a given direction <span class="arithmatex">\(\hat{\mathbf{n}}\)</span> from a directional jammer:</p>
+<div id="eq-directional_jam_radius"></div>
+<div class="arithmatex">\[R_{eff}(\hat{\mathbf{n}}) = \sqrt{\frac{P_j G_j(\hat{\mathbf{n}}) \lambda^2 G_{rx}}
+                                        {(4\pi)^2 \cdot (J/S)_{req} \cdot P_{link}}}\tag{33.32}\]</div>
+<p>A 10-dBi directional antenna reduces the jamming footprint in the side-lobe directions by 10 dB (factor 3.16 in range), significantly reducing friendly force risk.</p>
+<h2 id="sec-cuas_system"><span class="secnum">33.7</span> C-UAS System Integration and Kill Chain<a class="headerlink" href="#sec-cuas_system" title="Permanent link">&para;</a></h2>
+<h3 id="3371-the-c-uas-kill-chain"><span class="secnum">33.7.1</span> The C-UAS Kill Chain<a class="headerlink" href="#3371-the-c-uas-kill-chain" title="Permanent link">&para;</a></h3>
+<p>The C-UAS kill chain encompasses six sequential functions, each with its own latency budget:</p>
+<ol>
+<li>
+<p><strong>Detect:</strong> Sensor network acquires UAS track with <span class="arithmatex">\(P_D \geq 0.90\)</span>, <span class="arithmatex">\(P_{FA} \leq 10^{-4}\)</span>. Latency: 0.1–2 s (radar first detection).</p>
+</li>
+<li>
+<p><strong>Identify:</strong> Classifier assigns group, type, intent. Latency: 0.5–3 s.</p>
+</li>
+<li>
+<p><strong>Track:</strong> Multi-sensor fusion maintains continuous kinematics estimate; fire control quality track with position uncertainty <span class="arithmatex">\(&lt;\)</span> 5 m at 1 km. Latency: ongoing.</p>
+</li>
+<li>
+<p><strong>Decide:</strong> Automated or human decision to engage; rules of engagement assessment; weapon assignment. Latency: 0.5–10 s (human-in-the-loop adds greatest uncertainty).</p>
+</li>
+<li>
+<p><strong>Engage:</strong> Weapon system fires or activates. Latency: <span class="arithmatex">\(&lt;\)</span> 1 s kinetic; <span class="arithmatex">\(&lt;\)</span> 0.1 s DEW.</p>
+</li>
+<li>
+<p><strong>Assess:</strong> Battle damage assessment; re-engagement decision. Latency: 1–5 s.</p>
+</li>
+</ol>
+<p>Total kill chain latency goal: <span class="arithmatex">\(&lt;\)</span> 10 s for Group 1–2 threats; <span class="arithmatex">\(&lt;\)</span> 30 s for Group 3+. Against a 30 m/s kamikaze drone at 500 m range, the available engagement time is only 17 s — requiring highly automated, low-latency processing throughout.</p>
+<h3 id="3372-layered-defence-architecture"><span class="secnum">33.7.2</span> Layered Defence Architecture<a class="headerlink" href="#3372-layered-defence-architecture" title="Permanent link">&para;</a></h3>
+<p>A mature fixed-site C-UAS architecture employs concentric defence layers:</p>
+<div class="tbl" id="tab-layered_defence">
+<div class="tbl-caption"><strong>Table 33.4.</strong> Layered C-UAS Defence Architecture</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Layer</strong></th>
+<th style="text-align: left;"><strong>Range (km)</strong></th>
+<th style="text-align: left;"><strong>Primary Sensor</strong></th>
+<th style="text-align: left;"><strong>Primary Effector</strong></th>
+<th style="text-align: left;"><strong>Target Groups</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Outer</td>
+<td style="text-align: left;">5–20</td>
+<td style="text-align: left;">Long-range AESA radar</td>
+<td style="text-align: left;">EA + MALD-J; EW decoys</td>
+<td style="text-align: left;">Groups 3–5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Middle</td>
+<td style="text-align: left;">1–5</td>
+<td style="text-align: left;">Radar + EO/IR + RF</td>
+<td style="text-align: left;">HEL (100 kW); interceptor missile</td>
+<td style="text-align: left;">Groups 1–4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Inner</td>
+<td style="text-align: left;">0.1–1</td>
+<td style="text-align: left;">EO/IR + radar + acoustic</td>
+<td style="text-align: left;">HEL (15 kW); HPM; gun</td>
+<td style="text-align: left;">Groups 1–3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Point</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 0.1</td>
+<td style="text-align: left;">EO/IR + acoustic</td>
+<td style="text-align: left;">Net gun; HPM; short-range DEW</td>
+<td style="text-align: left;">Groups 1–2</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="3373-command-and-control-automation"><span class="secnum">33.7.3</span> Command and Control Automation<a class="headerlink" href="#3373-command-and-control-automation" title="Permanent link">&para;</a></h3>
+<p>Rules of Engagement (ROE) for C-UAS must balance timely engagement against risk of fratricide and civilian harm. Modern C-UAS C2 systems implement three engagement modes:</p>
+<ul>
+<li>
+<p><strong>Autonomous:</strong> Pre-authorised automatic engagement when classification confidence <span class="arithmatex">\(&gt; P_{thresh}\)</span> and predicted impact point is within defence perimeter. Used at inner layer for fast kamikaze threats.</p>
+</li>
+<li>
+<p><strong>Automated with human confirmation:</strong> System presents threat assessment and recommended action; human approves within a time window (<span class="arithmatex">\(&lt;\)</span> 5 s); used for middle layer.</p>
+</li>
+<li>
+<p><strong>Manual:</strong> Human initiates all engagements; system provides cueing only; used for outer layer against ambiguous or politically sensitive targets.</p>
+</li>
+</ul>
+<p>The automation level must comply with IHL (International Humanitarian Law) requirements for meaningful human control, DoD Directive 3000.09 (Autonomous Weapons Systems), and applicable national policy. Lethal kinetic effects against any target with potential civilian status must have human authorisation.</p>
+<h3 id="3374-mobile-c-uas-systems"><span class="secnum">33.7.4</span> Mobile C-UAS Systems<a class="headerlink" href="#3374-mobile-c-uas-systems" title="Permanent link">&para;</a></h3>
+<p>Mobile C-UAS protects convoys, forward operating bases (FOBs), and manoeuvre units:</p>
+<ul>
+<li>
+<p><strong>MSHORAD (Manportable/Short-Range Air Defence):</strong> Vehicle-mounted Stinger/SHORAD with C-UAS adaptation; radar-cued; man-in-loop.</p>
+</li>
+<li>
+<p><strong>LMAMS (Leonidas pod on vehicle):</strong> HPM; drives alongside convoy; activates automatically when drone approach is detected.</p>
+</li>
+<li>
+<p><strong>Drone Defender / Dronebuster:</strong> Handheld directional jammer; 2.4/5.8/1.2 GHz; operator points at drone; 400 m effective range; 2 kg.</p>
+</li>
+<li>
+<p><strong>Skyranger 30 (Rheinmetall):</strong> Wheeled vehicle; 30 mm AHEAD; fully automatic; 360° coverage; network-enabled sensor integration.</p>
+</li>
+</ul>
+<h3 id="3375-naval-c-uas-integration"><span class="secnum">33.7.5</span> Naval C-UAS Integration<a class="headerlink" href="#3375-naval-c-uas-integration" title="Permanent link">&para;</a></h3>
+<p>Naval vessels present unique C-UAS challenges: sea-surface clutter complicates low-altitude drone detection; ship motion introduces tracking errors; international maritime law governs engagement authority.</p>
+<ul>
+<li>
+<p><strong>Phalanx Block 1B:</strong> Upgraded CIWS with surface search mode; EO/IR sensor; effective against Group 1–2 UAS at <span class="arithmatex">\(&lt;\)</span>1 km.</p>
+</li>
+<li>
+<p><strong>SeaRAM:</strong> Rolling Airframe Missile; 11-round launcher; infrared-guided; adapted for UAS engagement.</p>
+</li>
+<li>
+<p><strong>HELIOS (Lockheed):</strong> 60 kW HEL; DDG-class integration; approved for FY2024 deployment; unlimited engagements per sortie.</p>
+</li>
+<li>
+<p><strong>DroneTracker Naval (Dedrone):</strong> RF + radar sensor fusion; covers 360°; interfaces with ship C2.</p>
+</li>
+</ul>
+<h2 id="sec-swarm_defeat"><span class="secnum">33.8</span> Swarm Defeat<a class="headerlink" href="#sec-swarm_defeat" title="Permanent link">&para;</a></h2>
+<h3 id="3381-the-swarm-saturation-problem"><span class="secnum">33.8.1</span> The Swarm Saturation Problem<a class="headerlink" href="#3381-the-swarm-saturation-problem" title="Permanent link">&para;</a></h3>
+<p>A coordinated drone swarm presents the most severe C-UAS challenge. If <span class="arithmatex">\(N_{swarm}\)</span> drones attack simultaneously and the defender’s engagement rate is <span class="arithmatex">\(\dot{N}_{kill}\)</span> drones per second, the number of drones that penetrate the defence is:</p>
+<div id="eq-swarm_penetration"></div>
+<div class="arithmatex">\[N_{penetrate} = N_{swarm} - \dot{N}_{kill} \cdot T_{engagement}\tag{33.33}\]</div>
+<p>where <span class="arithmatex">\(T_{engagement}\)</span> is the available engagement window. For kinetic interceptors with <span class="arithmatex">\(\dot{N}_{kill} = 1\)</span> drone/s and 30-second engagement window against a 100-drone swarm: <span class="arithmatex">\(N_{penetrate} = 70\)</span> drones — most penetrate. Only DEW systems can achieve the engagement rates required:</p>
+<div id="eq-dew_kill_rate"></div>
+<div class="arithmatex">\[\dot{N}_{kill,DEW} = \frac{1}{t_{engage} + t_{slew}}\tag{33.34}\]</div>
+<p>where <span class="arithmatex">\(t_{slew}\)</span> is beam-pointing transition time. A HEL system with <span class="arithmatex">\(t_{engage} = 3\)</span> s and <span class="arithmatex">\(t_{slew} = 0.5\)</span> s achieves <span class="arithmatex">\(\dot{N}_{kill} \approx 0.29\)</span> drone/s — still insufficient for large swarms. HPM systems that illuminate a wide cone simultaneously achieve:</p>
+<div id="eq-hpm_swarm"></div>
+<div class="arithmatex">\[\dot{N}_{kill,HPM} = \frac{N_{in\,beam}}{t_{HPM\,pulse}} \gg \dot{N}_{kill,HEL}\tag{33.35}\]</div>
+<p>since <span class="arithmatex">\(t_{HPM\,pulse} &lt; 1\,\mu\)</span>s and <span class="arithmatex">\(N_{in\,beam}\)</span> can be tens to hundreds.</p>
+<h3 id="3382-counter-swarm-uas"><span class="secnum">33.8.2</span> Counter-Swarm UAS<a class="headerlink" href="#3382-counter-swarm-uas" title="Permanent link">&para;</a></h3>
+<p>An emerging concept employs a "counter-swarm": a friendly drone swarm that intercepts and defeats the hostile swarm through coordinated kinetic or EW engagement:</p>
+<ul>
+<li>
+<p>DARPA OFFSET programme: 250-node friendly swarm autonomy framework.</p>
+</li>
+<li>
+<p>Raytheon/AFRL Perdix swarm: 3-inch expendable drones launched from F-16 flare dispensers; 103-drone coordination demonstrated; payload includes RF jamming, visual obstruction, or kinetic mini-charge.</p>
+</li>
+<li>
+<p>Counter-swarm tactics: Interception at maximum range before swarm achieves coordinated attack formation; decentralised swarm C2 makes decapitation attack (destroying C2 node) ineffective against fully autonomous swarms.</p>
+</li>
+</ul>
+<h3 id="3383-swarm-c2-network-targeting"><span class="secnum">33.8.3</span> Swarm C2 Network Targeting<a class="headerlink" href="#3383-swarm-c2-network-targeting" title="Permanent link">&para;</a></h3>
+<p>Semi-autonomous swarms that require a centralised C2 radio link can be defeated by targeting the C2 network:</p>
+<div id="eq-swarm_c2_defeat"></div>
+<div class="arithmatex">\[P_{swarm\,defeat} = P(C2\,link\,jammed) \cdot (1 - P_{autonomous\,fallback})\tag{33.36}\]</div>
+<p>Modern swarm designs incorporate decentralised coordination algorithms (e.g., consensus-based formation control, MANET mesh networking) that continue to function after loss of the C2 link, reducing the effectiveness of C2-targeting strategies. Future swarms using optical (laser) inter-drone links will be immune to RF jamming of the coordination network.</p>
+<h2 id="sec-cuas_regs"><span class="secnum">33.9</span> Regulations, Standards, and Policy<a class="headerlink" href="#sec-cuas_regs" title="Permanent link">&para;</a></h2>
+<h3 id="3391-faa-remote-id-14-cfr-part-89"><span class="secnum">33.9.1</span> FAA Remote ID (14 CFR Part 89)<a class="headerlink" href="#3391-faa-remote-id-14-cfr-part-89" title="Permanent link">&para;</a></h3>
+<p>The FAA Remote ID rule, effective September 2023, mandates that all UAS <span class="arithmatex">\(&gt; 250\)</span> g operating in the US National Airspace System must:</p>
+<ul>
+<li>
+<p>Broadcast the drone’s identifier, position, altitude, velocity, and operator location.</p>
+</li>
+<li>
+<p>Comply with the Standard Remote ID specification or fly within an FAA-recognised Identification Area (FRIA).</p>
+</li>
+<li>
+<p>Enable law enforcement and C-UAS systems to access drone identity data in real time.</p>
+</li>
+</ul>
+<p>Remote ID provides the cooperative detection layer that makes RF-based C-UAS more effective for compliant operators, but does not address non-cooperative (adversarial) drones.</p>
+<h3 id="3392-nato-stanag-4703-and-c-uas-standards"><span class="secnum">33.9.2</span> NATO STANAG 4703 and C-UAS Standards<a class="headerlink" href="#3392-nato-stanag-4703-and-c-uas-standards" title="Permanent link">&para;</a></h3>
+<p>STANAG 4703 defines NATO standard UAS classifications and provides the framework for interoperability of C-UAS systems across alliance members. Key provisions relevant to C-UAS:</p>
+<ul>
+<li>
+<p>UAS classification by mass, altitude, and range (aligns with DoD Groups).</p>
+</li>
+<li>
+<p>Standardised data format for UAS track reporting across C2 systems (Link 16/JREAP).</p>
+</li>
+<li>
+<p>ROE framework for joint operations including C-UAS engagement authority.</p>
+</li>
+<li>
+<p>Interoperability requirements for sensor-to-shooter datalinks.</p>
+</li>
+</ul>
+<p>The NATO Counter-UAS Working Group (through AC/322) is developing additional STANAGs for DEW integration (power levels, safety zones) and swarm defeat doctrine.</p>
+<h3 id="3393-airport-protection-standards"><span class="secnum">33.9.3</span> Airport Protection Standards<a class="headerlink" href="#3393-airport-protection-standards" title="Permanent link">&para;</a></h3>
+<p>UAS incursions into controlled airspace around airports represent a major safety and security risk. ICAO Annex 14 and EASA NPA 2021-14 require:</p>
+<ul>
+<li>
+<p>Detection and identification capability covering the airport’s airspace protection zone (typically 5 nm radius; <span class="arithmatex">\(&lt;\)</span> 500 ft AGL for small drones).</p>
+</li>
+<li>
+<p>Coordination with ATC to avoid confusion between drone tracks and crewed aircraft.</p>
+</li>
+<li>
+<p>Proportional response protocols (detection-first; defeat only if safety threat confirmed).</p>
+</li>
+<li>
+<p>Integration with the wider Air Traffic Management (ATM) system via UTM (UAS Traffic Management).</p>
+</li>
+</ul>
+<p>Major incidents include London Gatwick (December 2018: 140,000 passengers stranded; Gatwick closed 36 hours due to repeated drone sightings) and Newark Liberty (multiple closures 2019–2023), which accelerated ICAO and regulatory action.</p>
+<h3 id="3394-c-uas-legal-framework"><span class="secnum">33.9.4</span> C-UAS Legal Framework<a class="headerlink" href="#3394-c-uas-legal-framework" title="Permanent link">&para;</a></h3>
+<p>The legal authority to take action against a UAS varies significantly by jurisdiction:</p>
+<ul>
+<li>
+<p><strong>USA:</strong> Federal law (18 U.S.C. § 32) criminalises destruction of aircraft; a UAS is an “aircraft” under FAA definition. Shooting down a private drone — even a hostile one over private property — is therefore potentially a federal crime. DoD authority to engage is limited to designated zones under specific statutes. The FAA Reauthorization Act (2018) granted DHS, DoJ, and DoD authority to track, jam, and take control of drones deemed a national security threat.</p>
+</li>
+<li>
+<p><strong>Military ROE:</strong> Under LOAC (Law of Armed Conflict), a UAS used as a weapon system or intelligence platform against a military force is a lawful military objective. Proportionality assessment is still required.</p>
+</li>
+<li>
+<p><strong>IHL:</strong> Autonomous C-UAS engagement of potential civilian drones must comply with distinction, proportionality, and precaution principles.</p>
+</li>
+</ul>
+<h3 id="3395-geofencing-and-technical-countermeasures"><span class="secnum">33.9.5</span> Geofencing and Technical Countermeasures<a class="headerlink" href="#3395-geofencing-and-technical-countermeasures" title="Permanent link">&para;</a></h3>
+<p>Many commercial UAS manufacturers implement geofencing — on-board flight restrictions that prevent drone operation in prohibited areas (airports, government facilities, prisons):</p>
+<ul>
+<li>
+<p>DJI FlySafe geofencing: 300+ m radius around airports encoded in drone firmware; can be unlocked by verified operators; updated via internet.</p>
+</li>
+<li>
+<p>FAA UAS Facility Maps (UASFM): Define altitude limits near airports; integrated into DJI, Parrot, Skydio autopilots.</p>
+</li>
+<li>
+<p>Limitation: Geofencing can be defeated by modified firmware (“jailbroken” drones); provides no protection against purpose-built hostile UAS.</p>
+</li>
+<li>
+<p>Combined approach: Remote ID + geofencing + C-UAS detection provides a layered policy and technical framework, but requires coordinated regulatory enforcement.</p>
+</li>
+</ul>
+<h2 id="sec-cuas_metrics"><span class="secnum">33.10</span> C-UAS Performance Metrics and System Evaluation<a class="headerlink" href="#sec-cuas_metrics" title="Permanent link">&para;</a></h2>
+<h3 id="33101-key-performance-parameters"><span class="secnum">33.10.1</span> Key Performance Parameters<a class="headerlink" href="#33101-key-performance-parameters" title="Permanent link">&para;</a></h3>
+<p>C-UAS system performance is characterised by the following key performance parameters (KPPs):</p>
+<div class="tbl" id="tab-cuas_kpps">
+<div class="tbl-caption"><strong>Table 33.5.</strong> C-UAS Key Performance Parameters and Representative Values</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Target Value</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Detection range (Group 1)</td>
+<td style="text-align: left;"><span class="math inline">\(R_{det}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> 2 km</td>
+<td style="text-align: left;">Radar; <span class="math inline">\(P_D \geq 0.9\)</span>; <span class="math inline">\(P_{FA} \leq 10^{-4}\)</span>/scan</td>
+</tr>
+<tr>
+<td style="text-align: left;">Detection range (Group 3)</td>
+<td style="text-align: left;"><span class="math inline">\(R_{det,3}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> 10 km</td>
+<td style="text-align: left;">Radar; similar <span class="math inline">\(P_D/P_{FA}\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Track accuracy (pos)</td>
+<td style="text-align: left;"><span class="math inline">\(\sigma_{pos}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 5 m at 1 km</td>
+<td style="text-align: left;">Fire control quality</td>
+</tr>
+<tr>
+<td style="text-align: left;">Classification accuracy</td>
+<td style="text-align: left;"><span class="math inline">\(P_c\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> 90%</td>
+<td style="text-align: left;">At <span class="math inline">\(P_D\)</span> range; SNR <span class="math inline">\(&gt;\)</span> 10 dB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Kill chain latency</td>
+<td style="text-align: left;"><span class="math inline">\(t_{KC}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 10 s</td>
+<td style="text-align: left;">Detect to engage; Group 1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Probability of kill (HEL)</td>
+<td style="text-align: left;"><span class="math inline">\(P_k\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> 90%</td>
+<td style="text-align: left;">Group 1 at design range</td>
+</tr>
+<tr>
+<td style="text-align: left;">False alarm rate</td>
+<td style="text-align: left;"><span class="math inline">\(P_{FA}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span> 1/hr</td>
+<td style="text-align: left;">System-level; human-curated</td>
+</tr>
+<tr>
+<td style="text-align: left;">Simultaneous track capacity</td>
+<td style="text-align: left;"><span class="math inline">\(N_{track}\)</span></td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span> 50</td>
+<td style="text-align: left;">Fire control tracks</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="33102-test-and-evaluation"><span class="secnum">33.10.2</span> Test and Evaluation<a class="headerlink" href="#33102-test-and-evaluation" title="Permanent link">&para;</a></h3>
+<p>C-UAS system T&amp;E requires a carefully constructed test matrix spanning the full threat space:</p>
+<ul>
+<li>
+<p><strong>Benign environment:</strong> Open range, low clutter, good visibility; establishes maximum performance bounds.</p>
+</li>
+<li>
+<p><strong>Urban environment:</strong> Building clutter; RF noise floor; <span class="arithmatex">\(\sim\)</span>50% reduction in detection range expected.</p>
+</li>
+<li>
+<p><strong>Adverse weather:</strong> Rain, fog, temperature inversion; EO/IR degradation; potential acoustic masking.</p>
+</li>
+<li>
+<p><strong>Electronic attack:</strong> Threat drone employing RF-silent autonomy (no command link); GPS-spoofing of C-UAS sensors; HPM hardened drones.</p>
+</li>
+<li>
+<p><strong>Swarm stress test:</strong> 5/10/50/100 drone simultaneous engagement; saturates kill chain; reveals engagement rate bottlenecks.</p>
+</li>
+</ul>
+<p>The US DoD Joint C-UAS Office (JCO) conducts formal Capability Assessment events at Yuma Proving Ground (Arizona) and other ranges using a standardised threat library of representative commercial and military-grade drones.</p>
+<h3 id="33103-cost-effectiveness-analysis"><span class="secnum">33.10.3</span> Cost-Effectiveness Analysis<a class="headerlink" href="#33103-cost-effectiveness-analysis" title="Permanent link">&para;</a></h3>
+<p>The cost-effectiveness metric for a C-UAS system weighs the defence cost against the threat value denied. Defining the defence cost ratio:</p>
+<div id="eq-dcr"></div>
+<div class="arithmatex">\[\text{DCR} = \frac{C_{system} + N_{engagements} \cdot C_{shot}}{N_{kills} \cdot V_{threat}}\tag{33.37}\]</div>
+<p>where <span class="arithmatex">\(C_{system}\)</span> is the system procurement and operating cost, <span class="arithmatex">\(C_{shot}\)</span> is the per-engagement cost, <span class="arithmatex">\(N_{kills}\)</span> is the number of successful kills, and <span class="arithmatex">\(V_{threat}\)</span> is the average value of the threats defeated (replacement cost or damage prevented). For a DEW system with <span class="arithmatex">\(C_{system} = \$10\)</span>M, <span class="arithmatex">\(C_{shot} \approx \$50\)</span> (electricity per engagement), <span class="arithmatex">\(N_{kills} = 10{,}000\)</span> over system life, and <span class="arithmatex">\(V_{threat} = \$1{,}000\)</span> per drone: DCR <span class="arithmatex">\(= (10^7 + 10{,}000 \times 50) / (10{,}000 \times 1{,}000) = 1.05\)</span> — barely cost-effective. Against threats carrying &#36;50,000 payloads or causing &#36;1M damage, DCR <span class="arithmatex">\(\ll 1\)</span> and the DEW investment is clearly justified.</p>
+<h2 id="sec-cuas_future"><span class="secnum">33.11</span> Emerging Trends and Future Directions<a class="headerlink" href="#sec-cuas_future" title="Permanent link">&para;</a></h2>
+<h3 id="33111-ai-enhanced-autonomous-c-uas"><span class="secnum">33.11.1</span> AI-Enhanced Autonomous C-UAS<a class="headerlink" href="#33111-ai-enhanced-autonomous-c-uas" title="Permanent link">&para;</a></h3>
+<p>The trend toward fully autonomous C-UAS kill chains is driven by the impossibility of human-in-the-loop response to millisecond-scale threats. Key developments include:</p>
+<ul>
+<li>
+<p><strong>Edge AI inference:</strong> On-sensor neural network inference (ResNet, YOLO) for real-time drone classification without communications latency.</p>
+</li>
+<li>
+<p><strong>Multi-agent task allocation:</strong> Multiple C-UAS nodes negotiate engagement assignments to avoid duplication and maximise coverage against swarms.</p>
+</li>
+<li>
+<p><strong>Predictive track:</strong> Kalman + ML hybrid tracker predicts drone intent (attack trajectory extrapolation); pre-cues engagement before drone reaches dangerous range.</p>
+</li>
+<li>
+<p><strong>Continuous learning:</strong> C-UAS AI retrained on-the-fly from new threat encounters; requires rapid OTA update mechanism and adversarial ML robustness.</p>
+</li>
+</ul>
+<h3 id="33112-counter-counter-uas-c2uas-the-adversary-response"><span class="secnum">33.11.2</span> Counter-Counter-UAS (C2UAS) — The Adversary Response<a class="headerlink" href="#33112-counter-counter-uas-c2uas-the-adversary-response" title="Permanent link">&para;</a></h3>
+<p>As C-UAS matures, adversaries are adapting drone designs to defeat detection and defeat systems:</p>
+<ul>
+<li>
+<p><strong>RF-silent drones:</strong> Pre-programmed waypoint navigation with optical inter-drone communication; no RF link for jamming or DF detection.</p>
+</li>
+<li>
+<p><strong>Low-RCS airframes:</strong> Carbon fibre construction; radar-absorbing material coatings; <span class="arithmatex">\(\sigma &lt; 0.001\)</span> m<span class="arithmatex">\(^2\)</span>; defeats many dedicated C-UAS radars.</p>
+</li>
+<li>
+<p><strong>HPM-hardened electronics:</strong> Metal-enclosed drone body; filtered apertures; faraday cage around flight controller; increases HPM defeat threshold by 20–40 dB.</p>
+</li>
+<li>
+<p><strong>GPS-independent navigation:</strong> Terrain matching; visual odometry; star tracker; SLAM — denies GPS jamming/spoofing as a C-UAS tool.</p>
+</li>
+<li>
+<p><strong>Decoy + payload split:</strong> Swarm includes decoy drones (cheap, high RCS) to saturate C-UAS engagement capacity while payload drones approach low and slow.</p>
+</li>
+</ul>
+<p>The C-UAS vs UAS technology competition will continue to escalate, demanding continuous engineering investment and operational adaptation from C-UAS system developers and military users.</p>
+<h3 id="33113-integrated-air-defence-system-iads-integration"><span class="secnum">33.11.3</span> Integrated Air Defence System (IADS) Integration<a class="headerlink" href="#33113-integrated-air-defence-system-iads-integration" title="Permanent link">&para;</a></h3>
+<p>Future C-UAS will integrate seamlessly into the broader IADS architecture via:</p>
+<ul>
+<li>
+<p><strong>JADC2 (Joint All-Domain Command and Control):</strong> Automated data sharing between C-UAS nodes, air defence radars, and theatre C2; enables cross-domain engagement (e.g., a fighter intercepts a Group 5 UCAV detected by a ground C-UAS radar).</p>
+</li>
+<li>
+<p><strong>Multi-domain operations:</strong> C-UAS and offensive cyber/EW coordinated at operational level; simultaneous drone swarm defeat and suppression of the operator command node.</p>
+</li>
+<li>
+<p><strong>Space integration:</strong> LEO ISR satellites detecting launch signatures of large drone swarms; cueing ground C-UAS systems at maximum range.</p>
+</li>
+<li>
+<p><strong>Common tactical picture:</strong> Standardised data formats (STANAG 4703, Link 16, ASTERIX) enabling civilian and military C-UAS sensors to contribute to a unified air picture available to all defending forces.</p>
+</li>
+</ul>
+<h2 id="sec-cuas_summary"><span class="secnum">33.12</span> Summary<a class="headerlink" href="#sec-cuas_summary" title="Permanent link">&para;</a></h2>
+<p>Counter-UAS is one of the most rapidly evolving disciplines in contemporary defence engineering, driven by the explosive proliferation of drone technology and its operational exploitation by both state and non-state actors. The core engineering challenges are:</p>
+<ol>
+<li>
+<p><strong>Detection:</strong> Small RCS, low altitude, cluttered environments demand dedicated waveforms (FMCW, micro-Doppler), multi-sensor fusion, and AI-based classification.</p>
+</li>
+<li>
+<p><strong>Engagement rate:</strong> Kinetic systems are cost-limited and magazine-limited against swarms; only DEW (HEL, HPM) provides the required engagement throughput.</p>
+</li>
+<li>
+<p><strong>Cost asymmetry:</strong> The defender must achieve sub-unity DCR against cheap threats; forces adoption of low marginal-cost effectors (DEW, jamming).</p>
+</li>
+<li>
+<p><strong>Autonomy and ROE:</strong> Kill chain latency demands automation; legal and ethical constraints demand human oversight; balancing these is the central C2 challenge.</p>
+</li>
+<li>
+<p><strong>Adaptation:</strong> Adversary drone designs continuously evolve to defeat current C-UAS; open system architectures and AI-enabled adaptation are essential.</p>
+</li>
+</ol>
+<p>The most capable near-term C-UAS architectures will combine persistent multi-sensor detection (radar + EO/IR + RF), AI-based classification, directed energy engagement (HEL for precision, HPM for swarm), and tightly integrated C2 with human oversight for lethal-force decisions. The longer-term trajectory points toward fully networked, AI-driven, multi-domain C-UAS systems capable of defending against hundreds of simultaneous threats in contested electromagnetic and informational environments.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch32-directed-energy-weapons.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 32. Directed Energy Weapons">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                32. Directed Energy Weapons
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-footer__link md-footer__link--next" aria-label="Next: 34. Autonomous Lethal Systems and Ethics">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                34. Autonomous Lethal Systems and Ethics
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

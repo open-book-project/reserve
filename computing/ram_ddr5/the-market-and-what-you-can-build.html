@@ -1,0 +1,1862 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/the-market-and-what-you-can-build.html">
+  
+  
+    <link rel="prev" href="controllers-dram-chips-and-the-tools-behind-them.html">
+  
+  
+    <link rel="next" href="glossary-and-further-reading.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>17. The Market, and What You Can Build with Open Tools - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#171-the-memory-market" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              17. The Market, and What You Can Build with Open Tools
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what-ram-is.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lpddr-and-gddr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#171-the-memory-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.1 The memory market
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#172-the-best-open-source-route-to-real-ram-silicon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.2 The best open-source route to real RAM silicon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#173-can-a-4-gb-ram-be-designed-with-open-source-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.3 Can a 4 GB RAM be designed with open-source tools?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#174-working-with-a-systems-partner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.4 Working with a systems partner
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#175-the-toolbox-and-where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.5 The toolbox and where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#176-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.6 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#177-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.7 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#171-the-memory-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.1 The memory market
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#172-the-best-open-source-route-to-real-ram-silicon" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.2 The best open-source route to real RAM silicon
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#173-can-a-4-gb-ram-be-designed-with-open-source-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.3 Can a 4 GB RAM be designed with open-source tools?
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#174-working-with-a-systems-partner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.4 Working with a systems partner
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#175-the-toolbox-and-where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.5 The toolbox and where to go next
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#176-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.6 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#177-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        17.7 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-17-the-market-and-what-you-can-build-with-open-tools">Chapter 17: The Market, and What You Can Build with Open Tools<a class="headerlink" href="#chapter-17-the-market-and-what-you-can-build-with-open-tools" title="Permanent link">&para;</a></h1>
+<p>The last chapter of the main text turns from how memory works to where it is sold and what a student or a small company can realistically do. It first sketches the memory market and the companies in it. It then asks the question every student asks, "could I design a 4 GB RAM with free tools?", and answers it with arithmetic: not as a chip, but yes as a module and as a memory system. It describes the most useful open-source project that can really be manufactured, the role a systems partner can play, and finishes with the toolbox, three career paths and a capstone assignment. Figures for market size and cost are rough orders of magnitude for 2025 and 2026.</p>
+<h2 id="171-the-memory-market">17.1 The memory market<a class="headerlink" href="#171-the-memory-market" title="Permanent link">&para;</a></h2>
+<p>Memory is one of the largest and most cyclical parts of the semiconductor industry: prices swing sharply with supply and demand, and AI has reshaped it since 2023. Check current numbers with analysts such as TrendForce, Yole Group or Gartner.</p>
+<table>
+<thead>
+<tr>
+<th>Market</th>
+<th>Approx. size</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRAM (all types)</td>
+<td>~USD 130 billion or more (2025), higher in 2026</td>
+<td>The biggest semiconductor memory market; surged with AI</td>
+</tr>
+<tr>
+<td>NAND flash (for comparison)</td>
+<td>~USD 65–80 billion</td>
+<td>Storage rather than RAM</td>
+</tr>
+<tr>
+<td>Standalone SRAM</td>
+<td>Under USD 1 billion</td>
+<td>Most SRAM is embedded inside other chips</td>
+</tr>
+<tr>
+<td>Emerging NVM (MRAM, FeRAM, ReRAM)</td>
+<td>~USD 1–2 billion</td>
+<td>Small but growing</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DRAM revenue by type.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Rank</th>
+<th>Type</th>
+<th>Approx. share of DRAM revenue</th>
+<th>Trend</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>DDR4 / DDR5 (PC and server DIMMs)</td>
+<td>~40%</td>
+<td>Steady; server DDR5 strong</td>
+</tr>
+<tr>
+<td>2</td>
+<td>LPDDR</td>
+<td>~25–30%</td>
+<td>Spreading into laptops and servers (SOCAMM)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>HBM</td>
+<td>~20–30% and rising fast</td>
+<td>Fastest growing, highest profit per bit, sold out years ahead</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GDDR</td>
+<td>~5%</td>
+<td>Graphics and some AI inference</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Others</td>
+<td>Small</td>
+<td>Declining</td>
+</tr>
+</tbody>
+</table>
+<p><strong>DRAM revenue by application.</strong> Data centres and AI servers (DDR5 RDIMMs, HBM and LPDDR5X) are the biggest and fastest-growing segment, now more than half of DRAM revenue. Smartphones are second by revenue and the largest by number of units. PCs and laptops are third. Graphics, game consoles, automotive and industrial are smaller; automotive is growing as cars gain driver assistance and larger screens.</p>
+<p><strong>Who makes DRAM.</strong> SK hynix has been number 1 in DRAM revenue since 2025, driven by its lead in HBM. Samsung is a close number 1 or 2 and the largest memory maker overall. Micron is number 3, strong in HBM3E and LPDDR5X. CXMT of China is rising quickly in DDR5 and LPDDR5.</p>
+<p>Standard DDR is still the largest type by revenue, LPDDR ships in the most devices, and HBM is the fastest-growing and most profitable. Data-centre memory is where most of the money is going.</p>
+<h2 id="172-the-best-open-source-route-to-real-ram-silicon">17.2 The best open-source route to real RAM silicon<a class="headerlink" href="#172-the-best-open-source-route-to-real-ram-silicon" title="Permanent link">&para;</a></h2>
+<p>If you can use only open-source tools and open processes, what is the most useful RAM project that can actually be manufactured and that industry will value? The recommendation is to design a custom SRAM macro test chip on an open PDK and, in parallel, build an FPGA-based DDR/LPDDR controller project, which needs no fab at all. Together they exercise the circuit, layout, test and RTL skills that memory teams hire for.</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Fabricable with open tools?</th>
+<th>Industry relevant?</th>
+<th>Verdict</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRAM chip</td>
+<td>No: no open DRAM process exists</td>
+<td>Yes</td>
+<td>Not possible</td>
+</tr>
+<tr>
+<td>LPDDR6 PHY</td>
+<td>No: 130–180 nm open processes cannot reach 10+ Gbps</td>
+<td>Yes</td>
+<td>Not possible in silicon</td>
+</tr>
+<tr>
+<td>Custom SRAM macro</td>
+<td>Yes: SKY130, GF180MCU, IHP SG13G2</td>
+<td>Yes: every chip has SRAM</td>
+<td>Best choice</td>
+</tr>
+<tr>
+<td>DDR/LPDDR controller RTL on FPGA</td>
+<td>Yes: no fab needed</td>
+<td>Yes: controller and verification jobs are plentiful</td>
+<td>Best companion</td>
+</tr>
+<tr>
+<td>Compute-in-memory SRAM</td>
+<td>Yes</td>
+<td>Yes: a hot topic for AI</td>
+<td>Good stretch goal</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Choosing an open PDK.</strong> A sensible pick is to learn on SKY130, where the tutorials are, then fabricate on GF180MCU or IHP SG13G2, depending on which affordable shuttle is nearest in time.</p>
+<table>
+<thead>
+<tr>
+<th>PDK</th>
+<th>Node</th>
+<th>SRAM support</th>
+<th>Fabrication route</th>
+<th>Best for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SKY130</td>
+<td>130 nm, 1.8 V</td>
+<td>OpenRAM most mature; most tutorials</td>
+<td>Shuttle services (Efabless shut down in 2025; check current SKY130 providers)</td>
+<td>Learning</td>
+</tr>
+<tr>
+<td>GF180MCU</td>
+<td>180 nm, 3.3 / 5 V</td>
+<td>OpenRAM supported</td>
+<td>Low-cost pooled runs such as wafer.space; Tiny Tapeout</td>
+<td>Cheapest real fabrication</td>
+</tr>
+<tr>
+<td>IHP SG13G2</td>
+<td>130 nm SiGe BiCMOS, 1.2 V core</td>
+<td>Ready-made SRAM macros in the PDK; OpenRAM support in progress</td>
+<td>IHP open-source MPW runs (sometimes free for open designs), Europractice, Tiny Tapeout</td>
+<td>Best-quality fab; active European ecosystem</td>
+</tr>
+</tbody>
+</table>
+<p>Fabrication access changes often, so always check current schedules and prices. The cheapest possible first silicon is a small test structure on Tiny Tapeout, at a few hundred dollars per tile.</p>
+<p><strong>What to put on the test chip.</strong> A good test chip is designed for measurement: every block should answer a question about how the SRAM really behaves in silicon.</p>
+<table>
+<thead>
+<tr>
+<th>Block</th>
+<th>Why include it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Custom 1–4 KB 6T single-port SRAM macro</td>
+<td>The core skill: your own bitcell, periphery and layout</td>
+</tr>
+<tr>
+<td>OpenRAM macro of the same size</td>
+<td>A baseline to compare against</td>
+</tr>
+<tr>
+<td>MBIST (March C− algorithm)</td>
+<td>Every industry SRAM has built-in self-test</td>
+</tr>
+<tr>
+<td>Programmable sense-amplifier timing</td>
+<td>Measure timing margins on real silicon</td>
+</tr>
+<tr>
+<td>Separate SRAM supply pin</td>
+<td>Measure Vmin, the lowest voltage at which the SRAM still works</td>
+</tr>
+<tr>
+<td>Ring oscillators</td>
+<td>Identify which process corner your chips came from</td>
+</tr>
+<tr>
+<td>Standalone bitcell and sense-amp test structures</td>
+<td>Measure static noise margin and sense-amp offset directly</td>
+</tr>
+<tr>
+<td>SPI or scan test interface</td>
+<td>Easy to drive from a microcontroller or FPGA</td>
+</tr>
+<tr>
+<td>Stretch: 8T low-voltage cell or compute-in-memory array</td>
+<td>Material for a research publication</td>
+</tr>
+</tbody>
+</table>
+<p>The open tools for every stage are those of Section 15.3, with KiCad for the test PCB, Python for the measurement analysis, and Git with GitHub Actions running automated DRC, LVS and simulations as regression and CI.</p>
+<p><strong>The FPGA companion project.</strong> Study LiteDRAM to see how a real open controller and PHY are organised. Use a Lattice ECP5 board with DDR3 memory (for example ButterStick or OrangeCrab) with the open Yosys and nextpnr FPGA flow. Build a simplified DDR3 or LPDDR4-style controller with a scheduler and refresh, verified with a cocotb testbench. Use Ramulator 2.0 or DRAMSim3 to compare scheduling policies. The FPGA board can then serve as the tester for the SRAM chip when it returns from the fab.</p>
+<table>
+<thead>
+<tr>
+<th>Phase</th>
+<th>Duration</th>
+<th>Work</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 Ramp-up</td>
+<td>1–2 months</td>
+<td>Install tools, simulate 6T SNM, run OpenRAM</td>
+</tr>
+<tr>
+<td>1 Circuit design</td>
+<td>3–4 months</td>
+<td>Bitcell, periphery, timing; corners and Monte Carlo</td>
+</tr>
+<tr>
+<td>2 Layout and verification</td>
+<td>2–3 months</td>
+<td>DRC/LVS, extraction, post-layout corners, BIST RTL, test interface</td>
+</tr>
+<tr>
+<td>3 Tapeout</td>
+<td>1 month</td>
+<td>Integration, final checks, submission</td>
+</tr>
+<tr>
+<td>4 While in fab</td>
+<td>3–6 months</td>
+<td>KiCad test PCB, FPGA tester firmware, controller project</td>
+</tr>
+<tr>
+<td>5 Silicon measurement</td>
+<td>2–3 months</td>
+<td>Functional test, shmoo plots, Vmin, access time, leakage, correlation with simulation</td>
+</tr>
+<tr>
+<td>6 Publish</td>
+<td>–</td>
+<td>GitHub release; conference papers (for example VLSI Design or VDAT in India)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>From skills to jobs.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Skill shown by the project</th>
+<th>Matching job</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bitcell and periphery design, Monte Carlo, Vmin</td>
+<td>Memory circuit design engineer (Intel, AMD, Qualcomm, Arm, Synopsys and Cadence memory-compiler teams)</td>
+</tr>
+<tr>
+<td>Layout, DRC/LVS, extraction</td>
+<td>Custom / memory layout engineer</td>
+</tr>
+<tr>
+<td>.lib characterisation</td>
+<td>Library / characterisation engineer</td>
+</tr>
+<tr>
+<td>BIST, test chip, measurement</td>
+<td>DFT / silicon validation engineer</td>
+</tr>
+<tr>
+<td>Controller RTL, cocotb or UVM-style verification</td>
+<td>RTL / design verification engineer (the largest hiring area)</td>
+</tr>
+<tr>
+<td>A real shuttle tapeout</td>
+<td>A rare differentiator for a fresh graduate</td>
+</tr>
+</tbody>
+</table>
+<p>Many memory design teams are based in India, notably in Bengaluru and Hyderabad.</p>
+<div class="admonition warning">
+<p class="admonition-title">Honest limits</p>
+<p>SRAM on 130 or 180 nm processes runs at roughly 100 to 300 MHz: industry values the methodology and the measurements, not the raw speed. Open DRC and LVS decks are accepted on open shuttles, but industry signoff uses Calibre. Fabrication access (shuttles, prices, providers) changes quickly.</p>
+</div>
+<h2 id="173-can-a-4-gb-ram-be-designed-with-open-source-tools">17.3 Can a 4 GB RAM be designed with open-source tools?<a class="headerlink" href="#173-can-a-4-gb-ram-be-designed-with-open-source-tools" title="Permanent link">&para;</a></h2>
+<p>A common question from students: could I design a complete 4 GB RAM myself with free tools? It depends on what "a 4 GB RAM" means.</p>
+<table>
+<thead>
+<tr>
+<th>Meaning</th>
+<th>Open tools?</th>
+<th>Manufacturable?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A 4 GB RAM chip</td>
+<td>No</td>
+<td>No: no open DRAM process exists, and SRAM would be far too big</td>
+</tr>
+<tr>
+<td>A 4 GB module or board using commercial DRAM chips</td>
+<td>Yes: KiCad</td>
+<td>Yes: any PCB fab and assembly house</td>
+</tr>
+<tr>
+<td>A 4 GB memory system (your own controller and DRAM)</td>
+<td>Yes: LiteDRAM, Verilator, FPGA tools</td>
+<td>Runs on a real FPGA board</td>
+</tr>
+</tbody>
+</table>
+<p>The short answer is: not as a single chip; yes as a module built from commercial DRAM chips; and yes as a memory system with your own controller.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 17.1: The area maths of a 4 GB chip</p>
+<p>Without a DRAM process, the only memory one could build on an open PDK is SRAM. A quick calculation shows why that cannot reach 4 GB.</p>
+<ol>
+<li>4 GB in bits: <span class="arithmatex">\(4 \times 2^{30} \times 8 = 34.4\)</span> billion bits.</li>
+<li>SKY130 6T bitcell area: about 2 µm². With about 60 per cent array efficiency, the area per bit including periphery is about <span class="arithmatex">\(2/0.6 = 3.3\)</span> µm².</li>
+<li>Total silicon area: <span class="arithmatex">\(34.4 \times 10^{9} \times 3.3\ \mu\text{m}^2 = 1.14 \times 10^{11}\ \mu\text{m}^2 \approx 114{,}000\ \text{mm}^2\)</span>, about 115,000 mm² or 1150 cm².</li>
+<li>The reticle limit (the largest single chip a scanner can expose) is about 858 mm² (26 × 33 mm), so <span class="arithmatex">\(114{,}000/858 \approx 133\)</span>: about 130 or more maximum-size chips.</li>
+<li>A 200 mm wafer has an area of <span class="arithmatex">\(\pi \times 100^2 = 31{,}400\)</span> mm², so <span class="arithmatex">\(114{,}000/31{,}400 = 3.6\)</span>: about four full wafers of pure memory, and the yield of a maximum-size die at 130 nm is low without redundancy and repair.</li>
+<li>Compare a commercial 1β DRAM: its 1T1C cell is about 0.001 µm², roughly 2000 times smaller per bit than the SKY130 SRAM cell. A full 4 GB fits on a single DRAM die of very roughly 60 to 80 mm² (an estimate) that costs a few dollars to make. Array efficiency, the fraction of die area that is actual memory cells rather than decoders, sense amplifiers and wiring, matters as much as cell size.</li>
+</ol>
+</div>
+<p>How much SRAM does fit on open silicon?</p>
+<table>
+<thead>
+<tr>
+<th>Silicon available</th>
+<th>Area</th>
+<th>Approx. SRAM capacity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One Tiny Tapeout tile</td>
+<td>~0.016 mm²</td>
+<td>A few hundred bytes</td>
+</tr>
+<tr>
+<td>A typical shuttle slot</td>
+<td>~10 mm²</td>
+<td>~300 KB</td>
+</tr>
+<tr>
+<td>A full reticle-size chip</td>
+<td>~858 mm²</td>
+<td>~30 MB</td>
+</tr>
+<tr>
+<td>4 GB</td>
+<td>–</td>
+<td>~130 times the biggest possible chip</td>
+</tr>
+</tbody>
+</table>
+<p>A realistic silicon target is therefore 1 KB to a few hundred KB, which is exactly what industry SRAM test chips look like anyway.</p>
+<p><strong>Option 1 (recommended): a 4 GB DDR4 SO-DIMM in KiCad.</strong> You can design a complete, working 4 GB module with open tools by using commercial DRAM chips: four 8 Gbit x16 DDR4 chips (from Micron, Samsung or SK hynix) give 4 GB in a single 64-bit rank (<span class="arithmatex">\(4 \times 16 = 64\)</span> bits; <span class="arithmatex">\(4 \times 8\ \text{Gbit} = 32\ \text{Gbit} = 4\)</span> GB). Add an SPD EEPROM, decoupling capacitors and termination resistors on a 6 to 8 layer impedance-controlled, length-matched PCB. The tools are KiCad for schematic and layout with length tuning and differential pairs; basic signal-integrity simulation with vendor IBIS models in KiCad's ngspice simulator; optionally openEMS for field-solver analysis; SPD contents written to the JEDEC SPD specification and verified with Linux <code>decode-dimms</code>; a functional test in a laptop or mini PC with Memtest86+; and fabrication files (Gerbers, drill, BOM, pick-and-place) for a PCB fab offering impedance control and BGA assembly. Antmicro has published open-source KiCad designs for DDR4 SO-DIMMs and DRAM test boards, which make excellent references. The difficulty is medium to hard, and a prototype costs a few hundred dollars.</p>
+<p><strong>Option 2: a memory system with your own controller.</strong> Use LiteDRAM as the reference design, simulate with Verilator and cocotb, explore policies with Ramulator 2.0, and run it on an ECP5 FPGA board with the Yosys and nextpnr flow. The controller design is the same for 128 MB or 4 GB: capacity comes from the DRAM chips, not the controller.</p>
+<p><strong>Option 3 (stretch): gain-cell eDRAM on an open PDK.</strong> A gain-cell eDRAM uses two or three ordinary transistors (2T or 3T) and stores charge on the gate of one of them instead of on a dedicated capacitor. Like DRAM, the charge leaks and must be refreshed, so you can measure retention time on real silicon, an active research topic. A classic 1T1C cell built with the MIM (metal-insulator-metal) capacitors available on these PDKs is impractical, because the capacitors are far too large.</p>
+<figure class="fig fig-diagram">
+<img src="img/three-open-projects.png" alt="Three combined open-source projects: an SRAM test chip (with a gain-cell eDRAM stretch) using Xschem, ngspice, Magic, KLayout, OpenRAM and LibreLane on a shuttle; a 4 GB DDR4 SO-DIMM in KiCad with openEMS and Memtest86+; and a memory controller on an FPGA using Verilator, cocotb, Yosys, nextpnr and Ramulator" loading="lazy" width="1263" height="463">
+<figcaption><strong>Figure 17.1.</strong> Three combined open-source projects: an SRAM test chip (with a gain-cell eDRAM stretch) using Xschem, ngspice, Magic, KLayout, OpenRAM and LibreLane on a shuttle; a 4 GB DDR4 SO-DIMM in KiCad with openEMS and Memtest86+; and a memory controller on an FPGA using Verilator, cocotb, Yosys, nextpnr and Ramulator</figcaption>
+</figure>
+
+<p>Together the three projects cover the chip, the module and the controller.</p>
+<h2 id="174-working-with-a-systems-partner">17.4 Working with a systems partner<a class="headerlink" href="#174-working-with-a-systems-partner" title="Permanent link">&para;</a></h2>
+<p>A memory design effort needs more than a fab. A systems partner, such as an Indian server maker that does not make chips, fills two other gaps: compute infrastructure for running EDA tools, and a system partner and customer, so that memory designs reach real servers. It cannot supply fabrication, PDKs or foundry bitcells, EDA licences, DRAM dies, or packaging and chip testing. The current products and capabilities of any named company should be confirmed with the company itself, as with every vendor and product named in this part of the book.</p>
+<figure class="fig fig-diagram">
+<img src="img/memory-value-chain.png" alt="The memory product value chain: design (EDA on partner compute), fab (TSMC, GF or open PDK), package and test (OSATs), module or board (PCB fab and assembly) and system (servers and AI clusters), with the partner helping at design and system stages" loading="lazy" width="1276" height="265">
+<figcaption><strong>Figure 17.2.</strong> The memory product value chain: design (EDA on partner compute), fab (TSMC, GF or open PDK), package and test (OSATs), module or board (PCB fab and assembly) and system (servers and AI clusters), with the partner helping at design and system stages</figcaption>
+</figure>
+
+<p>India's ecosystem is growing around the middle stages too: Micron's assembly and test plant at Sanand, Gujarat, and Indian OSAT projects from Tata, Kaynes and CG Semi.</p>
+<p><strong>Sizing the compute.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Project</th>
+<th>CPU cores</th>
+<th>Big-memory servers</th>
+<th>Storage</th>
+<th>GPUs</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Open-PDK SRAM test chip</td>
+<td>64–256</td>
+<td>Not needed (256–512 GB fine)</td>
+<td>10–50 TB</td>
+<td>Not needed</td>
+</tr>
+<tr>
+<td>TSMC N7 SRAM macro / compiler (10–30 engineers)</td>
+<td>500–2000</td>
+<td>2–4 with 1–2 TB</td>
+<td>100–500 TB</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>TSMC N7 LPDDR5X / DDR5 controller and PHY (50–150 engineers)</td>
+<td>2000–10,000</td>
+<td>5–10 with 2–4 TB</td>
+<td>0.5–2 PB</td>
+<td>Useful</td>
+</tr>
+<tr>
+<td>Full memory-centric SoC / AI accelerator</td>
+<td>10,000+</td>
+<td>10+ with 4 TB</td>
+<td>Multi-PB</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>An on-premise, isolated cluster run by a trusted partner can meet the strict security requirements of advanced-node PDKs more easily than a general-purpose cloud account.</p>
+<p><strong>Product opportunities.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>What you design</th>
+<th>Feasibility</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CXL memory expander card</td>
+<td>CXL controller chip (N7 plus licensed PHY) and a card PCB with DDR5</td>
+<td>High</td>
+</tr>
+<tr>
+<td>DDR5 RDIMM / MRDIMM made locally</td>
+<td>Module PCB, SPD, thermal design (DRAM dies bought in)</td>
+<td>Very high; the most achievable, no custom chip</td>
+</tr>
+<tr>
+<td>Memory-rich AI accelerator</td>
+<td>Large SRAM or compute-in-memory chip (N7)</td>
+<td>Medium; large effort, high impact</td>
+</tr>
+<tr>
+<td>SRAM compiler IP</td>
+<td>Compiler at N7 / GF 22FDX</td>
+<td>High; an IP business</td>
+</tr>
+<tr>
+<td>Memory test / validation platform</td>
+<td>Rowhammer, reliability, error-rate and CXL testing on real servers</td>
+<td>Very high; low cost, publishable</td>
+</tr>
+<tr>
+<td>Memory tiering software (DRAM, CXL and SSD)</td>
+<td>Linux kernel / runtime</td>
+<td>High; software only</td>
+</tr>
+<tr>
+<td>HBM / DRAM chips</td>
+<td>–</td>
+<td>Not possible; needs a DRAM maker</td>
+</tr>
+</tbody>
+</table>
+<p>A phased roadmap: phase 1 (0 to 12 months) builds the team and methodology with an open-PDK SRAM test chip, an FPGA controller and a KiCad DDR4 or DDR5 module; phase 2 (6 to 18 months) delivers a first product with no custom chip, a DDR5 RDIMM qualified on partner servers, and a memory test platform; phase 3 (12 to 30 months) targets advanced-node silicon, a low-Vmin SRAM macro or compiler on a TSMC N7 shuttle; phase 4 (24 to 48 months) builds a system chip, a CXL memory expander controller or an SRAM or compute-in-memory AI accelerator. Still not possible: your own DRAM chip (DDR5, LPDDR6 or HBM DRAM dies) or NAND. The realistic route there is partnership with a DRAM maker, since HBM base dies are increasingly co-designed with customers. Programmes such as the India Semiconductor Mission and its Design Linked Incentive (DLI) scheme and the C2S programme support design and tapeout funding.</p>
+<h2 id="175-the-toolbox-and-where-to-go-next">17.5 The toolbox and where to go next<a class="headerlink" href="#175-the-toolbox-and-where-to-go-next" title="Permanent link">&para;</a></h2>
+<p>The exercises of this book can all be done with free, open-source tools; the industry uses commercial equivalents, and knowing both helps when applying for jobs. The toolbox is:</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Tool</th>
+<th>What it does</th>
+<th>Industry equivalent</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Everyday</td>
+<td>Python with NumPy, SciPy, Matplotlib</td>
+<td>Calculations, plots and scripts that drive every other tool</td>
+<td>MATLAB</td>
+</tr>
+<tr>
+<td>Everyday</td>
+<td>Git</td>
+<td>Saves every version of a design</td>
+<td>Perforce, Cliosoft SOS</td>
+</tr>
+<tr>
+<td>Everyday</td>
+<td>pytest</td>
+<td>Runs automated design checks in seconds</td>
+<td>In-house regression systems</td>
+</tr>
+<tr>
+<td>Circuits</td>
+<td>ngspice, Xyce</td>
+<td>Simulate circuits transistor by transistor</td>
+<td>Spectre, HSPICE; fast-SPICE</td>
+</tr>
+<tr>
+<td>Circuits</td>
+<td>Xschem</td>
+<td>Draw transistor schematics and run ngspice</td>
+<td>Virtuoso (schematic)</td>
+</tr>
+<tr>
+<td>Circuits</td>
+<td>DEVSIM</td>
+<td>Simulates the physics inside one transistor or capacitor (TCAD)</td>
+<td>Synopsys Sentaurus</td>
+</tr>
+<tr>
+<td>Chip layout</td>
+<td>Magic, KLayout</td>
+<td>Draw layouts, check rules, extract parasitics, view GDS</td>
+<td>Virtuoso Layout with Calibre</td>
+</tr>
+<tr>
+<td>Chip layout</td>
+<td>Netgen</td>
+<td>LVS: proves the layout matches the schematic</td>
+<td>Calibre LVS</td>
+</tr>
+<tr>
+<td>Chip layout</td>
+<td>OpenRAM</td>
+<td>Generates complete SRAM blocks</td>
+<td>Commercial memory compilers</td>
+</tr>
+<tr>
+<td>Chip flow</td>
+<td>Yosys, OpenROAD, OpenSTA</td>
+<td>Synthesis, place-and-route, timing checks</td>
+<td>Design Compiler or Genus, ICC2 or Innovus, PrimeTime</td>
+</tr>
+<tr>
+<td>Chip flow</td>
+<td>LibreLane / OpenLane</td>
+<td>One command from Verilog to GDSII</td>
+<td>Full commercial flows</td>
+</tr>
+<tr>
+<td>Digital</td>
+<td>Icarus Verilog, Verilator</td>
+<td>Verilog simulators for learning and for speed</td>
+<td>VCS, Xcelium</td>
+</tr>
+<tr>
+<td>Digital</td>
+<td>cocotb, GTKWave / Surfer, SymbiYosys</td>
+<td>Python testbenches, waveform viewing, formal proofs</td>
+<td>UVM, Verdi, JasperGold</td>
+</tr>
+<tr>
+<td>Architecture</td>
+<td>Ramulator 2.0, DRAMSim3, gem5, LiteDRAM</td>
+<td>Memory-system and whole-computer simulation; an open DDR controller</td>
+<td>In-house simulators, licensed controller IP</td>
+</tr>
+<tr>
+<td>Board</td>
+<td>KiCad (with <code>kicad-cli</code>)</td>
+<td>Schematic and PCB design, 3D view, rule checks, Gerber export</td>
+<td>Allegro, Altium, Xpedition</td>
+</tr>
+<tr>
+<td>Signals and power</td>
+<td>openEMS, scikit-rf, ngspice</td>
+<td>Field solving, S-parameters, eye diagrams and terminations</td>
+<td>HFSS, Clarity, ADS, Sigrity</td>
+</tr>
+<tr>
+<td>Test</td>
+<td>Memtest86+, stressapptest, <code>decode-dimms</code></td>
+<td>Memory test, stress test, reading the SPD</td>
+<td>Vendor test suites</td>
+</tr>
+<tr>
+<td>Lab</td>
+<td>Oscilloscope, BERT, VNA</td>
+<td>Measure real signals, bit errors and channel response</td>
+<td>(hardware)</td>
+</tr>
+</tbody>
+</table>
+<p>A few first commands, to try each core tool in five minutes (the chip tools run best on Linux or WSL2):</p>
+<div class="language-spice highlight"><pre><span></span><code><span class="o">*</span><span class="w"> </span><span class="nx">rc</span><span class="p">.</span><span class="nx">cir</span><span class="p">:</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">resistor</span><span class="w"> </span><span class="nx">charging</span><span class="w"> </span><span class="nx">a</span><span class="w"> </span><span class="nx">capacitor</span>
+<span class="nx">V1</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="nx">PULSE</span><span class="p">(</span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">10</span><span class="kd">p</span><span class="w"> </span><span class="mi">10</span><span class="kd">p</span><span class="w"> </span><span class="mi">5</span><span class="nx">n</span><span class="w"> </span><span class="mi">10</span><span class="nx">n</span><span class="p">)</span>
+<span class="nx">R1</span><span class="w"> </span><span class="nx">in</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="mi">1</span><span class="nx">k</span>
+<span class="nx">C1</span><span class="w"> </span><span class="nx">out</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="mi">1</span><span class="kd">p</span>
+<span class="p">.</span><span class="nx">tran</span><span class="w"> </span><span class="mi">10</span><span class="kd">p</span><span class="w"> </span><span class="mi">20</span><span class="nx">n</span>
+<span class="p">.</span><span class="nx">control</span>
+<span class="nx">run</span>
+<span class="nx">plot</span><span class="w"> </span><span class="nx">v</span><span class="p">(</span><span class="nx">in</span><span class="p">)</span><span class="w"> </span><span class="nx">v</span><span class="p">(</span><span class="nx">out</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">endc</span>
+<span class="p">.</span><span class="nx">end</span>
+</code></pre></div>
+<div class="language-bash highlight"><pre><span></span><code>ngspice<span class="w"> </span>rc.cir
+kicad-cli<span class="w"> </span>pcb<span class="w"> </span>drc<span class="w"> </span>board.kicad_pcb
+kicad-cli<span class="w"> </span>pcb<span class="w"> </span><span class="nb">export</span><span class="w"> </span>gerbers<span class="w"> </span>-o<span class="w"> </span>fab/<span class="w"> </span>board.kicad_pcb
+klayout<span class="w"> </span>sram.gds
+yosys<span class="w"> </span>-p<span class="w"> </span><span class="s2">"read_verilog counter.v; synth; stat"</span>
+verilator<span class="w"> </span>--binary<span class="w"> </span>-j<span class="w"> </span><span class="m">0</span><span class="w"> </span>top.sv
+</code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span class="c1"># myconfig.py for OpenRAM</span>
+<span class="n">word_size</span> <span class="o">=</span> <span class="mi">32</span>
+<span class="n">num_words</span> <span class="o">=</span> <span class="mi">256</span>
+<span class="n">tech_name</span> <span class="o">=</span> <span class="s2">"sky130"</span>
+</code></pre></div>
+<p><strong>Three paths into the memory industry.</strong> <em>Memory circuit design:</em> SRAM cells, sense amplifiers and timing (Exercises 2.5, 2.6 and 15.6); employers are memory-compiler teams, CPU and GPU companies and DRAM makers' design centres. <em>Board and signal integrity:</em> module and motherboard design, high-speed signals and power (Exercises 12.4, 12.5, 13.5, 14.4 and 14.5); employers are module makers, server and PC companies. <em>Controllers and verification:</em> memory controllers in Verilog, testbenches and FPGA prototypes (Exercise 3.5); the largest hiring area in chip design.</p>
+<h2 id="176-summary">17.6 Summary<a class="headerlink" href="#176-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>DRAM is a market of about USD 130 billion or more; DDR is about 40 per cent of revenue, LPDDR 25 to 30, HBM 20 to 30 and rising; SK hynix, Samsung and Micron lead, with CXMT rising.</li>
+<li>The best open-source route to real RAM silicon is an SRAM macro test chip on an open PDK plus an FPGA controller; DRAM and the LPDDR6 PHY cannot be built with open processes.</li>
+<li>A 4 GB SRAM chip would need about 115,000 mm², about 130 maximum-size chips; a 4 GB module (four 8 Gbit x16 DDR4 chips) can be designed in KiCad, and a memory system with your own controller can run on an FPGA.</li>
+<li>A systems partner can supply compute and a path to market, not chips; the most achievable product is a locally made DDR5 module.</li>
+<li>Three career paths: memory circuit design, board and signal integrity, controllers and verification.</li>
+</ul>
+<h2 id="177-exercises">17.7 Exercises<a class="headerlink" href="#177-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 17.1.</strong> How much SRAM fits into a 10 mm² shuttle slot at 3.3 µm² per bit, and how many bytes is that? Compare with the table in Section 17.3.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(10\ \text{mm}^2 = 10^{7}\ \mu\text{m}^2\)</span>, and <span class="arithmatex">\(10^7/3.3 = 3.03 \times 10^{6}\)</span> bits <span class="arithmatex">\(= 379\)</span> KB. The table gives "about 300 KB", which allows for the pad ring and test circuits that take part of the area.</p>
+</details>
+<p><strong>Exercise 17.2.</strong> Four 8 Gbit x16 DDR4 chips make a 4 GB module. How many chips would you need for an 8 GB single-rank module, and which chip organisation gives a 64-bit rank?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>With 8 Gbit x16 chips, four chips give 64 bits and <span class="arithmatex">\(4 \times 1\ \text{GB} = 4\)</span> GB. For 8 GB in one rank, use 16 Gbit x16 chips (four chips again), or eight 8 Gbit x8 chips for 8 GB (eight x8 chips give 64 bits, <span class="arithmatex">\(8 \times 1\ \text{GB} = 8\)</span> GB).</p>
+</details>
+<p><strong>Exercise 17.3.</strong> Run the RC netlist of Section 17.5 (R = 1 kΩ, C = 1 pF, a pulse from 0 V to 1 V lasting 5 ns). What is the time constant, and how close does the output come to 1 V within the 5 ns pulse?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(\tau = RC = 1\ \text{k}\Omega \times 1\ \text{pF} = 1\)</span> ns. After 5 ns the output has reached <span class="arithmatex">\(1 - e^{-5} = 0.993\)</span> of the final value, about 0.993 V. After one time constant it reached 63 per cent.</p>
+</details>
+<p><strong>Exercise 17.4.</strong> The module project of Chapters 11 to 14 uses KiCad, ngspice, Python, pytest and an automatic router. To which of the three career paths does each skill contribute: (a) writing the SPD checksum code; (b) simulating the termination study; (c) simulating a sense amplifier; (d) writing a cocotb timing checker?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>(a) Board and signal integrity (module firmware and test data). (b) Board and signal integrity. (c) Memory circuit design. (d) Controllers and verification.</p>
+</details>
+<p><strong>Exercise 17.5 (Assignment 14: capstone, pick one).</strong> Do real engineering on an open problem. Options: (a) solve the module's DRAM via fan-out (Section 14.2) as an integer program with <code>scipy.optimize.milp</code>; (b) plan a 1 KB SRAM test chip with a built-in self-test (March C−) and a measurement plan for Vmin and access time; (c) design a 4 GB DDR4 SO-DIMM in KiCad from an open reference design. Deliver code or design files plus a two-page report.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Success criteria: (a) every ball gets a via site and the tests pass; (b) the plan names every block and test; (c) design-rule check reports 0 violations, with a length-matching report. For (b), the March C− test is the sequence: up the addresses write 0; up: read 0, write 1; up: read 1, write 0; down: read 0, write 1; down: read 1, write 0; down: read 0. Scope it so you can finish it: a small finished project beats a big unfinished one.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 16. Controllers, DRAM Chips and the Tools Behind Them">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                16. Controllers, DRAM Chips and the Tools Behind Them
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="glossary-and-further-reading.html" class="md-footer__link md-footer__link--next" aria-label="Next: Glossary and Further Reading">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Glossary and Further Reading
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

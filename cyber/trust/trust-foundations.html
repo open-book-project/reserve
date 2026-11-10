@@ -1,0 +1,3540 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/trust/trust-foundations.html">
+  
+  
+    <link rel="prev" href="how-to-read-this-guide.html">
+  
+  
+    <link rel="next" href="hardware-roots-of-trust.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>1. Trust Foundations - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#11-what-trust-means-in-computing" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Trust Foundations
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Roots of Trust, TPM & PKI</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to-read-this-guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to read this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Trust Foundations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="trust-foundations.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Trust Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-trust-means-in-computing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 What "Trust" Means in Computing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 What &#34;Trust&#34; Means in Computing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-count-how-many-root-certificate-authorities-your-machine-already-trusts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Count how many root certificate authorities your machine already trusts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-the-trusted-computing-base-tcb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 The Trusted Computing Base (TCB)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 The Trusted Computing Base (TCB)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-how-big-part-of-your-own-tcb-is-count-loaded-kernel-modules-and-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See how big part of your own TCB is — count loaded kernel modules and drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-threats-that-roots-of-trust-defend-against" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Threats That Roots of Trust Defend Against
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Threats That Roots of Trust Defend Against">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-check-whether-secure-boot-and-disk-encryption-are-on-your-own-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Check whether Secure Boot and disk encryption are on (your own machine)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-crypto-refresher-i-hashes-macs-key-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 #️⃣ Crypto Refresher I: Hashes, MACs &amp; Key Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 #️⃣ Crypto Refresher I: Hashes, MACs &amp; Key Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-hash-a-file-then-make-an-hmac-of-it-with-a-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Hash a file, then make an HMAC of it with a key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-crypto-refresher-ii-asymmetric-keys-digital-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Crypto Refresher II: Asymmetric Keys &amp; Digital Signatures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Crypto Refresher II: Asymmetric Keys &amp; Digital Signatures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-make-an-ecdsa-key-pair-sign-a-file-and-verify-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Make an ECDSA key pair, sign a file and verify it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-the-chain-of-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 The Chain of Trust
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 The Chain of Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-a-real-certificate-chain-from-a-website-down-to-a-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See a real certificate chain from a website down to a root
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-roots-of-trust-defined-rtm-rts-rtr-and-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Roots of Trust Defined: RTM, RTS, RTR and Friends
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Roots of Trust Defined: RTM, RTS, RTR and Friends">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-ask-your-tpm-who-made-it-and-which-spec-it-follows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Ask your TPM who made it and which spec it follows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-hardware-vs-software-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Hardware vs Software Trust
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 Hardware vs Software Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-create-a-non-exportable-key-in-the-tpm-windows-and-inspect-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Create a non-exportable key in the TPM (Windows) and inspect it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-secure-boot-vs-measured-boot-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Secure Boot vs Measured Boot in One Picture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Secure Boot vs Measured Boot in One Picture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-check-secure-boot-state-and-read-the-pcrs-that-measured-boot-filled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Check secure boot state and read the PCRs that measured boot filled
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-attestation-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10 Attestation in One Picture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.10 Attestation in One Picture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-produce-a-tpm-quote-over-pcrs-with-a-nonce-lab-machine-with-tpm2-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Produce a TPM quote over PCRs with a nonce (lab machine with tpm2-tools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-certificates-pki-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11 Certificates &amp; PKI in One Picture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.11 Certificates &amp; PKI in One Picture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-inspect-a-website-certificates-subject-issuer-dates-and-sans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Inspect a website certificate's subject, issuer, dates and SANs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-the-big-map-how-hardware-rot-tpm-boot-tee-pki-fit-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12 The Big Map: How Hardware RoT, TPM, Boot, TEE &amp; PKI Fit Together
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 The Big Map: How Hardware RoT, TPM, Boot, TEE &amp; PKI Fit Together">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-touch-every-layer-from-your-own-machine-in-four-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Touch every layer from your own machine in four commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-a-short-history-of-trusted-computing-pki" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13 A Short History of Trusted Computing &amp; PKI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.13 A Short History of Trusted Computing &amp; PKI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-which-tpm-spec-version-your-machine-implements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See which TPM spec version your machine implements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-follow-a-laptop-from-power-on-to-an-https-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14 Follow a Laptop from Power-On to an HTTPS Page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.14 Follow a Laptop from Power-On to an HTTPS Page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-collect-evidence-from-each-stage-on-your-own-windows-pc-administrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Collect evidence from each stage on your own Windows PC (Administrator)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hardware-roots-of-trust.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Hardware Roots of Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-trusted-platform-module-in-depth.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. The Trusted Platform Module, In Depth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="secure-boot-measured-boot-firmware-trust.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Secure Boot, Measured Boot & Firmware Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trusted-execution-confidential-computing-attestation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Trusted Execution, Confidential Computing & Attestation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pki-x-509-certificates-in-depth.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. PKI & X.509 Certificates, In Depth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="root-cas-in-depth.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Root CAs, In Depth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="running-pki-private-cas-automation-lifecycle.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Running PKI: Private CAs, Automation & Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standards-careers-learning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Standards, Careers & Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ten-things-every-student-of-trust-should-master.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ten Things Every Student of Trust Should Master
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-of-terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary of Terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-trust-means-in-computing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 What "Trust" Means in Computing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.1 What &#34;Trust&#34; Means in Computing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-count-how-many-root-certificate-authorities-your-machine-already-trusts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Count how many root certificate authorities your machine already trusts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-the-trusted-computing-base-tcb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 The Trusted Computing Base (TCB)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 The Trusted Computing Base (TCB)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-how-big-part-of-your-own-tcb-is-count-loaded-kernel-modules-and-drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See how big part of your own TCB is — count loaded kernel modules and drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-threats-that-roots-of-trust-defend-against" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 Threats That Roots of Trust Defend Against
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 Threats That Roots of Trust Defend Against">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-check-whether-secure-boot-and-disk-encryption-are-on-your-own-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Check whether Secure Boot and disk encryption are on (your own machine)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-crypto-refresher-i-hashes-macs-key-derivation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 #️⃣ Crypto Refresher I: Hashes, MACs &amp; Key Derivation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 #️⃣ Crypto Refresher I: Hashes, MACs &amp; Key Derivation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-hash-a-file-then-make-an-hmac-of-it-with-a-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Hash a file, then make an HMAC of it with a key
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-crypto-refresher-ii-asymmetric-keys-digital-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Crypto Refresher II: Asymmetric Keys &amp; Digital Signatures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Crypto Refresher II: Asymmetric Keys &amp; Digital Signatures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-make-an-ecdsa-key-pair-sign-a-file-and-verify-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Make an ECDSA key pair, sign a file and verify it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-the-chain-of-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 The Chain of Trust
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 The Chain of Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-a-real-certificate-chain-from-a-website-down-to-a-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See a real certificate chain from a website down to a root
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-roots-of-trust-defined-rtm-rts-rtr-and-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Roots of Trust Defined: RTM, RTS, RTR and Friends
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Roots of Trust Defined: RTM, RTS, RTR and Friends">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-ask-your-tpm-who-made-it-and-which-spec-it-follows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Ask your TPM who made it and which spec it follows
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-hardware-vs-software-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Hardware vs Software Trust
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 Hardware vs Software Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-create-a-non-exportable-key-in-the-tpm-windows-and-inspect-it" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Create a non-exportable key in the TPM (Windows) and inspect it
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-secure-boot-vs-measured-boot-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Secure Boot vs Measured Boot in One Picture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Secure Boot vs Measured Boot in One Picture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-check-secure-boot-state-and-read-the-pcrs-that-measured-boot-filled" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Check secure boot state and read the PCRs that measured boot filled
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-attestation-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10 Attestation in One Picture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.10 Attestation in One Picture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-produce-a-tpm-quote-over-pcrs-with-a-nonce-lab-machine-with-tpm2-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Produce a TPM quote over PCRs with a nonce (lab machine with tpm2-tools)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-certificates-pki-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11 Certificates &amp; PKI in One Picture
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.11 Certificates &amp; PKI in One Picture">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-inspect-a-website-certificates-subject-issuer-dates-and-sans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Inspect a website certificate's subject, issuer, dates and SANs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-the-big-map-how-hardware-rot-tpm-boot-tee-pki-fit-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12 The Big Map: How Hardware RoT, TPM, Boot, TEE &amp; PKI Fit Together
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 The Big Map: How Hardware RoT, TPM, Boot, TEE &amp; PKI Fit Together">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-touch-every-layer-from-your-own-machine-in-four-commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Touch every layer from your own machine in four commands
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-a-short-history-of-trusted-computing-pki" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13 A Short History of Trusted Computing &amp; PKI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.13 A Short History of Trusted Computing &amp; PKI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-which-tpm-spec-version-your-machine-implements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See which TPM spec version your machine implements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#114-follow-a-laptop-from-power-on-to-an-https-page" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14 Follow a Laptop from Power-On to an HTTPS Page
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.14 Follow a Laptop from Power-On to an HTTPS Page">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-collect-evidence-from-each-stage-on-your-own-windows-pc-administrator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Collect evidence from each stage on your own Windows PC (Administrator)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-1-trust-foundations">Chapter 1: Trust Foundations<a class="headerlink" href="#chapter-1-trust-foundations" title="Permanent link">&para;</a></h1>
+<p>Before learning chips, TPMs and certificate authorities, you need the core ideas they all share: what trust means, what roots and chains of trust are, the bits of cryptography that make them work and the threats they defend against. This chapter gives you those foundations and a map of how hardware roots of trust, TPMs, boot security, trusted execution and PKI fit together — each later chapter fills in one part of the map.</p>
+<h2 id="11-what-trust-means-in-computing">1.1 What "Trust" Means in Computing<a class="headerlink" href="#11-what-trust-means-in-computing" title="Permanent link">&para;</a></h2>
+<p>In security, to trust a component means you rely on it to behave correctly — if it misbehaves, your protection fails and you may not even notice. "Trusted" describes that dependence; "trustworthy" means there is good evidence the component deserves it. Good security design keeps the list of trusted things short and works hard to make each one trustworthy.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-01-what-trust-means-in-computing.svg" alt="Every layer relies on the layers beneath it, so the bottom of the stack matters most." loading="lazy" width="1000" height="437">
+<figcaption><strong>What one web login silently trusts.</strong> Every layer relies on the layers beneath it, so the bottom of the stack matters most.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Giving a neighbour your spare house key makes them trusted whether or not they are honest — if they misuse it, you are burgled. You would pick someone with a track record (trustworthy) and hand over only the front-door key, not the safe combination.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Maya, the new IT lead at the fictional Harbour Credit Union, lists everything a member's online-banking login silently depends on: the laptop's firmware, the operating system, the browser, the root certificates inside it, DNS and the bank's TLS server key. She notices that tampered firmware could quietly undermine every other item on the list. That insight drives her next purchase: laptops with a hardware root of trust, measured boot and a TPM, so the bottom of the stack can be checked rather than just assumed.</p>
+</div>
+<h4 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Name the asset you are protecting (money, patient records, a signing key).</li>
+<li>List every component that could break that protection if it misbehaved — these are your trust dependencies.</li>
+<li>Draw trust boundaries where data or control passes between parts you trust differently.</li>
+<li>Remove or shrink dependencies you do not need, so less has to be trusted.</li>
+<li>Gather evidence for what remains: certification, audits, open review, signatures and attestation.</li>
+<li>Re-check over time — keys leak, vendors change and bugs are found, so trust decays.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Security architects, threat modellers, platform and PKI engineers, auditors and anyone who writes a security design document starts from this list of trust assumptions.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Memorise the classic definition: a trusted component is one whose failure can break your security — so 'trusted' is a warning label, not a compliment.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A useful exercise is the 'trust inventory': for one asset, list every hardware, firmware, software, person and organisation that could defeat its protection. Most inventories reveal dozens of entries nobody consciously chose.</li>
+<li>Trust is directional and scoped: a CA trusted to vouch for web servers is not automatically trusted to sign code. Certificates express this with Extended Key Usage, and roots of trust with separate keys per purpose.</li>
+<li>Evidence for trustworthiness comes in several forms — formal verification (e.g. the seL4 microkernel), independent certification (Common Criteria, FIPS 140-3), transparency (open source, Certificate Transparency logs) and runtime evidence (attestation).</li>
+<li>Trust has a time dimension: keys expire, algorithms weaken (SHA-1, RSA-1024), and vendors stop patching. Good designs plan for rotating keys, revoking certificates and updating trusted code.</li>
+<li>Insiders and suppliers are trust dependencies too. Supply-chain security frameworks such as NIST SP 800-161 and SLSA treat the people and build systems that produce code as part of what you trust.</li>
+<li>Reducing trust is often cheaper than proving trustworthiness: removing an unneeded admin account or driver eliminates a dependency, whereas evaluating it can take months.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Treating 'trusted' as meaning 'safe'. It only means 'relied upon'; a trusted component that is compromised is the worst kind of failure.</li>
+<li>Listing only software in a trust inventory. Firmware, hardware, manufacturers, administrators and certificate authorities belong on the list too.</li>
+<li>Assuming trust once granted stays valid forever. Revisit trust decisions when keys leak, vendors change or new attacks appear.</li>
+</ul>
+</div>
+<h3 id="try-it-count-how-many-root-certificate-authorities-your-machine-already-trusts">Try it: Count how many root certificate authorities your machine already trusts<a class="headerlink" href="#try-it-count-how-many-root-certificate-authorities-your-machine-already-trusts" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Windows PowerShell</span>
+<span class="o">(</span>Get-ChildItem<span class="w"> </span>Cert:<span class="se">\L</span>ocalMachine<span class="se">\R</span>oot<span class="o">)</span>.Count
+<span class="c1"># Linux (Debian/Ubuntu)</span>
+ls<span class="w"> </span>/etc/ssl/certs/*.pem<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l
+<span class="c1"># macOS</span>
+security<span class="w"> </span>find-certificate<span class="w"> </span>-a<span class="w"> </span>/System/Library/Keychains/SystemRootCertificates.keychain<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-c<span class="w"> </span>labl
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trust</strong><br><em>General security engineering · Concept · General</em></td>
+<td>Relying on a component to behave as expected, accepting that its failure or betrayal would break your security goals.</td>
+<td>A web browser trusts about 150 root CAs; any one of them could issue a certificate the browser would accept.</td>
+</tr>
+<tr>
+<td><strong>Trusted vs trustworthy</strong><br><em>Security engineering literature · Concept · General</em></td>
+<td>Trusted means you depend on it; trustworthy means evidence shows it deserves that dependence. Aim for components that are both.</td>
+<td>An unvetted USB driver running in the kernel is trusted (it can do anything) but not shown to be trustworthy.</td>
+</tr>
+<tr>
+<td><strong>Trust boundary</strong><br><em>Threat modelling (e.g. Microsoft STRIDE) · Concept · General</em></td>
+<td>A line in a design where data or control crosses between parts trusted to different degrees; checks belong there.</td>
+<td>Data entering a TPM from the operating system crosses a trust boundary, so the TPM validates every command.</td>
+</tr>
+<tr>
+<td><strong>Trust assumption</strong><br><em>Security design practice · Concept · General</em></td>
+<td>Something a design takes for granted without proof, such as 'the boot ROM has no bugs' or 'the CA checked identity'.</td>
+<td>A secure-boot design assumes the vendor's signing key never leaks; the 2023 MSI key leak broke exactly that assumption.</td>
+</tr>
+<tr>
+<td><strong>Threat model</strong><br><em>OWASP, Microsoft STRIDE, MITRE ATT&amp;CK · Concept · General</em></td>
+<td>A structured description of what you protect, from whom, how attackers could act and which risks you accept.</td>
+<td>Harbour Credit Union's laptop threat model includes theft in taxis but excludes nation-state chip decapping.</td>
+</tr>
+<tr>
+<td><strong>Trust anchor</strong><br><em>RFC 5280, RFC 5914 · Concept · General</em></td>
+<td>A key or certificate accepted directly, without further proof, at the top of a verification chain.</td>
+<td>A browser's root store and a CPU's fused public-key hash are both trust anchors for different chains.</td>
+</tr>
+<tr>
+<td><strong>Transitive trust</strong><br><em>TCG architecture · Concept · General</em></td>
+<td>Trusting B because trusted A vouched for it — the basis of boot chains and certificate chains, and weaker with every hop.</td>
+<td>Firmware trusts the bootloader because its signature verifies; the bootloader then vouches for the kernel.</td>
+</tr>
+<tr>
+<td><strong>Least privilege</strong><br><em>Saltzer &amp; Schroeder design principles (1975) · Concept · General</em></td>
+<td>Give each component only the access it needs, so a trusted part that fails can do limited damage.</td>
+<td>A firmware-update service can write the flash region but cannot read the disk-encryption key.</td>
+</tr>
+<tr>
+<td><strong>Defence in depth</strong><br><em>Security architecture practice · Concept · General</em></td>
+<td>Layering independent protections so one broken layer does not lose everything.</td>
+<td>Secure boot blocks unsigned bootloaders; measured boot plus attestation catches anything that slips past.</td>
+</tr>
+<tr>
+<td><strong>Assurance</strong><br><em>ISO/IEC 15408 Common Criteria, FIPS 140-3 · Concept · General</em></td>
+<td>The level of confidence, gained through evaluation, testing and review, that a component really meets its security claims.</td>
+<td>A smart-card chip evaluated at EAL6+ offers more assurance than an unevaluated microcontroller.</td>
+</tr>
+<tr>
+<td><strong>Zero trust</strong><br><em>NIST SP 800-207 (2020) · Concept · Current · General</em></td>
+<td>An architecture that never trusts by network location; every request is authenticated and checked against device and user state.</td>
+<td>Before opening the payroll app, the gateway checks Maya's identity plus her laptop's attested health.</td>
+</tr>
+<tr>
+<td><strong>Relying party</strong><br><em>RFC 5280, IETF RATS RFC 9334 · Role · General</em></td>
+<td>Whoever depends on a certificate or attestation result to make a decision, and therefore bears the risk if it is wrong.</td>
+<td>The bank's login server is the relying party when it checks a laptop's device certificate.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-the-trusted-computing-base-tcb">1.2 The Trusted Computing Base (TCB)<a class="headerlink" href="#12-the-trusted-computing-base-tcb" title="Permanent link">&para;</a></h2>
+<p>The trusted computing base is the complete set of hardware, firmware and software that must work correctly for a system's security rules to hold. Anything outside the TCB can misbehave without breaking those rules; anything inside it cannot. Security engineers try to keep the TCB as small and simple as possible, because every extra line of trusted code is another place for a fatal bug.</p>
+<p><strong>Big TCB vs small TCB for one secret key</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Key in an ordinary app</th>
+<th>Key inside a secure element</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trusted code size</strong></td>
+<td>Tens of millions of lines</td>
+<td>Thousands of lines</td>
+</tr>
+<tr>
+<td><strong>Who can read the key</strong></td>
+<td>Kernel, drivers, admins, malware</td>
+<td>Only the chip's own firmware</td>
+</tr>
+<tr>
+<td><strong>Attack surface</strong></td>
+<td>Hundreds of system calls, drivers</td>
+<td>A small command set</td>
+</tr>
+<tr>
+<td><strong>Evidence of quality</strong></td>
+<td>Usually none independent</td>
+<td>Certified (e.g. CC EAL5+)</td>
+</tr>
+<tr>
+<td><strong>Cost and flexibility</strong></td>
+<td>Free, flexible</td>
+<td>Extra chip, limited features</td>
+</tr>
+</tbody>
+</table>
+<p><em>Moving a key into a dedicated security chip removes millions of lines from what must be trusted.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>In a bank, the TCB is the vault door, the guards and the alarm system — not the carpets or the coffee machine. If the coffee machine breaks, the money is still safe; if the vault door fails, it is not.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Leon, a student at the fictional Ridgeway Polytechnic, compares two designs for a password manager. In design A the decryption key lives in an ordinary process, so the whole operating system kernel, every driver and the app itself are in the TCB — tens of millions of lines of code. In design B the key never leaves a secure element that runs a few thousand lines of evaluated code. Design B's TCB for the key is thousands of times smaller, so there is far less that can go wrong.</p>
+</div>
+<h4 id="how-it-works_1">How it works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Pick the security property you care about, such as 'only Ana can read this file'.</li>
+<li>Trace every component that enforces or could bypass that property — kernel, firmware, hypervisor, CPU microcode, security chip.</li>
+<li>Everything on that trace is in the TCB; everything else is untrusted and must be checked at the boundary.</li>
+<li>Shrink the TCB by moving secrets into smaller isolated components (TPM, secure element, enclave).</li>
+<li>Harden and verify what remains: code review, formal methods, certification, measured and signed updates.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Operating-system and hypervisor designers, platform security engineers, evaluators writing Common Criteria security targets and confidential-computing architects all reason in TCB terms.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>In interviews, describe the TCB as 'the parts that must be correct for security to hold' and explain why smaller is better — fewer lines, fewer bugs, easier to verify.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>The TCSEC (Orange Book) defined the TCB in the early 1980s and graded systems D, C1, C2, B1, B2, B3 and A1; Common Criteria (ISO/IEC 15408) replaced it internationally from 1999 with EAL1-EAL7.</li>
+<li>A reference monitor's three classic properties — complete mediation, tamper-proofness and verifiability — still guide TPM, hypervisor and enclave design today.</li>
+<li>Modern TCBs include things people forget: CPU microcode, the management engine, BMC firmware in servers, peripheral firmware with DMA access and the compilers that built trusted code.</li>
+<li>Confidential computing explicitly shrinks the TCB by removing the hypervisor and host OS; the remaining TCB is the CPU, its security firmware and the guest itself — which is why CPU firmware bugs matter so much there.</li>
+<li>TCB size is measured loosely in lines of code: seL4's verified kernel is around 10,000 lines of C, compared with tens of millions for a general-purpose OS kernel plus drivers.</li>
+<li>TCB recovery is a related idea: after a vulnerability in trusted firmware is fixed, a platform must prove (for example via a new security version in attestation) that it now runs the patched TCB.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking the TCB is just the security software you installed. It includes the kernel, firmware, hardware and anything with DMA or privileged access.</li>
+<li>Adding features to trusted components for convenience. Every feature in the TCB enlarges what must be correct; push non-essential code outside it.</li>
+<li>Assuming a small TCB is automatically secure. Small helps, but it still needs review, testing, patching and protection from physical attack.</li>
+</ul>
+</div>
+<h3 id="try-it-see-how-big-part-of-your-own-tcb-is-count-loaded-kernel-modules-and-drivers">Try it: See how big part of your own TCB is — count loaded kernel modules and drivers<a class="headerlink" href="#try-it-see-how-big-part-of-your-own-tcb-is-count-loaded-kernel-modules-and-drivers" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code># Linux: every loaded module runs with full kernel privilege
+lsmod | wc -l
+# Windows PowerShell: running kernel drivers
+(Get-CimInstance Win32_SystemDriver | Where-Object State -eq 'Running').Count
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_1">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trusted computing base (TCB)</strong><br><em>US DoD TCSEC 'Orange Book' (DoD 5200.28-STD, 1985) · Concept · General</em></td>
+<td>All hardware, firmware and software whose correct behaviour is required to enforce a system's security policy.</td>
+<td>For BitLocker, the TCB includes the TPM, UEFI firmware, Windows Boot Manager and the Windows kernel.</td>
+</tr>
+<tr>
+<td><strong>Orange Book (TCSEC)</strong><br><em>US Department of Defense, 1983/1985 · Standard · Legacy · General</em></td>
+<td>The early US evaluation criteria that defined the TCB and rated systems from D to A1; replaced by Common Criteria.</td>
+<td>1980s secure operating systems were sold as 'B2' or 'A1' rated under the Orange Book.</td>
+</tr>
+<tr>
+<td><strong>Reference monitor</strong><br><em>Anderson Report, US Air Force (1972) · Concept · General</em></td>
+<td>A component that checks every access; it must be always invoked, tamper-proof and small enough to verify.</td>
+<td>An operating system's access-control check on every file open is meant to behave as a reference monitor.</td>
+</tr>
+<tr>
+<td><strong>Attack surface</strong><br><em>Security engineering practice · Concept · General</em></td>
+<td>All the interfaces an attacker can reach — commands, ports, files, buses — that lead into trusted code.</td>
+<td>A TPM's attack surface is its command interface; a full OS kernel exposes hundreds of system calls.</td>
+</tr>
+<tr>
+<td><strong>Privilege levels (rings)</strong><br><em>x86 rings 0-3, Arm exception levels EL0-EL3 · Concept · Platform &amp; OS</em></td>
+<td>Hardware-enforced levels that stop less-privileged code from touching more-privileged code and data.</td>
+<td>Apps run at EL0, the Linux kernel at EL1, a hypervisor at EL2 and secure monitor firmware at EL3 on Arm.</td>
+</tr>
+<tr>
+<td><strong>Microkernel</strong><br><em>Designs such as seL4, QNX, MINIX 3 · Concept · Platform &amp; OS</em></td>
+<td>A kernel that keeps only essentials in privileged mode and runs drivers outside it, shrinking the TCB.</td>
+<td>A medical-device maker picks a microkernel so a buggy USB driver cannot crash the insulin-dosing logic.</td>
+</tr>
+<tr>
+<td><strong>seL4</strong><br><em>seL4 Foundation (Linux Foundation) · Software · Current · Platform &amp; OS</em></td>
+<td>A microkernel with machine-checked mathematical proof that its C code matches its specification — a rare, fully verified TCB component.</td>
+<td>Defence and aviation projects choose seL4 when they need strong evidence the kernel cannot be subverted.</td>
+</tr>
+<tr>
+<td><strong>Isolation</strong><br><em>Hardware MMU, IOMMU, TrustZone, enclaves · Concept · General</em></td>
+<td>Keeping components in separate protected compartments so one cannot read or change another's memory.</td>
+<td>A TPM, a secure enclave and a confidential VM each isolate secrets from the main operating system.</td>
+</tr>
+<tr>
+<td><strong>Separation of privilege</strong><br><em>Saltzer &amp; Schroeder (1975) · Concept · General</em></td>
+<td>Requiring two independent conditions or parties for a sensitive action, so one failure is not enough.</td>
+<td>Unsealing a disk key needs both correct boot measurements and the user's PIN.</td>
+</tr>
+<tr>
+<td><strong>Formal verification</strong><br><em>Proof assistants such as Isabelle/HOL, Coq/Rocq · Concept · General</em></td>
+<td>Mathematically proving code or hardware meets a specification, giving the strongest evidence for a small TCB.</td>
+<td>Parts of the OpenTitan and Caliptra projects use formal property checking to verify security-critical hardware blocks.</td>
+</tr>
+<tr>
+<td><strong>Security target</strong><br><em>ISO/IEC 15408 Common Criteria · Concept · General</em></td>
+<td>A document defining exactly what a product's TCB (the 'TOE security functionality') protects, against which threats, for evaluation.</td>
+<td>A smart-card vendor's security target lists the threats its chip resists, such as fault injection.</td>
+</tr>
+<tr>
+<td><strong>Confidential computing TCB</strong><br><em>Confidential Computing Consortium (Linux Foundation) · Concept · Current · Trusted execution</em></td>
+<td>In confidential VMs and enclaves, the cloud host is removed from the TCB, leaving the CPU and a little firmware.</td>
+<td>A hospital's analytics VM no longer has to trust the cloud provider's hypervisor administrators.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-threats-that-roots-of-trust-defend-against">1.3 Threats That Roots of Trust Defend Against<a class="headerlink" href="#13-threats-that-roots-of-trust-defend-against" title="Permanent link">&para;</a></h2>
+<p>Roots of trust exist because some attacks hide below the operating system or happen before it starts, where antivirus cannot see them. Typical threats are malicious firmware (rootkits and bootkits), tampering in the supply chain, someone with brief physical access (the 'evil maid'), stolen laptops and disks, devices pretending to be something they are not, and attackers rolling software back to an old, buggy version.</p>
+<p><strong>Threat versus the defence that counters it</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Threat</th>
+<th>Main hardware-rooted defence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Firmware rootkit</strong></td>
+<td>Persists in flash</td>
+<td>Silicon RoT verifies firmware</td>
+</tr>
+<tr>
+<td><strong>Bootkit</strong></td>
+<td>Replaces bootloader</td>
+<td>UEFI Secure Boot</td>
+</tr>
+<tr>
+<td><strong>Evil maid</strong></td>
+<td>Brief physical access</td>
+<td>Measured boot + TPM PIN</td>
+</tr>
+<tr>
+<td><strong>Stolen disk</strong></td>
+<td>Offline reading</td>
+<td>TPM-sealed encryption</td>
+</tr>
+<tr>
+<td><strong>Impersonation</strong></td>
+<td>Fake device or server</td>
+<td>Hardware-bound keys + PKI</td>
+</tr>
+<tr>
+<td><strong>Rollback</strong></td>
+<td>Old signed firmware</td>
+<td>Anti-rollback counters</td>
+</tr>
+<tr>
+<td><strong>Supply chain</strong></td>
+<td>Factory or transit change</td>
+<td>Attestation vs reference values</td>
+</tr>
+</tbody>
+</table>
+<p><em>Each defence relies on something trusted that runs before, or beneath, the attacker.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Antivirus is a security guard inside the building; firmware attacks are like someone who rewired the building before the guard arrived. You need a check that runs first, from something the attacker could not rewire.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Tomás, a journalist working for the fictional Lantern News, leaves his laptop in a hotel room. An intruder could boot it from USB, copy the disk or flash modified firmware that logs his password. Full-disk encryption sealed to the TPM defeats the disk copy; secure boot stops the USB bootkit; measured boot plus attestation would let Lantern's IT team notice changed firmware. Each defence relies on something trusted that runs before the attacker's code.</p>
+</div>
+<h4 id="how-it-works_2">How it works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Attackers aim for persistence and stealth: code that survives OS reinstall and runs before security tools.</li>
+<li>Firmware, bootloaders and peripheral controllers are attractive because they start first and are rarely inspected.</li>
+<li>Physical access enables disk theft, booting other media, flashing chips or sniffing buses.</li>
+<li>Supply-chain attacks insert changes before the device reaches you — at the factory, distributor or update server.</li>
+<li>Roots of trust counter these by verifying code before it runs, recording what ran, and protecting keys in hardware.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Threat-intelligence analysts, firmware security researchers, endpoint-security teams and procurement officers buying hardware for high-risk staff all reason about these threats.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember the pairing: secure boot mainly stops bootkits, measured boot plus attestation detects tampering, TPM-sealed encryption protects stolen disks, and hardware identity stops impersonation.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>MITRE ATT&amp;CK lists pre-OS persistence under techniques such as T1542 (Pre-OS Boot) with sub-techniques for system firmware, component firmware and bootkits — useful vocabulary for threat reports.</li>
+<li>Firmware threats are attractive because the code runs with the highest privilege, before endpoint tools load, and is rarely scanned; NIST SP 800-193 therefore asks platforms to protect, detect and recover firmware.</li>
+<li>Physical-access threats come in tiers: minutes (evil maid, booting USB), hours (opening the case, flashing SPI chips, sniffing the TPM bus) and lab-grade (decapping, fault injection). Defences are chosen per tier.</li>
+<li>Supply-chain defences combine signed firmware, manufacturer device certificates, platform certificates (TCG) that describe the as-built configuration, and attestation compared against reference values.</li>
+<li>Rollback attacks are subtle because the old image is genuinely signed; only a monotonic security version stored in fuses, a TPM NV counter or replay-protected memory can refuse it.</li>
+<li>Leaked signing keys turn verification against you: firmware or bootloaders signed with a leaked key pass every check until the key is revoked in fuses, dbx or a certificate revocation list.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Believing reinstalling the OS removes all malware. Firmware rootkits survive reinstalls; only reflashing from a trusted source, ideally verified by a root of trust, does.</li>
+<li>Assuming disk encryption alone stops an evil maid. Without secure or measured boot, an attacker can trojan the unlock screen and capture the passphrase.</li>
+<li>Treating physical security as 'out of scope' for laptops and IoT. These devices are lost, stolen and handled by strangers every day.</li>
+</ul>
+</div>
+<h3 id="try-it-check-whether-secure-boot-and-disk-encryption-are-on-your-own-machine">Try it: Check whether Secure Boot and disk encryption are on (your own machine)<a class="headerlink" href="#try-it-check-whether-secure-boot-and-disk-encryption-are-on-your-own-machine" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Windows PowerShell (Administrator)</span>
+Confirm-SecureBootUEFI
+manage-bde<span class="w"> </span>-status<span class="w"> </span>C:
+<span class="c1"># Linux</span>
+mokutil<span class="w"> </span>--sb-state
+lsblk<span class="w"> </span>-o<span class="w"> </span>NAME,TYPE,FSTYPE<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span>crypt
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_2">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Firmware rootkit</strong><br><em>Documented by ESET, Kaspersky and others since 2018 · Attack · Firmware &amp; boot</em></td>
+<td>Malware implanted in UEFI or other firmware so it survives disk wipes and OS reinstalls.</td>
+<td>LoJax (2018) was the first UEFI rootkit found in the wild; chapter 30 covers it and its successors.</td>
+</tr>
+<tr>
+<td><strong>Bootkit</strong><br><em>Malware class · Attack · Firmware &amp; boot</em></td>
+<td>Malware that replaces or patches the bootloader so it runs before the OS kernel and its defences.</td>
+<td>BlackLotus (2023) bypassed UEFI Secure Boot on fully patched Windows 11 by exploiting an old boot manager.</td>
+</tr>
+<tr>
+<td><strong>Supply-chain tampering</strong><br><em>NIST SP 800-161, CISA guidance · Attack · General</em></td>
+<td>Altering hardware, firmware or software before it reaches the customer — in factories, logistics or update servers.</td>
+<td>An attacker swaps a server's BMC firmware during shipping; a hardware root of trust detects the unsigned image.</td>
+</tr>
+<tr>
+<td><strong>Evil maid attack</strong><br><em>Term coined by Joanna Rutkowska (2009) · Attack · Platform &amp; OS</em></td>
+<td>An attacker with brief, unsupervised physical access modifies a device so it later leaks secrets.</td>
+<td>A hotel intruder replaces the unencrypted boot partition with one that records the disk passphrase.</td>
+</tr>
+<tr>
+<td><strong>Stolen device or disk</strong><br><em>Common physical threat · Attack · Platform &amp; OS</em></td>
+<td>Thieves remove the drive or boot other media to read files directly, bypassing the operating system's logins.</td>
+<td>A stolen clinic laptop with TPM-sealed BitLocker reveals nothing; the unencrypted one exposes patient records.</td>
+</tr>
+<tr>
+<td><strong>Impersonation (spoofing)</strong><br><em>STRIDE category 'S' · Attack · General</em></td>
+<td>Pretending to be a legitimate device, server or user to gain access or intercept data.</td>
+<td>A cloned sensor claims to be a hospital's genuine infusion pump; hardware-bound device certificates stop it.</td>
+</tr>
+<tr>
+<td><strong>Rollback (downgrade) attack</strong><br><em>Mitigated by NIST SP 800-193 controls · Attack · Firmware &amp; boot</em></td>
+<td>Reinstalling an older, validly signed version that still contains a known vulnerability.</td>
+<td>An attacker flashes last year's signed firmware with a known bug; anti-rollback counters refuse it.</td>
+</tr>
+<tr>
+<td><strong>DMA attack</strong><br><em>Thunderbolt/PCIe devices; tools such as PCILeech · Attack · Platform &amp; OS</em></td>
+<td>A malicious peripheral reads or writes memory directly, bypassing the CPU's protections.</td>
+<td>A rogue Thunderbolt adapter dumps RAM from a locked laptop unless the IOMMU and Kernel DMA Protection are on.</td>
+</tr>
+<tr>
+<td><strong>Key theft</strong><br><em>General threat · Attack · General</em></td>
+<td>Stealing private keys from disk, memory or backups so an attacker can sign, decrypt or impersonate.</td>
+<td>Leaked OEM firmware-signing keys let attackers sign malicious BIOS images that pass verification.</td>
+</tr>
+<tr>
+<td><strong>Counterfeit hardware</strong><br><em>Supply-chain threat · Attack · Devices &amp; IoT</em></td>
+<td>Fake or recycled chips and devices sold as genuine, sometimes with weaker security or hidden functions.</td>
+<td>A distributor ships cloned network cards; genuine parts prove identity with manufacturer-signed certificates.</td>
+</tr>
+<tr>
+<td><strong>Malicious insider</strong><br><em>Threat category · Attack · General</em></td>
+<td>A trusted employee or contractor abuses access to keys, factories, build systems or signing services.</td>
+<td>Requiring two people and an HSM to sign firmware stops one rogue engineer releasing a backdoor.</td>
+</tr>
+<tr>
+<td><strong>Machine-in-the-middle</strong><br><em>Network threat · Attack · Web PKI</em></td>
+<td>An attacker secretly relays and possibly alters traffic between two parties who think they talk directly.</td>
+<td>A café Wi-Fi attacker presents a fake certificate; certificate validation in the browser rejects it.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="14-crypto-refresher-i-hashes-macs-key-derivation">1.4 #️⃣ Crypto Refresher I: Hashes, MACs &amp; Key Derivation<a class="headerlink" href="#14-crypto-refresher-i-hashes-macs-key-derivation" title="Permanent link">&para;</a></h2>
+<p>A hash function turns any data into a short fixed-size fingerprint; change one bit of input and the fingerprint changes completely. A MAC (message authentication code) is a hash mixed with a secret key, so only key holders can produce a valid tag. Key derivation functions (KDFs) turn one secret into many purpose-specific keys. Roots of trust use all three constantly: hashes to measure code, MACs to protect data, KDFs to build key hierarchies.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-04-crypto-refresher-i-hashes-macs-key.svg" alt="A root of trust never uses its master secret directly; it derives purpose-specific keys." loading="lazy" width="1000" height="189">
+<figcaption><strong>From one device secret to many keys.</strong> A root of trust never uses its master secret directly; it derives purpose-specific keys.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A hash is a fingerprint: tiny, unique to the person, and you cannot rebuild the person from it. A MAC is a wax seal pressed with a private signet ring. A KDF is a master key cutter that makes a different key for every door from one master blank.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Priya, a firmware engineer at the fictional Kestrel Devices, computes the SHA-256 hash of the new bootloader and gets a 64-hex-digit value. The TPM extends that value into a PCR during boot. Separately, the device's secure element derives a storage key with HKDF from its fused device secret and the label 'config-encryption-v1', and protects the configuration file with an HMAC tag so any tampering is detected at next boot.</p>
+</div>
+<h4 id="how-it-works_3">How it works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Hash: feed in data of any size, get a fixed-size digest (SHA-256 gives 32 bytes).</li>
+<li>Compare digests to check integrity — equal digests mean identical data, with overwhelming probability.</li>
+<li>MAC: combine a secret key with the data (e.g. HMAC-SHA-256) to get a tag only key holders can compute.</li>
+<li>KDF: input a secret plus context labels; output one or more independent keys of the size you need.</li>
+<li>Use different derived keys for different purposes so one leaked key does not expose the others.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Firmware, TPM and HSM developers, protocol designers and anyone reading boot logs or certificate fingerprints use hashes, MACs and KDFs daily.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the difference: a hash proves integrity only if the digest itself is protected; a MAC proves integrity and origin among key holders; only a digital signature proves origin to everyone.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Digest sizes worth memorising: SHA-1 160 bits (20 bytes), SHA-256 256 bits (32 bytes), SHA-384 384 bits (48 bytes), SHA-512 512 bits (64 bytes). Collision security is roughly half the digest length.</li>
+<li>SHA-256 and SHA-512 are vulnerable to length-extension if misused as 'hash(key ‖ message)'; HMAC's nested construction avoids this, which is why you should never invent your own keyed hash.</li>
+<li>TPM PCR extension is itself a hash chain: new PCR = H(old PCR ‖ measurement). Because hashing is one-way, nobody can set a PCR to a chosen value without replaying the exact sequence of measurements.</li>
+<li>KDFs separate keys by purpose using labels and context. TPM 2.0 uses KDFa (SP 800-108 counter mode with HMAC) for symmetric keys and KDFe (SP 800-56A) for ECDH-derived secrets.</li>
+<li>Hardware roots of trust usually implement SHA-2 and HMAC in silicon and increasingly SHA-3/SHAKE, because ML-DSA and ML-KEM need Keccak-based functions internally.</li>
+<li>Constant-time comparison matters: checking a MAC tag byte by byte and stopping at the first mismatch leaks timing that can let an attacker forge tags one byte at a time.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Using a plain hash to protect data from an attacker who can also change the stored hash. Use a MAC or signature, or keep the reference hash in protected storage.</li>
+<li>Calling hashing 'encryption'. Hashes are one-way and keyless; nothing is decrypted from a digest.</li>
+<li>Reusing one key for several purposes. Derive separate keys with a KDF and distinct labels.</li>
+</ul>
+</div>
+<h3 id="try-it-hash-a-file-then-make-an-hmac-of-it-with-a-key">Try it: Hash a file, then make an HMAC of it with a key<a class="headerlink" href="#try-it-hash-a-file-then-make-an-hmac-of-it-with-a-key" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="nb">echo</span><span class="w"> </span><span class="s1">'bootloader v1'</span><span class="w"> </span>&gt;<span class="w"> </span>boot.bin
+sha256sum<span class="w"> </span>boot.bin<span class="w">                         </span><span class="c1"># Linux/macOS</span>
+openssl<span class="w"> </span>dgst<span class="w"> </span>-sha256<span class="w"> </span>-hmac<span class="w"> </span><span class="s1">'demo-key'</span><span class="w"> </span>boot.bin
+<span class="c1"># Windows PowerShell</span>
+Get-FileHash<span class="w"> </span>.<span class="se">\b</span>oot.bin<span class="w"> </span>-Algorithm<span class="w"> </span>SHA256
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_3">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_3" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cryptographic hash function</strong><br><em>NIST FIPS 180-4, FIPS 202 · Concept · General</em></td>
+<td>A one-way function producing a fixed-size digest; hard to invert or to find two inputs with the same digest.</td>
+<td>Secure boot compares the hash of a bootloader against an allow-list before running it.</td>
+</tr>
+<tr>
+<td><strong>SHA-256 / SHA-384</strong><br><em>NIST FIPS 180-4 (SHA-2 family) · Algorithm · Current · General</em></td>
+<td>The workhorse hashes of trusted computing; 256- and 384-bit digests used in TPM PCR banks, certificates and code signing.</td>
+<td>Windows records SHA-256 measurements in TPM PCR banks; CNSA 2.0 prefers SHA-384 or larger.</td>
+</tr>
+<tr>
+<td><strong>SHA-3 / SHAKE</strong><br><em>NIST FIPS 202 (2015) · Algorithm · Current · General</em></td>
+<td>A different hash design (Keccak sponge) offering an alternative if SHA-2 ever weakens; SHAKE gives variable-length output.</td>
+<td>ML-KEM and ML-DSA use SHAKE internally, so new post-quantum chips include SHA-3 hardware.</td>
+</tr>
+<tr>
+<td><strong>SHA-1</strong><br><em>NIST FIPS 180 family (1995) · Algorithm · Deprecated · General</em></td>
+<td>An older 160-bit hash; practical collisions shown in 2017 (SHAttered), so it must not be used for signatures.</td>
+<td>TPM 1.2 only supports SHA-1 PCRs, one reason TPM 2.0 with SHA-256 banks replaced it.</td>
+</tr>
+<tr>
+<td><strong>Collision resistance</strong><br><em>Hash security property · Concept · General</em></td>
+<td>It should be infeasible to find two different inputs with the same digest; signatures over hashes depend on this.</td>
+<td>MD5 collisions let attackers forge a rogue CA certificate in 2008 — why MD5 is banned in PKI.</td>
+</tr>
+<tr>
+<td><strong>HMAC</strong><br><em>RFC 2104, NIST FIPS 198-1 · Algorithm · Current · General</em></td>
+<td>A MAC built from a hash and a secret key; proves data came from a key holder and was not altered.</td>
+<td>TPM 2.0 authorisation sessions attach HMACs to commands so the chip can trust their origin.</td>
+</tr>
+<tr>
+<td><strong>CMAC</strong><br><em>NIST SP 800-38B · Algorithm · Current · Silicon</em></td>
+<td>A MAC built from a block cipher such as AES; common in hardware where an AES engine already exists.</td>
+<td>A smart card checks a CMAC on each secure-channel command before acting on it.</td>
+</tr>
+<tr>
+<td><strong>HKDF</strong><br><em>RFC 5869 · Algorithm · Current · General</em></td>
+<td>An extract-then-expand KDF using HMAC that turns one secret into many independent keys bound to context labels.</td>
+<td>TLS 1.3 derives all handshake and traffic keys from the shared secret using HKDF.</td>
+</tr>
+<tr>
+<td><strong>SP 800-108 KDF</strong><br><em>NIST SP 800-108 Rev. 1 · Standard · Current · Silicon</em></td>
+<td>Recommended key-derivation constructions (counter, feedback, double-pipeline) using HMAC, CMAC or KMAC.</td>
+<td>The TPM 2.0 KDFa function follows SP 800-108 counter mode with HMAC.</td>
+</tr>
+<tr>
+<td><strong>Password-based KDF</strong><br><em>PBKDF2 (RFC 8018), Argon2 (RFC 9106) · Algorithm · Current · General</em></td>
+<td>Deliberately slow derivation of keys from human passwords to resist guessing; not needed for high-entropy hardware secrets.</td>
+<td>A disk-encryption tool stretches a PIN with Argon2 before combining it with a TPM-sealed key.</td>
+</tr>
+<tr>
+<td><strong>Digest / fingerprint</strong><br><em>Common usage · Concept · General</em></td>
+<td>The short output of a hash, often shown in hexadecimal and used to name or compare files, keys and certificates.</td>
+<td>Admins confirm a root certificate by comparing its SHA-256 fingerprint with the CA's published value.</td>
+</tr>
+<tr>
+<td><strong>Domain separation</strong><br><em>Cryptographic design practice · Concept · General</em></td>
+<td>Mixing a unique label into each hash or KDF use so outputs for different purposes can never collide or be swapped.</td>
+<td>A chip derives 'storage' and 'attestation' keys with different labels from the same root secret.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="15-crypto-refresher-ii-asymmetric-keys-digital-signatures">1.5 Crypto Refresher II: Asymmetric Keys &amp; Digital Signatures<a class="headerlink" href="#15-crypto-refresher-ii-asymmetric-keys-digital-signatures" title="Permanent link">&para;</a></h2>
+<p>Asymmetric cryptography uses a key pair: a private key kept secret and a public key you can give to anyone. Signing data with the private key produces a digital signature that anyone holding the public key can check, proving who signed and that nothing changed. This is how firmware, bootloaders, certificates and attestation reports prove where they came from.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-05-crypto-refresher-ii-asymmetric-keys.svg" alt="The device trusts the result only because the public key&#x27;s hash is fixed in hardware." loading="lazy" width="1000" height="353">
+<figcaption><strong>Signing firmware and verifying it at boot.</strong> The device trusts the result only because the public key&#x27;s hash is fixed in hardware.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A public key is like a padlock design everyone can recognise; the private key is the one stamp that leaves that exact imprint. Anyone can compare an imprint to the design, but only the stamp's owner can make one.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Kestrel Devices signs every firmware release with an ECDSA P-384 private key kept in an HSM. The matching public key's hash is burned into each chip's fuses at the factory. When a sensor boots, its boot ROM hashes the new firmware, checks the signature with the public key and compares the key's hash to the fuses. A forged image or a swapped public key both fail, so the sensor refuses to run it.</p>
+</div>
+<h4 id="how-it-works_4">How it works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Generate a key pair inside protected hardware (HSM, TPM, secure element).</li>
+<li>Publish or embed the public key; keep the private key locked away.</li>
+<li>To sign: hash the data, then compute a signature over the digest with the private key.</li>
+<li>To verify: recompute the hash and check the signature with the public key.</li>
+<li>Trust the public key itself only because it is fused in hardware, pinned, or certified by a trusted CA.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Firmware signers, PKI engineers, release engineers, TPM and HSM developers and anyone validating certificates or code signatures rely on asymmetric crypto.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember: encrypt with the recipient's public key, sign with your own private key — and a signature is only as trustworthy as the way you obtained the public key.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Signature sizes matter in boot ROMs and certificates: ECDSA P-256 signatures are about 64 bytes, RSA-2048 256 bytes, ML-DSA-44 2,420 bytes, ML-DSA-87 4,627 bytes and SLH-DSA from about 7.8 KB up to roughly 50 KB.</li>
+<li>Security levels: RSA-2048 and P-256 give roughly 112- and 128-bit classical security; P-384 about 192-bit. None of them resists a large quantum computer running Shor's algorithm, which is why PQC is being added.</li>
+<li>FIPS 186-5 (February 2023) added EdDSA and deterministic ECDSA and withdrew DSA for new signatures; FIPS 203, 204 and 205 (August 2024) standardised ML-KEM, ML-DSA and SLH-DSA.</li>
+<li>ECDSA needs a fresh secret nonce per signature; reusing or leaking nonce bits reveals the private key, as famously happened with Sony's PlayStation 3 signing key in 2010.</li>
+<li>Hardware roots of trust usually store only a hash of the vendor public key in fuses (to save space) and receive the full key alongside the firmware, checking it against the fused hash first.</li>
+<li>Hybrid or composite approaches sign with both a classical and a post-quantum algorithm during the transition, so security holds if either remains unbroken.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Saying 'sign with the public key'. You sign with the private key and verify with the public key.</li>
+<li>Verifying a signature with a public key that arrived alongside the data without anchoring it. An attacker simply signs with their own key and ships it too.</li>
+<li>Assuming signed means safe. A signature proves who released the code, not that it is free of bugs — old signed versions can still be dangerous.</li>
+</ul>
+</div>
+<h3 id="try-it-make-an-ecdsa-key-pair-sign-a-file-and-verify-it">Try it: Make an ECDSA key pair, sign a file and verify it<a class="headerlink" href="#try-it-make-an-ecdsa-key-pair-sign-a-file-and-verify-it" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>openssl<span class="w"> </span>genpkey<span class="w"> </span>-algorithm<span class="w"> </span>EC<span class="w"> </span>-pkeyopt<span class="w"> </span>ec_paramgen_curve:P-256<span class="w"> </span>-out<span class="w"> </span>priv.pem
+openssl<span class="w"> </span>pkey<span class="w"> </span>-in<span class="w"> </span>priv.pem<span class="w"> </span>-pubout<span class="w"> </span>-out<span class="w"> </span>pub.pem
+openssl<span class="w"> </span>dgst<span class="w"> </span>-sha256<span class="w"> </span>-sign<span class="w"> </span>priv.pem<span class="w"> </span>-out<span class="w"> </span>fw.sig<span class="w"> </span>boot.bin
+openssl<span class="w"> </span>dgst<span class="w"> </span>-sha256<span class="w"> </span>-verify<span class="w"> </span>pub.pem<span class="w"> </span>-signature<span class="w"> </span>fw.sig<span class="w"> </span>boot.bin<span class="w">   </span><span class="c1"># Verified OK</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_4">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_4" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Key pair</strong><br><em>Public-key cryptography (Diffie &amp; Hellman 1976) · Concept · General</em></td>
+<td>A mathematically linked private key (secret) and public key (shareable); what one does, only the other can check or undo.</td>
+<td>A TPM creates an attestation key pair and exports only the public half for a server to register.</td>
+</tr>
+<tr>
+<td><strong>Digital signature</strong><br><em>NIST FIPS 186-5, FIPS 204 · Concept · General</em></td>
+<td>A value computed with a private key over data that anyone can verify with the public key, proving origin and integrity.</td>
+<td>Windows refuses to load a kernel driver whose Authenticode signature does not verify.</td>
+</tr>
+<tr>
+<td><strong>RSA</strong><br><em>Rivest, Shamir, Adleman (1977); FIPS 186-5 · Algorithm · Current · General</em></td>
+<td>The classic public-key algorithm based on factoring; 2048-bit minimum today, 3072+ for long-lived keys.</td>
+<td>Many UEFI Secure Boot keys and older root CAs use RSA-2048 signatures.</td>
+</tr>
+<tr>
+<td><strong>ECDSA (P-256 / P-384)</strong><br><em>NIST FIPS 186-5, SP 800-186 · Algorithm · Current · General</em></td>
+<td>Elliptic-curve signatures with much smaller keys than RSA; P-256 is common, P-384 required by CNSA 1.0/2.0 classical suites.</td>
+<td>Caliptra and many TPMs sign attestation evidence with ECDSA P-384 or P-256.</td>
+</tr>
+<tr>
+<td><strong>EdDSA (Ed25519)</strong><br><em>RFC 8032; added to FIPS 186-5 (2023) · Algorithm · Current · General</em></td>
+<td>A fast, deterministic elliptic-curve signature scheme designed to avoid common implementation mistakes.</td>
+<td>OpenSSH keys and many software-update systems use Ed25519 signatures.</td>
+</tr>
+<tr>
+<td><strong>ML-DSA</strong><br><em>NIST FIPS 204 (August 2024) · Algorithm · Emerging · General</em></td>
+<td>The main standardised post-quantum signature algorithm (from CRYSTALS-Dilithium), with larger keys and signatures than ECDSA.</td>
+<td>Newer root-of-trust designs such as Caliptra 2.x add ML-DSA hardware to sign and verify firmware.</td>
+</tr>
+<tr>
+<td><strong>Stateful hash-based signatures (LMS/XMSS)</strong><br><em>NIST SP 800-208, RFC 8554, RFC 8391 · Algorithm · Current · Firmware &amp; boot</em></td>
+<td>Quantum-safe signatures built only from hashes; each one-time key must never be reused, so state must be tracked.</td>
+<td>CNSA 2.0 recommends LMS or XMSS for firmware signing because verification is simple and well understood.</td>
+</tr>
+<tr>
+<td><strong>SLH-DSA</strong><br><em>NIST FIPS 205 (August 2024) · Algorithm · Emerging · General</em></td>
+<td>A stateless hash-based post-quantum signature (from SPHINCS+): conservative security, but large, slow signatures.</td>
+<td>A long-lived boot ROM might accept SLH-DSA so it stays safe even if lattice schemes are broken.</td>
+</tr>
+<tr>
+<td><strong>Key agreement (ECDH / ML-KEM)</strong><br><em>SP 800-56A; FIPS 203 (2024) · Algorithm · Current · General</em></td>
+<td>Two parties derive a shared secret over an open network; ML-KEM is the post-quantum key-encapsulation replacement.</td>
+<td>Modern browsers combine X25519 with ML-KEM-768 in the TLS 1.3 handshake.</td>
+</tr>
+<tr>
+<td><strong>Public-key binding problem</strong><br><em>Core PKI motivation · Concept · General</em></td>
+<td>A signature only proves who holds a private key; you still need trusted proof which identity that key belongs to.</td>
+<td>Fusing a key hash in silicon or getting a CA certificate both solve 'whose key is this?'.</td>
+</tr>
+<tr>
+<td><strong>Non-repudiation</strong><br><em>ISO/IEC 13888, legal e-signature frameworks · Concept · General</em></td>
+<td>The property that a signer cannot credibly deny signing, because only they controlled the private key.</td>
+<td>An eIDAS qualified signature on a contract is hard to deny because the key lives on a certified device.</td>
+</tr>
+<tr>
+<td><strong>Private key protection</strong><br><em>FIPS 140-3, Common Criteria · Concept · General</em></td>
+<td>Keeping private keys in hardware that performs operations internally and never reveals the key itself.</td>
+<td>A code-signing key in an HSM signs builds but cannot be copied, even by the administrator.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="16-the-chain-of-trust">1.6 The Chain of Trust<a class="headerlink" href="#16-the-chain-of-trust" title="Permanent link">&para;</a></h2>
+<p>A chain of trust is a series of steps where each trusted component checks the next one before handing over control or vouching for it. If every link verifies the next, the final result can be trusted as much as the first link. The first link — the one nobody checks — is the root of trust. Boot sequences and certificate chains are both chains of trust.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-06-the-chain-of-trust.svg" alt="Code chains and certificate chains look different but follow the same rule: each link checks the next." loading="lazy" width="1000" height="464">
+<figcaption><strong>Two chains of trust on one laptop.</strong> Code chains and certificate chains look different but follow the same rule: each link checks the next.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a relay race where each runner checks the next runner's ID badge before passing the baton. If the first runner is genuine and nobody skips a check, the runner crossing the finish line is genuine too.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>When Ana's work laptop starts, the processor's boot ROM verifies the firmware's signature, the firmware verifies the Windows Boot Manager against its Secure Boot database, and the boot manager verifies the Windows kernel. Later, her browser verifies a website certificate against an intermediate CA, which it verifies against a root CA in its trust store. Two different chains — one for code, one for identity — each start from an anchor she never had to check herself.</p>
+</div>
+<h4 id="how-it-works_5">How it works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Start from a root of trust that is trusted by design (immutable ROM, fused key hash, root CA in a trust store).</li>
+<li>The current link verifies the next link's signature or measurement before using it.</li>
+<li>If verification passes, control (or trust) passes to the next link, which repeats the process.</li>
+<li>If any link fails, the chain stops — refuse to boot, fall back to recovery or reject the certificate.</li>
+<li>Optionally record each step (measured boot, CT logs) so others can audit the chain later.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Firmware and boot engineers, PKI engineers and anyone troubleshooting 'certificate chain incomplete' or 'secure boot violation' errors work with chains of trust.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>A chain is only as strong as its weakest link and its root: an unsigned stage, a skipped check or a leaked key anywhere breaks everything after it.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Two styles exist: a verifying chain (secure boot, certificate validation) blocks bad links, while a measuring chain (measured boot) records each link so a remote verifier can judge later. Many platforms do both.</li>
+<li>Chains add trust transitively but also add risk: each link's own bugs become part of the TCB. Long chains — such as shim → GRUB → kernel → modules on Linux — need every stage to enforce verification.</li>
+<li>The root of a boot chain is often split: immutable boot ROM code plus a public-key hash in one-time-programmable fuses. The ROM cannot be patched, but keys can sometimes be revoked by burning additional fuses.</li>
+<li>Certificate chains are built by the relying party, not dictated by the server; path-building may find alternative routes through cross-signed certificates to different roots (chapter 50 covers path validation).</li>
+<li>Verify-then-execute must protect against TOCTOU: good designs verify code inside internal SRAM or lock the flash interface so the verified bytes are the bytes that run.</li>
+<li>Recovery is part of the chain design: NIST SP 800-193 expects a platform to detect corruption and restore authorised firmware automatically rather than leaving the device bricked.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming a chain is secure because the first and last links are signed. One unverified middle stage (an unsigned GRUB module, a missing intermediate check) lets attackers in.</li>
+<li>Forgetting revocation. A chain that cannot distrust a leaked key or a vulnerable signed image stays exploitable forever.</li>
+<li>Believing the root of trust is checked by something. By definition it is not; that is why it must be small, immutable or tightly protected.</li>
+</ul>
+</div>
+<h3 id="try-it-see-a-real-certificate-chain-from-a-website-down-to-a-root">Try it: See a real certificate chain from a website down to a root<a class="headerlink" href="#try-it-see-a-real-certificate-chain-from-a-website-down-to-a-root" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span>-showcerts<span class="w"> </span>&lt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-E<span class="w"> </span><span class="s1">'s:|i:'</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_5">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chain of trust</strong><br><em>TCG, UEFI and RFC 5280 usage · Concept · General</em></td>
+<td>Successive verification where each component vouches for the next, back to a root that is trusted without proof.</td>
+<td>Boot ROM → firmware → bootloader → kernel → drivers is the classic boot chain of trust.</td>
+</tr>
+<tr>
+<td><strong>Root of trust</strong><br><em>TCG, NIST SP 800-193 · Concept · General</em></td>
+<td>The first link: a component that must be trusted because nothing earlier can check it.</td>
+<td>A chip's immutable boot ROM plus the key hash in its fuses form the root of a boot chain.</td>
+</tr>
+<tr>
+<td><strong>Boot chain</strong><br><em>UEFI, Android Verified Boot, Apple boot · Concept · Firmware &amp; boot</em></td>
+<td>The sequence of firmware and software stages that start a device, each normally verifying the next.</td>
+<td>On an iPhone the Boot ROM verifies iBoot, which verifies the kernel — covered in detail in chapter 30.</td>
+</tr>
+<tr>
+<td><strong>Certificate chain</strong><br><em>RFC 5280 path validation · Concept · Web PKI</em></td>
+<td>End-entity certificate → intermediate CA(s) → root CA; each certificate is signed by the next one up.</td>
+<td>A bank's server certificate chains to an intermediate CA, which chains to a root in the browser.</td>
+</tr>
+<tr>
+<td><strong>Verify-then-execute</strong><br><em>Secure boot principle · Concept · Firmware &amp; boot</em></td>
+<td>Code is checked and then run from protected memory, so it cannot be swapped between check and use.</td>
+<td>A boot ROM copies firmware into internal SRAM, verifies it there, and only then jumps to it.</td>
+</tr>
+<tr>
+<td><strong>TOCTOU</strong><br><em>Time-of-check to time-of-use flaw · Attack · Firmware &amp; boot</em></td>
+<td>A gap between verifying something and using it lets an attacker swap it after the check.</td>
+<td>An attacker changes SPI flash contents after the firmware was verified but before it is re-read.</td>
+</tr>
+<tr>
+<td><strong>Fail-secure (fail-closed)</strong><br><em>Security design principle · Concept · General</em></td>
+<td>When a check fails, the system stops or enters recovery rather than continuing in an unknown state.</td>
+<td>A Chromebook that finds a bad kernel signature boots to the recovery screen instead of the OS.</td>
+</tr>
+<tr>
+<td><strong>Recovery path</strong><br><em>NIST SP 800-193 'recover' · Concept · Firmware &amp; boot</em></td>
+<td>A trusted way to restore known-good code when a later link fails verification.</td>
+<td>A server's platform root of trust reloads a golden BIOS image from a protected flash region.</td>
+</tr>
+<tr>
+<td><strong>Transparency log</strong><br><em>Certificate Transparency (RFC 9162), Sigstore Rekor · Concept · Current · Web PKI</em></td>
+<td>An append-only public log that records issued certificates or signed artefacts so misuse is visible.</td>
+<td>Domain owners spot a mis-issued certificate for their name by watching CT logs.</td>
+</tr>
+<tr>
+<td><strong>Delegation</strong><br><em>PKI and boot design · Concept · General</em></td>
+<td>A higher link grants a lower one limited authority, such as a root CA allowing an intermediate to issue TLS certificates only.</td>
+<td>Name Constraints let a company's intermediate CA issue only for *.example.org.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="17-roots-of-trust-defined-rtm-rts-rtr-and-friends">1.7 Roots of Trust Defined: RTM, RTS, RTR and Friends<a class="headerlink" href="#17-roots-of-trust-defined-rtm-rts-rtr-and-friends" title="Permanent link">&para;</a></h2>
+<p>A root of trust (RoT) is a component that must behave correctly because nothing can check it — misbehaviour would go undetected. Standards split roots of trust by job: one measures code, one stores secrets, one reports what was measured, and others verify, update, detect and recover. Some roots are immutable (fixed in silicon forever); others are updatable but tightly protected.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-07-roots-of-trust-defined-rtm-rts-rtr-and.svg" alt="TCG names the first three; NIST SP 800-193 adds update, detection and recovery." loading="lazy" width="1000" height="580">
+<figcaption><strong>The jobs a root of trust can do.</strong> TCG names the first three; NIST SP 800-193 adds update, detection and recovery.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A notary public is a root of trust for signatures: courts accept a notarised document without re-checking, so the notary's integrity matters enormously. A town might have separate trusted officials for measuring land, storing deeds and reporting records — just as a platform has separate roots for measurement, storage and reporting.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>In a laptop built by the fictional Corvid Computing, the core root of trust for measurement is the first firmware block, verified by the CPU's boot ROM, which hashes the rest of the firmware. The TPM is the root of trust for storage, holding keys inside shielded locations, and for reporting, signing PCR values in quotes. A separate platform root of trust chip in Corvid's servers acts as the roots for update, detection and recovery of the BIOS flash.</p>
+</div>
+<h4 id="how-it-works_6">How it works<a class="headerlink" href="#how-it-works_6" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Identify the security function: measuring, storing, reporting, verifying, updating, detecting or recovering.</li>
+<li>Assign one small, protected component as the root for each function — often several roots live in one chip.</li>
+<li>Decide immutable or updatable: ROM and fuses cannot change; updatable roots need signed, rollback-protected updates.</li>
+<li>Build chains of trust from each root outward (measurement chain, key hierarchy, update chain).</li>
+<li>Protect each root physically and logically in proportion to the threats you face.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Platform architects, TPM and firmware engineers, chip designers writing security specifications and evaluators reviewing NIST SP 800-193 compliance use these terms.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Memorise the TCG trio — RTM (measurement), RTS (storage), RTR (reporting) — and the NIST SP 800-193 trio — update, detection, recovery.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>TCG's definition: a root of trust is a component that must always behave in the expected manner because its misbehaviour cannot be detected. The TPM provides RTS and RTR; the RTM lives in platform firmware or CPU logic.</li>
+<li>In TCG terms the CRTM is the first measuring code; on modern PCs Intel Boot Guard or AMD's security processor verifies the initial boot block, making the hardware effectively part of the RTM.</li>
+<li>DRTM (Intel TXT's GETSEC[SENTER], AMD's SKINIT) resets a special set of PCRs (17-22) and measures a fresh launch, reducing reliance on everything the firmware did before.</li>
+<li>NIST SP 800-193 (May 2018) is the key reference for firmware resiliency and defines RTU, RTD and RTRec alongside chains of trust for each. SP 800-164's draft roots (RTS, RTV, RTI, RTR, RTM) remained a 2012 draft.</li>
+<li>Immutable versus updatable is a real trade-off: Apple's checkm8 (2019), Nvidia Tegra X1's Fusée Gelée (2018) and Intel's CSME ROM flaw CVE-2019-0090 all showed ROM bugs living forever, so modern designs keep ROM tiny and push logic into updatable stages.</li>
+<li>DICE (chapter 10) offers a middle path: each updatable layer receives secrets derived from measurements of itself, so updating code automatically changes its identity and old secrets cannot leak to new code.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Calling the TPM 'the' root of trust for everything. A discrete TPM provides storage and reporting; measurement starts in firmware or the CPU, which the TPM cannot check.</li>
+<li>Assuming immutable means invulnerable. Immutable code can still have bugs — they just can never be patched.</li>
+<li>Mixing up roots of trust with trust anchors. A trust anchor is a key or certificate; a root of trust is a functioning component that uses or protects such keys.</li>
+</ul>
+</div>
+<h3 id="try-it-ask-your-tpm-who-made-it-and-which-spec-it-follows">Try it: Ask your TPM who made it and which spec it follows<a class="headerlink" href="#try-it-ask-your-tpm-who-made-it-and-which-spec-it-follows" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span class="c"># Windows PowerShell (Administrator)</span>
+<span class="nb">Get-Tpm</span>
+<span class="nb">Get-CimInstance</span> <span class="n">-Namespace</span> <span class="n">root</span><span class="p">/</span><span class="n">cimv2</span><span class="p">/</span><span class="n">security</span><span class="p">/</span><span class="n">microsofttpm</span> <span class="n">-ClassName</span> <span class="n">Win32_Tpm</span>
+<span class="c"># Linux with tpm2-tools</span>
+<span class="n">tpm2_getcap</span> <span class="n">properties-fixed</span> <span class="p">|</span> <span class="n">grep</span> <span class="n">-A2</span> <span class="n">-E</span> <span class="s1">'MANUFACTURER|FAMILY|REVISION'</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_6">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_6" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Root of Trust for Measurement (RTM)</strong><br><em>Trusted Computing Group · Concept · Firmware &amp; boot</em></td>
+<td>The component that makes the first reliable measurement (hash) of platform code; measurement is only as trustworthy as the RTM.</td>
+<td>On a PC the RTM is usually the first firmware code, verified by Intel Boot Guard or AMD's security processor.</td>
+</tr>
+<tr>
+<td><strong>Core RTM (CRTM)</strong><br><em>TCG PC Client specifications · Concept · Firmware &amp; boot</em></td>
+<td>The very first code that runs and starts the chain of measurements — the instructions that measure everything else.</td>
+<td>The CRTM hashes the remaining UEFI firmware into PCR 0 before letting it run.</td>
+</tr>
+<tr>
+<td><strong>Static vs dynamic RTM (SRTM / DRTM)</strong><br><em>TCG; Intel TXT, AMD SKINIT · Concept · Firmware &amp; boot</em></td>
+<td>SRTM measures from power-on; DRTM starts a fresh measured environment later, without trusting earlier firmware.</td>
+<td>Windows System Guard uses DRTM to relaunch into a measured state, sidestepping firmware it cannot verify.</td>
+</tr>
+<tr>
+<td><strong>Root of Trust for Storage (RTS)</strong><br><em>Trusted Computing Group · Concept · Silicon</em></td>
+<td>Shielded storage that protects keys and measurement values from disclosure or alteration — the TPM's protected memory and SRK hierarchy.</td>
+<td>A TPM stores PCR values and key hierarchies so software cannot forge or read them.</td>
+</tr>
+<tr>
+<td><strong>Root of Trust for Reporting (RTR)</strong><br><em>Trusted Computing Group · Concept · Silicon</em></td>
+<td>The component that reliably reports what the RTS holds, signing it with a key bound to genuine hardware.</td>
+<td>A TPM quote signed by its attestation key reports PCR values to a remote verifier.</td>
+</tr>
+<tr>
+<td><strong>Roots of trust in NIST SP 800-164 (draft)</strong><br><em>NIST SP 800-164 draft (2012, never finalised) · Standard · Legacy · Mobile</em></td>
+<td>Mobile-device guidance naming roots for storage, verification, integrity, reporting and measurement.</td>
+<td>Older phone-security documents still cite 800-164's 'Root of Trust for Verification' for verified boot.</td>
+</tr>
+<tr>
+<td><strong>RoT for Update / Detection / Recovery</strong><br><em>NIST SP 800-193 (2018) · Concept · Firmware &amp; boot</em></td>
+<td>Firmware-resiliency roots: authenticate updates (RTU), detect corrupted firmware (RTD) and restore it (RTRec).</td>
+<td>A server's platform RoT rejects an unsigned BIOS update, notices flash corruption and restores a golden image.</td>
+</tr>
+<tr>
+<td><strong>NIST SP 800-193</strong><br><em>NIST, Platform Firmware Resiliency Guidelines (2018) · Standard · Current · Firmware &amp; boot</em></td>
+<td>Guidance built on protect, detect and recover, defining roots of trust and chains of trust for platform firmware.</td>
+<td>Server buyers ask vendors for 'SP 800-193-compliant' platform roots of trust; chapter 30 goes deeper.</td>
+</tr>
+<tr>
+<td><strong>Immutable root of trust</strong><br><em>Boot ROM / mask ROM, OTP fuses · Concept · Silicon</em></td>
+<td>A root fixed in silicon that can never be changed — strong against tampering, but bugs can never be patched.</td>
+<td>Apple's 2019 checkm8 boot-ROM bug could not be fixed on affected iPhones because ROM is immutable.</td>
+</tr>
+<tr>
+<td><strong>Updatable root of trust</strong><br><em>TCG DICE, Caliptra, OpenTitan · Concept · Silicon</em></td>
+<td>A root whose firmware can be updated through signed, rollback-protected updates, trading some assurance for fixability.</td>
+<td>A security chip's ROM verifies a patchable first-stage firmware that implements most RoT functions.</td>
+</tr>
+<tr>
+<td><strong>Hardware root of trust</strong><br><em>Industry term · Concept · Silicon</em></td>
+<td>A root implemented in dedicated silicon — boot ROM, fuses, security processor or separate chip — isolated from main software.</td>
+<td>OpenTitan, Caliptra, Pluton and Apple's Secure Enclave are all hardware roots of trust (chapter 10).</td>
+</tr>
+<tr>
+<td><strong>Platform root of trust (PRoT)</strong><br><em>NIST SP 800-193, OCP · Concept · Cloud</em></td>
+<td>A dedicated controller that protects, detects and recovers a whole platform's firmware, especially in servers.</td>
+<td>A data-centre motherboard's PRoT checks BIOS and BMC flash before releasing the CPU from reset.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="18-hardware-vs-software-trust">1.8 Hardware vs Software Trust<a class="headerlink" href="#18-hardware-vs-software-trust" title="Permanent link">&para;</a></h2>
+<p>Software can be copied, patched and modified by anyone with enough privilege, so software alone cannot fully protect its own secrets. Hardware roots of trust keep keys and checks in silicon that the main processor's software cannot reach. But hardware is harder to update and costs money, so real systems mix the two: hardware anchors the chain, software does the heavy lifting.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-08-hardware-vs-software-trust.svg" alt="Relative ranking only — real strength depends on design, certification and threat model." loading="lazy" width="1000" height="310">
+<figcaption><strong>Rough isolation strength (illustrative, higher is stronger).</strong> Relative ranking only — real strength depends on design, certification and threat model.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A password written in a notebook (software) can be photocopied by anyone who borrows the notebook. A bank safe-deposit box (hardware) can only be opened in person with the right key, though moving it is much harder.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>The fictional startup Finch Pay first stored its payment-signing key encrypted on a server disk, with the decryption password in a config file — effectively software trust. A penetration tester copied both in an afternoon. Finch moved the key into a cloud HSM and its laptops' credentials into TPM-backed storage. Now an attacker who fully compromises a server can ask the HSM to sign while they are present, but cannot walk away with the key.</p>
+</div>
+<h4 id="how-it-works_7">How it works<a class="headerlink" href="#how-it-works_7" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Decide what must survive a full software compromise: usually long-term keys and the boot chain's anchor.</li>
+<li>Place those in hardware — fuses, a TPM, a secure element, an HSM or a security processor.</li>
+<li>Keep hardware-resident code small and well-reviewed; implement features in software above it.</li>
+<li>Use hardware to verify and measure the software, and to release secrets only to good states.</li>
+<li>Plan updates: hardware roots need signed firmware updates and revocation for when bugs appear.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Security architects choosing between software keystores and HSMs, device makers deciding whether to add a secure element, and cloud teams weighing KMS versus HSM tiers make this trade-off.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Hardware protection's main benefit is non-exportability: even with full admin access an attacker can use a hardware-protected key while present, but cannot copy it to use later.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>The strongest property hardware adds is non-exportability: an attacker with root can misuse a hardware key only while they control the machine, whereas a stolen software key can be used anywhere, forever.</li>
+<li>Discrete chips (TPMs, secure elements) offer physical separation and often Common Criteria EAL4+ to EAL6+ certification, but talk over buses (SPI, I²C, LPC) that can be sniffed unless sessions are encrypted.</li>
+<li>Integrated security processors (Pluton, Apple Secure Enclave, Intel CSME, AMD ASP) avoid exposed buses and can be updated with the platform, but share the die, power and sometimes memory with the main CPU.</li>
+<li>TEEs isolate code on the main cores using CPU modes and memory encryption; they protect against the OS and hypervisor but have suffered side-channel attacks because they share caches and execution units.</li>
+<li>Firmware security has to be updatable: AMD and Intel ship security-processor firmware inside BIOS updates, and Microsoft services Pluton firmware through Windows Update.</li>
+<li>Certification levels help compare options: FIPS 140-3 Levels 1-4 for crypto modules, Common Criteria AVA_VAN.5 for high attack potential, PSA Certified Levels 1-4 and SESIP 1-5 for IoT parts (chapter 10).</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming a hardware-backed key cannot be misused. Host malware can still ask the TPM to sign; hardware stops copying, not misuse — add user presence or policy.</li>
+<li>Assuming every 'secure chip' is equally strong. A firmware TPM, a discrete TPM and an EAL6+ secure element resist very different attackers.</li>
+<li>Treating hardware as set-and-forget. Security chips have firmware bugs too and need patching and revocation plans.</li>
+</ul>
+</div>
+<h3 id="try-it-create-a-non-exportable-key-in-the-tpm-windows-and-inspect-it">Try it: Create a non-exportable key in the TPM (Windows) and inspect it<a class="headerlink" href="#try-it-create-a-non-exportable-key-in-the-tpm-windows-and-inspect-it" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span class="c"># Windows PowerShell: certificate whose key lives in the TPM via the Platform Crypto Provider</span>
+<span class="nb">New-SelfSignedCertificate</span> <span class="n">-Subject</span> <span class="s1">'CN=tpm-demo'</span> <span class="n">-CertStoreLocation</span> <span class="n">Cert</span><span class="p">:\</span><span class="n">CurrentUser</span><span class="p">\</span><span class="n">My</span> <span class="p">`</span>
+  <span class="n">-Provider</span> <span class="s1">'Microsoft Platform Crypto Provider'</span> <span class="n">-KeyExportPolicy</span> <span class="n">NonExportable</span>
+<span class="n">certutil</span> <span class="n">-user</span> <span class="n">-store</span> <span class="n">My</span> <span class="n">tpm-demo</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_7">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_7" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Software root of trust</strong><br><em>General term · Concept · General</em></td>
+<td>Trust anchored only in code and files — e.g. a key in an encrypted file — protected by the OS, not dedicated hardware.</td>
+<td>A small web app stores its JWT signing key in an environment variable; root access exposes it.</td>
+</tr>
+<tr>
+<td><strong>Hardware-backed key</strong><br><em>TPM, secure element, Secure Enclave, StrongBox · Concept · General</em></td>
+<td>A key generated and used inside protected hardware that never reveals it to the operating system.</td>
+<td>An Android banking app keeps its login key in StrongBox so malware cannot copy it off the phone.</td>
+</tr>
+<tr>
+<td><strong>Non-exportable key</strong><br><em>PKCS #11 CKA_EXTRACTABLE, CNG export policy · Concept · Platform &amp; OS</em></td>
+<td>A key flagged so the hardware refuses to output it in plaintext, limiting theft to on-device misuse.</td>
+<td>Windows Hello keys are non-exportable TPM keys, so stolen disk images do not contain usable credentials.</td>
+</tr>
+<tr>
+<td><strong>Isolation spectrum</strong><br><em>Industry classification · Concept · General</em></td>
+<td>From weakest to strongest: software, TEE enclave, integrated security processor, discrete secure element, certified HSM.</td>
+<td>A smart-lock maker chooses a discrete secure element because its devices sit unattended outdoors.</td>
+</tr>
+<tr>
+<td><strong>Security processor</strong><br><em>Pluton, Apple Secure Enclave, AMD ASP, Intel CSME · Hardware · Current · Silicon</em></td>
+<td>A separate core inside the main chip that runs security firmware isolated from the application processors.</td>
+<td>Apple's Secure Enclave processor protects Face ID data even if iOS is compromised.</td>
+</tr>
+<tr>
+<td><strong>Discrete security chip</strong><br><em>Discrete TPMs, secure elements (Infineon, NXP, ST) · Hardware · Current · Silicon</em></td>
+<td>A separate tamper-resistant chip on the board, physically isolated from the main processor.</td>
+<td>Many business laptops still ship a discrete Infineon or Nuvoton TPM soldered to the motherboard.</td>
+</tr>
+<tr>
+<td><strong>Hardware security module (HSM)</strong><br><em>FIPS 140-3 validated appliances and cloud HSMs · Product · Current · General</em></td>
+<td>A tamper-resistant appliance or card that generates and uses high-value keys such as CA and code-signing keys.</td>
+<td>A root CA's private key never leaves its HSM; chapter 40 and chapter 60 cover HSMs in depth.</td>
+</tr>
+<tr>
+<td><strong>Firmware-based security</strong><br><em>fTPM, firmware secure boot · Concept · Current · Firmware &amp; boot</em></td>
+<td>Security functions implemented as firmware on an existing processor rather than separate silicon — cheaper but shares hardware.</td>
+<td>Intel PTT and AMD fTPM provide TPM 2.0 without an extra chip on most consumer PCs.</td>
+</tr>
+<tr>
+<td><strong>Updatability trade-off</strong><br><em>Design principle · Concept · Silicon</em></td>
+<td>More logic in immutable hardware means stronger tamper resistance but no fixes; more in firmware means patchable but bigger attack surface.</td>
+<td>Caliptra keeps a small ROM and moves most functions into signed, updatable firmware.</td>
+</tr>
+<tr>
+<td><strong>Physical attack resistance</strong><br><em>CC AVA_VAN levels, FIPS 140-3 physical security · Concept · Silicon</em></td>
+<td>How well hardware resists probing, glitching and side-channel analysis — the main thing extra money buys.</td>
+<td>A payment card chip resists lab attacks that would extract keys from an ordinary microcontroller in hours.</td>
+</tr>
+<tr>
+<td><strong>Cost of hardware trust</strong><br><em>Engineering economics · Concept · Devices &amp; IoT</em></td>
+<td>Extra silicon, certification, provisioning and lifecycle management add cost, so designs use hardware where it really matters.</td>
+<td>A cheap smart bulb may rely on a microcontroller's secure boot; a payment terminal needs certified hardware.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="19-secure-boot-vs-measured-boot-in-one-picture">1.9 Secure Boot vs Measured Boot in One Picture<a class="headerlink" href="#19-secure-boot-vs-measured-boot-in-one-picture" title="Permanent link">&para;</a></h2>
+<p>Secure boot is a bouncer: each boot stage checks the next one's signature and refuses to run anything not signed by a trusted key. Measured boot is a notary: each stage hashes the next one and records the result in the TPM, without blocking anything, so the record can be checked later. Most modern PCs, phones and servers do both. Chapter 30 covers the details.</p>
+<p><strong>Secure boot vs measured boot</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Secure boot</th>
+<th>Measured boot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Question answered</strong></td>
+<td>May this code run?</td>
+<td>What exactly ran?</td>
+</tr>
+<tr>
+<td><strong>Action on bad code</strong></td>
+<td>Block or recover</td>
+<td>Record it, keep booting</td>
+</tr>
+<tr>
+<td><strong>Needs</strong></td>
+<td>Trusted keys, signatures</td>
+<td>TPM PCRs, event log</td>
+</tr>
+<tr>
+<td><strong>Who decides</strong></td>
+<td>The device itself</td>
+<td>A verifier, later</td>
+</tr>
+<tr>
+<td><strong>Catches signed-but-wrong</strong></td>
+<td>No</td>
+<td>Yes, if reference values exist</td>
+</tr>
+<tr>
+<td><strong>Typical use</strong></td>
+<td>Stop bootkits</td>
+<td>Attestation, sealing disk keys</td>
+</tr>
+</tbody>
+</table>
+<p><em>They answer different questions, so strong platforms use both.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Secure boot is a nightclub bouncer turning away anyone without a valid ticket. Measured boot is the CCTV camera at the door — it stops nobody, but afterwards you can prove exactly who came in.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>At the fictional Oakridge Hospital, Secure Boot on every workstation blocks a USB bootkit outright. But a misconfigured firmware setting that disables a protection would not be blocked — the firmware is still validly signed. Measured boot records that configuration in the TPM's PCRs, and when the workstation asks the hospital's network for access, the attestation service notices the unusual PCR value and puts it into a quarantine VLAN.</p>
+</div>
+<h4 id="how-it-works_8">How it works<a class="headerlink" href="#how-it-works_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Secure boot: stage N verifies stage N+1's signature against trusted keys; if it fails, stop or recover.</li>
+<li>Measured boot: stage N hashes stage N+1 and extends the hash into a TPM PCR, then runs it regardless.</li>
+<li>An event log records each measurement so a verifier can replay it and match the PCR values.</li>
+<li>Later, the TPM signs a quote of the PCRs; a verifier compares them with known-good values.</li>
+<li>Secrets (disk keys) can be sealed to PCR values so they unlock only after a known-good boot.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Endpoint, firmware and platform engineers, Windows and Linux administrators, and anyone deploying BitLocker, Intune compliance or Keylime meet both mechanisms.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>One-line answer for interviews: secure boot enforces (blocks bad code), measured boot reports (records what ran so someone else can decide).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>PCR extension is order-sensitive and one-way: extending A then B gives a different value from B then A, and no command can set a PCR to an arbitrary value — only reboot resets most PCRs.</li>
+<li>TCG's PC Client firmware profile assigns PCRs by convention: 0 for core firmware code, 1 for firmware configuration, 2-3 for option ROMs, 4-5 for the boot manager and partition table, 7 for Secure Boot state; chapter 20 lists them all.</li>
+<li>Measured boot needs reference values to be useful; TCG's Reference Integrity Manifest (RIM) and IETF CoRIM formats let vendors publish expected measurements so verifiers do not have to learn them by trial.</li>
+<li>Secure boot cannot catch 'signed but wrong' code — an old vulnerable but signed bootloader, as in BlackLotus — unless the image is revoked; measured boot at least records that it ran.</li>
+<li>Sealing to PCRs is brittle: firmware updates change PCR 0, and Secure Boot database updates change PCR 7, so tools like BitLocker suspend protection or reseal around updates.</li>
+<li>Mobile platforms mostly use verified boot plus key attestation instead of PCR-style measured boot; Android records verified-boot state into key attestation certificates (chapter 40).</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking measured boot blocks malware. It only records; something else must act on the measurements.</li>
+<li>Assuming secure boot means the firmware is trustworthy. Secure boot usually starts after firmware; protecting firmware needs a hardware root such as Boot Guard or a platform RoT.</li>
+<li>Expecting PCR values to be identical across all 'identical' laptops. Firmware versions, settings and option ROMs change them, so reference values must cover each configuration.</li>
+</ul>
+</div>
+<h3 id="try-it-check-secure-boot-state-and-read-the-pcrs-that-measured-boot-filled">Try it: Check secure boot state and read the PCRs that measured boot filled<a class="headerlink" href="#try-it-check-secure-boot-state-and-read-the-pcrs-that-measured-boot-filled" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Linux</span>
+mokutil<span class="w"> </span>--sb-state
+sudo<span class="w"> </span>tpm2_pcrread<span class="w"> </span>sha256:0,2,4,7
+<span class="c1"># Windows PowerShell (Administrator)</span>
+Confirm-SecureBootUEFI
+msinfo32<span class="w">    </span><span class="c1"># look for 'Secure Boot State' and 'PCR7 Configuration'</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_8">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Secure boot</strong><br><em>UEFI 2.3.1+ (2011), vendor boot chains · Concept · Current · Firmware &amp; boot</em></td>
+<td>Each boot stage runs the next only if its signature verifies against trusted keys — enforcement.</td>
+<td>A Windows PC refuses to start an unsigned bootkit and shows a 'Secure Boot violation' message.</td>
+</tr>
+<tr>
+<td><strong>Measured boot</strong><br><em>TCG PC Client Platform Firmware Profile · Concept · Current · Firmware &amp; boot</em></td>
+<td>Each stage hashes the next into TPM PCRs before running it — recording, not blocking.</td>
+<td>Linux's PCR 4 changes when a different bootloader runs, even if both are signed.</td>
+</tr>
+<tr>
+<td><strong>Verified boot</strong><br><em>Android Verified Boot, ChromeOS, U-Boot · Concept · Current · Mobile</em></td>
+<td>Mobile and embedded name for secure boot, usually extended to verify whole partitions as they are read.</td>
+<td>Android checks the system partition block by block with dm-verity as it loads.</td>
+</tr>
+<tr>
+<td><strong>PCR (Platform Configuration Register)</strong><br><em>TCG TPM 2.0 Library · Concept · Platform &amp; OS</em></td>
+<td>A TPM register that can only be extended: new value = hash(old value ‖ measurement); reset only at reboot.</td>
+<td>PCR 7 reflects Secure Boot policy; BitLocker seals its key to it by default on modern Windows.</td>
+</tr>
+<tr>
+<td><strong>Event log</strong><br><em>TCG PC Client Platform Firmware Profile · Format · Firmware &amp; boot</em></td>
+<td>A list of what was measured into each PCR, used to explain and replay PCR values.</td>
+<td>Linux exposes it at /sys/kernel/security/tpm0/binary_bios_measurements for tools to parse.</td>
+</tr>
+<tr>
+<td><strong>Allow-list (db) and deny-list (dbx)</strong><br><em>UEFI specification · Concept · Firmware &amp; boot</em></td>
+<td>UEFI Secure Boot databases of trusted signers/hashes and revoked ones; chapter 30 covers PK, KEK, db, dbx and MOK.</td>
+<td>A revoked, vulnerable boot manager is added to dbx so firmware refuses it.</td>
+</tr>
+<tr>
+<td><strong>Sealing</strong><br><em>TCG TPM 2.0 · Concept · Platform &amp; OS</em></td>
+<td>Encrypting a secret so the TPM releases it only if PCRs or a policy match expected values.</td>
+<td>BitLocker's volume key unseals automatically only when the boot measurements are unchanged.</td>
+</tr>
+<tr>
+<td><strong>Golden measurements / reference values</strong><br><em>IETF RATS RFC 9334, TCG RIM · Concept · General</em></td>
+<td>Known-good hash values a verifier compares against attested measurements.</td>
+<td>Oakridge's attestation server holds the expected PCR values for each approved firmware version.</td>
+</tr>
+<tr>
+<td><strong>Boot policy</strong><br><em>Platform design · Concept · Firmware &amp; boot</em></td>
+<td>Rules deciding what happens on failure: halt, boot to recovery, alert, or boot but mark the device untrusted.</td>
+<td>A kiosk halts on any failure; a developer laptop boots but loses access to company resources.</td>
+</tr>
+<tr>
+<td><strong>Signature verification cost</strong><br><em>Engineering consideration · Concept · Firmware &amp; boot</em></td>
+<td>Verifying signatures adds boot time and ROM size, especially with large post-quantum signatures.</td>
+<td>A microcontroller spends tens of milliseconds checking an ECDSA signature during boot.</td>
+</tr>
+<tr>
+<td><strong>Combined approach</strong><br><em>Industry best practice · Concept · Current · Platform &amp; OS</em></td>
+<td>Platforms use secure boot to block known-bad code and measured boot to evidence everything else.</td>
+<td>Windows 11 with Secure Boot, BitLocker and Device Health Attestation uses both together.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="110-attestation-in-one-picture">1.10 Attestation in One Picture<a class="headerlink" href="#110-attestation-in-one-picture" title="Permanent link">&para;</a></h2>
+<p>Attestation is how a device proves its identity and state to someone far away. The device (attester) gathers evidence — such as boot measurements — and signs it with a key rooted in hardware. A verifier checks the signature and compares the evidence with known-good reference values, then tells a relying party whether to trust the device. Chapters 20 and 40 go deep; this is the overview.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-10-attestation-in-one-picture.svg" alt="The nonce makes the evidence fresh; the hardware key makes it believable." loading="lazy" width="1000" height="443">
+<figcaption><strong>Remote attestation, background-check model.</strong> The nonce makes the evidence fresh; the hardware key makes it believable.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a sealed health certificate from an accredited lab: the lab (hardware root) signs your test results, the airline's checker (verifier) confirms the lab's seal and compares results with the entry rules, and the gate agent (relying party) lets you board.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Finch Pay's payroll service runs in a cloud confidential VM. Before releasing the database key, Finch's key service sends a random nonce; the VM returns a report signed by the CPU's security processor, including a hash of the VM's initial memory and the nonce. An attestation verifier checks the signature chains to the CPU vendor, the measurement matches Finch's approved build and the nonce is fresh. Only then does the key service release the database key.</p>
+</div>
+<h4 id="how-it-works_9">How it works<a class="headerlink" href="#how-it-works_9" title="Permanent link">&para;</a></h4>
+<ol>
+<li>The relying party (or verifier) sends a fresh random nonce to stop replay of old evidence.</li>
+<li>The attester collects claims — measurements, firmware versions, configuration — plus the nonce.</li>
+<li>A hardware-rooted key (TPM AK, CPU attestation key, DICE alias key) signs the evidence.</li>
+<li>The verifier checks the signature chain to the manufacturer and compares claims with reference values.</li>
+<li>The verifier produces an attestation result; the relying party grants or denies access accordingly.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Zero-trust and endpoint-management teams, confidential-computing engineers, IoT onboarding services and mobile-app security teams use attestation.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Memorise the three RATS roles from RFC 9334 — Attester, Verifier, Relying Party — and why the nonce matters (freshness).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>IETF RFC 9334 (January 2023) defines the RATS architecture: attester, verifier, relying party, plus endorser and reference-value provider roles, and the passport and background-check topologies.</li>
+<li>Evidence formats vary by hardware: TPM quotes (TPMS_ATTEST), Intel TDX quotes, AMD SEV-SNP attestation reports, Arm CCA tokens, PSA tokens (RFC 9783) and SPDM measurement responses.</li>
+<li>The trust chain of evidence goes back to manufacturing: a device key (EK, DICE DeviceID, CPU VCEK/PCK) is certified by the vendor's CA, so the verifier ultimately relies on the vendor's PKI.</li>
+<li>Privacy matters: a unique hardware key lets observers track a device. TPMs use separate attestation keys certified via credential activation; schemes such as Direct Anonymous Attestation (DAA) go further.</li>
+<li>Attestation proves what was measured, not that it is bug-free — reference values must also encode which versions are acceptable, and verifiers need timely updates when vulnerabilities appear.</li>
+<li>Common deployments: Windows Device Health Attestation and Intune compliance, Keylime for Linux fleets, Android Key Attestation and Play Integrity, and confidential-computing key release services.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Skipping the nonce or timestamp. Without freshness, attackers replay old, healthy-looking evidence.</li>
+<li>Assuming attestation proves software is safe. It proves which software ran; whether that software is acceptable depends on your reference values.</li>
+<li>Forgetting the verifier itself is in the TCB. A compromised or misconfigured verifier approves anything.</li>
+</ul>
+</div>
+<h3 id="try-it-produce-a-tpm-quote-over-pcrs-with-a-nonce-lab-machine-with-tpm2-tools">Try it: Produce a TPM quote over PCRs with a nonce (lab machine with tpm2-tools)<a class="headerlink" href="#try-it-produce-a-tpm-quote-over-pcrs-with-a-nonce-lab-machine-with-tpm2-tools" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>tpm2_createek<span class="w"> </span>-c<span class="w"> </span>ek.ctx<span class="w"> </span>-G<span class="w"> </span>ecc<span class="w"> </span>-u<span class="w"> </span>ek.pub
+tpm2_createak<span class="w"> </span>-C<span class="w"> </span>ek.ctx<span class="w"> </span>-c<span class="w"> </span>ak.ctx<span class="w"> </span>-G<span class="w"> </span>ecc<span class="w"> </span>-g<span class="w"> </span>sha256<span class="w"> </span>-s<span class="w"> </span>ecdsa<span class="w"> </span>-u<span class="w"> </span>ak.pub
+tpm2_quote<span class="w"> </span>-c<span class="w"> </span>ak.ctx<span class="w"> </span>-l<span class="w"> </span>sha256:0,7<span class="w"> </span>-q<span class="w"> </span><span class="k">$(</span>openssl<span class="w"> </span>rand<span class="w"> </span>-hex<span class="w"> </span><span class="m">16</span><span class="k">)</span><span class="w"> </span>-m<span class="w"> </span>quote.msg<span class="w"> </span>-s<span class="w"> </span>quote.sig
+tpm2_print<span class="w"> </span>-t<span class="w"> </span>TPMS_ATTEST<span class="w"> </span>quote.msg
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_9">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Remote attestation</strong><br><em>TCG, IETF RATS · Concept · Current · General</em></td>
+<td>A device proving its identity and software state to a remote party with hardware-signed evidence.</td>
+<td>A laptop proves its boot state to a VPN gateway before getting network access.</td>
+</tr>
+<tr>
+<td><strong>Attester</strong><br><em>IETF RFC 9334 (2023) · Role · General</em></td>
+<td>The entity whose state is being proven; it produces signed evidence.</td>
+<td>A server's TPM and firmware together act as the attester.</td>
+</tr>
+<tr>
+<td><strong>Verifier</strong><br><em>IETF RFC 9334 · Role · General</em></td>
+<td>Appraises evidence against endorsements and reference values, then issues an attestation result.</td>
+<td>Microsoft Azure Attestation acts as verifier for confidential VMs (chapter 40).</td>
+</tr>
+<tr>
+<td><strong>Evidence</strong><br><em>IETF RFC 9334 · Concept · General</em></td>
+<td>Signed claims about the attester's state, such as a TPM quote or CPU attestation report.</td>
+<td>A TPM quote containing PCR 0-7 digests and a nonce is evidence.</td>
+</tr>
+<tr>
+<td><strong>Endorsement</strong><br><em>IETF RFC 9334 · Concept · General</em></td>
+<td>A statement from the manufacturer vouching that the attester's signing key is genuine hardware.</td>
+<td>An EK certificate from Infineon endorses that a TPM is a real Infineon TPM.</td>
+</tr>
+<tr>
+<td><strong>Reference values</strong><br><em>IETF RATS, TCG RIM, CoRIM · Concept · General</em></td>
+<td>Known-good measurements the verifier compares evidence against.</td>
+<td>A firmware vendor publishes the expected hash of BIOS version 1.42.</td>
+</tr>
+<tr>
+<td><strong>Attestation result</strong><br><em>IETF RFC 9334, EAR format · Concept · General</em></td>
+<td>The verifier's verdict, often a signed token, consumed by the relying party.</td>
+<td>A token stating 'affirming: boot state matches policy' lets a key service release a secret.</td>
+</tr>
+<tr>
+<td><strong>Nonce</strong><br><em>Cryptographic freshness · Concept · General</em></td>
+<td>A random, single-use value included in evidence so old evidence cannot be replayed.</td>
+<td>Without a nonce, malware could replay a quote recorded before the infection.</td>
+</tr>
+<tr>
+<td><strong>TPM quote</strong><br><em>TCG TPM 2.0 (TPM2_Quote) · Concept · Current · Platform &amp; OS</em></td>
+<td>A TPM-signed structure containing selected PCR digests and caller-supplied qualifying data.</td>
+<td>Keylime polls each Linux server for quotes every few seconds (chapter 20).</td>
+</tr>
+<tr>
+<td><strong>Passport vs background-check model</strong><br><em>IETF RFC 9334 · Concept · General</em></td>
+<td>Passport: attester gets a result and shows it; background check: relying party forwards evidence to the verifier.</td>
+<td>A phone presents a pre-obtained attestation token (passport) to an app server.</td>
+</tr>
+<tr>
+<td><strong>Entity Attestation Token (EAT)</strong><br><em>IETF RFC 9711 · Format · Current · Devices &amp; IoT</em></td>
+<td>A standard CBOR/JSON token format for attestation claims, profiled by Arm PSA and others.</td>
+<td>A PSA-certified microcontroller emits an EAT-based attestation token to a cloud service.</td>
+</tr>
+<tr>
+<td><strong>Freshness and replay</strong><br><em>Attestation design · Concept · General</em></td>
+<td>Evidence must be recent and tied to this session; nonces, timestamps or epochs provide that.</td>
+<td>Finch's verifier rejects any report whose nonce does not match the one it just sent.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="111-certificates-pki-in-one-picture">1.11 Certificates &amp; PKI in One Picture<a class="headerlink" href="#111-certificates-pki-in-one-picture" title="Permanent link">&para;</a></h2>
+<p>A certificate is a digitally signed document saying 'this public key belongs to this name'. A certificate authority (CA) checks the name and signs the certificate. Your browser or operating system holds a small set of root CA certificates it trusts, and accepts other certificates only if they chain back to one of those roots. The people, rules, software and hardware that run all this are called PKI — public key infrastructure. Chapters 50-70 cover it in depth.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-11-certificates-pki-in-one-picture.svg" alt="The browser trusts the leaf only because a chain of signatures leads to a root it already holds." loading="lazy" width="1000" height="328">
+<figcaption><strong>A typical web PKI chain.</strong> The browser trusts the leaf only because a chain of signatures leads to a root it already holds.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A certificate is like a passport: a trusted authority (the passport office) checks your identity and issues a tamper-evident document linking your photo to your name. Border officers trust it because they trust the issuing government, not because they know you.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Ravi runs the website of the fictional Willow Bakery. He uses an ACME client that proves to Let's Encrypt he controls willowbakery.example by placing a file on the site, then receives a certificate valid for 90 days. When a customer visits, the browser checks that the certificate's name matches, it has not expired, it chains to the ISRG root in the browser's trust store, and it appears in Certificate Transparency logs. The padlock appears.</p>
+</div>
+<h4 id="how-it-works_10">How it works<a class="headerlink" href="#how-it-works_10" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Subscriber generates a key pair and a certificate signing request (CSR) containing the public key and name.</li>
+<li>A registration authority or automated validation checks the subscriber controls the name.</li>
+<li>The CA signs a certificate binding name and public key, with validity dates and permitted uses.</li>
+<li>Relying parties build a chain to a trusted root and validate signatures, names, dates and usages.</li>
+<li>Certificates are renewed before expiry, and revoked early if keys are compromised.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Web and DevOps engineers, PKI administrators, security operations teams and anyone deploying TLS, VPNs, Wi-Fi 802.1X, code signing or device identity handles certificates.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember the chain: end-entity certificate → intermediate CA → root CA (in trust store) — and that roots stay offline while intermediates do the daily signing.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>X.509 v3 (1996 onward) added extensions such as Subject Alternative Name, Key Usage, Extended Key Usage and Basic Constraints that tell relying parties exactly what a certificate may be used for.</li>
+<li>Public TLS certificates are governed by the CA/Browser Forum Baseline Requirements and enforced by browser root programs (Mozilla, Apple, Microsoft, Chrome), with annual WebTrust or ETSI audits.</li>
+<li>Ballot SC-081 (2025) shrinks maximum TLS validity to 200 days from 15 March 2026, 100 days from 15 March 2027 and 47 days from 15 March 2029, which makes ACME-style automation essential.</li>
+<li>The same certificate machinery appears inside hardware trust: TPM endorsement-key certificates, DICE certificate chains, SPDM device certificates and UEFI Secure Boot keys are all X.509.</li>
+<li>Revocation is the weak spot of PKI: CRLs grow large, OCSP leaks browsing data, and many clients soft-fail — one reason the industry is moving to short-lived certificates and browser-pushed revocation lists.</li>
+<li>Post-quantum PKI is coming: ML-DSA certificates and composite signatures are being standardised, but their size (kilobytes per signature) creates real engineering challenges for TLS and constrained devices.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking the padlock means a site is honest. It means the connection is encrypted to whoever controls that domain name — phishing sites get valid certificates too.</li>
+<li>Installing a self-signed root on every machine to silence warnings. That makes the private key a powerful trust anchor that must be protected like a real root CA.</li>
+<li>Forgetting intermediates. Servers must send the intermediate certificate(s); missing intermediates cause 'unable to get local issuer' errors on some clients.</li>
+</ul>
+</div>
+<h3 id="try-it-inspect-a-website-certificates-subject-issuer-dates-and-sans">Try it: Inspect a website certificate's subject, issuer, dates and SANs<a class="headerlink" href="#try-it-inspect-a-website-certificates-subject-issuer-dates-and-sans" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>example.com:443<span class="w"> </span>-servername<span class="w"> </span>example.com<span class="w"> </span>&lt;/dev/null<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>openssl<span class="w"> </span>x509<span class="w"> </span>-noout<span class="w"> </span>-subject<span class="w"> </span>-issuer<span class="w"> </span>-dates<span class="w"> </span>-ext<span class="w"> </span>subjectAltName
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_10">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_10" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Public key infrastructure (PKI)</strong><br><em>ITU-T X.509, IETF PKIX · Concept · General</em></td>
+<td>The people, policies, software and hardware that issue, manage and revoke certificates.</td>
+<td>A university runs a private PKI for Wi-Fi certificates and buys public TLS certificates for its websites.</td>
+</tr>
+<tr>
+<td><strong>X.509 certificate</strong><br><em>ITU-T X.509, IETF RFC 5280 · Format · Current · Web PKI</em></td>
+<td>The standard certificate format: subject, issuer, validity, public key, extensions and the issuer's signature.</td>
+<td>Every HTTPS website presents an X.509 certificate; chapter 50 dissects one field by field.</td>
+</tr>
+<tr>
+<td><strong>Certificate authority (CA)</strong><br><em>RFC 5280, CA/Browser Forum · Role · General</em></td>
+<td>A trusted organisation or system that verifies identities and signs certificates.</td>
+<td>Let's Encrypt, DigiCert and Sectigo are public CAs; a company's internal CA is private.</td>
+</tr>
+<tr>
+<td><strong>Root CA</strong><br><em>Trust stores and root programs · Role · Web PKI</em></td>
+<td>The top of a hierarchy; its self-signed certificate is distributed in trust stores as a trust anchor.</td>
+<td>ISRG Root X1 is trusted by browsers and anchors Let's Encrypt certificates (chapter 60).</td>
+</tr>
+<tr>
+<td><strong>Intermediate CA</strong><br><em>RFC 5280 · Role · Web PKI</em></td>
+<td>A CA certified by a root that does day-to-day issuing, so the root key can stay offline.</td>
+<td>Let's Encrypt issues from intermediates while its root keys sit in offline HSMs.</td>
+</tr>
+<tr>
+<td><strong>Trust store</strong><br><em>Mozilla NSS, Microsoft, Apple, Chrome Root Store · Concept · Web PKI</em></td>
+<td>The list of root certificates a browser, OS or application trusts.</td>
+<td>Chrome on Windows uses the Chrome Root Store rather than the Windows list for TLS.</td>
+</tr>
+<tr>
+<td><strong>Certificate signing request (CSR)</strong><br><em>PKCS #10, RFC 2986 · Format · Current · General</em></td>
+<td>A signed request containing a public key and requested name, sent to a CA for certification.</td>
+<td>Ravi's ACME client creates a CSR automatically; manual buyers paste one into a CA's web form.</td>
+</tr>
+<tr>
+<td><strong>Revocation</strong><br><em>CRL (RFC 5280), OCSP (RFC 6960) · Concept · General</em></td>
+<td>Cancelling a certificate before expiry because its key leaked or details changed.</td>
+<td>After a server breach, the admin revokes the old certificate and issues a new one with a new key.</td>
+</tr>
+<tr>
+<td><strong>Certificate Transparency (CT)</strong><br><em>RFC 6962, RFC 9162 · Concept · Current · Web PKI</em></td>
+<td>Public append-only logs of issued TLS certificates that browsers require, making mis-issuance visible.</td>
+<td>Willow Bakery sets an alert on crt.sh for any new certificate naming its domain.</td>
+</tr>
+<tr>
+<td><strong>ACME</strong><br><em>IETF RFC 8555 (2019) · Protocol · Current · Web PKI</em></td>
+<td>The protocol for automatically proving domain control and obtaining certificates.</td>
+<td>Certbot renews a website certificate every 60 days via ACME with no human involved.</td>
+</tr>
+<tr>
+<td><strong>Public vs private PKI</strong><br><em>Industry practice · Concept · General</em></td>
+<td>Public CAs serve the open internet under browser rules; private PKIs serve one organisation's own devices and services.</td>
+<td>A factory's sensors get certificates from the company's private CA, not from a public CA.</td>
+</tr>
+<tr>
+<td><strong>Shrinking certificate lifetimes</strong><br><em>CA/Browser Forum ballot SC-081 (2025) · Concept · Current · Web PKI</em></td>
+<td>Maximum public TLS lifetimes fall to 200 days (March 2026), 100 (2027) and 47 (2029).</td>
+<td>Teams still renewing certificates by hand must automate before 47-day certificates arrive.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="112-the-big-map-how-hardware-rot-tpm-boot-tee-pki-fit-together">1.12 The Big Map: How Hardware RoT, TPM, Boot, TEE &amp; PKI Fit Together<a class="headerlink" href="#112-the-big-map-how-hardware-rot-tpm-boot-tee-pki-fit-together" title="Permanent link">&para;</a></h2>
+<p>All the topics in this guide fit into one stack. At the bottom, a hardware root of trust in the silicon starts everything. The TPM records and protects. Secure and measured boot carry trust up to the operating system. Trusted execution environments protect code while it runs. Attestation reports all this to others. And PKI — certificates — gives every chip, device, server and website a verifiable identity. This page is the map; the later chapters are the territory.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-12-the-big-map-how-hardware-rot-tpm-boot.svg" alt="Trust flows upward from silicon; identity and evidence flow outward through PKI and attestation." loading="lazy" width="1000" height="580">
+<figcaption><strong>The trust stack and where each chapter lives.</strong> Trust flows upward from silicon; identity and evidence flow outward through PKI and attestation.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Think of a city: bedrock (silicon RoT) supports foundations (TPM and boot), which support buildings (OS and TEEs); inspectors (attestation) certify the buildings; and the passport office (PKI) issues IDs so visitors can tell who lives where.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Consider a cloud payment service run by the fictional Finch Pay. Server silicon roots of trust verify firmware (chapter 10); a TPM records the boot (chapters 20 and 30); the workload runs in a confidential VM (chapter 40); the VM attests to Finch's key service, which releases keys from an HSM (chapter 40); and customers reach it over TLS using a certificate chaining to a public root CA (chapters 50-70). Remove any layer and the trust story has a hole.</p>
+</div>
+<h4 id="how-it-works_11">How it works<a class="headerlink" href="#how-it-works_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Silicon root of trust: boot ROM, fused keys and crypto engines verify the first firmware.</li>
+<li>Boot chain: firmware, bootloader and OS are verified (secure boot) and measured into the TPM.</li>
+<li>Runtime protection: TEEs and confidential VMs isolate sensitive code and data while running.</li>
+<li>Attestation: hardware-signed evidence lets remote parties check identity and state.</li>
+<li>PKI: certificates bind keys to chips, devices, workloads, people and websites so anyone can verify them.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Security architects, platform engineers and students planning a career path use this map to see where TPM work, firmware security, confidential computing and PKI roles sit.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>When you meet a new technology, place it on the map: is it a root, a chain link, a runtime protection, an attestation mechanism or an identity system?</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>The layers reuse the same primitives: hashes for measurement, signatures for verification, and X.509 certificates for identity appear in silicon (DICE, EK certificates), boot (UEFI keys) and the web alike.</li>
+<li>Every layer has its own root: fused key hashes for firmware, UEFI PK/KEK/db for the OS loader, the TPM EK certificate for attestation, the CPU vendor's CA for TEE reports, and root CAs for TLS.</li>
+<li>Weaknesses propagate upward: a leaked firmware-signing key undermines secure boot, attestation and any keys sealed to boot state; a mis-issuing CA undermines TLS no matter how secure the hardware is.</li>
+<li>Industry groups map onto the layers: TCG (TPM, DICE), UEFI Forum (boot), Confidential Computing Consortium and IETF RATS (TEE and attestation), DMTF and OCP (data-centre devices), CA/Browser Forum and root programs (web PKI).</li>
+<li>Post-quantum migration touches every layer at once: boot ROM signature checks (LMS, ML-DSA), TPM algorithms (TPM 2.0 v1.85 drafts adding ML-KEM and ML-DSA), TEE reports and PKI certificates.</li>
+<li>Job roles also follow the map: silicon/firmware security engineers at the bottom, platform and endpoint engineers in the middle, PKI engineers and CA compliance staff at the top (chapter 80).</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Treating PKI and hardware trust as separate worlds. Device identity, attestation and secure boot all depend on certificates and CA keys.</li>
+<li>Securing only one layer. Strong TLS on a server with a compromised BMC or unsigned firmware still leaks data.</li>
+<li>Assuming the cloud provider handles every layer. Shared-responsibility models leave identity, key policies and attestation checks to the customer.</li>
+</ul>
+</div>
+<h3 id="try-it-touch-every-layer-from-your-own-machine-in-four-commands">Try it: Touch every layer from your own machine in four commands<a class="headerlink" href="#try-it-touch-every-layer-from-your-own-machine-in-four-commands" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span class="c"># Windows PowerShell (Administrator)</span>
+<span class="nb">Get-Tpm</span>                                   <span class="c"># TPM / root of trust</span>
+<span class="nb">Confirm-SecureBootUEFI</span>                    <span class="c"># boot chain</span>
+<span class="nb">Get-CimInstance</span> <span class="n">-Namespace</span> <span class="n">root</span><span class="p">/</span><span class="n">Microsoft</span><span class="p">/</span><span class="n">Windows</span><span class="p">/</span><span class="n">DeviceGuard</span> <span class="n">-ClassName</span> <span class="n">Win32_DeviceGuard</span>  <span class="c"># VBS isolation</span>
+<span class="n">certutil</span> <span class="n">-store</span> <span class="n">-user</span> <span class="n">My</span>                  <span class="c"># certificates (PKI)</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_11">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_11" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Trusted Platform Module (TPM)</strong><br><em>TCG TPM 2.0 Library, ISO/IEC 11889 — chapter 20 · Standard · Current · Platform &amp; OS</em></td>
+<td>A standard security component that stores keys, records boot measurements in PCRs and signs attestation quotes.</td>
+<td>Windows 11 requires TPM 2.0 for features such as BitLocker and Windows Hello.</td>
+</tr>
+<tr>
+<td><strong>Secure &amp; measured boot</strong><br><em>UEFI, TCG — chapter 30 · Concept · Current · Firmware &amp; boot</em></td>
+<td>The boot-time chain that verifies and records firmware, bootloader and OS.</td>
+<td>A Linux server boots shim, GRUB and a signed kernel, measuring each into TPM PCRs.</td>
+</tr>
+<tr>
+<td><strong>Trusted execution environment (TEE)</strong><br><em>Chapter 40 · Concept · Current · Trusted execution</em></td>
+<td>Hardware-isolated execution that protects code and data even from the OS or hypervisor.</td>
+<td>A phone's TrustZone TEE runs the fingerprint matcher; a cloud TDX VM runs a bank's analytics.</td>
+</tr>
+<tr>
+<td><strong>Confidential computing</strong><br><em>Confidential Computing Consortium (2019) — chapter 40 · Concept · Current · Cloud</em></td>
+<td>Protecting data in use with attested, hardware-isolated environments, often in the cloud.</td>
+<td>A hospital processes patient data in an AMD SEV-SNP VM the cloud operator cannot inspect.</td>
+</tr>
+<tr>
+<td><strong>Attestation</strong><br><em>IETF RFC 9334 — chapters 20 and 40 · Concept · Current · General</em></td>
+<td>Hardware-signed evidence of identity and state checked by a verifier.</td>
+<td>A key service releases a database key only to VMs whose attestation matches policy.</td>
+</tr>
+<tr>
+<td><strong>Device identity</strong><br><em>IEEE 802.1AR, DICE, TPM EK · Concept · Devices &amp; IoT</em></td>
+<td>A hardware-protected key plus certificate proving which physical device you are talking to.</td>
+<td>A factory-installed device certificate lets a new router join the network with zero-touch onboarding.</td>
+</tr>
+<tr>
+<td><strong>Web PKI</strong><br><em>CA/Browser Forum, root programs — chapters 50-60 · Concept · Current · Web PKI</em></td>
+<td>The public certificate system browsers use to authenticate websites.</td>
+<td>A browser trusts a bank's site because its certificate chains to a root in the browser's trust store.</td>
+</tr>
+<tr>
+<td><strong>Private PKI</strong><br><em>Chapter 70 · Concept · Current · Private PKI</em></td>
+<td>An organisation's own CAs for internal services, devices, Wi-Fi, VPN and workloads.</td>
+<td>A company issues mTLS certificates to every microservice from its private CA.</td>
+</tr>
+<tr>
+<td><strong>HSM / key management</strong><br><em>FIPS 140-3 — chapter 40 · Concept · Current · General</em></td>
+<td>Hardware that protects CA keys, signing keys and data-encryption keys for organisations.</td>
+<td>A code-signing key in an HSM signs firmware that a silicon RoT later verifies.</td>
+</tr>
+<tr>
+<td><strong>Firmware signing</strong><br><em>Vendor practice, CNSA 2.0 · Concept · Current · Firmware &amp; boot</em></td>
+<td>Vendors sign firmware with keys whose public halves are anchored in device hardware.</td>
+<td>A laptop maker signs BIOS updates; Boot Guard checks the signature against a fused key hash.</td>
+</tr>
+<tr>
+<td><strong>Zero-trust access decision</strong><br><em>NIST SP 800-207 · Concept · Current · General</em></td>
+<td>The place where device attestation, user identity and certificates combine into an allow/deny decision.</td>
+<td>Maya's laptop gets payroll access only with a valid device certificate and healthy attestation.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="113-a-short-history-of-trusted-computing-pki">1.13 A Short History of Trusted Computing &amp; PKI<a class="headerlink" href="#113-a-short-history-of-trusted-computing-pki" title="Permanent link">&para;</a></h2>
+<p>Hardware trust and PKI grew up side by side. Smart cards in the 1970s-90s showed that a tiny chip could keep secrets. Public-key cryptography (1976-77) and X.509 (1988) gave us certificates. The Trusted Computing Group (2003) standardised the TPM; UEFI Secure Boot (2011-12) protected the boot chain; Let's Encrypt (2015-16) made HTTPS free; confidential computing arrived around 2015-2019; and NIST published post-quantum standards in 2024.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-13-a-short-history-of-trusted-computing-pki.svg" alt="Each generation reused the ideas of the previous one — and post-quantum is the next rebuild." loading="lazy" width="1000" height="237">
+<figcaption><strong>Milestones in hardware trust and PKI.</strong> Each generation reused the ideas of the previous one — and post-quantum is the next rebuild.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Like the history of locks and passports: first came strongboxes (smart cards), then standard ID documents (X.509), then building codes for vaults (TPM specs), and now everything is being rebuilt to withstand a new kind of lockpick — the quantum computer.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Ana's grandmother's first bank card in the 1990s already held a chip that refused to reveal its key. Ana's 2010 laptop had a TPM 1.2 that nobody used. Her 2022 laptop needed TPM 2.0 for Windows 11, booted with UEFI Secure Boot, and every site she visited had a free certificate. Her 2026 browser negotiates hybrid post-quantum key exchange without her noticing. Each step reused ideas from the step before.</p>
+</div>
+<h4 id="how-it-works_12">How it works<a class="headerlink" href="#how-it-works_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>1970s: public-key cryptography (Diffie-Hellman 1976, RSA 1977) and the first smart-card patents.</li>
+<li>1980s-90s: X.509 (1988), SSL (1995) and smart cards in phones (GSM SIM) and bank cards (EMV).</li>
+<li>1999-2014: TCPA becomes TCG (2003); TPM 1.2 then TPM 2.0 (2014); UEFI Secure Boot ships with Windows 8 (2012).</li>
+<li>2015-2021: Let's Encrypt, Intel SGX, AMD SEV, Confidential Computing Consortium; Windows 11 requires TPM 2.0.</li>
+<li>2022-2026: open-source silicon roots (OpenTitan, Caliptra), NIST post-quantum standards (2024) and shrinking certificate lifetimes.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Anyone writing reports, giving training or answering 'why is it done this way?' benefits from knowing how and when each piece arrived.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Anchor dates: TCG 2003, TPM 2.0 2014, Windows 8 Secure Boot 2012, Let's Encrypt public launch 2015-16, Windows 11 TPM 2.0 requirement 2021, FIPS 203/204/205 August 2024.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Smart cards evolved from 1970s patents to mass deployment: French telephone cards and bank cards in the 1980s, GSM SIMs from 1991 and EMV payment cards later in the 1990s — the first billions of hardware roots of trust.</li>
+<li>The Trusted Computing Platform Alliance (1999) produced TPM 1.1b; its successor TCG (2003) published TPM 1.2, standardised as ISO/IEC 11889:2009. TPM 2.0 followed in 2014 and as ISO/IEC 11889:2015.</li>
+<li>Trusted computing was controversial in the 2000s ('Palladium' / NGSCB debates over user control and DRM); today's designs emphasise owner control, measured rather than restricted boot, and privacy-preserving attestation.</li>
+<li>UEFI 2.3.1 (2011) defined Secure Boot; Windows 8 certification (2012) required it on by default, and Microsoft's 2011 UEFI CA certificates — now expiring in 2026 — became the de facto trust anchors for PC booting.</li>
+<li>Let's Encrypt and ACME (RFC 8555, 2019) made automated certificate issuance normal; combined with CT (RFC 6962, 2013) and shorter lifetimes they reshaped the web PKI.</li>
+<li>Since 2022 the trend is openness and post-quantum readiness: OpenTitan and Caliptra publish RTL, TCG drafts PQC TPM algorithms, and NIST's IR 8547 proposes deprecating quantum-vulnerable algorithms by 2030-2035.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming the TPM is new. It has existed since the early 2000s; Windows 11 simply made TPM 2.0 mandatory.</li>
+<li>Confusing SSL with TLS. SSL 2.0/3.0 are long deprecated; modern connections use TLS 1.2 or 1.3, though people still say 'SSL certificate'.</li>
+<li>Thinking post-quantum migration is far away. Standards were published in 2024 and hybrid key exchange is already deployed in major browsers.</li>
+</ul>
+</div>
+<h3 id="try-it-see-which-tpm-spec-version-your-machine-implements">Try it: See which TPM spec version your machine implements<a class="headerlink" href="#try-it-see-which-tpm-spec-version-your-machine-implements" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Windows PowerShell</span>
+Get-CimInstance<span class="w"> </span>-Namespace<span class="w"> </span>root/cimv2/security/microsofttpm<span class="w"> </span>-ClassName<span class="w"> </span>Win32_Tpm<span class="w"> </span><span class="p">|</span><span class="w"> </span>Select<span class="w"> </span>SpecVersion
+<span class="c1"># Linux</span>
+cat<span class="w"> </span>/sys/class/tpm/tpm0/tpm_version_major<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_12">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Smart card</strong><br><em>ISO/IEC 7816 (from 1987) · Hardware · Current · Devices &amp; IoT</em></td>
+<td>A plastic card with a tamper-resistant chip that stores keys and computes inside — the ancestor of every hardware root of trust.</td>
+<td>French bank and phone cards of the 1980s proved chips could keep secrets in hostile hands.</td>
+</tr>
+<tr>
+<td><strong>Diffie-Hellman and RSA</strong><br><em>Diffie &amp; Hellman (1976); Rivest, Shamir &amp; Adleman (1977) · Algorithm · Current · General</em></td>
+<td>The first published public-key schemes, making digital signatures and certificates possible.</td>
+<td>Every certificate chain and signed firmware image builds on these 1970s ideas.</td>
+</tr>
+<tr>
+<td><strong>X.509 (1988)</strong><br><em>ITU-T · Standard · Current · General</em></td>
+<td>The certificate format first published as part of the X.500 directory standards; v3 extensions arrived in the 1990s.</td>
+<td>Certificates in browsers today are still X.509 v3, profiled by RFC 5280.</td>
+</tr>
+<tr>
+<td><strong>TCPA → TCG</strong><br><em>TCPA founded 1999; Trusted Computing Group 2003 · Organisation · General</em></td>
+<td>The industry consortium that defines the TPM, PC Client, DICE and related trusted-computing specifications.</td>
+<td>TCG's founding members included AMD, HP, IBM, Intel and Microsoft.</td>
+</tr>
+<tr>
+<td><strong>TPM 1.2</strong><br><em>TCG (2003 onward); ISO/IEC 11889:2009 · Standard · Legacy · Platform &amp; OS</em></td>
+<td>The first widely deployed TPM spec; fixed SHA-1 and RSA, now obsolete.</td>
+<td>Business laptops from about 2006 shipped TPM 1.2 for early BitLocker deployments.</td>
+</tr>
+<tr>
+<td><strong>TPM 2.0</strong><br><em>TCG Library spec (2014); ISO/IEC 11889:2015 · Standard · Current · Platform &amp; OS</em></td>
+<td>The current TPM generation with algorithm agility, multiple hierarchies and flexible policies.</td>
+<td>Windows 11 (2021) made TPM 2.0 a hard requirement, pushing it into almost every new PC.</td>
+</tr>
+<tr>
+<td><strong>UEFI Secure Boot</strong><br><em>UEFI Forum, UEFI 2.3.1 (2011) · Standard · Current · Firmware &amp; boot</em></td>
+<td>Firmware-enforced signature checking of bootloaders, first required on Windows 8 certified PCs (2012).</td>
+<td>Linux distributions adopted the Microsoft-signed shim bootloader to boot on Secure Boot PCs.</td>
+</tr>
+<tr>
+<td><strong>Let's Encrypt</strong><br><em>Internet Security Research Group (ISRG) · Service · Current · Web PKI</em></td>
+<td>A free, automated public CA; first certificate September 2015, public beta December 2015, out of beta April 2016.</td>
+<td>Let's Encrypt helped push HTTPS from a minority of page loads to the vast majority.</td>
+</tr>
+<tr>
+<td><strong>Intel SGX and AMD SEV</strong><br><em>Intel (2015), AMD (2016-17) · Product · Legacy · Trusted execution</em></td>
+<td>The first mainstream CPU features for enclaves and encrypted VMs, launching modern confidential computing.</td>
+<td>SGX enclaves first shipped with Skylake CPUs; AMD SEV launched with first-generation EPYC.</td>
+</tr>
+<tr>
+<td><strong>Confidential Computing Consortium</strong><br><em>Linux Foundation (2019) · Organisation · Current · Trusted execution</em></td>
+<td>An industry group promoting hardware-based trusted execution and attestation standards.</td>
+<td>CCC hosts open-source projects such as Gramine, Open Enclave SDK and Veraison.</td>
+</tr>
+<tr>
+<td><strong>NIST post-quantum standards</strong><br><em>FIPS 203, 204, 205 (13 August 2024) · Standard · Emerging · General</em></td>
+<td>The first standardised post-quantum algorithms: ML-KEM, ML-DSA and SLH-DSA.</td>
+<td>Hardware roots of trust such as Caliptra 2.x began adding ML-DSA and ML-KEM accelerators.</td>
+</tr>
+<tr>
+<td><strong>Open-source silicon roots of trust</strong><br><em>OpenTitan (2019), Caliptra (2022) · Concept · Emerging · Silicon</em></td>
+<td>Publicly reviewable root-of-trust hardware designs, reaching production chips in 2025-26.</td>
+<td>OpenTitan silicon from Nuvoton began shipping in Chromebooks in early 2026.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="114-follow-a-laptop-from-power-on-to-an-https-page">1.14 Follow a Laptop from Power-On to an HTTPS Page<a class="headerlink" href="#114-follow-a-laptop-from-power-on-to-an-https-page" title="Permanent link">&para;</a></h2>
+<p>This walkthrough follows a single laptop from pressing the power button to showing a padlock in the browser, naming each root of trust and chain as it appears. It ties the whole guide together: silicon checks firmware, firmware checks the bootloader, the TPM records everything and releases the disk key, the user signs in with a hardware-protected key, and the browser checks a certificate chain to a trusted root.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-14-follow-a-laptop-from-power-on-to-an.svg" alt="Each step trusts the previous one; break any link and Ana sees an error instead of payroll." loading="lazy" width="1000" height="428">
+<figcaption><strong>Power button to padlock.</strong> Each step trusts the previous one; break any link and Ana sees an error instead of payroll.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a relay of security checkpoints at an airport: identity check at the door, bag scan, passport control, boarding-pass scan — each trusting the previous checkpoint did its job, until you are finally on the plane.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Ana, an accountant at the fictional Corvid Computing, opens her Windows 11 laptop at 08:55. In about twenty seconds her CPU's security engine verifies the firmware, Secure Boot verifies Windows, the TPM unseals BitLocker's key, Windows Hello unlocks with her face and a TPM key, Intune confirms the device is healthy, and her browser opens the payroll site after validating its certificate and negotiating a hybrid post-quantum TLS key. She notices none of it.</p>
+</div>
+<h4 id="how-it-works_13">How it works<a class="headerlink" href="#how-it-works_13" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Power-on: the CPU's boot ROM and security engine verify the first firmware block against a key hash in fuses (Intel Boot Guard / AMD PSB).</li>
+<li>UEFI firmware runs, measuring itself and settings into TPM PCRs 0-7, then Secure Boot verifies Windows Boot Manager against db/dbx.</li>
+<li>Boot Manager verifies and measures the Windows kernel and early-launch anti-malware driver; the TPM unseals the BitLocker key because PCRs match.</li>
+<li>Ana unlocks with Windows Hello: her credential is a non-exportable key in the TPM; the device proves its health to Intune via attestation.</li>
+<li>Her browser connects with TLS 1.3, receives the server's certificate chain, and validates names, dates, signatures, CT SCTs and revocation status to a root in its trust store.</li>
+<li>With the chain valid and keys agreed (e.g. X25519 + ML-KEM-768), the padlock appears and payroll loads.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Help-desk and endpoint engineers diagnosing boot or certificate errors, security architects and interviewers asking 'what happens when you power on and browse?' all use this end-to-end view.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Practise telling this story in two minutes, naming each root: fused key hash, Secure Boot db, TPM, Windows Hello key, root CA — it is a favourite interview question.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>On a typical Windows 11 PC, BitLocker seals to PCR 7 and PCR 11 when Secure Boot is on, so ordinary firmware updates that change PCR 0 do not trigger recovery prompts, while Secure Boot policy changes do.</li>
+<li>Windows also measures into the TPM a log that Device Health Attestation and Intune use; Linux equivalents are the TCG event log plus IMA runtime measurements, verified by tools such as Keylime.</li>
+<li>The browser's certificate decision involves several independent roots: the root CA in its store, CT log keys built into the browser, and pushed revocation data such as Chrome's CRLSets or Firefox's CRLite.</li>
+<li>Chrome made hybrid X25519MLKEM768 its default key exchange in late 2024 and other major browsers followed; it protects against 'harvest now, decrypt later' even though certificates themselves are still classical ECDSA or RSA.</li>
+<li>Failure points map to error messages: 'Secure Boot violation' (boot chain), 'BitLocker recovery' (PCR mismatch), 'device not compliant' (attestation), 'NET::ERR_CERT_DATE_INVALID' or 'unknown issuer' (PKI).</li>
+<li>Every key in this story was born somewhere: OEM fuses at the factory, Microsoft's UEFI CA keys, the TPM's endorsement key certificate, Ana's Hello key at enrolment and the website's key at certificate issuance.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking the TPM verifies the bootloader. Firmware verifies it (secure boot); the TPM only records measurements and releases sealed keys.</li>
+<li>Assuming the browser trusts the OS root store everywhere. Chrome and Firefox ship their own root stores on most platforms.</li>
+<li>Believing a padlock means post-quantum security. Key exchange may be hybrid post-quantum, but certificate signatures are still classical in 2026.</li>
+</ul>
+</div>
+<h3 id="try-it-collect-evidence-from-each-stage-on-your-own-windows-pc-administrator">Try it: Collect evidence from each stage on your own Windows PC (Administrator)<a class="headerlink" href="#try-it-collect-evidence-from-each-stage-on-your-own-windows-pc-administrator" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span class="nb">Confirm-SecureBootUEFI</span>                     <span class="c"># boot chain enforced?</span>
+<span class="n">manage-bde</span> <span class="n">-protectors</span> <span class="n">-get</span> <span class="n">C</span><span class="p">:</span>              <span class="c"># BitLocker TPM protector</span>
+<span class="nb">Get-Tpm</span> <span class="p">|</span> <span class="nb">Select </span><span class="n">TpmPresent</span><span class="p">,</span><span class="n">TpmReady</span>       <span class="c"># TPM state</span>
+<span class="n">certutil</span> <span class="n">-verify</span> <span class="n">-urlfetch</span> <span class="n">site</span><span class="p">.</span><span class="n">cer</span>         <span class="c"># validate a saved site certificate chain</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_13">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_13" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Boot ROM</strong><br><em>CPU / SoC vendor · Firmware · Silicon</em></td>
+<td>Immutable first code in the chip; verifies the next stage using a fused key hash.</td>
+<td>On Ana's laptop the processor's boot ROM starts before any flash code runs.</td>
+</tr>
+<tr>
+<td><strong>Intel Boot Guard / AMD Platform Secure Boot</strong><br><em>Intel; AMD · Firmware · Current · Firmware &amp; boot</em></td>
+<td>CPU features that verify the initial firmware block against an OEM key hash burned into fuses.</td>
+<td>Tampered BIOS flash on Ana's laptop would fail Boot Guard verification and refuse to boot (chapter 10).</td>
+</tr>
+<tr>
+<td><strong>UEFI firmware</strong><br><em>UEFI Forum specification; vendors such as AMI, Insyde, Phoenix · Firmware · Current · Firmware &amp; boot</em></td>
+<td>The PC firmware that initialises hardware, measures into the TPM and enforces Secure Boot.</td>
+<td>UEFI loads Windows Boot Manager only after checking it against the db database.</td>
+</tr>
+<tr>
+<td><strong>Windows Boot Manager</strong><br><em>Microsoft · Software · Current · Firmware &amp; boot</em></td>
+<td>The Microsoft-signed loader that verifies and starts the Windows kernel, measuring components into the TPM.</td>
+<td>After BlackLotus, Microsoft moved boot manager signing to its 2023 CA certificates (chapter 30).</td>
+</tr>
+<tr>
+<td><strong>BitLocker with TPM</strong><br><em>Microsoft Windows · Product · Current · Platform &amp; OS</em></td>
+<td>Full-disk encryption whose key is sealed to TPM PCRs and released only on a known-good boot.</td>
+<td>If Ana's disk is moved to another PC, the TPM there cannot unseal the key (chapter 20).</td>
+</tr>
+<tr>
+<td><strong>Windows Hello</strong><br><em>Microsoft · Product · Current · Platform &amp; OS</em></td>
+<td>Passwordless sign-in where a TPM-protected private key, unlocked by face, fingerprint or PIN, authenticates the user.</td>
+<td>Ana's face unlocks a TPM key; the key, not a password, proves her identity to Entra ID.</td>
+</tr>
+<tr>
+<td><strong>Device health attestation</strong><br><em>Microsoft Intune, Entra ID Conditional Access · Service · Current · Cloud</em></td>
+<td>Cloud check of TPM-reported boot state and security settings before granting access to apps.</td>
+<td>A laptop with Secure Boot turned off is marked non-compliant and blocked from payroll.</td>
+</tr>
+<tr>
+<td><strong>TLS 1.3 handshake</strong><br><em>IETF RFC 8446 (2018) · Protocol · Current · Web PKI</em></td>
+<td>The protocol that agrees keys and authenticates the server with its certificate before any web data flows.</td>
+<td>The payroll server sends its certificate chain and signs the handshake with its private key.</td>
+</tr>
+<tr>
+<td><strong>Hybrid post-quantum key exchange</strong><br><em>X25519MLKEM768 in TLS (IETF drafts; FIPS 203) · Algorithm · Current · Web PKI</em></td>
+<td>Combining classical X25519 with ML-KEM-768 so recorded traffic stays safe even against future quantum computers.</td>
+<td>Chrome, Firefox and Edge negotiate X25519MLKEM768 with servers that support it.</td>
+</tr>
+<tr>
+<td><strong>Certificate path validation</strong><br><em>IETF RFC 5280 section 6 · Concept · Web PKI</em></td>
+<td>The algorithm a client runs to check every certificate in the chain up to a trusted root.</td>
+<td>Ana's browser checks the leaf's name, dates and signature, then the intermediate's, then the root's (chapter 50).</td>
+</tr>
+<tr>
+<td><strong>Signed Certificate Timestamp (SCT)</strong><br><em>RFC 6962 · Concept · Current · Web PKI</em></td>
+<td>A CT log's promise that a certificate has been logged; browsers require SCTs for public TLS certificates.</td>
+<td>Chrome rejects a public certificate that lacks enough valid SCTs.</td>
+</tr>
+<tr>
+<td><strong>Root store</strong><br><em>Chrome Root Store, Mozilla NSS, Microsoft, Apple · Concept · Current · Web PKI</em></td>
+<td>The browser or OS list of trusted root certificates where every web chain must end.</td>
+<td>The payroll site's chain ends at a root included in the Chrome Root Store.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="how-to-read-this-guide.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: How to read this guide">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                How to read this guide
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="hardware-roots-of-trust.html" class="md-footer__link md-footer__link--next" aria-label="Next: 2. Hardware Roots of Trust">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                2. Hardware Roots of Trust
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,1474 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/lpddr-and-gddr.html">
+  
+  
+    <link rel="prev" href="standard-ddr-sdram.html">
+  
+  
+    <link rel="next" href="hbm-and-specialty-dram.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>6. LPDDR and GDDR - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#61-how-lpddr-differs-from-ddr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. LPDDR and GDDR
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what-ram-is.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="lpddr-and-gddr.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-how-lpddr-differs-from-ddr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 How LPDDR differs from DDR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-lpddr3-2012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 LPDDR3 (2012)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-lpddr4-and-lpddr4x-2014-and-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 LPDDR4 and LPDDR4X (2014 and 2017)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-lpddr5-2019" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 LPDDR5 (2019)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-lpddr5x-2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 LPDDR5X (2021)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-lpddr6-2025-standard-arriving-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 LPDDR6 (2025 standard, arriving 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-lpddr-generations-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 LPDDR generations at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#68-why-gddr-is-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Why GDDR is different
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#69-the-gddr-generations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 The GDDR generations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#610-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#611-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-how-lpddr-differs-from-ddr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 How LPDDR differs from DDR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-lpddr3-2012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 LPDDR3 (2012)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-lpddr4-and-lpddr4x-2014-and-2017" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 LPDDR4 and LPDDR4X (2014 and 2017)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-lpddr5-2019" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 LPDDR5 (2019)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-lpddr5x-2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 LPDDR5X (2021)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-lpddr6-2025-standard-arriving-2026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 LPDDR6 (2025 standard, arriving 2026)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-lpddr-generations-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 LPDDR generations at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#68-why-gddr-is-different" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Why GDDR is different
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#69-the-gddr-generations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 The GDDR generations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#610-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#611-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-6-lpddr-and-gddr">Chapter 6: LPDDR and GDDR<a class="headerlink" href="#chapter-6-lpddr-and-gddr" title="Permanent link">&para;</a></h1>
+<p>DDR is built for capacity and cost. Two other DRAM families keep the same cells but change the interface to serve a different goal. LPDDR (low-power DDR) minimises the energy spent per bit and lives in phones, thin laptops, cars and, increasingly, AI servers. GDDR (graphics DDR) maximises the speed of every pin for graphics cards and game consoles. This chapter explains what each does differently, follows each family through its generations, and works through the bandwidth arithmetic of the newest parts.</p>
+<h2 id="61-how-lpddr-differs-from-ddr">6.1 How LPDDR differs from DDR<a class="headerlink" href="#61-how-lpddr-differs-from-ddr" title="Permanent link">&para;</a></h2>
+<p>LPDDR is the DRAM inside phones, tablets, most thin laptops, Apple Silicon Macs, cars and, increasingly, AI servers. It uses the same DRAM cells as DDR but a very different interface, tuned to save energy.</p>
+<ul>
+<li><strong>Narrow channels.</strong> LPDDR4 and LPDDR5 use 16-bit channels (LPDDR6 uses 24-bit channels made of two 12-bit sub-channels). A system gangs several channels together to get a wide bus, for example 64 or 128 bits in a laptop.</li>
+<li><strong>Soldered and close to the processor.</strong> Chips are soldered on the board, placed in the same package as the processor, or stacked on top of it (PoP, package-on-package). Short traces need less drive strength and allow high speeds at low power.</li>
+<li><strong>Low I/O voltage.</strong> LPDDR4X cut the I/O voltage to 0.6 V, and later generations go lower still, which greatly reduces the energy per bit moved.</li>
+<li><strong>Aggressive power states.</strong> Deep power-down and self-refresh modes let the memory sip power when the device is idle; partial-array self-refresh keeps only the needed part of memory alive.</li>
+<li><strong>DVFS</strong> (dynamic voltage and frequency scaling) lets the system lower the memory voltage and clock when full speed is not needed.</li>
+</ul>
+<p>The trade-off is that LPDDR cannot normally be upgraded and has historically offered less capacity per channel than DDR. The LPCAMM2 and SOCAMM module formats (Chapter 8) remove the first limitation.</p>
+<h2 id="62-lpddr3-2012">6.2 LPDDR3 (2012)<a class="headerlink" href="#62-lpddr3-2012" title="Permanent link">&para;</a></h2>
+<p>LPDDR3 ran at 1600 to 2133 MT/s and powered the smartphones and tablets of the early 2010s. It introduced on-die termination options and write levelling to LPDDR. It is now legacy, found only in older devices.</p>
+<h2 id="63-lpddr4-and-lpddr4x-2014-and-2017">6.3 LPDDR4 and LPDDR4X (2014 and 2017)<a class="headerlink" href="#63-lpddr4-and-lpddr4x-2014-and-2017" title="Permanent link">&para;</a></h2>
+<p>LPDDR4 reorganised each die into two independent 16-bit channels and reached 3200 MT/s, later 4266 MT/s. LPDDR4X (2017) kept the same core but cut the I/O voltage from 1.1 V to 0.6 V, saving a large share of interface power. Both remain very common in budget phones, single-board computers such as many Raspberry Pi models, TVs and automotive systems, because they are cheap and well supported.</p>
+<h2 id="64-lpddr5-2019">6.4 LPDDR5 (2019)<a class="headerlink" href="#64-lpddr5-2019" title="Permanent link">&para;</a></h2>
+<p>LPDDR5 reached 6400 MT/s. It added bank groups (as in DDR4) for high-speed operation, a deep sleep mode for lower idle power, and DVFS support with a lower core-voltage mode at reduced speed. It also introduced a separate write-clock scheme for the data pins. LPDDR5 is now typical of mid-range phones and laptops.</p>
+<h2 id="65-lpddr5x-2021">6.5 LPDDR5X (2021)<a class="headerlink" href="#65-lpddr5x-2021" title="Permanent link">&para;</a></h2>
+<p>LPDDR5X extended the LPDDR5 design to 8533 MT/s and, in newer parts, around 9600 to 10,700 MT/s, the highest low-power DRAM speed shipping in volume in 2026. It is the memory in current flagship phones, Apple Silicon Macs, thin laptops and Nvidia's Grace server CPU. Equalisation and improved signalling make the higher speeds possible on short, carefully designed channels.</p>
+<h2 id="66-lpddr6-2025-standard-arriving-2026">6.6 LPDDR6 (2025 standard, arriving 2026)<a class="headerlink" href="#66-lpddr6-2025-standard-arriving-2026" title="Permanent link">&para;</a></h2>
+<p>JEDEC published the LPDDR6 standard, JESD209-6, in 2025. Its biggest change is the channel: each 24-bit channel is made of two 12-bit sub-channels, and the extra width carries metadata bits that can be used for ECC and other information alongside the data. Speeds start around 10,667 MT/s with a path to about 14,400 MT/s. LPDDR6 also adds an efficiency mode that lets one sub-channel handle traffic while the other sleeps, and PRAC (per-row activation counting) to defend against rowhammer attacks, in which repeated activation of one row flips bits in its neighbours. First devices were arriving in 2026.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 6.1: The numbers inside an LPDDR6 channel</p>
+<p>The standard's figures fit together as follows.</p>
+<ol>
+<li>A burst of 24 transfers on one 12-bit sub-channel moves <span class="arithmatex">\(24 \times 12 = 288\)</span> bits.</li>
+<li>Of these, 256 bits are data (32 bytes) and the other <span class="arithmatex">\(288 - 256 = 32\)</span> bits are metadata.</li>
+<li>One 24-bit channel at 10,667 MT/s moves <span class="arithmatex">\(24 \times 10{,}667 / 8 / 1000 = 32.0\)</span> GB/s raw; at 14,400 MT/s, <span class="arithmatex">\(24 \times 14{,}400 / 8 / 1000 = 43.2\)</span> GB/s, the "about 43 GB/s" of the standard's raw figure.</li>
+<li>An LPDDR5X channel (16 bits) at 10.7 Gbps gives <span class="arithmatex">\(16 \times 10{,}700 / 8 / 1000 = 21.4\)</span> GB/s.</li>
+</ol>
+<p>"Raw" counts all pins, so the metadata share of each burst, 32 of 288 bits or 11.1 per cent, is not available as plain data.</p>
+</div>
+<h2 id="67-lpddr-generations-at-a-glance">6.7 LPDDR generations at a glance<a class="headerlink" href="#67-lpddr-generations-at-a-glance" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Generation</th>
+<th>Year</th>
+<th>Speed (MT/s)</th>
+<th>Key change</th>
+<th>Typical use (2026)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>LPDDR3</td>
+<td>2012</td>
+<td>1600–2133</td>
+<td>None to note</td>
+<td>Legacy</td>
+</tr>
+<tr>
+<td>LPDDR4/4X</td>
+<td>2014/2017</td>
+<td>3200–4266</td>
+<td>4X cut I/O voltage to 0.6 V</td>
+<td>Budget phones, single-board computers</td>
+</tr>
+<tr>
+<td>LPDDR5</td>
+<td>2019</td>
+<td>6400</td>
+<td>Bank groups, deep sleep</td>
+<td>Mid-range</td>
+</tr>
+<tr>
+<td>LPDDR5X</td>
+<td>2021</td>
+<td>8533–10,700</td>
+<td>Highest low-power speed shipping in volume</td>
+<td>Current flagship</td>
+</tr>
+<tr>
+<td>LPDDR6</td>
+<td>2025 (JESD209-6)</td>
+<td>10,667–14,400</td>
+<td>24-bit channels (2 × 12-bit sub-channels), metadata bits for ECC, efficiency mode, PRAC rowhammer protection</td>
+<td>Arriving 2026</td>
+</tr>
+</tbody>
+</table>
+<h2 id="68-why-gddr-is-different">6.8 Why GDDR is different<a class="headerlink" href="#68-why-gddr-is-different" title="Permanent link">&para;</a></h2>
+<p>GDDR is built for one job: moving as many bits per second through each pin as possible, at a reasonable price, for graphics cards and game consoles.</p>
+<p>A GPU has thousands of cores working on huge textures and frame buffers, so it needs far more bandwidth than a CPU, but it tolerates higher latency, because it can switch to other work while waiting. GDDR exploits this by running each pin much faster than DDR, tens of gigabits per second instead of a few, at the cost of higher power per chip and somewhat higher latency. Each GDDR chip has a 32-bit interface (split internally into narrower channels), and the chips are soldered in a ring around the GPU on short, point-to-point traces, with no modules or slots. A GPU with a 256-bit bus uses eight chips; a 384-bit bus uses twelve.</p>
+<p>Signalling has evolved to keep raising per-pin speed (Section 3.4). GDDR5, GDDR5X and GDDR6 use two-level NRZ. GDDR6X, developed by Micron with Nvidia, switched to four-level PAM4, sending 2 bits per symbol. GDDR7 adopted three-level PAM3 (1.5 bits per symbol), which gives better noise margins than PAM4 while still beating NRZ.</p>
+<h2 id="69-the-gddr-generations">6.9 The GDDR generations<a class="headerlink" href="#69-the-gddr-generations" title="Permanent link">&para;</a></h2>
+<p><strong>GDDR5 (2008).</strong> About 4 to 8 Gbps per pin; it dominated graphics for nearly a decade: Nvidia GTX 900 and most GTX 1000 cards, the AMD Radeon cards of the period and the PlayStation 4, which used 8 GB of GDDR5 as unified memory for both CPU and GPU. It introduced separate clocks for commands and data, and link training to tune timing at start-up.</p>
+<p><strong>GDDR5X (2016).</strong> It doubled the prefetch of GDDR5 to reach about 10 to 14 Gbps while staying with NRZ. It had a short life, used mainly by Micron and Nvidia, most famously in the GTX 1080 and 1080 Ti.</p>
+<p><strong>GDDR6 (2018).</strong> It split each chip into two independent 16-bit channels and reached 14 to 20 Gbps with NRZ. It became the industry's workhorse: Nvidia RTX 20-series and many RTX 30 and 40 cards, AMD RX 6000 and 7000, the PlayStation 5 and the Xbox Series X and S. It remains the budget choice for graphics in 2026.</p>
+<p><strong>GDDR6X (2020).</strong> A Micron and Nvidia collaboration rather than a broad JEDEC standard, it used PAM4 signalling to reach about 19 to 24 Gbps. It powered high-end Nvidia cards such as the RTX 3080, 3090 and 4090. PAM4's smaller voltage steps demanded very careful board design.</p>
+<p><strong>GDDR7 (2024 to 2025).</strong> GDDR7 (JEDEC JESD239, 2024) uses PAM3 and splits each chip into four channels. First products run at 28 to 32 Gbps per pin, with vendor roadmaps reaching towards 48 Gbps. It is used in the Nvidia RTX 50 series, and also adds stronger error handling and options for lower-power operation.</p>
+<table>
+<thead>
+<tr>
+<th>Generation</th>
+<th>Year</th>
+<th>Speed per pin</th>
+<th>Signalling</th>
+<th>Example products</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GDDR5</td>
+<td>2008</td>
+<td>4–8 Gbps</td>
+<td>NRZ</td>
+<td>GTX 900/1000, PS4</td>
+</tr>
+<tr>
+<td>GDDR5X</td>
+<td>2016</td>
+<td>10–14 Gbps</td>
+<td>NRZ</td>
+<td>GTX 1080</td>
+</tr>
+<tr>
+<td>GDDR6</td>
+<td>2018</td>
+<td>14–20 Gbps</td>
+<td>NRZ</td>
+<td>RTX 20/30/40 (some), RX 6000/7000, PS5, Xbox Series</td>
+</tr>
+<tr>
+<td>GDDR6X</td>
+<td>2020</td>
+<td>19–24 Gbps</td>
+<td>PAM4</td>
+<td>RTX 3080/3090/4090 (Micron and Nvidia only)</td>
+</tr>
+<tr>
+<td>GDDR7</td>
+<td>2024–25</td>
+<td>28–32 Gbps, roadmap to 48</td>
+<td>PAM3</td>
+<td>RTX 50 series</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Example 6.2: GPU memory bandwidth</p>
+<p>For a chip with 32 data pins, bandwidth (GB/s) is the per-pin rate in Gbps times 32 divided by 8, or four times the per-pin rate.</p>
+<ol>
+<li>One GDDR7 chip at 32 Gbps: <span class="arithmatex">\(32 \times 32 / 8 = 128\)</span> GB/s.</li>
+<li>A card with a 512-bit bus uses <span class="arithmatex">\(512/32 = 16\)</span> chips. At 28 Gbps the bus delivers <span class="arithmatex">\(28 \times 512 / 8 = 1792\)</span> GB/s.</li>
+<li>For comparison, a 256-bit card with GDDR6 chips at 16 Gbps (a value inside the 14 to 20 Gbps range) uses 8 chips and delivers <span class="arithmatex">\(16 \times 256 / 8 = 512\)</span> GB/s, about 17 times the 25.6 GB/s of a single DDR4-3200 channel.</li>
+</ol>
+</div>
+<h2 id="610-summary">6.10 Summary<a class="headerlink" href="#610-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>LPDDR keeps DRAM cells but narrows the channel, shortens the wires, lowers the I/O voltage and adds deep power states, to minimise energy per bit.</li>
+<li>LPDDR4X cut I/O voltage to 0.6 V; LPDDR5X reaches 8533 to 10,700 MT/s; LPDDR6 uses 24-bit channels of two 12-bit sub-channels with metadata bits and PRAC.</li>
+<li>GDDR maximises per-pin speed (tens of Gbps) for graphics, soldered point-to-point around the GPU, tolerating higher latency.</li>
+<li>GDDR6X (PAM4) and GDDR7 (PAM3) raise the data rate without raising the symbol rate in proportion.</li>
+<li>Bandwidth for a 32-pin GDDR chip is four times the per-pin rate in Gbps; a 512-bit card at 28 Gbps reaches 1792 GB/s.</li>
+</ul>
+<h2 id="611-exercises">6.11 Exercises<a class="headerlink" href="#611-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 6.1.</strong> A thin laptop has LPDDR5X-8533 on a 128-bit bus (eight 16-bit channels). Find its peak bandwidth.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(8533 \times 128 / 8 / 1000 = 136.5\)</span> GB/s.</p>
+</details>
+<p><strong>Exercise 6.2.</strong> A GPU has a 192-bit memory bus built from GDDR6 chips with 32 data pins each, running at 18 Gbps. How many chips does it have and what is its peak bandwidth?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(192/32 = 6\)</span> chips. Bandwidth <span class="arithmatex">\(= 18 \times 192 / 8 = 432\)</span> GB/s.</p>
+</details>
+<p><strong>Exercise 6.3.</strong> Why can a GPU tolerate GDDR's higher latency, while a CPU prefers DDR or LPDDR?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>A GPU has thousands of cores and can switch to other work while a memory request is outstanding, so it hides latency with parallelism. A CPU has few threads and stalls when waiting for data, so it values low latency, and its memory also needs large capacity (DDR) or low power (LPDDR).</p>
+</details>
+<p><strong>Exercise 6.4.</strong> Which of these is an LPDDR feature and which a GDDR feature: PoP stacking; PAM3 signalling; deep power-down; 0.6 V I/O; a 384-bit bus of soldered chips?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>LPDDR: PoP stacking, deep power-down, 0.6 V I/O (LPDDR4X and later). GDDR: PAM3 signalling (GDDR7) and a 384-bit bus of soldered chips (twelve chips around the GPU).</p>
+</details>
+<p><strong>Exercise 6.5.</strong> Explain how LPDDR6's 288-bit burst on a 12-bit sub-channel splits into data and metadata, and what the metadata can be used for.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The burst is 24 transfers of 12 bits, 288 bits. 256 bits are data (32 bytes) and 32 bits are metadata, which can be used for ECC and other information alongside the data.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="standard-ddr-sdram.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Standard DDR SDRAM: From SDR to DDR6">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                5. Standard DDR SDRAM: From SDR to DDR6
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="hbm-and-specialty-dram.html" class="md-footer__link md-footer__link--next" aria-label="Next: 7. HBM and Specialty DRAM">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                7. HBM and Specialty DRAM
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

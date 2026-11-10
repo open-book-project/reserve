@@ -1,0 +1,85 @@
+/* Linked open books (tools/remote.py, assets/remote.js): the shell of a chapter while its text is fetched, the text
+   once it has arrived, its attribution, and the badge of the source on the covers. The rules for each linked book's
+   cover ("From Wikibooks · CC BY-SA 4.0") are added at the end by tools/remote.py. */
+
+/* the shell: its section headings are only for the contents of the book; they give way to the chapter's own */
+.md-typeset .pk-remote ~ h2, .md-typeset .pk-remote ~ h3 { display: none; }
+.md-typeset .pk-remote { min-height: 40vh; }
+.md-typeset .pk-remote-status { display: flex; align-items: center; gap: 0.75rem; margin: 2.5rem 0; color: var(--md-default-fg-color--light); font-family: var(--pk-ui, system-ui, sans-serif); font-size: 0.9rem; }
+.md-typeset .pk-remote-fail { display: block; padding: 1rem 1.2rem; border-radius: 10px; border: 1px solid var(--md-default-fg-color--lightest); background: var(--md-code-bg-color); color: var(--md-default-fg-color); }
+.md-typeset .pk-remote-fail p { margin: 0.4rem 0; }
+.md-typeset .pk-remote-fail strong { color: var(--pk-accent, var(--md-primary-fg-color)); }
+.pk-spin { width: 1.1rem; height: 1.1rem; flex: none; border-radius: 50%; border: 2px solid var(--md-default-fg-color--lightest); border-top-color: var(--pk-accent, var(--md-primary-fg-color)); animation: pk-spin 0.8s linear infinite; }
+@keyframes pk-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .pk-spin { animation-duration: 2.4s; } }
+
+/* the text of a chapter */
+.md-typeset .pk-remote-text img { max-width: 100%; height: auto; }
+.md-typeset .pk-remote-text figure.fig { margin: 1.4em auto; text-align: center; }
+.md-typeset .pk-remote-text figure.fig img { background: #fff; border-radius: 4px; }
+.md-typeset .pk-remote-text figcaption { font-size: 0.85em; color: var(--md-default-fg-color--light); max-width: 34rem; margin: 0.5em auto 0; }
+.md-typeset .pk-gallery { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; }
+.md-typeset .pk-gallery figure.fig { margin: 0.5em; max-width: 14rem; }
+.md-typeset .pk-poem { margin: 1em 0 1em 1.2em; line-height: 1.75; }
+.md-typeset .pk-poem p { margin: 0.6em 0; }
+.md-typeset .pk-pre { white-space: pre-wrap; font-family: inherit; }
+.md-typeset .pk-center { text-align: center; }
+.md-typeset .pk-remote-text div.arithmatex { overflow-x: auto; overflow-y: hidden; margin: 0.8em 0; }
+.md-typeset .pk-remote-text math[display="block"] { display: block; margin: 0.8em 0; overflow-x: auto; }
+.md-typeset .pk-remote-text dl dd { margin-left: 1.6em; }
+.md-typeset .pk-remote-text a.pk-ext::after { content: "\2009\2197"; font-size: 0.8em; opacity: 0.6; }
+
+/* the attribution at the end of a chapter */
+.md-typeset .pk-remote-credit { margin: 2.6rem 0 0.5rem; padding-top: 0.8rem; border-top: 1px solid var(--md-default-fg-color--lightest); font-family: var(--pk-ui, system-ui, sans-serif); font-size: 0.74rem; line-height: 1.5; color: var(--md-default-fg-color--light); }
+.md-typeset .pk-remote-credit p { margin: 0; }
+.md-typeset .pk-remote-credit a { color: inherit; text-decoration: underline; text-decoration-color: var(--md-default-fg-color--lighter); }
+
+/* the page of a linked book: where it comes from */
+.md-typeset .pk-linked-tag { display: inline-block; margin: 0.35rem 0 0; padding: 0.15rem 0.6rem; border-radius: 999px; font: 600 0.72rem/1.5 var(--pk-ui, system-ui, sans-serif); letter-spacing: 0.02em; color: var(--pk-secondary, var(--md-primary-fg-color)); background: color-mix(in srgb, var(--pk-secondary, #24476f) 12%, transparent); }
+.md-typeset .pk-linked-about { font-size: 0.9em; }
+.md-typeset .pk-linked-about .pk-linked-badge { display: none; }
+.md-typeset .pk-remote-keep { margin: 0.4rem 0 0; font: 0.74rem/1.45 var(--pk-ui, system-ui, sans-serif); color: var(--md-default-fg-color--light); }
+
+/* the reader: no search of the text (it is not in this library) */
+html.pk-linked .rd-findbtn { display: none; }
+
+/* the badge on the cover of a linked book ("From Wikibooks · CC BY-SA 4.0", put in by assets/remote.js) */
+.book-cover > .pk-cover-badge {
+  position: absolute; left: 12%; right: 9%; top: 2.2%; z-index: 3; box-sizing: border-box; max-width: none; padding: 0.9cqi 2cqi;
+  border-radius: 3cqi; font: 700 3.9cqi/1.25 var(--pk-ui, system-ui, sans-serif); letter-spacing: 0.02em; text-align: center;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--cv-bg, #800000); background: var(--cv-fg, #fcf8e8);
+  opacity: 0.94; pointer-events: none;
+}
+.pk-mini .pk-cover-badge, .pk-fan-c .pk-cover-badge { display: none; }
+
+/* the layout of transcribed texts (Wikisource): centred headings, stanzas, rules, small capitals */
+.md-typeset .pk-remote-text .pk-center { text-align: center; }
+.md-typeset .pk-remote-text .pk-right { text-align: right; }
+.md-typeset .pk-remote-text .pk-stanza { margin: 0 0 0.9em; }
+.md-typeset .pk-remote-text hr.pk-rule { width: 3em; margin: 1em auto; }
+.md-typeset .pk-remote-text .pk-sc { font-variant: small-caps; }
+.md-typeset .pk-remote-text .pk-larger { font-size: 1.15em; }
+.md-typeset .pk-remote-text .pk-smaller { font-size: 0.88em; }
+.md-typeset .pk-remote-text .pk-indent { padding-left: 1.5em; }
+/* Sanskrit and Hindi: no hyphenation, more leading for the marks above and below the line */
+.md-typeset .pk-remote-text:lang(sa), .md-typeset .pk-remote-text:lang(hi) { hyphens: manual; -webkit-hyphens: manual; line-height: 1.85; }
+/* boxes that open with a term (definitions, examples, theorems) */
+.md-typeset .pk-remote-text .pk-box { margin: 1.1em 0; padding: 0.2em 1em 0.4em; border-left: 3px solid var(--pk-secondary, var(--md-primary-fg-color)); background: color-mix(in srgb, var(--pk-secondary, #24476f) 5%, transparent); border-radius: 0 6px 6px 0; }
+.md-typeset .pk-remote-text .pk-box-title { margin: 0.6em 0 0.3em; font-weight: 700; color: var(--pk-secondary, inherit); }
+
+/* Standard Ebooks chapters: verse indents, plays (speeches, stage directions), epigraphs and letters */
+.md-typeset .pk-remote-text .pk-i1 { display: inline-block; padding-left: 1em; }
+.md-typeset .pk-remote-text .pk-i2 { display: inline-block; padding-left: 2em; }
+.md-typeset .pk-remote-text .pk-i3 { display: inline-block; padding-left: 3em; }
+.md-typeset .pk-remote-text .pk-i4 { display: inline-block; padding-left: 4em; }
+.md-typeset .pk-remote-text blockquote.pk-poem { border-left: 0; padding-left: 0; }
+.md-typeset .pk-remote-text .pk-drama { margin: 1em 0; }
+.md-typeset .pk-remote-text .pk-sp { margin: 0.9em 0; }
+.md-typeset .pk-remote-text .pk-speaker { margin: 0 0 0.1em; font-variant: small-caps; letter-spacing: 0.04em; font-weight: 700; }
+.md-typeset .pk-remote-text .pk-speech { margin-left: 1.2em; }
+.md-typeset .pk-remote-text .pk-speech p { margin: 0.2em 0; }
+.md-typeset .pk-remote-text .pk-speech .pk-poem { margin: 0.2em 0; }
+.md-typeset .pk-remote-text .pk-stage { font-style: italic; margin: 0.7em 0 0.7em 1.2em; color: var(--md-default-fg-color--light); }
+.md-typeset .pk-remote-text .pk-stage * { font-style: inherit; }
+.md-typeset .pk-remote-text .pk-epigraph { margin: 1.2em 0 1.2em 1.5em; font-style: italic; }
+.md-typeset .pk-remote-text .pk-letter { margin-left: 1.5em; }

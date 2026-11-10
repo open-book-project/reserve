@@ -1,0 +1,1861 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/randomness_testing/fips-140-2-and-bsi-ais-31.html">
+  
+  
+    <link rel="prev" href="diehard-and-dieharder.html">
+  
+  
+    <link rel="next" href="ent-testu01-and-practrand.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>7. FIPS 140-2 and BSI AIS 31 - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#71-about-the-fips-140-2-power-up-tests" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. FIPS 140-2 and BSI AIS 31
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Randomness Testing</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="random-numbers-and-the-coin-flip-model.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random Numbers and the Coin-Flip Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributions-corrections-and-entropy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distributions, Corrections and Entropy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-i-balance-runs-and-spectra.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. NIST SP 800-22 (I): Balance, Runs and Spectra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-ii-patterns-complexity-and-walks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. NIST SP 800-22 (II): Patterns, Complexity and Walks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="estimating-entropy-nist-sp-800-90b.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Estimating Entropy: NIST SP 800-90B
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diehard-and-dieharder.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Diehard and Dieharder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. FIPS 140-2 and BSI AIS 31
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="fips-140-2-and-bsi-ais-31.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. FIPS 140-2 and BSI AIS 31
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-about-the-fips-140-2-power-up-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 About the FIPS 140-2 power-up tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-monobit-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Monobit (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-poker-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Poker (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-runs-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Runs (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-long-run-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Long run (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-about-bsi-ais-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 About BSI AIS 31
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-t0-disjointness-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 T0: disjointness test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-t1-monobit-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 T1: monobit test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-t2-poker-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 T2: poker test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-t3-runs-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 T3: runs test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-t4-long-run-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 T4: long run test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-t5-autocorrelation-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 T5: autocorrelation test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#713-t6-uniform-distribution-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.13 T6: uniform distribution test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#714-t7-comparative-test-homogeneity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.14 T7: comparative test (homogeneity)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#715-t8-entropy-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.15 T8: entropy estimation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#716-procedure-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.16 Procedure A
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#717-procedure-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.17 Procedure B
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#718-stochastic-model-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.18 Stochastic model requirement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#719-online-and-total-failure-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.19 Online and total-failure tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#720-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.20 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#721-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.21 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ent-testu01-and-practrand.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. ENT, TestU01 and PractRand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comparing-the-batteries.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Comparing the Batteries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-i-bias-entropy-correlation-and-compression.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Additional Tests (I): Bias, Entropy, Correlation and Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-ii-source-behaviour-and-health.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Additional Tests (II): Source Behaviour and Health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iii-spectral-ordinal-matrix-and-betting-tes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Additional Tests (III): Spectral, Ordinal, Matrix and Betting Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iv-collisions-memory-and-learning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Additional Tests (IV): Collisions, Memory and Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recognising-generators-and-classifying-sources.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Recognising Generators and Classifying Sources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-about-the-fips-140-2-power-up-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 About the FIPS 140-2 power-up tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-monobit-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Monobit (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-poker-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Poker (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-runs-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 Runs (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-long-run-fips-140-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Long run (FIPS 140-2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-about-bsi-ais-31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 About BSI AIS 31
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-t0-disjointness-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 T0: disjointness test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#78-t1-monobit-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.8 T1: monobit test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#79-t2-poker-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.9 T2: poker test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#710-t3-runs-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.10 T3: runs test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#711-t4-long-run-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.11 T4: long run test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#712-t5-autocorrelation-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.12 T5: autocorrelation test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#713-t6-uniform-distribution-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.13 T6: uniform distribution test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#714-t7-comparative-test-homogeneity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.14 T7: comparative test (homogeneity)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#715-t8-entropy-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.15 T8: entropy estimation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#716-procedure-a" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.16 Procedure A
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#717-procedure-b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.17 Procedure B
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#718-stochastic-model-requirement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.18 Stochastic model requirement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#719-online-and-total-failure-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.19 Online and total-failure tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#720-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.20 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#721-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.21 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-7-fips-140-2-and-bsi-ais-31">Chapter 7: FIPS 140-2 and BSI AIS 31<a class="headerlink" href="#chapter-7-fips-140-2-and-bsi-ais-31" title="Permanent link">&para;</a></h1>
+<p>Two standards come from the world of certification rather than research. The FIPS 140-2 power-up tests are four quick checks on 20,000 bits, designed to run inside a device at start-up; they were struck out of the standard in 2002 but remain widely known. BSI's AIS 20 and AIS 31 are the evaluation method for random number generators in the German Common Criteria scheme, and they take a different view altogether: statistical tests are not enough for a physical generator, which needs a stochastic model and on-board tests. This chapter covers both.</p>
+<h2 id="71-about-the-fips-140-2-power-up-tests">7.1 About the FIPS 140-2 power-up tests<a class="headerlink" href="#71-about-the-fips-140-2-power-up-tests" title="Permanent link">&para;</a></h2>
+<p>FIPS 140-2 (May 2001) is the US standard for cryptographic modules. Its section 4.9.1 originally listed four quick statistical checks on one stream of 20,000 bits from each generator, meant to run inside a device at power-up or on demand. There are no p-values here: each test has fixed limits, and a block either passes or fails. They do not have a long life in the standard. Change Notice 1 (10 October 2001) corrected the runs intervals, and Change Notice 2 (3 December 2002) struck all four tests out of section 4.9.1, along with the related requirement in section 4.7.1, so the statistical tests are no longer FIPS 140-2 requirements. We include them because they remain widely known and because BSI's T1 to T4 descend from the same family in FIPS 140-1, with wider limits.</p>
+<h2 id="72-monobit-fips-140-2">7.2 Monobit (FIPS 140-2)<a class="headerlink" href="#72-monobit-fips-140-2" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Count the ones in 20,000 bits. A fair source gives close to 10,000. The limits are wide enough that a healthy device will almost never trip them. It is a sanity check, like asking whether a coin has two heads.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.2: Monobit (FIPS 140-2)</p>
+<p>A block with 10,100 ones passes, as <span class="arithmatex">\(9725 &lt; 10100 &lt; 10275\)</span>. A block with 10,275 ones fails, since the limits are strict. The limit is about 3.89 standard deviations out, as <span class="arithmatex">\(\sigma = \sqrt{5000} = 70.71\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[X = \sum_{i=1}^{20000} b_i, \qquad \text{pass if } 9725 &lt; X &lt; 10275\]</div>
+<ul>
+<li><span class="arithmatex">\(b_i\)</span> is bit <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(X\)</span> is the count of ones.</li>
+<li>Under a fair source, <span class="arithmatex">\(X\)</span> is Binomial(20000, 1/2). We compute a false-failure rate of about <span class="arithmatex">\(1.03 \times 10^{-4}\)</span> per block.</li>
+</ul>
+<p>The standard gives only the limits, with no p-value.</p>
+<p><strong>What it catches and misses.</strong> It catches a dead or badly biased source at start-up. A pattern as simple as 0101... passes. So it is an alarm for disasters, not a test of quality.</p>
+<h2 id="73-poker-fips-140-2">7.3 Poker (FIPS 140-2)<a class="headerlink" href="#73-poker-fips-140-2" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Cut the block into 5000 pieces of 4 bits and count each of the 16 possible values. They should appear about equally often, but not too exactly: real randomness has some wobble. So the test fails a block that is too lumpy, and also one that is too even.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.3: Poker (FIPS 140-2)</p>
+<p>If the counts are eight values at 300 and eight at 325, <span class="arithmatex">\(X = 8.0\)</span>, which passes. If they are all 312 or 313, <span class="arithmatex">\(X = 0.0128\)</span>, below 2.16, so the block fails as too even. If one value fills all 5000 slots, <span class="arithmatex">\(X = 75000\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[X = \frac{16}{5000} \sum_{i=0}^{15} f(i)^2 - 5000, \qquad \text{pass if } 2.16 &lt; X &lt; 46.17\]</div>
+<ul>
+<li><span class="arithmatex">\(f(i)\)</span> is the count of 4-bit value <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(X\)</span> is approximately chi-square with 15 degrees of freedom. On that basis, the limits leave about <span class="arithmatex">\(5 \times 10^{-5}\)</span> in each tail, by our calculation.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches bias in short patterns and sources that are suspiciously regular. It looks only at aligned 4-bit pieces, so a defect that lies across piece boundaries may be missed.</p>
+<h2 id="74-runs-fips-140-2">7.4 Runs (FIPS 140-2)<a class="headerlink" href="#74-runs-fips-140-2" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Count the runs of each length, separately for ones and zeros. About half of all runs should be length 1, a quarter length 2, and so on. There are 12 counts and each must land in its own interval, so it checks the whole shape, not just the total.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.4: Runs (FIPS 140-2)</p>
+<p>The expected number of runs of length 1 of one value is <span class="arithmatex">\((20000 - 1 + 3)/2^3 = 2500.25\)</span>, comfortably in the middle of 2315 to 2685. A block with 2700 runs of length 1 fails.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Run length</th>
+<th>Required interval, corrected by Change Notice 1</th>
+<th>Interval first published</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2315 to 2685</td>
+<td>2343 to 2657</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1114 to 1386</td>
+<td>1135 to 1365</td>
+</tr>
+<tr>
+<td>3</td>
+<td>527 to 723</td>
+<td>542 to 708</td>
+</tr>
+<tr>
+<td>4</td>
+<td>240 to 384</td>
+<td>251 to 373</td>
+</tr>
+<tr>
+<td>5</td>
+<td>103 to 209</td>
+<td>111 to 201</td>
+</tr>
+<tr>
+<td>6 or more</td>
+<td>103 to 209</td>
+<td>111 to 201</td>
+</tr>
+</tbody>
+</table>
+<div class="arithmatex">\[r(n, i) = \frac{n - i + 3}{2^{i+2}}\]</div>
+<ul>
+<li>All 12 counts, for ones and for zeros, must lie in the interval for their length. Runs longer than 6 count as length 6.</li>
+<li><span class="arithmatex">\(r(n, i)\)</span> is the expected number of runs of length <span class="arithmatex">\(i\)</span> of one value in <span class="arithmatex">\(n\)</span> bits, a formula quoted in BSI's document.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches sticky or over-alternating sources. Since it counts runs without regard to position, it is blind to where they fall in the block.</p>
+<h2 id="75-long-run-fips-140-2">7.5 Long run (FIPS 140-2)<a class="headerlink" href="#75-long-run-fips-140-2" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> If 26 or more identical bits appear in a row anywhere in the block, the test fails. In a good source that is rare, so a long run strongly suggests something has stuck, even briefly. It is the simplest of the four.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.5: Long run (FIPS 140-2)</p>
+<p>A run of 25 passes, and a run of 26 fails. For either bit value, the expected number of such runs in 20,000 bits is about <span class="arithmatex">\(20000 \cdot 2^{-26} = 0.0003\)</span>, so about three good blocks in 10,000 would fail by chance.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\text{pass if } \max_{\text{runs}} (\text{run length}) &lt; 26\]</div>
+<ul>
+<li>Runs of zeros and of ones both count.</li>
+<li>The 0.0003 above is our own estimate, not a number from the standard.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches a source that sticks briefly, which an average would hide. It tells you nothing about anything shorter than 26 bits, and it would not catch a source that fails slowly.</p>
+<h2 id="76-about-bsi-ais-31">7.6 About BSI AIS 31<a class="headerlink" href="#76-about-bsi-ais-31" title="Permanent link">&para;</a></h2>
+<p>BSI, Germany's federal cybersecurity office, uses AIS 20 and AIS 31 as the evaluation method for random number generators in its Common Criteria certification scheme. Common Criteria is the international framework for evaluating the security of IT products. The tests here come from the technical document by Killmann and Schindler, version 2.0 (18 September 2011). Its core idea differs from everything above: statistical tests are not enough for a physical generator. You also need a stochastic model of the noise source and on-board tests. It defines classes such as PTG.1, PTG.2 and PTG.3 for physical generators, DRG.1 to DRG.4 for deterministic ones, and NTG.1 for non-physical true generators. Tests have fixed limits and a retest rule, and T0 to T8 are grouped into procedures A and B below.</p>
+<p>An important update: version 3.0 (Peter and Schindler, September 2024) replaces this arrangement. It removes class PTG.1 and allows min-entropy claims. Its black-box suite for PTG.2 has four tests on 2,040,000 bits: monobit (pass from 9655 to 10345), poker (<span class="arithmatex">\(1.03 &lt; t &lt; 57.4\)</span>), and the MultiMMC and LZ78Y predictors from SP 800-90B, on <span class="arithmatex">\(10^6\)</span> bits each, failing below 0.95. Version 3.0 calls this suite a sanity check and says passing alone does not warrant a meaningful statement about quality. Read T0 to T8 as the 2011 scheme.</p>
+<h2 id="77-t0-disjointness-test">7.7 T0: disjointness test<a class="headerlink" href="#77-t0-disjointness-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Take 65,536 words of 48 bits. There are so many possible 48-bit words that two matching words should almost never happen. If any two are the same, the test fails. It is the birthday problem with a very long year.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.7: T0: disjointness test</p>
+<p>The number of pairs is <span class="arithmatex">\(2^{16}(2^{16} - 1)/2\)</span>, and each pair matches with chance <span class="arithmatex">\(2^{-48}\)</span>. So the chance of a match on ideal data is about <span class="arithmatex">\(7.63 \times 10^{-6}\)</span>, which is the document's <span class="arithmatex">\(2^{-17}\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\text{pass if and only if } w_1, \ldots, w_{2^{16}} \text{ are all different}, \qquad w_i \in \{0, 1\}^{48}\]</div>
+<ul>
+<li><span class="arithmatex">\(w_i\)</span> are the 48-bit words, taken from consecutive outputs.</li>
+<li>The rejection probability for an ideal generator is <span class="arithmatex">\(2^{-17}\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches short cycles and repeated output, and very small effective state. It reads only 65,536 words, though, so a generator whose period is just above that passes as long as no word repeats within the cycle, however weak its statistics are.</p>
+<h2 id="78-t1-monobit-test">7.8 T1: monobit test<a class="headerlink" href="#78-t1-monobit-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Count ones in 20,000 bits, just like the FIPS test, but with wider limits. BSI wants the chance of a false alarm in a single test to be about one in a million, because this test is repeated 257 times.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.8: T1: monobit test</p>
+<p>A block with 10,300 ones fails FIPS 140-2 but passes T1, since <span class="arithmatex">\(9654 &lt; 10300 &lt; 10346\)</span>. At the top of the band, the share of ones is 0.5173, for which the document gives a min-entropy of at least 0.9509 and a Shannon entropy of at least 0.9991.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[T_1 = \sum_{j=1}^{20000} b_j, \qquad \text{pass if and only if } 9654 &lt; T_1 &lt; 10346\]</div>
+<ul>
+<li><span class="arithmatex">\(b_j\)</span> is bit <span class="arithmatex">\(j\)</span>.</li>
+<li>We compute the false-failure rate on ideal data as about <span class="arithmatex">\(1.03 \times 10^{-6}\)</span> per block.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches gross bias. Its limits are too wide for mild bias, which is why the 257 repetitions and the stricter T6 exist. It is blind to order.</p>
+<h2 id="79-t2-poker-test">7.9 T2: poker test<a class="headerlink" href="#79-t2-poker-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Same as the FIPS poker test: count the 16 possible 4-bit values across 5000 pieces. Too lumpy fails, and so does too even. Again, the limits are wider so that good data rarely trips the alarm.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.9: T2: poker test</p>
+<p>Counts of eight values at 300 and eight at 325 give <span class="arithmatex">\(T_2 = 8.0\)</span>, inside the band. Perfectly even counts of 312 and 313 give 0.0128, below 1.03, and fail.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[T_2 = \frac{16}{5000} \sum_{i=0}^{15} f[i]^2 - 5000, \qquad \text{pass if } 1.03 &lt; T_2 &lt; 57.4\]</div>
+<ul>
+<li><span class="arithmatex">\(f[i]\)</span> counts the 4-bit value <span class="arithmatex">\(i\)</span>, built as <span class="arithmatex">\(c_j = 8b_{4j-3} + 4b_{4j-2} + 2b_{4j-1} + b_{4j}\)</span>.</li>
+<li>For an ideal generator, <span class="arithmatex">\(T_2\)</span> is chi-square with 15 degrees of freedom. The document gives a rejection probability of <span class="arithmatex">\(1.014 \times 10^{-6}\)</span>, which our calculation reproduces.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches short-pattern bias and excess regularity. It is limited to aligned 4-bit pieces.</p>
+<h2 id="710-t3-runs-test">7.10 T3: runs test<a class="headerlink" href="#710-t3-runs-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Same idea as the FIPS runs test: 12 counts of runs of each length and value, each inside its own interval. It checks the whole shape of the run-length distribution, with limits set for a one-in-a-million false alarm rate.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.10: T3: runs test</p>
+<p>The expected count for length 1 is about 2500, so a block with 2740 runs of length 1 fails, as it is over the limit of 2733. A block with 2700 fails FIPS 140-2, whose corrected limit is 2685, but passes here.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Run length</th>
+<th>Lower bound</th>
+<th>Upper bound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>2267</td>
+<td>2733</td>
+</tr>
+<tr>
+<td>2</td>
+<td>1079</td>
+<td>1421</td>
+</tr>
+<tr>
+<td>3</td>
+<td>502</td>
+<td>748</td>
+</tr>
+<tr>
+<td>4</td>
+<td>223</td>
+<td>402</td>
+</tr>
+<tr>
+<td>5</td>
+<td>90</td>
+<td>223</td>
+</tr>
+<tr>
+<td>6 or more</td>
+<td>90</td>
+<td>223</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="arithmatex">\(T_3(\ell, p)\)</span> is the number of runs of length <span class="arithmatex">\(\ell\)</span> of value <span class="arithmatex">\(p\)</span>. Runs longer than 5 are summed together into the last row.</li>
+<li>All 12 counts must lie within their bounds. The rejection probability is about <span class="arithmatex">\(10^{-6}\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches over-alternating or sticky behaviour. It does not see where runs fall, nor relations between one run and the next.</p>
+<h2 id="711-t4-long-run-test">7.11 T4: long run test<a class="headerlink" href="#711-t4-long-run-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> If any run of 34 or more identical bits appears, the block fails. It is the same simple alarm as in FIPS, with a longer limit to match this standard's lower false-alarm rate.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.11: T4: long run test</p>
+<p>A run of 33 passes, and a run of 34 fails. By the same estimate as before, the expected number on good data is <span class="arithmatex">\(20000 \cdot 2^{-34} = 1.16 \times 10^{-6}\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\text{pass if and only if } T_3(\ell, p) = 0 \text{ for all } \ell \ge 34 \text{ and } p \in \{0, 1\}\]</div>
+<ul>
+<li><span class="arithmatex">\(T_3(\ell, p)\)</span> is the count of runs of length <span class="arithmatex">\(\ell\)</span> and value <span class="arithmatex">\(p\)</span>.</li>
+<li>The document gives a rejection probability of about <span class="arithmatex">\(10^{-6}\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches a source that sticks for at least 34 bits. Shorter stuck periods can pass, and repeated runs of 33 would not be flagged here.</p>
+<h2 id="712-t5-autocorrelation-test">7.12 T5: autocorrelation test<a class="headerlink" href="#712-t5-autocorrelation-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Compare a sequence with a shifted copy of itself. If the bits are independent, they should agree about half the time, whatever the shift. If agreement at some shift is way off, the source has a memory or rhythm. This is the only test in T1 to T5 that looks directly at dependence at a distance.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.12: T5: autocorrelation test</p>
+<p>Over 5000 comparisons, we expect 2500 with <span class="arithmatex">\(\sigma = \sqrt{1250} = 35.36\)</span>. The limits 2326 and 2674 sit 174 away, about 4.92 standard deviations. So a count of 2700 at some shift fails.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[T_5(\tau) = \sum_{j=1}^{5000} \left(b_j \oplus b_{j+\tau}\right), \qquad \text{pass if and only if } 2326 &lt; T_5(\tau) &lt; 2674\]</div>
+<ul>
+<li><span class="arithmatex">\(\tau\)</span> is the shift, from 1 to 5000, and <span class="arithmatex">\(\oplus\)</span> is exclusive or.</li>
+<li><span class="arithmatex">\(b_1\)</span> to <span class="arithmatex">\(b_{10000}\)</span> are the 10,000 input bits.</li>
+<li>In procedure A, the worst shift on the first half of a block is chosen, and then tested on the second half, so that picking the worst shift does not bias the result.</li>
+<li>The rejection probability is about <span class="arithmatex">\(10^{-6}\)</span> per test.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches periodic structure and memory, up to a lag of 5000 bits. It sees only linear pairwise agreement, so a higher-order dependence that leaves each pair balanced would slip through.</p>
+<h2 id="713-t6-uniform-distribution-test">7.13 T6: uniform distribution test<a class="headerlink" href="#713-t6-uniform-distribution-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Count how often each <span class="arithmatex">\(k\)</span>-bit word appears as a share of the total, and check that every share stays within a small band around the fair value. It is a direct, strict check of frequency. In procedure B, this is the first test applied to raw bits.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.13: T6: uniform distribution test</p>
+<p>With <span class="arithmatex">\(k = 1\)</span>, <span class="arithmatex">\(n = 100{,}000\)</span> and <span class="arithmatex">\(a = 0.025\)</span>, the share of ones must lie between 0.475 and 0.525. A share of 0.53 fails. On unbiased data, the band is about 15.8 standard deviations wide on each side, so a failure means a real bias.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[T_6(x) = \frac{\lvert \{j : w_j = x\} \rvert}{n}, \qquad \text{pass if } T_6(x) \in \left[2^{-k} - a,\ 2^{-k} + a\right] \text{ for all } x \in \{0, 1\}^k\]</div>
+<ul>
+<li><span class="arithmatex">\(w_j\)</span> are the <span class="arithmatex">\(k\)</span>-bit words, and <span class="arithmatex">\(n\)</span> is how many there are.</li>
+<li><span class="arithmatex">\(a\)</span> is the allowed tolerance.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches meaningful bias in raw bits, which is what matters for a physical source. This band is wide by design, as AIS 31 expects a slightly biased raw source. Small biases that are harmless to entropy pass, and it says nothing about dependence.</p>
+<h2 id="714-t7-comparative-test-homogeneity">7.14 T7: comparative test (homogeneity)<a class="headerlink" href="#714-t7-comparative-test-homogeneity" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Do two sets of data come from the same distribution? Here that question is asked about transitions. For example: does the next bit behave the same after context "00" as after "10"? If so, the bit two steps back has no further effect. This lets the source have a small one-step memory while ruling out longer ones.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.14: T7: comparative test (homogeneity)</p>
+<p>Suppose the next bit gives 50,200 and 49,800 in one context, and 49,700 and 50,300 in the other, with 100,000 each. Then <span class="arithmatex">\(T_7 = 5.00\)</span>, which is below the limit of 15.137 at <span class="arithmatex">\(\alpha = 0.0001\)</span> on 1 degree of freedom, so it passes.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[p_t = \frac{f_1[t] + \cdots + f_h[t]}{hn}, \qquad T_7(h, s) = \sum_{i=1}^{h} \sum_{t=0}^{s-1} \frac{(f_i[t] - np_t)^2}{np_t}\]</div>
+<ul>
+<li><span class="arithmatex">\(h\)</span> is the number of samples compared, <span class="arithmatex">\(s\)</span> the number of outcomes, and <span class="arithmatex">\(n\)</span> the number of trials per sample.</li>
+<li><span class="arithmatex">\(f_i[t]\)</span> counts outcome <span class="arithmatex">\(t\)</span> in sample <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(p_t\)</span> is the pooled share.</li>
+<li>The test fails if <span class="arithmatex">\(T_7\)</span> exceeds the chi-square bound with <span class="arithmatex">\((h-1)(s-1)\)</span> degrees of freedom at level <span class="arithmatex">\(\alpha\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches dependence on more than one earlier bit, up to the contexts tested. It only compares contexts with each other, so if both are biased in the same way, it would not notice.</p>
+<h2 id="715-t8-entropy-estimation">7.15 T8: entropy estimation<a class="headerlink" href="#715-t8-entropy-estimation" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This one, due to Coron, refines Maurer's universal test. For each 8-bit word, look at how far back it last appeared, and turn that distance into an entropy score. Under the right assumptions, the average is an estimate of entropy per word. BSI requires that it comes out close to the full 8 bits.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.15: T8: entropy estimation</p>
+<p>The function <span class="arithmatex">\(g\)</span> gives <span class="arithmatex">\(g(1) = 0\)</span>, <span class="arithmatex">\(g(2) = 1.4427\)</span>, <span class="arithmatex">\(g(3) = 2.1640\)</span> and <span class="arithmatex">\(g(5) = 3.0056\)</span>. If four test words had distances 3, 1, 5, 6, then <span class="arithmatex">\(f_C = (2.1640 + 0 + 3.0056 + 3.2942)/4 = 2.1160\)</span>. That is far too short and far too low for the real test, which uses <span class="arithmatex">\(K = 256{,}000\)</span> words.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[f_C = \frac{1}{K} \sum_{n=Q+1}^{Q+K} g(A_n), \qquad g(i) = \frac{1}{\ln 2} \sum_{k=1}^{i-1} \frac{1}{k}\]</div>
+<ul>
+<li><span class="arithmatex">\(A_n\)</span> is the distance back to the last occurrence of word <span class="arithmatex">\(w_n\)</span>, or <span class="arithmatex">\(n\)</span> if there is none.</li>
+<li><span class="arithmatex">\(L\)</span> is the word length, and <span class="arithmatex">\(Q\)</span> and <span class="arithmatex">\(K\)</span> are the warm-up and test counts.</li>
+<li>Procedure B uses <span class="arithmatex">\(L = 8\)</span>, <span class="arithmatex">\(Q = 2560\)</span> and <span class="arithmatex">\(K = 256{,}000\)</span>, and passes if <span class="arithmatex">\(f_C &gt; 7.976\)</span>.</li>
+<li>That limit is <span class="arithmatex">\(8 \times 0.997\)</span>, tying in with the 0.997 bits of Shannon entropy that class PTG.2 requires per bit.</li>
+<li>For independent bits, the expected value is <span class="arithmatex">\(L\)</span> times the entropy per bit.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It gives an entropy estimate, but only if the source is stationary with a finite memory and the transition effects are negligible. It is a Shannon-style estimate, not min-entropy, so it can sit above the attacker's best guess.</p>
+<h2 id="716-procedure-a">7.16 Procedure A<a class="headerlink" href="#716-procedure-a" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Procedure A checks that outputs look statistically unremarkable. It runs T0 once, then T1 to T5 on each of 257 blocks. It is for all kinds of generators, applied to internal random numbers, and it checks the traces of each bit position as well as the whole words.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.16: Procedure A</p>
+<p>The total input is <span class="arithmatex">\(2^{16} \times 48 = 3{,}145{,}728\)</span> bits for T0, plus <span class="arithmatex">\(20000 \times 257 = 5{,}140{,}000\)</span> bits for the rest. If one of those tests fails, you run the whole procedure once more on new data. If two fail, the procedure fails outright.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\text{number of basic tests} = 1 + 257 \times 5 = 1286\]</div>
+<ul>
+<li>The document prints 1285 beside this sum, which we take as a slip.</li>
+<li>Passing all basic tests passes the procedure, which happens with probability 0.9987 for an ideal generator.</li>
+<li>If more than one fails, the procedure fails.</li>
+<li>If exactly one fails, you repeat once on fresh data, and any failure in the repeat fails the procedure.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches statistical defects in the output and in individual bit positions. Output from a well-seeded software generator passes, so it says nothing about true entropy.</p>
+<h2 id="717-procedure-b">7.17 Procedure B<a class="headerlink" href="#717-procedure-b" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Procedure B is mainly for raw bits from a physical source, and its target is entropy per bit. A small bias and slight one-step dependence are allowed, but dependence further back is not. Think of it as checking that a coin may be slightly unfair, and slightly sticky, but has no longer memory.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.17: Procedure B</p>
+<p>The five steps need at least 100,000, then 400,000, 1,200,000 and 3,200,000 bits, then 2,068,480 bits for T8, a total of 6,968,480 bits if every class fills evenly. A biased source needs more, because the input is not fixed in advance.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Test</th>
+<th>Rule</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>T6 with <span class="arithmatex">\((k, n, a) = (1, 100000, 0.025)\)</span></td>
+<td>as T6</td>
+</tr>
+<tr>
+<td>2</td>
+<td>one-step transitions from 100,000 pairs per first bit</td>
+<td><span class="arithmatex">\(\lvert \nu_{emp(0)}(1) + \nu_{emp(1)}(0) - 1 \rvert &lt; 0.02\)</span></td>
+</tr>
+<tr>
+<td>3</td>
+<td>T7 on 2-step transitions, for each middle bit</td>
+<td><span class="arithmatex">\(\alpha = 0.0001\)</span>, 2 comparisons</td>
+</tr>
+<tr>
+<td>4</td>
+<td>T7 on 3-step transitions, for each pair of middle bits</td>
+<td><span class="arithmatex">\(\alpha = 0.0001\)</span>, 4 comparisons</td>
+</tr>
+<tr>
+<td>5</td>
+<td>T8 with <span class="arithmatex">\(L = 8\)</span>, <span class="arithmatex">\(Q = 2560\)</span>, <span class="arithmatex">\(K = 256000\)</span></td>
+<td><span class="arithmatex">\(f_C &gt; 7.976\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="arithmatex">\(\nu_{emp(r)}(i)\)</span> is the observed chance of bit <span class="arithmatex">\(i\)</span> following bit <span class="arithmatex">\(r\)</span>.</li>
+<li>That gives <span class="arithmatex">\(1 + 1 + 2 + 4 + 1 = 9\)</span> basic tests. All passing passes the procedure, with probability 0.9998 for an ideal generator.</li>
+<li>The retest rule is the same as for procedure A.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches low entropy and longer-term dependence in raw data. It cannot on its own prove entropy, because the T8 estimate relies on assumptions that the stochastic model has to justify.</p>
+<h2 id="718-stochastic-model-requirement">7.18 Stochastic model requirement<a class="headerlink" href="#718-stochastic-model-requirement" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This is not a test but a requirement, and it is the heart of AIS 31 for classes PTG.2 and PTG.3. You must explain mathematically how the noise source makes randomness, and from that derive a lower bound on entropy. Tests of data alone can never establish that bound, as a well-made deterministic generator passes them too.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.18: Stochastic model requirement</p>
+<p>Coin tossing is the simplest teaching case, and version 3.0 opens its examples with it. If each bit is independent with bias <span class="arithmatex">\(\varepsilon\)</span>, so that <span class="arithmatex">\(P(1) = 0.5 + \varepsilon\)</span>, then the entropy per bit is a known function of <span class="arithmatex">\(\varepsilon\)</span>. At <span class="arithmatex">\(\varepsilon = 0.0173\)</span>, the Shannon entropy per bit is 0.99914. The model turns one measurable parameter into an entropy bound. Models of real noise circuits are much harder.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[H_1 \approx n\left(1 - \frac{2\varepsilon^2}{\ln 2}\right) \text{ for small bias}, \qquad H_{min}(n, \varepsilon) = -n\log_2(0.5 + \lvert \varepsilon \rvert)\]</div>
+<ul>
+<li><span class="arithmatex">\(n\)</span> is the number of independent bits, and <span class="arithmatex">\(\varepsilon\)</span> is the bias as above.</li>
+<li><span class="arithmatex">\(H_1\)</span> is Shannon entropy and <span class="arithmatex">\(H_{min}\)</span> is min-entropy. These are the forms in the document's monobit discussion, and they match its figures for T1.</li>
+<li>In general, the model gives a family of distributions with parameters that can be estimated from samples.</li>
+<li>Class PTG.2 requires average Shannon entropy above 0.997 per internal random bit.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It addresses what black-box testing cannot: why the numbers should be unpredictable at all. A model is only as good as its assumptions, so the standard requires checking it against data, and it depends on the true physical design being known.</p>
+<h2 id="719-online-and-total-failure-tests">7.19 Online and total-failure tests<a class="headerlink" href="#719-online-and-total-failure-tests" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> A generator can break while in the field, so AIS 31 requires alarms in the device itself. A total-failure test detects a complete breakdown of the noise source, and output must stop immediately. An online test looks for intolerable statistical defects as the device runs. These are the same kind of idea as SP 800-90B's health tests.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.19: Online and total-failure tests</p>
+<p>Suppose an amplifier in a noise circuit dies, so the digitiser gives all zeros. A tot test built on run length would catch that quickly, and the device must then stop producing output. Each design chooses its own tests to fit its failure modes, and section 5.5 of the document shows worked examples.</p>
+</div>
+<p><strong>The mathematics.</strong> The document does not fix one formula, because the tests depend on the design. Its requirements are as follows.</p>
+<ul>
+<li>The tot test must detect a total failure of the source quickly, and it must prevent further output. Some latency is allowed if, for example, entropy is stored in the internal state.</li>
+<li>The online test may run on raw numbers (for PTG.2 and PTG.3) or on internal numbers (allowed in PTG.1).</li>
+<li>PTG.1 needs a tot test and an online test, and PTG.2 adds a stochastic model and raw-data tests.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> These tests catch breakdowns during operation, which a one-off lab evaluation never could. They catch only the failures their designers foresaw, and an online test after heavy post-processing may see nothing wrong even when the source has died, which is why tests on raw numbers are preferred.</p>
+<h2 id="720-summary">7.20 Summary<a class="headerlink" href="#720-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The <strong>FIPS 140-2 tests</strong> (monobit, poker, runs, long run) have fixed pass limits on one 20,000-bit block, not p-values. They were removed by Change Notice 2 (3 December 2002), but BSI's T1 to T4 descend from the same family, with wider limits.</li>
+<li>The limits are chosen so that a good source fails very rarely: about <span class="arithmatex">\(1.03\times10^{-4}\)</span> per block for the monobit test and about <span class="arithmatex">\(10^{-6}\)</span> for the poker and long-run tests.</li>
+<li><strong>AIS 31</strong> (version 2.0, 2011) groups tests T0 to T8 into <strong>procedure A</strong> (for deterministic generators, about 8.3 million bits) and <strong>procedure B</strong> (for physical generators, including the entropy estimate T8).</li>
+<li>AIS 31's core idea is the <strong>stochastic model</strong>: the vendor must justify, from the physics of the device, why the entropy claim holds, and <strong>online and total-failure tests</strong> must catch breakdowns in operation.</li>
+<li>Version 3.0 (2024) removes class PTG.1, allows min-entropy claims, and calls its black-box suite a sanity check.</li>
+</ul>
+<h2 id="721-exercises">7.21 Exercises<a class="headerlink" href="#721-exercises" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>A 20,000-bit block has 10,280 ones. Does it pass the FIPS 140-2 monobit test (limits <span class="arithmatex">\(9725&lt;X&lt;10275\)</span>)? What about the AIS 31 T1 test (limits <span class="arithmatex">\(9654&lt;X&lt;10346\)</span>)?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>It <strong>fails</strong> FIPS 140-2, because 10,280 is not below 10,275. It <strong>passes</strong> T1, because <span class="arithmatex">\(9654&lt;10{,}280&lt;10{,}346\)</span>. This shows that the AIS 31 limits are wider than those of FIPS 140-2.</p>
+</details>
+</li>
+<li>
+<p>How many standard deviations from the mean is the upper FIPS 140-2 monobit limit?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The number of ones in 20,000 fair bits has mean 10,000 and standard deviation <span class="arithmatex">\(\sqrt{5000}=70.71\)</span>. The limit 10,275 is <span class="arithmatex">\(275/70.71=3.89\)</span> standard deviations from the mean.</p>
+</details>
+</li>
+<li>
+<p>Why were the FIPS 140-2 statistical tests struck out of the standard, and why does the book still describe them?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Change Notice 2 (3 December 2002) struck all four tests out of section 4.9.1, along with the related requirement in section 4.7.1, so they are no longer FIPS 140-2 requirements. They remain widely known, and BSI's T1 to T4 descend from the same family.</p>
+</details>
+</li>
+<li>
+<p>Explain why AIS 31 insists on a stochastic model, and give the simplest example of one.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Statistical tests on output cannot say why the numbers should be unpredictable. The stochastic model explains from the physics of the noise source why the entropy claim holds, turning measurable parameters into an entropy bound. The simplest example is coin tossing: if each bit is independent with <span class="arithmatex">\(P(1)=0.5+\varepsilon\)</span>, the entropy per bit is a known function of <span class="arithmatex">\(\varepsilon\)</span>; at <span class="arithmatex">\(\varepsilon=0.0173\)</span> the Shannon entropy is 0.99914 bits.</p>
+</details>
+</li>
+<li>
+<p>A noise-circuit amplifier dies and the digitiser outputs only zeros. Which kind of AIS 31 test should catch this, and why must it run on raw numbers?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>A total-failure test (one of the online tests) built on run length should catch it quickly, and the device must then stop producing output. It should run on raw numbers because after heavy post-processing the output may look fine even when the source has died.</p>
+</details>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="diehard-and-dieharder.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Diehard and Dieharder">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. Diehard and Dieharder
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ent-testu01-and-practrand.html" class="md-footer__link md-footer__link--next" aria-label="Next: 8. ENT, TestU01 and PractRand">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                8. ENT, TestU01 and PractRand
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

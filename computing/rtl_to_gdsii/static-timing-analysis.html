@@ -1,0 +1,1428 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/rtl_to_gdsii/static-timing-analysis.html">
+  
+  
+    <link rel="prev" href="routing-and-parasitic-extraction.html">
+  
+  
+    <link rel="next" href="physical-verification-and-tapeout.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>7. Static Timing Analysis - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-is-sta" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Static Timing Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">From RTL to GDSII</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-rtl-to-gdsii-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. The RTL-to-GDSII Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logic-synthesis-and-timing-basics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Logic Synthesis and Timing Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="floorplanning-and-power-planning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Floorplanning and Power Planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="placement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Placement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="clock-tree-synthesis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Clock-Tree Synthesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="routing-and-parasitic-extraction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Routing and Parasitic Extraction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Static Timing Analysis
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="static-timing-analysis.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Static Timing Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-sta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 What STA is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 The full setup check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 The full hold check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clock-imperfections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 The clock's imperfections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Reading the results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Reading the results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#critical-path-wns-and-tns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical path, WNS and TNS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-real-timing-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A real timing report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#corners" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Corners and variation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Fixing violations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="physical-verification-and-tapeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Physical Verification and Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="running-the-flow-with-openlane.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Running the Flow with OpenLANE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-is-sta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 What STA is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 The full setup check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 The full hold check
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#clock-imperfections" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 The clock's imperfections
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Reading the results
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7.5 Reading the results">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#critical-path-wns-and-tns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Critical path, WNS and TNS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#a-real-timing-report" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A real timing report
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#corners" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Corners and variation
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fixing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Fixing violations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-7-static-timing-analysis">Chapter 7: Static Timing Analysis<a class="headerlink" href="#chapter-7-static-timing-analysis" title="Permanent link">&para;</a></h1>
+<p>Placement, clock-tree synthesis and routing have committed the design to real cells, a real clock network and real parasitics. Now comes the question that decides whether the chip works at speed: does every path meet timing? Static timing analysis (STA) answers it exhaustively, for millions of paths, at every operating condition, without applying a single test vector. It is the gatekeeper of tapeout.</p>
+<p>Chapter 2 introduced setup and hold slack for an ideal clock. This chapter completes them with clock skew and uncertainty, shows how to read the summary numbers (WNS and TNS) and a real timing report line by line, explains why a chip must be analysed at several corners, and sets out the opposite remedies for setup and hold violations.</p>
+<div class="admonition note">
+<p class="admonition-title">Learning outcomes</p>
+<p>After this chapter you can:</p>
+<ol>
+<li>Explain what makes timing analysis static, and list the four kinds of timing path.</li>
+<li>Compute setup and hold slack including skew and uncertainty, and explain why hold ignores the clock period.</li>
+<li>Interpret WNS and TNS, and read a timing report line by line.</li>
+<li>Explain PVT corners, multi-corner multi-mode analysis, on-chip variation and temperature inversion.</li>
+<li>Choose the right remedy for a setup or a hold violation.</li>
+</ol>
+</div>
+<h2 id="what-is-sta">7.1 What STA is<a class="headerlink" href="#what-is-sta" title="Permanent link">&para;</a></h2>
+<p><strong>Static timing analysis</strong> adds up the propagation delay along every path of the gate-level design and compares it with the time the clock allows. "Static" means that no input stimulus is applied: STA needs no testbench, no vectors and no idea of what the logic <em>does</em>. It walks the delay graph once and checks every path, a coverage that no amount of dynamic simulation could match. Where a simulation exercises the few scenarios you thought to write, STA proves a bound that holds for all inputs.</p>
+<p>The price of this generality is that STA is topological. It will happily report paths that can never occur in practice (false paths) and paths whose launch and capture are more than one cycle apart (multicycle paths). You tell the tool about them with SDC constraints, so that it does not flag phantom violations.</p>
+<p>STA rests on three pieces of data from earlier stages: cell delays from the <code>.lib</code>, wire resistance and capacitance from the <code>.spef</code>, and the clock definition and exceptions from the <code>.sdc</code>.</p>
+<p>A timing path runs from a <strong>startpoint</strong> (the clock pin of a register, or a primary input) to an <strong>endpoint</strong> (the data pin of a register, or a primary output). STA checks every startpoint-to-endpoint path against both a maximum-delay constraint (setup) and a minimum-delay constraint (hold). There are four families of path.</p>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>From</th>
+<th>To</th>
+<th>Bounded by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>register to register</td>
+<td>launch flip-flop's clock pin</td>
+<td>capture flip-flop's data pin</td>
+<td>the clock period: the usual critical paths</td>
+</tr>
+<tr>
+<td>input to register</td>
+<td>primary input</td>
+<td>capture flip-flop's data pin</td>
+<td><code>set_input_delay</code></td>
+</tr>
+<tr>
+<td>register to output</td>
+<td>launch flip-flop's clock pin</td>
+<td>primary output</td>
+<td><code>set_output_delay</code></td>
+</tr>
+<tr>
+<td>input to output</td>
+<td>primary input</td>
+<td>primary output</td>
+<td>pure logic straight through</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 7.1 The four kinds of timing path.</em></p>
+<p>STA turns a hard question, "will this chip ever fail at speed, for any input?", into an arithmetic one it can answer for every path at once: compare when data <em>arrives</em> at an endpoint with when it is <em>required</em> there. The difference is the <strong>slack</strong>.</p>
+<h2 id="setup">7.2 The full setup check<a class="headerlink" href="#setup" title="Permanent link">&para;</a></h2>
+<p>The setup rule is the basic synchronous rule: data launched by one clock edge must be stable at the capture flip-flop before the next capture edge, less the flip-flop's setup time. Let the launch flip-flop's clock arrive at <span class="arithmatex">\(t_{launch}\)</span> and the capture flip-flop's at <span class="arithmatex">\(t_{capture}\)</span>. Then</p>
+<div class="arithmatex">\[t_{arrival} = t_{launch} + t_{cq} + t_{logic,max}\]</div>
+<div class="arithmatex">\[t_{required} = t_{capture} + T - t_{su} - t_{unc}\]</div>
+<div class="arithmatex">\[\text{setup slack} = t_{required} - t_{arrival} \;\ge\; 0.\]</div>
+<p>Here <span class="arithmatex">\(t_{unc}\)</span> is the <strong>clock uncertainty</strong>, a margin for jitter (the clock edge wobbling from cycle to cycle) plus safety; it always eats slack. Writing skew <span class="arithmatex">\(= t_{capture} - t_{launch}\)</span> and taking the launch edge as time zero, this collapses to the form used in the rest of the book:</p>
+<div class="arithmatex">\[\text{setup slack} = (T + \text{skew} - t_{su} - t_{unc}) - (t_{cq} + t_{logic,max}).\]</div>
+<div class="admonition example">
+<p class="admonition-title">Example 7.1: Full setup check</p>
+<p><span class="arithmatex">\(T = 5.0\)</span> ns, <span class="arithmatex">\(t_{cq} = 0.40\)</span>, slowest logic <span class="arithmatex">\(3.20\)</span>, <span class="arithmatex">\(t_{su} = 0.30\)</span>, <span class="arithmatex">\(t_{unc} = 0.10\)</span>, skew <span class="arithmatex">\(= 0.10\)</span> ns.</p>
+<ol>
+<li>Arrival <span class="arithmatex">\(= 0.40 + 3.20 = 3.60\)</span> ns.</li>
+<li>Required <span class="arithmatex">\(= 5.0 + 0.10 - 0.30 - 0.10 = 4.70\)</span> ns.</li>
+<li>Slack <span class="arithmatex">\(= 4.70 - 3.60 = +1.10\)</span> ns: <strong>met</strong>.</li>
+</ol>
+<p>At <span class="arithmatex">\(T = 3.5\)</span> ns:</p>
+<ol>
+<li>Required <span class="arithmatex">\(= 3.5 + 0.10 - 0.30 - 0.10 = 3.20\)</span> ns.</li>
+<li>Slack <span class="arithmatex">\(= 3.20 - 3.60 = -0.40\)</span> ns: <strong>violated</strong>. The clock has outrun the logic.</li>
+</ol>
+<p>(Here skew and uncertainty happen to cancel, so the numbers equal those of Example 2.1.)</p>
+</div>
+<h2 id="hold">7.3 The full hold check<a class="headerlink" href="#hold" title="Permanent link">&para;</a></h2>
+<p>Hold is the mirror image, and the more treacherous half. The data launched by an edge must not race through so fast that it corrupts the value that the same edge is capturing at the downstream flip-flop, which needs its current data to stay stable for <span class="arithmatex">\(t_h\)</span> after the edge. The <em>minimum</em> logic delay is used, because the fastest way through is the dangerous one:</p>
+<div class="arithmatex">\[\text{hold slack} = (t_{cq} + t_{logic,min}) - (t_h + \text{skew} + t_{unc}) \;\ge\; 0.\]</div>
+<p>The period <span class="arithmatex">\(T\)</span> does not appear. Both effects in a hold check come from the <em>same</em> clock edge: the check compares two consequences of one clock event at the two flip-flops. Slowing the clock does nothing for hold (Figure 7.1).</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.2: Full hold check</p>
+<p><span class="arithmatex">\(t_{cq} = 0.40\)</span>, fastest logic <span class="arithmatex">\(0.30\)</span>, <span class="arithmatex">\(t_h = 0.15\)</span>, skew <span class="arithmatex">\(= 0.10\)</span>, <span class="arithmatex">\(t_{unc} = 0.10\)</span> ns.</p>
+<ol>
+<li>Earliest arrival of new data <span class="arithmatex">\(= 0.40 + 0.30 = 0.70\)</span> ns.</li>
+<li>Deadline <span class="arithmatex">\(= 0.15 + 0.10 + 0.10 = 0.35\)</span> ns.</li>
+<li>Slack <span class="arithmatex">\(= 0.70 - 0.35 = +0.35\)</span> ns: <strong>met</strong>.</li>
+</ol>
+<p>Now let the skew grow to <span class="arithmatex">\(0.60\)</span> ns (the capture clock arrives much later than the launch clock):</p>
+<ol>
+<li>Deadline <span class="arithmatex">\(= 0.15 + 0.60 + 0.10 = 0.85\)</span> ns.</li>
+<li>Slack <span class="arithmatex">\(= 0.70 - 0.85 = -0.15\)</span> ns: <strong>violated</strong>. The skew that helped setup has broken hold.</li>
+</ol>
+</div>
+<figure class="fig fig-diagram">
+<img src="img/hold-timeline.svg" alt="A time line of the hold check: the capture edge at +0.10 ns, the hold time and uncertainty running to 0.35 ns, and new data arriving at 0.70 ns after clock-to-Q of 0.40 and fastest logic of 0.30; the slack is 0.35 ns." loading="lazy" width="900" height="320">
+<figcaption><strong>Figure 7.1 The hold check on a time line.</strong> A time line of the hold check: the capture edge at +0.10 ns, the hold time and uncertainty running to 0.35 ns, and new data arriving at 0.70 ns after clock-to-Q of 0.40 and fastest logic of 0.30; the slack is 0.35 ns.</figcaption>
+</figure>
+
+<div class="admonition warning">
+<p class="admonition-title">Why hold is the dangerous one</p>
+<p>A setup failure means the chip will not run at full speed; slow the clock and it works, so a setup problem can often be worked round in the laboratory. A hold failure is <strong>not frequency dependent</strong>: the part is broken at every clock speed, even the slowest. There is no knob on the tester that fixes it. If a hold violation escapes to silicon the chip is useless and the masks must be remade. That is why hold is closed conservatively, at the fast corner.</p>
+</div>
+<h2 id="clock-imperfections">7.4 The clock's imperfections<a class="headerlink" href="#clock-imperfections" title="Permanent link">&para;</a></h2>
+<p>An ideal clock reaches every flip-flop at once. A real clock, distributed by a buffer tree across millimetres of die, does not.</p>
+<table>
+<thead>
+<tr>
+<th>Effect</th>
+<th>What it is</th>
+<th>Effect on timing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latency</td>
+<td>delay from the clock source to a flip-flop's clock pin, split into source latency and network latency</td>
+<td>cancels in a register-to-register check if equal at both ends; only the difference matters</td>
+</tr>
+<tr>
+<td>Skew</td>
+<td>the difference in arrival between two related flip-flops, capture minus launch</td>
+<td>helps one check and hurts the other: setup gains when capture is later, hold loses</td>
+</tr>
+<tr>
+<td>Jitter and uncertainty</td>
+<td>cycle-to-cycle variation of the edge (from the PLL) plus a margin, modelled with <code>set_clock_uncertainty</code></td>
+<td>always subtracted: it eats both setup and hold slack</td>
+</tr>
+<tr>
+<td>Shared clock path</td>
+<td>launch and capture clock paths share some buffers before they split, so their variations are correlated</td>
+<td>pessimism that was counted twice on the shared part is credited back (CPPR or CRPR)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 7.2 Clock non-idealities.</em></p>
+<p>This is why CTS matters so much to timing: it is the tool's one chance to make latencies match and skew small. A well-balanced tree hands STA a clock that behaves almost ideally; a sloppy one hands it skew that becomes hold violations to be buffered away.</p>
+<h2 id="results">7.5 Reading the results<a class="headerlink" href="#results" title="Permanent link">&para;</a></h2>
+<h3 id="critical-path-wns-and-tns">Critical path, WNS and TNS<a class="headerlink" href="#critical-path-wns-and-tns" title="Permanent link">&para;</a></h3>
+<p>Slack is the single number that summarises a path. Two aggregate figures summarise a whole design.</p>
+<ul>
+<li>The <strong>critical path</strong> is the path with the smallest (worst) slack; it sets the maximum clock frequency.</li>
+<li><strong>WNS</strong>, worst negative slack, is the most negative slack over all endpoints: how deep the hole is. WNS <span class="arithmatex">\(\ge 0\)</span> means the whole design meets that check.</li>
+<li><strong>TNS</strong>, total negative slack, is the sum of the negative slacks over all failing endpoints (positive slacks count as zero): how wide the hole is, and how much work closure still needs.</li>
+</ul>
+<p>A design with WNS <span class="arithmatex">\(= -0.4\)</span> ns and TNS <span class="arithmatex">\(= -0.4\)</span> ns has one lonely failing path. WNS <span class="arithmatex">\(= -0.4\)</span> ns with TNS <span class="arithmatex">\(= -85\)</span> ns has thousands of failing endpoints: something systemic, such as an over-ambitious clock or a bad corner, not a single fixable path.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.3: WNS and TNS from a list</p>
+<p>Five endpoints have setup slacks <span class="arithmatex">\(+0.80\)</span>, <span class="arithmatex">\(-0.20\)</span>, <span class="arithmatex">\(-0.10\)</span>, <span class="arithmatex">\(+0.30\)</span> and <span class="arithmatex">\(-0.40\)</span> ns. The worst is <span class="arithmatex">\(-0.40\)</span>, so WNS <span class="arithmatex">\(= -0.40\)</span> ns. Only the three negative values count in the total: TNS <span class="arithmatex">\(= -0.20 - 0.10 - 0.40 = -0.70\)</span> ns. Three endpoints fail, the worst by 0.4 ns.</p>
+</div>
+<h3 id="a-real-timing-report">A real timing report<a class="headerlink" href="#a-real-timing-report" title="Permanent link">&para;</a></h3>
+<p>This is roughly what OpenSTA or OpenROAD prints for <code>report_checks -path_delay max</code>.</p>
+<div class="language-text highlight"><pre><span></span><code>Startpoint: ctrl_reg[3] (rising edge-triggered flip-flop clocked by clk)
+Endpoint:   data_reg[7] (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type:  max                          (a SETUP check)
+
+  Delay    Time   Description
+--------------------------------------------------------
+   0.000   0.000  clock clk (rise edge)
+   0.120   0.120  clock network delay (propagated)    &lt;- launch latency
+   0.000   0.120 ^ ctrl_reg[3]/CLK (sky130_fd_sc_hd__dfxtp_1)
+   0.310   0.430 v ctrl_reg[3]/Q                      &lt;- clock-to-Q
+   0.240   0.670 ^ U231/X (sky130_fd_sc_hd__nand2_1)
+   0.680   1.350 ^ U244/X (sky130_fd_sc_hd__and3_2)   &lt;- the logic cone
+   1.020   2.370 ^ U259/X (sky130_fd_sc_hd__buf_4)
+   0.430   2.800 v data_reg[7]/D
+           2.800  data arrival time
+
+   5.000   5.000  clock clk (rise edge)              &lt;- next capture edge, T = 5.0
+   0.130   5.130  clock network delay (propagated)   &lt;- capture latency
+   0.000   5.130  clock reconvergence pessimism (CRPR)
+  -0.300   4.830  library setup time
+  -0.100   4.730  clock uncertainty
+           4.730  data required time
+--------------------------------------------------------
+           4.730  data required time
+          -2.800  data arrival time
+--------------------------------------------------------
+           1.930  slack (MET)
+</code></pre></div>
+<p>Read it from the top. The upper block builds the <strong>arrival</strong> time: the clock network delay to the launch flip-flop (0.120 ns), the clock-to-Q (0.310), then each gate and the final wire into the <code>D</code> pin. The lower block builds the <strong>required</strong> time: the next edge at 5.000 ns, plus the capture latency (0.130), minus the setup time (0.300) and the uncertainty (0.100). The last line, required minus arrival, is the slack. A hold report (<code>-path_delay min</code>) looks the same, but compares against the <em>same</em> edge and the slack must clear the hold time.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.4: Every number in the report</p>
+<p>From the report above: launch latency 0.120 ns; clock-to-Q 0.310 ns; logic and wire delay <span class="arithmatex">\(0.240 + 0.680 + 1.020 + 0.430 = 2.370\)</span> ns; arrival <span class="arithmatex">\(0.120 + 0.310 + 2.370 = 2.800\)</span> ns; required 4.730 ns; slack <span class="arithmatex">\(+1.930\)</span> ns. The single cell that contributes most delay is <code>U259</code>, a <code>buf_4</code>, at 1.020 ns; it is probably driving a long or heavily loaded net, and a fix would be to split its load, place it nearer its loads or re-buffer the net. Keeping everything else equal, the shortest period this path could meet follows from <span class="arithmatex">\(T + 0.130 - 0.300 - 0.100 \ge 2.800\)</span>, so <span class="arithmatex">\(T \ge 3.07\)</span> ns, about 326 MHz.</p>
+</div>
+<h2 id="corners">7.6 Corners and variation<a class="headerlink" href="#corners" title="Permanent link">&para;</a></h2>
+<p>A cell's delay is not one number. It depends on <strong>P</strong>rocess (how the wafer came out), <strong>V</strong>oltage (supply droop) and <strong>T</strong>emperature. Libraries are measured at named <strong>PVT corners</strong>, one <code>.lib</code> per corner, and signoff must hold at all of them.</p>
+<table>
+<thead>
+<tr>
+<th>Corner</th>
+<th>Conditions</th>
+<th>Cells are</th>
+<th>Worst for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SS (slow)</td>
+<td>slow silicon, low voltage, extreme temperature</td>
+<td>slowest, longest delays</td>
+<td>setup (latest arrival)</td>
+</tr>
+<tr>
+<td>TT (typical)</td>
+<td>nominal process, voltage and temperature</td>
+<td>nominal</td>
+<td>sanity checks and power</td>
+</tr>
+<tr>
+<td>FF (fast)</td>
+<td>fast silicon, high voltage</td>
+<td>fastest, shortest delays</td>
+<td>hold (data races through)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 7.3 The classic PVT corners.</em></p>
+<p>The pairing is the crux. Setup is worst at the <em>slow</em> corner, where logic is sluggish and arrival is late; hold is worst at the <em>fast</em> corner, where logic is quick and data races. No single corner can therefore sign a design off: at the least, setup is closed at SS and hold at FF.</p>
+<div class="admonition warning">
+<p class="admonition-title">Temperature inversion</p>
+<p>The intuition "hotter means slower" fails at low voltage in modern processes, Sky130 included. Below a crossover voltage, <em>lower</em> temperature makes cells slower, so the true worst setup corner may be the cold, low-voltage corner. This is why signoff enumerates corners exhaustively and does not trust a rule of thumb.</p>
+</div>
+<p><strong>Multi-corner multi-mode</strong> (MCMM) analysis is the framework. A <em>mode</em> is a functional configuration with its own constraints and clocks (normal operation, scan test, low power). A <em>corner</em> is a PVT and wire-extraction condition (fast or slow wires too). The tool forms the cross-product, every mode at every relevant corner, and a path passes signoff only if it meets timing in all active scenarios. A real chip may have dozens.</p>
+<p>On top of corners sits <strong>on-chip variation</strong> (OCV): even on one die, identical cells differ slightly. STA models this by <em>derating</em>, stretching the launch path's delays and shrinking the capture path's (for setup) to add pessimism. Advanced OCV (AOCV) makes the derate depend on path depth and distance, since long paths average out variation and need less margin; parametric methods (POCV) go further with statistical, sigma-based derates. CPPR then credits back the pessimism that was double counted on shared clock segments.</p>
+<h2 id="fixing">7.7 Fixing violations<a class="headerlink" href="#fixing" title="Permanent link">&para;</a></h2>
+<p>When a report shows negative slack, the cure depends on which check failed, and the two are almost opposites.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Setup violation (path too slow)</th>
+<th>Hold violation (path too fast)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Goal</td>
+<td>make the data arrive earlier</td>
+<td>make the data arrive later</td>
+</tr>
+<tr>
+<td>Fixes</td>
+<td>up-size slow cells, use faster (low-threshold) cells, restructure the logic cone, improve placement to cut wire delay, buffer long nets, add a pipeline stage, use useful skew; as a last resort slow the clock</td>
+<td>insert delay (buffer) cells on the fast path, down-size or swap to slower (high-threshold) cells, route the longer way; the clock period is irrelevant</td>
+</tr>
+<tr>
+<td>Goes back to</td>
+<td>synthesis (structure, cell choice), placement (wire length), CTS (useful skew)</td>
+<td>CTS (skew balance), routing (detours), placement (cell spacing)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 7.4 Setup and hold need opposite medicine.</em></p>
+<p>The two fight. Hold buffers add area and can create new setup paths; the useful skew that helps setup can open a hold gap elsewhere. That is why timing closure is iterative, and why the slack left by earlier stages is so valuable. OpenROAD runs repair loops, <code>repair_timing -setup</code> and <code>repair_timing -hold</code>, that apply exactly these moves automatically; the intuition for what they are doing is what this chapter has built.</p>
+<div class="admonition warning">
+<p class="admonition-title">Common misconception</p>
+<p>"If the design meets setup, it works." Setup is half the story. A design can pass every setup check with large positive slack and still be dead on arrival because one hold path fails at the fast corner, and unlike setup, you cannot slow the clock to rescue it. Meeting setup means it works <em>at speed</em>; meeting hold means it works <em>at all</em>. Both are mandatory for signoff.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Think about it</p>
+<p>A register-to-register path has a comfortable <span class="arithmatex">\(+1.9\)</span> ns of setup slack. You insert a big buffer to speed up a long net. Later a hold check on the same path fails. What did the buffer change?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>The buffer changed the delay of the logic and wire on that path. If it sped up the fastest route through the logic, it reduced <span class="arithmatex">\(t_{logic,min}\)</span>. Hold depends on the fast case, <span class="arithmatex">\(t_{cq} + t_{logic,min}\)</span>, and not on the slow one, so a change that makes the fast route faster can push hold negative even while setup improves. Fixing one check can open a violation of the other.</p>
+</details>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>STA checks every path for setup and hold with no test vectors, using <code>.lib</code>, <code>.spef</code> and <code>.sdc</code>. The four path types are register to register, input to register, register to output and input to output.</li>
+<li>Setup slack <span class="arithmatex">\(= (T + \text{skew} - t_{su} - t_{unc}) - (t_{cq} + t_{logic,max})\)</span>. Hold slack <span class="arithmatex">\(= (t_{cq} + t_{logic,min}) - (t_h + \text{skew} + t_{unc})\)</span>, independent of <span class="arithmatex">\(T\)</span>.</li>
+<li>Skew helps one check and hurts the other; uncertainty hurts both. WNS is the depth of the worst failure and TNS its total width. A report builds arrival and required times line by line.</li>
+<li>Setup is closed at the slow corner and hold at the fast corner, across all modes, with margins for on-chip variation; beware temperature inversion.</li>
+<li>Fix setup by speeding paths up; fix hold by slowing them down.</li>
+</ul>
+<h2 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h2>
+<div class="admonition example">
+<p class="admonition-title">Exercise 7.1: Slack by hand</p>
+<p>A path has <span class="arithmatex">\(T = 5.0\)</span>, <span class="arithmatex">\(t_{cq} = 0.35\)</span>, slowest logic 4.10, fastest logic 0.20, <span class="arithmatex">\(t_{su} = 0.25\)</span> and <span class="arithmatex">\(t_h = 0.10\)</span> ns. (a) Find the setup slack, the hold slack and <span class="arithmatex">\(f_{max}\)</span> with no skew. (b) Now let skew <span class="arithmatex">\(= +0.30\)</span> and uncertainty <span class="arithmatex">\(= 0.10\)</span>. Find both slacks again. (c) At the slow corner every cell delay (clock-to-Q, logic, setup, hold) is multiplied by 1.25, and at the fast corner by 0.8; keep skew and uncertainty. Which check fails where?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>(a) Setup <span class="arithmatex">\((5.0 - 0.25) - 4.45 = +0.30\)</span> ns; hold <span class="arithmatex">\(0.55 - 0.10 = +0.45\)</span> ns; <span class="arithmatex">\(f_{max} = 1/(0.35 + 4.10 + 0.25\ \text{ns}) = 1/4.70\ \text{ns} \approx 213\)</span> MHz.
+(b) Setup <span class="arithmatex">\((5.0 + 0.30 - 0.25 - 0.10) - 4.45 = +0.50\)</span> ns; hold <span class="arithmatex">\(0.55 - (0.10 + 0.30 + 0.10) = +0.05\)</span> ns.
+(c) Slow corner: <span class="arithmatex">\(t_{cq} = 0.4375\)</span>, logic 5.125, <span class="arithmatex">\(t_{su} = 0.3125\)</span>, so setup <span class="arithmatex">\(= (5.0 + 0.30 - 0.3125 - 0.10) - (0.4375 + 5.125) = 4.8875 - 5.5625 = -0.675\)</span> ns, which fails. Fast corner: <span class="arithmatex">\(t_{cq} = 0.28\)</span>, fastest logic 0.16, <span class="arithmatex">\(t_h = 0.08\)</span>, so hold <span class="arithmatex">\(= (0.28 + 0.16) - (0.08 + 0.30 + 0.10) = 0.44 - 0.48 = -0.04\)</span> ns, which fails. Setup fails at the slow corner and hold at the fast corner, and both must be fixed: the classic corner pair.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 7.2: Setup and hold with skew and uncertainty</p>
+<p><span class="arithmatex">\(T = 2.0\)</span> ns, <span class="arithmatex">\(t_{cq} = 0.15\)</span>, slowest logic 1.50, fastest logic 0.05, <span class="arithmatex">\(t_{su} = 0.10\)</span>, <span class="arithmatex">\(t_h = 0.20\)</span>, skew <span class="arithmatex">\(+0.10\)</span>, uncertainty <span class="arithmatex">\(0.05\)</span> (ns). (a) Setup slack? (b) Hold slack? (c) Which fix would you apply?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>(a) <span class="arithmatex">\((2.0 + 0.10 - 0.10 - 0.05) - (0.15 + 1.50) = 1.95 - 1.65 = +0.30\)</span> ns, met.
+(b) <span class="arithmatex">\((0.15 + 0.05) - (0.20 + 0.10 + 0.05) = 0.20 - 0.35 = -0.15\)</span> ns, violated.
+(c) Add about 0.15 ns of delay buffers on the short path. Setup has 0.30 ns to spare, so it can afford them; changing <span class="arithmatex">\(T\)</span> would not help.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 7.3: Read a report</p>
+<p>From the timing report in Section 7.5, state the launch latency, the clock-to-Q, the total logic delay, the arrival, the required time and the slack, and say which cell contributes the most delay.</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Launch latency 0.120 ns; clock-to-Q 0.310 ns; logic and wire delay <span class="arithmatex">\(0.240 + 0.680 + 1.020 + 0.430 = 2.370\)</span> ns; arrival 2.800 ns; required 4.730 ns; slack <span class="arithmatex">\(+1.930\)</span> ns. The biggest single contributor is <code>U259</code>, a <code>buf_4</code>, at 1.020 ns. Without changing anything else the path could meet a period down to <span class="arithmatex">\(T \ge 3.07\)</span> ns (about 326 MHz).</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 7.4: Which fix?</p>
+<p>Your run shows WNS <span class="arithmatex">\(= -0.2\)</span> ns at the slow corner and a hold violation at the fast corner. Slowing the clock by 10 % makes the first go away. Why does it not fix the second, and what will?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Hold slack does not contain the clock period: launch and capture happen on the same edge. The cure is to make the short path slower, with delay buffers inserted after the clock tree (OpenROAD's <code>repair_timing -hold</code>), or to reduce the skew that hurts it.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 7.5: WNS and TNS</p>
+<p>Two designs both have WNS <span class="arithmatex">\(= -0.4\)</span> ns. Design A has TNS <span class="arithmatex">\(= -0.4\)</span> ns and design B has TNS <span class="arithmatex">\(= -85\)</span> ns. Which is nearer to closing, and why?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Design A. With TNS equal to WNS there is exactly one failing endpoint, a single path to fix. Design B has thousands of failing endpoints, which points to something systemic, such as an over-ambitious clock or the wrong corner.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 7.6: Set T very large</p>
+<p>Set <span class="arithmatex">\(T\)</span> to a huge value such as 1000 ns in the hold equation. Does the hold slack change? What does that say about running a chip slowly to be safe?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>It does not change at all: <span class="arithmatex">\(T\)</span> is absent from the hold equation. Running a chip more slowly can rescue a setup failure but never a hold failure, so "run slower to be safe" does not work for hold.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="routing-and-parasitic-extraction.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Routing and Parasitic Extraction">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. Routing and Parasitic Extraction
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="physical-verification-and-tapeout.html" class="md-footer__link md-footer__link--next" aria-label="Next: 8. Physical Verification and Tapeout">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                8. Physical Verification and Tapeout
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

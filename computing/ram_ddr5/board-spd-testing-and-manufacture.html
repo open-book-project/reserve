@@ -1,0 +1,1728 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/board-spd-testing-and-manufacture.html">
+  
+  
+    <link rel="prev" href="power-delivery-on-the-module.html">
+  
+  
+    <link rel="next" href="designing-an-sram-pdks-and-process-nodes.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>14. The Board, the SPD and Making a Module - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#141-the-stack-up" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              14. The Board, the SPD and Making a Module
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what-ram-is.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lpddr-and-gddr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#141-the-stack-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 The stack-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-placement-and-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Placement and routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#143-the-spd-the-identity-card" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 The SPD: the identity card
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-testing-four-rounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Testing: four rounds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#145-handing-over-to-the-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Handing over to the factory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#146-from-die-to-memory-stick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 From die to memory stick
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#147-building-a-ddr5-module-as-a-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7 Building a DDR5 module as a product
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#148-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#149-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#141-the-stack-up" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 The stack-up
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#142-placement-and-routing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Placement and routing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#143-the-spd-the-identity-card" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 The SPD: the identity card
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#144-testing-four-rounds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Testing: four rounds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#145-handing-over-to-the-factory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Handing over to the factory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#146-from-die-to-memory-stick" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 From die to memory stick
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#147-building-a-ddr5-module-as-a-product" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7 Building a DDR5 module as a product
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#148-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#149-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-14-the-board-the-spd-and-making-a-module">Chapter 14: The Board, the SPD and Making a Module<a class="headerlink" href="#chapter-14-the-board-the-spd-and-making-a-module" title="Permanent link">&para;</a></h1>
+<p>A printed circuit board is a sandwich of copper and fibreglass. This chapter finishes the case study of the 32 GB module by showing how the sandwich is chosen, where the parts go, how they are wired, how the identity chip is programmed and protected with a checksum, how the result is tested and how the factory files are produced. It then widens the view to the module as a product: how a die becomes a boxed module, what a company needs to build a DDR5 module commercially, and what that costs in parts, people, money and time.</p>
+<h2 id="141-the-stack-up">14.1 The stack-up<a class="headerlink" href="#141-the-stack-up" title="Permanent link">&para;</a></h2>
+<p>The board has ten copper layers, each with a job. <strong>Signal layers</strong> carry the fast wires. Each sits next to a solid <strong>plane</strong> layer, which gives every signal a clean return path and sets its impedance. <strong>Plane layers</strong> are whole sheets of copper for ground (VSS) and for each supply (VDD, VDDQ, VPP). A through-hole "via" from a chip ball reaches the plane of its own voltage.</p>
+<figure class="fig fig-diagram">
+<img src="img/pcb-stackup.png" alt="The ten-layer stack-up: L1 top signals, L2 VSS, L3 signal, L4 VSS, L5 VDD, L6 VDDQ, L7 VPP, L8 signal, L9 VSS, L10 bottom signals, separated by prepreg and core insulation, with layer thicknesses" loading="lazy" width="1600" height="1040">
+<figcaption><strong>Figure 14.1.</strong> The ten-layer stack-up: L1 top signals, L2 VSS, L3 signal, L4 VSS, L5 VDD, L6 VDDQ, L7 VPP, L8 signal, L9 VSS, L10 bottom signals, separated by prepreg and core insulation, with layer thicknesses</figcaption>
+</figure>
+
+<p>The total thickness is 1.27 mm, as for every memory stick. Trace widths come from the impedance formula: a width of 0.151 mm gives 40 Ω on the inner layers. The VDDQ plane (L6) also carries a 12 V island under the PMIC.</p>
+<h2 id="142-placement-and-routing">14.2 Placement and routing<a class="headerlink" href="#142-placement-and-routing" title="Permanent link">&para;</a></h2>
+<p>Where parts go decides whether the wiring is even possible. Figure 14.2 shows the placement study of the board rendered by KiCad: twenty DRAMs in two rows of ten (the back-side chips lie under the front ones), the RCD in the middle, the SPD hub and the temperature sensors, and the gold fingers along the bottom. Traces are not routed in this render.</p>
+<figure class="fig fig-diagram">
+<img src="img/module-render-top.png" alt="Three-dimensional render of the module&#x27;s top side from KiCad: ten DRAM chips on each side of the central RCD, decoupling capacitors, the PMIC at the top and gold edge fingers at the bottom" loading="lazy" width="1068" height="256">
+<figcaption><strong>Figure 14.2.</strong> Three-dimensional render of the module&#x27;s top side from KiCad: ten DRAM chips on each side of the central RCD, decoupling capacitors, the PMIC at the top and gold edge fingers at the bottom</figcaption>
+</figure>
+
+<p>Three lessons came out of the placement work.</p>
+<ul>
+<li><strong>Keep-out space.</strong> Every part has a "courtyard" that others may not enter. The real package's courtyard pushed the chip spacing from 11.0 mm to 11.5 mm.</li>
+<li><strong>Follow the vendor.</strong> The PMIC data sheet includes a recommended layout. The first placement had the coils on the wrong side, and was redone to match.</li>
+<li><strong>The via puzzle.</strong> Front and back chips sit on top of each other and share the same holes between the balls. About 140 connections need vias, but only about 112 spots exist. This is solved as an optimisation problem, which the course proposes as a capstone project (Exercise 17.5, option (a), as an integer program).</li>
+</ul>
+<h2 id="143-the-spd-the-identity-card">14.3 The SPD: the identity card<a class="headerlink" href="#143-the-spd-the-identity-card" title="Permanent link">&para;</a></h2>
+<p>When a computer starts, before it can use the memory, it reads 1024 bytes from the module's <strong>SPD</strong> (Serial Presence Detect) chip: the chip type, size, speed, timings, manufacturer and serial number. The project generates this file from the design code and protects it with a <strong>CRC</strong> checksum, a fingerprint of bytes 0 to 509 stored in bytes 510 and 511. The tests flip every one of the 4080 bits (<span class="arithmatex">\(510 \times 8\)</span>) once and confirm that the checksum catches each flip.</p>
+<table>
+<thead>
+<tr>
+<th>Byte(s)</th>
+<th>Holds</th>
+<th>Our value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2</td>
+<td>Memory type</td>
+<td>0x12 = DDR5</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Module type</td>
+<td>RDIMM</td>
+</tr>
+<tr>
+<td>4–7</td>
+<td>Chip density and organisation</td>
+<td>16 Gb, x4, 8 bank groups</td>
+</tr>
+<tr>
+<td>20–47</td>
+<td>Timings in picoseconds</td>
+<td>CL 40, tRCD 39, tRP 39 …</td>
+</tr>
+<tr>
+<td>510–511</td>
+<td>CRC-16 checksum</td>
+<td>verified</td>
+</tr>
+<tr>
+<td>512+</td>
+<td>Maker, date, part number, serial</td>
+<td>placeholders</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">What is still open</p>
+<p>77 of the 86 fields still need checking against the JEDEC standard before a real chip is programmed. The SPD contents of the project are a design-stage file, not a certified one.</p>
+</div>
+<p>The checksum is CRC-16 with polynomial 0x1021, start value 0 and no final exclusive-OR. The standard check value is that the CRC of the ASCII text <code>123456789</code> is <code>0x31C3</code>.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 14.1: Building a protected SPD image</p>
+<ol>
+<li>Start with 1024 zero bytes and set byte 2 to <code>0x12</code> (DDR5).</li>
+<li>Compute the CRC-16 of bytes 0 to 509. For an image in which only byte 2 is non-zero, the result is <code>0x3B5D</code>.</li>
+<li>Store it little-endian: byte 510 is <code>0x5D</code> (the low byte) and byte 511 is <code>0x3B</code>.</li>
+<li>At boot the BIOS recomputes the CRC over bytes 0 to 509 and compares: a match means the contents are trustworthy.</li>
+<li>Flip any single bit in bytes 0 to 509 and the recomputed CRC no longer matches. Testing all 4080 flips finds 4080 detections and none undetected.</li>
+</ol>
+</div>
+<h2 id="144-testing-four-rounds">14.4 Testing: four rounds<a class="headerlink" href="#144-testing-four-rounds" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Round</th>
+<th>State</th>
+<th>What is checked</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1. Design checks</td>
+<td>running today</td>
+<td>86 automated tests on connections, power, timing, layout rules, footprints and the SPD file; KiCad's design-rule check reports 0 violations</td>
+</tr>
+<tr>
+<td>2. Simulation</td>
+<td>running today</td>
+<td>ngspice eye diagrams for data and command signals; power-network impedance across frequency</td>
+</tr>
+<tr>
+<td>3. Bring-up</td>
+<td>after manufacturing</td>
+<td>Check for short circuits, apply power step by step, measure each voltage, read the SPD chip with a Raspberry Pi</td>
+</tr>
+<tr>
+<td>4. In a computer</td>
+<td>after manufacturing</td>
+<td>The BIOS trains and detects the module, then Memtest86+ and Google stressapptest run for 24 hours, with the Linux error counters watched</td>
+</tr>
+</tbody>
+</table>
+<h2 id="145-handing-over-to-the-factory">14.5 Handing over to the factory<a class="headerlink" href="#145-handing-over-to-the-factory" title="Permanent link">&para;</a></h2>
+<p>A design becomes a product when the right files reach the right factory.</p>
+<table>
+<thead>
+<tr>
+<th>For a module (PCB)</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Gerber files</td>
+<td>One image per copper, mask and silkscreen layer</td>
+</tr>
+<tr>
+<td>Drill files</td>
+<td>Where every hole and via goes</td>
+</tr>
+<tr>
+<td>Stack-up / fab drawing</td>
+<td>Layer order, thickness, impedance targets, gold fingers</td>
+</tr>
+<tr>
+<td>BOM</td>
+<td>Bill of materials: every part and its maker</td>
+</tr>
+<tr>
+<td>Pick-and-place</td>
+<td>Position and rotation for the assembly robot</td>
+</tr>
+<tr>
+<td>SPD .bin</td>
+<td>The identity-card contents to program</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>For a chip (silicon)</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GDSII / OASIS</td>
+<td>The layout: every shape on every mask layer</td>
+</tr>
+<tr>
+<td>DRC and LVS reports</td>
+<td>Proof that the rules are met and the layout matches the circuit</td>
+</tr>
+<tr>
+<td>Tapeout form</td>
+<td>Die size, process options, quantity</td>
+</tr>
+<tr>
+<td>Bonding / ball map</td>
+<td>For the packaging company</td>
+</tr>
+<tr>
+<td>Test plan</td>
+<td>How each chip will be tested</td>
+</tr>
+</tbody>
+</table>
+<h2 id="146-from-die-to-memory-stick">14.6 From die to memory stick<a class="headerlink" href="#146-from-die-to-memory-stick" title="Permanent link">&para;</a></h2>
+<p>A memory module looks simple, but it combines the output of several factories (Figure 14.3).</p>
+<figure class="fig fig-diagram">
+<img src="img/die-to-module-flow.png" alt="Five stages from silicon die at the DRAM fab, through package at an OSAT, module PCB with SPD, PMIC and passives, heat spreader and label, to the tested product, with the key files at each stage" loading="lazy" width="1276" height="335">
+<figcaption><strong>Figure 14.3.</strong> Five stages from silicon die at the DRAM fab, through package at an OSAT, module PCB with SPD, PMIC and passives, heat spreader and label, to the tested product, with the key files at each stage</figcaption>
+</figure>
+
+<p><strong>The silicon die.</strong> Everything starts with the DRAM die, made in a memory fab from the layout (GDSII). Each wafer holds hundreds of dies. Before dicing, every die is tested at wafer probe, and faulty rows or columns are replaced by spare ones by blowing on-chip fuses, a step called <strong>repair</strong> that is essential for DRAM yield.</p>
+<p><strong>The package.</strong> A bare die is fragile and its pads are too small and dense for a circuit board, so it is packaged. The package substrate is a tiny multilayer circuit board that fans the die pads out to larger solder balls. The die is connected either with fine gold or copper wire bonds or face-down with flip-chip bumps, then covered in mould compound. Standard DRAM uses FBGA (fine-pitch ball grid array) packages with, for example, 78 or 96 balls. For higher capacity, 2, 4 or 8 dies can be stacked in one package, joined by wire bonds or by TSVs. Packaging is often done by an OSAT (outsourced semiconductor assembly and test company) such as ASE or Amkor, which needs the substrate design (Gerber or ODB++ files), the bonding diagram, the ball map and package outline, and the die pad coordinates.</p>
+<p><strong>The module PCB.</strong> The module is a printed circuit board, typically 8 to 10 layers for client modules (server RDIMMs use 10 to 12), with controlled-impedance traces and careful length matching so that all data bits arrive within a tight time window. Gold-plated edge contacts (gold fingers) plug into the motherboard slot. The PCB fabricator and assembly house need Gerber files, drill files, the BOM, the pick-and-place file and a fabrication drawing that includes the layer stack-up.</p>
+<p><strong>Firmware and test data.</strong> The SPD contents tell the computer how to run the module. The <strong>ATE</strong> test programs run on automatic test equipment to check every module and to speed-bin it: parts that pass at higher speeds or tighter timings are sold as faster, more expensive grades.</p>
+<h2 id="147-building-a-ddr5-module-as-a-product">14.7 Building a DDR5 module as a product<a class="headerlink" href="#147-building-a-ddr5-module-as-a-product" title="Permanent link">&para;</a></h2>
+<p>A company does not make the DRAM chips. It buys them from Micron, Samsung or SK hynix, then designs, builds, tests and qualifies the module, as Kingston, ADATA, Netlist and SMART Modular do. Designing a DRAM chip itself needs a DRAM fab (Chapters 15 and 16).</p>
+<p><strong>Choosing the product.</strong> A DDR4 or DDR5 SO-DIMM prototype comes first, then a DDR5 RDIMM.</p>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Where used</th>
+<th>Difficulty</th>
+<th>Recommendation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDR4 SO-DIMM / UDIMM</td>
+<td>Older laptops and desktops</td>
+<td>Low</td>
+<td>Learning prototype only (DDR4 is being phased out)</td>
+</tr>
+<tr>
+<td>DDR5 UDIMM / SO-DIMM</td>
+<td>Desktops, laptops</td>
+<td>Medium</td>
+<td>First commercial product</td>
+</tr>
+<tr>
+<td>DDR5 CUDIMM / CSODIMM</td>
+<td>8000+ MT/s client systems</td>
+<td>High</td>
+<td>Later</td>
+</tr>
+<tr>
+<td>DDR5 RDIMM with ECC</td>
+<td>Servers</td>
+<td>High</td>
+<td>Main target</td>
+</tr>
+<tr>
+<td>DDR5 MRDIMM</td>
+<td>HPC and AI servers</td>
+<td>Very high</td>
+<td>Future</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Parts list for a 32 GB DDR5 RDIMM (1Rx4).</strong></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>Qty</th>
+<th>Function</th>
+<th>Suppliers</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDR5 DRAM, 16 Gb x4, FBGA</td>
+<td>20 (16 data + 4 ECC)</td>
+<td>The memory</td>
+<td>Micron, Samsung, SK hynix</td>
+</tr>
+<tr>
+<td>RCD</td>
+<td>1</td>
+<td>Buffers command, address and clock</td>
+<td>Renesas, Rambus, Montage</td>
+</tr>
+<tr>
+<td>PMIC (server type)</td>
+<td>1</td>
+<td>Converts 12 V to the DRAM voltages</td>
+<td>Renesas, Richtek, MPS</td>
+</tr>
+<tr>
+<td>SPD hub with temperature sensor</td>
+<td>1</td>
+<td>Module identity data for the BIOS</td>
+<td>Renesas, Montage, Rambus</td>
+</tr>
+<tr>
+<td>Temperature sensors</td>
+<td>2</td>
+<td>Thermal monitoring</td>
+<td>Same vendors</td>
+</tr>
+<tr>
+<td>Decoupling capacitors, resistors</td>
+<td>about 100–200</td>
+<td>Power filtering, termination</td>
+<td>Murata, Samsung EM, Yageo</td>
+</tr>
+<tr>
+<td>PCB, 288-pin, 10–12 layers</td>
+<td>1</td>
+<td>Module board with hard-gold edge fingers</td>
+<td>PCB fab</td>
+</tr>
+<tr>
+<td>Heat spreader</td>
+<td>Optional</td>
+<td>Cooling</td>
+<td>Mechanical supplier</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Why 20 chips?</strong> Each DIMM has 2 sub-channels <span class="arithmatex">\(\times\)</span> (32 data + 8 ECC bits) <span class="arithmatex">\(= 80\)</span> bits. With x4 chips, <span class="arithmatex">\(80 \div 4 = 20\)</span> chips. <span class="arithmatex">\(20 \times 16\)</span> Gb <span class="arithmatex">\(= 40\)</span> GB raw, of which 32 GB is usable data and the rest holds ECC.</p>
+<div class="admonition warning">
+<p class="admonition-title">Risk: DRAM supply</p>
+<p>DRAM chip supply is the biggest risk. AI demand caused shortages and price increases in 2025 and 2026, and small buyers may get only limited allocation. Secure direct or franchised-distributor agreements early.</p>
+</div>
+<p><strong>Design tools and standards.</strong> KiCad is the open-source choice for schematic and board design; Allegro, OrCAD, Altium Designer and Siemens Xpedition are the commercial ones. A reference design to start from is the set of open DDR4 SO-DIMM designs published by Antmicro, or the JEDEC raw cards, reference PCB designs for a given module type and chip organisation (starting from one saves months of layout and validation; some need JEDEC membership). Signal integrity is checked with ngspice and IBIS models and openEMS in the open-source world, or with HyperLynx, Sigrity, Keysight ADS or Ansys SIwave. The standards needed are JESD79-5 (DDR5 DRAM), the JEDEC DDR5 module standards (RDIMM, UDIMM, SO-DIMM and raw cards), the DDR5 SPD standard, the standards for the RCD, PMIC and SPD hub, the JEDEC mechanical outlines and JESD22 (reliability test methods).</p>
+<p><strong>Manufacturing, testing and qualification.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>Requirement</th>
+<th>Own or outsource</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PCB fabrication</td>
+<td>10–12 layers, ±10 per cent impedance, tight tolerances, hard-gold bevelled fingers</td>
+<td>Outsource (India, Taiwan, China)</td>
+</tr>
+<tr>
+<td>SMT assembly</td>
+<td>Fine-pitch BGA, reflow, AOI and X-ray inspection</td>
+<td>Start with an EMS partner; own line later (about USD 1–3 million)</td>
+</tr>
+<tr>
+<td>Programming</td>
+<td>SPD written in production</td>
+<td>In-house</td>
+</tr>
+<tr>
+<td>Module testing</td>
+<td>Module testers and system-level test racks</td>
+<td>In-house</td>
+</tr>
+<tr>
+<td>Burn-in</td>
+<td>Elevated-temperature stress to catch early failures</td>
+<td>In-house</td>
+</tr>
+<tr>
+<td>Labelling and packaging</td>
+<td>ESD-safe; lot and serial traceability</td>
+<td>In-house</td>
+</tr>
+</tbody>
+</table>
+<p>EMS (electronics manufacturing services) companies assemble boards for others; AOI (automated optical inspection) uses cameras to find assembly defects, while X-ray inspection checks the hidden BGA solder joints. Qualification covers signal-integrity validation (an oscilloscope of 16 to 25 GHz class with DDR5 compliance software), functional test on module testers, system-level stress on partner servers (Memtest86+, Google stressapptest and the Linux EDAC error logs), thermal tests in a climate chamber, reliability tests per JESD22 (temperature cycling, humidity, shock and vibration), platform qualification through Intel and AMD memory validation programmes and server makers' qualified vendor lists (QVLs), and compliance (RoHS, REACH, India BIS requirements, and ISO 9001 or IATF 16949 for automotive).</p>
+<p><strong>Team, budget and timeline (rough; get quotes).</strong> A team of about 10 to 20: hardware design 2–4, PCB layout 1–2, signal and power integrity 1–2, firmware, SPD and test software 2, test and manufacturing 2–4, quality and reliability 1–2, supply chain 1–2 (critical for DRAM allocation) and sales 1–2.</p>
+<table>
+<thead>
+<tr>
+<th>Budget item</th>
+<th>Approximate cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Design tools</td>
+<td>Free (KiCad) to about USD 10–50 thousand per year</td>
+</tr>
+<tr>
+<td>Prototypes (2–3 spins)</td>
+<td>about USD 10–30 thousand</td>
+</tr>
+<tr>
+<td>Module tester</td>
+<td>about USD 20–100 thousand</td>
+</tr>
+<tr>
+<td>DDR5-capable oscilloscope and compliance software</td>
+<td>about USD 100–300 thousand (or rent or use a lab)</td>
+</tr>
+<tr>
+<td>Thermal chamber</td>
+<td>about USD 20–50 thousand</td>
+</tr>
+<tr>
+<td>Qualification and certification</td>
+<td>about USD 20–100 thousand</td>
+</tr>
+<tr>
+<td>JEDEC membership</td>
+<td>A few thousand to tens of thousands of dollars per year, by tier</td>
+</tr>
+<tr>
+<td>DRAM inventory (working capital)</td>
+<td>The largest cost: DRAM is about 80–90 per cent of module cost</td>
+</tr>
+<tr>
+<td>Own SMT line (optional)</td>
+<td>about USD 1–3 million</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Duration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Learning prototype</td>
+<td>2–3 months</td>
+</tr>
+<tr>
+<td>DDR5 RDIMM design from a raw card</td>
+<td>2–3 months</td>
+</tr>
+<tr>
+<td>Prototype build and SI / functional validation</td>
+<td>2–3 months</td>
+</tr>
+<tr>
+<td>Platform qualification</td>
+<td>3–6 months</td>
+</tr>
+<tr>
+<td>First qualified product</td>
+<td>about 9–15 months</td>
+</tr>
+</tbody>
+</table>
+<p>Memory modules are a low-margin, high-volume business, because most of the value is in the DRAM chips that are bought. Ways to differentiate include server-grade RDIMMs qualified on particular server platforms, industrial and rugged modules (wide temperature range, conformal coating) for defence, rail and telecom, and a path towards CXL memory expanders. The summary checklist is to pick the product (start with a DDR5 RDIMM); secure DRAM supply; get the JEDEC standards and raw cards; choose tools (KiCad to start, Allegro or Altium with HyperLynx or Sigrity for production); line up partners (PCB fab, EMS assembly and a server partner for qualification); build a test lab; plan certifications; hire a team of about 10 to 20; and arrange working capital for DRAM inventory. All costs and figures here are approximate, and vendor names, part availability and product details should be confirmed with the companies concerned.</p>
+<h2 id="148-summary">14.8 Summary<a class="headerlink" href="#148-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The ten-layer stack-up pairs each signal layer with a plane; 0.151 mm traces give 40 Ω on the inner layers, total thickness 1.27 mm.</li>
+<li>Placement is constrained by courtyards, vendor layout guides and a via puzzle (140 connections, 112 sites).</li>
+<li>The SPD is 1024 bytes protected by a CRC-16 over bytes 0 to 509; all 4080 single-bit flips are detected.</li>
+<li>Testing runs in four rounds, from automated design checks to 24-hour stress in a real computer.</li>
+<li>A module is the product of several factories (DRAM fab, OSAT, PCB fab and assembly, test). A company that builds modules buys the DRAM, whose cost is 80 to 90 per cent of the module.</li>
+</ul>
+<h2 id="149-exercises">14.9 Exercises<a class="headerlink" href="#149-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 14.1.</strong> A module PCB is 1.27 mm thick and contains ten copper layers. If outer copper is 35 µm and inner copper 18 µm (Figure 14.1), how much of the thickness is copper, and how much insulation?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Copper: 2 outer layers <span class="arithmatex">\(\times\)</span> 35 µm <span class="arithmatex">\(= 70\)</span> µm plus 8 inner layers <span class="arithmatex">\(\times\)</span> 18 µm <span class="arithmatex">\(= 144\)</span> µm, total 214 µm. Insulation: <span class="arithmatex">\(1270 - 214 = 1056\)</span> µm. The layers listed in the stack-up sum to about 1.27 mm, so insulation is about 83 per cent of the thickness.</p>
+</details>
+<p><strong>Exercise 14.2.</strong> Of 140 connections that need vias in the DRAM fan-out, only 112 via sites exist. What must be true of the solution, and why is it called an optimisation problem?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Some connections must share a via site or be routed differently (for example through the other side or by moving escape routes), because <span class="arithmatex">\(140 &gt; 112\)</span>. Finding an assignment of connections to sites that satisfies all the geometric rules is a constrained assignment problem, which the course suggests solving as an integer program.</p>
+</details>
+<p><strong>Exercise 14.3.</strong> Suppose a manufacturer's DRAM costs USD 300 per module and is 85 per cent of module cost. What is the total module cost, and what is left for everything else?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The cost is <span class="arithmatex">\(300/0.85 = 353\)</span>, so the remainder is about USD 53. This shows why module making is a low-margin business and why DRAM supply is the largest risk.</p>
+</details>
+<p><strong>Exercise 14.4 (Assignment 10: your first 4-layer board).</strong> In KiCad, design a small board with an I²C EEPROM (an SPD-like identity chip), a connector, decoupling capacitors and pull-up resistors. Set a 4-layer stack-up, net classes and a 0.8 mm BGA fan-out exercise using any BGA footprint from the KiCad library. Route it, run the design-rule check until it reports 0 errors, and export Gerbers, drill files, the BOM and the pick-and-place file.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Success means that the design-rule check reports 0 violations and the Gerbers open correctly in KiCad's Gerber viewer. Hint: place the decoupling capacitors before routing anything else. Command-line checks and exports are <code>kicad-cli pcb drc board.kicad_pcb</code>, <code>kicad-cli pcb export gerbers -o fab/ board.kicad_pcb</code> and <code>kicad-cli pcb export drill -o fab/ board.kicad_pcb</code>.</p>
+</details>
+<p><strong>Exercise 14.5 (Assignment 11: write an SPD file with a checksum).</strong> Implement CRC-16 (polynomial 0x1021, start value 0, no final XOR). Create a 1024-byte image with byte 2 equal to 0x12 and the CRC of bytes 0 to 509 stored little-endian in bytes 510 and 511. Flip every bit in bytes 0 to 509 one at a time and confirm that the CRC catches all of them.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><div class="language-python highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">crc16</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="n">crc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">data</span><span class="p">:</span>
+        <span class="n">crc</span> <span class="o">^=</span> <span class="n">b</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+            <span class="n">crc</span> <span class="o">=</span> <span class="p">((</span><span class="n">crc</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">^</span> <span class="mh">0x1021</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span> <span class="k">if</span> <span class="n">crc</span> <span class="o">&amp;</span> <span class="mh">0x8000</span> <span class="k">else</span> <span class="p">(</span><span class="n">crc</span> <span class="o">&lt;&lt;</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xFFFF</span>
+    <span class="k">return</span> <span class="n">crc</span>
+
+<span class="k">assert</span> <span class="n">crc16</span><span class="p">(</span><span class="sa">b</span><span class="s2">"123456789"</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0x31C3</span>          <span class="c1"># standard check value</span>
+
+<span class="n">img</span> <span class="o">=</span> <span class="nb">bytearray</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+<span class="n">img</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mh">0x12</span>                                   <span class="c1"># DDR5</span>
+<span class="n">c</span> <span class="o">=</span> <span class="n">crc16</span><span class="p">(</span><span class="n">img</span><span class="p">[:</span><span class="mi">510</span><span class="p">])</span>
+<span class="n">img</span><span class="p">[</span><span class="mi">510</span><span class="p">],</span> <span class="n">img</span><span class="p">[</span><span class="mi">511</span><span class="p">]</span> <span class="o">=</span> <span class="n">c</span> <span class="o">&amp;</span> <span class="mh">0xFF</span><span class="p">,</span> <span class="n">c</span> <span class="o">&gt;&gt;</span> <span class="mi">8</span>           <span class="c1"># little-endian</span>
+
+<span class="n">undetected</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">for</span> <span class="n">byte</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">510</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">bit</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">8</span><span class="p">):</span>
+        <span class="n">img</span><span class="p">[</span><span class="n">byte</span><span class="p">]</span> <span class="o">^=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">bit</span>
+        <span class="k">if</span> <span class="n">crc16</span><span class="p">(</span><span class="n">img</span><span class="p">[:</span><span class="mi">510</span><span class="p">])</span> <span class="o">==</span> <span class="n">img</span><span class="p">[</span><span class="mi">510</span><span class="p">]</span> <span class="o">|</span> <span class="n">img</span><span class="p">[</span><span class="mi">511</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">8</span><span class="p">:</span>
+            <span class="n">undetected</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">img</span><span class="p">[</span><span class="n">byte</span><span class="p">]</span> <span class="o">^=</span> <span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">bit</span>                   <span class="c1"># restore</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">undetected</span><span class="p">)</span>                               <span class="c1"># 0 of 4080</span>
+</code></pre></div>
+The CRC of <code>123456789</code> is 0x31C3 and all 4080 single-bit flips are detected.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="power-delivery-on-the-module.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 13. Power: Clean, Steady Voltage for Twenty Chips">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                13. Power: Clean, Steady Voltage for Twenty Chips
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-footer__link md-footer__link--next" aria-label="Next: 15. Designing an SRAM, Process Kits and Process Nodes">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                15. Designing an SRAM, Process Kits and Process Nodes
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

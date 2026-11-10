@@ -1,0 +1,3907 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch27-launch-systems-and-integration.html">
+  
+  
+    <link rel="prev" href="ch26-missile-electronics-and-power.html">
+  
+  
+    <link rel="next" href="ch28-missile-manufacturing.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>27. Launch Systems and Integration - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-launch_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              27. Launch Systems and Integration
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-launch_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.1 Introduction to Launch Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-launch_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2 Launch System Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.2 Launch System Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2721-platform-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.1 Platform Categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2722-common-launch-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.2 Common Launch Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2723-environmental-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.3 Environmental Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2724-fire-control-system-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.4 Fire Control System Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-VLS" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3 Vertical Launch Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.3 Vertical Launch Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2731-mk-41-vertical-launch-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.1 Mk 41 Vertical Launch System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2732-cold-launch-vs-hot-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.2 Cold Launch vs Hot Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2733-sylver-a50-and-a70" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.3 Sylver A50 and A70
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2734-ukms-containerised-vls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.4 UKMS / Containerised VLS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2735-salvo-rate-and-interlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.5 Salvo Rate and Interlock
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-air_launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4 Air Launch Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.4 Air Launch Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2741-pylon-and-ejector-rack-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.1 Pylon and Ejector Rack Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2742-ejection-force-and-separation-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.2 Ejection Force and Separation Velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2743-store-separation-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.3 Store Separation Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2744-captive-carriage-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.4 Captive Carriage Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2745-internal-weapons-bay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.5 Internal Weapons Bay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2746-mil-std-1760-electrical-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.6 MIL-STD-1760 Electrical Interface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2747-safe-escape-and-motor-ignition-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.7 Safe Escape and Motor Ignition Timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2748-helicopter-launch-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.8 Helicopter Launch Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ground_mobile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5 Ground Mobile Launch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.5 Ground Mobile Launch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2751-tel-design-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.1 TEL Design and Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2752-reaction-time-and-survivability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.2 Reaction Time and Survivability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2753-atacms-on-m270himars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.3 ATACMS on M270/HIMARS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2754-iskander-m-tel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.4 Iskander-M TEL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2755-containerised-ground-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.5 Containerised Ground Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sub_launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6 Submarine Launch Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.6 Submarine Launch Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2761-torpedo-tube-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.1 Torpedo Tube Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2762-submarine-vls-ohio-class-trident" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.2 Submarine VLS (Ohio-Class Trident)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2763-communication-and-launch-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.3 Communication and Launch Order
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2764-position-accuracy-before-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.4 Position Accuracy Before Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-canisters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7 Canister Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.7 Canister Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2771-hermetically-sealed-canister-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7.1 Hermetically Sealed Canister Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2772-shelf-life-and-accelerated-aging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7.2 Shelf Life and Accelerated Aging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2773-modular-canister-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7.3 Modular Canister Concept
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8 Missile Handling and Logistics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.8 Missile Handling and Logistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2781-weight-handling-and-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.1 Weight Handling and Fixtures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2782-hero-herp-herf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.2 HERO, HERP, HERF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2783-insensitive-high-explosive-ihe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.3 Insensitive High Explosive (IHE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2784-transportation-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.4 Transportation Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fire_control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9 Fire Control and Weapon Management Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.9 Fire Control and Weapon Management Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2791-weapon-management-system-wms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.1 Weapon Management System (WMS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2792-target-track-data-and-engagement-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.2 Target Track Data and Engagement Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2793-pre-launch-data-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.3 Pre-Launch Data Transfer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2794-shoot-look-shoot-doctrine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.4 Shoot-Look-Shoot Doctrine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2795-battle-damage-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.5 Battle Damage Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-safe_arm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10 Safe and Arm Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.10 Safe and Arm Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#27101-functions-and-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.1 Functions and Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27102-environmental-sensing-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.2 Environmental Sensing Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27103-electromechanical-safearm-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.3 Electromechanical Safe/Arm Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27104-mems-safearm-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.4 MEMS Safe/Arm Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27105-unexploded-ordnance-uxo-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.5 Unexploded Ordnance (UXO) Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-integration_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11 Integration Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.11 Integration Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#27111-captive-carry-electrical-integration-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.1 Captive Carry Electrical Integration Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27112-sled-track-separation-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.2 Sled Track Separation Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27113-first-article-and-live-firing-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.3 First Article and Live Firing Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27114-electromagnetic-compatibility-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.4 Electromagnetic Compatibility Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27115-weapon-system-qualification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.5 Weapon System Qualification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27116-temp-and-dtot-phase-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.6 TEMP and DT/OT Phase Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-launch_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.12 Launch Platform Integration Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-launch_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.1 Introduction to Launch Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-launch_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2 Launch System Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.2 Launch System Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2721-platform-categories" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.1 Platform Categories
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2722-common-launch-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.2 Common Launch Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2723-environmental-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.3 Environmental Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2724-fire-control-system-role" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.2.4 Fire Control System Role
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-VLS" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3 Vertical Launch Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.3 Vertical Launch Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2731-mk-41-vertical-launch-system" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.1 Mk 41 Vertical Launch System
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2732-cold-launch-vs-hot-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.2 Cold Launch vs Hot Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2733-sylver-a50-and-a70" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.3 Sylver A50 and A70
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2734-ukms-containerised-vls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.4 UKMS / Containerised VLS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2735-salvo-rate-and-interlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.3.5 Salvo Rate and Interlock
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-air_launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4 Air Launch Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.4 Air Launch Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2741-pylon-and-ejector-rack-interfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.1 Pylon and Ejector Rack Interfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2742-ejection-force-and-separation-velocity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.2 Ejection Force and Separation Velocity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2743-store-separation-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.3 Store Separation Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2744-captive-carriage-environment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.4 Captive Carriage Environment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2745-internal-weapons-bay" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.5 Internal Weapons Bay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2746-mil-std-1760-electrical-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.6 MIL-STD-1760 Electrical Interface
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2747-safe-escape-and-motor-ignition-timing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.7 Safe Escape and Motor Ignition Timing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2748-helicopter-launch-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.4.8 Helicopter Launch Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ground_mobile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5 Ground Mobile Launch
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.5 Ground Mobile Launch">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2751-tel-design-and-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.1 TEL Design and Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2752-reaction-time-and-survivability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.2 Reaction Time and Survivability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2753-atacms-on-m270himars" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.3 ATACMS on M270/HIMARS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2754-iskander-m-tel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.4 Iskander-M TEL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2755-containerised-ground-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.5.5 Containerised Ground Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sub_launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6 Submarine Launch Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.6 Submarine Launch Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2761-torpedo-tube-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.1 Torpedo Tube Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2762-submarine-vls-ohio-class-trident" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.2 Submarine VLS (Ohio-Class Trident)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2763-communication-and-launch-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.3 Communication and Launch Order
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2764-position-accuracy-before-launch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.6.4 Position Accuracy Before Launch
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-canisters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7 Canister Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.7 Canister Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2771-hermetically-sealed-canister-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7.1 Hermetically Sealed Canister Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2772-shelf-life-and-accelerated-aging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7.2 Shelf Life and Accelerated Aging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2773-modular-canister-concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.7.3 Modular Canister Concept
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8 Missile Handling and Logistics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.8 Missile Handling and Logistics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2781-weight-handling-and-fixtures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.1 Weight Handling and Fixtures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2782-hero-herp-herf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.2 HERO, HERP, HERF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2783-insensitive-high-explosive-ihe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.3 Insensitive High Explosive (IHE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2784-transportation-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.8.4 Transportation Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fire_control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9 Fire Control and Weapon Management Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.9 Fire Control and Weapon Management Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2791-weapon-management-system-wms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.1 Weapon Management System (WMS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2792-target-track-data-and-engagement-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.2 Target Track Data and Engagement Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2793-pre-launch-data-transfer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.3 Pre-Launch Data Transfer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2794-shoot-look-shoot-doctrine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.4 Shoot-Look-Shoot Doctrine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2795-battle-damage-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.9.5 Battle Damage Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-safe_arm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10 Safe and Arm Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.10 Safe and Arm Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#27101-functions-and-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.1 Functions and Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27102-environmental-sensing-conditions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.2 Environmental Sensing Conditions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27103-electromechanical-safearm-device" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.3 Electromechanical Safe/Arm Device
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27104-mems-safearm-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.4 MEMS Safe/Arm Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27105-unexploded-ordnance-uxo-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.10.5 Unexploded Ordnance (UXO) Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-integration_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11 Integration Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="27.11 Integration Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#27111-captive-carry-electrical-integration-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.1 Captive Carry Electrical Integration Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27112-sled-track-separation-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.2 Sled Track Separation Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27113-first-article-and-live-firing-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.3 First Article and Live Firing Test
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27114-electromagnetic-compatibility-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.4 Electromagnetic Compatibility Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27115-weapon-system-qualification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.5 Weapon System Qualification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27116-temp-and-dtot-phase-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.11.6 TEMP and DT/OT Phase Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-launch_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        27.12 Launch Platform Integration Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-launch">Chapter 27: Launch Systems and Integration<a class="headerlink" href="#ch-launch" title="Permanent link">&para;</a></h1>
+<h2 id="sec-launch_intro"><span class="secnum">27.1</span> Introduction to Launch Systems<a class="headerlink" href="#sec-launch_intro" title="Permanent link">&para;</a></h2>
+<p>The launch system is the complete assembly of mechanical, pyrotechnic, electrical, and fire-control equipment that takes a stored, inert missile from its magazine, canister, or suspension and transforms it into an airborne weapon pursuing its target. A launch system failure—whether mechanical separation anomaly, electrical interface fault, fuze arming failure, or simple improper ignition sequencing—will at best destroy a mission and at worst endanger the launch platform and its crew.</p>
+<p>Launch system engineering encompasses a remarkable breadth of disciplines: structural dynamics (separation trajectories), thermodynamics (exhaust management), electromagnetic compatibility (EMI protection of ordnance), software (fire control and weapon management), reliability engineering (safe-and-arm sequences), and logistics (long-term canister storage). This chapter provides a comprehensive reference treatment of each element.</p>
+<p>The chapter proceeds from an overview of launch platform types and requirements through detailed treatments of vertical launch systems, air launch, ground mobile launch, submarine launch, canister design, missile handling logistics, fire control systems, safe-and-arm devices, and integration testing.</p>
+<h2 id="sec-launch_overview"><span class="secnum">27.2</span> Launch System Overview<a class="headerlink" href="#sec-launch_overview" title="Permanent link">&para;</a></h2>
+<h3 id="2721-platform-categories"><span class="secnum">27.2.1</span> Platform Categories<a class="headerlink" href="#2721-platform-categories" title="Permanent link">&para;</a></h3>
+<p>Launch platforms divide into four primary domains, each imposing distinct requirements on the launch system:</p>
+<div class="parahead">
+<p>Ground-fixed.</p>
+</div>
+<p>Fixed installations (missile defence batteries, coastal defence sites, base air defence) offer essentially unlimited power, crew size, and magazine volume. The launch system can be heavy and complex. Environmental requirements emphasise corrosion resistance for coastal sites and thermal management for arctic deployment, but are less stringent than naval requirements.</p>
+<div class="parahead">
+<p>Ground-mobile.</p>
+</div>
+<p>Transporter-erector-launchers (TELs) and truck-mounted systems must be road- or off-road-deployable, erect and fire within strict reaction-time budgets (typically <span class="arithmatex">\(&lt;\)</span>10 min), and immediately relocate (shoot-and-scoot). Weight, stow height, and road clearance drive the design.</p>
+<div class="parahead">
+<p>Naval (surface).</p>
+</div>
+<p>Ship-borne launch systems must operate in the salt-spray environment of the marine boundary layer, withstand shock loads from ship manoeuvring and gunfire (MIL-S-901D shock test), function through the ship’s roll and pitch (<span class="arithmatex">\(\pm\)</span>45<span class="arithmatex">\(^\circ\)</span> roll, <span class="arithmatex">\(\pm\)</span>15<span class="arithmatex">\(^\circ\)</span> pitch under some definitions), and be integrated with the ship’s combat management system (CMS).</p>
+<div class="parahead">
+<p>Airborne.</p>
+</div>
+<p>Air launch imposes the most stringent weight and volume constraints, adds the complication of safe weapon-aircraft separation at varying airspeeds (100– 500 m/s) and altitudes, and requires compliance with an elaborate suite of electrical interface and carriage environment standards.</p>
+<div class="parahead">
+<p>Submarine.</p>
+</div>
+<p>Submarine launch must function at periscope depth or below, require no surface exposure until after ejection, and produce no acoustic signature that would compromise the submarine’s position.</p>
+<h3 id="2722-common-launch-requirements"><span class="secnum">27.2.2</span> Common Launch Requirements<a class="headerlink" href="#2722-common-launch-requirements" title="Permanent link">&para;</a></h3>
+<p>Regardless of platform, every launch system must satisfy these functional requirements:</p>
+<ol>
+<li>
+<p><strong>Safe separation</strong>: the missile clears the launch platform without contact; structural damage margins <span class="arithmatex">\(&gt;\)</span>1.5 on all contact loads during the separation trajectory.</p>
+</li>
+<li>
+<p><strong>Ignition sequence</strong>: motor ignition occurs only after the missile has safely separated; ignition timing is enforced by both the fire control system and by the missile’s own safe-and-arm device.</p>
+</li>
+<li>
+<p><strong>Arming delay</strong>: the warhead cannot reach its armed state until after a defined time-of-flight or environmental sensing sequence has been satisfied, preventing detonation near the launch platform.</p>
+</li>
+<li>
+<p><strong>Initial guidance</strong>: the missile autopilot is operational within <span class="arithmatex">\(&lt;\)</span>500 ms of launch; target data is loaded to the missile’s computer before or during launch.</p>
+</li>
+<li>
+<p><strong>No fratricide</strong>: the launch event does not damage the platform, crew, or adjacent weapons.</p>
+</li>
+</ol>
+<h3 id="2723-environmental-requirements"><span class="secnum">27.2.3</span> Environmental Requirements<a class="headerlink" href="#2723-environmental-requirements" title="Permanent link">&para;</a></h3>
+<p>Launch systems must operate across the environmental extremes defined in MIL-STD-810 Method 500 (altitude), Method 501 (high temperature), Method 502 (low temperature), Method 506 (rain), Method 507 (humidity), and Method 509 (salt fog). <a href="#tab-launch_env">Table 27.1</a> summarises key environmental limits.</p>
+<div class="tbl" id="tab-launch_env">
+<div class="tbl-caption"><strong>Table 27.1.</strong> Standard environmental limits for launch systems (MIL-STD-810H)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Storage / Transport</strong></th>
+<th style="text-align: left;"><strong>Operational</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Temperature</td>
+<td style="text-align: left;"><span class="math inline">\(-54^\circ\)</span>C to <span class="math inline">\(+71^\circ\)</span>C</td>
+<td style="text-align: left;"><span class="math inline">\(-40^\circ\)</span>C to <span class="math inline">\(+55^\circ\)</span>C</td>
+</tr>
+<tr>
+<td style="text-align: left;">Humidity</td>
+<td style="text-align: left;">95% RH non-condensing</td>
+<td style="text-align: left;">95% RH condensing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Salt fog</td>
+<td style="text-align: left;">5% NaCl, 96 h</td>
+<td style="text-align: left;">5% NaCl, 48 h</td>
+</tr>
+<tr>
+<td style="text-align: left;">Altitude (ground)</td>
+<td style="text-align: left;">Sea level to 4600 m</td>
+<td style="text-align: left;">Sea level to 3050 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Vibration (transport)</td>
+<td style="text-align: left;">MIL-STD-810 Cat. I road</td>
+<td style="text-align: left;">MIL-STD-810 Fig. 514.6-1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Shock (naval)</td>
+<td style="text-align: left;">MIL-S-901D Grade A</td>
+<td style="text-align: left;">MIL-S-901D Grade A</td>
+</tr>
+<tr>
+<td style="text-align: left;">EMI</td>
+<td style="text-align: left;">MIL-STD-461G</td>
+<td style="text-align: left;">MIL-STD-461G</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="2724-fire-control-system-role"><span class="secnum">27.2.4</span> Fire Control System Role<a class="headerlink" href="#2724-fire-control-system-role" title="Permanent link">&para;</a></h3>
+<p>The fire control system (FCS<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>) orchestrates the engagement sequence:</p>
+<ol>
+<li>
+<p>Receives target track data from sensors (radar, IR, acoustic)</p>
+</li>
+<li>
+<p>Computes engagement geometry: time to intercept, required seeker look angle, fuze setting</p>
+</li>
+<li>
+<p>Assigns weapons to targets: threat prioritisation algorithm</p>
+</li>
+<li>
+<p>Obtains launch authorisation from operator or autonomous algorithm</p>
+</li>
+<li>
+<p>Issues pre-launch data load to missile (waypoints, target state, fuze data)</p>
+</li>
+<li>
+<p>Issues fire command; monitors launch confirmation</p>
+</li>
+<li>
+<p>Tracks the missile and target; issues in-flight updates if datalink is available</p>
+</li>
+</ol>
+<h2 id="sec-VLS"><span class="secnum">27.3</span> Vertical Launch Systems<a class="headerlink" href="#sec-VLS" title="Permanent link">&para;</a></h2>
+<h3 id="2731-mk-41-vertical-launch-system"><span class="secnum">27.3.1</span> Mk 41 Vertical Launch System<a class="headerlink" href="#2731-mk-41-vertical-launch-system" title="Permanent link">&para;</a></h3>
+<p>The Mk 41 VLS (developed by Lockheed Martin) is the most widely deployed naval vertical launch system, fielded on US Navy Ticonderoga-class cruisers (122 cells), Arleigh Burke-class destroyers (90 or 96 cells), and the naval forces of 12 allied nations. Key physical parameters:</p>
+<ul>
+<li>
+<p><strong>Cell dimensions</strong>: 0.635 m <span class="arithmatex">\(\times\)</span> 0.635 m cross-section; standard strike-length cell depth 7.7 m; tactical-length 5.3 m.</p>
+</li>
+<li>
+<p><strong>Maximum missile mass</strong>: 1,400 kg per cell (tactical length), 2,450 kg per cell (strike length).</p>
+</li>
+<li>
+<p><strong>Module configuration</strong>: 8-cell modules; each module has a dedicated launcher control unit (LCU) and plenum for exhaust gas.</p>
+</li>
+<li>
+<p><strong>Missiles certified</strong>: SM-2 Block IV, SM-3 Block IIA, SM-6, Evolved Sea Sparrow Missile (ESSM, 4-packed per cell), Tomahawk TLAM, ASROC VL.</p>
+</li>
+</ul>
+<p>The Mk 41 uses a hot-launch configuration in which the motor ignites within the cell. Exhaust gases are channelled through a water-cooled flame duct running below the deck, venting through two uptakes at the forward and aft ends of the module. Water deluge flow rates of <span class="arithmatex">\(\sim\)</span>400 L/s are required for thermal management during a full-module salvo.</p>
+<h3 id="2732-cold-launch-vs-hot-launch"><span class="secnum">27.3.2</span> Cold Launch vs Hot Launch<a class="headerlink" href="#2732-cold-launch-vs-hot-launch" title="Permanent link">&para;</a></h3>
+<p>The choice between cold and hot launch fundamentally drives the mechanical architecture of the VLS:</p>
+<div class="parahead">
+<p>Hot launch.</p>
+</div>
+<p>Motor ignites inside the cell. Requires robust flame duct and exhaust management. Advantages: simpler ejection mechanism; no separate gas generator required; shorter ignition delay. Disadvantages: thermal loading on adjacent cells limits salvo rate; exhaust gas recirculation risks motor re-ingestion in unfavourable wind conditions; failed-to-ignite missile remains in burning cell (fire hazard).</p>
+<div class="parahead">
+<p>Cold launch.</p>
+</div>
+<p>A gas generator (pyrotechnic piston or steam generator) ejects the missile vertically from the cell. The motor ignites after the missile is safely above the deck (<span class="arithmatex">\(\sim\)</span>10–30 m altitude). The ejection velocity required: <span id="eq-Veject"></span></p>
+<div class="arithmatex">\[V_{eject} = \sqrt{2\,g\,h_{clearance} + 2\,g\,h_{cell}}\tag{27.1}\]</div>
+<p>In practice <span class="arithmatex">\(V_{eject} \approx 20\)</span>–<span class="arithmatex">\(40\)</span> m/s. The ejection impulse from the gas generator: <span id="eq-J_ej"></span></p>
+<div class="arithmatex">\[J_{ej} = m_{missile}\,V_{eject} + \int_0^{t_{ej}} F_{drag}(V)\,dt\tag{27.2}\]</div>
+<p>Cold launch advantages: no flame duct required; failed-to-ignite missile can be jettisoned safely; adjacent cells are undamaged. Russian S-300/S-400 systems use cold launch; French Sylver VLS uses cold launch; US Mk 41 uses hot launch.</p>
+<h3 id="2733-sylver-a50-and-a70"><span class="secnum">27.3.3</span> Sylver A50 and A70<a class="headerlink" href="#2733-sylver-a50-and-a70" title="Permanent link">&para;</a></h3>
+<p>The Sylver (Système de Lancement Vertical) VLS designed by DCNS/Naval Group for MBDA Aster missiles uses a cold-launch architecture with an 8-cell module configuration. Two variants:</p>
+<ul>
+<li>
+<p><strong>Sylver A50</strong>: 5.0 m cell depth; Aster 15 (45 km range); used on French FREMM frigates and Type 45 destroyer (with Aster 30).</p>
+</li>
+<li>
+<p><strong>Sylver A70</strong>: 7.0 m cell depth; Aster 30 and Aster 30 Block 1NT (extended range); to accommodate longer missile body.</p>
+</li>
+</ul>
+<p>The Sylver modules use a gas generator of pyrotechnic type producing <span class="arithmatex">\(\sim\)</span>250 kPa over-pressure in the cell to achieve the required ejection velocity in 0.3–0.5 s.</p>
+<h3 id="2734-ukms-containerised-vls"><span class="secnum">27.3.4</span> UKMS / Containerised VLS<a class="headerlink" href="#2734-ukms-containerised-vls" title="Permanent link">&para;</a></h3>
+<p>Universal Vertical Launch Systems (known commercially as UKMS or Mk 70 Payload Delivery System in the US) are self-contained modules that can be installed on any surface with a flat deck: destroyer, frigate, Fast Attack Craft, ground vehicle, or fixed platform. The containerised concept reuses standard ISO shipping containers with a reinforced deck frame. Eight to twelve missile cells per container can be placed in minutes by crane; fire control integration uses a standardised datalink. This concept dramatically reduces the cost of equipping smaller navies and provides dispersed ground basing options.</p>
+<h3 id="2735-salvo-rate-and-interlock"><span class="secnum">27.3.5</span> Salvo Rate and Interlock<a class="headerlink" href="#2735-salvo-rate-and-interlock" title="Permanent link">&para;</a></h3>
+<p>Sequential missile launches are constrained by interlock timers that prevent two cells from igniting simultaneously. The thermal and structural constraints set a minimum inter-launch interval <span class="arithmatex">\(\Delta t_{interlock}\)</span>: <span id="eq-interlock"></span></p>
+<div class="arithmatex">\[\Delta t_{interlock} \geq \max\!\left(\frac{Q_{exhaust}}{P_{duct,cool}},\;
+  \frac{\Delta M_{gas}}{|\dot M_{supply}|}\right)\tag{27.3}\]</div>
+<p>For the Mk 41, the declared salvo rate is one missile per second from the same magazine under the thermal limitation of the flame duct water cooling system. Electrical interlocks prevent two launcher control units from sending fire commands within 0.5 s of each other.</p>
+<h2 id="sec-air_launch"><span class="secnum">27.4</span> Air Launch Systems<a class="headerlink" href="#sec-air_launch" title="Permanent link">&para;</a></h2>
+<h3 id="2741-pylon-and-ejector-rack-interfaces"><span class="secnum">27.4.1</span> Pylon and Ejector Rack Interfaces<a class="headerlink" href="#2741-pylon-and-ejector-rack-interfaces" title="Permanent link">&para;</a></h3>
+<p>Air-launched missiles are carried on aircraft on pylon-mounted ejector racks or on conformal pylon adapters. The primary US standards are:</p>
+<ul>
+<li>
+<p><strong>BRU-33</strong>: dual-store ejector rack; 762 mm and 356 mm hook spacing variants; 2,270 kg maximum store load per hook.</p>
+</li>
+<li>
+<p><strong>BRU-46</strong>: advanced multipurpose rack; AMRAAM, JDAM; lower profile for F-22 internal bays.</p>
+</li>
+<li>
+<p><strong>LAU-61 / LAU-68</strong>: rocket pods (70 mm FFAR); not used for guided missiles but illustrate variety of carriage hardware.</p>
+</li>
+</ul>
+<p>The mechanical interface between missile and rack is defined by MIL-STD-8591: lug dimensions (<span class="arithmatex">\(14.7\,mm\)</span> diameter lug pin), hook face geometry, release force (<span class="arithmatex">\(22\)</span>–<span class="arithmatex">\(27\)</span> N release load on hooks), and ejector foot placement. Two hook-lug pairs per missile (forward and aft) provide the attachment. The ejector cartridges fire propellant gas into pistons below the missile feet, pushing the missile down and away from the pylon with a defined velocity.</p>
+<h3 id="2742-ejection-force-and-separation-velocity"><span class="secnum">27.4.2</span> Ejection Force and Separation Velocity<a class="headerlink" href="#2742-ejection-force-and-separation-velocity" title="Permanent link">&para;</a></h3>
+<p>The ejection force from a piston ejector: <span id="eq-F_ej"></span></p>
+<div class="arithmatex">\[F_{ej}(t) = P_{gas}(t) \cdot A_{piston}\tag{27.4}\]</div>
+<p>where <span class="arithmatex">\(P_{gas}(t)\)</span> is the gas pressure (decaying exponentially after cartridge initiation) and <span class="arithmatex">\(A_{piston}\)</span> is the piston area. The resulting separation velocity at the end of piston stroke <span class="arithmatex">\(s_{stroke}\)</span>: <span id="eq-Vsep"></span></p>
+<div class="arithmatex">\[V_{sep} = \sqrt{\frac{2}{m_{store}}\int_0^{s_{stroke}} F_{ej}(x)\,dx}\tag{27.5}\]</div>
+<p>For a typical 200 kg missile, <span class="arithmatex">\(V_{sep} \approx 2\)</span>–<span class="arithmatex">\(5\)</span> m/s downward. The ejector must also overcome the aerodynamic lift on the missile at carriage conditions (which acts upward, opposing separation) and the missile weight component along the piston axis. The minimum ejection force margin: <span id="eq-F_ej_min"></span></p>
+<div class="arithmatex">\[F_{ej,min} = m_{store}\,g + L_{store}(q,\alpha) + F_{friction}\tag{27.6}\]</div>
+<h3 id="2743-store-separation-analysis"><span class="secnum">27.4.3</span> Store Separation Analysis<a class="headerlink" href="#2743-store-separation-analysis" title="Permanent link">&para;</a></h3>
+<p>Store separation is the most complex aerodynamic problem in aircraft/weapon integration. The missile experiences the non-uniform flow field of the pylon and aircraft fuselage during the critical first 1–2 m of descent. Analysis methods in order of fidelity:</p>
+<ol>
+<li>
+<p><strong>Empirical</strong>: DATCOM-based interference factors; fast but inaccurate for unusual configurations.</p>
+</li>
+<li>
+<p><strong>Wind tunnel captive trajectory system (CTS)</strong>: store mounted on a 6-DOF sting that moves in real time based on measured forces and moments; gold standard for separation testing.</p>
+</li>
+<li>
+<p><strong>CFD</strong>: RANS or URANS simulation; requires careful grid generation around the pylon and store; validated against CTS data.</p>
+</li>
+</ol>
+<p>Separation trajectory is simulated for the aircraft speed, altitude, and angle of attack envelope. A cleared separation envelope defines the conditions under which the store can be released without contacting the aircraft. MIL-HDBK-244A defines the methodology and documentation requirements.</p>
+<h3 id="2744-captive-carriage-environment"><span class="secnum">27.4.4</span> Captive Carriage Environment<a class="headerlink" href="#2744-captive-carriage-environment" title="Permanent link">&para;</a></h3>
+<p>During captive carriage (from aircraft take-off to weapon release), the missile is exposed to a severe combined environment:</p>
+<ul>
+<li>
+<p><strong>Vibration</strong>: broadband random vibration from airframe structure, engines, and turbulent boundary layer; power spectral density peaks at pylon attachment resonances (50–200 Hz). MIL-STD-810 Method 514, Category 20 (aircraft pylons) defines the spectrum.</p>
+</li>
+<li>
+<p><strong>Temperature</strong>: from <span class="arithmatex">\(-54^\circ\)</span>C (high altitude cold soak) to <span class="arithmatex">\(+71^\circ\)</span>C (ground static on hot day with solar loading on dark-painted skin).</p>
+</li>
+<li>
+<p><strong>Acoustic</strong>: high-intensity noise from jet engines and aerodynamic turbulence; OASPL 155 dB at proximity of after-burner aircraft.</p>
+</li>
+<li>
+<p><strong>EMI</strong>: aircraft radar and electronic warfare emitters at close range; HERO susceptibility of fuze and initiation circuits.</p>
+</li>
+</ul>
+<h3 id="2745-internal-weapons-bay"><span class="secnum">27.4.5</span> Internal Weapons Bay<a class="headerlink" href="#2745-internal-weapons-bay" title="Permanent link">&para;</a></h3>
+<p>Stealth aircraft (F-22A, F-35A/C, B-21) carry weapons in internal bays to preserve a low radar cross-section. Internal carriage adds complexity:</p>
+<ul>
+<li>
+<p>Bay doors must open within <span class="arithmatex">\(&lt;\)</span>0.5 s to minimise radar exposure during weapon release; doors are driven by high-rate hydraulic actuators.</p>
+</li>
+<li>
+<p>Weapons on an ejector rail are propelled downward at 2–5 m/s into the airstream before motor ignition.</p>
+</li>
+<li>
+<p>Bay acoustics (Helmholtz resonance of the open bay) can produce tones at 50–300 Hz and SPL 170 dB at weapon location; acoustic suppression devices (leading edge spoilers) are required.</p>
+</li>
+<li>
+<p>The weapon must not re-enter the bay after ejection; trajectory must clear the door edge and aircraft belly by <span class="arithmatex">\(&gt;\)</span>0.15 m at all release conditions.</p>
+</li>
+</ul>
+<h3 id="2746-mil-std-1760-electrical-interface"><span class="secnum">27.4.6</span> MIL-STD-1760 Electrical Interface<a class="headerlink" href="#2746-mil-std-1760-electrical-interface" title="Permanent link">&para;</a></h3>
+<p>MIL-STD-1760 (Aircraft/Store Electrical Interconnection System) defines the electrical interface between the aircraft mission computer and the weapon. It provides:</p>
+<ul>
+<li>
+<p><strong>Power</strong>: 28 V DC (primary) and 115 V 400 Hz AC (for older seekers and gyros); isolated from aircraft bus by weapon isolation relay.</p>
+</li>
+<li>
+<p><strong>Data bus</strong>: MIL-STD-1553B dual-redundant serial bus at 1 Mbps; aircraft sends target state, fuze settings, built-in test commands; weapon returns BIT status, seeker track status.</p>
+</li>
+<li>
+<p><strong>Fuze arming</strong>: separate dedicated wire for arm/safe signal; hardware-interlock prevents arming while hooks are closed.</p>
+</li>
+<li>
+<p><strong>Launch consent</strong>: single-wire discrete signal from ejector rack to weapon initiation circuit.</p>
+</li>
+</ul>
+<p>The MIL-STD-1553 data loading sequence: <span id="eq-tload"></span></p>
+<div class="arithmatex">\[t_{load} = N_{words} / f_{bus} = N_{words} / 1 \times 10^6 \;\text{bps}\tag{27.7}\]</div>
+<p>For a 256-word pre-launch message, <span class="arithmatex">\(t_{load} = 256 \times 20\,\mu\text{s} = 5.12\,\text{ms}\)</span>. The pre-launch sequence completes in <span class="arithmatex">\(&lt;\)</span>1 s including BIT and seeker cool-down confirmation.</p>
+<h3 id="2747-safe-escape-and-motor-ignition-timing"><span class="secnum">27.4.7</span> Safe Escape and Motor Ignition Timing<a class="headerlink" href="#2747-safe-escape-and-motor-ignition-timing" title="Permanent link">&para;</a></h3>
+<p>After ejection, the missile must travel a minimum safe-escape distance <span class="arithmatex">\(d_{esc}\)</span> before the motor ignites to prevent rocket exhaust from damaging the aircraft. The ignition delay timer <span class="arithmatex">\(\tau_{ign}\)</span>: <span id="eq-tau_ign"></span></p>
+<div class="arithmatex">\[\tau_{ign} \geq \frac{d_{esc}}{V_{sep} + V_{aircraft} \cdot \cos\alpha_{ej}}\tag{27.8}\]</div>
+<p>Typical values: <span class="arithmatex">\(d_{esc} = 10\)</span>–<span class="arithmatex">\(30\)</span> m; <span class="arithmatex">\(\tau_{ign} = 0.1\)</span>–<span class="arithmatex">\(0.5\)</span> s. The ignition signal is issued by the missile’s own timer circuit (started at hook-open) and cannot be overridden except by FTS command.</p>
+<h3 id="2748-helicopter-launch-considerations"><span class="secnum">27.4.8</span> Helicopter Launch Considerations<a class="headerlink" href="#2748-helicopter-launch-considerations" title="Permanent link">&para;</a></h3>
+<p>Helicopter-launched missiles (Hellfire, Brimstone, Spike ER) introduce unique constraints:</p>
+<ul>
+<li>
+<p><strong>Rotor downwash</strong>: 5–15 m/s downward velocity beneath the rotor disk; rocket exhaust plume deflects toward fuselage and tail rotor if ignition occurs inside the rotor disk area.</p>
+</li>
+<li>
+<p><strong>Back-blast</strong>: rocket motor exhaust must not impinge on the helicopter airframe; minimum stand-off distances are defined by back-blast hazard analyses.</p>
+</li>
+<li>
+<p><strong>Crosswind effect</strong>: main rotor torque produces aircraft yaw; weapon must be mounted on a rail that allows limited azimuth traverse to compensate.</p>
+</li>
+<li>
+<p><strong>Sling suspension</strong>: Hellfire uses a rail launcher (M299/LAU-61) bolted to hard points; the rail provides positive retention until motor ignition.</p>
+</li>
+</ul>
+<h2 id="sec-ground_mobile"><span class="secnum">27.5</span> Ground Mobile Launch<a class="headerlink" href="#sec-ground_mobile" title="Permanent link">&para;</a></h2>
+<h3 id="2751-tel-design-and-operations"><span class="secnum">27.5.1</span> TEL Design and Operations<a class="headerlink" href="#2751-tel-design-and-operations" title="Permanent link">&para;</a></h3>
+<p>The transporter-erector-launcher (TEL) is the fundamental ground mobile launch platform for ballistic and cruise missiles. It integrates in a single vehicle:</p>
+<ul>
+<li>
+<p>Transport chassis (wheeled: 8<span class="arithmatex">\(\times\)</span>8, 12<span class="arithmatex">\(\times\)</span>12; or tracked)</p>
+</li>
+<li>
+<p>Missile canister(s) on an erector arm</p>
+</li>
+<li>
+<p>Electrical power generator (diesel APU)</p>
+</li>
+<li>
+<p>Fire control computer and communications suite</p>
+</li>
+<li>
+<p>Navigation system (GPS + INS) for launch site survey</p>
+</li>
+<li>
+<p>Environmental control unit for missile conditioning</p>
+</li>
+</ul>
+<p>The erection sequence: from travel to erect (vertical) takes 3–8 minutes depending on design. The erector arm is typically driven by hydraulic cylinders powered by the APU. Alignment is verified by inertial reference comparison between the TEL IMU and the missile IMU (loaded before departure from the garrison).</p>
+<h3 id="2752-reaction-time-and-survivability"><span class="secnum">27.5.2</span> Reaction Time and Survivability<a class="headerlink" href="#2752-reaction-time-and-survivability" title="Permanent link">&para;</a></h3>
+<p>TEL survivability in a contested environment depends critically on minimising the time from move-in to shoot and from shoot to move-out (shoot-and-scoot manoeuvre). Requirements: <span id="eq-t_react"></span><span id="eq-t_scoot"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  t_{react} &amp;= t_{move-in} + t_{erect} + t_{align} + t_{FC} &lt; 10\,\text{min}
+  \\
+  t_{scoot} &amp;= t_{lower} + t_{move-out} &lt; 3\,\text{min}
+\end{align*}\]</div>
+<p>The Iskander-M (Russia) achieves approximately 4 minutes reaction time from halt; the ATACMS/M270 system requires approximately 8 minutes. HIMARS (a wheeled single-pod MLRS) achieves faster reaction by eliminating the erection step—it launches at a fixed elevation.</p>
+<h3 id="2753-atacms-on-m270himars"><span class="secnum">27.5.3</span> ATACMS on M270/HIMARS<a class="headerlink" href="#2753-atacms-on-m270himars" title="Permanent link">&para;</a></h3>
+<p>The Army Tactical Missile System (ATACMS) is launched from the M270 MLRS or M142 HIMARS using the M57 launch pod. Two ATACMS missiles fill the standard MLRS 12-rocket pod space. The launcher elevates to the required firing angle (<span class="arithmatex">\(\sim\)</span>55<span class="arithmatex">\(^\circ\)</span>) and the missile is rail-launched (hot launch). The M57 pod provides a hermetically sealed environment maintaining missile storage temperature.</p>
+<h3 id="2754-iskander-m-tel"><span class="secnum">27.5.4</span> Iskander-M TEL<a class="headerlink" href="#2754-iskander-m-tel" title="Permanent link">&para;</a></h3>
+<p>The 9K720 Iskander-M uses the MZKT-7930 Astrolog 8<span class="arithmatex">\(\times\)</span>8 chassis carrying two 9M723 ballistic missiles on a fold-out cradle-launcher. Specifications:</p>
+<ul>
+<li>
+<p>Rail launch angle: <span class="arithmatex">\(\sim\)</span>78<span class="arithmatex">\(^\circ\)</span> from horizontal at launch</p>
+</li>
+<li>
+<p>Reaction time: <span class="arithmatex">\(\leq\)</span>4 minutes from travel</p>
+</li>
+<li>
+<p>Scoot time: <span class="arithmatex">\(\leq\)</span>1 minute after launch</p>
+</li>
+<li>
+<p>Missile mass at launch: <span class="arithmatex">\(\sim\)</span>3,800 kg</p>
+</li>
+<li>
+<p>Maximum range: 500 km (treaty-limited); post-INF variants <span class="arithmatex">\(&gt;\)</span>500 km</p>
+</li>
+</ul>
+<h3 id="2755-containerised-ground-launch"><span class="secnum">27.5.5</span> Containerised Ground Launch<a class="headerlink" href="#2755-containerised-ground-launch" title="Permanent link">&para;</a></h3>
+<p>The US Navy Mk 70 Payload Delivery System places Mk 41 VLS cells inside an ISO 20-foot container. Eight cells per container can be transported by standard logistics trucks, CH-47 helicopter (limited), or cargo aircraft. Power is provided by a containerised diesel generator. Fire control integrates with the NIFC-CA (Naval Integrated Fire Control—Counter Air) architecture via tactical data link. The containerised VLS provides dispersal options that make targeting more complex for adversary planners.</p>
+<h2 id="sec-sub_launch"><span class="secnum">27.6</span> Submarine Launch Systems<a class="headerlink" href="#sec-sub_launch" title="Permanent link">&para;</a></h2>
+<h3 id="2761-torpedo-tube-launch"><span class="secnum">27.6.1</span> Torpedo Tube Launch<a class="headerlink" href="#2761-torpedo-tube-launch" title="Permanent link">&para;</a></h3>
+<p>The 533 mm torpedo tube is the universal submarine weapon interface. A torpedo-tube-launched cruise missile (TLAM, UUM-44 SUBROC) is packaged in a capsule that is water-ejected by a piston pump or swim-out and then surfaces before motor ignition. The ejection sequence:</p>
+<ol>
+<li>
+<p>Torpedo tube flooded and equalised to sea pressure</p>
+</li>
+<li>
+<p>Muzzle door opened</p>
+</li>
+<li>
+<p>Gas piston fires: missile capsule ejected at 15–25 m/s relative to submarine</p>
+</li>
+<li>
+<p>Capsule ascends through water column (3–15 s for 10–50 m depth)</p>
+</li>
+<li>
+<p>Surface: capsule splits open or dissolves; missile motor ignites</p>
+</li>
+</ol>
+<p>Ejection velocity must provide positive buoyancy margin throughout the water-transit phase to ensure the capsule reaches the surface even at maximum firing depth.</p>
+<h3 id="2762-submarine-vls-ohio-class-trident"><span class="secnum">27.6.2</span> Submarine VLS (Ohio-Class Trident)<a class="headerlink" href="#2762-submarine-vls-ohio-class-trident" title="Permanent link">&para;</a></h3>
+<p>The Ohio-class SSBN carries 24 Trident II D5 SLBMs in 2.11 m diameter VLS tubes running 13 m through the pressure hull. Cold launch uses a compressed- gas (steam from water-gas reaction) piston: <span id="eq-F_piston"></span></p>
+<div class="arithmatex">\[F_{piston} = P_{steam} \cdot A_{tube} = P_{steam} \cdot \pi r_{tube}^2\tag{27.11}\]</div>
+<p>For a tube radius <span class="arithmatex">\(r_{tube} = 1.055\)</span> m and steam pressure <span class="arithmatex">\(P_{steam} = 800\)</span> kPa, <span class="arithmatex">\(F_{piston} \approx 2.8\)</span> MN—sufficient to eject the 59,000 kg D5 at approximately <span class="arithmatex">\(V_{eject} = 40\)</span> m/s. The missile ascends through <span class="arithmatex">\(\sim\)</span>50 m of water, surfaces, and fires all three stages sequentially.</p>
+<p>The D5 first-stage motor ignition is triggered by an altitude sensor (barometric or radio altimeter) within 1 s of surface emergence. No command from the submarine is required after the ejection sequence is initiated.</p>
+<h3 id="2763-communication-and-launch-order"><span class="secnum">27.6.3</span> Communication and Launch Order<a class="headerlink" href="#2763-communication-and-launch-order" title="Permanent link">&para;</a></h3>
+<p>Communicating a launch order to a submerged SSBN requires transmission through seawater, which attenuates radio frequency signals exponentially with depth. The ELF (Extremely Low Frequency, 76 Hz) system used by the US Navy (Seafarer replacement) penetrates seawater to depths of <span class="arithmatex">\(\sim\)</span>100 m at power levels of megawatts, transmitted from land-based antenna arrays. The ELF message contains only a brief code authorising the submarine to come to periscope depth and receive the full launch order via VLF (Very Low Frequency, 3–30 kHz) or satellite.</p>
+<p>The relationship between skin depth and frequency: <span id="eq-skin_depth"></span></p>
+<div class="arithmatex">\[\delta_{skin} = \sqrt{\frac{2}{\omega\,\mu\,\sigma}} = \sqrt{\frac{2\rho}{\omega\,\mu}}\tag{27.12}\]</div>
+<p>For seawater (<span class="arithmatex">\(\sigma \approx 4\)</span> S/m, <span class="arithmatex">\(\mu \approx \mu_0\)</span>) at 76 Hz: <span class="arithmatex">\(\delta_{skin} \approx 29\)</span> m. Penetration to 100 m requires field strength of <span class="arithmatex">\(e^{100/29} \approx 31\)</span> times the 1/<span class="arithmatex">\(e\)</span> surface level, explaining the need for megawatt transmitters and multi-km antenna arrays.</p>
+<h3 id="2764-position-accuracy-before-launch"><span class="secnum">27.6.4</span> Position Accuracy Before Launch<a class="headerlink" href="#2764-position-accuracy-before-launch" title="Permanent link">&para;</a></h3>
+<p>The SLBM guidance system requires an accurate initial position and velocity to achieve the required CEP on the target. The submarine must obtain a GPS fix at periscope depth and update its Ship’s Inertial Navigation System (SINS) before launch. After GPS fix, SINS maintains position with drift: <span id="eq-pos_drift"></span></p>
+<div class="arithmatex">\[\sigma_{pos}(t) = \sigma_{GPS} + \dot\sigma_{INS} \cdot (t - t_{GPS})\tag{27.13}\]</div>
+<p>where <span class="arithmatex">\(\sigma_{GPS} \approx 5\)</span> m (CEP), <span class="arithmatex">\(\dot\sigma_{INS} \approx 0.5\)</span> nm/h (nautical miles per hour) for a modern ring-laser gyro SINS. Maximum time from GPS fix to last missile launch must be controlled to keep <span class="arithmatex">\(\sigma_{pos}\)</span> within the system accuracy budget.</p>
+<h2 id="sec-canisters"><span class="secnum">27.7</span> Canister Systems<a class="headerlink" href="#sec-canisters" title="Permanent link">&para;</a></h2>
+<h3 id="2771-hermetically-sealed-canister-design"><span class="secnum">27.7.1</span> Hermetically Sealed Canister Design<a class="headerlink" href="#2771-hermetically-sealed-canister-design" title="Permanent link">&para;</a></h3>
+<p>The hermetically sealed launch canister provides the missile with a controlled environment throughout its service life. The canister is the primary barrier between the missile and environmental hazards: moisture, corrosive gases, salt spray, fungal growth, and physical damage. Key design elements:</p>
+<ul>
+<li>
+<p><strong>Pressure vessel</strong>: aluminium alloy 6061-T6 or 7075-T6 tube; wall thickness determined by internal positive-pressure maintenance (typically 0.5–2 psig dry nitrogen) and external crush load from transport.</p>
+</li>
+<li>
+<p><strong>Humidity control</strong>: silica gel desiccant packs sized for 10–25 year absorption; relative humidity inside <span class="arithmatex">\(&lt;\)</span>5% RH.</p>
+</li>
+<li>
+<p><strong>Front burst disc</strong>: metallic (stainless steel, 0.2–0.5 mm) diaphragm that ruptures at 2–5 bar differential to allow missile egress on launch. Burst pressure: <span id="eq-P_burst"></span></p>
+<div class="arithmatex">\[P_{burst} = \frac{2\,\sigma_u\,t_{disc}}{D_{tube}}\tag{27.14}\]</div>
+<p>where <span class="arithmatex">\(\sigma_u\)</span> is ultimate tensile stress, <span class="arithmatex">\(t_{disc}\)</span> is disc thickness, <span class="arithmatex">\(D_{tube}\)</span> is tube diameter.</p>
+</li>
+<li>
+<p><strong>Rear vent disc</strong>: ruptures on motor ignition (cold launch) or is pre-vented (hot launch) to allow exhaust gas exit.</p>
+</li>
+</ul>
+<h3 id="2772-shelf-life-and-accelerated-aging"><span class="secnum">27.7.2</span> Shelf Life and Accelerated Aging<a class="headerlink" href="#2772-shelf-life-and-accelerated-aging" title="Permanent link">&para;</a></h3>
+<p>The NATO standard for missile shelf life in a sealed canister is 10 years without maintenance intervention; extended-life designs achieve 20–25 years. Accelerated aging tests (per MIL-HDBK-698) expose canisters to elevated temperature and humidity to simulate long-term storage, then verify missile function. The Arrhenius relationship is used to relate test temperature <span class="arithmatex">\(T_{test}\)</span> to service temperature <span class="arithmatex">\(T_{serv}\)</span>: <span id="eq-Arrhenius"></span></p>
+<div class="arithmatex">\[t_{test} = t_{serv} \cdot \exp\!\left[-\frac{E_a}{k}\left(\frac{1}{T_{test}}
+             - \frac{1}{T_{serv}}\right)\right]\tag{27.15}\]</div>
+<p>where <span class="arithmatex">\(E_a\)</span> is the activation energy for the dominant aging mechanism (typically <span class="arithmatex">\(E_a/k \approx 9000\)</span> K for propellant oxidiser migration) and <span class="arithmatex">\(k\)</span> is Boltzmann’s constant. At <span class="arithmatex">\(T_{test} = 343\)</span> K (70<span class="arithmatex">\(^\circ\)</span>C) vs <span class="arithmatex">\(T_{serv} = 298\)</span> K (25<span class="arithmatex">\(^\circ\)</span>C), the acceleration factor is <span class="arithmatex">\(\approx 8.8\)</span>, so 1 year of testing represents <span class="arithmatex">\(\approx\)</span>8.8 years of storage.</p>
+<h3 id="2773-modular-canister-concept"><span class="secnum">27.7.3</span> Modular Canister Concept<a class="headerlink" href="#2773-modular-canister-concept" title="Permanent link">&para;</a></h3>
+<p>The common canister concept, pursued by MBDA (CAMM family) and others, designs the canister-missile assembly to be platform-agnostic: the same sealed canister can be installed on a VLS cell, a TEL launch rail, or a ship deck-mount, by adapting only the canister interface collar. This reduces logistics complexity (single supply chain for multiple platform types) and allows missiles purchased for one platform to be diverted to another during conflict.</p>
+<h2 id="sec-handling"><span class="secnum">27.8</span> Missile Handling and Logistics<a class="headerlink" href="#sec-handling" title="Permanent link">&para;</a></h2>
+<h3 id="2781-weight-handling-and-fixtures"><span class="secnum">27.8.1</span> Weight Handling and Fixtures<a class="headerlink" href="#2781-weight-handling-and-fixtures" title="Permanent link">&para;</a></h3>
+<p>Missile assembly and installation require dedicated handling equipment certified to the missile mass plus safety factor. Crane and hoist ratings per ASME B30.2: <span id="eq-crane_rating"></span></p>
+<div class="arithmatex">\[W_{rated} \geq SF_{lift} \cdot m_{missile} \cdot g\tag{27.16}\]</div>
+<p>where <span class="arithmatex">\(SF_{lift} \geq 5\)</span> for personnel overhead lifts. Spreader bars distribute the load between multiple attachment points on the missile, keeping loads within the structural limit at each lug. Bending moment at the centre of the missile during two-point lift: <span id="eq-M_lift"></span></p>
+<div class="arithmatex">\[M_{bend,lift} = \frac{m\,g}{2} \cdot \left(\frac{L}{2} - d_{lug}\right)\tag{27.17}\]</div>
+<p>where <span class="arithmatex">\(L\)</span> is missile length and <span class="arithmatex">\(d_{lug}\)</span> is the lug position from the nose. This moment must be less than the missile structural limit under combined gravity and <span class="arithmatex">\(4g\)</span> dynamic factor for ship-motion handling.</p>
+<h3 id="2782-hero-herp-herf"><span class="secnum">27.8.2</span> HERO, HERP, HERF<a class="headerlink" href="#2782-hero-herp-herf" title="Permanent link">&para;</a></h3>
+<p>Electromagnetic radiation poses a significant hazard to electro-explosive devices (EEDs) and electronic fuzes:</p>
+<ul>
+<li>
+<p><strong>HERO</strong> (Hazard of Electromagnetic Radiation to Ordnance): induced current in EED bridgewire from stray RF field. MIL-STD-464C and MIL-STD-1512 define RF immunity requirements for EEDs. The HERO susceptibility power density limit for a standard bridgewire: <span id="eq-HERO"></span></p>
+<div class="arithmatex">\[S_{HERO} = \frac{P_{nofire}}{4\,R_{bridgewire} \cdot A_{antenna,eff}}\tag{27.18}\]</div>
+</li>
+<li>
+<p><strong>HERP</strong> (Hazard of Electromagnetic Radiation to Personnel): RF power density limits for personnel (<span class="arithmatex">\(&lt;\)</span>10 W/m<span class="arithmatex">\(^2\)</span> for continuous exposure at most frequencies per IEEE C95.1).</p>
+</li>
+<li>
+<p><strong>HERF</strong> (Hazard of Electromagnetic Radiation to Fuel): electrostatic ignition of fuel vapour; relevant during fueling operations near high-power transmitters.</p>
+</li>
+</ul>
+<p>HERO safe-separation distances are maintained during weapon loading and fueling operations aboard ships and aircraft. Transmitters are powered off or reduced during specified maintenance windows.</p>
+<h3 id="2783-insensitive-high-explosive-ihe"><span class="secnum">27.8.3</span> Insensitive High Explosive (IHE)<a class="headerlink" href="#2783-insensitive-high-explosive-ihe" title="Permanent link">&para;</a></h3>
+<p>MIL-DTL-23659 and STANAG 4439 mandate IHE for all new missile warhead programs. IHE must survive all hazard stimuli without detonation (partial reaction or burning is acceptable):</p>
+<ol>
+<li>
+<p><strong>Bullet impact test</strong>: 12.7 mm AP bullet at 850 m/s; no detonation.</p>
+</li>
+<li>
+<p><strong>Fragment impact test</strong>: 1.6 g steel fragment at <span class="arithmatex">\(&gt;\)</span>2,530 m/s.</p>
+</li>
+<li>
+<p><strong>Fast cook-off</strong>: heated in fire at <span class="arithmatex">\(800^\circ\)</span>C per minute; no detonation.</p>
+</li>
+<li>
+<p><strong>Slow cook-off</strong>: heated at <span class="arithmatex">\(3.3^\circ\)</span>C/hour to auto-ignition; no detonation.</p>
+</li>
+<li>
+<p><strong>Sympathetic detonation</strong>: adjacent warhead detonates; no propagation.</p>
+</li>
+</ol>
+<p>PBXN-109 (with RDX/HTPB), PBXN-110, and PBXIH-135 are common IHE formulations meeting these criteria. PBXIH-135 achieves <span class="arithmatex">\(&gt;\)</span>90% RDX density while remaining IHE-compliant.</p>
+<h3 id="2784-transportation-standards"><span class="secnum">27.8.4</span> Transportation Standards<a class="headerlink" href="#2784-transportation-standards" title="Permanent link">&para;</a></h3>
+<p>Missiles with live warheads are classified UN 0181 (article, explosive) and require:</p>
+<ul>
+<li>
+<p><strong>Road</strong>: UN-approved packaging; ADR regulations; hazmat placards; driver training; route approval; escort for nuclear or Category I conventional.</p>
+</li>
+<li>
+<p><strong>Rail</strong>: no detonators on same car; buffer cars each end; speed limit 64 km/h for Category I munitions.</p>
+</li>
+<li>
+<p><strong>Sea</strong>: IMDG Code classification; segregation from oxidisers and flammables; quantity limits per ship type.</p>
+</li>
+<li>
+<p><strong>Air</strong>: IATA Dangerous Goods Regulations Class 1 Explosives; military exemptions via AFJMAN 24-204 equivalent; cargo aircraft only.</p>
+</li>
+</ul>
+<p>The MIL-STD-648 vibration and shock profiles for road transport characterise the worst-case truck bed environment. The spectrum is reproduced on a vibration test table during development to verify that the canister and missile survive the transportation environment.</p>
+<h2 id="sec-fire_control"><span class="secnum">27.9</span> Fire Control and Weapon Management Systems<a class="headerlink" href="#sec-fire_control" title="Permanent link">&para;</a></h2>
+<h3 id="2791-weapon-management-system-wms"><span class="secnum">27.9.1</span> Weapon Management System (WMS)<a class="headerlink" href="#2791-weapon-management-system-wms" title="Permanent link">&para;</a></h3>
+<p>The weapon management system (WMS) maintains real-time situational awareness of the weapons complement on the platform:</p>
+<ul>
+<li>
+<p>Inventory: serial number, type, status, cell/pylon location</p>
+</li>
+<li>
+<p>Readiness: BIT passed/failed; seeker status; battery voltage; fuze continuity</p>
+</li>
+<li>
+<p>Assignment: which weapon is assigned to which track number</p>
+</li>
+<li>
+<p>Expenditure log: fired time, target position, estimated impact time</p>
+</li>
+</ul>
+<p>The WMS interfaces with the combat management system (CMS) via a MIL-STD-1553 bus on aircraft or an ETHERNET/NTDS-E serial bus on ships.</p>
+<h3 id="2792-target-track-data-and-engagement-geometry"><span class="secnum">27.9.2</span> Target Track Data and Engagement Geometry<a class="headerlink" href="#2792-target-track-data-and-engagement-geometry" title="Permanent link">&para;</a></h3>
+<p>The fire control computer receives target tracks from the sensor suite (air search radar, fire control radar, ESM, IR search and track) and computes: <span id="eq-tTI"></span><span id="eq-theta_seek"></span><span id="eq-n_req"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  t_{TI} &amp;= \frac{R_T}{V_{closure}} \\
+  \theta_{seeker} &amp;= \arctan\!\left(\frac{\Delta y_T}{\Delta x_T}\right) \\
+  n_{required} &amp;= V_m^2 / (R_{min} \cdot g)
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(t_{TI}\)</span> is the time to intercept, <span class="arithmatex">\(R_T\)</span> is range to target, <span class="arithmatex">\(V_{closure}\)</span> is closing velocity, <span class="arithmatex">\(\theta_{seeker}\)</span> is the initial seeker look angle (must be within the seeker’s acquisition angle), and <span class="arithmatex">\(n_{required}\)</span> is the required lateral acceleration to fly the intercept trajectory.</p>
+<h3 id="2793-pre-launch-data-transfer"><span class="secnum">27.9.3</span> Pre-Launch Data Transfer<a class="headerlink" href="#2793-pre-launch-data-transfer" title="Permanent link">&para;</a></h3>
+<p>Pre-launch data loaded to the missile includes:</p>
+<ul>
+<li>
+<p>Target state vector: position <span class="arithmatex">\((x_T, y_T, z_T)\)</span>, velocity <span class="arithmatex">\((\dot x_T, \dot y_T, \dot z_T)\)</span> in local navigation frame; time tag.</p>
+</li>
+<li>
+<p>Waypoints: for terrain-hugging cruise missiles; up to 128 waypoints with altitude, time-on-target.</p>
+</li>
+<li>
+<p>Fuze settings: proximity burst height; impact delay; self-destruct timer.</p>
+</li>
+<li>
+<p>Mode of engagement: radar active, datalink, pre-programmed.</p>
+</li>
+<li>
+<p>Platform state: own-ship position, velocity, attitude (for fire- control-to-missile coordinate transformation).</p>
+</li>
+</ul>
+<p>The total pre-launch data package is typically 256–512 bytes; transfer via MIL-STD-1553 completes in <span class="arithmatex">\(&lt;\)</span>50 ms.</p>
+<h3 id="2794-shoot-look-shoot-doctrine"><span class="secnum">27.9.4</span> Shoot-Look-Shoot Doctrine<a class="headerlink" href="#2794-shoot-look-shoot-doctrine" title="Permanent link">&para;</a></h3>
+<p>Shoot-look-shoot (SLS) is the engagement doctrine in which a first weapon is fired at the target, and a second is fired only after the engagement result of the first is assessed (via mid-course datalink, active radar tracking, or EO/IR sensor). The SLS time budget: <span id="eq-t_SLS"></span></p>
+<div class="arithmatex">\[t_{SLS} = t_{TI,1} + t_{BDA} + t_{assign,2} + t_{launch,2}\tag{27.22}\]</div>
+<p>SLS requires that the second missile can still intercept the target after the additional delay: <span id="eq-SLS_range"></span></p>
+<div class="arithmatex">\[R_T(t_{SLS}) = R_T(0) - V_{closure} \cdot t_{SLS} &gt; R_{min}\tag{27.23}\]</div>
+<p>where <span class="arithmatex">\(R_{min}\)</span> is the missile’s minimum intercept range. If <span class="arithmatex">\(R_T(t_{SLS}) &lt; R_{min}\)</span>, salvo fire (both missiles simultaneously) is required.</p>
+<h3 id="2795-battle-damage-assessment"><span class="secnum">27.9.5</span> Battle Damage Assessment<a class="headerlink" href="#2795-battle-damage-assessment" title="Permanent link">&para;</a></h3>
+<p>Battle damage assessment (BDA) after a strike is conducted by:</p>
+<ul>
+<li>
+<p>Missile terminal seeker imagery (transmitted via datalink in last seconds of flight)</p>
+</li>
+<li>
+<p>Overhead ISR (satellite, high-altitude UAV)</p>
+</li>
+<li>
+<p>Signals intelligence (cessation of emissions from target)</p>
+</li>
+<li>
+<p>Acoustic or seismic sensors (for underground targets)</p>
+</li>
+</ul>
+<p>The re-engagement decision compares the estimated target damage state against the mission requirement. If BDA indicates a partial kill, a follow-on strike is planned using updated target coordinates from the BDA sensor data.</p>
+<h2 id="sec-safe_arm"><span class="secnum">27.10</span> Safe and Arm Systems<a class="headerlink" href="#sec-safe_arm" title="Permanent link">&para;</a></h2>
+<h3 id="27101-functions-and-principles"><span class="secnum">27.10.1</span> Functions and Principles<a class="headerlink" href="#27101-functions-and-principles" title="Permanent link">&para;</a></h3>
+<p>The safe-and-arm (S&amp;A) device is the critical safety barrier between the initiating stimulus (fuze output) and the explosive train leading to warhead detonation. Its function:</p>
+<ul>
+<li>
+<p><strong>Safe</strong>: in all pre-launch and launch handling conditions, the S&amp;A blocks the explosive train even if the fuze fires (due to malfunction or inadvertent stimulus).</p>
+</li>
+<li>
+<p><strong>Arm</strong>: after a defined set of environmental conditions have been sensed and satisfied, the S&amp;A aligns the explosive train to allow detonation on fuze command.</p>
+</li>
+</ul>
+<p>The arm sequence requires satisfaction of at least two independent environmental sensing conditions (MIL-DTL-23659 requires <span class="arithmatex">\(\geq\)</span>2 for Category 1 rockets): <span id="eq-ARM_logic"></span></p>
+<div class="arithmatex">\[\text{ARM} = \text{Condition}_1 \;\text{AND}\; \text{Condition}_2\tag{27.24}\]</div>
+<h3 id="27102-environmental-sensing-conditions"><span class="secnum">27.10.2</span> Environmental Sensing Conditions<a class="headerlink" href="#27102-environmental-sensing-conditions" title="Permanent link">&para;</a></h3>
+<p>Typical sensing conditions:</p>
+<ul>
+<li>
+<p><strong>Set-back</strong>: linear deceleration (acceleration rearward on launch) sensed by a weighted rotor that cocks on launch. Threshold: typically 100–500 <span class="arithmatex">\(g\)</span> for 50 ms.</p>
+</li>
+<li>
+<p><strong>Spin</strong>: centrifugal force on a flyweight that moves a pin out of the rotor; requires <span class="arithmatex">\(&gt;\)</span>10 Hz spin rate for <span class="arithmatex">\(&gt;\)</span>500 ms.</p>
+</li>
+<li>
+<p><strong>All-fire time delay</strong>: mechanical clock or pyrotechnic delay element; prevents arming within the minimum arming range.</p>
+</li>
+<li>
+<p><strong>Altitude</strong>: barometric sensor; prevents arming below a defined altitude (ensures weapon has left the ship/aircraft).</p>
+</li>
+<li>
+<p><strong>Electronic arming</strong>: coded electrical signal from the fire control system; ESD-protected.</p>
+</li>
+</ul>
+<h3 id="27103-electromechanical-safearm-device"><span class="secnum">27.10.3</span> Electromechanical Safe/Arm Device<a class="headerlink" href="#27103-electromechanical-safearm-device" title="Permanent link">&para;</a></h3>
+<p>The rotor-type ESAD (Electro-mechanical Safe/Arm Device) is the traditional implementation. An explosive pellet (transfer charge) is embedded in a cylindrical rotor. In the safe position, the rotor is rotated 90<span class="arithmatex">\(^\circ\)</span> from alignment so the pellet is out of line with the explosive train. On arming:</p>
+<ol>
+<li>
+<p>Environmental conditions satisfied simultaneously</p>
+</li>
+<li>
+<p>Solenoid releases rotor restraint</p>
+</li>
+<li>
+<p>Rotor rotates to aligned position (spring-driven or set-back driven)</p>
+</li>
+<li>
+<p>All-fire channel is open: fuze output fires through pellet to booster</p>
+</li>
+</ol>
+<p>The rotor alignment precision: <span class="arithmatex">\(&lt;\)</span>0.5<span class="arithmatex">\(^\circ\)</span> tolerance on alignment position to ensure complete explosive coupling. Failure mode: rotor jams in transit <span class="arithmatex">\(\rightarrow\)</span> fail-safe (incomplete alignment, does not fire).</p>
+<h3 id="27104-mems-safearm-devices"><span class="secnum">27.10.4</span> MEMS Safe/Arm Devices<a class="headerlink" href="#27104-mems-safearm-devices" title="Permanent link">&para;</a></h3>
+<p>Micro-electromechanical systems (MEMS) S&amp;A devices use photolithographically fabricated silicon structures to achieve the blocking function in a package <span class="arithmatex">\(&lt;\)</span>1 cm<span class="arithmatex">\(^3\)</span>. A MEMS S&amp;A may use:</p>
+<ul>
+<li>
+<p>Silicon chip with a micro-fabricated explosive bridge (semiconductor bridge, SCB) that fires only when a specific voltage pulse is applied</p>
+</li>
+<li>
+<p>Multiple silicon interlock sliders each requiring a different stimulus to translate to the aligned position</p>
+</li>
+<li>
+<p>Electrical AND logic replacing mechanical rotor: ARM = AND<span class="arithmatex">\((V_1, V_2, V_3)\)</span> where each <span class="arithmatex">\(V_i\)</span> is output of an independent environmental sensor</p>
+</li>
+</ul>
+<p>MEMS S&amp;A offers programmable arm sequences, digital diagnostics, and integration with the missile’s built-in test system.</p>
+<h3 id="27105-unexploded-ordnance-uxo-mitigation"><span class="secnum">27.10.5</span> Unexploded Ordnance (UXO) Mitigation<a class="headerlink" href="#27105-unexploded-ordnance-uxo-mitigation" title="Permanent link">&para;</a></h3>
+<p>Self-destruct and self-neutralisation functions reduce the UXO hazard:</p>
+<ul>
+<li>
+<p><strong>Self-destruct timer</strong>: after maximum time of flight + margin, a pyrotechnic timer fires the fuze initiation circuit, detonating the warhead at altitude above ground (air burst, smaller ground hazard radius than dud on ground).</p>
+</li>
+<li>
+<p><strong>Impact self-destruct</strong>: if the fuze fails to fire on impact (stony ground, very shallow angle), a delayed initiator fires 50 ms after impact deceleration.</p>
+</li>
+<li>
+<p><strong>Self-neutralisation</strong>: if detonation is not feasible (e.g., chemical munitions), an initiator destroys the fuze/explosive train without main-charge detonation, rendering the weapon chemically safe.</p>
+</li>
+</ul>
+<p>The UXO rate requirement per NATO STANAG 4526: <span class="arithmatex">\(&lt;\)</span>1% of delivered weapons remain as UXO hazards.</p>
+<h2 id="sec-integration_test"><span class="secnum">27.11</span> Integration Testing<a class="headerlink" href="#sec-integration_test" title="Permanent link">&para;</a></h2>
+<h3 id="27111-captive-carry-electrical-integration-test"><span class="secnum">27.11.1</span> Captive Carry Electrical Integration Test<a class="headerlink" href="#27111-captive-carry-electrical-integration-test" title="Permanent link">&para;</a></h3>
+<p>Before any flight test, the complete missile-aircraft interface is validated on the ground. The missile (or a mass simulator with full electronics) is installed on the aircraft pylon; all MIL-STD-1760 lines are exercised:</p>
+<ul>
+<li>
+<p>Power application and regulation check; bus voltage <span class="arithmatex">\(28.5 \pm 0.5\)</span> V DC</p>
+</li>
+<li>
+<p>MIL-STD-1553 data transfer: all defined messages sent and acknowledged</p>
+</li>
+<li>
+<p>Fuze arming status (safe confirmed in all ground conditions)</p>
+</li>
+<li>
+<p>Built-in test execution: missile BIT complete in <span class="arithmatex">\(&lt;\)</span>60 s; pass/fail status to WMS</p>
+</li>
+<li>
+<p>Seeker BIT: gimbal articulation; detector cool-down time; acquisition of built-in test target</p>
+</li>
+</ul>
+<p>Data is recorded on the aircraft maintenance data recorder and downloaded for analysis against the weapons integration specification.</p>
+<h3 id="27112-sled-track-separation-test"><span class="secnum">27.11.2</span> Sled Track Separation Test<a class="headerlink" href="#27112-sled-track-separation-test" title="Permanent link">&para;</a></h3>
+<p>Store separation on a sled track replaces expensive flight tests for initial separation clearance validation. The missile (or mass simulator) is mounted on a rocket-powered sled at the correct pylon height and angle. At the desired test speed, the ejection system fires, and high-speed cameras and strain gauges measure the separation trajectory and loads. The trajectory data is compared with the CFD/wind-tunnel prediction: <span id="eq-sep_error"></span></p>
+<div class="arithmatex">\[\Delta r_{sep}(t) = r_{measured}(t) - r_{predicted}(t)\tag{27.25}\]</div>
+<p>Acceptance: <span class="arithmatex">\(|\Delta r_{sep}| &lt; 0.10\)</span> m at all times from release to motor ignition.</p>
+<h3 id="27113-first-article-and-live-firing-test"><span class="secnum">27.11.3</span> First Article and Live Firing Test<a class="headerlink" href="#27113-first-article-and-live-firing-test" title="Permanent link">&para;</a></h3>
+<p>The first article firing (FAF) is the first complete end-to-end missile firing including motor ignition, autopilot operation, and fuze function. Test objectives:</p>
+<ol>
+<li>
+<p>Verify ignition sequence and safe escape (no aircraft contact or hot-gas impingement)</p>
+</li>
+<li>
+<p>Verify autopilot stabilisation within the first 3 s of flight</p>
+</li>
+<li>
+<p>Verify seeker acquisition of test target (drone or towed banner)</p>
+</li>
+<li>
+<p>Verify fuze function (proximity or impact) against instrumented target</p>
+</li>
+<li>
+<p>Record telemetry: all FCS signals at 500 Hz; GPS position; timing</p>
+</li>
+</ol>
+<h3 id="27114-electromagnetic-compatibility-testing"><span class="secnum">27.11.4</span> Electromagnetic Compatibility Testing<a class="headerlink" href="#27114-electromagnetic-compatibility-testing" title="Permanent link">&para;</a></h3>
+<p>The complete aircraft-weapon system combination is tested for mutual EMI in an electromagnetically controlled test facility (OATS or anechoic chamber):</p>
+<ul>
+<li>
+<p>Aircraft radiated emissions measured with weapon installed; compared against MIL-STD-461G RE102/RE101 limits</p>
+</li>
+<li>
+<p>Weapon susceptibility: aircraft systems energised at maximum power; weapon monitors for interference on MIL-STD-1553 bus</p>
+</li>
+<li>
+<p>HERO tests: aircraft transmitters at maximum power with weapon in launch-ready state; EED bridgewire current measured; must be <span class="arithmatex">\(&lt;\)</span>1 mA (no-fire current)</p>
+</li>
+<li>
+<p>High-intensity radiated fields (HIRF): weapon in simulated launch environment; exposed to FAR Part 25 or MIL-STD-461 field levels</p>
+</li>
+</ul>
+<h3 id="27115-weapon-system-qualification"><span class="secnum">27.11.5</span> Weapon System Qualification<a class="headerlink" href="#27115-weapon-system-qualification" title="Permanent link">&para;</a></h3>
+<p>Full weapon system qualification follows the Test and Evaluation Master Plan (TEMP), which defines:</p>
+<ul>
+<li>
+<p><strong>Developmental Test (DT)</strong>: contractor-led; verifies specification compliance; controlled conditions; typically 15–30 rounds.</p>
+</li>
+<li>
+<p><strong>Operational Test (OT)</strong>: government/user-led; realistic operational conditions; operators with minimum training; typically 10–20 rounds.</p>
+</li>
+<li>
+<p><strong>Live Fire Test (LFT)</strong>: required by US law (10 USC 2366) for major defence acquisitions; full-up system test against realistic targets; assesses survivability (for manned systems) and lethality.</p>
+</li>
+</ul>
+<p><a href="#tab-qual_matrix">Table 27.2</a> summarises the qualification test matrix for a representative air-launched missile program.</p>
+<div class="tbl" id="tab-qual_matrix">
+<div class="tbl-caption"><strong>Table 27.2.</strong> Representative qualification test matrix for an air-launched missile</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Test Phase</strong></th>
+<th style="text-align: left;"><strong>Quantity</strong></th>
+<th style="text-align: left;"><strong>Conditions</strong></th>
+<th style="text-align: left;"><strong>Platform</strong></th>
+<th style="text-align: left;"><strong>Goal</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Ground integration</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Lab/pylon</td>
+<td style="text-align: left;">F/A-18E</td>
+<td style="text-align: left;">Interface verification</td>
+</tr>
+<tr>
+<td style="text-align: left;">Captive carry</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Flight <span class="math inline">\(\leq\)</span>M1.2</td>
+<td style="text-align: left;">F/A-18E</td>
+<td style="text-align: left;">Carriage environment</td>
+</tr>
+<tr>
+<td style="text-align: left;">Separation (sled)</td>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">120–250 m/s</td>
+<td style="text-align: left;">Sled track</td>
+<td style="text-align: left;">Separation clearance</td>
+</tr>
+<tr>
+<td style="text-align: left;">DT flights (inert)</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Full envelope</td>
+<td style="text-align: left;">F/A-18E/F-35</td>
+<td style="text-align: left;">Autopilot; seeker</td>
+</tr>
+<tr>
+<td style="text-align: left;">DT live fire</td>
+<td style="text-align: left;">18</td>
+<td style="text-align: left;">Controlled</td>
+<td style="text-align: left;">Range</td>
+<td style="text-align: left;">Fuze; guidance; lethality</td>
+</tr>
+<tr>
+<td style="text-align: left;">OT live fire</td>
+<td style="text-align: left;">12</td>
+<td style="text-align: left;">Operational</td>
+<td style="text-align: left;">User pilots</td>
+<td style="text-align: left;">SLS; salvo; hostile EMI</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="27116-temp-and-dtot-phase-requirements"><span class="secnum">27.11.6</span> TEMP and DT/OT Phase Requirements<a class="headerlink" href="#27116-temp-and-dtot-phase-requirements" title="Permanent link">&para;</a></h3>
+<p>The Test and Evaluation Master Plan is the governing document for the qualification program. It defines: <span id="eq-SSKP"></span><span id="eq-Ntest"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  P_{SSKP,required} &amp;\geq 0.85 \quad \text{(single-shot kill probability)} \\
+  N_{DT} &amp;\geq \frac{\ln(1 - C_{conf})}{\ln(1 - P_{SSKP})}
+\end{align*}\]</div>
+<p>For <span class="arithmatex">\(P_{SSKP} = 0.85\)</span> and confidence level <span class="arithmatex">\(C_{conf} = 0.90\)</span>: <span id="eq-Ntest2"></span></p>
+<div class="arithmatex">\[N_{DT} \geq \frac{\ln(0.10)}{\ln(0.15)} \approx 12\;\text{rounds}\tag{27.28}\]</div>
+<p>This is the minimum number of successes required; accounting for expected failures and statistical margin, programs typically plan 20–30 DT rounds.</p>
+<h2 id="sec-launch_summary"><span class="secnum">27.12</span> Launch Platform Integration Summary<a class="headerlink" href="#sec-launch_summary" title="Permanent link">&para;</a></h2>
+<p><a href="#tab-platform_summary">Table 27.3</a> provides a consolidated comparison of the key parameters across launch platform types.</p>
+<div class="tbl" id="tab-platform_summary">
+<div class="tbl-caption"><strong>Table 27.3.</strong> Launch platform type comparison: key integration parameters</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Ground Fixed</strong></th>
+<th style="text-align: left;"><strong>TEL</strong></th>
+<th style="text-align: left;"><strong>Naval VLS</strong></th>
+<th style="text-align: left;"><strong>Air</strong></th>
+<th style="text-align: left;"><strong>Submarine</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Reaction time</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>10 min</td>
+<td style="text-align: left;">4–10 min</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>10 s (ready)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>5 s</td>
+<td style="text-align: left;">15 min (submerged)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Salvo rate</td>
+<td style="text-align: left;">1/2 s</td>
+<td style="text-align: left;">1/30 s</td>
+<td style="text-align: left;">1/s (Mk 41)</td>
+<td style="text-align: left;">1/2 s</td>
+<td style="text-align: left;">1/30 s (SLBM)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Max missile mass</td>
+<td style="text-align: left;">Unlimited</td>
+<td style="text-align: left;"><span class="math inline">\(\sim\)</span>5 t</td>
+<td style="text-align: left;"><span class="math inline">\(\sim\)</span>2.5 t</td>
+<td style="text-align: left;"><span class="math inline">\(\sim\)</span>1 t</td>
+<td style="text-align: left;"><span class="math inline">\(\sim\)</span>60 t (SLBM)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reload time</td>
+<td style="text-align: left;">Hours</td>
+<td style="text-align: left;">Not field</td>
+<td style="text-align: left;">Hours (tender)</td>
+<td style="text-align: left;">Hours (ground)</td>
+<td style="text-align: left;">Not field</td>
+</tr>
+<tr>
+<td style="text-align: left;">Survivability</td>
+<td style="text-align: left;">Low (fixed)</td>
+<td style="text-align: left;">High (mobile)</td>
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Very high</td>
+<td style="text-align: left;">Very high</td>
+</tr>
+<tr>
+<td style="text-align: left;">Crew HERO risk</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">High (deck)</td>
+<td style="text-align: left;">Low (remote)</td>
+<td style="text-align: left;">Low (submerged)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Launch system design is ultimately a systems engineering trade between responsiveness, survivability, magazine depth, and cost. The trend in modern programs is toward modular, canisterised systems that allow the same missile to be deployed from multiple platform types with minimal re- engineering, reducing per-unit cost and simplifying the joint logistics chain. Fire control integration complexity—the software challenge of interfacing a new weapon to an existing ship or aircraft combat system—often exceeds the missile hardware development cost and schedule and must be treated as a first-order program risk from contract award.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>In this chapter, FCS denotes fire control system; the missile autopilot is referred to as the autopilot or flight control system to avoid ambiguity.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch26-missile-electronics-and-power.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 26. Missile Electronics and Power">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                26. Missile Electronics and Power
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch28-missile-manufacturing.html" class="md-footer__link md-footer__link--next" aria-label="Next: 28. Missile Manufacturing">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                28. Missile Manufacturing
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

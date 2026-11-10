@@ -1,0 +1,4799 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch06-drone-power-systems.html">
+  
+  
+    <link rel="prev" href="ch05-drone-propulsion-systems.html">
+  
+  
+    <link rel="next" href="ch07-avionics-and-flight-control.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>6. Drone Power Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-ps_overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Drone Power Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch06-drone-power-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ps_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Power System Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 Power System Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-energy-versus-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.1 Energy versus Power
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sub-ragone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.2 Ragone Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#613-power-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.3 Power System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#614-typical-uav-power-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.4 Typical UAV Power Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#615-power-quality-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.5 Power Quality Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#616-redundancy-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.6 Redundancy Strategies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Lithium Polymer (LiPo) Batteries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Lithium Polymer (LiPo) Batteries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-electrochemistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 Electrochemistry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-voltage-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 Voltage Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623-c-rating-and-capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 C-Rating and Capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#624-pack-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.4 Pack Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#625-energy-density" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.5 Energy Density
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#626-temperature-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.6 Temperature Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#627-cycle-life-and-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.7 Cycle Life and Degradation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#628-safety-and-thermal-runaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.8 Safety and Thermal Runaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#629-cc-cv-charging-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.9 CC-CV Charging Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-liion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Lithium-Ion (Li-Ion) Batteries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Lithium-Ion (Li-Ion) Batteries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-comparison-with-lipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 Comparison with LiPo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-cell-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 Cell Formats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-state-of-charge-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 State of Charge Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#634-silicon-anode-cells" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.4 Silicon Anode Cells
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#635-solid-state-li-ion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.5 Solid-State Li-Ion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-bms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Battery Management System (BMS)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 Battery Management System (BMS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#641-cell-voltage-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.1 Cell Voltage Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#642-cell-balancing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.2 Cell Balancing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#643-protection-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.3 Protection Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#644-bms-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.4 BMS Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#645-pre-charge-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.5 Pre-Charge Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Fuel Cells
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Fuel Cells">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#651-pem-fuel-cell-operating-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.1 PEM Fuel Cell Operating Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#652-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.2 System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#653-cold-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.3 Cold-Start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#654-endurance-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.4 Endurance Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#655-commercial-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.5 Commercial Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-solar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Solar Power Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Solar Power Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#661-photovoltaic-cell-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.1 Photovoltaic Cell Technologies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#662-irradiance-and-energy-harvest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.2 Irradiance and Energy Harvest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#663-mppt-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.3 MPPT Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#664-energy-balance-for-perpetual-flight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.4 Energy Balance for Perpetual Flight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#665-high-altitude-long-endurance-hale-solar-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.5 High-Altitude Long-Endurance (HALE) Solar UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-pdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 Power Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 Power Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#671-bus-voltage-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.1 Bus Voltage Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#672-power-distribution-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.2 Power Distribution Board
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#673-connector-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.3 Connector Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#674-wire-sizing-and-voltage-drop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.4 Wire Sizing and Voltage Drop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#675-emi-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.5 EMI Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#676-power-distribution-block-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.6 Power Distribution Block Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-power_elec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Power Electronics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.8 Power Electronics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#681-switching-regulators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.1 Switching Regulators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#682-linear-regulators-ldo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.2 Linear Regulators (LDO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#683-sic-and-gan-power-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.3 SiC and GaN Power Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#684-esc-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.4 ESC Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-energy_mgmt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 Energy Management and Mission Planning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.9 Energy Management and Mission Planning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#691-endurance-and-range-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.1 Endurance and Range Calculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#692-usable-energy-and-depth-of-discharge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.2 Usable Energy and Depth of Discharge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#693-power-mode-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.3 Power Mode Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#694-low-battery-failsafe-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.4 Low-Battery Failsafe Thresholds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#695-cold-weather-battery-pre-heating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.5 Cold-Weather Battery Pre-Heating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#696-energy-aware-waypoint-mission-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.6 Energy-Aware Waypoint Mission Planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emerging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Emerging Power Technologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.10 Emerging Power Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6101-solid-state-batteries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.1 Solid-State Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6102-lithium-sulphur-li-s-batteries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.2 Lithium-Sulphur (Li-S) Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6103-wireless-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.3 Wireless Charging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6104-laser-power-beaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.4 Laser Power Beaming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6105-tethered-power-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.5 Tethered Power Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-thermal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Thermal Management of Power Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.11 Thermal Management of Power Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6111-battery-thermal-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11.1 Battery Thermal Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6112-esc-thermal-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11.2 ESC Thermal Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-design_process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12 Power System Design Process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.12 Power System Design Process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6121-requirements-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.1 Requirements Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6122-sizing-methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.2 Sizing Methodology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6123-pack-voltage-and-cell-count-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.3 Pack Voltage and Cell Count Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6124-verification-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.4 Verification and Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-equations_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.13 Summary of Key Power System Equations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.14 Practical Design Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.14 Practical Design Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6141-example-1-multi-rotor-delivery-drone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.14.1 Example 1 — Multi-Rotor Delivery Drone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6142-example-2-long-endurance-fixed-wing-isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.14.2 Example 2 — Long-Endurance Fixed-Wing ISR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.15 Standards and Certification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.16 Future Outlook
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ps_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 Power System Overview
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.1 Power System Overview">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#611-energy-versus-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.1 Energy versus Power
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sub-ragone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.2 Ragone Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#613-power-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.3 Power System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#614-typical-uav-power-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.4 Typical UAV Power Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#615-power-quality-requirements" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.5 Power Quality Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#616-redundancy-strategies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1.6 Redundancy Strategies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Lithium Polymer (LiPo) Batteries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Lithium Polymer (LiPo) Batteries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#621-electrochemistry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.1 Electrochemistry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#622-voltage-characteristics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.2 Voltage Characteristics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#623-c-rating-and-capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.3 C-Rating and Capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#624-pack-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.4 Pack Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#625-energy-density" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.5 Energy Density
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#626-temperature-effects" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.6 Temperature Effects
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#627-cycle-life-and-degradation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.7 Cycle Life and Degradation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#628-safety-and-thermal-runaway" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.8 Safety and Thermal Runaway
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#629-cc-cv-charging-profile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2.9 CC-CV Charging Profile
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-liion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Lithium-Ion (Li-Ion) Batteries
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Lithium-Ion (Li-Ion) Batteries">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#631-comparison-with-lipo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.1 Comparison with LiPo
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#632-cell-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.2 Cell Formats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#633-state-of-charge-estimation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.3 State of Charge Estimation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#634-silicon-anode-cells" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.4 Silicon Anode Cells
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#635-solid-state-li-ion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3.5 Solid-State Li-Ion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-bms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Battery Management System (BMS)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.4 Battery Management System (BMS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#641-cell-voltage-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.1 Cell Voltage Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#642-cell-balancing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.2 Cell Balancing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#643-protection-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.3 Protection Functions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#644-bms-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.4 BMS Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#645-pre-charge-circuit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4.5 Pre-Charge Circuit
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 Fuel Cells
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.5 Fuel Cells">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#651-pem-fuel-cell-operating-principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.1 PEM Fuel Cell Operating Principles
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#652-system-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.2 System Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#653-cold-start" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.3 Cold-Start
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#654-endurance-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.4 Endurance Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#655-commercial-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5.5 Commercial Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-solar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Solar Power Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Solar Power Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#661-photovoltaic-cell-technologies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.1 Photovoltaic Cell Technologies
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#662-irradiance-and-energy-harvest" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.2 Irradiance and Energy Harvest
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#663-mppt-algorithms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.3 MPPT Algorithms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#664-energy-balance-for-perpetual-flight" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.4 Energy Balance for Perpetual Flight
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#665-high-altitude-long-endurance-hale-solar-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6.5 High-Altitude Long-Endurance (HALE) Solar UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-pdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 Power Distribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 Power Distribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#671-bus-voltage-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.1 Bus Voltage Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#672-power-distribution-board" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.2 Power Distribution Board
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#673-connector-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.3 Connector Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#674-wire-sizing-and-voltage-drop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.4 Wire Sizing and Voltage Drop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#675-emi-mitigation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.5 EMI Mitigation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#676-power-distribution-block-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7.6 Power Distribution Block Diagram
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-power_elec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Power Electronics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.8 Power Electronics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#681-switching-regulators" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.1 Switching Regulators
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#682-linear-regulators-ldo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.2 Linear Regulators (LDO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#683-sic-and-gan-power-devices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.3 SiC and GaN Power Devices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#684-esc-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8.4 ESC Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-energy_mgmt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 Energy Management and Mission Planning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.9 Energy Management and Mission Planning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#691-endurance-and-range-calculation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.1 Endurance and Range Calculation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#692-usable-energy-and-depth-of-discharge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.2 Usable Energy and Depth of Discharge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#693-power-mode-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.3 Power Mode Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#694-low-battery-failsafe-thresholds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.4 Low-Battery Failsafe Thresholds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#695-cold-weather-battery-pre-heating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.5 Cold-Weather Battery Pre-Heating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#696-energy-aware-waypoint-mission-planning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9.6 Energy-Aware Waypoint Mission Planning
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emerging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Emerging Power Technologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.10 Emerging Power Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6101-solid-state-batteries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.1 Solid-State Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6102-lithium-sulphur-li-s-batteries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.2 Lithium-Sulphur (Li-S) Batteries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6103-wireless-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.3 Wireless Charging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6104-laser-power-beaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.4 Laser Power Beaming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6105-tethered-power-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10.5 Tethered Power Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-thermal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Thermal Management of Power Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.11 Thermal Management of Power Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6111-battery-thermal-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11.1 Battery Thermal Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6112-esc-thermal-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11.2 ESC Thermal Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-design_process" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12 Power System Design Process
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.12 Power System Design Process">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6121-requirements-definition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.1 Requirements Definition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6122-sizing-methodology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.2 Sizing Methodology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6123-pack-voltage-and-cell-count-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.3 Pack Voltage and Cell Count Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6124-verification-and-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12.4 Verification and Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-equations_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.13 Summary of Key Power System Equations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.14 Practical Design Examples
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.14 Practical Design Examples">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#6141-example-1-multi-rotor-delivery-drone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.14.1 Example 1 — Multi-Rotor Delivery Drone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6142-example-2-long-endurance-fixed-wing-isr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.14.2 Example 2 — Long-Endurance Fixed-Wing ISR
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.15 Standards and Certification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.16 Future Outlook
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-power">Chapter 6: Drone Power Systems<a class="headerlink" href="#ch-power" title="Permanent link">&para;</a></h1>
+<h2 id="sec-ps_overview"><span class="secnum">6.1</span> Power System Overview<a class="headerlink" href="#sec-ps_overview" title="Permanent link">&para;</a></h2>
+<p>The power system of an unmanned aerial vehicle (UAV) is its metabolic infrastructure. Every joule consumed by motors, avionics, payloads, and thermal management must originate from the on-board energy store, traverse power-conditioning electronics, and arrive at the load within tight voltage and current tolerances. Understanding the distinction between <em>energy</em> and <em>power</em> is the first principle from which all subsequent design decisions flow.</p>
+<h3 id="611-energy-versus-power"><span class="secnum">6.1.1</span> Energy versus Power<a class="headerlink" href="#611-energy-versus-power" title="Permanent link">&para;</a></h3>
+<p><strong>Energy</strong> (<span class="arithmatex">\(E\)</span>) is the capacity to do work, measured in watt-hours (Wh) or joules (<span class="arithmatex">\(1\,\text{Wh} = 3600\,\text{J}\)</span>). A battery pack rated at <span class="arithmatex">\(22\,\text{Ah} \times 22.2\,\text{V} = 488\,\text{Wh}\)</span> stores that fixed quantity of chemical energy regardless of how fast it is drawn.</p>
+<p><strong>Power</strong> (<span class="arithmatex">\(P\)</span>) is the rate of energy transfer, measured in watts (<span class="arithmatex">\(\text{W} = \text{J/s}\)</span>). A multi-rotor drawing <span class="arithmatex">\(800\,\text{W}\)</span> during hover depletes its <span class="arithmatex">\(488\,\text{Wh}\)</span> pack in approximately <span class="arithmatex">\(36.6\,\text{min}\)</span>: <span id="eq-endurance_basic"></span></p>
+<div class="arithmatex">\[t = \frac{E}{P} = \frac{488\,\text{Wh}}{800\,\text{W}} = 0.61\,\text{h}
+    = 36.6\,\text{min}.\tag{6.1}\]</div>
+<p><strong>Specific energy</strong> (<span class="arithmatex">\(e_s\)</span>, Wh/kg) describes how much energy is stored per kilogram of the source — it governs flight endurance. <strong>Specific power</strong> (<span class="arithmatex">\(p_s\)</span>, W/kg) describes how fast that energy can be delivered per kilogram — it governs peak-load capability. The relationship between these two metrics, plotted on logarithmic axes, is the celebrated <em>Ragone diagram</em>.</p>
+<h3 id="sub-ragone"><span class="secnum">6.1.2</span> Ragone Diagram<a class="headerlink" href="#sub-ragone" title="Permanent link">&para;</a></h3>
+<p><a href="#fig-ragone">Figure 6.1</a> illustrates a representative Ragone plot for four energy-storage technologies relevant to UAV applications. Batteries occupy the central region: high specific energy relative to supercapacitors, but far lower specific power than liquid fuels. The diagonal lines of constant discharge time (<span class="arithmatex">\(e_s / p_s = t_d\)</span>) allow rapid endurance estimation for a given technology.</p>
+<figure class="fig fig-diagram" id="fig-ragone">
+<img class="tikz" src="img/tikz-68e4c0282b4c.svg" alt="Ragone plot for UAV energy-storage technologies. Diagonal dashed lines indicate constant discharge times of 1 h, 6 min, and 36 s respectively (top to bottom)." loading="lazy" width="368" height="230">
+<figcaption><strong>Figure 6.1.</strong> Ragone plot for UAV energy-storage technologies. Diagonal dashed lines indicate constant discharge times of 1 h, 6 min, and 36 s respectively (top to bottom).</figcaption>
+</figure>
+
+<h3 id="613-power-system-architecture"><span class="secnum">6.1.3</span> Power System Architecture<a class="headerlink" href="#613-power-system-architecture" title="Permanent link">&para;</a></h3>
+<p>A typical UAV power system follows a layered architecture:</p>
+<div id="eq-arch"></div>
+<div class="arithmatex">\[\text{Energy Store} \xrightarrow{\text{BMS}} \text{Main Bus}
+  \xrightarrow{\text{PDB}} \text{ESC}_1 \cdots \text{ESC}_N
+  \quad\text{and}\quad
+  \text{Main Bus} \xrightarrow{\text{BEC/DCDC}} \text{Avionics Rail}\tag{6.2}\]</div>
+<p>Each stage introduces an efficiency penalty <span class="arithmatex">\(\eta_i &lt; 1\)</span>. The overall system efficiency is: <span id="eq-sys_eff"></span></p>
+<div class="arithmatex">\[\eta_{\text{sys}} = \prod_{i} \eta_i
+    = \eta_{\text{BMS}} \cdot \eta_{\text{wire}} \cdot \eta_{\text{ESC}}
+      \cdot \eta_{\text{motor}} \cdot \eta_{\text{propeller}}.\tag{6.3}\]</div>
+<p>For a well-designed brushless-motor drive train: <span class="arithmatex">\(\eta_{\text{sys}} \approx 0.99 \times 0.98 \times 0.93 \times 0.90 \times 0.80 \approx 0.645\)</span>.</p>
+<h3 id="614-typical-uav-power-budget"><span class="secnum">6.1.4</span> Typical UAV Power Budget<a class="headerlink" href="#614-typical-uav-power-budget" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-power_budget">Table 6.1</a> lists representative power draws for a 5 kg quadrotor UAV in steady hover.</p>
+<div class="tbl" id="tab-power_budget">
+<div class="tbl-caption"><strong>Table 6.1.</strong> Representative power budget — 5 kg quadrotor in hover.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Subsystem</strong></th>
+<th style="text-align: left;"><strong>Voltage Rail</strong></th>
+<th style="text-align: right;"><strong>Current (A)</strong></th>
+<th style="text-align: right;"><strong>Power (W)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">4<span class="math inline">\(\times\)</span> Brushless Motors (total)</td>
+<td style="text-align: left;">22.2 V (6S)</td>
+<td style="text-align: right;">33.0</td>
+<td style="text-align: right;">733</td>
+</tr>
+<tr>
+<td style="text-align: left;">4<span class="math inline">\(\times\)</span> ESC self-consumption</td>
+<td style="text-align: left;">22.2 V</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flight controller (FC)</td>
+<td style="text-align: left;">5.0 V</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPS + compass module</td>
+<td style="text-align: left;">5.0 V</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">RC receiver</td>
+<td style="text-align: left;">5.0 V</td>
+<td style="text-align: right;">0.1</td>
+<td style="text-align: right;">0.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Telemetry radio (900 MHz, TX)</td>
+<td style="text-align: left;">5.0 V</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">EO/IR camera</td>
+<td style="text-align: left;">12.0 V</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">2-axis gimbal</td>
+<td style="text-align: left;">12.0 V</td>
+<td style="text-align: right;">0.8</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr>
+<td style="text-align: left;">Navigation lights (LED)</td>
+<td style="text-align: left;">5.0 V</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;">BEC/DCDC converter losses (<span class="math inline">\(\sim\)</span>5%)</td>
+<td style="text-align: left;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"><strong>770</strong></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="615-power-quality-requirements"><span class="secnum">6.1.5</span> Power Quality Requirements<a class="headerlink" href="#615-power-quality-requirements" title="Permanent link">&para;</a></h3>
+<p>Avionics subsystems are sensitive to supply-voltage variations. The key quality metrics are:</p>
+<ul>
+<li>
+<p><strong>Ripple voltage</strong> <span class="arithmatex">\(V_r\)</span>: peak-to-peak AC component riding on the DC rail. Inertial measurement units (IMUs) and GPS receivers typically require <span class="arithmatex">\(V_r &lt; 50\,\text{mV}\)</span> at switching frequencies.</p>
+</li>
+<li>
+<p><strong>Transient response</strong>: the voltage excursion caused by sudden load steps (motor spin-up). A well-regulated BEC should recover within <span class="arithmatex">\(\Delta t &lt; 100\,\mu\text{s}\)</span> and <span class="arithmatex">\(\Delta V &lt; 100\,\text{mV}\)</span>.</p>
+</li>
+<li>
+<p><strong>Hold-up time</strong>: duration the avionics rail remains within specification after main-bus power loss; typically <span class="arithmatex">\(&gt;50\,\text{ms}\)</span> provided by bulk capacitance.</p>
+</li>
+</ul>
+<p>The voltage sag on the main bus during a motor transient is: <span id="eq-voltage_sag"></span></p>
+<div class="arithmatex">\[\Delta V_{\text{sag}} = I_{\text{peak}} \cdot \left(r_{\text{batt}}
+    + R_{\text{wire}}\right) + L_{\text{wire}}\frac{dI}{dt},\tag{6.4}\]</div>
+<p>where <span class="arithmatex">\(r_{\text{batt}}\)</span> is the battery internal resistance, <span class="arithmatex">\(R_{\text{wire}}\)</span> the harness resistance, and <span class="arithmatex">\(L_{\text{wire}}\)</span> the parasitic inductance. For a 6S LiPo with <span class="arithmatex">\(r = 6\,\text{m}\Omega\)</span>, <span class="arithmatex">\(R_{\text{wire}} = 2\,\text{m}\Omega\)</span>, a <span class="arithmatex">\(50\,\text{A}\)</span> step produces <span class="arithmatex">\(\Delta V_{\text{sag}} \approx 0.4\,\text{V}\)</span> of resistive sag plus an inductive spike that must be absorbed by the ESC capacitors.</p>
+<h3 id="616-redundancy-strategies"><span class="secnum">6.1.6</span> Redundancy Strategies<a class="headerlink" href="#616-redundancy-strategies" title="Permanent link">&para;</a></h3>
+<p>High-reliability UAVs implement power redundancy at multiple levels:</p>
+<ol>
+<li>
+<p><strong>Dual battery with diode OR-ing</strong>: Two batteries share a common bus via Schottky diodes. The forward voltage drop <span class="arithmatex">\(V_f \approx 0.4\text{--}0.7\,\text{V}\)</span> causes an efficiency penalty; ideal-diode controllers (e.g., LTC4412) use MOSFETs to reduce drop to <span class="arithmatex">\(&lt;10\,\text{mV}\)</span>.</p>
+</li>
+<li>
+<p><strong>Hot-swap capable modules</strong>: A battery can be replaced mid-mission if the system includes a buffer capacitor that maintains the bus during swap. Hold-up energy: <span id="eq-holdup"></span></p>
+<div class="arithmatex">\[E_{\text{hold}} = \tfrac{1}{2}C_{\text{bulk}}
+            \left(V_{\max}^2 - V_{\min}^2\right).\tag{6.5}\]</div>
+<p>For <span class="arithmatex">\(C_{\text{bulk}} = 10\,\text{mF}\)</span>, <span class="arithmatex">\(V_{\max} = 25\,\text{V}\)</span>, <span class="arithmatex">\(V_{\min} = 18\,\text{V}\)</span>: <span class="arithmatex">\(E_{\text{hold}} = 2.3\,\text{J}\)</span>, sufficient for <span class="arithmatex">\(\sim\!3\,\text{ms}\)</span> at 770 W.</p>
+</li>
+<li>
+<p><strong>Cross-strapped avionics rails</strong>: Primary and secondary flight controllers each have independent 5 V BECs, each capable of powering all critical avionics.</p>
+</li>
+</ol>
+<h2 id="sec-lipo"><span class="secnum">6.2</span> Lithium Polymer (LiPo) Batteries<a class="headerlink" href="#sec-lipo" title="Permanent link">&para;</a></h2>
+<p>Lithium polymer batteries dominate the small-to-medium UAV market because they combine high specific energy, high discharge rates, and flexible mechanical form factors. Understanding their electrochemistry, electrical characteristics, and failure modes is essential for safe and efficient system design.</p>
+<h3 id="621-electrochemistry"><span class="secnum">6.2.1</span> Electrochemistry<a class="headerlink" href="#621-electrochemistry" title="Permanent link">&para;</a></h3>
+<p>A LiPo cell is a lithium-ion battery using a polymer-gelled electrolyte in place of a liquid electrolyte. The fundamental half-reactions are:</p>
+<p><strong>Positive electrode (cathode — LiCoO<span class="arithmatex">\(_2\)</span>):</strong> <span id="eq-cathode"></span></p>
+<div class="arithmatex">\[\text{LiCoO}_2 \;\rightleftharpoons\;
+  \text{Li}_{1-x}\text{CoO}_2 + x\,\text{Li}^+ + x\,e^-.\tag{6.6}\]</div>
+<p><strong>Negative electrode (anode — graphite):</strong> <span id="eq-anode"></span></p>
+<div class="arithmatex">\[x\,\text{Li}^+ + x\,e^- + \text{C}_6 \;\rightleftharpoons\;
+  \text{Li}_x\text{C}_6.\tag{6.7}\]</div>
+<p>The net cell reaction: <span id="eq-net_cell"></span></p>
+<div class="arithmatex">\[\text{LiCoO}_2 + \text{C}_6 \;\rightleftharpoons\;
+  \text{Li}_{1-x}\text{CoO}_2 + \text{Li}_x\text{C}_6.\tag{6.8}\]</div>
+<p>The electrolyte is lithium hexafluorophosphate (LiPF<span class="arithmatex">\(_6\)</span>) dissolved in a carbonate solvent (ethylene carbonate, dimethyl carbonate) absorbed into a porous polymer matrix (PVDF-HFP). The polymer matrix allows cell fabrication in thin, flexible pouches — hence the “polymer” designation.</p>
+<h3 id="622-voltage-characteristics"><span class="secnum">6.2.2</span> Voltage Characteristics<a class="headerlink" href="#622-voltage-characteristics" title="Permanent link">&para;</a></h3>
+<p>A single LiPo cell has:</p>
+<ul>
+<li>
+<p><strong>Nominal voltage</strong>: <span class="arithmatex">\(V_{\text{nom}} = 3.7\,\text{V}\)</span></p>
+</li>
+<li>
+<p><strong>Fully charged</strong>: <span class="arithmatex">\(V_{\text{max}} = 4.20\,\text{V}\)</span> (high-voltage LiHV cells: 4.35 V)</p>
+</li>
+<li>
+<p><strong>Storage voltage</strong>: <span class="arithmatex">\(V_{\text{store}} = 3.80\,\text{V}\)</span></p>
+</li>
+<li>
+<p><strong>Discharge cutoff</strong>: <span class="arithmatex">\(V_{\text{cut}} = 3.0\text{--}3.5\,\text{V}\)</span> (cell-level)</p>
+</li>
+</ul>
+<p>The open-circuit voltage (OCV) is a nonlinear function of state of charge (SOC): <span id="eq-ocv_soc"></span></p>
+<div class="arithmatex">\[V_{\text{OCV}}(\text{SOC}) \approx 3.0 + 1.2 \cdot \text{SOC}
+    - 0.8\,\text{SOC}^2 + 0.8\,\text{SOC}^3 \qquad [\text{V, cell}].\tag{6.9}\]</div>
+<p>Under load, the terminal voltage sags due to internal resistance <span class="arithmatex">\(r\)</span>: <span id="eq-terminal_voltage"></span></p>
+<div class="arithmatex">\[V_{\text{term}} = V_{\text{OCV}} - I \cdot r,\tag{6.10}\]</div>
+<p>where <span class="arithmatex">\(r\)</span> ranges from <span class="arithmatex">\(1\,\text{m}\Omega\)</span> for premium racing-grade cells to <span class="arithmatex">\(10\,\text{m}\Omega\)</span> for budget pouch cells.</p>
+<h3 id="623-c-rating-and-capacity"><span class="secnum">6.2.3</span> C-Rating and Capacity<a class="headerlink" href="#623-c-rating-and-capacity" title="Permanent link">&para;</a></h3>
+<p>Capacity <span class="arithmatex">\(Q\)</span> is measured in ampere-hours (Ah). The C-rate normalises the discharge current to the cell capacity: <span id="eq-c_rate"></span></p>
+<div class="arithmatex">\[I_C = C_{\text{rate}} \times Q \quad [\text{A}].\tag{6.11}\]</div>
+<p>A 5 Ah cell at 10C discharges at <span class="arithmatex">\(I = 10 \times 5 = 50\,\text{A}\)</span>. Peak pulse C-ratings of 100C appear in marketing literature but represent burst durations of only a few seconds; the continuous C-rating (typically 25–50C for quality UAV cells) is more relevant to design.</p>
+<p>The usable energy from a pack is: <span id="eq-usable_energy"></span></p>
+<div class="arithmatex">\[E_{\text{usable}} = V_{\text{nom}} \cdot Q \cdot N_s \cdot N_p
+    \cdot \eta_{\text{Coulombic}} \cdot (1 - \text{DOD}_{\text{min}}),\tag{6.12}\]</div>
+<p>where <span class="arithmatex">\(N_s\)</span> is the number of series cells, <span class="arithmatex">\(N_p\)</span> the number of parallel cells, <span class="arithmatex">\(\eta_{\text{Coulombic}} \approx 0.99\)</span> is the Coulombic efficiency, and <span class="arithmatex">\(\text{DOD}_{\text{min}}\)</span> is the depth-of-discharge limit (20% is typical for longevity).</p>
+<h3 id="624-pack-configuration"><span class="secnum">6.2.4</span> Pack Configuration<a class="headerlink" href="#624-pack-configuration" title="Permanent link">&para;</a></h3>
+<p>UAV packs are specified as <span class="arithmatex">\(N_s\)</span><strong>S</strong><span class="arithmatex">\(\times N_p\)</span><strong>P</strong>. A <strong>6S2P</strong> pack with 5 Ah cells has: <span id="eq-6s_v"></span><span id="eq-6s_q"></span><span id="eq-6s_e"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  V_{\text{pack,nom}} &amp;= 6 \times 3.7 = 22.2\,\text{V}, \\
+  Q_{\text{pack}}     &amp;= 2 \times 5 = 10\,\text{Ah},    \\
+  E_{\text{pack}}     &amp;= 22.2 \times 10 = 222\,\text{Wh}.
+\end{align*}\]</div>
+<p>Higher series count reduces current and conductor mass for a given power level; higher parallel count improves discharge rate and cycle life.</p>
+<h3 id="625-energy-density"><span class="secnum">6.2.5</span> Energy Density<a class="headerlink" href="#625-energy-density" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-lipo_specs">Table 6.2</a> summarises key LiPo cell parameters.</p>
+<div class="tbl" id="tab-lipo_specs">
+<div class="tbl-caption"><strong>Table 6.2.</strong> LiPo cell performance parameters by grade.</div>
+<div class="tbl-scroll">
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Grade</strong></td>
+<td style="text-align: right;"><strong>Sp. Energy</strong></td>
+<td style="text-align: right;"><strong>Cont. C</strong></td>
+<td style="text-align: right;"><strong>Internal <span class="math inline">\(r\)</span></strong></td>
+<td style="text-align: right;"><strong>Cycle Life</strong></td>
+<td style="text-align: left;"><strong>Example</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: right;">(Wh/kg)</td>
+<td style="text-align: right;">(—)</td>
+<td style="text-align: right;">(m<span class="math inline">\(\Omega\)</span>/cell)</td>
+<td style="text-align: right;">(to 80%)</td>
+<td style="text-align: left;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Budget (hobby)</td>
+<td style="text-align: right;">130–165</td>
+<td style="text-align: right;">15–25</td>
+<td style="text-align: right;">6–10</td>
+<td style="text-align: right;">100–200</td>
+<td style="text-align: left;">Generic pouch</td>
+</tr>
+<tr>
+<td style="text-align: left;">Standard UAV</td>
+<td style="text-align: right;">160–200</td>
+<td style="text-align: right;">25–45</td>
+<td style="text-align: right;">3–6</td>
+<td style="text-align: right;">200–350</td>
+<td style="text-align: left;">Tattu R-Line</td>
+</tr>
+<tr>
+<td style="text-align: left;">High-energy</td>
+<td style="text-align: right;">200–220</td>
+<td style="text-align: right;">10–20</td>
+<td style="text-align: right;">5–8</td>
+<td style="text-align: right;">250–400</td>
+<td style="text-align: left;">Bonka 22000</td>
+</tr>
+<tr>
+<td style="text-align: left;">High-power (FPV)</td>
+<td style="text-align: right;">150–185</td>
+<td style="text-align: right;">50–100</td>
+<td style="text-align: right;">1–3</td>
+<td style="text-align: right;">150–250</td>
+<td style="text-align: left;">Maxamps 1500</td>
+</tr>
+<tr>
+<td style="text-align: left;">Kokam high-perf.</td>
+<td style="text-align: right;">210–265</td>
+<td style="text-align: right;">20–30</td>
+<td style="text-align: right;">2–5</td>
+<td style="text-align: right;">400–500</td>
+<td style="text-align: left;">Kokam SLPB</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>At pack level, accounting for cell interconnects, BMS PCB, casing, and wiring, pack-level specific energy is typically 80–90% of cell-level: <span id="eq-pack_penalty"></span></p>
+<div class="arithmatex">\[e_{s,\text{pack}} \approx 0.85 \times e_{s,\text{cell}}.\tag{6.16}\]</div>
+<h3 id="626-temperature-effects"><span class="secnum">6.2.6</span> Temperature Effects<a class="headerlink" href="#626-temperature-effects" title="Permanent link">&para;</a></h3>
+<p>Low temperatures dramatically reduce available capacity. The relationship is approximately: <span id="eq-temp_capacity"></span></p>
+<div class="arithmatex">\[Q(T) \approx Q_{25} \left[1 - k_T \left(25 - T\right)\right],\tag{6.17}\]</div>
+<p>where <span class="arithmatex">\(k_T \approx 0.006\,\text{K}^{-1}\)</span> for a typical LiPo. At <span class="arithmatex">\(-10\,°\)</span>C: <span class="arithmatex">\(Q \approx Q_{25}(1 - 0.006 \times 35) = 0.79\,Q_{25}\)</span> — a 21% capacity loss before accounting for increased internal resistance. Internal resistance roughly doubles from 25 °C to <span class="arithmatex">\(-10\,°\)</span>C, worsening voltage sag under load. Maximum charge temperature is 45 °C; charging above this threshold accelerates electrolyte decomposition and can cause cell swelling.</p>
+<h3 id="627-cycle-life-and-degradation"><span class="secnum">6.2.7</span> Cycle Life and Degradation<a class="headerlink" href="#627-cycle-life-and-degradation" title="Permanent link">&para;</a></h3>
+<p>Capacity fade follows an approximate power law: <span id="eq-capacity_fade"></span></p>
+<div class="arithmatex">\[Q_n = Q_0 \left(1 - \alpha\, n^\beta\right),\tag{6.18}\]</div>
+<p>where <span class="arithmatex">\(n\)</span> is the cycle count, <span class="arithmatex">\(\alpha\)</span> and <span class="arithmatex">\(\beta\)</span> are empirical constants (typically <span class="arithmatex">\(\alpha \approx 0.0008\)</span> and <span class="arithmatex">\(\beta \approx 0.9\)</span> for 25% DOD). Calendar aging adds a <span class="arithmatex">\(\sqrt{t}\)</span> term from solid-electrolyte-interphase (SEI) layer growth. A practical life criterion is 500 cycles to 80% capacity at 1C charge / 1C discharge, 25 °C, 100% DOD; operating at partial DOD (50–70%) can extend this to 1000+ cycles.</p>
+<h3 id="628-safety-and-thermal-runaway"><span class="secnum">6.2.8</span> Safety and Thermal Runaway<a class="headerlink" href="#628-safety-and-thermal-runaway" title="Permanent link">&para;</a></h3>
+<p>Thermal runaway is initiated when cell temperature exceeds approximately <span class="arithmatex">\(80\,°\)</span>C, triggering exothermic decomposition of the electrolyte: <span id="eq-decomp"></span></p>
+<div class="arithmatex">\[\text{LiPF}_6 \;\rightarrow\; \text{LiF} + \text{PF}_5
+  \quad (\text{above }60\,°\text{C}),\tag{6.19}\]</div>
+<p>followed by cathode oxygen release and anode lithium reactions, producing heat at rates of <span class="arithmatex">\(10\text{--}1000\,\text{W/g}\)</span>. Propagation to adjacent cells occurs within seconds. Mitigation measures include:</p>
+<ul>
+<li>
+<p>Fusing each parallel cell group with a fusible link.</p>
+</li>
+<li>
+<p>Encasing packs in fireproof lithium-battery bags (fibreglass, mica).</p>
+</li>
+<li>
+<p>BMS hard-cut-off at <span class="arithmatex">\(V &gt; 4.25\,\text{V}\)</span> or <span class="arithmatex">\(T &gt; 65\,°\)</span>C.</p>
+</li>
+<li>
+<p>Venting channels that direct combustion gases away from electronics.</p>
+</li>
+</ul>
+<h3 id="629-cc-cv-charging-profile"><span class="secnum">6.2.9</span> CC-CV Charging Profile<a class="headerlink" href="#629-cc-cv-charging-profile" title="Permanent link">&para;</a></h3>
+<p>LiPo cells are charged in two phases (<a href="#fig-cccv">Figure 6.2</a>):</p>
+<ol>
+<li>
+<p><strong>Constant Current (CC)</strong>: charger sources constant current <span class="arithmatex">\(I_{\text{ch}} = C_{\text{rate}} \times Q\)</span> until the cell reaches <span class="arithmatex">\(V_{\max} = 4.20\,\text{V}\)</span>. Duration: <span class="arithmatex">\(t_{\text{CC}} \approx (1 - \text{SOC}_0) \times Q / I_{\text{ch}}\)</span>.</p>
+</li>
+<li>
+<p><strong>Constant Voltage (CV)</strong>: charger holds <span class="arithmatex">\(V = 4.20\,\text{V}\)</span>; current tapers exponentially to a termination threshold <span class="arithmatex">\(I_{\text{term}} \approx 0.05C\)</span>. Charge is considered complete when <span class="arithmatex">\(I &lt; I_{\text{term}}\)</span>.</p>
+</li>
+</ol>
+<figure class="fig fig-diagram" id="fig-cccv">
+<img class="tikz" src="img/tikz-25868b15db5f.svg" alt="CC-CV charging profile for a single LiPo cell. Blue solid: terminal voltage; red dashed: charge current (normalised). The transition to CV phase occurs at V = 4.20\,\text{V}." loading="lazy" width="293" height="171">
+<figcaption><strong>Figure 6.2.</strong> CC-CV charging profile for a single LiPo cell. Blue solid: terminal voltage; red dashed: charge current (normalised). The transition to CV phase occurs at <span class="math inline">\(V = 4.20\,\text{V}\)</span>.</figcaption>
+</figure>
+
+<p>Total charge time at rate <span class="arithmatex">\(C_r\)</span> from empty: <span id="eq-charge_time"></span></p>
+<div class="arithmatex">\[t_{\text{charge}} \approx \frac{1}{C_r} + 0.2 \times \frac{1}{C_r}
+    = \frac{1.2}{C_r} \quad [\text{hours}].\tag{6.20}\]</div>
+<p>At 2C this gives <span class="arithmatex">\(t \approx 36\,\text{min}\)</span>; at 5C approximately <span class="arithmatex">\(14\,\text{min}\)</span>, though high-rate charging above 2C requires premium cells with low internal resistance.</p>
+<h2 id="sec-liion"><span class="secnum">6.3</span> Lithium-Ion (Li-Ion) Batteries<a class="headerlink" href="#sec-liion" title="Permanent link">&para;</a></h2>
+<p>Cylindrical Li-Ion cells — particularly the 18650 and 21700 formats — have become increasingly common in UAV applications where energy density and cycle life take priority over peak discharge rate.</p>
+<h3 id="631-comparison-with-lipo"><span class="secnum">6.3.1</span> Comparison with LiPo<a class="headerlink" href="#631-comparison-with-lipo" title="Permanent link">&para;</a></h3>
+<p>Li-Ion cells typically achieve 250–300 Wh/kg at the cell level, compared to 150–265 Wh/kg for LiPo pouches. The trade-off is lower continuous C-rating: premium 21700 cells (e.g., Samsung 21700-50E) deliver only 5–10C continuous versus 25–50C for UAV-grade LiPo pouches.</p>
+<p><a href="#tab-liion_vs_lipo">Table 6.3</a> provides a head-to-head comparison.</p>
+<div class="tbl" id="tab-liion_vs_lipo">
+<div class="tbl-caption"><strong>Table 6.3.</strong> Li-Ion (cylindrical) versus LiPo (pouch) — key differences.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Li-Ion 21700</strong></th>
+<th style="text-align: left;"><strong>LiPo Pouch</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Specific energy (cell)</td>
+<td style="text-align: left;">250–300 Wh/kg</td>
+<td style="text-align: left;">150–265 Wh/kg</td>
+</tr>
+<tr>
+<td style="text-align: left;">Specific power (cell)</td>
+<td style="text-align: left;">500–1500 W/kg</td>
+<td style="text-align: left;">1500–5000 W/kg</td>
+</tr>
+<tr>
+<td style="text-align: left;">Max cont. C-rate</td>
+<td style="text-align: left;">5–10C</td>
+<td style="text-align: left;">25–100C</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cycle life (to 80%)</td>
+<td style="text-align: left;">500–1000</td>
+<td style="text-align: left;">200–500</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mechanical form</td>
+<td style="text-align: left;">Rigid cylinder</td>
+<td style="text-align: left;">Flexible pouch</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cell <span class="math inline">\(V_{\text{nom}}\)</span></td>
+<td style="text-align: left;">3.6 V</td>
+<td style="text-align: left;">3.7 V</td>
+</tr>
+<tr>
+<td style="text-align: left;">Thermal stability</td>
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">Lower</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cost (USD/Wh)</td>
+<td style="text-align: left;">$0.15–0.30</td>
+<td style="text-align: left;">$0.20–0.50</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="632-cell-formats"><span class="secnum">6.3.2</span> Cell Formats<a class="headerlink" href="#632-cell-formats" title="Permanent link">&para;</a></h3>
+<p>The <strong>18650</strong> cell (<span class="arithmatex">\(⌀ 18\,\text{mm} \times 65\,\text{mm}\)</span>) remains widely available; typical capacity is 2.5–3.5 Ah. The larger <strong>21700</strong> format (<span class="arithmatex">\(⌀ 21 \times 70\,\text{mm}\)</span>) offers 4.0–5.0 Ah with improved volumetric energy density; Tesla and Panasonic pioneered the format for automotive use. Pouch Li-Ion cells (no external cylinder) are used in bespoke UAV battery assemblies to match airframe geometry.</p>
+<h3 id="633-state-of-charge-estimation"><span class="secnum">6.3.3</span> State of Charge Estimation<a class="headerlink" href="#633-state-of-charge-estimation" title="Permanent link">&para;</a></h3>
+<p>Accurate SOC estimation is critical for safe operation. Three principal methods are used:</p>
+<h4 id="coulomb-counting">Coulomb Counting<a class="headerlink" href="#coulomb-counting" title="Permanent link">&para;</a></h4>
+<p>Current is integrated over time: <span id="eq-coulomb_counting"></span></p>
+<div class="arithmatex">\[\text{SOC}(t) = \text{SOC}(t_0) - \frac{1}{Q_n} \int_{t_0}^{t}
+    \eta_C \, i(\tau)\,d\tau,\tag{6.21}\]</div>
+<p>where <span class="arithmatex">\(Q_n\)</span> is nominal capacity and <span class="arithmatex">\(\eta_C\)</span> is Coulombic efficiency (<span class="arithmatex">\(\approx 0.99\)</span>). Coulomb counting accumulates sensor error over time and requires periodic recalibration against a reference SOC point (e.g., fully charged or fully discharged).</p>
+<h4 id="ocv-soc-look-up">OCV-SOC Look-Up<a class="headerlink" href="#ocv-soc-look-up" title="Permanent link">&para;</a></h4>
+<p>At rest, the OCV uniquely maps to SOC via an empirically determined curve. A polynomial fit of order 5–7 is typically used: <span id="eq-ocv_poly"></span></p>
+<div class="arithmatex">\[\text{SOC} = a_0 + a_1 V + a_2 V^2 + a_3 V^3 + a_4 V^4 + a_5 V^5.\tag{6.22}\]</div>
+<p>This requires a relaxation period (<span class="arithmatex">\(&gt;30\,\text{min}\)</span>) to allow the surface-concentration gradient to equilibrate — impractical during flight-critical operations.</p>
+<h4 id="extended-kalman-filter-ekf">Extended Kalman Filter (EKF)<a class="headerlink" href="#extended-kalman-filter-ekf" title="Permanent link">&para;</a></h4>
+<p>The EKF fuses Coulomb counting with a first-order equivalent-circuit model (ECM) to produce a statistically optimal SOC estimate: <span id="eq-ekf_s1"></span><span id="eq-ekf_s2"></span><span id="eq-ekf_out"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \dot{x}_1 &amp;= \text{SOC} \quad (\text{state 1}), \\
+  \dot{x}_2 &amp;= -\frac{1}{R_1 C_1} x_2 + \frac{1}{C_1} I
+    \quad (\text{RC polarisation, state 2}), \\
+  V_t &amp;= V_{\text{OCV}}(x_1) - I R_0 - x_2 \quad (\text{output}).
+\end{align*}\]</div>
+<p>The Kalman gain <span class="arithmatex">\(\mathbf{K}\)</span> is updated at each measurement step to minimise the estimation-error covariance. EKF-based BMS chips achieve SOC accuracy of <span class="arithmatex">\(\pm 1\text{--}2\%\)</span> under dynamic load conditions.</p>
+<h3 id="634-silicon-anode-cells"><span class="secnum">6.3.4</span> Silicon Anode Cells<a class="headerlink" href="#634-silicon-anode-cells" title="Permanent link">&para;</a></h3>
+<p>Silicon has a theoretical specific capacity of <span class="arithmatex">\(4200\,\text{mAh/g}\)</span> versus <span class="arithmatex">\(372\,\text{mAh/g}\)</span> for graphite, promising a factor-of-11 improvement in anode capacity. Practical silicon-anode cells (Sila Nanotechnologies, Group14 Technologies) incorporate 20–40% Si in a graphite matrix to manage the 300% volume change on lithiation. Current commercial cells achieve 350–400 Wh/kg at cell level and are entering the premium EV and UAV market.</p>
+<h3 id="635-solid-state-li-ion"><span class="secnum">6.3.5</span> Solid-State Li-Ion<a class="headerlink" href="#635-solid-state-li-ion" title="Permanent link">&para;</a></h3>
+<p>Solid-state batteries replace the liquid or gel electrolyte with a ceramic (e.g., LLZO — Li<span class="arithmatex">\(_7\)</span>La<span class="arithmatex">\(_3\)</span>Zr<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_{12}\)</span>) or sulphide (<span class="arithmatex">\(\text{Li}_6\text{PS}_5\text{Cl}\)</span>) solid electrolyte. Benefits include:</p>
+<ul>
+<li>
+<p>Inherent non-flammability (no organic liquid solvent).</p>
+</li>
+<li>
+<p>Compatibility with lithium-metal anodes (theoretical capacity <span class="arithmatex">\(3860\,\text{mAh/g}\)</span>), targeting <span class="arithmatex">\(&gt;400\,\text{Wh/kg}\)</span> at cell level.</p>
+</li>
+<li>
+<p>Wider operating temperature range (<span class="arithmatex">\(-40\,°\)</span>C to <span class="arithmatex">\(+100\,°\)</span>C).</p>
+</li>
+</ul>
+<p>QuantumScape, Solid Power, and Toyota are among developers targeting production readiness by 2027–2030. Manufacturing challenges include interfacial resistance between solid electrolyte and electrodes and high-pressure requirements during cell assembly.</p>
+<h2 id="sec-bms"><span class="secnum">6.4</span> Battery Management System (BMS)<a class="headerlink" href="#sec-bms" title="Permanent link">&para;</a></h2>
+<p>The battery management system is the electronic subsystem responsible for safe operation, accurate state estimation, and communication of battery status to the vehicle management computer.</p>
+<h3 id="641-cell-voltage-monitoring"><span class="secnum">6.4.1</span> Cell Voltage Monitoring<a class="headerlink" href="#641-cell-voltage-monitoring" title="Permanent link">&para;</a></h3>
+<p>Cell voltages are measured with precision analogue-to-digital converters (ADCs). Each cell must be monitored independently; the BMS must detect cell imbalance to within <span class="arithmatex">\(\pm 1\,\text{mV}\)</span> to prevent overcharge of weak cells in a series string. Texas Instruments BQ76952 and Analog Devices LTC6813 are representative multi-cell battery monitor ICs achieving 14–16 bit resolution with <span class="arithmatex">\(\leq 0.5\,\text{mV}\)</span> accuracy.</p>
+<p>The voltage imbalance across a series string after <span class="arithmatex">\(n\)</span> cycles is: <span id="eq-imbal"></span></p>
+<div class="arithmatex">\[\Delta V_{\text{imbal}} = \frac{\Delta Q_{\text{cap}}}{C_{\text{avg}}}
+    \approx \frac{\sigma_Q \sqrt{n}}{C_{\text{avg}}},\tag{6.26}\]</div>
+<p>where <span class="arithmatex">\(\sigma_Q\)</span> is the per-cycle capacity-loss standard deviation across cells.</p>
+<h3 id="642-cell-balancing"><span class="secnum">6.4.2</span> Cell Balancing<a class="headerlink" href="#642-cell-balancing" title="Permanent link">&para;</a></h3>
+<h4 id="passive-balancing">Passive Balancing<a class="headerlink" href="#passive-balancing" title="Permanent link">&para;</a></h4>
+<p>Energy from higher-voltage cells is dissipated through bypass resistors (typically <span class="arithmatex">\(10\text{--}100\,\Omega\)</span>) switched by FETs controlled by the BMS IC. Maximum balancing current: <span id="eq-passive_bal"></span></p>
+<div class="arithmatex">\[I_{\text{bal}} = \frac{V_{\text{cell}} - V_{\min}}{R_{\text{bypass}}}.\tag{6.27}\]</div>
+<p>For <span class="arithmatex">\(R_{\text{bypass}} = 33\,\Omega\)</span> and <span class="arithmatex">\(\Delta V = 50\,\text{mV}\)</span>: <span class="arithmatex">\(I_{\text{bal}} = 1.5\,\text{mA}\)</span>. Balancing power: <span class="arithmatex">\(P_{\text{bal}} = I_{\text{bal}}^2 R = 74\,\mu\text{W}\)</span> per cell — very slow but simple and reliable.</p>
+<h4 id="active-balancing">Active Balancing<a class="headerlink" href="#active-balancing" title="Permanent link">&para;</a></h4>
+<p>Active balancers shuttle charge from high-SOC to low-SOC cells via inductors or capacitors, achieving efficiencies of 90–97%. An inductor-based flyback balancer operates at switching frequency <span class="arithmatex">\(f_s\)</span>; the transferred charge per switching cycle: <span id="eq-active_bal"></span></p>
+<div class="arithmatex">\[\Delta Q = \frac{1}{2} L I_{\text{pk}}^2 / V_{\text{cell}},\tag{6.28}\]</div>
+<p>and balancing current: <span id="eq-active_bal_current"></span></p>
+<div class="arithmatex">\[I_{\text{bal,active}} = \Delta Q \cdot f_s.\tag{6.29}\]</div>
+<p>For <span class="arithmatex">\(L = 10\,\mu\text{H}\)</span>, <span class="arithmatex">\(I_{\text{pk}} = 3\,\text{A}\)</span>, <span class="arithmatex">\(f_s = 100\,\text{kHz}\)</span>, <span class="arithmatex">\(V_{\text{cell}} = 3.7\,\text{V}\)</span>: <span class="arithmatex">\(I_{\text{bal}} \approx 40\,\text{mA}\)</span> — roughly 27<span class="arithmatex">\(\times\)</span> faster than passive balancing.</p>
+<h3 id="643-protection-functions"><span class="secnum">6.4.3</span> Protection Functions<a class="headerlink" href="#643-protection-functions" title="Permanent link">&para;</a></h3>
+<p>The BMS implements the following protection layers (<a href="#tab-bms_prot">Table 6.4</a>):</p>
+<div class="tbl" id="tab-bms_prot">
+<div class="tbl-caption"><strong>Table 6.4.</strong> BMS protection thresholds — typical Li-Ion/LiPo pack.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Fault Condition</strong></th>
+<th style="text-align: left;"><strong>Threshold</strong></th>
+<th style="text-align: left;"><strong>Action</strong></th>
+<th style="text-align: left;"><strong>Reset</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Overvoltage (cell)</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;4.25\,\text{V}\)</span></td>
+<td style="text-align: left;">Disconnect charge FET</td>
+<td style="text-align: left;">Auto</td>
+</tr>
+<tr>
+<td style="text-align: left;">Undervoltage (cell)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;3.00\,\text{V}\)</span></td>
+<td style="text-align: left;">Disconnect discharge FET</td>
+<td style="text-align: left;">Manual</td>
+</tr>
+<tr>
+<td style="text-align: left;">Overcurrent (discharge)</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;120\%\)</span> rated</td>
+<td style="text-align: left;">FET off, 10 ms delay</td>
+<td style="text-align: left;">Auto</td>
+</tr>
+<tr>
+<td style="text-align: left;">Short circuit</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;500\%\)</span> rated</td>
+<td style="text-align: left;">FET off, <span class="math inline">\(&lt;1\,\mu\)</span>s</td>
+<td style="text-align: left;">Manual</td>
+</tr>
+<tr>
+<td style="text-align: left;">Overtemperature (charge)</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;45\,°\)</span>C</td>
+<td style="text-align: left;">Stop charging</td>
+<td style="text-align: left;">Auto</td>
+</tr>
+<tr>
+<td style="text-align: left;">Overtemperature (discharge)</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;70\,°\)</span>C</td>
+<td style="text-align: left;">Disconnect load</td>
+<td style="text-align: left;">Auto</td>
+</tr>
+<tr>
+<td style="text-align: left;">Undertemperature (charge)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;0\,°\)</span>C</td>
+<td style="text-align: left;">Stop charging</td>
+<td style="text-align: left;">Auto</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="644-bms-communication"><span class="secnum">6.4.4</span> BMS Communication<a class="headerlink" href="#644-bms-communication" title="Permanent link">&para;</a></h3>
+<p>Modern UAV BMS ICs communicate battery status to the flight controller via:</p>
+<ul>
+<li>
+<p><strong>SMBus / I<span class="arithmatex">\(^2\)</span>C</strong>: Smart Battery Data (SBD) protocol; reports voltage, current, temperature, SOC, cycle count.</p>
+</li>
+<li>
+<p><strong>CAN bus</strong>: Higher noise immunity; used in larger UAV platforms; supports MAVLink battery status message (<code>BATTERY_STATUS</code>, message ID 147).</p>
+</li>
+<li>
+<p><strong>Analogue</strong>: Simple current and voltage signals for low-cost systems.</p>
+</li>
+</ul>
+<p>MAVLink battery status parameters include: <code>voltage_cell[10]</code> (mV per cell), <code>current_battery</code> (10<span class="arithmatex">\(\times\)</span>mA), <code>battery_remaining</code> (0–100%), <code>time_remaining</code> (seconds).</p>
+<h3 id="645-pre-charge-circuit"><span class="secnum">6.4.5</span> Pre-Charge Circuit<a class="headerlink" href="#645-pre-charge-circuit" title="Permanent link">&para;</a></h3>
+<p>Large filter capacitors on ESC power rails present a near-short at connection. Without a pre-charge circuit, inrush current: <span id="eq-inrush"></span></p>
+<div class="arithmatex">\[I_{\text{inrush}} = V_{\text{bat}} / R_{\text{wire}} \approx 25\,\text{V}
+    / 0.002\,\Omega = 12{,}500\,\text{A}\tag{6.30}\]</div>
+<p>— sufficient to weld connector contacts and fuse traces. The pre-charge circuit inserts a resistor <span class="arithmatex">\(R_{\text{pc}} = 10\text{--}100\,\Omega\)</span> in series for a period <span class="arithmatex">\(\tau = 5 R_{\text{pc}} C_{\text{ESC}}\)</span> before closing the main contactor: <span id="eq-precharge"></span></p>
+<div class="arithmatex">\[I_{\text{pre}} = \frac{V_{\text{bat}}}{R_{\text{pc}}} \cdot
+    e^{-t / (R_{\text{pc}} C_{\text{ESC}})}.\tag{6.31}\]</div>
+<h2 id="sec-fc"><span class="secnum">6.5</span> Fuel Cells<a class="headerlink" href="#sec-fc" title="Permanent link">&para;</a></h2>
+<p>Hydrogen proton-exchange-membrane (PEM) fuel cells offer specific energies of 600–1800 Wh/kg at the system level (cell stack + compressed hydrogen tank), enabling endurance figures of 4–12 hours for multi-rotor UAVs that are unachievable with current batteries.</p>
+<h3 id="651-pem-fuel-cell-operating-principles"><span class="secnum">6.5.1</span> PEM Fuel Cell Operating Principles<a class="headerlink" href="#651-pem-fuel-cell-operating-principles" title="Permanent link">&para;</a></h3>
+<p>At the anode: <span id="eq-fc_anode"></span></p>
+<div class="arithmatex">\[\text{H}_2 \;\rightarrow\; 2\,\text{H}^+ + 2\,e^-.\tag{6.32}\]</div>
+<p>At the cathode (air-breathing): <span id="eq-fc_cathode"></span></p>
+<div class="arithmatex">\[\tfrac{1}{2}\,\text{O}_2 + 2\,\text{H}^+ + 2\,e^- \;\rightarrow\;
+  \text{H}_2\text{O}.\tag{6.33}\]</div>
+<p>Net reaction: <span id="eq-fc_net"></span></p>
+<div class="arithmatex">\[\text{H}_2 + \tfrac{1}{2}\,\text{O}_2 \;\rightarrow\;
+  \text{H}_2\text{O} + \text{heat}.\tag{6.34}\]</div>
+<p>Theoretical (Nernst) cell voltage is <span class="arithmatex">\(E^0 = 1.23\,\text{V}\)</span> at STP. Under operating conditions, voltage losses reduce this to 0.6–0.8 V per cell at rated current. Stack voltage: <span id="eq-stack_v"></span></p>
+<div class="arithmatex">\[V_{\text{stack}} = N_{\text{cells}} \times V_{\text{cell}}.\tag{6.35}\]</div>
+<p>Efficiency relative to lower heating value (LHV) of hydrogen: <span id="eq-fc_eff"></span></p>
+<div class="arithmatex">\[\eta_{\text{FC}} = \frac{V_{\text{cell}}}{1.25} \approx 0.48\text{--}0.64.\tag{6.36}\]</div>
+<h3 id="652-system-architecture"><span class="secnum">6.5.2</span> System Architecture<a class="headerlink" href="#652-system-architecture" title="Permanent link">&para;</a></h3>
+<p>A UAV PEM fuel cell system comprises:</p>
+<ol>
+<li>
+<p><strong>Compressed H<span class="arithmatex">\(_2\)</span> tank</strong>: Type IV composite-overwrap pressure vessel (COPV) at 350 or 700 bar. Gravimetric storage efficiency (H<span class="arithmatex">\(_2\)</span> mass / total tank mass) is 5–7% for 350 bar COPV.</p>
+</li>
+<li>
+<p><strong>Pressure regulator</strong>: Two-stage reducing from 350 bar to 1–3 bar at stack inlet.</p>
+</li>
+<li>
+<p><strong>FC stack</strong>: Air-cooled (small systems) or liquid-cooled (&gt;500 W); cathode fed by axial fan; anode operated dead-end with purge valve.</p>
+</li>
+<li>
+<p><strong>DC-DC boost converter</strong>: Stack output (12–40 V) boosted to bus voltage (48 V typical for large UAV).</p>
+</li>
+<li>
+<p><strong>LiPo buffer pack</strong>: Handles peak power transients (motor acceleration, attitude corrections) at rates the fuel cell cannot follow (<span class="arithmatex">\(dP/dt\)</span> limit of FC <span class="arithmatex">\(\approx\)</span> 10 W/s).</p>
+</li>
+</ol>
+<p>Power sharing between FC and buffer battery: <span id="eq-fc_sharing"></span></p>
+<div class="arithmatex">\[P_{\text{FC}}(t) = P_{\text{FC,max}} \cdot \min\!\left(1,\,
+    \frac{P_{\text{load}}(t)}{P_{\text{FC,rated}}}\right)\tag{6.37}\]</div>
+<p>with the deficit supplied by the LiPo buffer: <span id="eq-lipo_buffer"></span></p>
+<div class="arithmatex">\[P_{\text{LiPo}}(t) = P_{\text{load}}(t) - P_{\text{FC}}(t).\tag{6.38}\]</div>
+<h3 id="653-cold-start"><span class="secnum">6.5.3</span> Cold-Start<a class="headerlink" href="#653-cold-start" title="Permanent link">&para;</a></h3>
+<p>Below <span class="arithmatex">\(-5\,°\)</span>C the PEM membrane may freeze. A resistive heater powered from the buffer LiPo brings the stack above <span class="arithmatex">\(0\,°\)</span>C before hydrogen is admitted. Target cold-start time is <span class="arithmatex">\(&lt;60\,\text{s}\)</span>. Heater power requirement: <span id="eq-coldstart"></span></p>
+<div class="arithmatex">\[P_{\text{heat}} = \frac{m_{\text{stack}} c_p \Delta T}{t_{\text{start}}},\tag{6.39}\]</div>
+<p>where <span class="arithmatex">\(m_{\text{stack}}\)</span> is the stack mass (kg), <span class="arithmatex">\(c_p \approx 900\,\text{J/(kg·K)}\)</span> for the aluminium bipolar plates, <span class="arithmatex">\(\Delta T\)</span> the required temperature rise, and <span class="arithmatex">\(t_{\text{start}}\)</span> the allowed warm-up time.</p>
+<h3 id="654-endurance-comparison"><span class="secnum">6.5.4</span> Endurance Comparison<a class="headerlink" href="#654-endurance-comparison" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-endurance_cmp">Table 6.5</a> compares LiPo and fuel cell endurance for representative UAV platforms.</p>
+<div class="tbl" id="tab-endurance_cmp">
+<div class="tbl-caption"><strong>Table 6.5.</strong> Endurance comparison: LiPo vs PEM fuel cell.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Platform</strong></th>
+<th style="text-align: left;"><strong>MTOW</strong></th>
+<th style="text-align: left;"><strong>Source</strong></th>
+<th style="text-align: left;"><strong>Energy</strong></th>
+<th style="text-align: left;"><strong>Endurance</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Quad (5 kg)</td>
+<td style="text-align: left;">5 kg</td>
+<td style="text-align: left;">6S 10Ah LiPo</td>
+<td style="text-align: left;">222 Wh</td>
+<td style="text-align: left;">20–25 min</td>
+</tr>
+<tr>
+<td style="text-align: left;">Quad (5 kg)</td>
+<td style="text-align: left;">6 kg</td>
+<td style="text-align: left;">H<span class="math inline">\(_2\)</span> FC 350W + 2Ah buffer</td>
+<td style="text-align: left;">500 Wh</td>
+<td style="text-align: left;">90–120 min</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fixed-wing (3 kg)</td>
+<td style="text-align: left;">3 kg</td>
+<td style="text-align: left;">4S 8Ah LiPo</td>
+<td style="text-align: left;">118 Wh</td>
+<td style="text-align: left;">60–80 min</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fixed-wing (4 kg)</td>
+<td style="text-align: left;">4 kg</td>
+<td style="text-align: left;">H<span class="math inline">\(_2\)</span> FC 150W</td>
+<td style="text-align: left;">800 Wh</td>
+<td style="text-align: left;">6–9 hr</td>
+</tr>
+<tr>
+<td style="text-align: left;">MALE-class (25 kg)</td>
+<td style="text-align: left;">25 kg</td>
+<td style="text-align: left;">Petrol engine</td>
+<td style="text-align: left;">30 kWh</td>
+<td style="text-align: left;">20–24 hr</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="655-commercial-systems"><span class="secnum">6.5.5</span> Commercial Systems<a class="headerlink" href="#655-commercial-systems" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Intelligent Energy 650W</strong>: Air-cooled; 650 W rated; 2.4 kg stack mass; compatibility with DJI M600 and Matrice platforms.</p>
+</li>
+<li>
+<p><strong>HES UAS350</strong>: 350 W; 0.9 kg; integrated regulator and controller; proven on fixed-wing endurance platforms.</p>
+</li>
+<li>
+<p><strong>Doosan H30</strong>: 30 A·h hydrogen cartridge; powers Doosan DS30 multi-rotor; 2-hour rated endurance; FAA-certified.</p>
+</li>
+</ul>
+<h2 id="sec-solar"><span class="secnum">6.6</span> Solar Power Systems<a class="headerlink" href="#sec-solar" title="Permanent link">&para;</a></h2>
+<p>Photovoltaic (PV) cells integrated into UAV wing surfaces enable extended or even perpetual flight when the energy harvested equals or exceeds cruise power consumption.</p>
+<h3 id="661-photovoltaic-cell-technologies"><span class="secnum">6.6.1</span> Photovoltaic Cell Technologies<a class="headerlink" href="#661-photovoltaic-cell-technologies" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Monocrystalline silicon</strong>: Efficiency <span class="arithmatex">\(\eta_{\text{cell}} = 20\text{--}24\%\)</span>; rigid; cost-effective; dominant in large-area wings.</p>
+</li>
+<li>
+<p><strong>GaAs single-junction</strong>: <span class="arithmatex">\(\eta_{\text{cell}} = 28\text{--}32\%\)</span>; very high efficiency; tolerates high irradiance and temperature; expensive (&#36;50/cm<span class="arithmatex">\(^2\)</span>); used on high-performance platforms.</p>
+</li>
+<li>
+<p><strong>Multi-junction III-V</strong> (InGaP/GaAs/Ge): <span class="arithmatex">\(\eta_{\text{cell}} = 34\text{--}47\%\)</span> (concentrator); complex fabrication; primary use in satellites.</p>
+</li>
+<li>
+<p><strong>CIGS thin-film</strong>: <span class="arithmatex">\(\eta_{\text{cell}} = 14\text{--}17\%\)</span>; flexible; lightweight; compatible with curved surfaces.</p>
+</li>
+<li>
+<p><strong>Organic PV (OPV)</strong>: <span class="arithmatex">\(\eta_{\text{cell}} = 10\text{--}15\%\)</span>; ultra-thin; very lightweight; emerging UAV applications.</p>
+</li>
+</ul>
+<h3 id="662-irradiance-and-energy-harvest"><span class="secnum">6.6.2</span> Irradiance and Energy Harvest<a class="headerlink" href="#662-irradiance-and-energy-harvest" title="Permanent link">&para;</a></h3>
+<p>Standard test irradiance is <span class="arithmatex">\(G_{\text{STC}} = 1000\,\text{W/m}^2\)</span> (AM1.5G spectrum). Actual irradiance depends on: <span id="eq-irradiance"></span></p>
+<div class="arithmatex">\[G(t) = G_{\text{STC}} \cos\theta_z(t) \cdot \tau_{\text{atm}},\tag{6.40}\]</div>
+<p>where <span class="arithmatex">\(\theta_z\)</span> is the solar zenith angle and <span class="arithmatex">\(\tau_{\text{atm}}\)</span> is atmospheric transmittance (<span class="arithmatex">\(0.6\text{--}0.9\)</span> for clear sky at sea level).</p>
+<p>Daily energy per unit area: <span id="eq-daily_energy"></span></p>
+<div class="arithmatex">\[H_{\text{day}} = \int_{\text{sunrise}}^{\text{sunset}} G(t)\,dt
+    \approx G_{\text{STC}} \cdot \text{PSH},\tag{6.41}\]</div>
+<p>where PSH is the peak sun hours (4–7 h/day for mid-latitudes in summer).</p>
+<h3 id="663-mppt-algorithms"><span class="secnum">6.6.3</span> MPPT Algorithms<a class="headerlink" href="#663-mppt-algorithms" title="Permanent link">&para;</a></h3>
+<p>The PV array produces maximum power at a specific (voltage, current) point that shifts with irradiance and temperature. Maximum power point trackers continuously search for this optimum.</p>
+<p><strong>Perturb and Observe (P&amp;O):</strong> <span id="eq-p_and_o"></span></p>
+<div class="arithmatex">\[V_{\text{ref}}(k+1) = V_{\text{ref}}(k) + \Delta V \cdot
+    \text{sgn}\!\left[\frac{\Delta P}{\Delta V}\right].\tag{6.42}\]</div>
+<p><strong>Incremental Conductance (INC):</strong> <span id="eq-inc_cond"></span></p>
+<div class="arithmatex">\[\frac{dI}{dV} = -\frac{I}{V} \quad \Rightarrow\;
+  \frac{dP}{dV} = 0 \text{ at MPP.}\tag{6.43}\]</div>
+<p>INC eliminates steady-state oscillation around the MPP under constant irradiance; P&amp;O is simpler but oscillates <span class="arithmatex">\(\pm \Delta V\)</span> continuously. MPPT efficiency <span class="arithmatex">\(\eta_{\text{mppt}} = 95\text{--}99\%\)</span>.</p>
+<h3 id="664-energy-balance-for-perpetual-flight"><span class="secnum">6.6.4</span> Energy Balance for Perpetual Flight<a class="headerlink" href="#664-energy-balance-for-perpetual-flight" title="Permanent link">&para;</a></h3>
+<p>The energy balance condition for “eternal flight” (net zero daily energy): <span id="eq-eternal_flight"></span></p>
+<div class="arithmatex">\[P_{\text{solar}} \cdot \eta_{\text{mppt}} \cdot \eta_{\text{charge}}
+    \cdot \text{PSH} \geq P_{\text{cruise}} \cdot 24\,\text{h}.\tag{6.44}\]</div>
+<p>Required wing area: <span id="eq-wing_area"></span></p>
+<div class="arithmatex">\[A_{\text{wing}} = \frac{P_{\text{cruise}} \cdot 24}{
+    G_{\text{STC}} \cdot \eta_{\text{cell}} \cdot \eta_{\text{mppt}}
+    \cdot \eta_{\text{charge}} \cdot \text{PSH}}.\tag{6.45}\]</div>
+<p><em>Example</em>: <span class="arithmatex">\(P_{\text{cruise}} = 80\,\text{W}\)</span>, <span class="arithmatex">\(\eta_{\text{cell}} = 0.22\)</span>, <span class="arithmatex">\(\eta_{\text{mppt}} = 0.97\)</span>, <span class="arithmatex">\(\eta_{\text{charge}} = 0.95\)</span>, PSH <span class="arithmatex">\(= 6\,\text{h}\)</span>: <span id="eq-wing_area_ex"></span></p>
+<div class="arithmatex">\[A = \frac{80 \times 24}{1000 \times 0.22 \times 0.97 \times 0.95 \times 6}
+    = \frac{1920}{1215} \approx 1.58\,\text{m}^2.\tag{6.46}\]</div>
+<h3 id="665-high-altitude-long-endurance-hale-solar-uavs"><span class="secnum">6.6.5</span> High-Altitude Long-Endurance (HALE) Solar UAVs<a class="headerlink" href="#665-high-altitude-long-endurance-hale-solar-uavs" title="Permanent link">&para;</a></h3>
+<p>The Airbus <strong>Zephyr S</strong> represents the state of the art: 25 kg MTOW, 25 m wingspan, <span class="arithmatex">\(\sim\)</span>250 W cruise power, GaAs cells on upper wing surface, Li-S battery buffer. It set the world endurance record of 25 days 23 hours in 2022. Operating at 70,000 ft eliminates cloud cover and provides near-constant irradiance; thin air reduces aerodynamic drag at very low wing loadings (<span class="arithmatex">\(&lt;40\,\text{N/m}^2\)</span>).</p>
+<h2 id="sec-pdb"><span class="secnum">6.7</span> Power Distribution<a class="headerlink" href="#sec-pdb" title="Permanent link">&para;</a></h2>
+<h3 id="671-bus-voltage-selection"><span class="secnum">6.7.1</span> Bus Voltage Selection<a class="headerlink" href="#671-bus-voltage-selection" title="Permanent link">&para;</a></h3>
+<p>Higher bus voltage reduces current for a given power, decreasing resistive losses and allowing smaller conductor cross-sections. The relationship is: <span id="eq-vloss"></span></p>
+<div class="arithmatex">\[P_{\text{loss}} = I^2 R = \left(\frac{P}{V_{\text{bus}}}\right)^2 R
+    \propto \frac{1}{V_{\text{bus}}^2}.\tag{6.47}\]</div>
+<p>Doubling bus voltage from 24 V to 48 V reduces conductor losses by a factor of four for the same transmitted power. <a href="#tab-bus_volt">Table 6.6</a> lists common UAV bus voltages.</p>
+<div class="tbl" id="tab-bus_volt">
+<div class="tbl-caption"><strong>Table 6.6.</strong> UAV bus voltage selection guide.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Bus Voltage</strong></th>
+<th style="text-align: left;"><strong>Battery</strong></th>
+<th style="text-align: left;"><strong>Class</strong></th>
+<th style="text-align: left;"><strong>Max Power</strong></th>
+<th style="text-align: left;"><strong>Typical Wire</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">11.1 V (3S)</td>
+<td style="text-align: left;">LiPo 3S</td>
+<td style="text-align: left;">Nano/micro UAV</td>
+<td style="text-align: left;">&lt;100 W</td>
+<td style="text-align: left;">22–26 AWG</td>
+</tr>
+<tr>
+<td style="text-align: left;">14.8 V (4S)</td>
+<td style="text-align: left;">LiPo 4S</td>
+<td style="text-align: left;">Small quad</td>
+<td style="text-align: left;">&lt;500 W</td>
+<td style="text-align: left;">18–22 AWG</td>
+</tr>
+<tr>
+<td style="text-align: left;">22.2 V (6S)</td>
+<td style="text-align: left;">LiPo 6S</td>
+<td style="text-align: left;">Medium UAV</td>
+<td style="text-align: left;">&lt;2 kW</td>
+<td style="text-align: left;">12–16 AWG</td>
+</tr>
+<tr>
+<td style="text-align: left;">44.4 V (12S)</td>
+<td style="text-align: left;">LiPo 12S</td>
+<td style="text-align: left;">Heavy-lift</td>
+<td style="text-align: left;">&lt;10 kW</td>
+<td style="text-align: left;">8–12 AWG</td>
+</tr>
+<tr>
+<td style="text-align: left;">48 V DC</td>
+<td style="text-align: left;">Li-Ion</td>
+<td style="text-align: left;">Fixed-wing / VTOL</td>
+<td style="text-align: left;">&lt;20 kW</td>
+<td style="text-align: left;">6–10 AWG</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="672-power-distribution-board"><span class="secnum">6.7.2</span> Power Distribution Board<a class="headerlink" href="#672-power-distribution-board" title="Permanent link">&para;</a></h3>
+<p>The power distribution board (PDB) provides:</p>
+<ul>
+<li>
+<p>Low-resistance copper traces from battery connector to each ESC (trace width <span class="arithmatex">\(w \geq I_{\text{max}} / (1\,\text{A/mm})\)</span> for 1 oz copper, or use the IPC-2221 thermal derating formula).</p>
+</li>
+<li>
+<p>Integrated current sensor (hall-effect or shunt resistor) for total system current measurement.</p>
+</li>
+<li>
+<p>Fusing: blade fuses or poly-switches per branch; main fuse <span class="arithmatex">\(I_{\text{fuse}} = 1.25 \times I_{\text{max,cont}}\)</span>.</p>
+</li>
+<li>
+<p>Filtered BEC outputs: 5 V and 12 V regulated rails.</p>
+</li>
+</ul>
+<p>Minimum trace width for a PDB carrying <span class="arithmatex">\(I_{\text{max}}\)</span> at <span class="arithmatex">\(\Delta T = 20\,°\)</span>C above ambient (IPC-2221 external layer): <span id="eq-trace_width"></span></p>
+<div class="arithmatex">\[w\,[\text{mils}] = \frac{I^{0.725}}{0.0647 \times (\Delta T)^{0.44}}.\tag{6.48}\]</div>
+<p>For <span class="arithmatex">\(I = 80\,\text{A}\)</span>, <span class="arithmatex">\(\Delta T = 20\,°\)</span>C: <span class="arithmatex">\(w \approx 310\,\text{mils} = 7.9\,\text{mm}\)</span>.</p>
+<h3 id="673-connector-selection"><span class="secnum">6.7.3</span> Connector Selection<a class="headerlink" href="#673-connector-selection" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>XT60</dt>
+<dd>: Rated 60 A continuous; gold-plated 3.5 mm bullets; widely used on 3S–6S hobby UAVs.</dd>
+<dt>XT90</dt>
+<dd>: Rated 90 A; 4.5 mm bullets; preferred for heavy-lift multi-rotors.</dd>
+<dt>AS150</dt>
+<dd>: Rated 150 A; integrated anti-spark resistor in plug; used on large UAV and rover platforms.</dd>
+<dt>EC5</dt>
+<dd>: Rated 120 A; 5 mm bullet; common in the North American market.</dd>
+</dl>
+<p>Contact resistance at rated current should not exceed <span class="arithmatex">\(1\,\text{m}\Omega\)</span>; at <span class="arithmatex">\(80\,\text{A}\)</span> this generates <span class="arithmatex">\(P_{\text{conn}} = I^2 R = 6.4\,\text{W}\)</span> per pair — a significant thermal source if connectors are undersized.</p>
+<h3 id="674-wire-sizing-and-voltage-drop"><span class="secnum">6.7.4</span> Wire Sizing and Voltage Drop<a class="headerlink" href="#674-wire-sizing-and-voltage-drop" title="Permanent link">&para;</a></h3>
+<p>For a harness of length <span class="arithmatex">\(L\)</span> (one-way) carrying current <span class="arithmatex">\(I\)</span> with conductor resistivity <span class="arithmatex">\(\rho = 1.72 \times 10^{-8}\,\Omega\cdot\text{m}\)</span> (copper): <span id="eq-vdrop"></span></p>
+<div class="arithmatex">\[\Delta V = 2 \cdot I \cdot \frac{\rho L}{A_{\text{wire}}},\tag{6.49}\]</div>
+<p>where <span class="arithmatex">\(A_{\text{wire}}\)</span> is the conductor cross-section. For AWG values, <span class="arithmatex">\(A \approx 53.5 / 2^{(n-3)/3} \,\text{mm}^2\)</span> where <span class="arithmatex">\(n\)</span> is the AWG number. The design rule is <span class="arithmatex">\(\Delta V &lt; 2\%\)</span> of bus voltage under maximum continuous current.</p>
+<h3 id="675-emi-mitigation"><span class="secnum">6.7.5</span> EMI Mitigation<a class="headerlink" href="#675-emi-mitigation" title="Permanent link">&para;</a></h3>
+<p>Switching ESCs generate broadband EMI that can corrupt GPS and telemetry signals. Mitigation strategies:</p>
+<ul>
+<li>
+<p><strong>Bulk capacitors</strong>: <span class="arithmatex">\(1000\text{--}4700\,\mu\text{F}\)</span> electrolytic capacitors on each ESC input, placed within 5 mm of the ESC power terminals to minimise loop area.</p>
+</li>
+<li>
+<p><strong>Ferrite beads</strong>: Series ferrite on telemetry and GPS power leads; <span class="arithmatex">\(Z = 100\,\Omega\)</span> at <span class="arithmatex">\(100\,\text{MHz}\)</span> is a common specification.</p>
+</li>
+<li>
+<p><strong>LC low-pass filter</strong>: Inductor <span class="arithmatex">\(L \approx 10\,\mu\text{H}\)</span> plus decoupling capacitor <span class="arithmatex">\(C \approx 100\,\mu\text{F}\)</span> on the avionics 5 V rail; corner frequency: <span id="eq-lc_corner"></span></p>
+<div class="arithmatex">\[f_c = \frac{1}{2\pi\sqrt{LC}} = \frac{1}{2\pi\sqrt{10^{-5}
+            \times 10^{-4}}} \approx 5\,\text{kHz}.\tag{6.50}\]</div>
+</li>
+<li>
+<p><strong>Separate ground planes</strong>: Motor current return path isolated from signal ground; single-point star connection at battery negative.</p>
+</li>
+</ul>
+<h3 id="676-power-distribution-block-diagram"><span class="secnum">6.7.6</span> Power Distribution Block Diagram<a class="headerlink" href="#676-power-distribution-block-diagram" title="Permanent link">&para;</a></h3>
+<p><a href="#fig-pdb_block">Figure 6.3</a> shows the canonical UAV power distribution architecture.</p>
+<figure class="fig fig-diagram" id="fig-pdb_block">
+<img class="tikz" src="img/tikz-f3e8b3595866.svg" alt="UAV power distribution architecture. Main bus (battery voltage) feeds ESCs directly through the PDB. A BEC provides isolated regulated rails for avionics." loading="lazy" width="598" height="191">
+<figcaption><strong>Figure 6.3.</strong> UAV power distribution architecture. Main bus (battery voltage) feeds ESCs directly through the PDB. A BEC provides isolated regulated rails for avionics.</figcaption>
+</figure>
+
+<h2 id="sec-power_elec"><span class="secnum">6.8</span> Power Electronics<a class="headerlink" href="#sec-power_elec" title="Permanent link">&para;</a></h2>
+<h3 id="681-switching-regulators"><span class="secnum">6.8.1</span> Switching Regulators<a class="headerlink" href="#681-switching-regulators" title="Permanent link">&para;</a></h3>
+<p>A synchronous buck converter steps down the battery voltage <span class="arithmatex">\(V_{\text{in}}\)</span> to a lower output voltage <span class="arithmatex">\(V_{\text{out}}\)</span> with duty cycle: <span id="eq-buck_duty"></span></p>
+<div class="arithmatex">\[D = \frac{V_{\text{out}}}{V_{\text{in}}}.\tag{6.51}\]</div>
+<p>For a 6S battery (<span class="arithmatex">\(V_{\text{in}} = 22.2\,\text{V}\)</span>) providing a 5 V rail: <span class="arithmatex">\(D = 5/22.2 = 0.225\)</span>.</p>
+<p>Output ripple voltage (continuous conduction mode): <span id="eq-buck_ripple"></span></p>
+<div class="arithmatex">\[\Delta V_{\text{out}} = \frac{V_{\text{out}}(1-D)}{8 L C f_s^2},\tag{6.52}\]</div>
+<p>where <span class="arithmatex">\(L\)</span> is the inductor value, <span class="arithmatex">\(C\)</span> the output capacitor, and <span class="arithmatex">\(f_s\)</span> the switching frequency.</p>
+<p>Converter efficiency: <span id="eq-buck_eff"></span></p>
+<div class="arithmatex">\[\eta_{\text{buck}} = \frac{P_{\text{out}}}{P_{\text{out}} + P_{\text{sw}}
+    + P_{\text{cond}} + P_{\text{core}}},\tag{6.53}\]</div>
+<p>where <span class="arithmatex">\(P_{\text{sw}} = (C_{\text{oss}} V_{\text{in}}^2 f_s)\)</span> (switching), <span class="arithmatex">\(P_{\text{cond}} = I_{\text{out}}^2 R_{\text{ds,on}}\)</span> (conduction), and <span class="arithmatex">\(P_{\text{core}}\)</span> (magnetics). Well-designed UAV BECs achieve <span class="arithmatex">\(\eta = 92\text{--}97\%\)</span>.</p>
+<h3 id="682-linear-regulators-ldo"><span class="secnum">6.8.2</span> Linear Regulators (LDO)<a class="headerlink" href="#682-linear-regulators-ldo" title="Permanent link">&para;</a></h3>
+<p>For noise-sensitive analogue loads (ADC references, RF circuits), an LDO regulator provides very low output noise at the cost of efficiency: <span id="eq-ldo_loss"></span></p>
+<div class="arithmatex">\[P_{\text{LDO,waste}} = (V_{\text{in}} - V_{\text{out}}) \times I_{\text{out}}.\tag{6.54}\]</div>
+<p>For <span class="arithmatex">\(V_{\text{in}} = 5\,\text{V}\)</span>, <span class="arithmatex">\(V_{\text{out}} = 3.3\,\text{V}\)</span>, <span class="arithmatex">\(I_{\text{out}} = 200\,\text{mA}\)</span>: <span class="arithmatex">\(P_{\text{waste}} = 1.7 \times 0.2 = 340\,\text{mW}\)</span> — a 26% efficiency penalty. The use of LDOs is justified for currents below <span class="arithmatex">\(\sim\!500\,\text{mA}\)</span> where the mass and complexity of a switching regulator is not warranted.</p>
+<h3 id="683-sic-and-gan-power-devices"><span class="secnum">6.8.3</span> SiC and GaN Power Devices<a class="headerlink" href="#683-sic-and-gan-power-devices" title="Permanent link">&para;</a></h3>
+<p>Wide-bandgap semiconductors enable higher switching frequencies, reducing passive component mass:</p>
+<ul>
+<li>
+<p><strong>Silicon Carbide (SiC) MOSFETs</strong>: Breakdown field <span class="arithmatex">\(10\times\)</span> Si; <span class="arithmatex">\(R_{\text{ds,on}}\)</span> at 650 V rating comparable to Si at 100 V; switching losses <span class="arithmatex">\(\sim\!3\times\)</span> lower than Si at same voltage. Used in high-power UAV ESCs and chargers.</p>
+</li>
+<li>
+<p><strong>Gallium Nitride (GaN) HEMTs</strong>: Lateral device; extremely fast switching (<span class="arithmatex">\(t_r &lt; 2\,\text{ns}\)</span>); enables <span class="arithmatex">\(f_s = 1\text{--}10\,\text{MHz}\)</span>; allows inductor miniaturisation (<span class="arithmatex">\(L \propto 1/f_s\)</span>). E-GaN (enhancement-mode GaN) from EPC and GaN Systems dominates the &lt; 100 V UAV power segment.</p>
+</li>
+</ul>
+<p>GaN figure of merit: <span id="eq-fom"></span></p>
+<div class="arithmatex">\[\text{FOM} = R_{\text{ds,on}} \times Q_g,\tag{6.55}\]</div>
+<p>which is <span class="arithmatex">\(10\text{--}20\times\)</span> lower for GaN than Si at equivalent voltage ratings, translating directly to lower switching losses.</p>
+<h3 id="684-esc-architecture"><span class="secnum">6.8.4</span> ESC Architecture<a class="headerlink" href="#684-esc-architecture" title="Permanent link">&para;</a></h3>
+<p>An electronic speed controller (ESC) implements three-phase sinusoidal or trapezoidal drive for a BLDC motor. Key power stages:</p>
+<ol>
+<li>
+<p>Input bulk capacitors absorb current ripple from PWM switching.</p>
+</li>
+<li>
+<p>Six-switch three-phase bridge (half-bridge pairs per phase).</p>
+</li>
+<li>
+<p>Gate drivers with bootstrap capacitor for high-side switches.</p>
+</li>
+<li>
+<p>Current sense shunt (1–5 m<span class="arithmatex">\(\Omega\)</span>) for torque/current control.</p>
+</li>
+<li>
+<p>Output phase filtering (optional ferrite beads).</p>
+</li>
+</ol>
+<p>Motor phase voltage (trapezoidal drive, 120° commutation): <span id="eq-phase_v"></span></p>
+<div class="arithmatex">\[V_{\text{phase}} = D \cdot V_{\text{bus}} \cdot \frac{2}{3},\tag{6.56}\]</div>
+<p>where <span class="arithmatex">\(D\)</span> is the throttle duty cycle.</p>
+<h2 id="sec-energy_mgmt"><span class="secnum">6.9</span> Energy Management and Mission Planning<a class="headerlink" href="#sec-energy_mgmt" title="Permanent link">&para;</a></h2>
+<h3 id="691-endurance-and-range-calculation"><span class="secnum">6.9.1</span> Endurance and Range Calculation<a class="headerlink" href="#691-endurance-and-range-calculation" title="Permanent link">&para;</a></h3>
+<p>For a multi-rotor in hover, thrust equals weight: <span id="eq-thrust_weight"></span></p>
+<div class="arithmatex">\[T = mg,\tag{6.57}\]</div>
+<p>and motor power scales as: <span id="eq-hover_power"></span></p>
+<div class="arithmatex">\[P_{\text{hover}} = \frac{(mg)^{3/2}}{\sqrt{2\rho A_{\text{disc}}}\,\eta},\tag{6.58}\]</div>
+<p>where <span class="arithmatex">\(\rho\)</span> is air density, <span class="arithmatex">\(A_{\text{disc}}\)</span> total rotor disc area, and <span class="arithmatex">\(\eta\)</span> motor/ESC efficiency. Maximum hover endurance using usable energy <span class="arithmatex">\(E_u\)</span>: <span id="eq-hover_endurance"></span></p>
+<div class="arithmatex">\[t_{\text{hover}} = \frac{E_u}{P_{\text{hover}}}.\tag{6.59}\]</div>
+<p>For a fixed-wing UAV in steady level flight, power is: <span id="eq-fw_power"></span></p>
+<div class="arithmatex">\[P_{\text{cruise}} = \frac{mg}{\eta_{\text{prop}}} \sqrt{\frac{2mg}{\rho S}}
+    \cdot \frac{C_D}{C_L^{3/2}} \cdot \frac{1}{\sqrt{C_L}},\tag{6.60}\]</div>
+<p>where <span class="arithmatex">\(S\)</span> is wing area and <span class="arithmatex">\(C_L, C_D\)</span> are lift and drag coefficients. Maximum range (Breguet-analogous for electric): <span id="eq-range_electric"></span></p>
+<div class="arithmatex">\[R = \frac{E_u \cdot V_{\text{cruise}} \cdot \eta_{\text{prop}}}{P_{\text{cruise}}}
+    = \frac{E_u}{mg} \cdot \frac{C_L}{C_D} \cdot \eta_{\text{prop}}.\tag{6.61}\]</div>
+<h3 id="692-usable-energy-and-depth-of-discharge"><span class="secnum">6.9.2</span> Usable Energy and Depth of Discharge<a class="headerlink" href="#692-usable-energy-and-depth-of-discharge" title="Permanent link">&para;</a></h3>
+<p>Not all stored energy is usable. Operating below <span class="arithmatex">\(V_{\text{cut}}\)</span> risks deep discharge, accelerated degradation, and BMS disconnection mid-flight. The usable fraction: <span id="eq-usable"></span></p>
+<div class="arithmatex">\[E_u = E_{\text{total}} \times (1 - \text{DOD}_{\text{min}})
+    \times \eta_{\text{discharge}}.\tag{6.62}\]</div>
+<p>Recommended DOD<sub>min</sub> = 20% (80% maximum DOD) for daily-use packs; 10% for extended-life packs.</p>
+<h3 id="693-power-mode-management"><span class="secnum">6.9.3</span> Power Mode Management<a class="headerlink" href="#693-power-mode-management" title="Permanent link">&para;</a></h3>
+<p>Multi-mode power management reduces average consumption:</p>
+<dl>
+<dt>Loiter mode</dt>
+<dd>: Reduced camera resolution; telemetry at 1 Hz; GPS at 1 Hz; attitude hold at minimum motor speed. Typical savings: 10–15% versus full operational mode.</dd>
+<dt>Sprint / dash mode</dt>
+<dd>: Maximum motor power; payload active; telemetry at 10 Hz; all sensors active.</dd>
+<dt>Emergency mode</dt>
+<dd>: Non-critical payloads powered off; single-antenna GPS; 1 Hz telemetry; return-to-home trajectory optimised for minimum energy.</dd>
+</dl>
+<h3 id="694-low-battery-failsafe-thresholds"><span class="secnum">6.9.4</span> Low-Battery Failsafe Thresholds<a class="headerlink" href="#694-low-battery-failsafe-thresholds" title="Permanent link">&para;</a></h3>
+<div id="eq-rth_v"></div>
+<div class="arithmatex">\[V_{\text{RTH}} = V_{\text{cut}} + \frac{E_{\text{RTH}}}{Q_{\text{pack}}},\tag{6.63}\]</div>
+<p>where <span class="arithmatex">\(E_{\text{RTH}}\)</span> is the energy needed to return from maximum range. Typical multi-level failsafe:</p>
+<ol>
+<li>
+<p><strong>Level 1 — Warning</strong>: SOC <span class="arithmatex">\(&lt;30\%\)</span>; audio/visual alert.</p>
+</li>
+<li>
+<p><strong>Level 2 — RTH trigger</strong>: SOC <span class="arithmatex">\(&lt;20\%\)</span>; automatic return-to-home.</p>
+</li>
+<li>
+<p><strong>Level 3 — Emergency land</strong>: SOC <span class="arithmatex">\(&lt;10\%\)</span>; vertical descent at current position.</p>
+</li>
+<li>
+<p><strong>Level 4 — Hard cutoff</strong>: <span class="arithmatex">\(V_{\text{cell}} &lt; 3.0\,\text{V}\)</span>; BMS disconnects load (may cause crash — must be avoided).</p>
+</li>
+</ol>
+<h3 id="695-cold-weather-battery-pre-heating"><span class="secnum">6.9.5</span> Cold-Weather Battery Pre-Heating<a class="headerlink" href="#695-cold-weather-battery-pre-heating" title="Permanent link">&para;</a></h3>
+<p>In ambient temperatures below <span class="arithmatex">\(10\,°\)</span>C, the battery should be pre-heated before flight. An internal heater pad draws power from a ground-side source. The time to heat a pack of thermal mass <span class="arithmatex">\(m c_p\)</span> from <span class="arithmatex">\(T_0\)</span> to <span class="arithmatex">\(T_{\text{target}}\)</span>: <span id="eq-preheat"></span></p>
+<div class="arithmatex">\[t_{\text{preheat}} = \frac{m c_p (T_{\text{target}} - T_0)}{P_{\text{heater}}},\tag{6.64}\]</div>
+<p>where <span class="arithmatex">\(c_p \approx 1000\,\text{J/(kg·K)}\)</span> for a LiPo pack and <span class="arithmatex">\(P_{\text{heater}} = 20\text{--}50\,\text{W}\)</span> from a resistive pad. For a 500 g pack from <span class="arithmatex">\(-10\,°\)</span>C to <span class="arithmatex">\(25\,°\)</span>C with 30 W heater: <span class="arithmatex">\(t = (0.5 \times 1000 \times 35) / 30 = 583\,\text{s} \approx 10\,\text{min}\)</span>.</p>
+<h3 id="696-energy-aware-waypoint-mission-planning"><span class="secnum">6.9.6</span> Energy-Aware Waypoint Mission Planning<a class="headerlink" href="#696-energy-aware-waypoint-mission-planning" title="Permanent link">&para;</a></h3>
+<p>Flight management software integrates power models to compute the energy budget for each leg: <span id="eq-leg_energy"></span></p>
+<div class="arithmatex">\[E_{\text{leg},i} = P_{\text{mode},i} \times t_{\text{leg},i}
+    + E_{\text{climb},i},\tag{6.65}\]</div>
+<p>where <span class="arithmatex">\(E_{\text{climb},i} = m g \Delta h_i / \eta_{\text{total}}\)</span> is the potential energy gain on climbing segments. Total mission energy: <span id="eq-mission_energy"></span></p>
+<div class="arithmatex">\[E_{\text{mission}} = \sum_{i=1}^{N} E_{\text{leg},i} + E_{\text{margin}},\tag{6.66}\]</div>
+<p>with a safety margin of at least 20%. If <span class="arithmatex">\(E_{\text{mission}} &gt; E_u\)</span>, the planner may: (a) reduce payload, (b) shorten route, (c) add intermediate landing/charging stop, or (d) increase battery capacity.</p>
+<h2 id="sec-emerging"><span class="secnum">6.10</span> Emerging Power Technologies<a class="headerlink" href="#sec-emerging" title="Permanent link">&para;</a></h2>
+<h3 id="6101-solid-state-batteries"><span class="secnum">6.10.1</span> Solid-State Batteries<a class="headerlink" href="#6101-solid-state-batteries" title="Permanent link">&para;</a></h3>
+<p>Solid-state batteries (SSBs) are widely regarded as the most transformative near-term improvement to UAV energy storage. Ceramic electrolytes such as LLZO and LIPON enable:</p>
+<ul>
+<li>
+<p>Lithium-metal anodes: theoretical specific capacity <span class="arithmatex">\(3860\,\text{mAh/g}\)</span> versus <span class="arithmatex">\(372\,\text{mAh/g}\)</span> for graphite, raising projected cell energy density to <span class="arithmatex">\(400\text{--}500\,\text{Wh/kg}\)</span>.</p>
+</li>
+<li>
+<p>Thermal stability: electrolyte does not decompose below <span class="arithmatex">\(\sim\!300\,°\)</span>C; elimination of thermal runaway propagation.</p>
+</li>
+<li>
+<p>Wider voltage window: compatibility with high-voltage cathodes (NMC-811, Li-rich) at 4.5–5.0 V.</p>
+</li>
+</ul>
+<p>Manufacturing challenges include:</p>
+<ul>
+<li>
+<p>Solid-solid interfacial resistance requires intimate contact — typically achieved by stack pressure of <span class="arithmatex">\(5\text{--}50\,\text{MPa}\)</span>.</p>
+</li>
+<li>
+<p>Lithium dendrite suppression through ceramic electrolyte layers of controlled density.</p>
+</li>
+<li>
+<p>Sintering at 1000–1200 °C for oxide ceramics; sulphide electrolytes processed at room temperature but are moisture-sensitive.</p>
+</li>
+</ul>
+<p>Companies at the forefront: QuantumScape (pouch format), Solid Power (automotive licensing), Factorial Energy. Volume production is expected by 2027–2030 with initial UAV applications in long-endurance fixed-wing platforms.</p>
+<h3 id="6102-lithium-sulphur-li-s-batteries"><span class="secnum">6.10.2</span> Lithium-Sulphur (Li-S) Batteries<a class="headerlink" href="#6102-lithium-sulphur-li-s-batteries" title="Permanent link">&para;</a></h3>
+<p>Li-S chemistry replaces the intercalation cathode with elemental sulphur, which undergoes a conversion reaction: <span id="eq-li_s"></span></p>
+<div class="arithmatex">\[\text{S}_8 + 16\,\text{Li}^+ + 16\,e^- \;\rightarrow\; 8\,\text{Li}_2\text{S}.\tag{6.67}\]</div>
+<p>Theoretical specific energy: <span class="arithmatex">\(2600\,\text{Wh/kg}\)</span> (cell); practical near-term targets are 400–600 Wh/kg at cell level. Key degradation mechanism: lithium polysulphide shuttle dissolves intermediates (Li<span class="arithmatex">\(_2\)</span>S<span class="arithmatex">\(_4\)</span>, Li<span class="arithmatex">\(_2\)</span>S<span class="arithmatex">\(_6\)</span>) into the electrolyte, causing capacity fade. Solutions include:</p>
+<ul>
+<li>
+<p>Carbon host matrices (graphene, CNT) to confine polysulphides.</p>
+</li>
+<li>
+<p>Solid or semi-solid electrolytes to block shuttle.</p>
+</li>
+<li>
+<p>Catholyte additives (LiNO<span class="arithmatex">\(_3\)</span>) that form a passivation layer on the lithium anode.</p>
+</li>
+</ul>
+<p>Lyten (USA) and Oxis Energy (UK, now restructured) have demonstrated cells with <span class="arithmatex">\(&gt;400\,\text{Wh/kg}\)</span> and <span class="arithmatex">\(&gt;100\)</span> cycles, with ongoing efforts to reach 500 cycles. The Airbus Zephyr uses a variant of Li-S chemistry for its night-storage buffer.</p>
+<h3 id="6103-wireless-charging"><span class="secnum">6.10.3</span> Wireless Charging<a class="headerlink" href="#6103-wireless-charging" title="Permanent link">&para;</a></h3>
+<p>Resonant inductive power transfer (RIPT) allows a UAV to land on a charging pad without physical connector engagement — enabling autonomous recharging between missions. Operating principle: <span id="eq-wc_k"></span><span id="eq-wc_eff"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  k &amp;= \frac{M}{\sqrt{L_1 L_2}} \quad (\text{coupling coefficient}), \\
+  \eta_{\text{WPT}} &amp;\approx \frac{k^2 Q_1 Q_2}{1 + k^2 Q_1 Q_2}
+    \quad (\text{maximum efficiency}),
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(M\)</span> is mutual inductance, <span class="arithmatex">\(L_{1,2}\)</span> transmitter/receiver inductances, and <span class="arithmatex">\(Q_{1,2}\)</span> quality factors. At <span class="arithmatex">\(k = 0.5\)</span> and <span class="arithmatex">\(Q = 100\)</span>: <span class="arithmatex">\(\eta = 0.25 \times 10^4 / (1 + 2500) \approx 99\%\)</span> — in practice, system efficiency including power electronics is 80–92%.</p>
+<p>Operating frequencies: 85–150 kHz (automotive-derived); 6.78 MHz (ISM band, higher coil Q). Power levels for UAV charging pads: 100 W to 3 kW, delivered in 10–60 minutes depending on pack capacity. Misalignment tolerance of <span class="arithmatex">\(\pm 30\,\text{mm}\)</span> is achievable with solenoid coil designs.</p>
+<h3 id="6104-laser-power-beaming"><span class="secnum">6.10.4</span> Laser Power Beaming<a class="headerlink" href="#6104-laser-power-beaming" title="Permanent link">&para;</a></h3>
+<p>Continuous-wave (CW) laser energy transmitted to a photovoltaic (PV) receiver on the UAV enables theoretically unlimited endurance. The link budget: <span id="eq-laser_budget"></span></p>
+<div class="arithmatex">\[P_{\text{rx}} = P_{\text{tx}} \cdot \eta_{\text{tx}} \cdot \eta_{\text{atm}}
+    \cdot \frac{A_{\text{rx}}}{\pi (R \theta_{\text{beam}})^2}
+    \cdot \eta_{\text{PV}},\tag{6.70}\]</div>
+<p>where <span class="arithmatex">\(R\)</span> is range, <span class="arithmatex">\(\theta_{\text{beam}}\)</span> half-angle beam divergence, <span class="arithmatex">\(\eta_{\text{tx}}\)</span> laser wall-plug efficiency, <span class="arithmatex">\(\eta_{\text{atm}}\)</span> atmospheric transmittance, and <span class="arithmatex">\(\eta_{\text{PV}}\)</span> monochromatic PV efficiency (40–50% for bandgap-matched GaAs at 808 nm).</p>
+<p>Practical systems (Laser Motive, PowerLight Technologies) have demonstrated 1–2 kW at 100–300 m range. Safety exclusion zones (Class 4 laser hazard) must be maintained. Beam-pointing servo must maintain sub-milliradian accuracy to prevent loss of power link.</p>
+<h3 id="6105-tethered-power-systems"><span class="secnum">6.10.5</span> Tethered Power Systems<a class="headerlink" href="#6105-tethered-power-systems" title="Permanent link">&para;</a></h3>
+<p>A conductive tether supplies unlimited electrical energy from a ground station to a hovering UAV, eliminating the endurance constraint entirely. Design considerations:</p>
+<dl>
+<dt>Voltage</dt>
+<dd>
+<p>: Transmit at high voltage (1–3 kV) to minimise resistive losses; step down with a lightweight DCDC converter on the UAV. For 2 kW over a 100 m tether with <span class="arithmatex">\(R_{\text{tether}} = 1\,\Omega/\text{km} \times 0.2\,\text{km} = 0.2\,\Omega\)</span>: <span id="eq-tether_loss"></span></p>
+<div class="arithmatex">\[P_{\text{loss}} = I^2 R = \left(\frac{2000}{1000}\right)^2
+            \times 0.2 = 0.8\,\text{W} \quad (\eta_{\text{tether}} \approx 99.96\%),\tag{6.71}\]</div>
+<p>at 1000 V transmission voltage.</p>
+</dd>
+<dt>Tether mass</dt>
+<dd>: Multi-strand copper coated with Kevlar or UHMWPE; typical mass <span class="arithmatex">\(&lt;50\,\text{g/m}\)</span> for 1 kW capability.</dd>
+<dt>Drag penalty</dt>
+<dd>: Tether adds aerodynamic drag; at 10 m/s wind, a 6 mm diameter tether on 100 m cable produces <span class="arithmatex">\(\sim\!2\,\text{N}\)</span> drag — a significant fraction of hover thrust for small UAVs.</dd>
+<dt>Operational limits</dt>
+<dd>: Maximum altitude limited by tether length (50–150 m typical); manoeuvrability constrained; cannot operate over unprepared terrain.</dd>
+</dl>
+<p>Commercial tethered systems: Elistair Orion 2 (500 W, 70 m), Hoverfly HOVR (1 kW, 120 m), Altaeros (data/surveillance at 300 m).</p>
+<h2 id="sec-thermal"><span class="secnum">6.11</span> Thermal Management of Power Systems<a class="headerlink" href="#sec-thermal" title="Permanent link">&para;</a></h2>
+<p>Thermal management is inseparable from power system design. Heat accumulates in batteries, ESCs, motors, and power regulators; excessive temperature reduces efficiency, accelerates degradation, and can trigger safety incidents.</p>
+<h3 id="6111-battery-thermal-model"><span class="secnum">6.11.1</span> Battery Thermal Model<a class="headerlink" href="#6111-battery-thermal-model" title="Permanent link">&para;</a></h3>
+<p>A lumped-parameter thermal model of a battery pack: <span id="eq-thermal_model"></span></p>
+<div class="arithmatex">\[m_{\text{pack}} c_p \frac{dT}{dt}
+    = P_{\text{heat}} - \frac{T - T_{\text{amb}}}{R_{\text{th}}},\tag{6.72}\]</div>
+<p>where <span class="arithmatex">\(P_{\text{heat}} = I^2 r_{\text{pack}}\)</span> is the Joule heating, and <span class="arithmatex">\(R_{\text{th}}\)</span> is the thermal resistance from pack to ambient. Steady-state temperature rise: <span id="eq-thermal_ss"></span></p>
+<div class="arithmatex">\[\Delta T_{\text{ss}} = P_{\text{heat}} \cdot R_{\text{th}}
+    = I^2 r \cdot R_{\text{th}}.\tag{6.73}\]</div>
+<p>For a 10 Ah LiPo pack with <span class="arithmatex">\(r = 15\,\text{m}\Omega\)</span> discharging at 50 A (<span class="arithmatex">\(= 5\text{C}\)</span>), <span class="arithmatex">\(P_{\text{heat}} = 2500 \times 0.015 = 37.5\,\text{W}\)</span>. With <span class="arithmatex">\(R_{\text{th}} = 1\,°\text{C/W}\)</span> (natural convection, bare pack): <span class="arithmatex">\(\Delta T = 37.5\,°\)</span>C — bringing a 25 °C ambient pack to 62.5 °C, exceeding the 60 °C discharge thermal limit. Active cooling (forced convection, <span class="arithmatex">\(R_{\text{th}} = 0.3\,°\text{C/W}\)</span>) reduces <span class="arithmatex">\(\Delta T\)</span> to 11.25 °C — well within limits.</p>
+<h3 id="6112-esc-thermal-management"><span class="secnum">6.11.2</span> ESC Thermal Management<a class="headerlink" href="#6112-esc-thermal-management" title="Permanent link">&para;</a></h3>
+<p>ESC MOSFETs and bootstrap capacitors dissipate: <span id="eq-esc_loss"></span></p>
+<div class="arithmatex">\[P_{\text{ESC}} = I_{\text{out}}^2 R_{\text{ds,on}} +
+    \frac{1}{2} C_{\text{oss}} V_{\text{ds}}^2 f_s,\tag{6.74}\]</div>
+<p>typically 2–5% of throughput power. For a 40 A ESC at 96% efficiency: <span class="arithmatex">\(P_{\text{ESC}} = 0.04 \times V \times I = 0.04 \times 22 \times 40 = 35\,\text{W}\)</span>. Aluminium heatsinks or direct airframe-cooling using propeller downwash are standard. Thermal interface material (TIM) between MOSFET die and heatsink should have <span class="arithmatex">\(\lambda &gt; 5\,\text{W/(m·K)}\)</span>; phase-change TIMs reach <span class="arithmatex">\(\lambda = 8\text{--}12\,\text{W/(m·K)}\)</span>.</p>
+<h2 id="sec-design_process"><span class="secnum">6.12</span> Power System Design Process<a class="headerlink" href="#sec-design_process" title="Permanent link">&para;</a></h2>
+<h3 id="6121-requirements-definition"><span class="secnum">6.12.1</span> Requirements Definition<a class="headerlink" href="#6121-requirements-definition" title="Permanent link">&para;</a></h3>
+<p>The power system design begins with a requirements matrix:</p>
+<ol>
+<li>
+<p><strong>Mission endurance</strong> <span class="arithmatex">\(t_{\text{req}}\)</span> and range <span class="arithmatex">\(R_{\text{req}}\)</span>.</p>
+</li>
+<li>
+<p><strong>Payload power</strong> <span class="arithmatex">\(P_{\text{pay}}\)</span> (W) and any peak demands.</p>
+</li>
+<li>
+<p><strong>Operating environment</strong>: temperature range, altitude, humidity; affects cell capacity and cooling.</p>
+</li>
+<li>
+<p><strong>Mass budget</strong>: <span class="arithmatex">\(m_{\text{bat,max}}\)</span> allocated to power system.</p>
+</li>
+<li>
+<p><strong>Recharge time</strong> and logistics: frequency of replacement, ground infrastructure.</p>
+</li>
+<li>
+<p><strong>Safety class</strong>: aviation certification level; defines redundancy and BMS certification.</p>
+</li>
+</ol>
+<h3 id="6122-sizing-methodology"><span class="secnum">6.12.2</span> Sizing Methodology<a class="headerlink" href="#6122-sizing-methodology" title="Permanent link">&para;</a></h3>
+<p>Step-by-step battery sizing procedure:</p>
+<p><em>Step 1</em>: Estimate total average power from subsystem power budget (<a href="#tab-power_budget">Table 6.1</a>): <span class="arithmatex">\(P_{\text{avg}}\)</span>.</p>
+<p><em>Step 2</em>: Calculate required energy: <span id="eq-e_req"></span></p>
+<div class="arithmatex">\[E_{\text{req}} = P_{\text{avg}} \times t_{\text{req}} / \eta_{\text{total}}.\tag{6.75}\]</div>
+<p><em>Step 3</em>: Select battery technology and specific energy <span class="arithmatex">\(e_s\)</span> (Wh/kg).</p>
+<p><em>Step 4</em>: Calculate minimum pack mass: <span id="eq-bat_mass"></span></p>
+<div class="arithmatex">\[m_{\text{bat}} = \frac{E_{\text{req}}}{e_s \times (1 - \text{DOD}_{\text{min}})}.\tag{6.76}\]</div>
+<p><em>Step 5</em>: Verify peak discharge current does not exceed rated C-rate: <span id="eq-c_check"></span></p>
+<div class="arithmatex">\[C_{\text{req}} = \frac{P_{\text{peak}}}{V_{\text{pack}} \times Q_{\text{pack}}}.\tag{6.77}\]</div>
+<p><em>Step 6</em>: Recalculate MTOW including <span class="arithmatex">\(m_{\text{bat}}\)</span>; if MTOW changes significantly, iterate from Step 1.</p>
+<h3 id="6123-pack-voltage-and-cell-count-selection"><span class="secnum">6.12.3</span> Pack Voltage and Cell Count Selection<a class="headerlink" href="#6123-pack-voltage-and-cell-count-selection" title="Permanent link">&para;</a></h3>
+<p>Motor KV rating and ESC maximum voltage constrain battery configuration. For a target bus voltage <span class="arithmatex">\(V_{\text{nom}}\)</span>: <span id="eq-ns"></span></p>
+<div class="arithmatex">\[N_s = \text{round}\!\left(\frac{V_{\text{nom}}}{3.7}\right).\tag{6.78}\]</div>
+<p>Capacity achieved with available cell size <span class="arithmatex">\(q_{\text{cell}}\)</span>: <span id="eq-np"></span></p>
+<div class="arithmatex">\[N_p = \left\lceil \frac{Q_{\text{req}}}{q_{\text{cell}}} \right\rceil.\tag{6.79}\]</div>
+<p>Pack internal resistance: <span id="eq-r_pack"></span></p>
+<div class="arithmatex">\[r_{\text{pack}} = \frac{N_s}{N_p} \times r_{\text{cell}}.\tag{6.80}\]</div>
+<h3 id="6124-verification-and-validation"><span class="secnum">6.12.4</span> Verification and Validation<a class="headerlink" href="#6124-verification-and-validation" title="Permanent link">&para;</a></h3>
+<p>Before flight:</p>
+<ul>
+<li>
+<p>Full discharge test at 1C, 2C, and rated-peak C at 25 °C to verify capacity and voltage profile.</p>
+</li>
+<li>
+<p>Thermal cycle test: five cycles from <span class="arithmatex">\(-20\,°\)</span>C to <span class="arithmatex">\(+60\,°\)</span>C to verify BMS response and capacity retention.</p>
+</li>
+<li>
+<p>Vibration test per MIL-STD-810 or DO-160G profile for airframe mounting.</p>
+</li>
+<li>
+<p>Balance charge verification: maximum cell-to-cell voltage spread <span class="arithmatex">\(&lt;10\,\text{mV}\)</span> at full charge.</p>
+</li>
+<li>
+<p>Electrical isolation: pack negative to airframe <span class="arithmatex">\(&gt;10\,\text{M}\Omega\)</span>.</p>
+</li>
+</ul>
+<h2 id="sec-equations_summary"><span class="secnum">6.13</span> Summary of Key Power System Equations<a class="headerlink" href="#sec-equations_summary" title="Permanent link">&para;</a></h2>
+<p><a href="#tab-eq_summary">Table 6.7</a> collects the most important design relationships from this chapter for quick reference.</p>
+<div class="tbl" id="tab-eq_summary">
+<div class="tbl-caption"><strong>Table 6.7.</strong> Key power system design equations.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Quantity</strong></th>
+<th style="text-align: left;"><strong>Equation</strong></th>
+<th style="text-align: left;"><strong>Eq. No.</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Endurance</td>
+<td style="text-align: left;"><span class="math inline">\(t = E_u / P_{\text{avg}}\)</span></td>
+<td style="text-align: left;"><a href="#eq-endurance_basic">(6.1)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">System efficiency</td>
+<td style="text-align: left;"><span class="math inline">\(\eta_{\text{sys}} = \prod \eta_i\)</span></td>
+<td style="text-align: left;"><a href="#eq-sys_eff">(6.3)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Terminal voltage</td>
+<td style="text-align: left;"><span class="math inline">\(V_t = V_{\text{OCV}} - Ir\)</span></td>
+<td style="text-align: left;"><a href="ch26-missile-electronics-and-power.html#eq-terminal_voltage">(26.2)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">C-rate current</td>
+<td style="text-align: left;"><span class="math inline">\(I_C = C_r \times Q\)</span></td>
+<td style="text-align: left;"><a href="#eq-c_rate">(6.11)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pack energy</td>
+<td style="text-align: left;"><span class="math inline">\(E = V_n Q N_s N_p\)</span></td>
+<td style="text-align: left;"><a href="#eq-6s_e">(6.15)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Voltage drop (wire)</td>
+<td style="text-align: left;"><span class="math inline">\(\Delta V = 2I\rho L/A\)</span></td>
+<td style="text-align: left;"><a href="#eq-vdrop">(6.49)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Buck duty cycle</td>
+<td style="text-align: left;"><span class="math inline">\(D = V_{\text{out}}/V_{\text{in}}\)</span></td>
+<td style="text-align: left;"><a href="#eq-buck_duty">(6.51)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Buck ripple</td>
+<td style="text-align: left;"><span class="math inline">\(\Delta V = V_{\text{out}}(1-D)/(8LCf_s^2)\)</span></td>
+<td style="text-align: left;"><a href="#eq-buck_ripple">(6.52)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">LDO waste power</td>
+<td style="text-align: left;"><span class="math inline">\(P_w = (V_{\text{in}}-V_{\text{out}})I\)</span></td>
+<td style="text-align: left;"><a href="#eq-ldo_loss">(6.54)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Hover power</td>
+<td style="text-align: left;"><span class="math inline">\(P = (mg)^{3/2}/\sqrt{2\rho A}\eta\)</span></td>
+<td style="text-align: left;"><a href="ch15-special-drone-categories.html#eq-hover_power">(15.30)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Electric range</td>
+<td style="text-align: left;"><span class="math inline">\(R = (E_u/mg)(C_L/C_D)\eta_p\)</span></td>
+<td style="text-align: left;"><a href="#eq-range_electric">(6.61)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Thermal steady state</td>
+<td style="text-align: left;"><span class="math inline">\(\Delta T = I^2 r R_{\text{th}}\)</span></td>
+<td style="text-align: left;"><a href="#eq-thermal_ss">(6.73)</a></td>
+</tr>
+<tr>
+<td style="text-align: left;">Pack internal resistance</td>
+<td style="text-align: left;"><span class="math inline">\(r_{\text{pack}} = (N_s/N_p)r_{\text{cell}}\)</span></td>
+<td style="text-align: left;"><a href="#eq-r_pack">(6.80)</a></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-examples"><span class="secnum">6.14</span> Practical Design Examples<a class="headerlink" href="#sec-examples" title="Permanent link">&para;</a></h2>
+<h3 id="6141-example-1-multi-rotor-delivery-drone"><span class="secnum">6.14.1</span> Example 1 — Multi-Rotor Delivery Drone<a class="headerlink" href="#6141-example-1-multi-rotor-delivery-drone" title="Permanent link">&para;</a></h3>
+<p><strong>Requirements</strong>: 5 kg payload; 30-minute delivery flight; maximum MTOW 15 kg; ambient <span class="arithmatex">\(-5\,°\)</span>C to <span class="arithmatex">\(+35\,°\)</span>C.</p>
+<p><em>Step 1 — Power estimate</em>: Hover power empirically <span class="arithmatex">\(\approx 130\,\text{W/kg}\)</span> of MTOW. Initial MTOW guess 12 kg: <span class="arithmatex">\(P_{\text{hover}} = 1560\,\text{W}\)</span>.</p>
+<p><em>Step 2 — Energy</em>: With 15% efficiency margin and 80% usable DOD:</p>
+<div class="arithmatex">\[E_{\text{req}} = \frac{1560 \times 0.5\,\text{h}}{0.85 \times 0.80}
+    = 1147\,\text{Wh}.\]</div>
+<p><em>Step 3 — Battery</em>: 6S LiPo at 180 Wh/kg (pack):</p>
+<div class="arithmatex">\[m_{\text{bat}} = 1147 / 180 = 6.4\,\text{kg}.\]</div>
+<p>Revise MTOW <span class="arithmatex">\(= 5\,(\text{payload}) + 6.4\,(\text{bat}) + 2\,(\text{airframe}) = 13.4\,\text{kg}\)</span>. Re-iterate: <span class="arithmatex">\(P_{\text{hover}} = 13.4 \times 130 = 1742\,\text{W}\)</span>; <span class="arithmatex">\(E_{\text{req}} = 1282\,\text{Wh}\)</span>; <span class="arithmatex">\(m_{\text{bat}} = 7.1\,\text{kg}\)</span>; MTOW <span class="arithmatex">\(= 14.1\,\text{kg}\)</span>. Convergence in two more iterations at MTOW <span class="arithmatex">\(\approx 14.5\,\text{kg}\)</span>, <span class="arithmatex">\(m_{\text{bat}} = 7.5\,\text{kg}\)</span>.</p>
+<p><em>Step 4 — Pack configuration</em>: Target <span class="arithmatex">\(V_{\text{bus}} = 44.4\,\text{V}\)</span> (12S): <span class="arithmatex">\(N_s = 12\)</span>. Using 22 Ah pouch cells (<span class="arithmatex">\(q = 22\,\text{Ah}\)</span>): <span class="arithmatex">\(Q_{\text{req}} = E / V_{\text{nom}} = 1350 / 44.4 = 30.4\,\text{Ah}\)</span>. <span class="arithmatex">\(N_p = \lceil 30.4 / 22 \rceil = 2\)</span>. Final pack: <strong>12S2P</strong>, <span class="arithmatex">\(V_{\text{nom}} = 44.4\,\text{V}\)</span>, <span class="arithmatex">\(Q = 44\,\text{Ah}\)</span>, <span class="arithmatex">\(E = 1954\,\text{Wh}\)</span>.</p>
+<p><em>Step 5 — Peak current</em>: At <span class="arithmatex">\(P_{\text{peak}} = 2200\,\text{W}\)</span> (20% manoeuvre margin): <span class="arithmatex">\(I_{\text{peak}} = 2200/44.4 = 49.6\,\text{A}\)</span>. C-rate <span class="arithmatex">\(= 49.6/44 = 1.13\text{C}\)</span> — very mild; no concern.</p>
+<h3 id="6142-example-2-long-endurance-fixed-wing-isr"><span class="secnum">6.14.2</span> Example 2 — Long-Endurance Fixed-Wing ISR<a class="headerlink" href="#6142-example-2-long-endurance-fixed-wing-isr" title="Permanent link">&para;</a></h3>
+<p><strong>Requirements</strong>: 8-hour endurance; 400 m altitude cruise; 80 W cruise power; <span class="arithmatex">\(-10\,°\)</span>C minimum temperature.</p>
+<p><em>Energy required</em>:</p>
+<div class="arithmatex">\[E_{\text{req}} = \frac{80\,\text{W} \times 8\,\text{h}}{0.90 \times 0.80}
+    = 889\,\text{Wh}.\]</div>
+<p><em>Fuel cell option</em>: Intelligent Energy 650 W FC system, system specific energy 900 Wh/kg:</p>
+<div class="arithmatex">\[m_{\text{FC system}} = 889 / 900 = 0.99\,\text{kg}.\]</div>
+<p><em>LiPo option</em>: at 180 Wh/kg pack:</p>
+<div class="arithmatex">\[m_{\text{LiPo}} = 889 / 180 = 4.9\,\text{kg} \quad (\approx 5\times \text{heavier}).\]</div>
+<p>The fuel cell advantage is decisive for this endurance class.</p>
+<p><em>Cold-weather pre-heat energy</em> (FC, from <span class="arithmatex">\(-10\)</span> to <span class="arithmatex">\(5\,°\)</span>C): Using <span class="arithmatex">\(m_{\text{stack}} = 1.5\,\text{kg}\)</span>, <span class="arithmatex">\(c_p = 900\,\text{J/kg/K}\)</span>, <span class="arithmatex">\(\Delta T = 15\,°\)</span>C:</p>
+<div class="arithmatex">\[E_{\text{heat}} = 1.5 \times 900 \times 15 = 20{,}250\,\text{J} = 5.6\,\text{Wh}\]</div>
+<p>— a negligible 0.6% of mission energy.</p>
+<h2 id="sec-standards"><span class="secnum">6.15</span> Standards and Certification<a class="headerlink" href="#sec-standards" title="Permanent link">&para;</a></h2>
+<p>Power system design for certified UAV operations must comply with applicable standards. Key references include:</p>
+<dl>
+<dt>RTCA DO-311A</dt>
+<dd>: Minimum operational performance standards for rechargeable lithium battery systems in civil aircraft.</dd>
+<dt>RTCA DO-160G Section 16</dt>
+<dd>: Electrical power input characteristics (voltage, frequency, transients) for avionics equipment.</dd>
+<dt>IEC 62133</dt>
+<dd>: Secondary cells — safety requirements for portable lithium cells and batteries.</dd>
+<dt>UN 38.3</dt>
+<dd>: Transportation testing for lithium batteries (vibration, shock, thermal, overcharge, short-circuit).</dd>
+<dt>UL 2054</dt>
+<dd>: Household and commercial batteries — safety standard.</dd>
+<dt>MIL-PRF-32565</dt>
+<dd>: Performance specification for rechargeable lithium batteries for military UAV applications (US DoD).</dd>
+<dt>EASA CS-UAS.300 / FAA AC 21.17-4</dt>
+<dd>: Emerging type-certification basis for UAV power systems in the manned airspace.</dd>
+</dl>
+<p>Compliance with DO-311A requires analysis and testing covering: overvoltage, overtemperature, external short circuit, forced discharge, vibration per DO-160G Section 8, altitude per DO-160G Section 4, and single-cell failure non-propagation.</p>
+<h2 id="sec-future"><span class="secnum">6.16</span> Future Outlook<a class="headerlink" href="#sec-future" title="Permanent link">&para;</a></h2>
+<p>The UAV power landscape in the 2025–2035 decade will be shaped by:</p>
+<ol>
+<li>
+<p><strong>Solid-state batteries entering volume production</strong> (2027–2030): <span class="arithmatex">\(&gt;400\,\text{Wh/kg}\)</span> packs will extend multi-rotor endurance from 25 to 60+ minutes without mass penalty.</p>
+</li>
+<li>
+<p><strong>Autonomous wireless charging infrastructure</strong>: City-wide landing pad networks enable persistent urban surveillance and delivery using smaller drones with shorter range.</p>
+</li>
+<li>
+<p><strong>Green hydrogen supply chain maturation</strong>: Electrolyser costs falling below &#36;300/kW (2030 target); portable H<span class="arithmatex">\(_2\)</span> dispensing at airfields; standardised quick-disconnect cartridges.</p>
+</li>
+<li>
+<p><strong>AI-driven adaptive power management</strong>: On-board neural networks predict power demand 30–60 s ahead based on mission profile and atmospheric data, pre-conditioning battery temperature and state.</p>
+</li>
+<li>
+<p><strong>Hybrid propulsion integration</strong>: Turbine-generator sets providing continuous power at high specific energy (diesel: <span class="arithmatex">\(\sim\!3000\,\text{Wh/kg}\)</span> including fuel and engine mass at small scale); battery buffer handles transients.</p>
+</li>
+<li>
+<p><strong>Laser power beaming for persistent ISR</strong>: Ground or airborne relay nodes illuminate solar-cell arrays on UAVs operating at stratospheric altitudes; multi-kW capability demonstrated by 2028.</p>
+</li>
+</ol>
+<p>The fundamental figure of merit — usable specific energy at the pack level — is projected to evolve as shown in <a href="#tab-future_energy">Table 6.8</a>.</p>
+<div class="tbl" id="tab-future_energy">
+<div class="tbl-caption"><strong>Table 6.8.</strong> Projected UAV-grade pack specific energy by technology and year.</div>
+<div class="tbl-scroll">
+<table>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Technology</strong></td>
+<td style="text-align: left;"><strong>2024</strong></td>
+<td style="text-align: left;"><strong>2027</strong></td>
+<td style="text-align: left;"><strong>2030</strong></td>
+<td style="text-align: left;"><strong>2035</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">(Wh/kg)</td>
+<td style="text-align: left;">(Wh/kg)</td>
+<td style="text-align: left;">(Wh/kg)</td>
+<td style="text-align: left;">(Wh/kg)</td>
+</tr>
+<tr>
+<td style="text-align: left;">LiPo (graphite/NMC)</td>
+<td style="text-align: left;">180–220</td>
+<td style="text-align: left;">200–240</td>
+<td style="text-align: left;">220–260</td>
+<td style="text-align: left;">240–280</td>
+</tr>
+<tr>
+<td style="text-align: left;">Li-Ion Si-anode (21700)</td>
+<td style="text-align: left;">260–300</td>
+<td style="text-align: left;">300–340</td>
+<td style="text-align: left;">340–380</td>
+<td style="text-align: left;">370–420</td>
+</tr>
+<tr>
+<td style="text-align: left;">Li-S (pouch)</td>
+<td style="text-align: left;">300–380</td>
+<td style="text-align: left;">380–460</td>
+<td style="text-align: left;">430–520</td>
+<td style="text-align: left;">480–580</td>
+</tr>
+<tr>
+<td style="text-align: left;">Solid-state Li-metal</td>
+<td style="text-align: left;">200–280</td>
+<td style="text-align: left;">280–360</td>
+<td style="text-align: left;">360–440</td>
+<td style="text-align: left;">420–500</td>
+</tr>
+<tr>
+<td style="text-align: left;">PEM FC system (H<span class="math inline">\(_2\)</span>)</td>
+<td style="text-align: left;">600–900</td>
+<td style="text-align: left;">700–1100</td>
+<td style="text-align: left;">900–1400</td>
+<td style="text-align: left;">1100–1800</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The convergence of solid-state electrolytes, silicon and lithium-metal anodes, and advanced cathode materials (Li-rich layered oxides, NMC-955) promises to break the long-standing 300 Wh/kg barrier at pack level before 2030, doubling the endurance of electrically powered UAVs and enabling new mission categories currently limited to internal-combustion platforms.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch05-drone-propulsion-systems.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Drone Propulsion Systems">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                5. Drone Propulsion Systems
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch07-avionics-and-flight-control.html" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Avionics and Flight Control">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                7. Avionics and Flight Control
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

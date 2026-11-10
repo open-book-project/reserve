@@ -1,0 +1,3220 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/asic/signoff-tapeout.html">
+  
+  
+    <link rel="prev" href="physical-design-floorplan-to-route.html">
+  
+  
+    <link rel="next" href="fabrication-packaging-test-bring-up.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>6. Signoff & Tapeout - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#61-what-signoff-means" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Signoff & Tapeout
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">ASIC Design: A Field Guide</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to-read-this-guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to read this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chip-design-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Chip Design Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="specification-architecture-rtl-design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Specification, Architecture & RTL Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="functional-verification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Functional Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logic-synthesis-design-for-test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Logic Synthesis & Design for Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="physical-design-floorplan-to-route.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Physical Design: Floorplan to Route
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Signoff & Tapeout
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="signoff-tapeout.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Signoff & Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-what-signoff-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 What Signoff Means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-signoff-sta-primetime-and-tempus-with-variation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Signoff STA: PrimeTime and Tempus with Variation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Signoff STA: PrimeTime and Tempus with Variation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-core-of-a-primetime-signoff-run-one-scenario-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Core of a PrimeTime signoff run (one scenario, simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-parasitic-extraction-starrc-quantus-and-calibre-xact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Parasitic Extraction: StarRC, Quantus and Calibre xACT
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Parasitic Extraction: StarRC, Quantus and Calibre xACT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-what-one-net-looks-like-in-a-spef-file-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: What one net looks like in a SPEF file (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-power-analysis-primepower-voltus-joules-and-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Power Analysis: PrimePower, Voltus, Joules and Friends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-ir-drop-and-electromigration-signoff-voltus-redhawk-sc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 IR Drop and Electromigration Signoff (Voltus, RedHawk-SC)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-physical-verification-drc-erc-antenna-and-density" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Physical Verification: DRC, ERC, Antenna and Density
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Physical Verification: DRC, ERC, Antenna and Density">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-run-drc-with-klayout-in-batch-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Run DRC with KLayout in batch mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-lvs-layout-versus-schematic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 LVS: Layout Versus Schematic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 LVS: Layout Versus Schematic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-open-source-lvs-with-netgen-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Open-source LVS with Netgen (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#68-physical-verification-tools-calibre-ic-validator-pegasus-klayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Physical Verification Tools: Calibre, IC Validator, Pegasus, KLayout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#69-dfm-and-lithography-friendly-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 DFM and Lithography-Friendly Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#610-final-data-gdsii-oasis-and-mask-data-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Final Data: GDSII, OASIS and Mask Data Preparation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.10 Final Data: GDSII, OASIS and Mask Data Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-merge-layouts-and-write-oasis-with-klayouts-python-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Merge layouts and write OASIS with KLayout's Python API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#611-tapeout-checklist-mask-sets-and-mpw-shuttles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Tapeout Checklist, Mask Sets and MPW Shuttles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#612-late-ecos-and-metal-only-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12 Late ECOs and Metal-Only Fixes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#613-reliability-aging-esd-latch-up-and-soft-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.13 Reliability: Aging, ESD, Latch-up and Soft Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fabrication-packaging-test-bring-up.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Fabrication, Packaging, Test & Bring-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="eda-industry-open-source-silicon-analog-ai-in-eda-careers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. EDA Industry, Open-Source Silicon, Analog, AI-in-EDA & Careers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ten-things-every-asic-student-should-master.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ten Things Every ASIC Student Should Master
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-of-terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary of Terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#61-what-signoff-means" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 What Signoff Means
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#62-signoff-sta-primetime-and-tempus-with-variation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 Signoff STA: PrimeTime and Tempus with Variation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.2 Signoff STA: PrimeTime and Tempus with Variation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-core-of-a-primetime-signoff-run-one-scenario-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Core of a PrimeTime signoff run (one scenario, simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#63-parasitic-extraction-starrc-quantus-and-calibre-xact" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Parasitic Extraction: StarRC, Quantus and Calibre xACT
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.3 Parasitic Extraction: StarRC, Quantus and Calibre xACT">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-what-one-net-looks-like-in-a-spef-file-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: What one net looks like in a SPEF file (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#64-power-analysis-primepower-voltus-joules-and-friends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Power Analysis: PrimePower, Voltus, Joules and Friends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#65-ir-drop-and-electromigration-signoff-voltus-redhawk-sc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 IR Drop and Electromigration Signoff (Voltus, RedHawk-SC)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#66-physical-verification-drc-erc-antenna-and-density" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Physical Verification: DRC, ERC, Antenna and Density
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.6 Physical Verification: DRC, ERC, Antenna and Density">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-run-drc-with-klayout-in-batch-mode" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Run DRC with KLayout in batch mode
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#67-lvs-layout-versus-schematic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 LVS: Layout Versus Schematic
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 LVS: Layout Versus Schematic">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-open-source-lvs-with-netgen-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Open-source LVS with Netgen (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#68-physical-verification-tools-calibre-ic-validator-pegasus-klayout" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 Physical Verification Tools: Calibre, IC Validator, Pegasus, KLayout
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#69-dfm-and-lithography-friendly-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.9 DFM and Lithography-Friendly Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#610-final-data-gdsii-oasis-and-mask-data-preparation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.10 Final Data: GDSII, OASIS and Mask Data Preparation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.10 Final Data: GDSII, OASIS and Mask Data Preparation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-merge-layouts-and-write-oasis-with-klayouts-python-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Merge layouts and write OASIS with KLayout's Python API
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#611-tapeout-checklist-mask-sets-and-mpw-shuttles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.11 Tapeout Checklist, Mask Sets and MPW Shuttles
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#612-late-ecos-and-metal-only-fixes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.12 Late ECOs and Metal-Only Fixes
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#613-reliability-aging-esd-latch-up-and-soft-errors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.13 Reliability: Aging, ESD, Latch-up and Soft Errors
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-6-signoff-tapeout">Chapter 6: Signoff &amp; Tapeout<a class="headerlink" href="#chapter-6-signoff-tapeout" title="Permanent link">&para;</a></h1>
+<p>Signoff is the final exam before a chip is manufactured: dozens of independent checks confirm that timing, power, electrical reliability and the physical layout are all correct and manufacturable. Only when every check is clean, or every exception is reviewed and waived, does the team 'tape out' and send the layout to the foundry. This chapter covers signoff timing, parasitic extraction, power and IR/EM analysis, physical verification (DRC, LVS and friends), DFM, the final GDSII/OASIS database, mask sets and shuttles, late metal-only ECOs, and reliability.</p>
+<h2 id="61-what-signoff-means">6.1 What Signoff Means<a class="headerlink" href="#61-what-signoff-means" title="Permanent link">&para;</a></h2>
+<p>Signoff means formally confirming that a design meets every requirement for manufacturing and operation, using 'golden' tools trusted by the foundry and the company. Implementation tools estimate; signoff tools measure as accurately as possible. Each category (timing, power, physical verification, equivalence, DFT, low power) has an owner who signs off, often with a checklist and review meeting.</p>
+<figure class="fig fig-diagram">
+<img src="img/06-01-what-signoff-means.svg" alt="Everything that must be signed off" loading="lazy" width="1000" height="580">
+<figcaption><strong>Everything that must be signed off.</strong></figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Signoff is like the final inspection before a plane is allowed to fly: independent inspectors check every system with certified instruments, and every item must be signed.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Two weeks before tapeout of a Bluetooth SoC, the signoff review lists: STA clean in 24 scenarios, IR drop under 5 %, EM clean, DRC and LVS clean with 3 approved waivers, LEC equivalent, ATPG coverage 99.1 %, UPF checks clean, ERC and ESD clean. The chief engineer reviews each item, the foundry checks the waivers, and the team gets the green light.</p>
+</div>
+<h4 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Freeze the netlist and layout candidates for signoff.</li>
+<li>Run golden signoff tools: STA, extraction, power/IR/EM, DRC/LVS, LEC, low-power, DFT checks.</li>
+<li>Triage violations; fix with ECOs or review and waive with justification.</li>
+<li>Hold signoff reviews; record results in a tapeout checklist.</li>
+<li>Get final approvals from internal leads and the foundry.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Signoff engineers (STA, physical verification, power integrity), project leads and foundry customer engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>'Golden tool' means the tool whose results the foundry and company trust for final decisions, usually certified by the foundry.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Signoff is a matrix, not one run: every category × every mode/corner × every hierarchy level, tracked with owners and dates on a dashboard until all cells are green.</li>
+<li>Implementation tools use estimated parasitics and fast timers; signoff tools use full extraction and the most accurate models, so a correlation gap of a few picoseconds is normal and monitored.</li>
+<li>Waivers must be specific (rule, location, reason, approver) and re-validated after every database change; blanket waivers are a classic tapeout risk.</li>
+<li>A typical final week: database freeze, full signoff runs on frozen data, review meetings, then data packaging and upload; any late ECO restarts the affected checks.</li>
+<li>Scenario counts at advanced nodes reach dozens to hundreds; dominance analysis keeps daily runs affordable, but the final signoff covers the full list.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Treating 'clean in the P&amp;R tool' as signoff; only golden-tool results on the final merged database count.</li>
+<li>Copying waivers from a previous tapeout without fresh review against the current rules and layout.</li>
+<li>Running final checks on a different database version from the one shipped; always tag and checksum the data.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Signoff</strong><br><em>Industry term · Concept · Signoff</em></td>
+<td>Final formal verification that a design meets all functional, timing, power and manufacturing requirements.</td>
+<td>Timing signoff means PrimeTime or Tempus shows zero violations in all required scenarios.</td>
+</tr>
+<tr>
+<td><strong>Golden signoff tools</strong><br><em>Industry term · Concept · Signoff</em></td>
+<td>Trusted, foundry-certified tools whose results are accepted for tapeout decisions.</td>
+<td>Calibre is the golden DRC/LVS tool at many foundries.</td>
+</tr>
+<tr>
+<td><strong>Correlation</strong><br><em>Flow quality metric · Concept · Signoff</em></td>
+<td>How closely implementation-tool estimates match signoff-tool results.</td>
+<td>Good correlation means P&amp;R slack is within a few ps of signoff slack.</td>
+</tr>
+<tr>
+<td><strong>Waiver review</strong><br><em>Signoff practice · Methodology · Signoff</em></td>
+<td>Formal review of each remaining violation deemed safe, documented and approved.</td>
+<td>A DRC density waiver in a test structure is approved by the foundry.</td>
+</tr>
+<tr>
+<td><strong>Signoff checklist</strong><br><em>Company/foundry practice · Concept · Signoff</em></td>
+<td>List of every check that must pass before tapeout, with owner and status.</td>
+<td>The checklist has 150 items from 'LVS clean' to 'pad ring reviewed'.</td>
+</tr>
+<tr>
+<td><strong>Foundry tapeout review</strong><br><em>Foundries · Concept · Signoff</em></td>
+<td>The foundry's own checks of the submitted data before making masks.</td>
+<td>The foundry rejects a database because the seal ring is missing.</td>
+</tr>
+<tr>
+<td><strong>Signoff compute infrastructure</strong><br><em>Company IT / cloud · Concept · Signoff</em></td>
+<td>Large servers and clusters needed to run full-chip signoff jobs.</td>
+<td>Full-chip DRC runs on 1,000 cores in the cloud overnight.</td>
+</tr>
+<tr>
+<td><strong>Multi-scenario signoff</strong><br><em>Signoff practice · Methodology · Signoff</em></td>
+<td>Running every required mode, corner and condition combination before tapeout.</td>
+<td>STA covers 6 modes × 8 corners = 48 scenarios.</td>
+</tr>
+<tr>
+<td><strong>RTL-to-GDS consistency checks</strong><br><em>Signoff practice · Methodology · Signoff</em></td>
+<td>Confirming that the final layout corresponds to the verified RTL (LEC, LVS, netlist version checks).</td>
+<td>A script confirms the GDS, netlist and RTL all carry the same release tag.</td>
+</tr>
+<tr>
+<td><strong>Tapeout readiness review</strong><br><em>Company practice · Methodology · Signoff</em></td>
+<td>Formal meeting where each signoff owner presents results and open risks before leadership approves tapeout.</td>
+<td>The review walks through 24 categories and assigns two open items before final approval.</td>
+</tr>
+<tr>
+<td><strong>Database freeze</strong><br><em>Signoff practice · Concept · Signoff</em></td>
+<td>Point after which the netlist and layout may change only through approved ECOs, so final checks run on fixed data.</td>
+<td>After freeze, every change needs a ticket, and all signoff runs restart on the new tag.</td>
+</tr>
+<tr>
+<td><strong>DFT signoff</strong><br><em>Test practice · Methodology · Signoff</em></td>
+<td>Confirming test coverage targets, scan-chain integrity and simulated test patterns on the final netlist.</td>
+<td>Patterns are re-simulated with signoff SDF, and stuck-at coverage is confirmed at 99.2 %.</td>
+</tr>
+<tr>
+<td><strong>Scenario reduction (dominant corners)</strong><br><em>STA practice · Methodology · Signoff</em></td>
+<td>Running only the scenarios that dominate violations during iteration, then the full set at final signoff.</td>
+<td>Eight dominant scenarios catch nearly every violation found by the full 64-scenario run.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="62-signoff-sta-primetime-and-tempus-with-variation">6.2 Signoff STA: PrimeTime and Tempus with Variation<a class="headerlink" href="#62-signoff-sta-primetime-and-tempus-with-variation" title="Permanent link">&para;</a></h2>
+<p>Signoff static timing analysis is the final, most accurate timing check, run with real extracted parasitics across every required PVT corner and mode. It includes on-chip variation (OCV, AOCV, POCV with LVF data), crosstalk effects and sometimes voltage-drop effects. The two dominant tools are Synopsys PrimeTime and Cadence Tempus.</p>
+<p><strong>Setup vs hold signoff corners</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Setup (max) check</th>
+<th>Hold (min) check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Process</strong></td>
+<td>Slow (SS)</td>
+<td>Fast (FF)</td>
+</tr>
+<tr>
+<td><strong>Voltage</strong></td>
+<td>Low (e.g. nominal −10 %)</td>
+<td>High</td>
+</tr>
+<tr>
+<td><strong>Temperature</strong></td>
+<td>Hot, or cold if temperature inversion</td>
+<td>Cold, or hot if inversion</td>
+</tr>
+<tr>
+<td><strong>RC corner</strong></td>
+<td>Cworst / RCworst</td>
+<td>Cbest / RCbest</td>
+</tr>
+<tr>
+<td><strong>Variation derate</strong></td>
+<td>Data late, clock early</td>
+<td>Data early, clock late</td>
+</tr>
+<tr>
+<td><strong>Typical fix</strong></td>
+<td>Upsize, Vt swap, restructure</td>
+<td>Insert delay cells</td>
+</tr>
+</tbody>
+</table>
+<p><em>Worst setup and worst hold sit at opposite extremes, so both must be analysed.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Implementation timing is a practice run with a stopwatch; signoff STA is the official race timed by certified electronic sensors in every weather condition.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>For a 2 GHz CPU at 3 nm, Rahul's signoff runs PrimeTime with POCV using LVF libraries, SI enabled, across 16 corners including temperature inversion. One hold path fails by 3 ps only at the fast corner with RCbest extraction. PrimeTime ECO suggests a delay cell; after implementation and re-extraction, all 16 corners pass and timing is signed off.</p>
+</div>
+<h4 id="how-it-works_1">How it works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Read the final netlist, extracted parasitics (SPEF/SPEF per corner), libraries and SDC.</li>
+<li>Configure variation: OCV derates, AOCV tables or POCV with LVF.</li>
+<li>Enable SI (crosstalk) analysis and optionally IR-drop-aware timing.</li>
+<li>Run all modes and corners; use path-based analysis on worst paths.</li>
+<li>Generate ECOs for remaining violations; repeat until clean.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>STA signoff engineers; PD engineers review results.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the variation progression: flat OCV → AOCV (depth/distance tables) → POCV/SOCV (statistical sigma from LVF).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A signoff scenario pairs one mode's SDC with one Liberty corner and the matching SPEF; distributed runs launch one process per scenario and merge the results for ECO.</li>
+<li>Graph-based analysis is fast but pessimistic; path-based analysis re-times the worst paths with their real slews, often recovering a few picoseconds before any ECO is attempted.</li>
+<li>POCV combines per-cell sigmas from LVF tables statistically, so long paths get relatively less pessimism than with flat OCV derates.</li>
+<li>SI adds two analyses: delta delays folded into timing, and separate glitch-noise checks; both depend on timing windows from the main analysis.</li>
+<li>Advanced nodes add effects such as temperature inversion, waveform distortion and multi-input switching; signoff tools model them with extra library data and settings.</li>
+<li>Timing ECO loops (PrimeTime ECO or Tempus ECO, then P&amp;R implementation, re-extraction and re-STA) usually repeat several times before the final clean run.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Signing off only typical corners; worst setup and worst hold sit at different process, voltage, temperature and RC extremes.</li>
+<li>Forgetting minimum pulse width, clock-gating and max-transition checks; they are violations even when setup and hold pass.</li>
+<li>Using estimated or pre-route parasitics for signoff; only full extraction of the final routing counts.</li>
+</ul>
+</div>
+<h3 id="try-it-core-of-a-primetime-signoff-run-one-scenario-simplified">Try it: Core of a PrimeTime signoff run (one scenario, simplified)<a class="headerlink" href="#try-it-core-of-a-primetime-signoff-run-one-scenario-simplified" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>set_app_var<span class="w"> </span>link_path<span class="w"> </span><span class="s2">"* ss_0p675v_125c.db"</span>
+read_verilog<span class="w"> </span>top.v
+link_design<span class="w"> </span>top
+read_parasitics<span class="w"> </span>-format<span class="w"> </span>SPEF<span class="w"> </span>top_rcworst.spef.gz
+read_sdc<span class="w"> </span>top_func.sdc
+set_app_var<span class="w"> </span>si_enable_analysis<span class="w"> </span><span class="nb">true</span>
+set_app_var<span class="w"> </span>timing_pocvm_enable_analysis<span class="w"> </span><span class="nb">true</span>
+update_timing
+report_timing<span class="w"> </span>-delay_type<span class="w"> </span>max<span class="w"> </span>-pba_mode<span class="w"> </span>exhaustive<span class="w"> </span>-max_paths<span class="w"> </span><span class="m">10</span>
+report_constraint<span class="w"> </span>-all_violators
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_1">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Synopsys PrimeTime</strong><br><em>Synopsys · Tool · Signoff · Commercial</em></td>
+<td>Industry-standard signoff STA tool with SI, POCV, ECO and power analysis add-ons.</td>
+<td>Most foundries treat PrimeTime as a golden timing signoff reference.</td>
+</tr>
+<tr>
+<td><strong>Cadence Tempus Timing Solution</strong><br><em>Cadence Design Systems · Tool · Signoff · Commercial</em></td>
+<td>Cadence's signoff STA tool with distributed multi-mode multi-corner analysis and ECO.</td>
+<td>Tempus runs 40 scenarios in parallel across a compute farm.</td>
+</tr>
+<tr>
+<td><strong>Hierarchical and distributed STA</strong><br><em>Synopsys PrimeTime HyperScale; Cadence Tempus distributed STA · Methodology · Signoff</em></td>
+<td>Splitting huge signoff STA runs across blocks or machines while keeping full-chip accuracy.</td>
+<td>A 50-billion-transistor GPU's STA is split by block so each corner finishes overnight.</td>
+</tr>
+<tr>
+<td><strong>OCV derating</strong><br><em>STA variation method · Concept · Signoff</em></td>
+<td>Applying fixed percentage slow-downs and speed-ups to model on-die variation.</td>
+<td>A 1.08 late derate is applied to data paths at the slow corner.</td>
+</tr>
+<tr>
+<td><strong>AOCV (Advanced OCV)</strong><br><em>STA variation method · Concept · Signoff</em></td>
+<td>Signoff derates looked up from foundry tables by path depth and distance, replacing one flat percentage.</td>
+<td>The signoff deck loads AOCV tables, so a 20-stage path gets a smaller derate than a 2-stage path.</td>
+</tr>
+<tr>
+<td><strong>POCV / SOCV</strong><br><em>Parametric/Statistical OCV · Concept · Signoff</em></td>
+<td>Models each cell's delay as a mean plus sigma, taken from LVF library tables, and combines them statistically along the path.</td>
+<td>Path delay is reported at mean + 3 sigma instead of with flat derates.</td>
+</tr>
+<tr>
+<td><strong>SI-aware STA</strong><br><em>STA practice · Methodology · Signoff</em></td>
+<td>Timing analysis including crosstalk delta delays and noise.</td>
+<td>Enabling SI adds 10-40 ps to some coupled paths.</td>
+</tr>
+<tr>
+<td><strong>IR-drop-aware timing</strong><br><em>STA/power integration · Methodology · Signoff</em></td>
+<td>Using per-instance voltage from power analysis to compute more accurate cell delays.</td>
+<td>A path in a high-IR area loses 15 ps when actual voltage is used.</td>
+</tr>
+<tr>
+<td><strong>SDF and timing reports for GLS</strong><br><em>IEEE 1497 SDF · File format · Signoff</em></td>
+<td>Signoff STA writes SDF files for timing-annotated gate-level simulation.</td>
+<td>SDF from the slow corner annotates the final GLS run.</td>
+</tr>
+<tr>
+<td><strong>Noise (glitch) signoff</strong><br><em>PrimeTime SI, Tempus SI · Methodology · Signoff</em></td>
+<td>Separate check that crosstalk glitches on quiet nets stay below what receiving cells can tolerate.</td>
+<td>Noise signoff flags a glitch on a scan-enable net that could corrupt test mode.</td>
+</tr>
+<tr>
+<td><strong>Minimum pulse width and clock checks</strong><br><em>STA checks · Concept · Signoff</em></td>
+<td>Checks that clock high/low pulses stay wide enough for flops and memories, plus clock-gating and period checks.</td>
+<td>A divided clock's 180 ps high pulse fails an SRAM's 200 ps minimum pulse width.</td>
+</tr>
+<tr>
+<td><strong>Waveform propagation effects</strong><br><em>Advanced-node STA · Concept · Signoff</em></td>
+<td>Modelling real, distorted signal waveforms (not ideal ramps) through long wires and cells using current-source library data.</td>
+<td>Waveform-aware analysis changes a long net's delay by several picoseconds versus a simple ramp model.</td>
+</tr>
+<tr>
+<td><strong>Multi-input switching (MIS)</strong><br><em>Advanced-node STA effect · Concept · Signoff</em></td>
+<td>When several inputs of a gate switch together, its delay differs from single-input library values.</td>
+<td>MIS modelling adds a few picoseconds to a NAND whose two inputs switch simultaneously.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="63-parasitic-extraction-starrc-quantus-and-calibre-xact">6.3 Parasitic Extraction: StarRC, Quantus and Calibre xACT<a class="headerlink" href="#63-parasitic-extraction-starrc-quantus-and-calibre-xact" title="Permanent link">&para;</a></h2>
+<p>Every wire has resistance and capacitance (parasitics) that slow signals and use power. Parasitic extraction computes these values from the layout geometry and the foundry's process data, producing SPEF files used by STA, power and SI analysis. Signoff extraction must be very accurate, often using 3D field-solver techniques for critical nets.</p>
+<figure class="fig fig-diagram">
+<img src="img/06-03-parasitic-extraction-starrc-quantus-and.svg" alt="One extraction per RC corner; the SPEF feeds timing, SI, power and IR analysis." loading="lazy" width="1000" height="389">
+<figcaption><strong>From routed layout to SPEF.</strong> One extraction per RC corner; the SPEF feeds timing, SI, power and IR analysis.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Extraction is like measuring the exact length, width and friction of every pipe in a building after it is built, so you can calculate real water pressure.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>After final routing, Leon runs StarRC with the foundry's nxtgrd files for five RC corners. It produces SPEF files with 120 million resistors and capacitors. PrimeTime reads them for signoff timing. For a sensitive analog-to-digital interface, he also uses a field solver for higher accuracy on 50 critical nets.</p>
+</div>
+<h4 id="how-it-works_2">How it works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Read the routed layout (DEF/GDS/OASIS) and technology data (ITF/QRC/nxtgrd).</li>
+<li>Identify conductors and compute resistance, ground capacitance and coupling capacitance.</li>
+<li>Reduce the network if needed while keeping accuracy.</li>
+<li>Write SPEF (or other formats) per RC corner and temperature.</li>
+<li>Use results in STA, SI, power and IR/EM analysis.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Signoff and PD engineers; extraction tool developers; foundry technology teams build the techfiles.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember: coupling capacitance (between wires) drives crosstalk, ground capacitance drives delay, and resistance grows sharply at small metal widths.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Rule-based extractors look up capacitance in precomputed tables of geometric patterns calibrated against 3D field solvers; full field solving is reserved for small, critical structures.</li>
+<li>Total wire capacitance = ground (area and fringe to layers above/below) + coupling to neighbours; SPEF can keep coupling caps separate for SI or lump them to ground for speed.</li>
+<li>Resistance depends on width, thickness, barrier layers and temperature; signoff extracts at the analysis temperature because metal resistance rises with heat.</li>
+<li>One extraction run is needed per RC corner (for example Cworst, Cbest, RCworst, RCbest and typical), each paired with the matching timing corners.</li>
+<li>Fill changes capacitance; final signoff extraction includes the real fill database, while earlier runs may emulate fill statistically.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Pairing the wrong RC corner with a timing corner, for example an RCbest SPEF in a slow-corner setup run, which gives optimistic slack.</li>
+<li>Leaving fill out of the final extraction and losing several picoseconds when fill appears in the shipped database.</li>
+<li>Treating a P&amp;R tool's internal RC estimate as signoff-accurate; use the certified extractor with the foundry's techfiles.</li>
+</ul>
+</div>
+<h3 id="try-it-what-one-net-looks-like-in-a-spef-file-simplified">Try it: What one net looks like in a SPEF file (simplified)<a class="headerlink" href="#try-it-what-one-net-looks-like-in-a-spef-file-simplified" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code>*SPEF "IEEE 1481-1998"
+*DESIGN "counter"
+*T_UNIT 1 NS
+*C_UNIT 1 FF
+*R_UNIT 1 OHM
+*D_NET n42 3.71
+*CONN
+*I u1:Y O *D sky130_fd_sc_hd__nand2_1
+*I u2:D I *D sky130_fd_sc_hd__dfxtp_1
+*CAP
+1 u1:Y 1.20
+2 u2:D 1.05
+3 n42:1 1.46
+*RES
+1 u1:Y n42:1 12.4
+2 n42:1 u2:D 9.8
+*END
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_2">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Parasitic extraction</strong><br><em>EDA technique · Methodology · Signoff</em></td>
+<td>Computing wire resistance and capacitance from layout for accurate analysis.</td>
+<td>Extraction shows a 2 mm net has 1.2 kΩ and 300 fF.</td>
+</tr>
+<tr>
+<td><strong>Synopsys StarRC</strong><br><em>Synopsys · Tool · Signoff · Commercial</em></td>
+<td>Signoff parasitic extraction tool widely used with PrimeTime.</td>
+<td>StarRC extracts a 100 mm² SoC in a few hours using distributed processing.</td>
+</tr>
+<tr>
+<td><strong>Cadence Quantus Extraction Solution</strong><br><em>Cadence Design Systems · Tool · Signoff · Commercial</em></td>
+<td>Cadence's signoff extraction tool integrated with Innovus and Tempus.</td>
+<td>Quantus provides SPEF for Tempus signoff in an all-Cadence flow.</td>
+</tr>
+<tr>
+<td><strong>Siemens Calibre xACT</strong><br><em>Siemens EDA · Tool · Signoff · Commercial</em></td>
+<td>Parasitic extraction tool in the Calibre family for digital and custom designs.</td>
+<td>An analog team uses xACT for post-layout simulation of a PLL.</td>
+</tr>
+<tr>
+<td><strong>Field solver (e.g. Synopsys Raphael, Cadence Quantus FS)</strong><br><em>Synopsys, Cadence · Tool · Signoff · Commercial</em></td>
+<td>Numerical 3D electromagnetic solvers giving the most accurate capacitance for small structures.</td>
+<td>Foundries calibrate their extraction techfiles against field-solver results.</td>
+</tr>
+<tr>
+<td><strong>OpenRCX</strong><br><em>OpenROAD project · Tool · Signoff · Open source</em></td>
+<td>Open-source parasitic extraction within OpenROAD.</td>
+<td>LibreLane uses OpenRCX to create SPEF for OpenSTA signoff.</td>
+</tr>
+<tr>
+<td><strong>Coupling vs ground capacitance</strong><br><em>Interconnect physics · Concept · Signoff</em></td>
+<td>Capacitance to neighbouring wires versus to ground/substrate; coupling dominates at tight pitches.</td>
+<td>At advanced nodes over half of a wire's capacitance can be coupling.</td>
+</tr>
+<tr>
+<td><strong>RC reduction</strong><br><em>Extraction technique · Concept · Signoff</em></td>
+<td>Simplifying huge RC networks while preserving delay accuracy.</td>
+<td>Reduction shrinks a 10 GB SPEF to 2 GB with negligible error.</td>
+</tr>
+<tr>
+<td><strong>DSPF</strong><br><em>Detailed Standard Parasitic Format · File format · Signoff</em></td>
+<td>Parasitic netlist format often used for transistor-level (SPICE) simulation.</td>
+<td>An extracted DSPF of a memory bit cell is simulated in HSPICE.</td>
+</tr>
+<tr>
+<td><strong>Fill-aware extraction</strong><br><em>Extraction practice · Methodology · Signoff</em></td>
+<td>Including real metal fill shapes, or a statistical model of them, because fill adds capacitance to nearby wires.</td>
+<td>Extracting with final fill adds 3 ps to a critical path compared with the fill-free run.</td>
+</tr>
+<tr>
+<td><strong>Pre-route estimates vs signoff extraction</strong><br><em>PD/signoff correlation · Concept · Signoff</em></td>
+<td>P&amp;R tools estimate RC quickly; signoff extractors compute it from full geometry and foundry techfiles.</td>
+<td>A net estimated at 180 fF extracts at 205 fF, explaining a small slack loss after routing.</td>
+</tr>
+<tr>
+<td><strong>Colour-aware (multi-patterning) extraction</strong><br><em>Advanced-node extraction · Concept · Signoff</em></td>
+<td>Accounting for possible shifts between masks of the same layer, which change spacing and coupling.</td>
+<td>Mask-shift corners widen the capacitance range of tightly spaced M1 neighbours.</td>
+</tr>
+<tr>
+<td><strong>Transistor-level extraction</strong><br><em>Custom/analog practice · Methodology · Signoff</em></td>
+<td>Extracting devices plus local wiring parasitics for SPICE simulation of analog, memory and custom cells.</td>
+<td>A SerDes driver's DSPF is simulated in Spectre to confirm its eye opening.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="64-power-analysis-primepower-voltus-joules-and-friends">6.4 Power Analysis: PrimePower, Voltus, Joules and Friends<a class="headerlink" href="#64-power-analysis-primepower-voltus-joules-and-friends" title="Permanent link">&para;</a></h2>
+<p>Power analysis calculates how much power the chip uses, using switching activity from simulation (or statistical estimates) plus library power data and extracted parasitics. It is done early on RTL to guide design, and at signoff on the final netlist for accurate numbers, peak power and per-block budgets.</p>
+<p><strong>Power analysis through the flow</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>RTL estimate</th>
+<th>Pre-route gates</th>
+<th>Signoff (post-route)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Netlist</strong></td>
+<td>Inferred from RTL</td>
+<td>Synthesised gates</td>
+<td>Final routed gates</td>
+</tr>
+<tr>
+<td><strong>Wire capacitance</strong></td>
+<td>Estimated</td>
+<td>Estimated from placement</td>
+<td>Extracted SPEF</td>
+</tr>
+<tr>
+<td><strong>Clock tree</strong></td>
+<td>Modelled</td>
+<td>Ideal or estimated</td>
+<td>Real buffers</td>
+</tr>
+<tr>
+<td><strong>Accuracy</strong></td>
+<td>Good for trends</td>
+<td>Better</td>
+<td>Highest</td>
+</tr>
+<tr>
+<td><strong>Main use</strong></td>
+<td>Architecture and RTL fixes</td>
+<td>Synthesis and Vt choices</td>
+<td>Budgets, IR-drop input</td>
+</tr>
+</tbody>
+</table>
+<p><em>Early estimates guide design decisions; only post-route analysis gives signoff numbers.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like an electricity meter for every appliance in a house, used both to plan the wiring and to check the final bill.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Using RTL simulation of a video-decode workload, Ines runs Cadence Joules and finds the motion-compensation block is using 40 % more power than budgeted, mainly from an ungated clock. After adding clock gating, signoff analysis with Voltus on the routed netlist confirms total power of 1.8 W, within the 2 W target. Emulation-based power analysis of a full game workload later reveals a 3-millisecond peak that guides the PDN design.</p>
+</div>
+<h4 id="how-it-works_3">How it works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Get switching activity from simulation or emulation (SAIF, FSDB, VCD) or use vectorless estimates.</li>
+<li>Combine with library power (Liberty), netlist and parasitics.</li>
+<li>Report average, peak, leakage and per-hierarchy power.</li>
+<li>Feed time-based power into dynamic IR-drop analysis.</li>
+<li>Iterate design changes (clock gating, Vt mix) to meet the budget.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Power analysis and low-power engineers, RTL designers, architects and PD engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Power numbers are only as good as the activity data: realistic workloads matter more than tool choice.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Total power = dynamic (internal + switching, proportional to αCV²f) + leakage; leakage rises steeply with temperature and at fast process corners, so it is reported at a hot, fast corner.</li>
+<li>Average-power mode uses toggle counts (SAIF); time-based mode uses full waveforms (FSDB/VCD) to show power over time, needed for peak power and dynamic IR drop.</li>
+<li>Glitch power only appears in timing-aware gate-level analysis with real delays; zero-delay simulation activity misses these spurious transitions entirely.</li>
+<li>When activity is known only at inputs or registers, tools propagate switching probabilities through the logic, which is less accurate than simulating every net.</li>
+<li>For emulator traces of billions of cycles, tools first find power-critical windows, then analyse those windows in detail.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Quoting signoff power from a default 10-20 % toggle rate; vectorless numbers are only for early sizing.</li>
+<li>Reporting power at the wrong corner: typical for battery life, worst case for thermal and power-grid design.</li>
+<li>Ignoring clock and memory power when setting budgets; they are often the largest consumers.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_3">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_3" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Synopsys PrimePower</strong><br><em>Synopsys · Tool · Signoff · Commercial</em></td>
+<td>RTL to gate-level signoff power analysis with average, peak and glitch power.</td>
+<td>PrimePower reports per-block power from a 10 ms emulation trace.</td>
+</tr>
+<tr>
+<td><strong>Cadence Voltus IC Power Integrity Solution</strong><br><em>Cadence Design Systems · Tool · Signoff · Commercial</em></td>
+<td>Cadence's signoff power, IR-drop and EM analysis tool.</td>
+<td>Voltus produces a power map and IR-drop heat map of the full chip.</td>
+</tr>
+<tr>
+<td><strong>Cadence Joules RTL Power Solution</strong><br><em>Cadence Design Systems · Tool · RTL Design · Commercial</em></td>
+<td>Early RTL power estimation tool with fast, accurate predictions.</td>
+<td>Designers run Joules nightly to catch power regressions in RTL.</td>
+</tr>
+<tr>
+<td><strong>Siemens PowerPro</strong><br><em>Siemens EDA · Tool · RTL Design · Commercial</em></td>
+<td>RTL power analysis and optimisation suggesting changes such as extra clock gating.</td>
+<td>PowerPro finds 2,000 registers that could be clock-gated.</td>
+</tr>
+<tr>
+<td><strong>SAIF (Switching Activity Interchange Format)</strong><br><em>Synopsys (open format) · File format · Signoff</em></td>
+<td>Compact file of toggle counts and signal probabilities for power analysis.</td>
+<td>Simulation writes a SAIF file that synthesis uses for power optimisation.</td>
+</tr>
+<tr>
+<td><strong>Vectorless power analysis</strong><br><em>Power analysis technique · Methodology · Signoff</em></td>
+<td>Estimating power from statistical toggle assumptions when no simulation data exists.</td>
+<td>Early floorplanning uses a 20 % default toggle rate.</td>
+</tr>
+<tr>
+<td><strong>Peak power and di/dt</strong><br><em>Power integrity · Concept · Signoff</em></td>
+<td>Maximum instantaneous power and the rate of current change, which stress the supply network.</td>
+<td>A sudden AI-layer start causes a large di/dt event and voltage droop.</td>
+</tr>
+<tr>
+<td><strong>Emulation-based power analysis</strong><br><em>Synopsys ZeBu Empower, Cadence Palladium DPA, Siemens Veloce · Methodology · Verification</em></td>
+<td>Computing power over billions of cycles of real software running on an emulator.</td>
+<td>Booting Android on an emulator reveals a power spike during app launch.</td>
+</tr>
+<tr>
+<td><strong>Power budget</strong><br><em>Architecture practice · Concept · Spec/Architecture</em></td>
+<td>Allocated power limits for each block, tracked through the project.</td>
+<td>The NPU's budget is 1.2 W at 1 GHz under the standard AI benchmark.</td>
+</tr>
+<tr>
+<td><strong>Power breakdown (internal, switching, leakage)</strong><br><em>Power-analysis terms · Concept · Signoff</em></td>
+<td>Reports split power into cell-internal, net-switching and leakage parts, per block and per cell type.</td>
+<td>Switching power dominates the long NoC wires; leakage dominates the idle SRAM banks.</td>
+</tr>
+<tr>
+<td><strong>Leakage signoff corner</strong><br><em>Power-analysis practice · Concept · Signoff</em></td>
+<td>The hot, fast-process corner where leakage peaks, used for worst-case standby power and thermal limits.</td>
+<td>Leakage is 40 mW at typical 25 °C but several times higher at the fast, 125 °C corner.</td>
+</tr>
+<tr>
+<td><strong>Time-based power analysis</strong><br><em>PrimePower, Voltus, Joules · Methodology · Signoff</em></td>
+<td>Computing power cycle by cycle from waveform files, giving power versus time rather than one average.</td>
+<td>A power waveform shows a 3 W spike for 200 ns when the NPU starts a layer.</td>
+</tr>
+<tr>
+<td><strong>Open-source power reporting (OpenSTA report_power)</strong><br><em>OpenROAD project / OpenSTA · Tool · Signoff · Open source</em></td>
+<td>Basic static power estimate from Liberty data and default or annotated activity in open flows.</td>
+<td>report_power on a SKY130 design lists internal, switching and leakage power per group.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="65-ir-drop-and-electromigration-signoff-voltus-redhawk-sc">6.5 IR Drop and Electromigration Signoff (Voltus, RedHawk-SC)<a class="headerlink" href="#65-ir-drop-and-electromigration-signoff-voltus-redhawk-sc" title="Permanent link">&para;</a></h2>
+<p>Power integrity signoff checks that every cell gets enough voltage (IR drop within budget) and that no wire carries so much current that it wears out over the product's life (electromigration). Static analysis uses average currents; dynamic analysis simulates switching events in time. The main tools are Cadence Voltus and RedHawk-SC, which became a Synopsys product when Synopsys acquired Ansys in July 2025.</p>
+<p><strong>Static IR vs dynamic IR vs EM</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Static IR</th>
+<th>Dynamic IR</th>
+<th>Electromigration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Current used</strong></td>
+<td>Average</td>
+<td>Time-varying peaks</td>
+<td>Average, RMS, peak per wire</td>
+</tr>
+<tr>
+<td><strong>Question</strong></td>
+<td>Is the grid strong enough?</td>
+<td>Does it survive bursts?</td>
+<td>Will wires last the lifetime?</td>
+</tr>
+<tr>
+<td><strong>Inputs</strong></td>
+<td>Average power</td>
+<td>Waveforms or vectorless</td>
+<td>Currents, temperature, lifetime</td>
+</tr>
+<tr>
+<td><strong>Typical fixes</strong></td>
+<td>Straps, vias, bumps</td>
+<td>Decaps, staggered switching</td>
+<td>Wider wires, more vias</td>
+</tr>
+<tr>
+<td><strong>Affects</strong></td>
+<td>Timing</td>
+<td>Timing and function</td>
+<td>Reliability</td>
+</tr>
+</tbody>
+</table>
+<p><em>IR drop threatens timing and function; EM threatens lifetime. All three are signed off.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>IR drop is like water pressure falling at the far end of a long hose; electromigration is like a riverbank slowly eroding under a strong current until it collapses.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>On an AI chip drawing 400 A, RedHawk-SC dynamic analysis shows a 9 % droop in one corner of a compute tile when all MAC units start together, above the 7 % budget. The team adds bumps, more upper-metal straps and decap cells and staggers the start-up of tiles in firmware. EM analysis flags 30 signal wires; they are widened. Final dynamic drop is 6 %.</p>
+</div>
+<h4 id="how-it-works_4">How it works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Build the power grid model from layout, extraction and package data.</li>
+<li>Compute current per cell from power analysis (static) or time-based waveforms (dynamic).</li>
+<li>Solve for voltage at every node; compare with the IR-drop budget.</li>
+<li>Check current densities against foundry EM limits for power and signal wires.</li>
+<li>Fix by grid strengthening, decaps, bump changes, cell spreading; re-run.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Power integrity engineers, PD engineers and package engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know that IR drop affects timing (slower cells) while EM affects lifetime reliability; both must be signed off.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>The power grid is solved as an enormous resistor network (billions of nodes at full chip): conductance × voltage = current, with currents from power analysis injected at each cell.</li>
+<li>Dynamic analysis includes on-die capacitance (decaps, cell and well caps) and package inductance; the worst droops occur within nanoseconds of large simultaneous switching such as clock edges or wake-up.</li>
+<li>Black's equation (MTTF ∝ J^-n · e^(Ea/kT)) explains why EM limits are set for a target lifetime and junction temperature, and why hotter products get stricter limits.</li>
+<li>Power-grid EM (mostly unidirectional current) is usually most severe; signal EM checks RMS and peak currents on high-activity nets such as clocks.</li>
+<li>Reff checks find weak spots before any current data exists, which makes them a fast first screen on every new grid.</li>
+<li>Every fix costs something: straps take routing tracks, decaps take area and add leakage, and extra bumps need package changes.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Signing off dynamic IR with an unrepresentative vector set; the worst droop often comes from rare activity bursts.</li>
+<li>Checking EM at a lower temperature than the product's maximum junction temperature.</li>
+<li>Widening straps while the real bottleneck is too few vias in the stacks.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_4">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_4" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ansys RedHawk-SC (now Synopsys)</strong><br><em>Synopsys (via Ansys acquisition completed July 2025) · Tool · Signoff · Commercial</em></td>
+<td>Foundry-certified power-integrity and reliability signoff tool for IR drop and EM.</td>
+<td>Many advanced-node SoCs sign off dynamic IR drop with RedHawk-SC.</td>
+</tr>
+<tr>
+<td><strong>Ansys Totem (now Synopsys)</strong><br><em>Synopsys (via Ansys) · Tool · Signoff · Commercial</em></td>
+<td>Transistor-level power-integrity and EM analysis for analog, memory and custom IP.</td>
+<td>An SRAM designer checks EM on bit-line drivers with Totem.</td>
+</tr>
+<tr>
+<td><strong>Cadence Voltus (IR/EM)</strong><br><em>Cadence Design Systems · Tool · Signoff · Commercial</em></td>
+<td>Cadence's foundry-certified static and dynamic IR/EM signoff engine.</td>
+<td>Voltus checks EM on every power via in a 5 nm block.</td>
+</tr>
+<tr>
+<td><strong>OpenROAD PDNSim</strong><br><em>OpenROAD project · Tool · Signoff · Open source</em></td>
+<td>Open-source static IR-drop analysis of the power grid.</td>
+<td>LibreLane reports worst IR drop on a SKY130 design using PDNSim.</td>
+</tr>
+<tr>
+<td><strong>Static IR analysis</strong><br><em>Power integrity · Methodology · Signoff</em></td>
+<td>IR-drop analysis using average currents to check grid strength.</td>
+<td>Static drop of 2 % shows the grid is basically sound.</td>
+</tr>
+<tr>
+<td><strong>Dynamic IR analysis</strong><br><em>Power integrity · Methodology · Signoff</em></td>
+<td>Time-domain analysis capturing peak switching droops and decap effects.</td>
+<td>Dynamic analysis of a clock edge shows a 60 mV local droop.</td>
+</tr>
+<tr>
+<td><strong>EM limits (Jmax)</strong><br><em>Foundry reliability rules · Concept · Signoff</em></td>
+<td>Maximum allowed current density per layer and via, depending on temperature and lifetime.</td>
+<td>Limits at 110 °C for 10 years are stricter than at 85 °C.</td>
+</tr>
+<tr>
+<td><strong>Signal EM</strong><br><em>Reliability analysis · Concept · Signoff</em></td>
+<td>Electromigration on signal and clock nets due to bidirectional or high-frequency currents.</td>
+<td>A long clock net driven by a huge buffer violates signal EM and needs widening.</td>
+</tr>
+<tr>
+<td><strong>Chip-package co-analysis</strong><br><em>Power integrity practice · Methodology · Signoff</em></td>
+<td>Including package and board power network models in on-chip IR/noise analysis.</td>
+<td>A package model reveals a resonance that worsens on-die droop at 120 MHz.</td>
+</tr>
+<tr>
+<td><strong>Vectorless dynamic IR analysis</strong><br><em>Voltus, RedHawk-SC · Methodology · Signoff</em></td>
+<td>Dynamic droop analysis using statistically chosen switching scenarios when no realistic vectors exist.</td>
+<td>Vectorless analysis assumes a worst-case local toggle burst around each clock buffer.</td>
+</tr>
+<tr>
+<td><strong>Effective resistance (Reff) check</strong><br><em>Power-integrity practice · Methodology · Signoff</em></td>
+<td>Computing the resistance from each cell's power pin back to the supply bumps to find weak grid spots.</td>
+<td>Cells under a missing via stack show ten times the average Reff.</td>
+</tr>
+<tr>
+<td><strong>Average, RMS and peak current EM</strong><br><em>Foundry EM rules · Concept · Signoff</em></td>
+<td>EM rules check average current (atom migration), RMS current (Joule heating) and peak current separately.</td>
+<td>A clock net passes average-current EM but fails the RMS limit and is widened.</td>
+</tr>
+<tr>
+<td><strong>Black's equation</strong><br><em>Reliability physics (J. R. Black, 1969) · Concept · Signoff</em></td>
+<td>Empirical EM lifetime model: median time to failure falls with current density to a power and rises exponentially with activation energy over temperature.</td>
+<td>Running 20 °C hotter can shorten EM lifetime dramatically, so limits depend on temperature.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="66-physical-verification-drc-erc-antenna-and-density">6.6 Physical Verification: DRC, ERC, Antenna and Density<a class="headerlink" href="#66-physical-verification-drc-erc-antenna-and-density" title="Permanent link">&para;</a></h2>
+<p>Design rule checking (DRC) verifies that every polygon in the layout obeys the foundry's manufacturing rules: minimum widths, spacings, enclosures, densities and many more, often thousands of rules at advanced nodes. Related checks include antenna rules, metal density, and electrical rule checks (ERC) such as floating gates or wrong well connections. A layout must be DRC-clean, or have foundry-approved waivers, before tapeout.</p>
+<figure class="fig fig-diagram">
+<img src="img/06-06-physical-verification-drc-erc-antenna.svg" alt="DRC is iterative: review, fix or waive, and re-run until the report is clean." loading="lazy" width="1000" height="389">
+<figcaption><strong>A physical-verification signoff run.</strong> DRC is iterative: review, fix or waive, and re-run until the report is clean.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>DRC is like a building inspector with a rulebook checking every wall thickness and door width against code before the building is allowed to open.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Zara runs Calibre nmDRC on the final GDS of a 28 nm chip with the foundry's rule deck. It reports 1,240 violations: most are density violations in a large analog area, fixed by adding fill; 12 are spacing violations at a macro boundary from a late ECO, fixed manually; 3 are in a foundry-supplied IP and receive a foundry waiver. The final run is clean.</p>
+</div>
+<h4 id="how-it-works_5">How it works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Merge all layout (standard cells, macros, IP, fill) into one GDS/OASIS.</li>
+<li>Run DRC with the foundry's signoff rule deck.</li>
+<li>Run antenna, density and ERC checks.</li>
+<li>Review results in a viewer; fix violations or request waivers.</li>
+<li>Repeat until clean and archive the reports.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical verification engineers, PD engineers and layout designers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Always run the exact foundry-released rule deck version specified for tapeout; old decks are a common cause of foundry rejection.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A rule deck first derives layers with Boolean operations (for example gate = poly AND diffusion), then runs width, spacing and enclosure checks on the derived layers.</li>
+<li>Advanced-node decks add context-dependent rules (end-of-line, direction-dependent via enclosure, colour spacing), so rule count and runtime grow node after node.</li>
+<li>Antenna checks add up the metal area connected to each gate at every etch step; fixes made during routing (diodes, layer jumps) are verified again here.</li>
+<li>Density is checked per window, with minimum and maximum limits and sometimes gradient limits between neighbouring windows, to keep CMP polishing even.</li>
+<li>Hierarchical DRC checks each unique cell once and then the interactions between placements, cutting runtime dramatically on designs with many repeated cells.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Running DRC on blocks only and missing chip-level interactions near block edges, the seal ring or the pad ring.</li>
+<li>Running the right deck with the wrong switches (metal-stack option, density options) for the actual tapeout.</li>
+<li>Assuming foundry IP is always clean in context; placing it next to your layout can still create violations.</li>
+</ul>
+</div>
+<h3 id="try-it-run-drc-with-klayout-in-batch-mode">Try it: Run DRC with KLayout in batch mode<a class="headerlink" href="#try-it-run-drc-with-klayout-in-batch-mode" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code>klayout -b -r sky130A_mr.drc \
+  -rd input=top.gds -rd topcell=top -rd report=top_drc.lyrdb
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_5">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DRC (Design Rule Check)</strong><br><em>Physical verification · Methodology · Signoff</em></td>
+<td>Checking layout geometry against foundry manufacturing rules.</td>
+<td>DRC flags two M2 wires 30 nm apart where 32 nm is required.</td>
+</tr>
+<tr>
+<td><strong>Rule deck / runset</strong><br><em>Foundry (Calibre SVRF, ICV, Pegasus formats) · File format · Signoff</em></td>
+<td>Foundry-provided file encoding all design rules for a specific verification tool.</td>
+<td>The N3 Calibre deck contains thousands of individual checks.</td>
+</tr>
+<tr>
+<td><strong>SVRF / TVF</strong><br><em>Siemens EDA (Calibre) · Language · Signoff</em></td>
+<td>Standard Verification Rule Format and Tcl Verification Format used to write Calibre rule decks.</td>
+<td>A custom check for test-structure spacing is written in SVRF.</td>
+</tr>
+<tr>
+<td><strong>ERC (Electrical Rule Check)</strong><br><em>Physical verification · Methodology · Signoff</em></td>
+<td>Checks for electrical problems like floating inputs, shorts between supplies and missing well taps.</td>
+<td>ERC finds a gate input connected to nothing.</td>
+</tr>
+<tr>
+<td><strong>Antenna check</strong><br><em>Physical verification · Methodology · Signoff</em></td>
+<td>Verifies the ratio of metal area to connected gate area stays within limits during manufacturing.</td>
+<td>The antenna check confirms router-inserted diodes fixed all violations.</td>
+</tr>
+<tr>
+<td><strong>Density check and fill</strong><br><em>Physical verification / DFM · Methodology · Signoff</em></td>
+<td>Ensures each layer's density is within limits per window; fill tools add dummy shapes.</td>
+<td>Calibre SmartFill adds fill to raise density from 12 % to the 20 % minimum.</td>
+</tr>
+<tr>
+<td><strong>Seal ring and scribe line</strong><br><em>Chip finishing · Concept · Signoff</em></td>
+<td>Protective metal ring around the die edge and the space between dies cut during dicing.</td>
+<td>The seal ring stops cracks and moisture from entering the die after dicing.</td>
+</tr>
+<tr>
+<td><strong>Programmable ERC / ESD checks (Calibre PERC)</strong><br><em>Siemens EDA · Tool · Signoff · Commercial</em></td>
+<td>Advanced reliability checks combining netlist and layout, e.g. ESD paths and voltage-aware spacing.</td>
+<td>PERC verifies every I/O pin has a proper ESD clamp path.</td>
+</tr>
+<tr>
+<td><strong>DRC waiver</strong><br><em>Foundry process · Concept · Signoff</em></td>
+<td>Foundry-approved exception for a specific DRC violation, often in qualified IP.</td>
+<td>A foundry-qualified I/O cell carries pre-approved waivers.</td>
+</tr>
+<tr>
+<td><strong>Common rule types</strong><br><em>Foundry design rules · Concept · Signoff</em></td>
+<td>Width, spacing, enclosure, minimum area, end-of-line, notch, extension and density rules form most of a deck.</td>
+<td>A short M1 stub fails minimum area even though its width and spacing pass.</td>
+</tr>
+<tr>
+<td><strong>Manufacturing grid</strong><br><em>Foundry technology · Concept · Signoff</em></td>
+<td>All shape vertices must sit on a fixed grid; off-grid points cause DRC errors and mask problems.</td>
+<td>SKY130 uses a 0.005 µm manufacturing grid, so a vertex at 0.0123 µm is illegal.</td>
+</tr>
+<tr>
+<td><strong>Hierarchical vs flat DRC</strong><br><em>Physical verification technique · Methodology · Signoff</em></td>
+<td>Hierarchical runs check each unique cell once plus interactions; flat runs check every shape individually.</td>
+<td>Hierarchical DRC finishes in hours where a flat run on the same chip takes far longer.</td>
+</tr>
+<tr>
+<td><strong>Well-tap distance (latch-up) rules</strong><br><em>Foundry design rules · Concept · Signoff</em></td>
+<td>Maximum distance from any transistor to a well or substrate tap, preventing latch-up.</td>
+<td>A gap in tap cells near a macro leaves cells beyond the allowed distance.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="67-lvs-layout-versus-schematic">6.7 LVS: Layout Versus Schematic<a class="headerlink" href="#67-lvs-layout-versus-schematic" title="Permanent link">&para;</a></h2>
+<p>LVS proves that the layout actually implements the intended circuit. The tool extracts devices and connections from the layout polygons and compares them with the netlist (schematic). Any mismatch, such as a short between two nets, a missing connection or a wrong transistor size, means the chip would not work as designed.</p>
+<figure class="fig fig-diagram">
+<img src="img/06-07-lvs-layout-versus-schematic.svg" alt="Two netlists are built, one from polygons and one from the design, and must match exactly." loading="lazy" width="1000" height="350">
+<figcaption><strong>How LVS works.</strong> Two netlists are built, one from polygons and one from the design, and must match exactly.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>LVS is like checking a finished house's actual wiring against the electrical plan, outlet by outlet, to make sure no wires were crossed.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Kiran's LVS run on a mixed-signal chip reports 'INCORRECT': two power nets, VDD_ANA and VDD_DIG, are shorted through a filler cell overlapping a domain boundary. After fixing the filler placement, LVS shows a second issue: a resistor's width in layout differs from the schematic. When both are fixed, the report shows 'CORRECT' with a smiley face, a famous Calibre detail.</p>
+</div>
+<h4 id="how-it-works_6">How it works<a class="headerlink" href="#how-it-works_6" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Extract devices (transistors, resistors, capacitors, diodes) and connectivity from layout.</li>
+<li>Read the reference netlist (from synthesis/P&amp;R or a schematic, converted to SPICE/CDL).</li>
+<li>Compare devices, nets, pins and parameters.</li>
+<li>Debug discrepancies: shorts, opens, missing devices, wrong sizes, pin mismatches.</li>
+<li>Repeat until the layout matches exactly.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical verification engineers, layout designers, analog and PD engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Debug shorts first: one power short can cause thousands of downstream mismatches.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>LVS has two halves: extraction (layer Boolean operations recognise devices, and connectivity follows contacts and vias) and comparison (graph matching of the two netlists, seeded by matching pin and net names).</li>
+<li>Text labels seed the comparison; without top-level labels the tool must match purely by structure, which is slower and produces confusing reports.</li>
+<li>Standard-cell chips are compared hierarchically using cell correspondence lists, so each library cell is verified once rather than millions of times.</li>
+<li>Power-aware netlists must include PG connections, well taps and physical-only cells (or exclude them consistently), otherwise thousands of false errors appear.</li>
+<li>In open-source flows, Magic extracts a SPICE netlist from the GDS and Netgen compares it with the Verilog netlist; KLayout also provides a scriptable LVS engine.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Debugging thousands of mismatches one by one; fix shorts first, then opens, then property errors, re-running between steps.</li>
+<li>Assuming LVS proves the logic is right; it only proves layout matches the netlist. Logic bugs need verification and LEC.</li>
+<li>Putting labels on the wrong layer, so ports silently fail to attach to their nets.</li>
+</ul>
+</div>
+<h3 id="try-it-open-source-lvs-with-netgen-sky130">Try it: Open-source LVS with Netgen (SKY130)<a class="headerlink" href="#try-it-open-source-lvs-with-netgen-sky130" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>netgen<span class="w"> </span>-batch<span class="w"> </span>lvs<span class="w"> </span><span class="s2">"top.spice top"</span><span class="w"> </span><span class="s2">"top.v top"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>sky130A_setup.tcl<span class="w"> </span>lvs_report.out
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_6">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_6" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>LVS (Layout Versus Schematic)</strong><br><em>Physical verification · Methodology · Signoff</em></td>
+<td>Comparing layout-extracted circuits with the reference netlist to prove they match.</td>
+<td>LVS confirms 2 billion transistors are connected exactly as designed.</td>
+</tr>
+<tr>
+<td><strong>CDL / SPICE netlist</strong><br><em>Circuit Description Language (Cadence); SPICE · File format · Signoff</em></td>
+<td>Transistor-level netlist format used as the LVS reference.</td>
+<td>The Verilog netlist is converted to CDL using the cells' CDL views.</td>
+</tr>
+<tr>
+<td><strong>Device extraction</strong><br><em>LVS step · Concept · Signoff</em></td>
+<td>Recognising transistors and other devices from overlapping layer shapes.</td>
+<td>Poly crossing diffusion inside an N-well is extracted as a PMOS.</td>
+</tr>
+<tr>
+<td><strong>Short and open</strong><br><em>LVS errors · Concept · Signoff</em></td>
+<td>A short joins nets that should be separate; an open breaks a net that should be connected.</td>
+<td>A via accidentally landing on a neighbouring wire creates a short.</td>
+</tr>
+<tr>
+<td><strong>Text labels and pins</strong><br><em>Layout practice · Concept · Signoff</em></td>
+<td>Labels in the layout that name ports and nets so LVS can match them to the netlist.</td>
+<td>A missing label on a top-level pin causes a port mismatch.</td>
+</tr>
+<tr>
+<td><strong>Netgen</strong><br><em>Open Circuit Design (Tim Edwards) · Tool · Signoff · Open source</em></td>
+<td>Open-source LVS netlist comparison tool used in open-source flows.</td>
+<td>LibreLane runs Netgen to compare Magic-extracted and Verilog netlists.</td>
+</tr>
+<tr>
+<td><strong>Hierarchical LVS</strong><br><em>LVS technique · Methodology · Signoff</em></td>
+<td>Comparing designs block by block to handle huge chips efficiently.</td>
+<td>Standard cells are verified once and treated as hierarchical cells in chip-level LVS.</td>
+</tr>
+<tr>
+<td><strong>Post-layout simulation</strong><br><em>Analog/custom practice · Methodology · Signoff</em></td>
+<td>Simulating the extracted netlist with parasitics to confirm analog performance.</td>
+<td>A bandgap reference is re-simulated after extraction to confirm accuracy.</td>
+</tr>
+<tr>
+<td><strong>Verilog-to-SPICE conversion (e.g. Calibre v2lvs)</strong><br><em>Siemens EDA and other vendors · Tool · Signoff · Commercial</em></td>
+<td>Converts the gate-level Verilog netlist into a SPICE/CDL netlist that references each cell's transistor-level view.</td>
+<td>v2lvs turns top.v into top.sp, which LVS compares with the layout.</td>
+</tr>
+<tr>
+<td><strong>LVS box / black-box cells</strong><br><em>LVS technique · Concept · Signoff</em></td>
+<td>Treating a verified IP block as a box so LVS checks only its pins and outer connections.</td>
+<td>A foundry SRAM is boxed, so chip LVS checks its pins without re-extracting its bit cells.</td>
+</tr>
+<tr>
+<td><strong>Soft connections (stamping errors)</strong><br><em>LVS check · Concept · Signoff</em></td>
+<td>Connections made only through high-resistance layers like wells; LVS flags them as weak, unintended links.</td>
+<td>Two VSS nets joined only through the substrate are flagged as a soft connection.</td>
+</tr>
+<tr>
+<td><strong>Parameter (property) mismatch</strong><br><em>LVS errors · Concept · Signoff</em></td>
+<td>Device found in both netlists but with different sizes, such as transistor width or resistor length.</td>
+<td>A resistor drawn 4 µm long but specified as 5 µm causes a property error.</td>
+</tr>
+<tr>
+<td><strong>Physical-only cells in LVS</strong><br><em>LVS practice · Concept · Signoff</em></td>
+<td>Fillers, decaps, taps and endcaps exist in layout but not in the logical netlist, so they must be handled consistently.</td>
+<td>Using the PG netlist with decap cells included removes 5,000 false 'extra device' errors.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="68-physical-verification-tools-calibre-ic-validator-pegasus-klayout">6.8 Physical Verification Tools: Calibre, IC Validator, Pegasus, KLayout<a class="headerlink" href="#68-physical-verification-tools-calibre-ic-validator-pegasus-klayout" title="Permanent link">&para;</a></h2>
+<p>Physical verification tools run DRC, LVS, ERC, fill and related checks. Siemens Calibre has long been the most widely used signoff standard; Synopsys IC Validator and Cadence Pegasus are major alternatives integrated with their P&amp;R tools. In open source, KLayout and Magic (with Netgen for LVS) support open PDKs.</p>
+<p><strong>Physical verification tool families</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Siemens Calibre</th>
+<th>Synopsys ICV / Cadence Pegasus</th>
+<th>KLayout + Magic/Netgen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Licence</strong></td>
+<td>Commercial</td>
+<td>Commercial</td>
+<td>Open source</td>
+</tr>
+<tr>
+<td><strong>Rule format</strong></td>
+<td>SVRF / TVF</td>
+<td>Vendor runset formats</td>
+<td>Ruby/Python scripts, Magic tech files</td>
+</tr>
+<tr>
+<td><strong>In-design use</strong></td>
+<td>RealTime in many editors</td>
+<td>Inside Fusion Compiler / Innovus, Virtuoso</td>
+<td>Inside LibreLane flows</td>
+</tr>
+<tr>
+<td><strong>Debug viewer</strong></td>
+<td>Calibre RVE</td>
+<td>ICV VUE / Pegasus debug</td>
+<td>KLayout marker browser</td>
+</tr>
+<tr>
+<td><strong>Typical users</strong></td>
+<td>Most foundry golden signoff</td>
+<td>Teams in Synopsys or Cadence flows</td>
+<td>Students and open shuttles</td>
+</tr>
+</tbody>
+</table>
+<p><em>The foundry's deck support, not the tool's features, usually decides which one is golden.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>These tools are the different certified inspection companies a builder can hire; the city (foundry) must accept their certificates.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A company using Innovus runs Pegasus for in-design DRC during routing to fix problems early, but uses Calibre for final signoff because the foundry's golden deck is Calibre. A Fusion Compiler user runs IC Validator live inside P&amp;R. A student taping out on GF180 uses KLayout DRC and Magic/Netgen LVS, all free.</p>
+</div>
+<h4 id="how-it-works_7">How it works<a class="headerlink" href="#how-it-works_7" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Pick the tool supported by the foundry's signoff decks for the node.</li>
+<li>Run in-design checks during P&amp;R to catch issues early.</li>
+<li>Run full signoff DRC/LVS on the final merged layout.</li>
+<li>Debug with integrated viewers (Calibre RVE, ICV VUE, KLayout marker browser).</li>
+<li>Archive reports for the tapeout record.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical verification engineers, PD engineers, layout designers and analog designers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Calibre experience is listed in a large share of PV job adverts; KLayout is the best free way to learn DRC concepts.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Tool choice is driven by foundry deck support: a node is signoff-ready only in tools for which the foundry publishes and qualifies runsets.</li>
+<li>Physical verification engines split layouts by region and hierarchy across hundreds or thousands of cores; full-chip runtimes range from hours to about a day.</li>
+<li>In-design checking (Calibre RealTime, IC Validator inside Fusion Compiler/ICC2, Pegasus inside Innovus and Virtuoso) catches DRCs during editing and shrinks the final fix loop.</li>
+<li>Results databases let viewers cross-probe each violation into the layout editor, which is how engineers work through thousands of markers efficiently.</li>
+<li>Open decks for SKY130, GF180MCU and IHP SG13G2 run in KLayout and Magic; Tiny Tapeout and other shuttles use them as automated precheck gates.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming a clean open-source DRC equals signoff for a commercial node; only the foundry's golden decks count there.</li>
+<li>Switching tools between stages without cross-checking; small deck differences can hide or invent violations.</li>
+<li>Not booking licences and compute in advance; final full-chip runs need many of both at the busiest moment.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_7">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_7" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Siemens Calibre (nmDRC, nmLVS)</strong><br><em>Siemens EDA (originally Mentor Graphics) · Tool · Signoff · Commercial</em></td>
+<td>Industry-leading physical verification platform for DRC, LVS, PERC, fill and DFM.</td>
+<td>Calibre nmDRC runs full-chip signoff on a 3 nm SoC across hundreds of cores.</td>
+</tr>
+<tr>
+<td><strong>Synopsys IC Validator (ICV)</strong><br><em>Synopsys · Tool · Signoff · Commercial</em></td>
+<td>Synopsys's physical verification tool with in-design checking inside Fusion Compiler/ICC2.</td>
+<td>ICV Live checks DRC while the engineer edits the layout.</td>
+</tr>
+<tr>
+<td><strong>Cadence Pegasus Verification System</strong><br><em>Cadence Design Systems · Tool · Signoff · Commercial</em></td>
+<td>Cadence's massively parallel physical verification tool, integrated with Innovus and Virtuoso.</td>
+<td>Pegasus runs DRC in the cloud on thousands of CPUs for fast turnaround.</td>
+</tr>
+<tr>
+<td><strong>KLayout</strong><br><em>Matthias Köfferlein and community · Tool · Signoff · Open source</em></td>
+<td>Open-source layout viewer/editor whose scriptable DRC and LVS engines run the open PDKs' signoff decks.</td>
+<td>IHP's open PDK supplies KLayout DRC and LVS decks for SG13G2.</td>
+</tr>
+<tr>
+<td><strong>Magic</strong><br><em>Open Circuit Design · Tool · Signoff · Open source</em></td>
+<td>Open-source layout tool with interactive DRC and the netlist extraction used for Netgen LVS in open flows.</td>
+<td>Tiny Tapeout uses Magic DRC as one of its pre-tapeout checks.</td>
+</tr>
+<tr>
+<td><strong>Calibre RVE / results viewers</strong><br><em>Siemens EDA and other vendors · Tool · Signoff · Commercial</em></td>
+<td>Results viewers that highlight each violation in the layout for debugging.</td>
+<td>Clicking an error in RVE zooms the layout editor to the exact location.</td>
+</tr>
+<tr>
+<td><strong>In-design physical verification</strong><br><em>EDA practice · Methodology · Physical Design</em></td>
+<td>Running signoff-quality checks during P&amp;R to fix issues before final signoff.</td>
+<td>Innovus calls Pegasus to fix DRCs right after routing.</td>
+</tr>
+<tr>
+<td><strong>Cloud-based signoff</strong><br><em>EDA vendors with AWS, Azure, Google Cloud · Methodology · Signoff</em></td>
+<td>Running large verification jobs on cloud compute to shorten turnaround.</td>
+<td>A start-up rents 4,000 cloud cores for a one-day final DRC run.</td>
+</tr>
+<tr>
+<td><strong>Mentor Graphics → Siemens EDA</strong><br><em>Siemens acquired Mentor Graphics in 2017 · Company · Whole flow</em></td>
+<td>Mentor Graphics, maker of Calibre, Questa and Tessent, became Siemens EDA.</td>
+<td>Older documents and scripts still refer to 'Mentor Calibre'.</td>
+</tr>
+<tr>
+<td><strong>Calibre RealTime</strong><br><em>Siemens EDA · Tool · Physical Design · Commercial</em></td>
+<td>Runs signoff-deck DRC instantly inside layout editors and P&amp;R tools while engineers edit.</td>
+<td>A layout designer sees a spacing error highlighted the moment a wire is moved.</td>
+</tr>
+<tr>
+<td><strong>Foundry deck availability</strong><br><em>Foundry ecosystem · Concept · Signoff</em></td>
+<td>Foundries publish and qualify rule decks per tool and node; this often decides which PV tool a team uses.</td>
+<td>A team picks Calibre because the foundry's newest option deck appears there first.</td>
+</tr>
+<tr>
+<td><strong>Open PDK rule decks</strong><br><em>SKY130, GF180MCU and IHP SG13G2 projects · Resource · Signoff · Open source</em></td>
+<td>Free DRC and LVS decks for KLayout, Magic and Netgen published with the open PDKs.</td>
+<td>A student runs the GF180MCU KLayout DRC deck before submitting to a shuttle.</td>
+</tr>
+<tr>
+<td><strong>Results databases (RDB, lyrdb)</strong><br><em>Calibre ASCII RDB; KLayout marker database · File format · Signoff</em></td>
+<td>Files listing every violation with rule name and coordinates, loaded into viewers for debugging.</td>
+<td>KLayout opens top_drc.lyrdb and steps through 42 markers one by one.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="69-dfm-and-lithography-friendly-design">6.9 DFM and Lithography-Friendly Design<a class="headerlink" href="#69-dfm-and-lithography-friendly-design" title="Permanent link">&para;</a></h2>
+<p>Design for manufacturability (DFM) goes beyond the minimum design rules to make layouts that print reliably and yield well. Because features are smaller than the light used to print them, shapes distort; lithography simulation finds 'hot spots' likely to fail. DFM fixes include wider spacing where possible, redundant vias, recommended rules, pattern matching and smart fill.</p>
+<p><strong>DRC vs DFM</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DRC (minimum rules)</th>
+<th>DFM (yield-aware)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Goal</strong></td>
+<td>Manufacturable at all</td>
+<td>Robust, high yield</td>
+</tr>
+<tr>
+<td><strong>Rules</strong></td>
+<td>Mandatory</td>
+<td>Recommended and pattern-based</td>
+</tr>
+<tr>
+<td><strong>Result</strong></td>
+<td>Pass or fail</td>
+<td>Scores, hot spots, priorities</td>
+</tr>
+<tr>
+<td><strong>Typical checks</strong></td>
+<td>Width, spacing, enclosure</td>
+<td>Litho hot spots, CAA, CMP, via doubling</td>
+</tr>
+<tr>
+<td><strong>When fixed</strong></td>
+<td>Always, before tapeout</td>
+<td>Where area and timing allow</td>
+</tr>
+</tbody>
+</table>
+<p><em>DRC asks 'is it legal?'; DFM asks 'will it yield well under real process variation?'.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Passing DRC is like meeting the minimum building code; DFM is building with extra margin so the house still stands well in a storm.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>After a clean DRC on a 7 nm block, Lea runs Calibre lithography-friendly design checks. They highlight 85 hot spots where two line-ends face each other closely and could bridge under process variation. The router re-spaces 70 of them; the rest are fixed manually. A month later the foundry's yield report shows no failures at those locations.</p>
+</div>
+<h4 id="how-it-works_8">How it works<a class="headerlink" href="#how-it-works_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Apply recommended (not just minimum) rules where area allows.</li>
+<li>Run lithography simulation / pattern matching to find hot spots.</li>
+<li>Insert redundant vias and widen/space wires where possible.</li>
+<li>Use timing- and density-aware fill.</li>
+<li>Analyse critical area and yield sensitivity; fix the worst areas.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>DFM engineers, PV engineers, foundry yield and OPC engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know OPC (optical proximity correction): the foundry modifies mask shapes so the printed result matches the intended design.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Process window is the range of focus and dose over which a pattern prints within tolerance; DFM aims to keep every pattern inside a comfortably wide window.</li>
+<li>OPC adds serifs, hammerheads and biasing to mask shapes; ILT computes full curvilinear shapes, now practical thanks to GPU computing and multi-beam mask writers.</li>
+<li>Critical-area analysis combines the area where a defect of a given size would cause a short or open with defect-size statistics to predict random yield loss.</li>
+<li>CMP modelling predicts copper thickness and erosion from density patterns; timing-aware fill and density balancing keep the resulting resistance variation in bounds.</li>
+<li>Foundries publish hot-spot pattern libraries learned from silicon; pattern matching against them is fast and is increasingly required at advanced nodes.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking DRC-clean guarantees yield; marginal patterns can pass DRC yet fail under process variation.</li>
+<li>Applying recommended rules everywhere regardless of cost; use them where area and timing allow.</li>
+<li>Confusing OPC (done by the foundry on mask data) with designer work; designers make layouts OPC-friendly, foundries perform OPC.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_8">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>DFM (Design for Manufacturability)</strong><br><em>Industry practice · Methodology · Signoff</em></td>
+<td>Layout practices and checks that improve yield beyond minimum design rules.</td>
+<td>Using wider spacing on non-critical wires reduces defect-related shorts.</td>
+</tr>
+<tr>
+<td><strong>Lithography hot spot</strong><br><em>DFM term · Concept · Signoff</em></td>
+<td>A layout pattern that may print incorrectly under process variation.</td>
+<td>Two closely facing line-ends may bridge when focus drifts.</td>
+</tr>
+<tr>
+<td><strong>Litho-friendly design checks</strong><br><em>Siemens Calibre LFD, Synopsys, Cadence litho analysis · Tool · Signoff · Commercial</em></td>
+<td>Tools simulating lithography on the design to identify hot spots.</td>
+<td>Calibre LFD simulates how each critical shape will print.</td>
+</tr>
+<tr>
+<td><strong>Pattern matching</strong><br><em>DFM technique · Methodology · Signoff</em></td>
+<td>Searching layouts for known problem patterns from a foundry library.</td>
+<td>The foundry's pattern library flags 20 instances of a known-bad via arrangement.</td>
+</tr>
+<tr>
+<td><strong>OPC (Optical Proximity Correction)</strong><br><em>Foundry mask preparation · Process · Fabrication</em></td>
+<td>Modifying mask shapes so printed features match intended layout despite optical effects.</td>
+<td>Corners get small 'serifs' on the mask so they print square on silicon.</td>
+</tr>
+<tr>
+<td><strong>Critical area analysis (CAA)</strong><br><em>Yield analysis · Methodology · Signoff</em></td>
+<td>Estimating how sensitive a layout is to random particles that cause shorts or opens.</td>
+<td>CAA shows tightly packed M2 contributes most to predicted yield loss.</td>
+</tr>
+<tr>
+<td><strong>Recommended rules</strong><br><em>Foundry DFM guidelines · Concept · Physical Design</em></td>
+<td>Optional, more conservative rules that improve yield when area allows.</td>
+<td>Using the recommended via enclosure where possible raises reliability.</td>
+</tr>
+<tr>
+<td><strong>Computational lithography</strong><br><em>Synopsys Proteus, Siemens Calibre, ASML Brion, NVIDIA cuLitho · Process · Fabrication</em></td>
+<td>Massive computing used by foundries to perform OPC and inverse lithography on masks.</td>
+<td>GPU-accelerated computational lithography cuts mask-preparation time.</td>
+</tr>
+<tr>
+<td><strong>Smart fill</strong><br><em>DFM technique · Methodology · Signoff</em></td>
+<td>Fill that balances density while limiting extra capacitance on timing-critical nets.</td>
+<td>Fill keeps away from a high-speed clock trunk to avoid adding delay.</td>
+</tr>
+<tr>
+<td><strong>Process window</strong><br><em>Lithography term · Concept · Fabrication</em></td>
+<td>The range of focus and exposure dose over which a pattern still prints within tolerance.</td>
+<td>A wide-spaced line pair prints well over a large focus range; a tight one fails at the edges.</td>
+</tr>
+<tr>
+<td><strong>Wire spreading and widening</strong><br><em>DFM technique · Methodology · Physical Design</em></td>
+<td>Post-route moves that spread wires into free tracks and widen them to reduce shorts and opens.</td>
+<td>Spreading moves 30 % of M2 wires one track apart where space is free.</td>
+</tr>
+<tr>
+<td><strong>Inverse lithography technology (ILT)</strong><br><em>Computational lithography · Process · Fabrication</em></td>
+<td>Computing ideal, often curvy mask shapes by working backwards from the desired printed pattern.</td>
+<td>Curvilinear ILT masks, written by multi-beam writers, improve the process window of contact layers.</td>
+</tr>
+<tr>
+<td><strong>CMP modelling</strong><br><em>DFM analysis · Methodology · Signoff</em></td>
+<td>Simulating chemical-mechanical polishing to predict metal thickness variation from layout density.</td>
+<td>CMP simulation flags a dense memory edge where copper dishing would raise resistance.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="610-final-data-gdsii-oasis-and-mask-data-preparation">6.10 Final Data: GDSII, OASIS and Mask Data Preparation<a class="headerlink" href="#610-final-data-gdsii-oasis-and-mask-data-preparation" title="Permanent link">&para;</a></h2>
+<p>The finished layout is delivered as GDSII or OASIS, binary files listing every polygon on every layer in a hierarchy of cells. GDSII dates from the 1970s and has size limits; OASIS is a newer, far more compact format. The foundry then performs mask data preparation: merging, OPC, fracturing shapes for mask writers and adding alignment marks.</p>
+<figure class="fig fig-diagram">
+<img src="img/06-10-final-data-gdsii-oasis-and-mask-data.svg" alt="Design teams own the steps up to upload; the foundry and mask shop own the rest." loading="lazy" width="1000" height="350">
+<figcaption><strong>From final layout to masks.</strong> Design teams own the steps up to upload; the foundry and mask shop own the rest.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>GDSII/OASIS is the final, print-ready PDF of a book; mask data prep is the printer converting it into printing plates.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>The final OASIS file for a 5 nm SoC is 25 GB, compared with over 150 GB as GDSII. Before delivery, the team checks layer mapping, the top-cell name, the bounding box and that all IP layouts are merged, then uploads it to the foundry's secure portal with a checksum. The foundry's mask shop runs OPC and fracturing, producing data for each of about 70+ masks.</p>
+</div>
+<h4 id="how-it-works_9">How it works<a class="headerlink" href="#how-it-works_9" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Merge all cell, macro and IP layouts into one hierarchy.</li>
+<li>Map tool layers to foundry GDS layer/datatype numbers.</li>
+<li>Stream out GDSII or OASIS; verify with an independent viewer and checks.</li>
+<li>Deliver via the foundry portal with checksums and a tapeout form.</li>
+<li>Foundry performs mask data preparation: Boolean ops, OPC, fracturing, mask writing.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PD and PV engineers, tapeout coordinators, foundry mask-data-prep engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know that GDSII stores layers as numbers (layer/datatype), so a layer map file is essential when moving between tools.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A GDSII file is a stream of records: structures (cells) contain BOUNDARY polygons, PATH wires, TEXT labels, and SREF/AREF references to other structures, so repeated content is stored once.</li>
+<li>Coordinates are integers in database units (1 nm is common); every vertex must land on the foundry manufacturing grid, such as 5 nm in SKY130.</li>
+<li>GDSII has no built-in compression and carries legacy record-size limits; OASIS (SEMI P39) adds compact encoding and repetitions, often shrinking files around ten times.</li>
+<li>Merging IP from different sources risks cell-name collisions that silently swap geometry; tools uniquify or prefix names, and final LVS/DRC must run on the merged file.</li>
+<li>Mask data prep derives mask layers from drawn layers, applies OPC or ILT, fractures shapes, and places the die in the reticle with scribe lines and marks using job decks.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Shipping a GDS that contains only cell references without their layouts; the foundry receives empty boxes.</li>
+<li>Using the wrong layer map, so shapes land on the wrong layer/datatype and vanish or short at the foundry.</li>
+<li>Skipping checksums on upload; truncated or corrupted files have delayed real tapeouts.</li>
+</ul>
+</div>
+<h3 id="try-it-merge-layouts-and-write-oasis-with-klayouts-python-api">Try it: Merge layouts and write OASIS with KLayout's Python API<a class="headerlink" href="#try-it-merge-layouts-and-write-oasis-with-klayouts-python-api" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">klayout.db</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">db</span>
+<span class="n">ly</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">Layout</span><span class="p">()</span>
+<span class="n">ly</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">"top_pnr.gds"</span><span class="p">)</span>    <span class="c1"># P&amp;R output with cell references</span>
+<span class="n">ly</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="s2">"cells.gds"</span><span class="p">)</span>      <span class="c1"># standard-cell layouts merged in</span>
+<span class="n">top</span> <span class="o">=</span> <span class="n">ly</span><span class="o">.</span><span class="n">cell</span><span class="p">(</span><span class="s2">"top"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">top</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">top</span><span class="o">.</span><span class="n">dbbox</span><span class="p">())</span>
+<span class="n">ly</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">"top_final.oas"</span><span class="p">)</span>  <span class="c1"># OASIS chosen from the extension</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_9">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GDSII (GDS Stream Format)</strong><br><em>Calma Company (1970s), later Cadence · File format · Signoff</em></td>
+<td>Long-standing binary format for hierarchical IC layout polygons and layers.</td>
+<td>Most open-source flows still write .gds files for tapeout.</td>
+</tr>
+<tr>
+<td><strong>OASIS</strong><br><em>SEMI P39 (2004) · File format · Signoff</em></td>
+<td>Open Artwork System Interchange Standard: compact successor to GDSII for huge layouts.</td>
+<td>A 150 GB GDSII becomes about 15-25 GB in OASIS.</td>
+</tr>
+<tr>
+<td><strong>Layer map</strong><br><em>PDK / foundry · File format · Signoff</em></td>
+<td>Table linking tool layer names to GDS layer and datatype numbers.</td>
+<td>met1 drawing maps to GDS layer 68 datatype 20 in SKY130.</td>
+</tr>
+<tr>
+<td><strong>Stream out</strong><br><em>Tool operation · Concept · Signoff</em></td>
+<td>Exporting the design database to a GDSII/OASIS file.</td>
+<td>The P&amp;R tool streams out the block with references to cell GDS.</td>
+</tr>
+<tr>
+<td><strong>Mask data preparation (MDP)</strong><br><em>Foundry / mask shop · Process · Fabrication</em></td>
+<td>Converting layout into mask-writer data: OPC, fracturing and job decks.</td>
+<td>MDP runs on large compute clusters for days on advanced nodes.</td>
+</tr>
+<tr>
+<td><strong>Fracturing</strong><br><em>Mask making · Process · Fabrication</em></td>
+<td>Breaking polygons into simple shapes a mask writer can expose.</td>
+<td>Curvy OPC shapes are fractured into many small rectangles or handled by multi-beam writers.</td>
+</tr>
+<tr>
+<td><strong>Multi-beam mask writer</strong><br><em>IMS Nanofabrication, NuFlare · Hardware · Fabrication</em></td>
+<td>Mask-writing machines using many parallel electron beams for complex patterns.</td>
+<td>Curvilinear masks for EUV are written with multi-beam tools.</td>
+</tr>
+<tr>
+<td><strong>Tapeout data package</strong><br><em>Foundry submission · Concept · Signoff</em></td>
+<td>Layout database plus forms, checklists, reports and checksums sent to the foundry.</td>
+<td>The package includes DRC/LVS summaries and the mask layer list.</td>
+</tr>
+<tr>
+<td><strong>Dummy and test structures</strong><br><em>Foundry and company practice · Concept · Signoff</em></td>
+<td>Process monitors, alignment marks and test keys placed on the die or in scribe lines.</td>
+<td>Ring oscillators in the scribe line help monitor process speed.</td>
+</tr>
+<tr>
+<td><strong>GDSII records (BOUNDARY, PATH, TEXT, SREF, AREF)</strong><br><em>GDSII format · Concept · Signoff</em></td>
+<td>Building blocks of a GDS file: polygons, wires, labels and single or array references to other cells.</td>
+<td>One AREF places a 64 × 64 array of bit cells without repeating their shapes.</td>
+</tr>
+<tr>
+<td><strong>Database units and grid</strong><br><em>Layout data · Concept · Signoff</em></td>
+<td>Coordinates are integers in database units, often 1 nm, and must align with the foundry manufacturing grid.</td>
+<td>With 1 nm units, a point at 12.345 µm is stored as 12345.</td>
+</tr>
+<tr>
+<td><strong>Cell-name collisions</strong><br><em>Layout merge issue · Concept · Signoff</em></td>
+<td>Two different cells with the same name from different sources; merging can silently replace one with the other.</td>
+<td>Two IPs each containing a cell named 'INV' are uniquified with prefixes before merging.</td>
+</tr>
+<tr>
+<td><strong>Layout merge</strong><br><em>Chip finishing · Methodology · Signoff</em></td>
+<td>Replacing cell and macro references from P&amp;R with their full GDS layouts to form one complete database.</td>
+<td>The P&amp;R GDS references 900 cell names; merging pulls in each cell's real polygons.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="611-tapeout-checklist-mask-sets-and-mpw-shuttles">6.11 Tapeout Checklist, Mask Sets and MPW Shuttles<a class="headerlink" href="#611-tapeout-checklist-mask-sets-and-mpw-shuttles" title="Permanent link">&para;</a></h2>
+<p>Tapeout is the hand-off of final data to the foundry. Before it, the team works through a long checklist. The foundry then makes a mask set (one photomask per patterned layer, often 50-80+ at advanced nodes) and runs wafers. For prototypes and education, multi-project wafer (MPW) shuttles let many designs share one mask set and cost.</p>
+<figure class="fig fig-diagram">
+<img src="img/06-11-tapeout-checklist-mask-sets-and-mpw.svg" alt="Fabrication alone often takes two to four months or more at advanced nodes." loading="lazy" width="1000" height="389">
+<figcaption><strong>From tapeout to first samples.</strong> Fabrication alone often takes two to four months or more at advanced nodes.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A full mask set is like chartering a private jet; an MPW shuttle is buying one seat on a scheduled flight with other passengers.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A university lab designs a 2 × 2 mm test chip. Rather than pay for a full 28 nm mask set, it buys space on a foundry MPW run through a broker such as Europractice. Tapeout is on 15 March; the shuttle's wafers return in about three months, are diced, and the lab receives 40 packaged samples. A start-up later uses a full mask set for production after the MPW prototype works.</p>
+</div>
+<h4 id="how-it-works_10">How it works<a class="headerlink" href="#how-it-works_10" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Complete the tapeout checklist: signoff results, IP versions, pad ring, seal ring, fill, logos, mask layers.</li>
+<li>Submit data and forms (mask order, layer list, options) to the foundry.</li>
+<li>Foundry checks data (jobview / DRC re-run), performs MDP and writes masks.</li>
+<li>Wafers start; some fabs offer 'hot lot' fast processing for prototypes.</li>
+<li>Wafers return for sort, dicing and packaging.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Tapeout coordinators, project managers, PD leads, foundry account managers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember a mask set is fixed per layer: a bug fix touching only metal layers requires only those masks to be remade.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Mask cost scales with layer count and complexity; leading-edge EUV mask sets cost many millions of dollars, which is why MPW shuttles and metal-only fixes matter.</li>
+<li>MPW shuttles run on fixed calendars, and customers usually pay by silicon area; production volumes need a dedicated mask set.</li>
+<li>Corner lots shift process parameters on purpose so engineers can prove the design works across the foundry's specified range before volume production.</li>
+<li>Foundries can hold some wafers before metal layers so a metal-only fix can be finished quickly after first silicon.</li>
+<li>A tapeout package typically includes the layout, the layer and option list, signoff summaries, IP version declarations and checksums.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking tapeout ends the work; bring-up, characterisation and possibly ECOs start straight away.</li>
+<li>Missing a shuttle deadline by days; late data normally rolls to the next scheduled run, often months later.</li>
+<li>Forgetting non-design items (seal ring, logos and IDs, fill, mask options) on the checklist, causing foundry rejections.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_10">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_10" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Tapeout checklist</strong><br><em>Company/foundry practice · Concept · Signoff</em></td>
+<td>Formal list of items verified before submission to the foundry.</td>
+<td>Item 87: 'all IP versions match foundry-qualified releases'.</td>
+</tr>
+<tr>
+<td><strong>Photomask (reticle)</strong><br><em>Mask shops (Photronics, Toppan, DNP, in-house foundry shops) · Concept · Fabrication</em></td>
+<td>A quartz plate carrying the pattern for one layer, projected onto the wafer.</td>
+<td>EUV masks are reflective multilayer mirrors rather than transparent plates.</td>
+</tr>
+<tr>
+<td><strong>Mask set</strong><br><em>Foundry · Concept · Fabrication</em></td>
+<td>All masks needed for a design; count and cost rise sharply at advanced nodes.</td>
+<td>A 180 nm design needs around 20-30 masks; an advanced node needs many more.</td>
+</tr>
+<tr>
+<td><strong>MPW (Multi-Project Wafer) shuttle</strong><br><em>Foundries and brokers · Concept · Fabrication</em></td>
+<td>Shared tapeout where many designs split one mask set and wafer run.</td>
+<td>TSMC's CyberShuttle and Europractice runs serve start-ups and universities.</td>
+</tr>
+<tr>
+<td><strong>Europractice</strong><br><em>EU-funded service (imec, Fraunhofer, STFC and partners) · Organisation · Fabrication</em></td>
+<td>Gives European universities and companies affordable access to EDA tools and MPW fabrication.</td>
+<td>A PhD student tapes out a 65 nm sensor readout chip through Europractice.</td>
+</tr>
+<tr>
+<td><strong>MOSIS</strong><br><em>USC Information Sciences Institute (MOSIS 2.0) · Organisation · Fabrication</em></td>
+<td>Long-running US MPW brokerage service for prototype and academic chips.</td>
+<td>Generations of US students fabricated class designs through MOSIS.</td>
+</tr>
+<tr>
+<td><strong>Hot lot</strong><br><em>Foundry service · Concept · Fabrication</em></td>
+<td>A wafer lot given priority through the fab for faster turnaround, at extra cost.</td>
+<td>A hot lot cuts prototype cycle time from 12 to 8 weeks.</td>
+</tr>
+<tr>
+<td><strong>Base layers vs metal layers</strong><br><em>Fab process · Concept · Fabrication</em></td>
+<td>Front-end layers form transistors; back-end metal layers form wiring; metal masks are cheaper to redo.</td>
+<td>Wafers can be held after base layers awaiting final metal masks.</td>
+</tr>
+<tr>
+<td><strong>Engineering samples and risk production</strong><br><em>Industry terms · Concept · Fabrication</em></td>
+<td>Early wafers for validation, before the process and product enter volume production.</td>
+<td>Risk-production wafers let customers start qualification early.</td>
+</tr>
+<tr>
+<td><strong>Cycle time</strong><br><em>Fab metric · Concept · Fabrication</em></td>
+<td>Time from wafer start to finished wafers, often 2-4+ months at advanced nodes.</td>
+<td>Over 1,000 process steps make advanced-node cycle times long.</td>
+</tr>
+<tr>
+<td><strong>Mask order form (layer list)</strong><br><em>Foundry submission · Concept · Fabrication</em></td>
+<td>Form listing which mask layers to make, process options, metal stack and revision codes.</td>
+<td>The form lists 62 layers, the 13-metal option and revision code A0.</td>
+</tr>
+<tr>
+<td><strong>Shuttle calendar</strong><br><em>Foundries and MPW brokers · Concept · Fabrication</em></td>
+<td>Published schedule of MPW data deadlines; missing one means waiting for the next run.</td>
+<td>The team plans backwards from the 15 March shuttle deadline, freezing RTL in January.</td>
+</tr>
+<tr>
+<td><strong>Corner (skew) lots</strong><br><em>Foundry service · Concept · Fabrication</em></td>
+<td>Wafers deliberately processed at fast and slow process extremes to characterise how silicon behaves at the corners.</td>
+<td>Corner-lot parts confirm the design still meets 1 GHz on slow-slow wafers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="612-late-ecos-and-metal-only-fixes">6.12 Late ECOs and Metal-Only Fixes<a class="headerlink" href="#612-late-ecos-and-metal-only-fixes" title="Permanent link">&para;</a></h2>
+<p>When a bug is found late, after base layers are already fabricated or even after first silicon, teams try to fix it by changing only metal layers. Spare cells or special gate-array ECO cells placed earlier are rewired to create new logic. A metal-only ECO is much faster and cheaper than a full respin because only a few masks change.</p>
+<p><strong>Three ways to fix a silicon bug</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Full respin</th>
+<th>Metal-only ECO</th>
+<th>Firmware workaround</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Masks changed</strong></td>
+<td>All or most layers</td>
+<td>A few metal/via layers</td>
+<td>None</td>
+</tr>
+<tr>
+<td><strong>Time</strong></td>
+<td>Months (full fab cycle)</td>
+<td>Weeks (with held wafers)</td>
+<td>Days</td>
+</tr>
+<tr>
+<td><strong>Cost</strong></td>
+<td>Highest</td>
+<td>Moderate</td>
+<td>Lowest</td>
+</tr>
+<tr>
+<td><strong>Can fix</strong></td>
+<td>Anything</td>
+<td>Logic within spare resources</td>
+<td>Bugs software can avoid</td>
+</tr>
+<tr>
+<td><strong>Downside</strong></td>
+<td>Schedule and money</td>
+<td>Limited by spare cells</td>
+<td>Lost features or speed</td>
+</tr>
+</tbody>
+</table>
+<p><em>Teams pick the cheapest option that fully fixes the problem.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like rewiring light switches in a finished house rather than rebuilding the walls: you only change the wiring, using spare switches you installed in advance.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Two weeks after first silicon, validation finds a USB controller FSM that hangs on a rare disconnect sequence. The fix needs 9 extra gates. The ECO team uses Conformal ECO to compute a patch, maps it onto spare cells near the FSM, and reroutes metal layers M1-M4 only. Four new masks are made instead of 60+, and wafers held after base layers are finished with the new metals, saving about two months.</p>
+</div>
+<h4 id="how-it-works_11">How it works<a class="headerlink" href="#how-it-works_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Fix the bug in RTL and verify it.</li>
+<li>Generate a minimal netlist patch with a functional ECO tool.</li>
+<li>Map new logic onto spare cells or gate-array ECO cells (metal-programmable).</li>
+<li>Reroute using only allowed metal/via layers; run full signoff on the result.</li>
+<li>Order only the changed masks; finish held wafers or start new ones.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>ECO specialists, PD and signoff engineers, design and validation leads.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Planning for ECOs (spare cells, wafer holds, spare metal resources) before tapeout is cheap insurance.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Spare-cell clusters (NAND, NOR, inverters, muxes, flops) are spread evenly before tapeout with their inputs tied to constants, so they cost little area and almost no power.</li>
+<li>Gate-array ECO cells sit in filler space and can become many functions by changing only metal, giving more flexibility than fixed spare gates.</li>
+<li>Functional ECO tools compute a minimal logical patch; physical ECO then maps it onto spares while honouring which layers are frozen.</li>
+<li>A FIB edit on a handful of chips can validate a fix within days before committing to new masks.</li>
+<li>Every ECO, however small, repeats LEC, STA, DRC, LVS and relevant reliability checks on the full database before masks are ordered.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Too few or badly spread spare cells, so the needed gate is far away and the ECO fails timing.</li>
+<li>Leaving spare-cell inputs floating; they leak current and fail ERC.</li>
+<li>Skipping full signoff for a 'trivial' ECO; small changes have caused shorts and timing failures in silicon.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_11">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_11" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Metal-only ECO</strong><br><em>Industry practice · Methodology · Signoff</em></td>
+<td>A design change implemented by modifying only metal and via layers.</td>
+<td>A metal fix changes 4 masks and saves millions compared with a full respin.</td>
+</tr>
+<tr>
+<td><strong>Spare cells</strong><br><em>PD practice · Concept · Physical Design</em></td>
+<td>Unused logic gates distributed across the die for future metal-only fixes.</td>
+<td>Each 100 × 100 µm area has a spare cluster of NANDs, NORs, inverters and flops.</td>
+</tr>
+<tr>
+<td><strong>Gate-array ECO cells</strong><br><em>Library feature · Concept · Physical Design</em></td>
+<td>Filler-like base cells that can become different logic gates by changing metal.</td>
+<td>ECO filler cells are turned into a new AND gate with an M1 change.</td>
+</tr>
+<tr>
+<td><strong>Wafer hold (pre-metal hold)</strong><br><em>Foundry service · Concept · Fabrication</em></td>
+<td>Pausing some wafers before metal layers so they can be finished with ECO masks.</td>
+<td>Ten wafers are held at M1 in case first silicon reveals a bug.</td>
+</tr>
+<tr>
+<td><strong>Respin types (full, base, metal)</strong><br><em>Industry terms · Concept · Signoff</em></td>
+<td>Respins differ by which layers change: all layers, base layers or only metals.</td>
+<td>A base-layer change for a transistor-level issue costs nearly a full respin.</td>
+</tr>
+<tr>
+<td><strong>ECO signoff</strong><br><em>Signoff practice · Methodology · Signoff</em></td>
+<td>Rerunning LEC, STA, DRC/LVS and other checks after every ECO.</td>
+<td>Even a 5-gate ECO gets full LEC and LVS before mask ordering.</td>
+</tr>
+<tr>
+<td><strong>Chicken bits / feature disable</strong><br><em>Design practice · Concept · RTL Design</em></td>
+<td>Hidden configuration bits that let firmware disable or work around risky features.</td>
+<td>A chicken bit disables a new prefetcher found to cause rare hangs.</td>
+</tr>
+<tr>
+<td><strong>Firmware / microcode workaround</strong><br><em>Industry practice · Methodology · Packaging &amp; Test</em></td>
+<td>Fixing or avoiding hardware bugs through software changes instead of silicon changes.</td>
+<td>A CPU errata is avoided with a microcode update shipped to customers.</td>
+</tr>
+<tr>
+<td><strong>Errata sheet</strong><br><em>Chip vendor documentation · Concept · Packaging &amp; Test</em></td>
+<td>Published list of known silicon bugs and their workarounds.</td>
+<td>A microcontroller errata notes that one ADC channel needs a longer sample time.</td>
+</tr>
+<tr>
+<td><strong>Spare-cell mapping</strong><br><em>Physical ECO tools · Methodology · Signoff</em></td>
+<td>Assigning each gate of an ECO patch to a nearby unused spare cell of a suitable type.</td>
+<td>The ECO tool maps a new AND gate onto a spare NAND plus inverter 15 µm away.</td>
+</tr>
+<tr>
+<td><strong>Base-layer freeze</strong><br><em>ECO constraint · Concept · Signoff</em></td>
+<td>Once transistor layers are fixed, every change must reuse existing devices and alter only wiring layers.</td>
+<td>After base-layer freeze, a fix needing a new flip-flop must use a spare flop.</td>
+</tr>
+<tr>
+<td><strong>Layer-restricted ECO</strong><br><em>ECO practice · Methodology · Signoff</em></td>
+<td>Limiting changes to as few, usually upper, metal layers as possible to reduce mask cost and risk.</td>
+<td>The fix is confined to M5-M7, so only five masks are remade.</td>
+</tr>
+<tr>
+<td><strong>FIB circuit edit</strong><br><em>Failure-analysis labs · Process · Packaging &amp; Test</em></td>
+<td>Using a focused ion beam to cut and reconnect wires on a few chips to test a fix before new masks.</td>
+<td>A FIB edit on three samples proves the USB fix in a week.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="613-reliability-aging-esd-latch-up-and-soft-errors">6.13 Reliability: Aging, ESD, Latch-up and Soft Errors<a class="headerlink" href="#613-reliability-aging-esd-latch-up-and-soft-errors" title="Permanent link">&para;</a></h2>
+<p>A chip must not only work on day one but keep working for years, often 10-15+ years in cars and industry. Reliability signoff checks aging (transistors slowing over time), electromigration, electrostatic discharge (ESD) protection on every pin, latch-up immunity and sensitivity to radiation-induced soft errors.</p>
+<figure class="fig fig-diagram">
+<img src="img/06-13-reliability-aging-esd-latch-up-and-soft.svg" alt="Screening removes early failures; signoff for aging and EM keeps wear-out beyond the product lifetime." loading="lazy" width="1000" height="162">
+<figcaption><strong>The &#x27;bathtub curve&#x27; of chip failures.</strong> Screening removes early failures; signoff for aging and EM keeps wear-out beyond the product lifetime.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Reliability is like designing a bridge not just to carry today's traffic, but to survive decades of rust, storms and the occasional lightning strike.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>For an automotive radar chip with a 15-year mission profile at up to 150 °C junction temperature, Maria's team times the design with aged libraries, checks EM at the hottest temperature, verifies ESD paths on all 120 pins with Calibre PERC, places guard rings to prevent latch-up, adds ECC on memories for soft errors, and qualifies samples to AEC-Q100 Grade 0.</p>
+</div>
+<h4 id="how-it-works_12">How it works<a class="headerlink" href="#how-it-works_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Define the mission profile: lifetime, temperature, voltage and usage.</li>
+<li>Analyse aging (BTI, HCI) and sign off timing with aged models or margins.</li>
+<li>Check EM and self-heating against lifetime limits.</li>
+<li>Design and verify ESD protection and latch-up prevention.</li>
+<li>Mitigate soft errors with ECC, parity, hardened flops or redundancy; qualify parts.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Reliability engineers, ESD/IO designers, PD and signoff engineers, product and quality engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the ESD models: HBM (human body model) and CDM (charged device model), defined in JEDEC/ESDA standards JS-001 and JS-002.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>BTI shifts threshold voltage under bias and heat and partly recovers when stress is removed; aging-aware STA uses libraries characterised for the end-of-life shift.</li>
+<li>FIT is failures per billion device-hours; automotive and data-centre products set FIT budgets that drive ECC, redundancy and soft-error mitigation.</li>
+<li>ESD protection needs a complete current path: pin diodes to the supply rails plus rail clamps between VDD and VSS; PERC-style checks verify these paths and their resistance.</li>
+<li>Latch-up immunity comes from well taps, guard rings and spacing near I/O; JESD78 defines latch-up testing with injected current and overvoltage.</li>
+<li>Soft-error rates grow with memory size; SECDED ECC on SRAM, parity on registers and bit interleaving against multi-bit upsets are standard defences.</li>
+<li>JEDEC guidance documents (JEP155 for HBM, JEP157 for CDM) argue that about 1 kV HBM and 250 V CDM are safe targets for modern controlled factories.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Signing off timing with fresh libraries only; end-of-life aging can slow paths enough to fail setup.</li>
+<li>Thinking ECC fixes everything; it protects memory words, not upsets in flops or logic.</li>
+<li>Treating ESD as only an I/O-library problem; core power clamps and cross-domain paths need checks too.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_12">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BTI (Bias Temperature Instability)</strong><br><em>Device reliability · Concept · Signoff</em></td>
+<td>Threshold voltage shift over time under bias and heat, slowing transistors (NBTI/PBTI).</td>
+<td>A path that passes at time zero might fail after 7 years without aging margin.</td>
+</tr>
+<tr>
+<td><strong>HCI (Hot Carrier Injection)</strong><br><em>Device reliability · Concept · Signoff</em></td>
+<td>Damage from high-energy carriers during switching that degrades transistors over time.</td>
+<td>Heavily switching clock buffers age faster due to HCI.</td>
+</tr>
+<tr>
+<td><strong>TDDB (Time-Dependent Dielectric Breakdown)</strong><br><em>Device reliability · Concept · Signoff</em></td>
+<td>Gradual breakdown of insulators under electric field, eventually causing shorts.</td>
+<td>Overvoltage on thin-oxide devices accelerates TDDB failure.</td>
+</tr>
+<tr>
+<td><strong>ESD (Electrostatic Discharge)</strong><br><em>Reliability · Concept · Signoff</em></td>
+<td>A sudden high-voltage static discharge that can destroy chip circuits through pins.</td>
+<td>Touching a pin can deliver several kilovolts without protection.</td>
+</tr>
+<tr>
+<td><strong>ESD standards (HBM, CDM)</strong><br><em>ANSI/ESDA/JEDEC JS-001 (HBM), JS-002 (CDM) · Standard · Packaging &amp; Test</em></td>
+<td>Test methods and classification levels for chip ESD robustness.</td>
+<td>A chip is rated 2 kV HBM and 500 V CDM.</td>
+</tr>
+<tr>
+<td><strong>Latch-up</strong><br><em>CMOS reliability; tested per JEDEC JESD78 · Concept · Signoff</em></td>
+<td>Parasitic thyristor turning on in CMOS, creating a short from VDD to ground.</td>
+<td>Guard rings around I/O cells prevent latch-up from injected currents.</td>
+</tr>
+<tr>
+<td><strong>Soft errors (SER)</strong><br><em>Radiation effects; JEDEC JESD89 · Concept · Spec/Architecture</em></td>
+<td>Bit flips caused by cosmic-ray neutrons or alpha particles, without permanent damage.</td>
+<td>Server memories use ECC to correct single-bit soft errors.</td>
+</tr>
+<tr>
+<td><strong>ECC (Error-Correcting Code)</strong><br><em>Reliability technique (e.g. SECDED Hamming codes) · Concept · RTL Design</em></td>
+<td>Extra bits that detect and correct errors in memories and buses.</td>
+<td>SECDED corrects any single-bit error and detects double-bit errors in a 64-bit word.</td>
+</tr>
+<tr>
+<td><strong>Mission profile</strong><br><em>Automotive/industrial practice · Concept · Spec/Architecture</em></td>
+<td>Description of how long, how hot and how hard a chip will operate over its life.</td>
+<td>A car chip's profile: 15 years, 8,000 operating hours, up to 150 °C.</td>
+</tr>
+<tr>
+<td><strong>Reliability analysis tools</strong><br><em>Synopsys (PrimeTime aging, PrimeSim Reliability, Ansys PathFinder), Cadence Legato/Voltus, Siemens Calibre PERC · Tool · Signoff · Commercial</em></td>
+<td>Tools for aging, EM, ESD and reliability analysis.</td>
+<td>PathFinder checks ESD current paths through the power network.</td>
+</tr>
+<tr>
+<td><strong>Aged libraries</strong><br><em>Library characterisation · Concept · Signoff</em></td>
+<td>Liberty timing characterised for end-of-life transistor shifts, used for aging-aware timing signoff.</td>
+<td>Signoff STA uses 10-year aged libraries for an industrial controller.</td>
+</tr>
+<tr>
+<td><strong>Guard rings</strong><br><em>Layout technique · Concept · Signoff</em></td>
+<td>Rings of heavily doped diffusion tied to supply around devices, collecting stray current to prevent latch-up.</td>
+<td>Double guard rings surround each I/O driver.</td>
+</tr>
+<tr>
+<td><strong>FIT rate</strong><br><em>Reliability metric · Concept · Spec/Architecture</em></td>
+<td>Failures In Time: expected failures per billion device-hours of operation.</td>
+<td>A 10 FIT budget means about one failure per 100 million device-hours.</td>
+</tr>
+<tr>
+<td><strong>ESD clamps and protection network</strong><br><em>I/O and ESD design · Concept · Signoff</em></td>
+<td>Diodes at each pin steer ESD current to supply rails, where rail clamps safely discharge it.</td>
+<td>A missing VDD-to-VSS clamp in one power domain is caught before tapeout.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="physical-design-floorplan-to-route.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Physical Design: Floorplan to Route">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                5. Physical Design: Floorplan to Route
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="fabrication-packaging-test-bring-up.html" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Fabrication, Packaging, Test &amp; Bring-up">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                7. Fabrication, Packaging, Test & Bring-up
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

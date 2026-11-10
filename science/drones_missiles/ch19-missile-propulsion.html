@@ -1,0 +1,4067 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch19-missile-propulsion.html">
+  
+  
+    <link rel="prev" href="ch18-missile-aerodynamics.html">
+  
+  
+    <link rel="next" href="ch20-guidance-navigation-and-control.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>19. Missile Propulsion - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-prop_fundamentals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              19. Missile Propulsion
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch19-missile-propulsion.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-prop_fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1 Rocket Propulsion Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.1 Rocket Propulsion Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1911-the-thrust-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.1 The Thrust Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1912-specific-impulse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.2 Specific Impulse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1913-the-tsiolkovsky-rocket-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.3 The Tsiolkovsky Rocket Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1914-characteristic-velocity-and-thrust-coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.4 Characteristic Velocity and Thrust Coefficient
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1915-nozzle-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.5 Nozzle Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1916-performance-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.6 Performance Comparison Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-srm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2 Solid Rocket Motors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.2 Solid Rocket Motors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1921-propellant-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.1 Propellant Formulations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1922-propellant-grain-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.2 Propellant Grain Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1923-burn-rate-and-internal-ballistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.3 Burn Rate and Internal Ballistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1924-combustion-instability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.4 Combustion Instability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1925-motor-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.5 Motor Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1926-motor-casing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.6 Motor Casing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1927-nozzle-design-and-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.7 Nozzle Design and Materials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1928-insulation-and-thermal-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.8 Insulation and Thermal Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1929-ignition-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.9 Ignition Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3 Liquid Rocket Engines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.3 Liquid Rocket Engines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1931-propellant-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.1 Propellant Combinations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1932-turbopump-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.2 Turbopump Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1933-combustion-chamber-and-injector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.3 Combustion Chamber and Injector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1934-regenerative-cooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.4 Regenerative Cooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1935-pressure-fed-vs-pump-fed-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.5 Pressure-Fed vs Pump-Fed Trade-Off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1936-throttling-and-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.6 Throttling and Restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-airbreathing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4 Air-Breathing Propulsion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.4 Air-Breathing Propulsion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1941-ramjet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4.1 Ramjet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1942-scramjet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4.2 Scramjet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1943-turbojet-and-turbofan-for-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4.3 Turbojet and Turbofan for Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-advanced_prop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5 Combined Cycle and Advanced Propulsion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.5 Combined Cycle and Advanced Propulsion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1951-turbine-based-combined-cycle-tbcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.1 Turbine-Based Combined Cycle (TBCC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1952-rocket-based-combined-cycle-rbcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.2 Rocket-Based Combined Cycle (RBCC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1953-rotating-detonation-engine-rde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.3 Rotating Detonation Engine (RDE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1954-pulsed-detonation-engine-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.4 Pulsed Detonation Engine (PDE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1955-nuclear-thermal-propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.5 Nuclear Thermal Propulsion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-nozzle_tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6 Nozzle Design and Thrust Vector Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.6 Nozzle Design and Thrust Vector Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1961-bell-nozzle-contour-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6.1 Bell Nozzle Contour Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1962-extendible-exit-cone-eec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6.2 Extendible Exit Cone (EEC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1963-thrust-vector-control-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6.3 Thrust Vector Control Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-prop_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7 Propulsion Testing and Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.7 Propulsion Testing and Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1971-static-fire-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.1 Static Fire Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1972-altitude-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.2 Altitude Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1973-motor-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.3 Motor Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1974-uncertainty-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.4 Uncertainty Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-prop_integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8 Propulsion System Design Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.8 Propulsion System Design Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1981-motor-mass-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.1 Motor Mass Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1982-stage-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.2 Stage Optimisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1983-volumetric-efficiency-and-packaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.3 Volumetric Efficiency and Packaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1984-thermal-environment-and-insulation-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.4 Thermal Environment and Insulation Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-prop_fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1 Rocket Propulsion Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.1 Rocket Propulsion Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1911-the-thrust-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.1 The Thrust Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1912-specific-impulse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.2 Specific Impulse
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1913-the-tsiolkovsky-rocket-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.3 The Tsiolkovsky Rocket Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1914-characteristic-velocity-and-thrust-coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.4 Characteristic Velocity and Thrust Coefficient
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1915-nozzle-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.5 Nozzle Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1916-performance-comparison-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.1.6 Performance Comparison Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-srm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2 Solid Rocket Motors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.2 Solid Rocket Motors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1921-propellant-formulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.1 Propellant Formulations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1922-propellant-grain-geometry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.2 Propellant Grain Geometry
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1923-burn-rate-and-internal-ballistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.3 Burn Rate and Internal Ballistics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1924-combustion-instability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.4 Combustion Instability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1925-motor-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.5 Motor Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1926-motor-casing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.6 Motor Casing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1927-nozzle-design-and-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.7 Nozzle Design and Materials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1928-insulation-and-thermal-protection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.8 Insulation and Thermal Protection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1929-ignition-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.2.9 Ignition Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-lre" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3 Liquid Rocket Engines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.3 Liquid Rocket Engines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1931-propellant-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.1 Propellant Combinations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1932-turbopump-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.2 Turbopump Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1933-combustion-chamber-and-injector" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.3 Combustion Chamber and Injector
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1934-regenerative-cooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.4 Regenerative Cooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1935-pressure-fed-vs-pump-fed-trade-off" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.5 Pressure-Fed vs Pump-Fed Trade-Off
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1936-throttling-and-restart" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.3.6 Throttling and Restart
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-airbreathing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4 Air-Breathing Propulsion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.4 Air-Breathing Propulsion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1941-ramjet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4.1 Ramjet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1942-scramjet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4.2 Scramjet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1943-turbojet-and-turbofan-for-missiles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.4.3 Turbojet and Turbofan for Missiles
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-advanced_prop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5 Combined Cycle and Advanced Propulsion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.5 Combined Cycle and Advanced Propulsion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1951-turbine-based-combined-cycle-tbcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.1 Turbine-Based Combined Cycle (TBCC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1952-rocket-based-combined-cycle-rbcc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.2 Rocket-Based Combined Cycle (RBCC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1953-rotating-detonation-engine-rde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.3 Rotating Detonation Engine (RDE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1954-pulsed-detonation-engine-pde" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.4 Pulsed Detonation Engine (PDE)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1955-nuclear-thermal-propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.5.5 Nuclear Thermal Propulsion
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-nozzle_tvc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6 Nozzle Design and Thrust Vector Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.6 Nozzle Design and Thrust Vector Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1961-bell-nozzle-contour-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6.1 Bell Nozzle Contour Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1962-extendible-exit-cone-eec" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6.2 Extendible Exit Cone (EEC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1963-thrust-vector-control-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.6.3 Thrust Vector Control Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-prop_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7 Propulsion Testing and Evaluation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.7 Propulsion Testing and Evaluation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1971-static-fire-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.1 Static Fire Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1972-altitude-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.2 Altitude Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1973-motor-failure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.3 Motor Failure Modes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1974-uncertainty-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.7.4 Uncertainty Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-prop_integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8 Propulsion System Design Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="19.8 Propulsion System Design Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1981-motor-mass-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.1 Motor Mass Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1982-stage-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.2 Stage Optimisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1983-volumetric-efficiency-and-packaging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.3 Volumetric Efficiency and Packaging
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1984-thermal-environment-and-insulation-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        19.8.4 Thermal Environment and Insulation Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-missile_prop">Chapter 19: Missile Propulsion<a class="headerlink" href="#ch-missile_prop" title="Permanent link">&para;</a></h1>
+<h2 id="sec-prop_fundamentals"><span class="secnum">19.1</span> Rocket Propulsion Fundamentals<a class="headerlink" href="#sec-prop_fundamentals" title="Permanent link">&para;</a></h2>
+<p>Missile propulsion encompasses the complete science of converting stored chemical (or other) energy into directed thrust to accelerate a vehicle along a prescribed trajectory. The physical principles governing all rocket systems derive from Newton’s second and third laws combined with thermodynamic analyses of high-temperature, high-pressure combustion processes.</p>
+<h3 id="1911-the-thrust-equation"><span class="secnum">19.1.1</span> The Thrust Equation<a class="headerlink" href="#1911-the-thrust-equation" title="Permanent link">&para;</a></h3>
+<p>The thrust produced by a rocket nozzle arises from two contributions: the momentum flux of exhaust gases leaving the nozzle exit plane, and the pressure imbalance between the nozzle exit and the ambient atmosphere acting on the exit area. The general thrust equation is</p>
+<div id="eq-thrust_general"></div>
+<div class="arithmatex">\[F = \dot{m}\,V_e + (P_e - P_a)\,A_e\tag{19.1}\]</div>
+<p>where <span class="arithmatex">\(\dot{m}\)</span> is the propellant mass flow rate (k g s), <span class="arithmatex">\(V_e\)</span> the effective exhaust velocity at the nozzle exit plane (m s), <span class="arithmatex">\(P_e\)</span> the static pressure at the nozzle exit (P a), <span class="arithmatex">\(P_a\)</span> the ambient (freestream) pressure (P a), and <span class="arithmatex">\(A_e\)</span> the nozzle exit area (m 2).</p>
+<p>The first term, <span class="arithmatex">\(\dot{m}V_e\)</span>, is the momentum thrust; the second term, <span class="arithmatex">\((P_e-P_a)A_e\)</span>, is the pressure thrust. At the design altitude of a nozzle (<span class="arithmatex">\(P_e = P_a\)</span>), pressure thrust vanishes and the nozzle is said to be <em>perfectly expanded</em>. Over-expanded flow (<span class="arithmatex">\(P_e &lt; P_a\)</span>) produces oblique shocks at the nozzle lip; under-expanded flow (<span class="arithmatex">\(P_e &gt; P_a\)</span>) produces expansion fans.</p>
+<p>The <strong>effective exhaust velocity</strong> <span class="arithmatex">\(c\)</span> or <span class="arithmatex">\(V_{eff}\)</span> combines both terms: <span id="eq-effective_ve"></span></p>
+<div class="arithmatex">\[c = V_e + \frac{(P_e - P_a)\,A_e}{\dot{m}}\tag{19.2}\]</div>
+<p>so that <span class="arithmatex">\(F = \dot{m}\,c\)</span>.</p>
+<h3 id="1912-specific-impulse"><span class="secnum">19.1.2</span> Specific Impulse<a class="headerlink" href="#1912-specific-impulse" title="Permanent link">&para;</a></h3>
+<p>Specific impulse <span class="arithmatex">\(I_{sp}\)</span> is the single most important figure of merit for any rocket propellant combination or engine cycle. It is defined as the thrust produced per unit weight flow of propellant:</p>
+<div id="eq-isp_def"></div>
+<div class="arithmatex">\[I_{sp} = \frac{F}{\dot{m}\,g_0}\tag{19.3}\]</div>
+<p>where <span class="arithmatex">\(g_0 = 9.80665\,\text{m s 2}\)</span> is the standard sea-level gravitational acceleration. This definition makes <span class="arithmatex">\(I_{sp}\)</span> dimensionally a time (seconds) and independent of the unit system. Equivalently,</p>
+<div id="eq-isp_c"></div>
+<div class="arithmatex">\[I_{sp} = \frac{c}{g_0}\tag{19.4}\]</div>
+<p>High <span class="arithmatex">\(I_{sp}\)</span> means more thrust per kilogram of propellant consumed. Typical values range from <span class="arithmatex">\(\sim\)</span>230 s for early double-base propellants, to <span class="arithmatex">\(\sim\)</span>270 s for composite HTPB/AP/Al propellants, <span class="arithmatex">\(\sim\)</span>340 s for storable liquid bipropellants, and up to <span class="arithmatex">\(\sim\)</span>460 s vacuum for cryogenic LOX/LH<span class="arithmatex">\(_2\)</span>.</p>
+<h3 id="1913-the-tsiolkovsky-rocket-equation"><span class="secnum">19.1.3</span> The Tsiolkovsky Rocket Equation<a class="headerlink" href="#1913-the-tsiolkovsky-rocket-equation" title="Permanent link">&para;</a></h3>
+<p>The ideal velocity increment <span class="arithmatex">\(\Delta V\)</span> achievable by a rocket burning from initial mass <span class="arithmatex">\(m_0\)</span> to burnout mass <span class="arithmatex">\(m_f\)</span> in a gravity-free, drag-free environment is <span id="eq-tsiolkovsky"></span></p>
+<div class="arithmatex">\[\Delta V = I_{sp}\,g_0\,\ln\!\left(\frac{m_0}{m_f}\right)
+  = c\,\ln\!\left(\frac{m_0}{m_f}\right)\tag{19.5}\]</div>
+<p>The mass ratio <span class="arithmatex">\(R = m_0/m_f\)</span> is the key structural efficiency parameter. For a single-stage ballistic missile with <span class="arithmatex">\(\Delta V = 7\,\text{k m s}\)</span> and <span class="arithmatex">\(I_{sp} = 290\,\text{s}\)</span>, the required mass ratio is:</p>
+<div class="arithmatex">\[R = \exp\!\left(\frac{\Delta V}{I_{sp}\,g_0}\right)
+  = \exp\!\left(\frac{7000}{290 \times 9.807}\right) \approx 11.5\]</div>
+<p>meaning the propellant mass must be <span class="arithmatex">\(\approx 91\%\)</span> of launch mass — a severe constraint driving structural mass minimisation (thin CFRP casings, lightweight warhead structures).</p>
+<h3 id="1914-characteristic-velocity-and-thrust-coefficient"><span class="secnum">19.1.4</span> Characteristic Velocity and Thrust Coefficient<a class="headerlink" href="#1914-characteristic-velocity-and-thrust-coefficient" title="Permanent link">&para;</a></h3>
+<p>The <strong>characteristic velocity</strong> <span class="arithmatex">\(c^*\)</span> characterises the thermochemical efficiency of the propellant and the combustion chamber independently of nozzle geometry: <span id="eq-cstar"></span></p>
+<div class="arithmatex">\[c^* = \frac{P_c\,A_t}{\dot{m}}\tag{19.7}\]</div>
+<p>where <span class="arithmatex">\(P_c\)</span> is the chamber stagnation pressure and <span class="arithmatex">\(A_t\)</span> is the nozzle throat area. Theoretically, <span id="eq-cstar_theoretical"></span></p>
+<div class="arithmatex">\[c^*_{th} = \frac{\sqrt{\gamma R_u T_c / M_w}}{\gamma
+  \left(\frac{2}{\gamma+1}\right)^{(\gamma+1)/[2(\gamma-1)]}}\tag{19.8}\]</div>
+<p>where <span class="arithmatex">\(T_c\)</span> is the adiabatic flame temperature, <span class="arithmatex">\(M_w\)</span> the mean molecular weight of products, <span class="arithmatex">\(\gamma\)</span> the effective ratio of specific heats, and <span class="arithmatex">\(R_u\)</span> the universal gas constant. The combustion efficiency <span class="arithmatex">\(\eta_{c^*} = c^*_{measured}/c^*_{th}\)</span> is typically 0.94–0.98 for well-designed motors.</p>
+<p>The <strong>thrust coefficient</strong> <span class="arithmatex">\(C_F\)</span> relates thrust to chamber pressure and throat area: <span id="eq-CF"></span></p>
+<div class="arithmatex">\[C_F = \frac{F}{P_c\,A_t}\tag{19.9}\]</div>
+<p>Combining with Eq. <a href="app-a-mathematical-foundations.html#eq-cstar">(A.100)</a>: <span class="arithmatex">\(F = C_F\,c^*\,\dot{m}\)</span> and <span class="arithmatex">\(I_{sp} = C_F\,c^*/g_0\)</span>. The theoretical thrust coefficient for isentropic nozzle flow is:</p>
+<div id="eq-CF_theory"></div>
+<div class="arithmatex">\[C_{F,th} = \sqrt{\frac{2\gamma^2}{\gamma-1}\left(\frac{2}{\gamma+1}\right)^{(\gamma+1)/(\gamma-1)}
+  \left[1 - \left(\frac{P_e}{P_c}\right)^{(\gamma-1)/\gamma}\right]}
+  + \frac{(P_e-P_a)\,A_e}{P_c\,A_t}\tag{19.10}\]</div>
+<p>At vacuum (<span class="arithmatex">\(P_a = 0\)</span>) and optimal expansion, <span class="arithmatex">\(C_F\)</span> reaches its maximum. Typical values: <span class="arithmatex">\(C_F = 1.5\)</span>–<span class="arithmatex">\(1.7\)</span> at altitude for composite propellants.</p>
+<h3 id="1915-nozzle-theory"><span class="secnum">19.1.5</span> Nozzle Theory<a class="headerlink" href="#1915-nozzle-theory" title="Permanent link">&para;</a></h3>
+<h4 id="areamach-relation">Area–Mach Relation<a class="headerlink" href="#areamach-relation" title="Permanent link">&para;</a></h4>
+<p>The isentropic area–Mach relation governs the flow area at any cross-section: <span id="eq-area_mach"></span></p>
+<div class="arithmatex">\[\frac{A}{A_t} = \frac{1}{M}\left[\frac{2}{\gamma+1}
+  \left(1+\frac{\gamma-1}{2}M^2\right)\right]^{(\gamma+1)/[2(\gamma-1)]}\tag{19.11}\]</div>
+<p>At the throat <span class="arithmatex">\(M=1\)</span> and <span class="arithmatex">\(A = A_t\)</span>. The expansion ratio <span class="arithmatex">\(\varepsilon = A_e/A_t\)</span> uniquely determines the exit Mach number <span class="arithmatex">\(M_e\)</span> (supersonic solution). For <span class="arithmatex">\(\gamma = 1.3\)</span> and <span class="arithmatex">\(\varepsilon = 8\)</span>: <span class="arithmatex">\(M_e \approx 3.4\)</span>.</p>
+<h4 id="nozzle-contour-bell-nozzle">Nozzle Contour: Bell Nozzle<a class="headerlink" href="#nozzle-contour-bell-nozzle" title="Permanent link">&para;</a></h4>
+<p>A conical nozzle of half-angle <span class="arithmatex">\(\alpha = 15°\)</span> has a divergence efficiency of <span class="arithmatex">\(\lambda = (1+\cos\alpha)/2 = 0.983\)</span>. To reduce nozzle length while maintaining high efficiency, <strong>bell nozzles</strong> are used. The Rao optimum bell nozzle achieves near-ideal flow with a contour that:</p>
+<ol>
+<li>
+<p>Expands rapidly (high expansion angle, <span class="arithmatex">\(\sim\)</span>25–45°) near the throat</p>
+</li>
+<li>
+<p>Transitions smoothly to a low exit angle (<span class="arithmatex">\(\sim\)</span>8–12°) at the exit plane</p>
+</li>
+<li>
+<p>Uses a parabolic approximation for the contour</p>
+</li>
+</ol>
+<p>An <strong>80% bell nozzle</strong> has a length equal to 80% of the equivalent conical nozzle with the same expansion ratio. Despite its shorter length, the 80% bell achieves <span class="arithmatex">\(&gt;99\%\)</span> of the conical nozzle’s ideal thrust, making it the standard choice for most modern missile motors.</p>
+<h4 id="combustion-temperature-and-dissociation">Combustion Temperature and Dissociation<a class="headerlink" href="#combustion-temperature-and-dissociation" title="Permanent link">&para;</a></h4>
+<p>The adiabatic flame temperature <span class="arithmatex">\(T_{ad}\)</span> for HTPB/AP/Al at <span class="arithmatex">\(O/F = 2.1\)</span>, <span class="arithmatex">\(P_c = 7\,\text{M P a}\)</span> is approximately 3,500 K. However, at these temperatures significant <strong>dissociation</strong> occurs, absorbing energy. NASA CEA (Chemical Equilibrium with Applications) equilibrium calculations account for 40+ species including HCl, CO, CO<span class="arithmatex">\(_2\)</span>, H<span class="arithmatex">\(_2\)</span>O, H<span class="arithmatex">\(_2\)</span>, OH, O, H, Al<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_3\)</span>. The effective <span class="arithmatex">\(\gamma\)</span> ranges from 1.16–1.24 for composite propellants (lower than 1.4 for air because of the complex product mixture).</p>
+<h3 id="1916-performance-comparison-table"><span class="secnum">19.1.6</span> Performance Comparison Table<a class="headerlink" href="#1916-performance-comparison-table" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-prop_comparison">
+<div class="tbl-caption"><strong>Table 19.1.</strong> Comparative Performance of Missile Propulsion Systems</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>System</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(I_{sp}\)</span> (s)</strong></th>
+<th style="text-align: center;"><strong>T/W</strong></th>
+<th style="text-align: center;"><strong>Mach Range</strong></th>
+<th style="text-align: center;"><strong>Restartable</strong></th>
+<th style="text-align: left;"><strong>Applications</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">SRM (composite)</td>
+<td style="text-align: center;">250–285</td>
+<td style="text-align: center;">50–200</td>
+<td style="text-align: center;">0–6</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: left;">SAM, AAM, ICBM boost</td>
+</tr>
+<tr>
+<td style="text-align: left;">SRM (NEPE)</td>
+<td style="text-align: center;">275–290</td>
+<td style="text-align: center;">50–200</td>
+<td style="text-align: center;">0–6</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: left;">Trident II, Minuteman</td>
+</tr>
+<tr>
+<td style="text-align: left;">LRE (storable)</td>
+<td style="text-align: center;">290–320</td>
+<td style="text-align: center;">50–120</td>
+<td style="text-align: center;">0–4</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: left;">SCUD, DF-21, cruise</td>
+</tr>
+<tr>
+<td style="text-align: left;">LRE (cryogenic)</td>
+<td style="text-align: center;">380–460</td>
+<td style="text-align: center;">40–100</td>
+<td style="text-align: center;">0–5</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: left;">ICBM upper stage</td>
+</tr>
+<tr>
+<td style="text-align: left;">Liquid ramjet</td>
+<td style="text-align: center;">800–1200</td>
+<td style="text-align: center;">5–15</td>
+<td style="text-align: center;">2–4</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: left;">P-270 Moskit, MBDA Meteor</td>
+</tr>
+<tr>
+<td style="text-align: left;">Solid fuel ramjet</td>
+<td style="text-align: center;">500–700</td>
+<td style="text-align: center;">5–10</td>
+<td style="text-align: center;">2–3.5</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: left;">Sea Dart, ASRAAM devel.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Scramjet</td>
+<td style="text-align: center;">800–2000</td>
+<td style="text-align: center;">2–8</td>
+<td style="text-align: center;">5–15</td>
+<td style="text-align: center;">Poss.</td>
+<td style="text-align: left;">X-51A, future hypersonics</td>
+</tr>
+<tr>
+<td style="text-align: left;">Turbojet</td>
+<td style="text-align: center;">3000–4000</td>
+<td style="text-align: center;">3–8</td>
+<td style="text-align: center;">0–0.9</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: left;">Tomahawk, SCALP/Storm Shadow</td>
+</tr>
+<tr>
+<td style="text-align: left;">Turbofan</td>
+<td style="text-align: center;">4000–6000</td>
+<td style="text-align: center;">2–5</td>
+<td style="text-align: center;">0–0.85</td>
+<td style="text-align: center;">Yes</td>
+<td style="text-align: left;">Tomahawk BGM-109</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-srm"><span class="secnum">19.2</span> Solid Rocket Motors<a class="headerlink" href="#sec-srm" title="Permanent link">&para;</a></h2>
+<p>Solid rocket motors (SRMs) dominate tactical and strategic missile propulsion due to their simplicity, storage stability, high reliability, and high thrust-to-weight ratio. They consist of a propellant grain cast or pressed into a cylindrical casing, ignited at launch, and burned through to completion. There are no valves, pumps, or turbines.</p>
+<h3 id="1921-propellant-formulations"><span class="secnum">19.2.1</span> Propellant Formulations<a class="headerlink" href="#1921-propellant-formulations" title="Permanent link">&para;</a></h3>
+<h4 id="htpbapaluminium-composite-propellant">HTPB/AP/Aluminium (Composite Propellant)<a class="headerlink" href="#htpbapaluminium-composite-propellant" title="Permanent link">&para;</a></h4>
+<p>The most widely used tactical missile propellant is the <strong>HTPB/AP/Al</strong> system:</p>
+<ul>
+<li>
+<p><strong>Hydroxyl-Terminated Polybutadiene (HTPB)</strong> binder: 12–16% by mass; provides structural integrity and acts as a supplementary fuel; cross-linked with isocyanate (MDI or IPDI) to form an elastomeric matrix.</p>
+</li>
+<li>
+<p><strong>Ammonium Perchlorate (AP), (NH<span class="arithmatex">\(_4\)</span>ClO<span class="arithmatex">\(_4\)</span>)</strong>: 68–72% by mass; primary oxidiser; bimodal or trimodal particle size distribution (200 <span class="arithmatex">\(\mu\)</span>m coarse + 20 <span class="arithmatex">\(\mu\)</span>m fine) to maximise packing density.</p>
+</li>
+<li>
+<p><strong>Aluminium powder</strong>: 2–20% by mass; metallic fuel; increases <span class="arithmatex">\(T_{ad}\)</span> by 300–500 K; increases <span class="arithmatex">\(I_{sp}\)</span> by 15–25 s; produces Al<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_3\)</span> slag.</p>
+</li>
+<li>
+<p><strong>Additives</strong>: iron oxide (Fe<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_3\)</span>) burn rate catalyst 0.1–1%; bonding agents (HX-752, MAPO); stabilisers; plasticisers (DOA/TEGDN).</p>
+</li>
+</ul>
+<p>Performance: <span class="arithmatex">\(I_{sp} = 250\)</span>–<span class="arithmatex">\(270\)</span> s (sea level), <span class="arithmatex">\(\rho = 1750\)</span>–<span class="arithmatex">\(1870\)</span> kg/m<span class="arithmatex">\(^3\)</span>, <span class="arithmatex">\(T_c \approx 3500\)</span> K, <span class="arithmatex">\(r \approx 8\)</span>–<span class="arithmatex">\(15\)</span> mm/s at 7 MPa, <span class="arithmatex">\(n \approx 0.3\)</span>–<span class="arithmatex">\(0.4\)</span>.</p>
+<h4 id="nepe-nitrate-ester-plasticised-polyether">NEPE (Nitrate Ester Plasticised Polyether)<a class="headerlink" href="#nepe-nitrate-ester-plasticised-polyether" title="Permanent link">&para;</a></h4>
+<p>NEPE propellants use an energetic binder (polyethylene glycol or polyethylene-polyol plasticised with nitrate esters such as TMETN or BTTN) combined with <strong>HMX</strong> or <strong>RDX</strong> oxidiser/fuel:</p>
+<ul>
+<li>
+<p>Binder: polyether backbone with nitrate ester plasticiser (40% of binder)</p>
+</li>
+<li>
+<p>HMX (cyclotetramethylenetetranitramine): 20–30% by mass</p>
+</li>
+<li>
+<p>AP: 30–40%; Al: 15–20%</p>
+</li>
+<li>
+<p><span class="arithmatex">\(I_{sp} = 275\)</span>–<span class="arithmatex">\(285\)</span> s; density <span class="arithmatex">\(\rho = 1820\)</span>–<span class="arithmatex">\(1870\)</span> kg/m<span class="arithmatex">\(^3\)</span></p>
+</li>
+<li>
+<p>Burn rate: 7–12 mm/s at 7 MPa; <span class="arithmatex">\(n = 0.35\)</span>–<span class="arithmatex">\(0.45\)</span></p>
+</li>
+</ul>
+<p>Used in the US <em>Trident II D5</em> SLBM (first and second stages), achieving <span class="arithmatex">\(\Delta V\)</span> capability for 7,400+ km range with MIRV payload. The higher energy density compared to HTPB/AP/Al allows significantly increased mass ratio or reduced motor size.</p>
+<h4 id="adn-based-propellants">ADN-Based Propellants<a class="headerlink" href="#adn-based-propellants" title="Permanent link">&para;</a></h4>
+<p><strong>Ammonium Dinitramide (ADN)</strong>, NH<span class="arithmatex">\(_4\)</span>N(NO<span class="arithmatex">\(_2\)</span>)<span class="arithmatex">\(_2\)</span>, is an alternative oxidiser offering:</p>
+<ul>
+<li>
+<p><strong>Chlorine-free combustion</strong>: eliminates HCl in exhaust — reduces radar cross-section (RCS) of plume (HCl is strongly radar-absorbent at certain wavelengths)</p>
+</li>
+<li>
+<p><span class="arithmatex">\(I_{sp} \approx 255\)</span>–<span class="arithmatex">\(265\)</span> s (slightly below AP)</p>
+</li>
+<li>
+<p>Higher solubility in binder systems</p>
+</li>
+<li>
+<p>Lower sensitivity: more insensitive to shock and friction than AP</p>
+</li>
+<li>
+<p>Hygroscopic: requires careful moisture control in processing</p>
+</li>
+</ul>
+<p>ADN-based propellants are investigated for stealth missile applications where plume observability is critical (e.g., low-RCS cruise missiles, covert tactical rounds).</p>
+<h4 id="htpe-propellants">HTPE Propellants<a class="headerlink" href="#htpe-propellants" title="Permanent link">&para;</a></h4>
+<p><strong>Hydroxyl-Terminated Polyether (HTPE)</strong> replaces HTPB as the binder:</p>
+<ul>
+<li>
+<p>Improved low-temperature flexibility (<span class="arithmatex">\(T_g &lt; -65°C\)</span>)</p>
+</li>
+<li>
+<p>Lower sensitivity to shock and friction (important for Insensitive Munitions (IM) requirements MIL-STD-2105D)</p>
+</li>
+<li>
+<p>Slower burn rate (must be compensated with catalyst)</p>
+</li>
+<li>
+<p>Used in upgraded AIM-9X Sidewinder and AMRAAM motors</p>
+</li>
+</ul>
+<h3 id="1922-propellant-grain-geometry"><span class="secnum">19.2.2</span> Propellant Grain Geometry<a class="headerlink" href="#1922-propellant-grain-geometry" title="Permanent link">&para;</a></h3>
+<p>The geometry of the propellant grain determines the burn area <span class="arithmatex">\(A_b(t)\)</span> as a function of time, which in turn controls the thrust profile. Six fundamental grain geometries are used:</p>
+<div class="tbl" id="tab-grain_geometry">
+<div class="tbl-caption"><strong>Table 19.2.</strong> Propellant Grain Geometries and Thrust Profiles</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Geometry</strong></th>
+<th style="text-align: left;"><strong>Burn Profile</strong></th>
+<th style="text-align: left;"><strong><span class="math inline">\(A_b/A_{b0}\)</span> Trend</strong></th>
+<th style="text-align: left;"><strong>Typical Application</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">End-burning (cigarette)</td>
+<td style="text-align: left;">Neutral/regressive</td>
+<td style="text-align: left;">Decreasing</td>
+<td style="text-align: left;">Long-burn sustain motors</td>
+</tr>
+<tr>
+<td style="text-align: left;">Internal cylinder (BATES)</td>
+<td style="text-align: left;">Neutral/progressive</td>
+<td style="text-align: left;">Constant then inc.</td>
+<td style="text-align: left;">Short-range AAM</td>
+</tr>
+<tr>
+<td style="text-align: left;">Star (5–7 point)</td>
+<td style="text-align: left;">Neutral</td>
+<td style="text-align: left;"><span class="math inline">\(\approx\)</span> constant</td>
+<td style="text-align: left;">SAM, ICBM boost</td>
+</tr>
+<tr>
+<td style="text-align: left;">Finocyl (finned cylinder)</td>
+<td style="text-align: left;">Neutral/regressive</td>
+<td style="text-align: left;">Slight decrease</td>
+<td style="text-align: left;">ICBM 2nd stage, AAM</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wagon-wheel</td>
+<td style="text-align: left;">Progressive</td>
+<td style="text-align: left;">Increasing</td>
+<td style="text-align: left;">High boost, short burn</td>
+</tr>
+<tr>
+<td style="text-align: left;">Slotted tube</td>
+<td style="text-align: left;">Progressive</td>
+<td style="text-align: left;">Increasing</td>
+<td style="text-align: left;">Quick boost applications</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The <strong>star grain</strong> is the most common for tactical missiles. With <span class="arithmatex">\(N\)</span> points of internal star geometry, the burn area remains approximately constant (neutral burn) throughout most of the web, providing near-constant thrust. A 5-point star is typical for medium-calibre SAMs. A <strong>finocyl</strong> (finned cylindrical) grain achieves very neutral burning with higher volumetric loading than a star, at the cost of more complex tooling.</p>
+<h3 id="1923-burn-rate-and-internal-ballistics"><span class="secnum">19.2.3</span> Burn Rate and Internal Ballistics<a class="headerlink" href="#1923-burn-rate-and-internal-ballistics" title="Permanent link">&para;</a></h3>
+<h4 id="vieilles-law">Vieille’s Law<a class="headerlink" href="#vieilles-law" title="Permanent link">&para;</a></h4>
+<p>The propellant burn rate <span class="arithmatex">\(r\)</span> (surface regression rate, mm/s) is governed by <strong>Vieille’s empirical law</strong>: <span id="eq-vieille"></span></p>
+<div class="arithmatex">\[r = a\,P_c^n\tag{19.12}\]</div>
+<p>where <span class="arithmatex">\(a\)</span> is a pre-exponential coefficient (m m ( s M P a n )), <span class="arithmatex">\(P_c\)</span> the chamber pressure in MPa, and <span class="arithmatex">\(n\)</span> the pressure exponent (0.2–0.6 for stable burning). Values of <span class="arithmatex">\(n &gt; 0.85\)</span> indicate combustion instability risk; <span class="arithmatex">\(n = 1\)</span> produces unstable runaway.</p>
+<div class="tbl" id="tab-burn_rate">
+<div class="tbl-caption"><strong>Table 19.3.</strong> Typical Burn Rate Parameters for Composite Propellants</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Propellant</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(a\)</span> at 7 MPa</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(n\)</span></strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(r\)</span> at 7 MPa</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(T_{ad}\)</span> (K)</strong></th>
+<th style="text-align: center;"><strong><span class="math inline">\(\sigma_p\)</span> (%/K)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">HTPB/AP/Al (18% Al)</td>
+<td style="text-align: center;">2.1</td>
+<td style="text-align: center;">0.33</td>
+<td style="text-align: center;">10.2</td>
+<td style="text-align: center;">3,500</td>
+<td style="text-align: center;">0.10</td>
+</tr>
+<tr>
+<td style="text-align: left;">HTPB/AP/Al (2% Al)</td>
+<td style="text-align: center;">2.5</td>
+<td style="text-align: center;">0.30</td>
+<td style="text-align: center;">10.8</td>
+<td style="text-align: center;">3,100</td>
+<td style="text-align: center;">0.12</td>
+</tr>
+<tr>
+<td style="text-align: left;">NEPE/HMX/Al</td>
+<td style="text-align: center;">1.8</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">9.5</td>
+<td style="text-align: center;">3,700</td>
+<td style="text-align: center;">0.09</td>
+</tr>
+<tr>
+<td style="text-align: left;">HTPB/AP+Fe<span class="math inline">\(_2\)</span>O<span class="math inline">\(_3\)</span></td>
+<td style="text-align: center;">3.8</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">17.0</td>
+<td style="text-align: center;">3,450</td>
+<td style="text-align: center;">0.11</td>
+</tr>
+<tr>
+<td style="text-align: left;">Double-base (NC/NG)</td>
+<td style="text-align: center;">1.2</td>
+<td style="text-align: center;">0.28</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">2,800</td>
+<td style="text-align: center;">0.18</td>
+</tr>
+<tr>
+<td style="text-align: left;">HTPE/AP/Al</td>
+<td style="text-align: center;">1.9</td>
+<td style="text-align: center;">0.32</td>
+<td style="text-align: center;">9.8</td>
+<td style="text-align: center;">3,480</td>
+<td style="text-align: center;">0.10</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The <strong>temperature sensitivity</strong> coefficient <span class="arithmatex">\(\sigma_p\)</span> describes the fractional change in burn rate per degree Kelvin change in initial propellant temperature at constant chamber pressure: <span id="eq-sigma_p"></span></p>
+<div class="arithmatex">\[\sigma_p = \frac{1}{r}\left(\frac{\partial r}{\partial T_i}\right)_{P_c}\tag{19.13}\]</div>
+<p>For <span class="arithmatex">\(\sigma_p = 0.10\%/\mathrm{K}\)</span> and a temperature swing from <span class="arithmatex">\(-40°C\)</span> to <span class="arithmatex">\(+70°C\)</span> (<span class="arithmatex">\(\Delta T = 110~K\)</span>), burn rate changes by <span class="arithmatex">\(\pm5.5\%\)</span>, requiring pressure vessel and nozzle throat sizing to accommodate maximum design pressure.</p>
+<h4 id="mass-flow-and-chamber-pressure">Mass Flow and Chamber Pressure<a class="headerlink" href="#mass-flow-and-chamber-pressure" title="Permanent link">&para;</a></h4>
+<p>The mass flow rate generated by combustion is: <span id="eq-mass_flow_srm"></span></p>
+<div class="arithmatex">\[\dot{m} = \rho_p\,r\,A_b = \rho_p\,a\,P_c^n\,A_b\tag{19.14}\]</div>
+<p>At quasi-steady state, this mass flow must equal the choked nozzle flow: <span id="eq-mass_flow_nozzle"></span></p>
+<div class="arithmatex">\[\dot{m} = \frac{P_c\,A_t}{c^*}\tag{19.15}\]</div>
+<p>Equating Eqs. <a href="#eq-mass_flow_srm">(19.14)</a> and <a href="#eq-mass_flow_nozzle">(19.15)</a> and solving for the steady-state chamber pressure: <span id="eq-Pc_steady"></span></p>
+<div class="arithmatex">\[P_c = \left(\frac{\rho_p\,c^*\,a\,A_b}{A_t}\right)^{1/(1-n)}\tag{19.16}\]</div>
+<p>This equation shows that <span class="arithmatex">\(P_c \propto (A_b/A_t)^{1/(1-n)}\)</span>. For <span class="arithmatex">\(n=0.35\)</span> and a 10% increase in burn area (e.g., from propellant cracking), chamber pressure increases by <span class="arithmatex">\(\approx 15\%\)</span> — highlighting the importance of grain integrity inspection.</p>
+<h3 id="1924-combustion-instability"><span class="secnum">19.2.4</span> Combustion Instability<a class="headerlink" href="#1924-combustion-instability" title="Permanent link">&para;</a></h3>
+<p>Combustion instability is the coupling between the acoustic modes of the combustion chamber and the heat release rate. Two principal categories affect SRMs:</p>
+<h4 id="l-instability-low-frequency">L* Instability (Low-Frequency)<a class="headerlink" href="#l-instability-low-frequency" title="Permanent link">&para;</a></h4>
+<div id="eq-Lstar"></div>
+<div class="arithmatex">\[L^* = \frac{V_c}{A_t}\tag{19.17}\]</div>
+<p>where <span class="arithmatex">\(V_c\)</span> is the combustion chamber free volume. For <span class="arithmatex">\(L^* &lt; L^*_{min} \approx 0.5\)</span> m (propellant-specific), low-frequency pressure oscillations (chugging, 10–200 Hz) occur. Solution: increase <span class="arithmatex">\(L^*\)</span> by enlarging chamber volume.</p>
+<h4 id="acoustic-mode-coupling-high-frequency">Acoustic Mode Coupling (High-Frequency)<a class="headerlink" href="#acoustic-mode-coupling-high-frequency" title="Permanent link">&para;</a></h4>
+<p>Axial longitudinal acoustic modes at frequency: <span id="eq-acoustic_modes"></span></p>
+<div class="arithmatex">\[f_n = \frac{n\,c_{gas}}{2L}\tag{19.18}\]</div>
+<p>where <span class="arithmatex">\(c_{gas} = \sqrt{\gamma R T}\)</span> is the speed of sound in combustion gases (<span class="arithmatex">\(\approx 1000\)</span>–<span class="arithmatex">\(1200\)</span> m/s) and <span class="arithmatex">\(L\)</span> is the grain length. For <span class="arithmatex">\(L = 1.5\,\text{m}\)</span> and <span class="arithmatex">\(c_{gas} = 1100\,\text{m s}\)</span>: first axial mode <span class="arithmatex">\(f_1 \approx 367\)</span> Hz.</p>
+<p><strong>Combustion response function</strong> <span class="arithmatex">\(R(f)\)</span> describes the propellant’s amplification of oscillating pressure at frequency <span class="arithmatex">\(f\)</span>. If <span class="arithmatex">\(R &gt; 1/\mathrm{damping}\)</span>, instability grows. Suppression methods include:</p>
+<ul>
+<li>
+<p><strong>Iron oxide (Fe<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_3\)</span>)</strong> or <strong>zirconium oxide (ZrO<span class="arithmatex">\(_2\)</span>)</strong> added at 0.1–0.5%: act as combustion stabilisers by modifying the solid-phase chemistry, reducing the response function magnitude</p>
+</li>
+<li>
+<p>Resonance suppressor rods or aluminum wires (acoustic damping)</p>
+</li>
+<li>
+<p>Propellant composition modification: reducing AP bimodal ratio</p>
+</li>
+<li>
+<p>Chamber geometry modification: non-cylindrical port reduces modal purity</p>
+</li>
+</ul>
+<h3 id="1925-motor-design"><span class="secnum">19.2.5</span> Motor Design<a class="headerlink" href="#1925-motor-design" title="Permanent link">&para;</a></h3>
+<h4 id="web-thickness-and-burn-time">Web Thickness and Burn Time<a class="headerlink" href="#web-thickness-and-burn-time" title="Permanent link">&para;</a></h4>
+<p>The web thickness <span class="arithmatex">\(W\)</span> is the minimum distance from the initial burning surface to the nearest case wall: <span id="eq-burn_time"></span></p>
+<div class="arithmatex">\[t_b = \frac{W}{\bar{r}}\tag{19.19}\]</div>
+<p>where <span class="arithmatex">\(\bar{r}\)</span> is the mean burn rate over the operating pressure range. Volumetric loading fraction <span class="arithmatex">\(V_f = V_{propellant}/V_{case}\)</span> is typically 0.88–0.94 for tactical motors; maximising <span class="arithmatex">\(V_f\)</span> reduces inert motor mass.</p>
+<h4 id="dual-pulse-motor">Dual-Pulse Motor<a class="headerlink" href="#dual-pulse-motor" title="Permanent link">&para;</a></h4>
+<p>A dual-pulse motor contains two propellant grains in a single casing separated by a <strong>bulkhead/barrier</strong>. The barrier is designed to rupture at a controlled pressure after the first grain burns out. This provides:</p>
+<ul>
+<li>
+<p>Programmable thrust: high initial thrust for kinematic advantage, then reignited for terminal phase</p>
+</li>
+<li>
+<p>Increased average velocity (reduced time to target = reduced target manoeuvre time)</p>
+</li>
+<li>
+<p>Example: MBDA Meteor uses a dual-pulse design integrated with a throttleable ramjet sustainer</p>
+</li>
+<li>
+<p>Mass penalty: bulkhead mass <span class="arithmatex">\(\approx\)</span> 3–5% of motor mass</p>
+</li>
+</ul>
+<h4 id="boost-sustain-configuration">Boost-Sustain Configuration<a class="headerlink" href="#boost-sustain-configuration" title="Permanent link">&para;</a></h4>
+<p>The boost-sustain SRM uses a single case with two grain types:</p>
+<ul>
+<li>
+<p><strong>Booster grain</strong> (fast-burning, forward section): high <span class="arithmatex">\(a\)</span>, higher <span class="arithmatex">\(n\)</span>, burns first; provides 10–50<span class="arithmatex">\(g\)</span> acceleration at launch; burns in 1–5 s</p>
+</li>
+<li>
+<p><strong>Sustainer grain</strong> (slow-burning, aft section): lower <span class="arithmatex">\(a\)</span>, lower <span class="arithmatex">\(n\)</span>; provides 3–10<span class="arithmatex">\(g\)</span> for 10–60 s flight duration</p>
+</li>
+<li>
+<p>Transition between grains: natural as booster burns through; slight pressure dip at transition</p>
+</li>
+<li>
+<p>Example: AIM-120 AMRAAM uses a boost-sustain SRM with a shaped grain providing high initial thrust then a lower sustain level</p>
+</li>
+</ul>
+<h3 id="1926-motor-casing"><span class="secnum">19.2.6</span> Motor Casing<a class="headerlink" href="#1926-motor-casing" title="Permanent link">&para;</a></h3>
+<p>Modern tactical missile casings use <strong>filament-wound Carbon Fibre Reinforced Polymer (CFRP)</strong>:</p>
+<ul>
+<li>
+<p><strong>Fibre</strong>: T700S or T800H carbon fibre; tensile strength 4,900 MPa; modulus 294 GPa</p>
+</li>
+<li>
+<p><strong>Winding</strong>: wet filament winding with epoxy resin (hoop + helical layers); hoop-to-helical ratio optimised for biaxial stress state under <span class="arithmatex">\(P_c = 7\)</span>–<span class="arithmatex">\(14\)</span> MPa</p>
+</li>
+<li>
+<p><strong>Specific strength</strong>: <span class="arithmatex">\(\sigma_u/\rho \approx 2200\)</span> kN<span class="arithmatex">\(\cdot\)</span>m/kg; 3–5<span class="arithmatex">\(\times\)</span> steel on weight basis</p>
+</li>
+<li>
+<p><strong>Structural factor</strong> <span class="arithmatex">\(PV/W\)</span>: CFRP cases achieve 40–55 km; steel cases 15–25 km</p>
+</li>
+<li>
+<p>Liner: <span class="arithmatex">\(\approx\)</span>3 m m HTPB or EPDM bonded to case interior; prevents debonding of grain from case under thermal cycling; tested per AIAA S-080B</p>
+</li>
+</ul>
+<p>Older/cheaper designs (SCUD, SA-2) use D6AC or 300M high-strength steel: heavier but more resistant to manufacturing defects and easier to weld.</p>
+<h3 id="1927-nozzle-design-and-materials"><span class="secnum">19.2.7</span> Nozzle Design and Materials<a class="headerlink" href="#1927-nozzle-design-and-materials" title="Permanent link">&para;</a></h3>
+<p>The SRM nozzle must withstand:</p>
+<ul>
+<li>
+<p>Stagnation temperatures: 3,000–3,700 K</p>
+</li>
+<li>
+<p>Erosive Al<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_3\)</span> particles at 100–200 m/s</p>
+</li>
+<li>
+<p>Short burn times: 1–60 s (tactical); 60–180 s (strategic)</p>
+</li>
+</ul>
+<p><strong>Throat insert</strong>: isostatically moulded <strong>graphite</strong> or <strong>carbon–carbon (C-C)</strong> composite. C-C throat erosion rate: 0.01–0.05 mm/s. Graphite: 0.05–0.15 mm/s. The throat diameter at burn end is larger than at start by <span class="arithmatex">\(\Delta d = 2\,r_{erosion}\,t_b\)</span>, causing <span class="arithmatex">\(P_c\)</span> to decrease over burn time (must be accounted in design).</p>
+<p><strong>Exit cone</strong>: C-C composite or silica-phenolic ablative. C-C preferred for high-performance (lower mass, higher <span class="arithmatex">\(\varepsilon\)</span>); silica-phenolic for cost-sensitive applications.</p>
+<h4 id="thrust-vector-control-tvc-in-srms">Thrust Vector Control (TVC) in SRMs<a class="headerlink" href="#thrust-vector-control-tvc-in-srms" title="Permanent link">&para;</a></h4>
+<p>Several TVC approaches are used:</p>
+<ul>
+<li>
+<p><strong>Flex bearing</strong>: elastomeric ball-and-socket mount for nozzle; deflection <span class="arithmatex">\(\pm 7\)</span>–<span class="arithmatex">\(12°\)</span>; actuated by dual linear actuators (electromechanical or electrohydraulic); torque requirement: <span class="arithmatex">\(M_{act} \approx k_s\,\delta\)</span> where <span class="arithmatex">\(k_s = 10\)</span>–<span class="arithmatex">\(100\)</span> kN<span class="arithmatex">\(\cdot\)</span>m/rad; no losses to exhaust; cleanest design</p>
+</li>
+<li>
+<p><strong>Jet vanes</strong>: four tungsten or graphite vanes inserted in exhaust plume; deflection <span class="arithmatex">\(\pm 20°\)</span>; 3–5% thrust loss at full deflection; vane erosion limits life to <span class="arithmatex">\(&lt;60\)</span> s; used on early V-2, Shahab-3</p>
+</li>
+<li>
+<p><strong>Liquid injection TVC (LITVC)</strong>: injectant (water, NaClO<span class="arithmatex">\(_4\)</span> solution) injected into nozzle divergent section; asymmetric shock creates side force; no moving nozzle parts; lower authority (<span class="arithmatex">\(\pm 4°\)</span> equivalent); used on Minuteman III third stage</p>
+</li>
+</ul>
+<h3 id="1928-insulation-and-thermal-protection"><span class="secnum">19.2.8</span> Insulation and Thermal Protection<a class="headerlink" href="#1928-insulation-and-thermal-protection" title="Permanent link">&para;</a></h3>
+<p>The case internal insulation must protect the CFRP or steel case from hot gas impingement:</p>
+<ul>
+<li>
+<p>Material: <strong>EPDM (Ethylene Propylene Diene Monomer)</strong> loaded with silica/aramid fibres; <span class="arithmatex">\(\rho = 1200\)</span> kg/m<span class="arithmatex">\(^3\)</span>; char rate 0.05–0.20 mm/s</p>
+</li>
+<li>
+<p>Heat flux from hot gas: <span class="arithmatex">\(q = h\,(T_{gas} - T_{wall})\)</span>; for <span class="arithmatex">\(h = 1000\)</span> W/m<span class="arithmatex">\(^2\)</span>K and <span class="arithmatex">\(\Delta T = 3000\)</span> K: <span class="arithmatex">\(q = 3\)</span> MW/m<span class="arithmatex">\(^2\)</span></p>
+</li>
+<li>
+<p>Insulation thickness <span class="arithmatex">\(\delta_{ins}\)</span>: sized so bondline temperature <span class="arithmatex">\(T_{bond} &lt; T_{limit}\)</span> (180°C for CFRP) during motor operation</p>
+</li>
+<li>
+<p>Rule of thumb: <span class="arithmatex">\(\delta_{ins} = r_{char}\,t_b + \text{safety margin}\)</span></p>
+</li>
+</ul>
+<h3 id="1929-ignition-systems"><span class="secnum">19.2.9</span> Ignition Systems<a class="headerlink" href="#1929-ignition-systems" title="Permanent link">&para;</a></h3>
+<p>The ignition sequence must deliver sufficient energy to initiate and sustain combustion across the full grain surface before chamber pressure builds:</p>
+<ol>
+<li>
+<p><strong>Squib (initiator)</strong>: zirconium/potassium perchlorate bridge wire; fires on 1 A current; output <span class="arithmatex">\(\approx 50\)</span>–<span class="arithmatex">\(100\)</span> J; response time <span class="arithmatex">\(&lt;3\)</span> ms</p>
+</li>
+<li>
+<p><strong>Igniter booster</strong>: aluminium/iron oxide thermite or BKNO<span class="arithmatex">\(_3\)</span> pellets; produces 2,000–3,000 K gases; ignites propellant grain surface</p>
+</li>
+<li>
+<p><strong>Grain surface ignition</strong>: requires surface temperature to reach propellant ignition temperature (<span class="arithmatex">\(\approx 500\)</span>–<span class="arithmatex">\(700°C\)</span>)</p>
+</li>
+<li>
+<p><strong>Build-up</strong>: pressure rises from ambient to <span class="arithmatex">\(P_c\)</span> in 20–200 ms; controlled by igniter mass and energy output vs grain surface area</p>
+</li>
+</ol>
+<p>Safety requirements: no-fire current <span class="arithmatex">\(&lt; 0.45\,I_{fire}\)</span> (ESD protection); all-fire current <span class="arithmatex">\(&gt; 2.0\,I_{fire}\)</span>; thermal barrier for cook-off resistance (UN Series 6 testing).</p>
+<h2 id="sec-lre"><span class="secnum">19.3</span> Liquid Rocket Engines<a class="headerlink" href="#sec-lre" title="Permanent link">&para;</a></h2>
+<p>Liquid rocket engines (LREs) offer advantages over SRMs in restartability, throttleability, and (for some combinations) higher specific impulse. They are preferred for strategic ballistic missiles requiring extended range through efficient propellant utilisation, and for certain tactical missiles requiring multi-burn capability.</p>
+<h3 id="1931-propellant-combinations"><span class="secnum">19.3.1</span> Propellant Combinations<a class="headerlink" href="#1931-propellant-combinations" title="Permanent link">&para;</a></h3>
+<h4 id="loxlh2-liquid-oxygen-liquid-hydrogen">LOX/LH₂ (Liquid Oxygen / Liquid Hydrogen)<a class="headerlink" href="#loxlh2-liquid-oxygen-liquid-hydrogen" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><span class="arithmatex">\(I_{sp} = 450\)</span> s (vacuum, <span class="arithmatex">\(\varepsilon = 77\)</span>); <span class="arithmatex">\(T_{ad} = 3,570\)</span> K; <span class="arithmatex">\(O/F = 6.0\)</span> by mass</p>
+</li>
+<li>
+<p>Mixture density: <span class="arithmatex">\(\rho_{mix} = 360\)</span> kg/m<span class="arithmatex">\(^3\)</span> (very low — large tank volume)</p>
+</li>
+<li>
+<p>Boiling points: LH<span class="arithmatex">\(_2\)</span> at <span class="arithmatex">\(-253°C\)</span>; LOX at <span class="arithmatex">\(-183°C\)</span></p>
+</li>
+<li>
+<p>Cryogenic complexity: super-insulated tanks; active conditioning before launch; boil-off losses during extended storage</p>
+</li>
+<li>
+<p>Applications: ICBM upper stages (Titan II LR-87-AJ-11), Space Shuttle main engines (SSME); extremely high performance but impractical for quick-reaction tactical missiles</p>
+</li>
+</ul>
+<h4 id="loxrp-1-liquid-oxygen-rocket-propellant-1">LOX/RP-1 (Liquid Oxygen / Rocket Propellant-1)<a class="headerlink" href="#loxrp-1-liquid-oxygen-rocket-propellant-1" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>RP-1: highly refined kerosene; density 820 kg/m<span class="arithmatex">\(^3\)</span>; storable at ambient</p>
+</li>
+<li>
+<p><span class="arithmatex">\(I_{sp} = 338\)</span> s (sea level), <span class="arithmatex">\(353\)</span> s (vacuum) at <span class="arithmatex">\(O/F = 2.72\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(T_{ad} = 3,600\)</span> K; LOX still cryogenic (but only one cryogen)</p>
+</li>
+<li>
+<p>High density impulse (<span class="arithmatex">\(I_{sp} \times \rho_{mix}\)</span>) advantages compact missiles</p>
+</li>
+<li>
+<p>Example engines: RD-107/108 (R-7), RD-180 (Atlas V), SpaceX Merlin</p>
+</li>
+<li>
+<p>ICBM application: R-7 Semyorka (first ICBM, 1957); limited by LOX load-before-launch procedure</p>
+</li>
+</ul>
+<h4 id="n2o4udmh-nitrogen-tetroxide-unsymmetrical-dimethylhydrazine">N₂O₄/UDMH (Nitrogen Tetroxide / Unsymmetrical Dimethylhydrazine)<a class="headerlink" href="#n2o4udmh-nitrogen-tetroxide-unsymmetrical-dimethylhydrazine" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p>Both propellants liquid at room temperature and pressure (storable)</p>
+</li>
+<li>
+<p><strong>Hypergolic</strong>: ignite spontaneously on contact — no igniter required; enhances reliability and restart capability</p>
+</li>
+<li>
+<p><span class="arithmatex">\(I_{sp} = 310\)</span>–<span class="arithmatex">\(320\)</span> s vacuum; <span class="arithmatex">\(O/F = 2.0\)</span> by mass; <span class="arithmatex">\(T_{ad} = 3,150\)</span> K</p>
+</li>
+<li>
+<p>UDMH: extremely toxic (IARC carcinogen); vapour pressure 20 kPa at 25°C; requires SCAPE suits for handling</p>
+</li>
+<li>
+<p>Soviet/Russian missiles: R-36M (SS-18 Satan, <span class="arithmatex">\(I_{sp} = 318\)</span> s); Chinese DF-5, DF-21 (UDMH/N<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_4\)</span>)</p>
+</li>
+<li>
+<p>Advantages: can remain fuelled for years in silo; instant launch readiness</p>
+</li>
+</ul>
+<h4 id="n2o4mmh-monomethylhydrazine">N₂O₄/MMH (Monomethylhydrazine)<a class="headerlink" href="#n2o4mmh-monomethylhydrazine" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><span class="arithmatex">\(I_{sp} = 300\)</span>–<span class="arithmatex">\(310\)</span> s vacuum; hypergolic; storable</p>
+</li>
+<li>
+<p>Less toxic than UDMH; better handling safety margin</p>
+</li>
+<li>
+<p>Used widely in spacecraft propulsion (Shuttle RCS, Ariane 5 upper stage)</p>
+</li>
+<li>
+<p>Tactical missile application: Exocet AM39, MICA (divert motors)</p>
+</li>
+</ul>
+<h4 id="irfnafuel-systems">IRFNA/Fuel Systems<a class="headerlink" href="#irfnafuel-systems" title="Permanent link">&para;</a></h4>
+<p><strong>Inhibited Red Fuming Nitric Acid (IRFNA)</strong> is an older storable oxidiser:</p>
+<ul>
+<li>
+<p>HNO<span class="arithmatex">\(_3\)</span> + 13–15% N<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_4\)</span> + 0.6–1.0% HF (inhibitor to reduce corrosion of stainless tanks)</p>
+</li>
+<li>
+<p><span class="arithmatex">\(I_{sp}\)</span> with kerosene: 250–270 s; with UDMH: 280–290 s</p>
+</li>
+<li>
+<p>Used: SCUD-B, SS-N-9 Siren, Chinese YJ-83 early versions</p>
+</li>
+<li>
+<p>Replaced in modern designs by N<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_4\)</span> (better <span class="arithmatex">\(I_{sp}\)</span>, less corrosive vapours)</p>
+</li>
+</ul>
+<h3 id="1932-turbopump-systems"><span class="secnum">19.3.2</span> Turbopump Systems<a class="headerlink" href="#1932-turbopump-systems" title="Permanent link">&para;</a></h3>
+<p>For high thrust LREs, pressurising propellant tanks to drive flow through injectors (pressure-fed) requires very heavy tanks. A <strong>turbopump</strong> delivers propellant at high pressure from low-pressure tanks, dramatically reducing tank wall mass:</p>
+<div id="eq-pump_power"></div>
+<div class="arithmatex">\[P_{pump} = \frac{\dot{m}_{pump}\,\Delta P}{\rho\,\eta_p}\tag{19.20}\]</div>
+<p>where <span class="arithmatex">\(\eta_p = 0.70\)</span>–<span class="arithmatex">\(0.85\)</span> is the pump efficiency. A centrifugal pump with specific speed: <span id="eq-specific_speed"></span></p>
+<div class="arithmatex">\[N_s = \frac{N\,\sqrt{Q}}{\Delta H^{3/4}}\tag{19.21}\]</div>
+<p>drives propellants to chamber pressure (7–30 MPa for modern engines). The turbine driving the pump is powered by hot gas tapped from:</p>
+<ul>
+<li>
+<p><strong>Gas generator (GG) cycle</strong>: small fraction of propellants burned in separate GG at low <span class="arithmatex">\(O/F\)</span>; turbine exhaust dumped overboard; 1–3% performance penalty; simplest (RD-107, F-1)</p>
+</li>
+<li>
+<p><strong>Staged combustion (SC)</strong>: all propellant passes through preburner then main chamber; no dump loss; higher <span class="arithmatex">\(P_c\)</span> achievable (20–30 MPa); most efficient (SSME, RD-180); most complex</p>
+</li>
+<li>
+<p><strong>Expander cycle</strong>: fuel heated in cooling jacket powers turbine; no combustion for turbine drive; limited to H<span class="arithmatex">\(_2\)</span> fuel; clean and simple (RL-10 upper stage engine)</p>
+</li>
+</ul>
+<h3 id="1933-combustion-chamber-and-injector"><span class="secnum">19.3.3</span> Combustion Chamber and Injector<a class="headerlink" href="#1933-combustion-chamber-and-injector" title="Permanent link">&para;</a></h3>
+<p>The <strong>injector</strong> atomises and mixes propellants to achieve rapid and complete combustion in the shortest possible chamber length:</p>
+<ul>
+<li>
+<p><strong>Like-on-like doublet impinging</strong>: LOX-LOX + Fuel-Fuel jets impinge; produces fans of mixed propellant; good for low <span class="arithmatex">\(O/F\)</span> ratios</p>
+</li>
+<li>
+<p><strong>Unlike doublet (F-O-F triplet)</strong>: LOX jet impacts between two fuel jets; efficient mixing; used in many US engines</p>
+</li>
+<li>
+<p><strong>Coaxial shear</strong>: central LOX jet surrounded by annular fuel jet; shear mixing; used in Russian and European H<span class="arithmatex">\(_2\)</span> engines (Vulcain, RD-0120)</p>
+</li>
+<li>
+<p><strong>Pintle injector</strong>: central rod with radial holes; LOX through annulus; throttleable 10:1; used in Merlin 1D (SpaceX), descent engines</p>
+</li>
+</ul>
+<p><strong>Characteristic chamber length</strong> <span class="arithmatex">\(L^* = V_c/A_t\)</span> (distinct from <span class="arithmatex">\(L^*\)</span> instability parameter): 0.5–2.0 m for most propellant combinations; ensures sufficient residence time for complete combustion.</p>
+<p><strong>Combustion efficiency</strong> <span class="arithmatex">\(\eta_c = T_{c,measured}/T_{c,theoretical}\)</span>: typically 0.94–0.99 for modern injector designs.</p>
+<h3 id="1934-regenerative-cooling"><span class="secnum">19.3.4</span> Regenerative Cooling<a class="headerlink" href="#1934-regenerative-cooling" title="Permanent link">&para;</a></h3>
+<p>Chamber wall temperature limits: copper alloy (NARloy-Z) walls <span class="arithmatex">\(&lt; 900°C\)</span>; nickel superalloy walls <span class="arithmatex">\(&lt; 1,100°C\)</span>. Hot gas side heat flux at throat: <span id="eq-heat_flux"></span></p>
+<div class="arithmatex">\[q_w = h_g\,(T_{ad} - T_{wg})\tag{19.22}\]</div>
+<p>where <span class="arithmatex">\(h_g \approx 5,000\)</span>–<span class="arithmatex">\(50,000\)</span> W/m<span class="arithmatex">\(^2\)</span>K and <span class="arithmatex">\(T_{wg} = 500\)</span>–<span class="arithmatex">\(900°C\)</span> for regeneratively cooled walls, giving <span class="arithmatex">\(q_w = 5\)</span>–<span class="arithmatex">\(150\)</span> MW/m<span class="arithmatex">\(^2\)</span> at the throat.</p>
+<p><strong>Regenerative cooling</strong>: propellant (usually fuel) flows through milled or brazed channels in the chamber/nozzle wall. Wall temperature governed by: <span id="eq-cooling_balance"></span></p>
+<div class="arithmatex">\[q_w = \frac{T_{wg} - T_{wc}}{R_{wall}} = h_c\,(T_c^{cool} - T_{wc})\tag{19.23}\]</div>
+<p><strong>Dittus–Boelter correlation</strong> for coolant-side heat transfer: <span id="eq-dittus_boelter"></span></p>
+<div class="arithmatex">\[h_c = 0.023\,\frac{k_f}{D}\,Re^{0.8}\,Pr^{0.4}\tag{19.24}\]</div>
+<p>where <span class="arithmatex">\(Re = \rho_c\,V_c\,D/\mu_c\)</span> is the coolant Reynolds number and <span class="arithmatex">\(Pr = \mu_c\,c_p/k_f\)</span> the Prandtl number of the coolant.</p>
+<h3 id="1935-pressure-fed-vs-pump-fed-trade-off"><span class="secnum">19.3.5</span> Pressure-Fed vs Pump-Fed Trade-Off<a class="headerlink" href="#1935-pressure-fed-vs-pump-fed-trade-off" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-press_vs_pump">
+<div class="tbl-caption"><strong>Table 19.4.</strong> Pressure-Fed vs Pump-Fed LRE System Comparison</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Pressure-Fed</strong></th>
+<th style="text-align: left;"><strong>Pump-Fed</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Tank pressure</td>
+<td style="text-align: left;">1–4 MPa</td>
+<td style="text-align: left;">0.3–0.5 MPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tank mass</td>
+<td style="text-align: left;">Very high</td>
+<td style="text-align: left;">Low</td>
+</tr>
+<tr>
+<td style="text-align: left;">Turbopump mass</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">2–8% of engine mass</td>
+</tr>
+<tr>
+<td style="text-align: left;">Chamber pressure</td>
+<td style="text-align: left;">0.5–3 MPa</td>
+<td style="text-align: left;">5–30 MPa</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(I_{sp}\)</span> potential</td>
+<td style="text-align: left;">Moderate</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Throttleability</td>
+<td style="text-align: left;">Easy</td>
+<td style="text-align: left;">Complex</td>
+</tr>
+<tr>
+<td style="text-align: left;">Complexity</td>
+<td style="text-align: left;">Low</td>
+<td style="text-align: left;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reliability</td>
+<td style="text-align: left;">Very high</td>
+<td style="text-align: left;">Moderate–high</td>
+</tr>
+<tr>
+<td style="text-align: left;">Application</td>
+<td style="text-align: left;">Attitude control,</td>
+<td style="text-align: left;">Boost, sustain</td>
+</tr>
+<tr>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">small kick stages</td>
+<td style="text-align: left;">motors <span class="math inline">\(&gt;5\)</span> kN</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="1936-throttling-and-restart"><span class="secnum">19.3.6</span> Throttling and Restart<a class="headerlink" href="#1936-throttling-and-restart" title="Permanent link">&para;</a></h3>
+<p><strong>Deep throttling</strong> requires special injector design:</p>
+<ul>
+<li>
+<p><strong>Pintle injector</strong>: scales flow by adjusting radial gap; 10:1 throttle demonstrated; minimum flow limited by combustion stability</p>
+</li>
+<li>
+<p><strong>Multiple injection elements</strong>: shut down discrete element groups; coarser throttle steps</p>
+</li>
+<li>
+<p><strong>Cavitating venturi</strong>: pressure-drop device maintains constant mass flow ratio during throttling; simple but limits minimum flow to 50% nominal</p>
+</li>
+</ul>
+<p><strong>Restart</strong>: hypergolic propellants restart on valve opening (no igniter needed); LOX/H<span class="arithmatex">\(_2\)</span> engines require spark or torch igniter for restart; LOX/RP-1 use TEA-TEB (triethylaluminium / triethylborane) pyrophoric igniter (Falcon 9).</p>
+<p><strong>Propellant management in zero-<span class="arithmatex">\(g\)</span></strong>:</p>
+<ul>
+<li>
+<p>Surface tension / capillary devices: screen channels or vanes collect propellant at tank outlet; passive; reliable for <span class="arithmatex">\(&lt;10\)</span> N thrust</p>
+</li>
+<li>
+<p>Positive expulsion bladder: elastomeric bladder separates pressurant gas from propellant; zero-<span class="arithmatex">\(g\)</span> operable; used in attitude control systems</p>
+</li>
+<li>
+<p>Slosh baffles: reduce liquid motion during vehicle manoeuvres; ring baffles spaced <span class="arithmatex">\(\approx D/4\)</span> apart in tank</p>
+</li>
+</ul>
+<h2 id="sec-airbreathing"><span class="secnum">19.4</span> Air-Breathing Propulsion<a class="headerlink" href="#sec-airbreathing" title="Permanent link">&para;</a></h2>
+<p>Air-breathing engines use atmospheric oxygen as the oxidiser, eliminating the need to carry it. This dramatically improves <span class="arithmatex">\(I_{sp}\)</span> and range, but the engine only operates while the vehicle is within the atmosphere and at sufficient speed.</p>
+<h3 id="1941-ramjet"><span class="secnum">19.4.1</span> Ramjet<a class="headerlink" href="#1941-ramjet" title="Permanent link">&para;</a></h3>
+<h4 id="operating-principle">Operating Principle<a class="headerlink" href="#operating-principle" title="Permanent link">&para;</a></h4>
+<p>A ramjet has no rotating machinery. Inlet <strong>ram compression</strong> decelerates the incoming supersonic (or subsonic) flow, converting kinetic energy to pressure: <span id="eq-ram_pressure_ratio"></span></p>
+<div class="arithmatex">\[\frac{P_{02}}{P_\infty} = \left(1 + \frac{\gamma-1}{2}M_\infty^2\right)^{\gamma/(\gamma-1)}
+  \cdot \eta_{ram}\tag{19.25}\]</div>
+<p>where <span class="arithmatex">\(\eta_{ram}\)</span> is the inlet pressure recovery (0.85–0.97 for well-designed inlets). At <span class="arithmatex">\(M = 3\)</span>: stagnation pressure ratio <span class="arithmatex">\(\approx 36\)</span>, providing adequate combustion chamber pressure without a mechanical compressor.</p>
+<h4 id="inlet-types">Inlet Types<a class="headerlink" href="#inlet-types" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><strong>Pitot inlet (normal shock)</strong>: simple; used for subsonic ramjets (<span class="arithmatex">\(M&lt;1.5\)</span>); high pressure loss above <span class="arithmatex">\(M=2\)</span>: <span class="arithmatex">\(\eta_{ram} \approx 0.65\)</span> at <span class="arithmatex">\(M=3\)</span></p>
+</li>
+<li>
+<p><strong>Conical spike inlet</strong>: oblique shock from central spike compresses flow; then normal shock at throat; <span class="arithmatex">\(\eta_{ram} = 0.90\)</span>–<span class="arithmatex">\(0.94\)</span> at <span class="arithmatex">\(M = 2\)</span>–<span class="arithmatex">\(4\)</span>; used on Kh-31, BrahMos</p>
+</li>
+<li>
+<p><strong>Isentropic spike (Oswatitsch)</strong>: shaped spike for fully isentropic compression via series of infinitesimal oblique shocks; highest recovery but complex; variable geometry for off-design</p>
+</li>
+<li>
+<p><strong>Side inlets (2D wedge)</strong>: flat wedge inlets either side of fuselage; SCALP/Storm Shadow; avoids nose spike; lower recovery than axisymmetric</p>
+</li>
+</ul>
+<h4 id="ramjet-combustion">Ramjet Combustion<a class="headerlink" href="#ramjet-combustion" title="Permanent link">&para;</a></h4>
+<p>Fuel is injected into the subsonic flow behind the inlet throat. Flame stabilisation requires a recirculation zone:</p>
+<ul>
+<li>
+<p><strong>V-gutter flameholder</strong>: creates recirculation behind bluff body</p>
+</li>
+<li>
+<p><strong>Step/cavity</strong>: backward-facing step creates shear layer trapping hot products</p>
+</li>
+</ul>
+<p>The ramjet combustion Mach number is 0.2–0.4 (subsonic). Equivalence ratio <span class="arithmatex">\(\phi = 0.5\)</span>–<span class="arithmatex">\(0.9\)</span> for lean combustion to avoid over-temperature at inlet wall.</p>
+<p>Combustion efficiency <span class="arithmatex">\(\eta_{comb}\)</span>: with modern fuel injectors, <span class="arithmatex">\(&gt; 0.96\)</span>.</p>
+<h4 id="performance-calculations">Performance Calculations<a class="headerlink" href="#performance-calculations" title="Permanent link">&para;</a></h4>
+<p>Ramjet specific impulse: <span id="eq-isp_ramjet"></span></p>
+<div class="arithmatex">\[I_{sp,ramjet} = \frac{F}{\dot{m}_f\,g_0}\tag{19.26}\]</div>
+<p>For a liquid ramjet burning kerosene at <span class="arithmatex">\(M_\infty = 3\)</span>:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(I_{sp} \approx 1100\)</span> s (compared to <span class="arithmatex">\(\approx 260\)</span> s for SRM)</p>
+</li>
+<li>
+<p>No static thrust: requires solid-rocket booster to reach <span class="arithmatex">\(M &gt; 1.5\)</span> minimum starting Mach for the particular design</p>
+</li>
+<li>
+<p>Maximum <span class="arithmatex">\(T/W \approx 8\)</span>–<span class="arithmatex">\(15\)</span> at design Mach number</p>
+</li>
+</ul>
+<h4 id="liquid-fuel-ramjet-lfrj">Liquid Fuel Ramjet (LFRJ)<a class="headerlink" href="#liquid-fuel-ramjet-lfrj" title="Permanent link">&para;</a></h4>
+<p>Throttleable by varying fuel flow rate; fuel-to-air ratio control. Kerosene (JP-10, JP-7, RJ-4) is most common. Advantages: throttleable; long-duration flight; efficient cruise. Disadvantages: fuel system complexity; corrosion protection for long storage.</p>
+<p>Example: <strong>P-270 Moskit (SS-N-22 Sunburn)</strong> — liquid ramjet; <span class="arithmatex">\(M \approx 3\)</span> at sea level; range 120 km; terminal phase <span class="arithmatex">\(M = 2.8\)</span> manoeuvring.</p>
+<h4 id="solid-fuel-ramjet-sfrp">Solid Fuel Ramjet (SFRP)<a class="headerlink" href="#solid-fuel-ramjet-sfrp" title="Permanent link">&para;</a></h4>
+<p>The combustion chamber contains a <strong>solid HTPB fuel grain</strong> with a central port. Air enters the port; erosive/pyrolytic combustion of HTPB surface releases fuel vapour that mixes with air and burns: <span id="eq-sfrj_burn"></span></p>
+<div class="arithmatex">\[r_{HTPB} = a_{ram}\,\dot{m}_{air}^n \cdot P^m\tag{19.27}\]</div>
+<p><span class="arithmatex">\(I_{sp} = 500\)</span>–<span class="arithmatex">\(700\)</span> s; fuel-to-air ratio self-regulates through port area change; non-throttleable; simpler than LFRJ. Used: <strong>British Aerospace Sea Dart</strong> (UK RN carrier-borne SAM, retired 2012); development in ASRAAM/CAMM derivatives.</p>
+<h4 id="integral-rocket-ramjet-irr">Integral Rocket-Ramjet (IRR)<a class="headerlink" href="#integral-rocket-ramjet-irr" title="Permanent link">&para;</a></h4>
+<p>The booster SRM charge is packaged <em>within</em> the ramjet combustion chamber:</p>
+<ol>
+<li>
+<p>At launch, inlets are blocked (pop-out covers); SRM burns, accelerates missile to ramjet start speed (<span class="arithmatex">\(M \geq 1.8\)</span>–<span class="arithmatex">\(2.2\)</span>)</p>
+</li>
+<li>
+<p>SRM burns out; inlet covers jettisoned; air flows into now-empty combustion chamber (former SRM case becomes ramjet combustor)</p>
+</li>
+<li>
+<p>Fuel injected; ramjet combustion begins</p>
+</li>
+</ol>
+<p>Advantage: no separate booster stage — very compact. Used: <strong>MBDA Meteor BVRAAM</strong>; <strong>Kh-31 Krypton</strong>; <strong>SA-6 Gainful</strong> (with solid booster + liquid ramjet in separate sections).</p>
+<h4 id="notable-ramjet-missiles">Notable Ramjet Missiles<a class="headerlink" href="#notable-ramjet-missiles" title="Permanent link">&para;</a></h4>
+<div class="tbl" id="tab-ramjet_missiles">
+<div class="tbl-caption"><strong>Table 19.5.</strong> Selected Operational Ramjet-Powered Missiles</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Missile</strong></th>
+<th style="text-align: left;"><strong>Nation</strong></th>
+<th style="text-align: left;"><strong>Type</strong></th>
+<th style="text-align: left;"><strong>Ramjet</strong></th>
+<th style="text-align: left;"><strong>Mach</strong></th>
+<th style="text-align: left;"><strong>Range</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MBDA Meteor</td>
+<td style="text-align: left;">UK/Europe</td>
+<td style="text-align: left;">AAM/BVRAAM</td>
+<td style="text-align: left;">Throttleable IRR</td>
+<td style="text-align: left;">4+</td>
+<td style="text-align: left;">100+ km</td>
+</tr>
+<tr>
+<td style="text-align: left;">P-270 Moskit</td>
+<td style="text-align: left;">Russia</td>
+<td style="text-align: left;">AShM</td>
+<td style="text-align: left;">LFRJ</td>
+<td style="text-align: left;">3.0</td>
+<td style="text-align: left;">120 km</td>
+</tr>
+<tr>
+<td style="text-align: left;">Kh-31A/P</td>
+<td style="text-align: left;">Russia</td>
+<td style="text-align: left;">AShM/ARM</td>
+<td style="text-align: left;">Solid IRR</td>
+<td style="text-align: left;">3.5</td>
+<td style="text-align: left;">70 km</td>
+</tr>
+<tr>
+<td style="text-align: left;">BrahMos</td>
+<td style="text-align: left;">India/Rus</td>
+<td style="text-align: left;">AShM/Land</td>
+<td style="text-align: left;">Ramjet+SRM boost</td>
+<td style="text-align: left;">3.0</td>
+<td style="text-align: left;">500 km</td>
+</tr>
+<tr>
+<td style="text-align: left;">SA-6 Gainful</td>
+<td style="text-align: left;">Russia</td>
+<td style="text-align: left;">SAM</td>
+<td style="text-align: left;">LFRJ + SRM boost</td>
+<td style="text-align: left;">2.8</td>
+<td style="text-align: left;">24 km</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bloodhound Mk2</td>
+<td style="text-align: left;">UK</td>
+<td style="text-align: left;">SAM</td>
+<td style="text-align: left;">4<span class="math inline">\(\times\)</span> ramjet</td>
+<td style="text-align: left;">2.5</td>
+<td style="text-align: left;">85 km</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="1942-scramjet"><span class="secnum">19.4.2</span> Scramjet<a class="headerlink" href="#1942-scramjet" title="Permanent link">&para;</a></h3>
+<h4 id="supersonic-combustion-fundamentals">Supersonic Combustion Fundamentals<a class="headerlink" href="#supersonic-combustion-fundamentals" title="Permanent link">&para;</a></h4>
+<p>In a scramjet (supersonic combustion ramjet), the airflow through the combustor remains <strong>supersonic</strong> (<span class="arithmatex">\(M_{combustor} = 2\)</span>–<span class="arithmatex">\(4\)</span>). This avoids the severe temperature rise from decelerating hypersonic flow to subsonic speeds:</p>
+<p>At <span class="arithmatex">\(M = 8\)</span>: decelerating to subsonic gives <span class="arithmatex">\(T_{stagnation} \approx 3,800\)</span> K — above dissociation temperature of molecular nitrogen, effectively destroying the propellant oxidiser before combustion. Instead, the scramjet operates at <span class="arithmatex">\(M_{inlet} \approx 5\)</span>–<span class="arithmatex">\(8\)</span>, <span class="arithmatex">\(T_{static} \approx 1,500\)</span>–<span class="arithmatex">\(2,000\)</span> K — hot enough to initiate combustion without exceeding material limits.</p>
+<h4 id="operating-principles">Operating Principles<a class="headerlink" href="#operating-principles" title="Permanent link">&para;</a></h4>
+<p>The air enters the inlet, is compressed (but stays supersonic), and fuel is injected perpendicular to the flow. The residence time in the combustor is: <span id="eq-scramjet_residence"></span></p>
+<div class="arithmatex">\[\tau_{res} = \frac{L_{comb}}{V_{air}} \approx \frac{0.5}{2000} = 0.25 \, \text{ms}\tag{19.28}\]</div>
+<p>Chemical reaction timescale for hydrogen at <span class="arithmatex">\(T = 1,500\)</span> K: <span class="arithmatex">\(\tau_{chem} \approx 0.05\)</span>–<span class="arithmatex">\(0.2\)</span> ms — marginally achievable. For hydrocarbon fuel at <span class="arithmatex">\(M=8\)</span>: <span class="arithmatex">\(\tau_{chem} &gt; \tau_{res}\)</span>, making combustion incomplete without active mixing enhancement.</p>
+<h4 id="fuel-injection-and-mixing">Fuel Injection and Mixing<a class="headerlink" href="#fuel-injection-and-mixing" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><strong>Parallel wall injectors</strong>: fuel injected parallel to flow; slow mixing; low drag; insufficient for <span class="arithmatex">\(M &gt; 6\)</span> without cavity enhancement</p>
+</li>
+<li>
+<p><strong>Strut injectors</strong>: transverse struts in flow with fuel through holes; better penetration; structural and drag penalty; used in HyCause, Hyshot</p>
+</li>
+<li>
+<p><strong>Ramp injectors</strong>: angled ramps create streamwise vortices; enhance fuel–air mixing via counterrotating vortex pair (CVP)</p>
+</li>
+<li>
+<p><strong>Cavity flame holder</strong>: shallow recessed cavity (<span class="arithmatex">\(L/D = 4\)</span>–<span class="arithmatex">\(8\)</span>) traps hot products for flame anchoring; acts as both mixer and flame stabiliser</p>
+</li>
+</ul>
+<h4 id="scramjet-performance">Scramjet Performance<a class="headerlink" href="#scramjet-performance" title="Permanent link">&para;</a></h4>
+<div id="eq-isp_scram"></div>
+<div class="arithmatex">\[I_{sp,scram} = \frac{F}{\dot{m}_f\,g_0} = \frac{\dot{m}_{air}\,(V_e - V_0)
+  + (P_e - P_a)\,A_e}{\dot{m}_f\,g_0}\tag{19.29}\]</div>
+<p>For hydrogen fuel (<span class="arithmatex">\(Q_{react} = 120\)</span> MJ/kg), theoretical <span class="arithmatex">\(I_{sp}\)</span> at <span class="arithmatex">\(M=8\)</span>: <span class="arithmatex">\(\approx 1,500\)</span>–<span class="arithmatex">\(2,000\)</span> s. For hydrocarbon (JP-10, <span class="arithmatex">\(Q_{react} = 43\)</span> MJ/kg): <span class="arithmatex">\(\approx 800\)</span>–<span class="arithmatex">\(1,200\)</span> s.</p>
+<p>Performance degrades sharply outside the design Mach range:</p>
+<ul>
+<li>
+<p>Below <span class="arithmatex">\(M \approx 5\)</span>: inlet un-starts; combustor pressure too low for ignition</p>
+</li>
+<li>
+<p>Above <span class="arithmatex">\(M \approx 15\)</span>: hydrogen dissociation losses; structural limits</p>
+</li>
+<li>
+<p>Optimum window: <span class="arithmatex">\(M = 8\)</span>–<span class="arithmatex">\(12\)</span> for sustained propulsion</p>
+</li>
+</ul>
+<h4 id="experimental-programs-and-flight-tests">Experimental Programs and Flight Tests<a class="headerlink" href="#experimental-programs-and-flight-tests" title="Permanent link">&para;</a></h4>
+<ul>
+<li>
+<p><strong>NASA HyperX X-43A</strong> (2004): Mach 9.6 at 33 km; H<span class="arithmatex">\(_2\)</span> fuel; 10-second burn; proved supersonic combustion in flight</p>
+</li>
+<li>
+<p><strong>US AF X-51A Waverider</strong> (2013): Mach 5.1; 240-second burn on JP-7 fuel; longest-duration scramjet flight at the time</p>
+</li>
+<li>
+<p><strong>HyCause</strong> (Australia): <span class="arithmatex">\(M = 7.6\)</span>; hydrogen fuel; strut injectors</p>
+</li>
+<li>
+<p><strong>Russian Kh-47M2 Kinzhal</strong>: officially described as a hypersonic aeroballistic missile (modified Iskander); classified propulsion details; some sources claim modified turbofan + terminal boost, not true scramjet</p>
+</li>
+</ul>
+<h4 id="thermal-management-challenges">Thermal Management Challenges<a class="headerlink" href="#thermal-management-challenges" title="Permanent link">&para;</a></h4>
+<p>Combustor wall heat flux for <span class="arithmatex">\(M = 8\)</span> scramjet: <span id="eq-scramjet_heat_flux"></span></p>
+<div class="arithmatex">\[q_w \approx St\,\rho_\infty V_\infty^3 / 2 \approx 5\,\text{M W m 2}\tag{19.30}\]</div>
+<p>Active cooling with endothermic fuel (cracked JP-7 or H<span class="arithmatex">\(_2\)</span>) absorbs heat while providing fuel. Copper-alloy channels; ceramic matrix composite (CMC) walls.</p>
+<h3 id="1943-turbojet-and-turbofan-for-missiles"><span class="secnum">19.4.3</span> Turbojet and Turbofan for Missiles<a class="headerlink" href="#1943-turbojet-and-turbofan-for-missiles" title="Permanent link">&para;</a></h3>
+<h4 id="williams-f107-wr-402">Williams F107-WR-402<a class="headerlink" href="#williams-f107-wr-402" title="Permanent link">&para;</a></h4>
+<p>The <strong>Williams International F107</strong> turbofan powers the BGM-109 Tomahawk:</p>
+<ul>
+<li>
+<p>Thrust: 3.1 kN (700 lbf); mass: 66 kg; length: 0.71 m; diameter: 0.31 m</p>
+</li>
+<li>
+<p>Thrust-specific fuel consumption (TSFC): 0.682 kg/kN<span class="arithmatex">\(\cdot\)</span>h</p>
+</li>
+<li>
+<p>Bypass ratio: 1.0; max Mach: 0.90; altitude: 0–10,000 m</p>
+</li>
+<li>
+<p>Range: 1,600 km+ at subsonic cruise (Mach 0.7–0.8)</p>
+</li>
+<li>
+<p>Enables long loiter (TLAM Block IV: waypoint programming, BDA capability)</p>
+</li>
+</ul>
+<p>The turbofan’s <span class="arithmatex">\(I_{sp} \approx 4,000\)</span> s vastly exceeds any rocket system, enabling globally significant range from a compact standoff weapon. The price paid is subsonic speed (no supersonic capability), large minimum altitude (must maintain air intake), and vulnerability to modern air defences.</p>
+<h4 id="safranmicroturbo-tri-60-3">SAFRAN/Microturbo TRI 60-3<a class="headerlink" href="#safranmicroturbo-tri-60-3" title="Permanent link">&para;</a></h4>
+<p>Powers the French <strong>ASMP</strong> (Air Sol Moyenne Portée) nuclear cruise missile:</p>
+<ul>
+<li>
+<p>Variable cycle: subsonic turbofan mode (<span class="arithmatex">\(M &lt; 1\)</span>) transitioning to turbojet + afterburner mode (<span class="arithmatex">\(M &gt; 1\)</span>)</p>
+</li>
+<li>
+<p>Performance: Mach 3 at altitude; range 300–500 km; turbine inlet temperature <span class="arithmatex">\(&gt; 1,600°C\)</span> at maximum afterburner</p>
+</li>
+<li>
+<p>Mass: <span class="arithmatex">\(\approx\)</span> 190 kg; thrust (AB): 15 kN</p>
+</li>
+</ul>
+<h4 id="variable-cycle-engines">Variable-Cycle Engines<a class="headerlink" href="#variable-cycle-engines" title="Permanent link">&para;</a></h4>
+<p>At <span class="arithmatex">\(M &gt; 1.5\)</span>, the compressor of a conventional turbofan suffers from stagnation temperature rise exceeding blade material limits. Variable-cycle solutions:</p>
+<ul>
+<li>
+<p>Reduce bypass ratio to zero (turbojet) above <span class="arithmatex">\(M = 1.5\)</span></p>
+</li>
+<li>
+<p>Increase turbine inlet temperature (<span class="arithmatex">\(&gt; 1,800°C\)</span> with CMC blades + TBC coating)</p>
+</li>
+<li>
+<p>Use variable nozzle geometry to maintain optimal expansion ratio across Mach range</p>
+</li>
+</ul>
+<h2 id="sec-advanced_prop"><span class="secnum">19.5</span> Combined Cycle and Advanced Propulsion<a class="headerlink" href="#sec-advanced_prop" title="Permanent link">&para;</a></h2>
+<h3 id="1951-turbine-based-combined-cycle-tbcc"><span class="secnum">19.5.1</span> Turbine-Based Combined Cycle (TBCC)<a class="headerlink" href="#1951-turbine-based-combined-cycle-tbcc" title="Permanent link">&para;</a></h3>
+<p>A TBCC system integrates a turbojet/turbofan (low-speed operation) with a ramjet/scramjet (high-speed) in a shared inlet/nozzle framework:</p>
+<ul>
+<li>
+<p>Turbojet operates <span class="arithmatex">\(M = 0\)</span>–<span class="arithmatex">\(3\)</span>; ramjet takes over at <span class="arithmatex">\(M \approx 2.5\)</span>–<span class="arithmatex">\(3\)</span></p>
+</li>
+<li>
+<p>Mode transition requires careful inlet management: variable geometry diverts flow between turbojet and ramjet paths</p>
+</li>
+<li>
+<p>Advantage: single-stage-to-Mach-8+ without expendable boosters</p>
+</li>
+<li>
+<p>Disadvantage: weight, complexity, mode transition instability</p>
+</li>
+<li>
+<p>Program: DARPA Vulcan program; Aerojet/Rocketdyne TBCC studies; MHI HYPR (Japan)</p>
+</li>
+</ul>
+<h3 id="1952-rocket-based-combined-cycle-rbcc"><span class="secnum">19.5.2</span> Rocket-Based Combined Cycle (RBCC)<a class="headerlink" href="#1952-rocket-based-combined-cycle-rbcc" title="Permanent link">&para;</a></h3>
+<p>An RBCC incorporates a rocket inside the air-breathing flowpath:</p>
+<ol>
+<li>
+<p><strong>Ejector mode</strong> (<span class="arithmatex">\(M = 0\)</span>–<span class="arithmatex">\(1\)</span>): rocket fires; entrained air augments thrust; <span class="arithmatex">\(I_{sp} = 400\)</span>–<span class="arithmatex">\(600\)</span> s</p>
+</li>
+<li>
+<p><strong>Ramjet mode</strong> (<span class="arithmatex">\(M = 2\)</span>–<span class="arithmatex">\(4\)</span>): rocket off; air-breathing combustion</p>
+</li>
+<li>
+<p><strong>Scramjet mode</strong> (<span class="arithmatex">\(M = 5\)</span>–<span class="arithmatex">\(12\)</span>): supersonic combustion</p>
+</li>
+<li>
+<p><strong>Rocket mode</strong> (<span class="arithmatex">\(M &gt; 12\)</span>): pure rocket for exoatmospheric phase</p>
+</li>
+</ol>
+<h3 id="1953-rotating-detonation-engine-rde"><span class="secnum">19.5.3</span> Rotating Detonation Engine (RDE)<a class="headerlink" href="#1953-rotating-detonation-engine-rde" title="Permanent link">&para;</a></h3>
+<p>Thermodynamic analysis shows that <strong>constant-volume combustion</strong> (detonation) is inherently more efficient than constant-pressure combustion (deflagration): <span id="eq-rde_efficiency"></span></p>
+<div class="arithmatex">\[\eta_{th,RDE} = 1 - \frac{T_1}{T_4} \cdot \frac{\Delta s}{c_p}\tag{19.31}\]</div>
+<p>In an RDE, a detonation wave rotates continuously in an annular channel:</p>
+<ul>
+<li>
+<p>Detonation wave speed: <span class="arithmatex">\(V_D = V_{CJ} \approx 1,700\)</span>–<span class="arithmatex">\(2,500\)</span> m/s (for H<span class="arithmatex">\(_2\)</span>/air)</p>
+</li>
+<li>
+<p>Wave rotates at <span class="arithmatex">\(f_{RDE} = V_D / (\pi D_{channel}) \approx 5\)</span>–<span class="arithmatex">\(10\)</span> kHz for <span class="arithmatex">\(D = 100\)</span> mm</p>
+</li>
+<li>
+<p>Theoretical gain in cycle efficiency vs gas turbine: 5–15%</p>
+</li>
+<li>
+<p>Applications under development: next-generation cruise missile engines, USAF AFRL programs</p>
+</li>
+</ul>
+<h3 id="1954-pulsed-detonation-engine-pde"><span class="secnum">19.5.4</span> Pulsed Detonation Engine (PDE)<a class="headerlink" href="#1954-pulsed-detonation-engine-pde" title="Permanent link">&para;</a></h3>
+<p>A PDE operates in repeated detonation cycles:</p>
+<ol>
+<li>
+<p>Fill tube with fuel-air mixture</p>
+</li>
+<li>
+<p>Initiate detonation at closed end</p>
+</li>
+<li>
+<p>Detonation wave propagates to open end; impulse generated</p>
+</li>
+<li>
+<p>Purge and refill; repeat at 50–200 Hz</p>
+</li>
+</ol>
+<p>Specific impulse: <span class="arithmatex">\(I_{sp} = 1,200\)</span>–<span class="arithmatex">\(2,000\)</span> s (JP-10/air); <span class="arithmatex">\(&gt; I_{sp}\)</span> of turbojet but pulse nature complicates integration. Demonstrated: General Electric PDE test vehicle (2008), <span class="arithmatex">\(M = 0\)</span> to <span class="arithmatex">\(M = 0.4\)</span> ground tests at 100 Hz.</p>
+<h3 id="1955-nuclear-thermal-propulsion"><span class="secnum">19.5.5</span> Nuclear Thermal Propulsion<a class="headerlink" href="#1955-nuclear-thermal-propulsion" title="Permanent link">&para;</a></h3>
+<p>Nuclear thermal engines heat a propellant (H<span class="arithmatex">\(_2\)</span>) using a fission reactor: <span id="eq-isp_ntp"></span></p>
+<div class="arithmatex">\[I_{sp,NTP} = \frac{1}{g_0}\sqrt{\frac{2\,\gamma\,R_u\,T_{reactor}}{(\gamma-1)\,M_w}}\tag{19.32}\]</div>
+<p>For <span class="arithmatex">\(T_{reactor} = 3,000\)</span> K and H<span class="arithmatex">\(_2\)</span> (<span class="arithmatex">\(M_w = 2\)</span> g/mol): <span class="arithmatex">\(I_{sp} \approx 900\)</span> s — approximately <span class="arithmatex">\(3\times\)</span> better than chemical rockets.</p>
+<p><strong>Project Pluto / SLAM</strong> (1961–1964): US program for a nuclear-powered subsonic cruise missile using a nuclear ramjet (TORY-IIC reactor, <span class="arithmatex">\(\approx 500\)</span> MW thermal; unshielded; designed for one-way use; programme cancelled due to arms control concerns and ICBM superiority). All nuclear-propelled missile concepts remain banned under the INF Treaty framework and are not deployed operationally by any signatory nation.</p>
+<h2 id="sec-nozzle_tvc"><span class="secnum">19.6</span> Nozzle Design and Thrust Vector Control<a class="headerlink" href="#sec-nozzle_tvc" title="Permanent link">&para;</a></h2>
+<h3 id="1961-bell-nozzle-contour-design"><span class="secnum">19.6.1</span> Bell Nozzle Contour Design<a class="headerlink" href="#1961-bell-nozzle-contour-design" title="Permanent link">&para;</a></h3>
+<p>The Rao optimum bell nozzle contour is derived using the <strong>Method of Characteristics (MOC)</strong>:</p>
+<ol>
+<li>
+<p>Specify <span class="arithmatex">\(\varepsilon = A_e/A_t\)</span> and desired nozzle length as fraction of equivalent cone length</p>
+</li>
+<li>
+<p>Using a source-flow field at the throat with initial expansion angle <span class="arithmatex">\(\theta_i \approx 25°\)</span>–<span class="arithmatex">\(45°\)</span> (function of <span class="arithmatex">\(\varepsilon\)</span>)</p>
+</li>
+<li>
+<p>Propagate characteristic lines through the nozzle; reflect off wall</p>
+</li>
+<li>
+<p>Optimise wall contour to minimise flow non-uniformity at exit plane</p>
+</li>
+</ol>
+<p>The exit flow divergence angle <span class="arithmatex">\(\theta_e\)</span> for a Rao optimum bell is: <span id="eq-bell_exit_angle"></span></p>
+<div class="arithmatex">\[\theta_e = \theta_i - \frac{\theta_i - \theta_{cone}}{\varepsilon^{0.4}}\tag{19.33}\]</div>
+<p>For 80% bell (<span class="arithmatex">\(L_n = 0.8 L_{cone}\)</span>): <span class="arithmatex">\(\theta_e \approx 8\)</span>–<span class="arithmatex">\(12°\)</span>; thrust efficiency: <span class="arithmatex">\(\lambda_{bell} &gt; 0.99\)</span> vs <span class="arithmatex">\(\lambda_{cone} \approx 0.983\)</span> for <span class="arithmatex">\(\alpha = 15°\)</span> cone.</p>
+<h3 id="1962-extendible-exit-cone-eec"><span class="secnum">19.6.2</span> Extendible Exit Cone (EEC)<a class="headerlink" href="#1962-extendible-exit-cone-eec" title="Permanent link">&para;</a></h3>
+<p>For strategic missiles, the nozzle must be compact during storage but achieve high expansion ratio in flight. The extendible exit cone solves this:</p>
+<ul>
+<li>
+<p>Cone stowed around motor case during storage; deployed pneumatically or by spring on motor ignition</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\varepsilon\)</span> increase from 20 (stowed) to 80 (deployed) for Trident II D5</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\Delta I_{sp} \approx +15\)</span>–<span class="arithmatex">\(25\)</span> s from higher expansion ratio</p>
+</li>
+<li>
+<p>Deployment mechanism: pyrotechnic actuators; carbon-phenolic cone sections telescope or hinge out; must seal at joint to prevent hot gas leakage</p>
+</li>
+</ul>
+<h3 id="1963-thrust-vector-control-systems"><span class="secnum">19.6.3</span> Thrust Vector Control Systems<a class="headerlink" href="#1963-thrust-vector-control-systems" title="Permanent link">&para;</a></h3>
+<h4 id="gimballed-nozzle">Gimballed Nozzle<a class="headerlink" href="#gimballed-nozzle" title="Permanent link">&para;</a></h4>
+<p>The most common TVC for large SRMs and LREs:</p>
+<ul>
+<li>
+<p>Ball-and-socket or trunnion bearing mount; full <span class="arithmatex">\(\pm 8°\)</span>–<span class="arithmatex">\(15°\)</span> pitch and yaw</p>
+</li>
+<li>
+<p>Actuator force: <span class="arithmatex">\(F_{act} \approx P_c \cdot A_t \cdot 0.015\)</span> per degree (rule of thumb for gas loads)</p>
+</li>
+<li>
+<p>Bandwidth: 3–10 Hz for gimbal; actuator must exceed this</p>
+</li>
+<li>
+<p>Used: Minuteman III 2nd stage (gimballed motor); Trident II (stages 1–3)</p>
+</li>
+</ul>
+<h4 id="flexible-bearing-flex-nozzle">Flexible Bearing (Flex Nozzle)<a class="headerlink" href="#flexible-bearing-flex-nozzle" title="Permanent link">&para;</a></h4>
+<p>The elastomeric flex bearing is the dominant TVC method for tactical SRMs: <span id="eq-flex_restoring"></span></p>
+<div class="arithmatex">\[M_{flex} = k_s\,\delta + c_s\,\dot{\delta}\tag{19.34}\]</div>
+<p>where <span class="arithmatex">\(k_s\)</span> is the bearing spring rate (k N m r a d), <span class="arithmatex">\(\delta\)</span> the deflection angle, and <span class="arithmatex">\(c_s\)</span> the viscous damping coefficient. Deflection range: <span class="arithmatex">\(\pm 7°\)</span>–<span class="arithmatex">\(12°\)</span>. Material: alternating layers of silicone elastomer and spherical shells of carbon-filled rubber; vulcanised bond; life: 50–100 firings.</p>
+<h4 id="liquid-injection-tvc-litvc">Liquid Injection TVC (LITVC)<a class="headerlink" href="#liquid-injection-tvc-litvc" title="Permanent link">&para;</a></h4>
+<div id="eq-litvc_side_force"></div>
+<div class="arithmatex">\[F_{side} = C_{F,inj}\,\dot{m}_{inj}\,\sqrt{2\,\frac{P_c}{\rho_{inj}}}\tag{19.35}\]</div>
+<p>Injectant creates a local oblique shock on the injected side; asymmetric pressure distribution produces net side force and moment. Specific impulse of injectant: <span class="arithmatex">\(I_{sp,inj} = F_{side}/(\dot{m}_{inj}\,g_0) = 100\)</span>–<span class="arithmatex">\(300\)</span> s. Advantages: no moving nozzle; very high bandwidth (100 Hz+). Disadvantage: consumes additional mass; lower control authority than gimballed nozzle.</p>
+<h2 id="sec-prop_testing"><span class="secnum">19.7</span> Propulsion Testing and Evaluation<a class="headerlink" href="#sec-prop_testing" title="Permanent link">&para;</a></h2>
+<h3 id="1971-static-fire-testing"><span class="secnum">19.7.1</span> Static Fire Testing<a class="headerlink" href="#1971-static-fire-testing" title="Permanent link">&para;</a></h3>
+<h4 id="test-stand-and-instrumentation">Test Stand and Instrumentation<a class="headerlink" href="#test-stand-and-instrumentation" title="Permanent link">&para;</a></h4>
+<p>Static fire tests measure motor or engine performance in ground conditions:</p>
+<ul>
+<li>
+<p><strong>Thrust measurement</strong>: load cell (piezoelectric or strain-gauge); range: 100 N to 10 MN; accuracy: <span class="arithmatex">\(\pm0.1\%\)</span> FS; must account for parasitic forces (pressure lines, umbilical cables, resonances)</p>
+</li>
+<li>
+<p><strong>Chamber pressure transducer</strong>: flush-mounted or with cooling standoff; Kistler piezoelectric; 0–70 MPa; 50 kHz bandwidth</p>
+</li>
+<li>
+<p><strong>Mass flow</strong>: Coriolis meter (liquids); orifice plate / venturi (gases); propellant tank weight-loss method</p>
+</li>
+<li>
+<p><strong>High-speed cameras</strong>: 2,000–100,000 fps; combustion imaging; plume observation; nozzle erosion measurement</p>
+</li>
+<li>
+<p><strong>Exhaust gas sampling</strong>: post-test chemical analysis; combustion efficiency verification; emission characterisation</p>
+</li>
+</ul>
+<h4 id="performance-derivation">Performance Derivation<a class="headerlink" href="#performance-derivation" title="Permanent link">&para;</a></h4>
+<p>From test data, key performance parameters: <span id="eq-cstar_meas"></span><span id="eq-CF_meas"></span><span id="eq-isp_measured"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  c^*_{meas} &amp;= \frac{P_c\,A_t}{\dot{m}}  \\
+  C_{F,meas} &amp;= \frac{F_{meas}}{P_c\,A_t}  \\
+  I_{sp,meas} &amp;= \frac{\int F\,dt}{\dot{m}_{total}\,g_0}
+\end{align*}\]</div>
+<p>Efficiency ratios: <span class="arithmatex">\(\eta_{c^*} = c^*_{meas}/c^*_{th}\)</span> and <span class="arithmatex">\(\eta_{CF} = C_{F,meas}/C_{F,th}\)</span> characterise combustion and nozzle efficiencies independently.</p>
+<h3 id="1972-altitude-simulation"><span class="secnum">19.7.2</span> Altitude Simulation<a class="headerlink" href="#1972-altitude-simulation" title="Permanent link">&para;</a></h3>
+<p>To measure vacuum <span class="arithmatex">\(I_{sp}\)</span>, a jet exhaust diffuser simulates altitude back-pressure:</p>
+<ul>
+<li>
+<p>A second-throat diffuser after the nozzle captures exhaust and creates a low back-pressure environment</p>
+</li>
+<li>
+<p>Minimum starting pressure ratio: <span class="arithmatex">\(P_{chamber}/P_{ambient} &gt; 3\)</span>–<span class="arithmatex">\(5\)</span> for diffuser to start</p>
+</li>
+<li>
+<p>Altitude simulation facilities: AFRL Test Cell 2 (Arnold Engineering Development Complex, AEDC); simulates <span class="arithmatex">\(&gt; 70\)</span> km altitude</p>
+</li>
+</ul>
+<h3 id="1973-motor-failure-modes"><span class="secnum">19.7.3</span> Motor Failure Modes<a class="headerlink" href="#1973-motor-failure-modes" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-srm_failures">
+<div class="tbl-caption"><strong>Table 19.6.</strong> SRM Failure Modes and Detection Methods</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Failure Mode</strong></th>
+<th style="text-align: left;"><strong>Mechanism</strong></th>
+<th style="text-align: left;"><strong>Detection</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CATO (Catastrophic)</td>
+<td style="text-align: left;">Case rupture from over-pressure</td>
+<td style="text-align: left;">Range safety destruct</td>
+</tr>
+<tr>
+<td style="text-align: left;">Erosive burning</td>
+<td style="text-align: left;">Over-prediction of burn rate</td>
+<td style="text-align: left;"><span class="math inline">\(P_c\)</span> spike, short burn</td>
+</tr>
+<tr>
+<td style="text-align: left;">Combustion instability</td>
+<td style="text-align: left;">Acoustic coupling</td>
+<td style="text-align: left;"><span class="math inline">\(P_c\)</span> oscillation (<span class="math inline">\(&gt; 10\%\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nozzle throat erosion</td>
+<td style="text-align: left;">Al<span class="math inline">\(_2\)</span>O<span class="math inline">\(_3\)</span> / ablation</td>
+<td style="text-align: left;"><span class="math inline">\(P_c\)</span> decay; post-fire measurement</td>
+</tr>
+<tr>
+<td style="text-align: left;">Propellant debonding</td>
+<td style="text-align: left;">Grain-case separation</td>
+<td style="text-align: left;">X-ray inspection pre-test</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ignition failure</td>
+<td style="text-align: left;">Squib misfire</td>
+<td style="text-align: left;"><span class="math inline">\(P_c\)</span> = 0; electrical continuity</td>
+</tr>
+<tr>
+<td style="text-align: left;">TVC actuator jam</td>
+<td style="text-align: left;">Mechanical seizure</td>
+<td style="text-align: left;">No yaw/pitch response</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="1974-uncertainty-analysis"><span class="secnum">19.7.4</span> Uncertainty Analysis<a class="headerlink" href="#1974-uncertainty-analysis" title="Permanent link">&para;</a></h3>
+<p>Measurement uncertainty in <span class="arithmatex">\(I_{sp}\)</span> (per JANNAF Rocket Performance Standards): <span id="eq-isp_uncertainty"></span></p>
+<div class="arithmatex">\[\frac{\delta I_{sp}}{I_{sp}} = \sqrt{\left(\frac{\delta F}{F}\right)^2
+  + \left(\frac{\delta \dot{m}}{\dot{m}}\right)^2}\tag{19.39}\]</div>
+<p>Typical individual uncertainties: <span class="arithmatex">\(\delta F/F = 0.1\%\)</span>; <span class="arithmatex">\(\delta\dot{m}/\dot{m} = 0.2\%\)</span>. Combined: <span class="arithmatex">\(\delta I_{sp}/I_{sp} \approx 0.22\%\)</span>. For <span class="arithmatex">\(I_{sp} = 265\)</span> s, this gives <span class="arithmatex">\(\pm 0.6\)</span> s uncertainty.</p>
+<h2 id="sec-prop_integration"><span class="secnum">19.8</span> Propulsion System Design Integration<a class="headerlink" href="#sec-prop_integration" title="Permanent link">&para;</a></h2>
+<h3 id="1981-motor-mass-budget"><span class="secnum">19.8.1</span> Motor Mass Budget<a class="headerlink" href="#1981-motor-mass-budget" title="Permanent link">&para;</a></h3>
+<p>The <strong>structural coefficient</strong> <span class="arithmatex">\(\varepsilon_s\)</span> quantifies inert motor mass fraction: <span id="eq-struct_coeff"></span></p>
+<div class="arithmatex">\[\varepsilon_s = \frac{m_{inert}}{m_{motor,total}} = \frac{m_{case}+m_{nozzle}+m_{igniter}}{m_{propellant}+m_{inert}}\tag{19.40}\]</div>
+<p>Typical values: tactical SRM with CFRP case: <span class="arithmatex">\(\varepsilon_s = 0.05\)</span>–<span class="arithmatex">\(0.10\)</span>; strategic SRM: <span class="arithmatex">\(\varepsilon_s = 0.03\)</span>–<span class="arithmatex">\(0.06\)</span>; steel case tactical SRM: <span class="arithmatex">\(\varepsilon_s = 0.15\)</span>–<span class="arithmatex">\(0.20\)</span>.</p>
+<p>The impact on <span class="arithmatex">\(\Delta V\)</span> is profound:</p>
+<div class="arithmatex">\[\Delta V = I_{sp}\,g_0\,\ln\!\left(\frac{1 + m_{pay}/m_{motor}}{1 - (1-\varepsilon_s)(1 - m_{pay}/(m_{motor}+m_{pay}))}\right)\]</div>
+<p>Reducing <span class="arithmatex">\(\varepsilon_s\)</span> from 0.10 to 0.05 for a missile with mass ratio 3:1 increases <span class="arithmatex">\(\Delta V\)</span> by <span class="arithmatex">\(\approx 7\%\)</span> or equivalently allows <span class="arithmatex">\(\approx 14\%\)</span> more payload mass.</p>
+<h3 id="1982-stage-optimisation"><span class="secnum">19.8.2</span> Stage Optimisation<a class="headerlink" href="#1982-stage-optimisation" title="Permanent link">&para;</a></h3>
+<p>For a multi-stage missile, the optimal staging to maximise <span class="arithmatex">\(\Delta V\)</span> for a given payload requires: <span id="eq-staging_opt"></span></p>
+<div class="arithmatex">\[\frac{\Delta V_i}{\Delta V_{total}} = \frac{I_{sp,i}}{\sum_j I_{sp,j}}
+  \text{ (equal mass ratios for equal $I_{sp}$)}\tag{19.42}\]</div>
+<p>For unequal <span class="arithmatex">\(I_{sp}\)</span> stages (common in practical missiles), numerical optimisation using Lagrange multipliers determines optimal propellant mass allocation per stage.</p>
+<h3 id="1983-volumetric-efficiency-and-packaging"><span class="secnum">19.8.3</span> Volumetric Efficiency and Packaging<a class="headerlink" href="#1983-volumetric-efficiency-and-packaging" title="Permanent link">&para;</a></h3>
+<p>Missile airframe diameter is often fixed by aerodynamic or launch system constraints. The <strong>volumetric specific impulse</strong> <span class="arithmatex">\(I_{sp,v}\)</span> accounts for propellant density: <span id="eq-isp_vol"></span></p>
+<div class="arithmatex">\[I_{sp,v} = I_{sp}\,\rho_{prop}\,g_0\tag{19.43}\]</div>
+<p>Composite propellant (<span class="arithmatex">\(I_{sp} = 265\)</span> s, <span class="arithmatex">\(\rho = 1,820\)</span> kg/m<span class="arithmatex">\(^3\)</span>): <span class="arithmatex">\(I_{sp,v} = 4.73 \times 10^6\)</span> N<span class="arithmatex">\(\cdot\)</span>s/m<span class="arithmatex">\(^3\)</span>. Liquid N<span class="arithmatex">\(_2\)</span>O<span class="arithmatex">\(_4\)</span>/UDMH (<span class="arithmatex">\(I_{sp} = 310\)</span> s, <span class="arithmatex">\(\rho_{mix} = 1,050\)</span> kg/m<span class="arithmatex">\(^3\)</span>): <span class="arithmatex">\(I_{sp,v} = 3.19 \times 10^6\)</span> N<span class="arithmatex">\(\cdot\)</span>s/m<span class="arithmatex">\(^3\)</span>.</p>
+<p>Despite higher <span class="arithmatex">\(I_{sp}\)</span>, the liquid storable propellant has <em>lower</em> <span class="arithmatex">\(I_{sp,v}\)</span> — liquid missiles require larger diameter or longer body for the same <span class="arithmatex">\(\Delta V\)</span>, partially explaining the dominance of solids in compact tactical designs.</p>
+<h3 id="1984-thermal-environment-and-insulation-design"><span class="secnum">19.8.4</span> Thermal Environment and Insulation Design<a class="headerlink" href="#1984-thermal-environment-and-insulation-design" title="Permanent link">&para;</a></h3>
+<p>The motor thermal environment affects:</p>
+<ul>
+<li>
+<p>Propellant temperature at ignition (burn rate prediction)</p>
+</li>
+<li>
+<p>Structural case temperatures during and after firing (cool-down period)</p>
+</li>
+<li>
+<p>Adjacent warhead and electronics temperature limits</p>
+</li>
+</ul>
+<p>Thermal analysis uses the transient heat conduction equation: <span id="eq-heat_conduction"></span></p>
+<div class="arithmatex">\[\rho\,c_p\,\frac{\partial T}{\partial t} = \nabla \cdot (k\,\nabla T) + \dot{q}\tag{19.44}\]</div>
+<p>With appropriate boundary conditions:</p>
+<ul>
+<li>
+<p>Internal (combustion): <span class="arithmatex">\(q_{internal} = h_g(T_g - T_w) - \rho_{ins}\,r_{char}\,L_{char}\)</span></p>
+</li>
+<li>
+<p>External (aerodynamic heating): <span class="arithmatex">\(q_{aero} = h_{aero}(T_{aw} - T_w)\)</span> where <span class="arithmatex">\(T_{aw} = T_0(1 + r(\gamma-1)M^2/2)\)</span> is the adiabatic wall temperature (<span class="arithmatex">\(r\)</span> = recovery factor <span class="arithmatex">\(\approx 0.89\)</span> for turbulent flow)</p>
+</li>
+<li>
+<p>End faces: convection to ambient air + radiation</p>
+</li>
+</ul>
+<p>Thermal protection between motor and warhead/guidance section: 10–25 mm of phenolic or ablative material; verified by thermocouple measurements during qualification testing per MIL-STD-331.</p>
+<p><strong>Summary of Key Propulsion Design Equations:</strong></p>
+<div id="eq-summary_thrust"></div>
+<div id="eq-summary_isp"></div>
+<div id="eq-summary_dv"></div>
+<div id="eq-summary_cstar"></div>
+<div id="eq-summary_CF"></div>
+<div id="eq-summary_Pc"></div>
+<div id="eq-summary_burnrate"></div>
+<div id="eq-summary_tb"></div>
+<div class="arithmatex">\[\begin{align*}
+  F &amp;= \dot{m}V_e + (P_e - P_a)A_e &amp; &amp;\text{(Thrust)} \\
+  I_{sp} &amp;= F/(\dot{m}g_0) &amp; &amp;\text{(Specific Impulse)} \\
+  \Delta V &amp;= I_{sp}g_0\ln(m_0/m_f) &amp; &amp;\text{(Tsiolkovsky)} \\
+  c^* &amp;= P_c A_t / \dot{m} &amp; &amp;\text{(Char. Velocity)} \\
+  C_F &amp;= F/(P_c A_t) &amp; &amp;\text{(Thrust Coeff.)} \\
+  P_c &amp;= (\rho_p c^* a A_b / A_t)^{1/(1-n)} &amp; &amp;\text{(Chamber Pressure)} \\
+  r &amp;= a P_c^n &amp; &amp;\text{(Burn Rate)} \\
+  t_b &amp;= W/\bar{r} &amp; &amp;\text{(Burn Time)}
+\end{align*}\]</div>
+<p>These relations, combined with the thermochemical equilibrium calculations (NASA CEA or PROPEP codes) and structural finite-element analysis, form the complete toolset for solid and liquid missile propulsion design.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch18-missile-aerodynamics.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 18. Missile Aerodynamics">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                18. Missile Aerodynamics
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch20-guidance-navigation-and-control.html" class="md-footer__link md-footer__link--next" aria-label="Next: 20. Guidance, Navigation and Control">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                20. Guidance, Navigation and Control
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

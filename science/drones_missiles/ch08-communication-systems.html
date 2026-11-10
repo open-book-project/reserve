@@ -1,0 +1,3594 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch08-communication-systems.html">
+  
+  
+    <link rel="prev" href="ch07-avionics-and-flight-control.html">
+  
+  
+    <link rel="next" href="ch09-payloads-and-sensors.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>8. Communication Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-rf_fundamentals" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. Communication Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch08-communication-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-rf_fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 RF Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 RF Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-maxwell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.1 Maxwell’s Equations and Wave Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-fspl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.2 Free-Space Path Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-link_budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.3 Link Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-multipath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.4 Multipath Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-doppler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.5 Doppler Shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-rc_links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 RC Control Links
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 RC Control Links">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-elrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.1 ExpressLRS Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-crossfire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.2 TBS Crossfire
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sbus_crsf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.3 SBUS and CRSF Protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-antennas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.4 Antenna Design for RC Links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-fhss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.5 Frequency Hopping Spread Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Telemetry Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Telemetry Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mavlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.1 MAVLink Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sik_radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.2 SiK Radio and RFD900+
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-4g_lte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.3 4G/LTE and Mesh Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-video_downlinks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Video Downlinks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 Video Downlinks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-analogue_fpv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.1 Analogue FPV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-digital_fpv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.2 Digital FPV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-video_compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.3 Video Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cofdm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.4 Long-Range Encrypted Video: COFDM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-military_datalinks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Military Datalinks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 Military Datalinks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-link16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.1 Link 16 (JTIDS/MIDS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cdl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.2 Common Data Link (CDL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-rover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.3 ROVER and Battlefield Video Relay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-anti_jam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.4 Anti-Jam Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-satcom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 Satellite Communications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 Satellite Communications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-iridium" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.1 Iridium
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-bgan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.2 Inmarsat BGAN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-starlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.3 Starlink for UAV Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-wgs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.4 Wideband Global SATCOM (WGS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-satcom_terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.5 SATCOM Terminal Design for UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7 Encryption and Cybersecurity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.7 Encryption and Cybersecurity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.1 Command Link Encryption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lpi_lpd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.2 Low Probability of Intercept and Detection (LPI/LPD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-anti_spoof" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.3 Anti-Spoofing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-jamming_detect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.4 Jamming Detection and Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-zero_trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.5 Zero-Trust Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8 Spectrum Management and Regulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.8 Spectrum Management and Regulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-itu_regulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.1 ITU Radio Regulations and Frequency Allocations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-icao_bvlos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.2 ICAO BVLOS Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mil_spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.3 Military Spectrum Deconfliction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cognitive_radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.4 Cognitive Radio and Dynamic Spectrum Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mq9_comms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.9 Integrated Communications Example: MQ-9 Reaper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-comms_future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10 Future Directions in Drone Communications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.10 Future Directions in Drone Communications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8101-5g-nr-for-uav-c2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10.1 5G NR for UAV C2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8102-quantum-key-distribution-qkd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10.2 Quantum Key Distribution (QKD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8103-laser-free-space-optical-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10.3 Laser / Free-Space Optical Communications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-rf_fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 RF Fundamentals
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 RF Fundamentals">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-maxwell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.1 Maxwell’s Equations and Wave Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-fspl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.2 Free-Space Path Loss
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-link_budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.3 Link Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-multipath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.4 Multipath Propagation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-doppler" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1.5 Doppler Shift
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-rc_links" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 RC Control Links
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 RC Control Links">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-elrs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.1 ExpressLRS Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-crossfire" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.2 TBS Crossfire
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sbus_crsf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.3 SBUS and CRSF Protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-antennas" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.4 Antenna Design for RC Links
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-fhss" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2.5 Frequency Hopping Spread Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-telemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Telemetry Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Telemetry Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mavlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.1 MAVLink Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sik_radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.2 SiK Radio and RFD900+
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-4g_lte" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3.3 4G/LTE and Mesh Connectivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-video_downlinks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Video Downlinks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 Video Downlinks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-analogue_fpv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.1 Analogue FPV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-digital_fpv" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.2 Digital FPV
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-video_compression" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.3 Video Compression
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cofdm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4.4 Long-Range Encrypted Video: COFDM
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-military_datalinks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Military Datalinks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.5 Military Datalinks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-link16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.1 Link 16 (JTIDS/MIDS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cdl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.2 Common Data Link (CDL)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-rover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.3 ROVER and Battlefield Video Relay
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-anti_jam" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5.4 Anti-Jam Techniques
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-satcom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 Satellite Communications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 Satellite Communications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-iridium" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.1 Iridium
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-bgan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.2 Inmarsat BGAN
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-starlink" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.3 Starlink for UAV Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-wgs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.4 Wideband Global SATCOM (WGS)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-satcom_terminal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6.5 SATCOM Terminal Design for UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cybersecurity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7 Encryption and Cybersecurity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.7 Encryption and Cybersecurity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-encryption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.1 Command Link Encryption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-lpi_lpd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.2 Low Probability of Intercept and Detection (LPI/LPD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-anti_spoof" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.3 Anti-Spoofing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-jamming_detect" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.4 Jamming Detection and Response
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-zero_trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7.5 Zero-Trust Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8 Spectrum Management and Regulation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.8 Spectrum Management and Regulation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-itu_regulations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.1 ITU Radio Regulations and Frequency Allocations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-icao_bvlos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.2 ICAO BVLOS Requirements
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mil_spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.3 Military Spectrum Deconfliction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cognitive_radio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8.4 Cognitive Radio and Dynamic Spectrum Access
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mq9_comms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.9 Integrated Communications Example: MQ-9 Reaper
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-comms_future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10 Future Directions in Drone Communications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.10 Future Directions in Drone Communications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#8101-5g-nr-for-uav-c2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10.1 5G NR for UAV C2
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8102-quantum-key-distribution-qkd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10.2 Quantum Key Distribution (QKD)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#8103-laser-free-space-optical-communications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10.3 Laser / Free-Space Optical Communications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-comms">Chapter 8: Communication Systems<a class="headerlink" href="#ch-comms" title="Permanent link">&para;</a></h1>
+<h2 id="sec-rf_fundamentals"><span class="secnum">8.1</span> RF Fundamentals<a class="headerlink" href="#sec-rf_fundamentals" title="Permanent link">&para;</a></h2>
+<p>Reliable communication between an unmanned vehicle and its operators — or between vehicles in a swarm — is the enabling technology for virtually all drone and missile applications. This chapter develops the theoretical foundations of radio-frequency propagation, links all major control, telemetry, video, datalink, and satellite systems to those foundations, and addresses the military imperatives of jam-resistance, low probability of intercept, and cybersecurity.</p>
+<h3 id="subsec-maxwell"><span class="secnum">8.1.1</span> Maxwell’s Equations and Wave Propagation<a class="headerlink" href="#subsec-maxwell" title="Permanent link">&para;</a></h3>
+<p>All electromagnetic communication systems obey Maxwell’s equations, in SI units and differential form: <span id="eq-gauss_e"></span><span id="eq-gauss_m"></span><span id="eq-faraday"></span><span id="eq-ampere"></span></p>
+<div class="arithmatex">\[\begin{align*}
+\nabla \cdot \mathbf{D} &amp;= \rho_f \\
+\nabla \cdot \mathbf{B} &amp;= 0 \\
+\nabla \times \mathbf{E} &amp;= -\frac{\partial \mathbf{B}}{\partial t} \\
+\nabla \times \mathbf{H} &amp;= \mathbf{J}_f + \frac{\partial \mathbf{D}}{\partial t}
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{E}\)</span> is the electric field intensity (V/m), <span class="arithmatex">\(\mathbf{H}\)</span> is the magnetic field intensity (A/m), <span class="arithmatex">\(\mathbf{D} = \varepsilon\mathbf{E}\)</span> is the electric flux density (C/m<span class="arithmatex">\(^2\)</span>), <span class="arithmatex">\(\mathbf{B} = \mu\mathbf{H}\)</span> is the magnetic flux density (T), <span class="arithmatex">\(\rho_f\)</span> is the free charge density, and <span class="arithmatex">\(\mathbf{J}_f\)</span> is the free current density.</p>
+<p>In a source-free, homogeneous, isotropic medium, combining Faraday’s and Ampère’s laws yields the vector wave equation: <span id="eq-wave_eq"></span></p>
+<div class="arithmatex">\[\nabla^2\mathbf{E} - \mu\varepsilon\frac{\partial^2\mathbf{E}}{\partial t^2} = 0\tag{8.5}\]</div>
+<p>Solutions of the form <span class="arithmatex">\(\mathbf{E} = E_0\,\hat{\mathbf{x}}\,e^{j(\omega t - kz)}\)</span> describe plane waves propagating in the <span class="arithmatex">\(+z\)</span> direction with wavenumber <span class="arithmatex">\(k = \omega\sqrt{\mu\varepsilon} = 2\pi/\lambda\)</span> and phase velocity <span class="arithmatex">\(v_p = 1/\sqrt{\mu\varepsilon}\)</span> (equal to <span class="arithmatex">\(c = 3 \times 10^8\)</span> m/s in free space).</p>
+<h3 id="subsec-fspl"><span class="secnum">8.1.2</span> Free-Space Path Loss<a class="headerlink" href="#subsec-fspl" title="Permanent link">&para;</a></h3>
+<p>As an isotropic radiator transmits power <span class="arithmatex">\(P_t\)</span>, that power spreads over a sphere of area <span class="arithmatex">\(4\pi d^2\)</span> at range <span class="arithmatex">\(d\)</span>. The power density at range <span class="arithmatex">\(d\)</span> is <span class="arithmatex">\(S = P_t/(4\pi d^2)\)</span>. An isotropic receive antenna with effective area <span class="arithmatex">\(A_e = \lambda^2/(4\pi)\)</span> intercepts: <span id="eq-isotropic_pr"></span></p>
+<div class="arithmatex">\[P_r = P_t \cdot \frac{\lambda^2}{(4\pi d)^2}\tag{8.6}\]</div>
+<p>For directional antennas with gains <span class="arithmatex">\(G_t\)</span> and <span class="arithmatex">\(G_r\)</span>, the <strong>Friis transmission equation</strong> is: <span id="eq-friis"></span></p>
+<div class="arithmatex">\[\boxed{
+P_r = P_t \cdot G_t \cdot G_r \cdot \left(\frac{\lambda}{4\pi d}\right)^2
+}\tag{8.7}\]</div>
+<p>The free-space path loss (FSPL) in dB, independent of antenna gains: <span id="eq-fspl_db"></span></p>
+<div class="arithmatex">\[\text{FSPL}_{dB} = 20\log_{10}\!\left(\frac{4\pi d}{\lambda}\right) = 20\log_{10}(d) + 20\log_{10}(f) + 20\log_{10}\!\left(\frac{4\pi}{c}\right)\tag{8.8}\]</div>
+<p>Numerically: <span class="arithmatex">\(\text{FSPL}_{dB} = 20\log_{10}(d_{\text{km}}) + 20\log_{10}(f_{\text{MHz}}) + 32.45\)</span>. At 5.8 GHz and 1 km: FSPL = <span class="arithmatex">\(20\log_{10}(1) + 20\log_{10}(5800) + 32.45 = 0 + 75.27 + 32.45 = 107.7\)</span> dB.</p>
+<h3 id="subsec-link_budget"><span class="secnum">8.1.3</span> Link Budget<a class="headerlink" href="#subsec-link_budget" title="Permanent link">&para;</a></h3>
+<p>A link budget calculates the received signal-to-noise ratio (SNR) or <span class="arithmatex">\(E_b/N_0\)</span> (energy per bit over noise spectral density) to determine link viability. In tabular form:</p>
+<div class="tbl" id="tab-link_budget">
+<div class="tbl-caption"><strong>Table 8.1.</strong> Example Link Budget: 915 MHz SiK Telemetry Radio at 5 km LOS</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: right;"><strong>Value</strong></th>
+<th style="text-align: right;"><strong>Units</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Transmit power (<span class="math inline">\(P_t\)</span>)</td>
+<td style="text-align: right;">+20.0</td>
+<td style="text-align: right;">dBm</td>
+</tr>
+<tr>
+<td style="text-align: left;">Transmit antenna gain (<span class="math inline">\(G_t\)</span>)</td>
+<td style="text-align: right;">+3.0</td>
+<td style="text-align: right;">dBi</td>
+</tr>
+<tr>
+<td style="text-align: left;">EIRP</td>
+<td style="text-align: right;">+23.0</td>
+<td style="text-align: right;">dBm</td>
+</tr>
+<tr>
+<td style="text-align: left;">Free-space path loss (5 km, 915 MHz)</td>
+<td style="text-align: right;"><span class="math inline">\(-\)</span>105.2</td>
+<td style="text-align: right;">dB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Atmospheric absorption</td>
+<td style="text-align: right;"><span class="math inline">\(-\)</span>0.5</td>
+<td style="text-align: right;">dB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Polarisation mismatch loss</td>
+<td style="text-align: right;"><span class="math inline">\(-\)</span>1.0</td>
+<td style="text-align: right;">dB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Receive antenna gain (<span class="math inline">\(G_r\)</span>)</td>
+<td style="text-align: right;">+3.0</td>
+<td style="text-align: right;">dBi</td>
+</tr>
+<tr>
+<td style="text-align: left;">Received power (<span class="math inline">\(P_r\)</span>)</td>
+<td style="text-align: right;"><span class="math inline">\(-\)</span>80.7</td>
+<td style="text-align: right;">dBm</td>
+</tr>
+<tr>
+<td style="text-align: left;">Receiver noise figure</td>
+<td style="text-align: right;">5.0</td>
+<td style="text-align: right;">dB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Thermal noise floor (<span class="math inline">\(kTB\)</span>, <span class="math inline">\(B\)</span>=125 kHz)</td>
+<td style="text-align: right;"><span class="math inline">\(-\)</span>122.1</td>
+<td style="text-align: right;">dBm</td>
+</tr>
+<tr>
+<td style="text-align: left;">Effective noise floor</td>
+<td style="text-align: right;"><span class="math inline">\(-\)</span>117.1</td>
+<td style="text-align: right;">dBm</td>
+</tr>
+<tr>
+<td style="text-align: left;">SNR</td>
+<td style="text-align: right;">+36.4</td>
+<td style="text-align: right;">dB</td>
+</tr>
+<tr>
+<td style="text-align: left;">Required <span class="math inline">\(E_b/N_0\)</span> (GFSK, BER<span class="math inline">\(=10^{-6}\)</span>)</td>
+<td style="text-align: right;">13.5</td>
+<td style="text-align: right;">dB</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Link margin</strong></td>
+<td style="text-align: right;"><strong>+22.9</strong></td>
+<td style="text-align: right;"><strong>dB</strong></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The <strong>EIRP</strong> (Equivalent Isotropically Radiated Power) is the product of transmit power and transmit antenna gain: <span class="arithmatex">\(\text{EIRP}_{dBm} = P_t + G_t\)</span>. The <strong>link margin</strong> is the surplus SNR above the minimum required for the target BER; margins of 10–20 dB are typical for reliable drone links.</p>
+<h3 id="subsec-multipath"><span class="secnum">8.1.4</span> Multipath Propagation<a class="headerlink" href="#subsec-multipath" title="Permanent link">&para;</a></h3>
+<p>Near the ground or over water, reflected signals arrive at the receiver with delays and phase shifts relative to the direct path. Destructive interference creates <em>fades</em>: <span id="eq-two_ray"></span></p>
+<div class="arithmatex">\[P_r(\phi) = P_{r,LOS} \cdot |1 + \Gamma\,e^{j\phi}|^2\tag{8.9}\]</div>
+<p>where <span class="arithmatex">\(\Gamma\)</span> is the ground reflection coefficient and <span class="arithmatex">\(\phi = 2\pi(d_1 - d_2)/\lambda\)</span> is the differential path phase. For <strong>Rayleigh fading</strong> (no dominant direct path), the envelope <span class="arithmatex">\(r\)</span> of the received signal follows: <span id="eq-rayleigh_pdf"></span></p>
+<div class="arithmatex">\[f(r) = \frac{r}{\sigma^2}\,\exp\!\left(-\frac{r^2}{2\sigma^2}\right),\quad r \geq 0\tag{8.10}\]</div>
+<p>For <strong>Rician fading</strong> (with a dominant direct/LOS component of power <span class="arithmatex">\(s^2\)</span>): <span id="eq-rician_pdf"></span></p>
+<div class="arithmatex">\[f(r) = \frac{r}{\sigma^2}\,\exp\!\left(-\frac{r^2 + s^2}{2\sigma^2}\right)\,
+I_0\!\left(\frac{r\,s}{\sigma^2}\right)\tag{8.11}\]</div>
+<p>The Rician <span class="arithmatex">\(K\)</span>-factor <span class="arithmatex">\(K = s^2/(2\sigma^2)\)</span> quantifies the ratio of direct to scattered power. Drone links at 915 MHz typically experience <span class="arithmatex">\(K = 5\)</span>–15 dB (moderate Rician), while links below tree canopy may approach Rayleigh (<span class="arithmatex">\(K \approx 0\)</span> dB).</p>
+<p><strong>Diversity techniques</strong> mitigate fading: <em>space diversity</em> uses two antennas separated by <span class="arithmatex">\(\geq\lambda/2\)</span>; <em>polarisation diversity</em> uses orthogonally-polarised receive antennas; <em>frequency diversity</em> uses FHSS (see <a href="#subsec-fhss">Section 8.2.5</a>); <em>time diversity</em> uses forward error correction and interleaving.</p>
+<h3 id="subsec-doppler"><span class="secnum">8.1.5</span> Doppler Shift<a class="headerlink" href="#subsec-doppler" title="Permanent link">&para;</a></h3>
+<p>When the drone moves with velocity component <span class="arithmatex">\(v_r\)</span> towards the transmitter, the received frequency increases: <span id="eq-doppler"></span></p>
+<div class="arithmatex">\[f_d = \frac{v_r}{c}\,f_0 \approx \frac{2v_r\,f_0}{c}\tag{8.12}\]</div>
+<p>(the factor 2 applies to active radar; for one-way links it is simply <span class="arithmatex">\(v_r/c \cdot f_0\)</span>). For a drone flying at 100 m/s on a 5.8 GHz video link, <span class="arithmatex">\(f_d = 100/3\times10^8 \times 5.8\times10^9 \approx 1933\)</span> Hz. For narrow-bandwidth coherent demodulators, this frequency offset degrades demodulation performance; OFDM systems (like DJI O3 and COFDM military links) handle Doppler by inserting pilot subcarriers for phase tracking and using cyclic-prefix guard intervals that absorb both Doppler spread and multipath delay spread.</p>
+<h2 id="sec-rc_links"><span class="secnum">8.2</span> RC Control Links<a class="headerlink" href="#sec-rc_links" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-elrs"><span class="secnum">8.2.1</span> ExpressLRS Architecture<a class="headerlink" href="#subsec-elrs" title="Permanent link">&para;</a></h3>
+<p>ExpressLRS (ELRS) is an open-source, high-performance RC control link based on the Semtech SX1276/SX1280 LoRa modem chips. Two modulation schemes are available:</p>
+<p><strong>LoRa (Long Range)</strong>: Uses Chirp Spread Spectrum (CSS), where the carrier frequency is linearly swept across a bandwidth <span class="arithmatex">\(B\)</span> in each symbol period <span class="arithmatex">\(T_s\)</span>. The spreading factor SF determines the chip count (<span class="arithmatex">\(2^{SF}\)</span> chips/symbol) and hence the processing gain: <span id="eq-lora_pg"></span></p>
+<div class="arithmatex">\[\text{PG}_{dB} = 10\log_{10}(2^{SF}) = SF \times 10\log_{10}(2) \approx 3.01 \times SF\tag{8.13}\]</div>
+<p>SF7 gives <span class="arithmatex">\(\approx 21\)</span> dB processing gain at 125 kHz bandwidth and 5.47 kbps; SF12 gives <span class="arithmatex">\(\approx 36\)</span> dB gain at 293 bps. ELRS uses SF6 on the 2.4 GHz band (SX1280, 800 kHz BW) or SF7–9 on 915 MHz (SX1276) depending on packet rate.</p>
+<p><strong>FLRC (Fast Long-Range Communication)</strong>: An SX1280 feature offering higher throughput (<span class="arithmatex">\(\leq\)</span>1.3 Mbps) with shorter-range performance. ELRS 2.4 GHz uses FLRC for packet rates above 250 Hz (D250, F500, F1000 modes).</p>
+<p>Key ELRS packet rates and performance:</p>
+<ul>
+<li>
+<p><strong>25 Hz / LoRa</strong>: <span class="arithmatex">\(\sim\)</span>130 dBm link budget, <span class="arithmatex">\(&gt;\)</span>50 km theoretical LOS range.</p>
+</li>
+<li>
+<p><strong>250 Hz / LoRa</strong>: <span class="arithmatex">\(\sim\)</span>112 dBm, 3–10 km typical, 4 ms latency.</p>
+</li>
+<li>
+<p><strong>500 Hz / FLRC</strong>: <span class="arithmatex">\(\sim\)</span>104 dBm, 2–5 km, 2 ms latency.</p>
+</li>
+<li>
+<p><strong>1000 Hz / FLRC</strong>: <span class="arithmatex">\(\sim\)</span>98 dBm, 1–3 km, 1 ms latency.</p>
+</li>
+</ul>
+<p>Binding uses a <strong>UID</strong> (unique identifier) from which the FHSS seed and packet CRC polynomial are derived, preventing cross-link interference between co-located pilots. The connection process: transmitter broadcasts bind packets on a fixed channel; receiver listens, matches UID, and both switch to FHSS pattern.</p>
+<p>Telemetry uplink (from drone to transmitter): ELRS carries basic telemetry (RSSI, LQ, SNR, GPS, battery voltage) in the downlink phase of the TDMA frame at 1/n packet rate (every <span class="arithmatex">\(n\)</span> control packets), typically 4–10 Hz for OpenTX/EdgeTX sensors.</p>
+<h3 id="subsec-crossfire"><span class="secnum">8.2.2</span> TBS Crossfire<a class="headerlink" href="#subsec-crossfire" title="Permanent link">&para;</a></h3>
+<p>Crossfire (TBS, 868/915 MHz) uses a proprietary TDMA frame structure with adaptive power levels from 10 mW to 2 W and an encrypted, self-healing mesh approach:</p>
+<ul>
+<li>
+<p>TDMA frame: 10 ms total; 4 ms TX slot (uplink to drone); 4 ms RX slot (downlink telemetry); 2 ms guard time.</p>
+</li>
+<li>
+<p>FEC: Convolutional coding rate 1/2, constraint length 7 (Viterbi decoded) for forward error correction over noisy channels.</p>
+</li>
+<li>
+<p>Failsafe: configurable per-channel positions triggered after 120 ms of no valid packet; options: hold last, fixed values, no pulses (motor cut).</p>
+</li>
+<li>
+<p>Range: up to 150 km LOS at 2 W with directional Yagi antenna.</p>
+</li>
+</ul>
+<h3 id="subsec-sbus_crsf"><span class="secnum">8.2.3</span> SBUS and CRSF Protocols<a class="headerlink" href="#subsec-sbus_crsf" title="Permanent link">&para;</a></h3>
+<p><strong>SBUS</strong> (Futaba) is a serial digital RC protocol running at 100 kbps, 8E2 (8 data bits, even parity, 2 stop bits), <em>inverted</em> UART logic (idle high = logic 0). Each 25-byte frame carries 16 analogue channels (11-bit resolution, 172–1811 value range), digital flags, and frame-lost/failsafe bits. Frame period: 14 ms (fast mode: 7 ms). The receiving FC must have hardware-inverted UART or apply software bit inversion.</p>
+<p><strong>CRSF</strong> (Crossfire Serial Protocol, used by both TBS Crossfire and ExpressLRS) is a bidirectional protocol at 400 kbps, non-inverted UART. The frame structure:</p>
+<ul>
+<li>
+<p>Byte 0: Sync byte (0xC8).</p>
+</li>
+<li>
+<p>Byte 1: Frame length (payload + type + CRC).</p>
+</li>
+<li>
+<p>Byte 2: Frame type (0x16 = RC channels packed; 0x14 = link statistics).</p>
+</li>
+<li>
+<p>Bytes 3–N: Payload (packed 11-bit channels or telemetry data).</p>
+</li>
+<li>
+<p>Last byte: CRC-8 (polynomial 0xD5 over type+payload).</p>
+</li>
+</ul>
+<p>The CRSF RC channels frame packs 16 <span class="arithmatex">\(\times\)</span> 11-bit values into 22 bytes using bitfield packing. CRSF’s bidirectionality allows the FC to inject telemetry frames that ELRS relays back to the handset.</p>
+<h3 id="subsec-antennas"><span class="secnum">8.2.4</span> Antenna Design for RC Links<a class="headerlink" href="#subsec-antennas" title="Permanent link">&para;</a></h3>
+<p><strong>Quarter-wave monopole</strong>: The simplest practical antenna — a vertical conductor of length <span class="arithmatex">\(\lambda/4\)</span> above a ground plane. Feedpoint impedance <span class="arithmatex">\(\approx 36\,\Omega\)</span>; a ferrite choke or sleeve balun corrects this to <span class="arithmatex">\(\approx 50\,\Omega\)</span> for coaxial feed. Gain: 0 dBi (omnidirectional in azimuth). At 915 MHz, <span class="arithmatex">\(\lambda/4 = 8.2\)</span> cm.</p>
+<p><strong>Half-wave dipole</strong>: Two quarter-wave elements fed at centre; gain <span class="arithmatex">\(\approx 2.15\)</span> dBi; radiation pattern toroidal (doughnut), null at tips. Commonly used on SiK radios and RC transmitters.</p>
+<p><strong>Patch (microstrip) antenna</strong>: A resonant metallic patch on a grounded substrate of thickness <span class="arithmatex">\(h\)</span> and permittivity <span class="arithmatex">\(\varepsilon_r\)</span>. The resonant length is approximately: <span id="eq-patch_length"></span></p>
+<div class="arithmatex">\[L_{patch} = \frac{c}{2f\sqrt{\varepsilon_r}}\tag{8.14}\]</div>
+<p>Gain: 6–9 dBi with a half-power beamwidth of <span class="arithmatex">\(\sim60\)</span>–<span class="arithmatex">\(80\)</span>°. Used in directional tracking antennas on GCS systems (e.g., TBS Crossfire Ground Station, Yaapu panel).</p>
+<p><strong>Helical antenna</strong>: For circular polarisation in FPV systems. Axial-mode helix provides right-hand circular polarisation (RHCP) with 10–14 dBic gain, greatly reducing multipath fading compared to linear polarisation (random polarisation mismatch up to 3 dB loss with linear, vs <span class="arithmatex">\(&lt; 1\)</span> dB for circular-to-circular same-sense).</p>
+<h3 id="subsec-fhss"><span class="secnum">8.2.5</span> Frequency Hopping Spread Spectrum<a class="headerlink" href="#subsec-fhss" title="Permanent link">&para;</a></h3>
+<p>FHSS divides the available band into <span class="arithmatex">\(N_h\)</span> hop channels of width <span class="arithmatex">\(B_h\)</span> and hops the carrier pseudo-randomly at the <em>hop rate</em> <span class="arithmatex">\(R_h\)</span> (hops/second), dwellling on each channel for <span class="arithmatex">\(T_{dwell} = 1/R_h\)</span> seconds. The spread signal occupies <span class="arithmatex">\(N_h \cdot B_h\)</span> total bandwidth (e.g., 50 channels <span class="arithmatex">\(\times\)</span> 500 kHz = 25 MHz). An interferer on a single channel degrades only <span class="arithmatex">\(1/N_h\)</span> of packets: <span id="eq-fhss_pg"></span></p>
+<div class="arithmatex">\[\text{Processing gain}_{FHSS} = 10\log_{10}(N_h)\tag{8.15}\]</div>
+<p>For <span class="arithmatex">\(N_h = 50\)</span>: PG = 17 dB. ISM band management at 2.4 GHz (IEEE 802.11b/g/n occupies 22 MHz channels): ELRS at 2.4 GHz hops across the full 2400–2500 MHz band in 80 channels (1.25 MHz spacing), using adaptive hop sequences that avoid channels with persistent interference detected via background RSSI scanning.</p>
+<h2 id="sec-telemetry"><span class="secnum">8.3</span> Telemetry Systems<a class="headerlink" href="#sec-telemetry" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-mavlink"><span class="secnum">8.3.1</span> MAVLink Protocol<a class="headerlink" href="#subsec-mavlink" title="Permanent link">&para;</a></h3>
+<p>MAVLink (Micro Air Vehicle Link) is the standard protocol for UAV telemetry and ground control communications. MAVLink v2 packet structure (total 12–280 bytes):</p>
+<ul>
+<li>
+<p><code>STX</code>: 0xFD (1 byte) — start-of-frame marker.</p>
+</li>
+<li>
+<p><code>LEN</code>: payload length in bytes (1 byte, 0–253).</p>
+</li>
+<li>
+<p><code>INC_FLAGS</code>: incompatibility flags (1 byte; bit 0 = MAVLINK_IFLAG_SIGNED for message signing).</p>
+</li>
+<li>
+<p><code>CMP_FLAGS</code>: compatibility flags (1 byte).</p>
+</li>
+<li>
+<p><code>SEQ</code>: rolling counter for packet loss detection (1 byte).</p>
+</li>
+<li>
+<p><code>SYS_ID</code>: source system ID, 1–255 (1 byte).</p>
+</li>
+<li>
+<p><code>COMP_ID</code>: source component ID (1 byte).</p>
+</li>
+<li>
+<p><code>MSG_ID</code>: 3-byte little-endian message type identifier.</p>
+</li>
+<li>
+<p>Payload: message-specific data.</p>
+</li>
+<li>
+<p><code>CHECKSUM</code>: CRC-16/MCRF4XX + message-specific CRC_EXTRA byte (2 bytes).</p>
+</li>
+</ul>
+<p><strong>Heartbeat</strong> (<code>MSG_ID</code> = 0) is transmitted at 1 Hz by all MAVLink nodes. Its payload carries vehicle type, autopilot type, base mode, custom mode, and system status. Absence of heartbeat for 3 seconds triggers GCS alarm.</p>
+<p>Key telemetry message families:</p>
+<ul>
+<li>
+<p><code>GLOBAL_POSITION_INT</code> (#33): 1 Hz – 10 Hz; lat/lon/alt/relative alt; velocity.</p>
+</li>
+<li>
+<p><code>ATTITUDE</code> (#30): 10–100 Hz; roll/pitch/yaw and rates.</p>
+</li>
+<li>
+<p><code>SYS_STATUS</code> (#1): 1 Hz; battery voltage/current/remaining; sensor health bitmask.</p>
+</li>
+<li>
+<p><code>GPS_RAW_INT</code> (#24): 5 Hz; GPS fix type, satellites, HDOP.</p>
+</li>
+<li>
+<p><code>RADIO_STATUS</code> (#109): 1 Hz; RSSI, remote RSSI, noise, errors, fixed packets.</p>
+</li>
+</ul>
+<h3 id="subsec-sik_radio"><span class="secnum">8.3.2</span> SiK Radio and RFD900+<a class="headerlink" href="#subsec-sik_radio" title="Permanent link">&para;</a></h3>
+<p>The SiK radio (firmware by Michael Oborne and Simon Chambers, open-source) runs on a Silicon Labs Si1000 mixed-signal SoC (8051 core + Si4432 RF transceiver). Key parameters: frequency-hopping GFSK, 50 hop channels, over-the-air baud rates of 2400–250000 bps (air data rate; serial baud rate to FC is independent), output power up to +20 dBm (100 mW), sensitivity <span class="arithmatex">\(-\)</span>117 dBm at 9.6 kbps.</p>
+<p>The <strong>RFD900x</strong> (RFDesign, Australia) replaces the Si1000 with a faster AT32 ARM Cortex-M4 processor and a Si446x RF transceiver, reaching +30 dBm (1 W) and dual-antenna MIMO diversity. Firmware supports transparent serial mode, MAVLink injection (where the radio parses MAVLink to prioritise critical messages under congestion), and configurable hop rates. At +30 dBm with 5 dBi antennas and 9.6 kbps air data rate, link margin at 40 km LOS is approximately 10 dB.</p>
+<h3 id="subsec-4g_lte"><span class="secnum">8.3.3</span> 4G/LTE and Mesh Connectivity<a class="headerlink" href="#subsec-4g_lte" title="Permanent link">&para;</a></h3>
+<p>4G LTE connectivity for drone command and control uses standard cellular infrastructure, enabling BVLOS operations without dedicated spectrum licensing. The GCS and drone each run a VPN client (ZeroTier or WireGuard) creating a Layer 2 or Layer 3 tunnel between GCS and drone IP addresses regardless of network topology. MAVLink runs over UDP on this tunnel.</p>
+<p>Latency components on a 4G MAVLink link: <span id="eq-lte_latency"></span></p>
+<div class="arithmatex">\[t_{total} = t_{LTE,up} + t_{internet} + t_{VPN} + t_{LTE,down} \approx 50\text{--}150\text{ ms}\tag{8.16}\]</div>
+<p>This latency is too high for inner-loop attitude control but is acceptable for position setpoint updates (<span class="arithmatex">\(&gt;\)</span>1 m position tolerance), mission command/acknowledge, and video streaming. <strong>OpenHD</strong> and <strong>WFB-NG</strong> (Wifibroadcast NG) repurpose 802.11 cards in injection/monitor mode for low-latency, low-overhead UDP video streaming at 20–100 Mbps, with FEC (forward error correction) replacing TCP reliability. This provides video latency of 50–80 ms vs 200–500 ms for H.264 over RTSP/RTP.</p>
+<p><strong>Mesh networking</strong> (Doodle Labs Smart Radio, Persistent Systems MPU5, FreqLink): Each drone node is both a router and an endpoint, relaying packets for other nodes using AODV (Ad-hoc On-Demand Distance Vector) or OLSR (Optimised Link State Routing) routing protocols. In a 5-node mesh at 2 km spacing, a ground station can reach 8–10 km (hop range). Doodle Labs RM-1800M achieves 100+ Mbps aggregate throughput at 900 MHz with 1 W TX power.</p>
+<h2 id="sec-video_downlinks"><span class="secnum">8.4</span> Video Downlinks<a class="headerlink" href="#sec-video_downlinks" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-analogue_fpv"><span class="secnum">8.4.1</span> Analogue FPV<a class="headerlink" href="#subsec-analogue_fpv" title="Permanent link">&para;</a></h3>
+<p>Analogue FPV transmits a composite NTSC or PAL video signal (720<span class="arithmatex">\(\times\)</span>480 NTSC, 720<span class="arithmatex">\(\times\)</span>576 PAL) at 5.8 GHz (most common), 2.4 GHz, or 1.2 GHz. Transmit power options: 25 mW, 100 mW, 200 mW, 600 mW, 1000 mW (1 W). The signal is VSB-AM modulated (vestigial sideband amplitude modulation) onto the carrier. Latency is essentially zero (one field period = 16.7 ms for NTSC), limited only by sensor and display refresh rates. Video quality degrades gracefully as SNR decreases (snow/static) rather than freezing (as in digital systems), which pilots often prefer for safety awareness.</p>
+<p>5.8 GHz band plan (FPV): 40 channels covering 5645–5945 MHz with typical 8 defined bands (Raceband, Fat Shark, ImmersionRC, etc.) of 8 channels each. Channel spacing: 37 MHz (some channels overlap, requiring coordination at multi-pilot events).</p>
+<p>Receiver options:</p>
+<ul>
+<li>
+<p><strong>Diversity receiver</strong>: monitors two antennas (e.g., omnidirectional + patch), selects stronger RSSI per field.</p>
+</li>
+<li>
+<p><strong>Analogue goggles</strong>: integrated displays at 800<span class="arithmatex">\(\times\)</span>480 or 1280<span class="arithmatex">\(\times\)</span>960 resolution; FOV 30–42 degrees.</p>
+</li>
+<li>
+<p><strong>Analog to digital video (A/D)</strong>: DVR (digital video recorder) at 60 fps captures flight footage.</p>
+</li>
+</ul>
+<h3 id="subsec-digital_fpv"><span class="secnum">8.4.2</span> Digital FPV<a class="headerlink" href="#subsec-digital_fpv" title="Permanent link">&para;</a></h3>
+<p><strong>DJI O3 Air Unit</strong>: DJI’s third-generation digital FPV system operates at 5.8 GHz using OFDM with H.264 (1080p) and H.265 (1080p/60fps) encoding. Latency: 18–24 ms (FPV mode). Range: 10 km in open conditions. The OFDM system uses 64-QAM in good SNR, degrading to QPSK at edge of range. Channel width: 20 MHz OFDM. Built-in AES-128 encryption.</p>
+<p><strong>HDZero</strong>: HD Zero uses QPSK modulation and 10 bit raw transmission without buffering for minimum latency: claimed 0-frame-delay architecture achieving 24 ms total system latency from camera to goggle display. Resolution: 720p at 60fps or 1080p at 60fps. Frequency: 5.8 GHz. FEC: Reed-Solomon (255, 239) per frame for packet loss recovery without retransmission latency.</p>
+<p><strong>Walksnail Avatar</strong>: DJI-Caddx joint venture offering H.265 encoding at 1080p/60fps and 1440p/60fps with Gyroflow stabilisation. Utilises the same 5.8 GHz band with OFDM; latency 22 ms. Dual-frequency (2.4/5.8 GHz) auto-selection.</p>
+<h3 id="subsec-video_compression"><span class="secnum">8.4.3</span> Video Compression<a class="headerlink" href="#subsec-video_compression" title="Permanent link">&para;</a></h3>
+<p>H.264 (MPEG-4 AVC) and H.265 (HEVC) are block-based transform codecs using:</p>
+<ul>
+<li>
+<p><strong>Intra-frame compression</strong>: DCT on 4<span class="arithmatex">\(\times\)</span>4 or 8<span class="arithmatex">\(\times\)</span>8 blocks, quantisation, Huffman/CABAC entropy coding. I-frames are independently decodable.</p>
+</li>
+<li>
+<p><strong>Inter-frame prediction</strong>: motion vectors (<span class="arithmatex">\(\Delta x\)</span>, <span class="arithmatex">\(\Delta y\)</span>, <span class="arithmatex">\(\Delta z\)</span> per block) from P-frames (one reference) and B-frames (bi-directional). Residual error is DCT-coded.</p>
+</li>
+<li>
+<p>H.265 adds <strong>CTU</strong> (Coding Tree Units) up to 64<span class="arithmatex">\(\times\)</span>64, allowing 40–50% better compression than H.264 at equivalent quality.</p>
+</li>
+<li>
+<p><strong>AV1</strong> (open, royalty-free): further 20–30% improvement over H.265, at higher encoder complexity. Used on bandwidth-constrained LTE video links.</p>
+</li>
+</ul>
+<p>PSNR (Peak Signal-to-Noise Ratio) quantifies video quality: <span id="eq-psnr"></span></p>
+<div class="arithmatex">\[\text{PSNR} = 10\log_{10}\!\left(\frac{255^2}{\text{MSE}}\right) \text{ dB}\tag{8.17}\]</div>
+<p>For broadcast quality, PSNR <span class="arithmatex">\(&gt;\)</span> 40 dB is desired; H.265 at 4 Mbps for 1080p/30 achieves PSNR <span class="arithmatex">\(\approx\)</span> 42 dB.</p>
+<h3 id="subsec-cofdm"><span class="secnum">8.4.4</span> Long-Range Encrypted Video: COFDM<a class="headerlink" href="#subsec-cofdm" title="Permanent link">&para;</a></h3>
+<p>Military and law-enforcement UAV video links use <strong>COFDM</strong> (Coded OFDM), where an outer convolutional code or LDPC code provides FEC before OFDM modulation. This provides robust performance in multipath environments (delay spread up to 1/<span class="arithmatex">\(B_{sc}\)</span> where <span class="arithmatex">\(B_{sc}\)</span> is the subcarrier spacing). Systems like Silvus StreamCaster 4200 MIMO operate at 2.4/4.4/5.8 GHz, achieve 400+ Mbps aggregate throughput with <span class="arithmatex">\(2\times2\)</span> MIMO, and use AES-256 encryption at the link layer. Persistent Systems MPU5 adds a full IP router capability (802.11ac waveform) enabling video, voice, and data on the same mesh network.</p>
+<h2 id="sec-military_datalinks"><span class="secnum">8.5</span> Military Datalinks<a class="headerlink" href="#sec-military_datalinks" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-link16"><span class="secnum">8.5.1</span> Link 16 (JTIDS/MIDS)<a class="headerlink" href="#subsec-link16" title="Permanent link">&para;</a></h3>
+<p>Link 16 is the primary tactical data link of NATO forces, standardised in MIL-STD-6016 and STANAG 5516. Physical layer characteristics:</p>
+<ul>
+<li>
+<p><strong>Frequency</strong>: 960–1215 MHz (L-band); 51 pseudo-random frequency hops per second across the full band.</p>
+</li>
+<li>
+<p><strong>Modulation</strong>: MSK (Minimum Shift Keying) on each hop frequency.</p>
+</li>
+<li>
+<p><strong>Access</strong>: TDMA (Time Division Multiple Access); the time axis is divided into <em>epochs</em> (12.8 s) <span class="arithmatex">\(\rightarrow\)</span> <em>frames</em> (12 s) <span class="arithmatex">\(\rightarrow\)</span> <em>time slots</em> (7.8125 ms, 128 per frame). Each platform is assigned slots.</p>
+</li>
+<li>
+<p><strong>Data rate</strong>: 28.8 kbps (single pulse) or 57.6/115.2 kbps (double/packed-2 pulse).</p>
+</li>
+<li>
+<p><strong>Message sets</strong>: J-series (J0.0 – J29.5) covering aircraft tracks, navigation, weapons, electronic warfare, IFF.</p>
+</li>
+<li>
+<p><strong>Anti-jam</strong>: frequency hopping provides <span class="arithmatex">\(\sim\)</span>13 dB process gain; voice-grade encryption; interleaved with Reed-Solomon FEC.</p>
+</li>
+<li>
+<p><strong>Platforms</strong>: F-22, F-35, E-3 AWACS, MQ-9 (Link 16 datalink pod), Eurofighter Typhoon.</p>
+</li>
+</ul>
+<p>The <strong>MIDS-LVT</strong> (Multifunctional Information Distribution System – Low Volume Terminal) is the airborne implementation of Link 16 for fighter-class aircraft, weighing <span class="arithmatex">\(\approx\)</span>4 kg in a standard ARINC 600 box. For the MQ-9 Reaper, a MIDS pod is carried on a wing station.</p>
+<h3 id="subsec-cdl"><span class="secnum">8.5.2</span> Common Data Link (CDL)<a class="headerlink" href="#subsec-cdl" title="Permanent link">&para;</a></h3>
+<p>CDL (MIL-STD-2106) is the US DoD wideband aerial ISR (Intelligence, Surveillance, Reconnaissance) downlink standard. Characteristics:</p>
+<ul>
+<li>
+<p><strong>Frequency</strong>: Ku-band (14–14.5 GHz uplink, 10.7–11.7 GHz downlink) primarily; X-band and Ka-band variants exist.</p>
+</li>
+<li>
+<p><strong>Data rates</strong>: 10.71, 21.4, 42.9, 137, 274 Mbps (defined in MIL-STD-2106C); 274 Mbps supports full-motion HD video plus secondary data.</p>
+</li>
+<li>
+<p><strong>Range</strong>: GEO satellite relay (TSAT notional) or point-to-point at 300+ km.</p>
+</li>
+<li>
+<p><strong>Platforms</strong>: U-2, Global Hawk, MQ-9, RC-135, E-8 JSTARS.</p>
+</li>
+<li>
+<p><strong>Terminals</strong>: Raytheon Advanced CDL (ACDL), L3Harris Terminal LXR.</p>
+</li>
+</ul>
+<h3 id="subsec-rover"><span class="secnum">8.5.3</span> ROVER and Battlefield Video Relay<a class="headerlink" href="#subsec-rover" title="Permanent link">&para;</a></h3>
+<p>ROVER (Remotely Operated Video Enhanced Receiver) is a receive-only terminal carried by ground troops (JTAC and Special Forces) to view full-motion video (FMV) from MALE UAVs (Predator, Reaper), ISR aircraft, and targeting pods (Sniper, Litening). ROVER 6 weighs 1.8 kg, supports CDL and commercial (COFDM) video formats, and runs on a ruggedised tablet interface. ROVER allows the ground unit to independently steer the UAV sensor via cursor-on-target (CoT) data and provides positive target identification before close air support (CAS) clearance.</p>
+<p><strong>BACN</strong> (Battlefield Airborne Communications Node) is a broadband airborne relay using the E-11A (Bombardier Global Express variant) or EQ-4 (Block 20 Global Hawk), which carries a payload translating between multiple waveforms (Link 16, UHF SATCOM, MANET, VHSB) and extending communication range over mountainous terrain where direct LOS is blocked.</p>
+<h3 id="subsec-anti_jam"><span class="secnum">8.5.4</span> Anti-Jam Techniques<a class="headerlink" href="#subsec-anti_jam" title="Permanent link">&para;</a></h3>
+<p>A jammer of power <span class="arithmatex">\(P_j\)</span> at distance <span class="arithmatex">\(d_j\)</span> creates a jam-to-signal ratio (JSR): <span id="eq-jsr"></span></p>
+<div class="arithmatex">\[\text{JSR} = \frac{P_j\,G_j}{P_t\,G_t} \cdot \left(\frac{d_t}{d_j}\right)^2\tag{8.18}\]</div>
+<p>where <span class="arithmatex">\(G_j\)</span> is jammer antenna gain, <span class="arithmatex">\(d_t\)</span> is the transmitter-to-receiver range.</p>
+<p><strong>Countermeasures</strong>:</p>
+<ul>
+<li>
+<p><strong>Frequency Hopping (FHSS)</strong>: jammer must cover entire hopping band simultaneously; barrage jammer power per channel reduced by <span class="arithmatex">\(N_h\)</span> (processing gain as in <a href="#eq-fhss_pg">Eq. (8.15)</a>).</p>
+</li>
+<li>
+<p><strong>Direct Sequence Spread Spectrum (DSSS)</strong>: code gain <span class="arithmatex">\(G_c = B_{ss}/B_{info}\)</span> rejects narrow-band jammers; GPS C/A code provides 43 dB code gain.</p>
+</li>
+<li>
+<p><strong>Null-steering antenna</strong>: adaptive phased array places a null in the direction of the jammer; <span class="arithmatex">\(&gt; 30\)</span> dB cancellation with a 4-element array.</p>
+</li>
+<li>
+<p><strong>Increased transmit power (burnthrough)</strong>: receiver SNR improves faster than JSR for stand-off jammers as the communication link shortens at LOS.</p>
+</li>
+<li>
+<p><strong>Inertial coast</strong>: autopilot continues flying stored mission using IMU during GPS/comms outage (<a href="ch07-avionics-and-flight-control.html#subsec-gps_denied">Section 7.4.5</a>).</p>
+</li>
+</ul>
+<h2 id="sec-satcom"><span class="secnum">8.6</span> Satellite Communications<a class="headerlink" href="#sec-satcom" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-iridium"><span class="secnum">8.6.1</span> Iridium<a class="headerlink" href="#subsec-iridium" title="Permanent link">&para;</a></h3>
+<p>The Iridium LEO constellation (66 operational + 9 spare satellites at 781 km altitude, six orbital planes, 86.4° inclination) provides true global coverage including poles. Key characteristics:</p>
+<ul>
+<li>
+<p>Frequency: L-band (1616–1626.5 MHz) for user links; Ka-band (23.18–23.38 GHz) for inter-satellite links (ISLs).</p>
+</li>
+<li>
+<p>Data rate: 2.4 kbps (9-channel TDMA/FDMA); Short Burst Data (SBD) packets of 1960 bytes maximum.</p>
+</li>
+<li>
+<p>Latency: <span class="arithmatex">\(\sim\)</span>400 ms round trip (ISL routing).</p>
+</li>
+<li>
+<p>Terminal: 150 g antenna + modem. Iridium 9603N SBD modem: 11.4 g, 90 mm <span class="arithmatex">\(\times\)</span> 54 mm.</p>
+</li>
+</ul>
+<p>Iridium NEXT (2019+) adds L-band spot beams for IoT and 1.4 Mbps broadband (Iridium Certus service) on the same 66-satellite constellation.</p>
+<h3 id="subsec-bgan"><span class="secnum">8.6.2</span> Inmarsat BGAN<a class="headerlink" href="#subsec-bgan" title="Permanent link">&para;</a></h3>
+<p>Inmarsat’s L-band (1525–1559 MHz down, 1626.5–1660.5 MHz up) geostationary satellites (I-4, I-5 series) support Broadband Global Area Network (BGAN) service offering 492 kbps background IP data and streaming QoS classes (32, 64, 128, 176 kbps).</p>
+<p>GEO orbit at 35,786 km yields one-way propagation delay: <span id="eq-geo_latency"></span></p>
+<div class="arithmatex">\[t_{prop} = \frac{d_{GEO}}{c} = \frac{35786 \times 10^3}{3 \times 10^8} \approx 119 \text{ ms}\tag{8.19}\]</div>
+<p>Round-trip latency: <span class="arithmatex">\(\approx 600\)</span> ms. For drone command links, this latency requires the onboard autopilot to handle flight stabilisation autonomously; the satellite link is used only for high-level mission commands, status updates, and non-real-time video.</p>
+<h3 id="subsec-starlink"><span class="secnum">8.6.3</span> Starlink for UAV Applications<a class="headerlink" href="#subsec-starlink" title="Permanent link">&para;</a></h3>
+<p>SpaceX Starlink operates a Walker constellation of <span class="arithmatex">\(&gt; 6000\)</span> LEO satellites at 340–550 km (Shell 1–5), providing global Ku/Ka-band (downlink 10.7–12.7/17.8–18.6 GHz; uplink 14.0–14.5/27.5–29.1 GHz) coverage with one-way latency: <span id="eq-leo_latency"></span></p>
+<div class="arithmatex">\[t_{LEO} = \frac{550 \times 10^3}{c} \approx 1.83 \text{ ms (slant range at zenith)}\tag{8.20}\]</div>
+<p>Actual round-trip latency: 20–40 ms, well suited to responsive UAV command and HD video. Throughput: 50–250 Mbps (user terminal dependent).</p>
+<p>The Starlink <strong>flat-panel terminal</strong> (Gen 3) uses a 2D AESA (Active Electronically Scanned Array) phased array (32 cm <span class="arithmatex">\(\times\)</span> 19 cm) for electronic beam steering without mechanical pointing. Key parameters: 96 dBHz <span class="arithmatex">\(G/T\)</span>, 12 W idle / 45 W active power, 1.1 kg mass. UAV integration uses the <strong>Starlink Mobility</strong> plan (aviation version, FAA/ICAO certified terminal) on platforms such as the Airbus A380 (SAS airline), L3Harris Lightning II, and experimental UAS platforms. For small drones, Starlink mini (29 cm <span class="arithmatex">\(\times\)</span> 25 cm, 370 g, <span class="arithmatex">\(&gt;\)</span>50 Mbps) was released in 2024.</p>
+<h3 id="subsec-wgs"><span class="secnum">8.6.4</span> Wideband Global SATCOM (WGS)<a class="headerlink" href="#subsec-wgs" title="Permanent link">&para;</a></h3>
+<p>WGS (Boeing 702HP bus) is the US DoD’s primary high-capacity military satellite constellation (11 satellites as of 2024) at GEO. Characteristics:</p>
+<ul>
+<li>
+<p>Frequency: X-band (7.9–8.4 GHz up, 7.25–7.75 GHz down) and Ka-band (30 GHz up, 20 GHz down).</p>
+</li>
+<li>
+<p>Capacity: <span class="arithmatex">\(\sim\)</span>3.6 Gbps per satellite (uplink + downlink combined).</p>
+</li>
+<li>
+<p>Bandwidth: 2.1 GHz X-band + 1 GHz Ka-band; digital channeliser allows flexible bandwidth allocation (5–125 MHz channels).</p>
+</li>
+<li>
+<p>Anti-jam: X-band spot beam; null-steering; jamming resistance classified.</p>
+</li>
+<li>
+<p>Platforms: Global Hawk, MQ-9 (via Block 50+ multi-band SATCOM), B-2, E-8, P-8.</p>
+</li>
+</ul>
+<p>A WGS-capable UAV terminal (e.g., Raytheon Multi-Band Terminal, MBT) uses a 0.6 m Ka-band steerable dish or AESA flat panel, consuming 250–400 W RF power. Data throughput: up to 274 Mbps for a dedicated CDL-over-WGS link.</p>
+<h3 id="subsec-satcom_terminal"><span class="secnum">8.6.5</span> SATCOM Terminal Design for UAVs<a class="headerlink" href="#subsec-satcom_terminal" title="Permanent link">&para;</a></h3>
+<p>Fixed dish antennas require mechanical 2-axis pointing with <span class="arithmatex">\(&lt; 0.1\)</span>° tracking accuracy. A servo gimbal with rate gyro feedback achieves this, but adds mass (0.5–2 kg for a 0.45 m Ku-band dish on a MALE UAV). Advantages: high gain, narrowband interference rejection.</p>
+<p><strong>Electronically Steered Antennas (ESA)</strong> replace mechanical pointing with a phased array of hundreds to thousands of antenna elements, each with an individual phase shifter (PIN diode or liquid crystal phase shifter). The array steering vector for angle <span class="arithmatex">\(\theta\)</span> (from boresight) in a uniform linear array (ULA) of <span class="arithmatex">\(N\)</span> elements with spacing <span class="arithmatex">\(d = \lambda/2\)</span>: <span id="eq-array_steering"></span></p>
+<div class="arithmatex">\[\mathbf{a}(\theta) = \begin{bmatrix}1,\,e^{j\pi\sin\theta},\,e^{j2\pi\sin\theta},\,…,\,e^{j(N-1)\pi\sin\theta}\end{bmatrix}^\top\tag{8.21}\]</div>
+<p>The array gain in direction <span class="arithmatex">\(\theta_0\)</span> is: <span id="eq-array_gain"></span></p>
+<div class="arithmatex">\[G(\theta_0) = N \cdot G_e \cdot |\mathbf{a}^\dagger(\theta_0)\mathbf{w}|^2\tag{8.22}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{w}\)</span> is the beamforming weight vector and <span class="arithmatex">\(G_e\)</span> is single-element gain. For <span class="arithmatex">\(N = 256\)</span> elements, maximum gain is <span class="arithmatex">\(24\)</span> dBi above element gain. ESA terminals for Starlink aviation weigh <span class="arithmatex">\(&lt; 2\)</span> kg with no moving parts, achieving <span class="arithmatex">\(&lt;\)</span> 100 ms beam handover between satellites.</p>
+<h2 id="sec-cybersecurity"><span class="secnum">8.7</span> Encryption and Cybersecurity<a class="headerlink" href="#sec-cybersecurity" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-encryption"><span class="secnum">8.7.1</span> Command Link Encryption<a class="headerlink" href="#subsec-encryption" title="Permanent link">&para;</a></h3>
+<p>Unencrypted RC and telemetry links are vulnerable to eavesdropping, replay attacks, and command injection. Best practice for civilian drone operators and mandatory for military systems:</p>
+<p><strong>AES-256</strong> (Advanced Encryption Standard, 256-bit key, FIPS PUB 197) is the standard cipher for data-link encryption. In GCM (Galois/Counter Mode), it provides both confidentiality and authentication (AEAD — Authenticated Encryption with Associated Data) with a 128-bit authentication tag, preventing bit-flip attacks. AES-256 in GCM achieves <span class="arithmatex">\(&gt; 1\)</span> Gbps throughput on ARM Cortex-M4 with hardware crypto acceleration.</p>
+<p><strong>Key exchange</strong>: Pre-shared keys are impractical for dynamic deployments. ECDH (Elliptic Curve Diffie-Hellman) on Curve25519 provides <span class="arithmatex">\(\sim\)</span>128-bit security equivalent with a 256-bit key, needing only 32 bytes per public key. The key exchange: <span id="eq-ecdh"></span></p>
+<div class="arithmatex">\[\text{Shared secret} = [a]\,\mathbf{B} = [b]\,\mathbf{A} = [ab]\,\mathbf{G}\tag{8.23}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{A} = [a]\mathbf{G}\)</span>, <span class="arithmatex">\(\mathbf{B} = [b]\mathbf{G}\)</span> are public keys and <span class="arithmatex">\(\mathbf{G}\)</span> is the generator point. Each power-cycle can use ephemeral ECDH (ECDHE) with X25519, providing <em>perfect forward secrecy</em>: compromise of the current session key does not expose past sessions.</p>
+<h3 id="subsec-lpi_lpd"><span class="secnum">8.7.2</span> Low Probability of Intercept and Detection (LPI/LPD)<a class="headerlink" href="#subsec-lpi_lpd" title="Permanent link">&para;</a></h3>
+<p>LPI (Low Probability of Intercept) and LPD (Low Probability of Detection) are military requirements that make the control link difficult for adversaries to detect or exploit:</p>
+<ul>
+<li>
+<p><strong>Spread spectrum</strong>: FHSS or DSSS raises the noise floor of the transmitted signal below the ambient electromagnetic noise background to a signal-intercept receiver.</p>
+</li>
+<li>
+<p><strong>Low transmit power</strong>: minimum power for link closure; reduces intercept range. A link operating at exactly the minimum viable power (0 dB link margin) is hardest to intercept; operational systems use 5–10 dB margin above this minimum.</p>
+</li>
+<li>
+<p><strong>Directional antenna</strong> on transmitter: concentrates power toward the receiver, reducing sidelobes detectable by intercept receivers at other angles.</p>
+</li>
+<li>
+<p><strong>Short burst transmissions</strong>: modem-on-demand; drone transmits telemetry in short bursts (0.1 s) every 1–5 seconds, reducing intercept exposure.</p>
+</li>
+</ul>
+<h3 id="subsec-anti_spoof"><span class="secnum">8.7.3</span> Anti-Spoofing<a class="headerlink" href="#subsec-anti_spoof" title="Permanent link">&para;</a></h3>
+<p>GPS spoofing — broadcasting fake GPS signals to mislead a drone’s navigation — is an increasingly significant threat. Countermeasures:</p>
+<ul>
+<li>
+<p><strong>Galileo OSNMA</strong> (Open Service Navigation Message Authentication): cryptographic signatures on the navigation message, verified on-receiver. A spoofed signal cannot produce valid OSNMA signatures without the private key.</p>
+</li>
+<li>
+<p><strong>Multi-constellation cross-check</strong>: independent GPS and Galileo position solutions should agree within <span class="arithmatex">\(\sim\)</span>3 m; sudden disagreement indicates spoofing of one.</p>
+</li>
+<li>
+<p><strong>RAIM (Receiver Autonomous Integrity Monitoring)</strong>: uses overdetermined pseudorange solution to detect and isolate faulty satellites. ARAIM (Advanced RAIM) extends this to dual-constellation.</p>
+</li>
+<li>
+<p><strong>IMU dead-reckoning cross-check</strong>: velocity implied by GPS position change is compared to IMU-integrated velocity; discrepancy <span class="arithmatex">\(&gt;\)</span>2 m/s flags spoofing.</p>
+</li>
+</ul>
+<h3 id="subsec-jamming_detect"><span class="secnum">8.7.4</span> Jamming Detection and Response<a class="headerlink" href="#subsec-jamming_detect" title="Permanent link">&para;</a></h3>
+<p>Jamming detection combines multiple indicators:</p>
+<ol>
+<li>
+<p><strong>RSSI drop</strong>: SiK/ELRS report RSSI; a sudden drop from <span class="arithmatex">\(-\)</span>75 to <span class="arithmatex">\(-\)</span>110 dBm while no range increase is occurring indicates jamming.</p>
+</li>
+<li>
+<p><strong>GPS signal strength</strong>: AGC (Automatic Gain Control) setting in GNSS receiver increases when broadband noise (jamming) is present; abnormal AGC is a flag.</p>
+</li>
+<li>
+<p><strong>Packet error rate (PER) spike</strong>: MAVLink sequence number gaps indicate lost packets consistent with jamming.</p>
+</li>
+</ol>
+<p>Response: 1) switch to IMU dead-reckoning + pre-programmed failsafe mission; 2) ascend to improve LOS path; 3) activate backup communication system (satellite link); 4) execute emergency landing at nearest safe coordinates.</p>
+<h3 id="subsec-zero_trust"><span class="secnum">8.7.5</span> Zero-Trust Architecture<a class="headerlink" href="#subsec-zero_trust" title="Permanent link">&para;</a></h3>
+<p>Traditional avionics assumed a trusted network boundary. Modern drone systems, especially those using 4G/LTE and internet-connected GCS, must adopt zero-trust principles:</p>
+<ul>
+<li>
+<p><strong>Per-aircraft PKI certificates</strong>: each aircraft has an asymmetric key pair issued by a root CA (Certificate Authority) specific to the operator’s fleet. Commands are signed by the GCS using its private key and verified by the aircraft’s public key, preventing command injection even if the VPN tunnel is compromised.</p>
+</li>
+<li>
+<p><strong>Message authentication codes (MAC)</strong>: HMAC-SHA-256 on every MAVLink packet (exploiting the <code>MAVLINK_IFLAG_SIGNED</code> bit in MAVLink v2).</p>
+</li>
+<li>
+<p><strong>OTA (Over-the-Air) firmware update authentication</strong>: firmware images are signed with a manufacturer RSA-4096 key; the bootloader verifies before flashing, preventing supply-chain injection.</p>
+</li>
+</ul>
+<h2 id="sec-spectrum"><span class="secnum">8.8</span> Spectrum Management and Regulation<a class="headerlink" href="#sec-spectrum" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-itu_regulations"><span class="secnum">8.8.1</span> ITU Radio Regulations and Frequency Allocations<a class="headerlink" href="#subsec-itu_regulations" title="Permanent link">&para;</a></h3>
+<p>The ITU Radio Regulations (edition 2020) constitute the international treaty governing spectrum use. Article 5 contains the Table of Frequency Allocations, dividing the spectrum among three ITU Regions (Americas; Europe/Africa/Middle East; Asia-Pacific) and among service types: Fixed, Mobile, Aeronautical Mobile, Satellite (Fixed, Mobile, Broadcast), Navigation (Radionavigation, Aeronautical Radionavigation), Amateur, and others.</p>
+<p>Key allocations relevant to drone operations:</p>
+<div class="tbl" id="tab-itu_alloc">
+<div class="tbl-caption"><strong>Table 8.2.</strong> Key Frequency Allocations for Drone Communication and Navigation Systems</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Band</strong></th>
+<th style="text-align: left;"><strong>Frequency</strong></th>
+<th style="text-align: left;"><strong>Primary Service / Use</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">VHF</td>
+<td style="text-align: left;">118–137 MHz</td>
+<td style="text-align: left;">Aeronautical Mobile (voice ATC)</td>
+</tr>
+<tr>
+<td style="text-align: left;">UHF</td>
+<td style="text-align: left;">225–400 MHz</td>
+<td style="text-align: left;">Military Aeronautical (satcom, JTIDS guard)</td>
+</tr>
+<tr>
+<td style="text-align: left;">L-band</td>
+<td style="text-align: left;">960–1215 MHz</td>
+<td style="text-align: left;">Aeronautical Radionavigation (DME, TACAN, Link 16)</td>
+</tr>
+<tr>
+<td style="text-align: left;">L-band</td>
+<td style="text-align: left;">1164–1300 MHz</td>
+<td style="text-align: left;">Radionavigation Satellite (GPS L5, Galileo E5)</td>
+</tr>
+<tr>
+<td style="text-align: left;">L-band</td>
+<td style="text-align: left;">1525–1660.5 MHz</td>
+<td style="text-align: left;">Mobile Satellite (Iridium, Inmarsat)</td>
+</tr>
+<tr>
+<td style="text-align: left;">L-band</td>
+<td style="text-align: left;">1575.42 MHz</td>
+<td style="text-align: left;">Radionavigation Satellite (GPS L1, Galileo E1)</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISM 2.4 GHz</td>
+<td style="text-align: left;">2400–2500 MHz</td>
+<td style="text-align: left;">Industrial/Scientific/Medical (RC, WiFi, BT)</td>
+</tr>
+<tr>
+<td style="text-align: left;">C-band</td>
+<td style="text-align: left;">5030–5091 MHz</td>
+<td style="text-align: left;">Aeronautical Mobile (LDACS, future BVLOS C2)</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISM 5.8 GHz</td>
+<td style="text-align: left;">5725–5875 MHz</td>
+<td style="text-align: left;">Industrial/Scientific/Medical (FPV video)</td>
+</tr>
+<tr>
+<td style="text-align: left;">X-band</td>
+<td style="text-align: left;">8.025–8.55 GHz</td>
+<td style="text-align: left;">Fixed Satellite (WGS downlink)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ku-band</td>
+<td style="text-align: left;">10.7–12.75 GHz</td>
+<td style="text-align: left;">Fixed Satellite (Starlink down, VSAT)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ka-band</td>
+<td style="text-align: left;">17.7–20.2 GHz</td>
+<td style="text-align: left;">Fixed Satellite (Starlink down, WGS)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="subsec-icao_bvlos"><span class="secnum">8.8.2</span> ICAO BVLOS Requirements<a class="headerlink" href="#subsec-icao_bvlos" title="Permanent link">&para;</a></h3>
+<p>ICAO Annex 2 (Rules of the Air) and Doc 10019 (Manual on Remotely Piloted Aircraft Systems) define requirements for RPAS operating Beyond Visual Line of Sight:</p>
+<ul>
+<li>
+<p>The C2 (Command and Control) link must maintain continuous, reliable two-way communications between pilot and RPA throughout the operation.</p>
+</li>
+<li>
+<p>Performance requirements: C2 link must achieve <span class="arithmatex">\(\leq 200\)</span> ms end-to-end latency, <span class="arithmatex">\(\geq 99.9\)</span>% availability, and include automatic failsafe (contingency procedure triggered on comms loss).</p>
+</li>
+<li>
+<p>Frequency: C2 links must use licensed spectrum unless within authorised ISM band limitations; LDACS (L-band Digital Aeronautical Communications System) at 960–975 MHz is the ICAO-recommended standard for BVLOS C2 being standardised in EUROCAE ED-303.</p>
+</li>
+<li>
+<p>Detect-and-Avoid (DAA): BVLOS aircraft must carry ADS-B Out (1090 MHz, 1090ES format, <em>or</em> equivalent DAA sensor suite) to be visible to crewed traffic. ADS-B Out requirement: position accuracy <span class="arithmatex">\(&lt; 0.05\)</span> NM NACp <span class="arithmatex">\(\geq\)</span> 9.</p>
+</li>
+</ul>
+<h3 id="subsec-mil_spectrum"><span class="secnum">8.8.3</span> Military Spectrum Deconfliction<a class="headerlink" href="#subsec-mil_spectrum" title="Permanent link">&para;</a></h3>
+<p>Military spectrum management uses a frequency-coordination hierarchy:</p>
+<ol>
+<li>
+<p><strong>National</strong>: Each nation’s military frequency management office (e.g., DoD frequency assignment authority: NTIA/IRAC in the USA) maintains a master frequency register of active assignments.</p>
+</li>
+<li>
+<p><strong>Operational</strong>: The Theatre Electronic Warfare Coordinator (TEWC) and Joint Spectrum Management Officer (JSMO) deconflict assignments within the joint operations area (JOA), issuing a Restricted Frequency List (RFL) and Taboo Frequency List for EMCON.</p>
+</li>
+<li>
+<p><strong>Platform</strong>: Each UAV datalink is programmed with an SSE (Spectrum Supportability Evidence) approval and assigned specific channels/nets before flight.</p>
+</li>
+</ol>
+<h3 id="subsec-cognitive_radio"><span class="secnum">8.8.4</span> Cognitive Radio and Dynamic Spectrum Access<a class="headerlink" href="#subsec-cognitive_radio" title="Permanent link">&para;</a></h3>
+<p>Cognitive radio (CR) is an intelligent radio that senses the spectral environment and adapts its operating parameters (frequency, power, modulation, protocol) to maximise spectrum utilisation while avoiding interference to primary users.</p>
+<p>The <strong>primary user / secondary user</strong> model (IEEE 802.22 for TV white space; CBRS 3.5 GHz Citizens Broadband Radio Service in the USA) allows CR secondary users to operate in licensed bands when the primary user is absent: <span id="eq-cr_requirements"></span></p>
+<div class="arithmatex">\[P(D) \geq P_D^{min},\quad P_{FA} \leq P_{FA}^{max}\tag{8.24}\]</div>
+<p>where <span class="arithmatex">\(P(D)\)</span> is detection probability (<span class="arithmatex">\(\geq 0.9\)</span>) and <span class="arithmatex">\(P_{FA}\)</span> is false alarm probability (<span class="arithmatex">\(\leq 0.1\)</span>) for the CR’s spectrum sensing function.</p>
+<p>CR technologies applicable to military drone links:</p>
+<ul>
+<li>
+<p><strong>Dynamic frequency selection (DFS)</strong>: already mandated in 5.8 GHz equipment to vacate on radar detection (ETSI EN 301 893).</p>
+</li>
+<li>
+<p><strong>Machine learning spectrum sensing</strong>: Deep-learning classifiers (ResNet-based) trained on RF signal spectrograms can identify emitter type with <span class="arithmatex">\(&gt; 95\)</span>% accuracy at SNR <span class="arithmatex">\(&gt; 5\)</span> dB, enabling intelligent interference avoidance.</p>
+</li>
+<li>
+<p><strong>MANET with adaptive waveform</strong>: Software-Defined Radio (SDR) platforms (Epiq Solutions Sidekiq, Ettus USRP B200) allow real-time waveform switching between Link 16, MUOS, and commercial waveforms based on spectrum availability.</p>
+</li>
+</ul>
+<h2 id="sec-mq9_comms"><span class="secnum">8.9</span> Integrated Communications Example: MQ-9 Reaper<a class="headerlink" href="#sec-mq9_comms" title="Permanent link">&para;</a></h2>
+<p>The MQ-9 Reaper illustrates integration of all communication subsystems discussed in this chapter on a single airframe:</p>
+<ul>
+<li>
+<p><strong>LOS datalink</strong>: KU-band (Ku CDL); 50 km radius from GCS; 137 Mbps video downlink.</p>
+</li>
+<li>
+<p><strong>SATCOM</strong>: Ku-band SATCOM terminal (Inmarsat or WGS); BLOS operations over Afghanistan from operators at Creech AFB, Nevada.</p>
+</li>
+<li>
+<p><strong>Link 16</strong>: MIDS-LVT pod for TAD (Tactical Air Direction) and ID.</p>
+</li>
+<li>
+<p><strong>ATC/IFF</strong>: UHF voice radio (AN/ARC-210, 108–512 MHz); IFF Mode 1/2/3A/C/S/4.</p>
+</li>
+<li>
+<p><strong>Video relay</strong>: CDL-format Predator ISR video downlink; ROVER receive across JTAC ground teams.</p>
+</li>
+<li>
+<p><strong>Spectrum</strong>: uplink <span class="arithmatex">\(\leq\)</span>14.5 GHz (Ku), downlink 10.7–11.7 GHz; coordinated via JSMO before each sortie.</p>
+</li>
+<li>
+<p><strong>Encryption</strong>: Type 1 NSA-approved (classified algorithm, KMI key management); mission key loaded at pre-flight via KSD-64 or KIK-30 crypto loader.</p>
+</li>
+</ul>
+<p>The GCS (Ground Control Station, AN/MPS-46 or Portable Flight Control System) connects to the Ku terminal via coaxial cable in the shelter; satellite uplink latency of 600 ms requires operators to anticipate manoeuvres and the onboard autopilot to stabilise independently.</p>
+<div class="tbl" id="tab-comms_comparison">
+<div class="tbl-caption"><strong>Table 8.3.</strong> Communication System Performance Comparison Across Major UAV Link Types</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>System</strong></th>
+<th style="text-align: left;"><strong>Band</strong></th>
+<th style="text-align: left;"><strong>Range</strong></th>
+<th style="text-align: left;"><strong>Data Rate</strong></th>
+<th style="text-align: left;"><strong>Latency</strong></th>
+<th style="text-align: left;"><strong>Encrypted</strong></th>
+<th style="text-align: left;"><strong>Use Case</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ExpressLRS 2.4 GHz</td>
+<td style="text-align: left;">2.4 GHz</td>
+<td style="text-align: left;">5–30 km</td>
+<td style="text-align: left;">250 bps–50 kbps</td>
+<td style="text-align: left;">1–4 ms</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">RC control</td>
+</tr>
+<tr>
+<td style="text-align: left;">TBS Crossfire</td>
+<td style="text-align: left;">868 MHz</td>
+<td style="text-align: left;">40–150 km</td>
+<td style="text-align: left;">100 kbps</td>
+<td style="text-align: left;">2–5 ms</td>
+<td style="text-align: left;">Partial</td>
+<td style="text-align: left;">RC control</td>
+</tr>
+<tr>
+<td style="text-align: left;">SiK 915 MHz</td>
+<td style="text-align: left;">915 MHz</td>
+<td style="text-align: left;">3–10 km</td>
+<td style="text-align: left;">57.6 kbps</td>
+<td style="text-align: left;">10–20 ms</td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">Telemetry</td>
+</tr>
+<tr>
+<td style="text-align: left;">RFD900+</td>
+<td style="text-align: left;">868/915 MHz</td>
+<td style="text-align: left;">40+ km</td>
+<td style="text-align: left;">250 kbps</td>
+<td style="text-align: left;">15 ms</td>
+<td style="text-align: left;">Optional</td>
+<td style="text-align: left;">Telemetry</td>
+</tr>
+<tr>
+<td style="text-align: left;">DJI O3</td>
+<td style="text-align: left;">5.8 GHz</td>
+<td style="text-align: left;">10 km</td>
+<td style="text-align: left;">50 Mbps</td>
+<td style="text-align: left;">18–24 ms</td>
+<td style="text-align: left;">AES-128</td>
+<td style="text-align: left;">FPV video</td>
+</tr>
+<tr>
+<td style="text-align: left;">Silvus SC4200 MIMO</td>
+<td style="text-align: left;">2.4/5.8 GHz</td>
+<td style="text-align: left;">5–20 km</td>
+<td style="text-align: left;">400 Mbps</td>
+<td style="text-align: left;">5–15 ms</td>
+<td style="text-align: left;">AES-256</td>
+<td style="text-align: left;">Mil video</td>
+</tr>
+<tr>
+<td style="text-align: left;">Link 16 MIDS</td>
+<td style="text-align: left;">960–1215 MHz</td>
+<td style="text-align: left;">500+ km</td>
+<td style="text-align: left;">57.6 kbps</td>
+<td style="text-align: left;">7.8 ms (slot)</td>
+<td style="text-align: left;">Type 1</td>
+<td style="text-align: left;">TAD/tracking</td>
+</tr>
+<tr>
+<td style="text-align: left;">CDL Ku-band</td>
+<td style="text-align: left;">10.7–14.5 GHz</td>
+<td style="text-align: left;">300 km</td>
+<td style="text-align: left;">274 Mbps</td>
+<td style="text-align: left;">1–5 ms</td>
+<td style="text-align: left;">Type 1</td>
+<td style="text-align: left;">ISR video</td>
+</tr>
+<tr>
+<td style="text-align: left;">Iridium SBD</td>
+<td style="text-align: left;">L-band</td>
+<td style="text-align: left;">Global</td>
+<td style="text-align: left;">2.4 kbps</td>
+<td style="text-align: left;">400 ms</td>
+<td style="text-align: left;">AES-128</td>
+<td style="text-align: left;">Low-bw C2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Inmarsat BGAN</td>
+<td style="text-align: left;">L-band</td>
+<td style="text-align: left;">Global</td>
+<td style="text-align: left;">492 kbps</td>
+<td style="text-align: left;">600 ms</td>
+<td style="text-align: left;">AES-256</td>
+<td style="text-align: left;">BVLOS C2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Starlink Aviation</td>
+<td style="text-align: left;">Ku/Ka</td>
+<td style="text-align: left;">Global</td>
+<td style="text-align: left;">100 Mbps</td>
+<td style="text-align: left;">20–40 ms</td>
+<td style="text-align: left;">AES-256</td>
+<td style="text-align: left;">HD video + C2</td>
+</tr>
+<tr>
+<td style="text-align: left;">WGS Ka-band</td>
+<td style="text-align: left;">Ka-band</td>
+<td style="text-align: left;">Global (GEO)</td>
+<td style="text-align: left;">3.6 Gbps</td>
+<td style="text-align: left;">600 ms</td>
+<td style="text-align: left;">Type 1</td>
+<td style="text-align: left;">Mil wideband</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-comms_future"><span class="secnum">8.10</span> Future Directions in Drone Communications<a class="headerlink" href="#sec-comms_future" title="Permanent link">&para;</a></h2>
+<h3 id="8101-5g-nr-for-uav-c2"><span class="secnum">8.10.1</span> 5G NR for UAV C2<a class="headerlink" href="#8101-5g-nr-for-uav-c2" title="Permanent link">&para;</a></h3>
+<p>3GPP Release 17 (2022) standardised <strong>NR-U2X</strong> (New Radio UAV-to-X) communications, including specific 5G NR features for low-latency (<span class="arithmatex">\(&lt; 10\)</span> ms), high-reliability (<span class="arithmatex">\(99.999\)</span>%) command links for BVLOS drone operations. 5G NR at 3.5 GHz (mid-band) provides <span class="arithmatex">\(\sim\)</span>100 Mbps aggregate per cell with network slicing to guarantee QoS for drone C2 independently of consumer traffic. By 2026, UTM (Unmanned Traffic Management) providers including NASA and EASA are piloting 5G drone corridors in major European cities.</p>
+<h3 id="8102-quantum-key-distribution-qkd"><span class="secnum">8.10.2</span> Quantum Key Distribution (QKD)<a class="headerlink" href="#8102-quantum-key-distribution-qkd" title="Permanent link">&para;</a></h3>
+<p>QKD (BB84 protocol, NIST SP 1800-38) distributes encryption keys using quantum photon states that cannot be eavesdropped without disturbance, providing information-theoretically secure key exchange. Satellite-based QKD (Chinese Micius satellite, 2016) demonstrated 1200 km quantum key distribution. Miniaturised QKD terminals for UAVs (<span class="arithmatex">\(&lt; 5\)</span> kg) are under development at Toshiba Research (UK) and QuiX Quantum (Netherlands), targeting practical deployment by the late 2020s for the most sensitive military UAV platforms.</p>
+<h3 id="8103-laser-free-space-optical-communications"><span class="secnum">8.10.3</span> Laser / Free-Space Optical Communications<a class="headerlink" href="#8103-laser-free-space-optical-communications" title="Permanent link">&para;</a></h3>
+<p>High-data-rate laser communications (lasercom) at 1550 nm wavelength offer 1–10 Gbps throughput in narrow beams (<span class="arithmatex">\(&lt; 0.01\)</span>° divergence), with essentially zero probability of intercept. DARPA’s PACE (Persistent Aquatic Living Sensors) and LCRD (Laser Communications Relay Demonstration, NASA) have demonstrated Gbps optical links from GEO. For drone-to-ground lasercom, adaptive optics must compensate atmospheric turbulence — the phase distortion coherence diameter <span class="arithmatex">\(r_0\)</span> (Fried parameter): <span id="eq-fried_param"></span></p>
+<div class="arithmatex">\[r_0 = 0.185\left(\frac{\lambda^2}{\bar{C}_n^2 L}\right)^{3/5}\tag{8.25}\]</div>
+<p>where <span class="arithmatex">\(C_n^2\)</span> is the refractive index structure parameter and <span class="arithmatex">\(L\)</span> is path length. Typical <span class="arithmatex">\(r_0 = 5\)</span>–20 cm at 1550 nm for 1 km slant path; deformable mirrors with 100–1000 actuators can correct down to <span class="arithmatex">\(r_0\)</span> scale.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<p>This chapter has presented a comprehensive treatment of drone and missile communication systems, grounded in the fundamental physics of Maxwell’s equations and the Friis transmission equation. The link budget framework unifies the analysis of all communication links, from the simplest ExpressLRS RC control link to the Wideband Global SATCOM system. RC control links (ELRS, Crossfire) and telemetry systems (SiK, RFD900+) serve the short-to-medium range civilian and commercial drone market; military platforms require the anti-jam, authentication, and wideband capabilities of Link 16, CDL, and WGS. Video downlinks span analogue FPV (zero-latency, degraded quality) to COFDM encrypted HD systems. Satellite communications using Iridium, Inmarsat, Starlink, and WGS enable global BVLOS and persistent ISR operations. Cybersecurity — AES-256 encryption, ECDH key exchange, GNSS anti-spoofing, and zero-trust PKI architectures — is now inseparable from communications system design. Cognitive radio, 5G NR C2, quantum key distribution, and free-space optical links represent the next technology frontier for drone communications.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch07-avionics-and-flight-control.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. Avionics and Flight Control">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                7. Avionics and Flight Control
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch09-payloads-and-sensors.html" class="md-footer__link md-footer__link--next" aria-label="Next: 9. Payloads and Sensors">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                9. Payloads and Sensors
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

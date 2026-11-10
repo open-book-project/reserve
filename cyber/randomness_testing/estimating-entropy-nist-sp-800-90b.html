@@ -1,0 +1,1816 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/randomness_testing/estimating-entropy-nist-sp-800-90b.html">
+  
+  
+    <link rel="prev" href="nist-sp-800-22-ii-patterns-complexity-and-walks.html">
+  
+  
+    <link rel="next" href="diehard-and-dieharder.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>5. Estimating Entropy: NIST SP 800-90B - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#51-the-question-sp-800-90b-asks" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Estimating Entropy: NIST SP 800-90B
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Randomness Testing</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="random-numbers-and-the-coin-flip-model.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random Numbers and the Coin-Flip Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributions-corrections-and-entropy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distributions, Corrections and Entropy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-i-balance-runs-and-spectra.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. NIST SP 800-22 (I): Balance, Runs and Spectra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-ii-patterns-complexity-and-walks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. NIST SP 800-22 (II): Patterns, Complexity and Walks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Estimating Entropy: NIST SP 800-90B
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="estimating-entropy-nist-sp-800-90b.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Estimating Entropy: NIST SP 800-90B
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-the-question-sp-800-90b-asks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 The question SP 800-90B asks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-min-entropy-framing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Min-entropy framing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-permutation-tests-iid-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Permutation tests (IID track)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-chi-square-tests-iid-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Chi-square tests (IID track)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-longest-repeated-substring-test-iid-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Longest repeated substring test (IID track)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-most-common-value-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 Most common value estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-collision-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Collision estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58-markov-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 Markov estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59-compression-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Compression estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510-t-tuple-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 t-tuple estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511-longest-repeated-substring-lrs-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 Longest repeated substring (LRS) estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512-multimcw-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 MultiMCW prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513-lag-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.13 Lag prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#514-multimmc-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.14 MultiMMC prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#515-lz78y-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.15 LZ78Y prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#516-restart-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.16 Restart tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#517-repetition-count-test-rct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.17 Repetition count test (RCT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#518-adaptive-proportion-test-apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.18 Adaptive proportion test (APT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#519-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.19 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#520-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.20 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diehard-and-dieharder.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Diehard and Dieharder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fips-140-2-and-bsi-ais-31.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. FIPS 140-2 and BSI AIS 31
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ent-testu01-and-practrand.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. ENT, TestU01 and PractRand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comparing-the-batteries.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Comparing the Batteries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-i-bias-entropy-correlation-and-compression.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Additional Tests (I): Bias, Entropy, Correlation and Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-ii-source-behaviour-and-health.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Additional Tests (II): Source Behaviour and Health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iii-spectral-ordinal-matrix-and-betting-tes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Additional Tests (III): Spectral, Ordinal, Matrix and Betting Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iv-collisions-memory-and-learning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Additional Tests (IV): Collisions, Memory and Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recognising-generators-and-classifying-sources.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Recognising Generators and Classifying Sources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-the-question-sp-800-90b-asks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 The question SP 800-90B asks
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-min-entropy-framing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Min-entropy framing
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-permutation-tests-iid-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Permutation tests (IID track)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-chi-square-tests-iid-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Chi-square tests (IID track)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-longest-repeated-substring-test-iid-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Longest repeated substring test (IID track)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-most-common-value-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 Most common value estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-collision-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Collision estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58-markov-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 Markov estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59-compression-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Compression estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510-t-tuple-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 t-tuple estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511-longest-repeated-substring-lrs-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 Longest repeated substring (LRS) estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512-multimcw-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 MultiMCW prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513-lag-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.13 Lag prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#514-multimmc-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.14 MultiMMC prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#515-lz78y-prediction-estimate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.15 LZ78Y prediction estimate
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#516-restart-tests" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.16 Restart tests
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#517-repetition-count-test-rct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.17 Repetition count test (RCT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#518-adaptive-proportion-test-apt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.18 Adaptive proportion test (APT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#519-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.19 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#520-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.20 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-5-estimating-entropy-nist-sp-800-90b">Chapter 5: Estimating Entropy: NIST SP 800-90B<a class="headerlink" href="#chapter-5-estimating-entropy-nist-sp-800-90b" title="Permanent link">&para;</a></h1>
+<p>SP 800-22 asks whether data looks random. SP 800-90B asks a different and more useful question for cryptography: how many bits of guessing work does each sample of a noise source give an attacker? Its answer is a number, the min-entropy per sample, produced by a family of estimators and made into a continuous safeguard by two health tests that run inside the device. This chapter works through the estimators one at a time, then the restart tests, then the repetition count and adaptive proportion tests.</p>
+<h2 id="51-the-question-sp-800-90b-asks">5.1 The question SP 800-90B asks<a class="headerlink" href="#51-the-question-sp-800-90b-asks" title="Permanent link">&para;</a></h2>
+<p>This one asks a different question. SP 800-22 asks "does this look random?", while SP 800-90B (Turan and colleagues, January 2018) asks "how many bits of guessing work does each sample give an attacker?". It was written for the noise sources inside entropy sources, and it is used in NIST's Cryptographic Algorithm Validation Program (CAVP) and Cryptographic Module Validation Program (CMVP). You supply at least 1,000,000 consecutive raw samples, plus a restart matrix of 1000 samples from each of 1000 restarts. You also state your own expected entropy from a design analysis. Data then follows one of two tracks. The IID track is open only if you claim independent, identically distributed (i.i.d.) samples and the tests below find nothing against that. Everything else follows the non-IID track. The output is not a p-value but a number: bits of min-entropy per sample. Taking the smallest estimate is deliberate, because we want the most cautious answer. NIST also warns that these estimators support an analysis of the source and do not replace it.</p>
+<h2 id="52-min-entropy-framing">5.2 Min-entropy framing<a class="headerlink" href="#52-min-entropy-framing" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Imagine an attacker with one guess. Their best move is to bet on the most likely value. Min-entropy measures exactly how hard that one bet is, so it is set by the single most likely outcome and nothing else. That is why it is cautious: a distribution can look rich on average and still have one value an attacker will always try first.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.2: Min-entropy framing</p>
+<p>Suppose three values have probabilities 0.5, 0.25, 0.25. The min-entropy is <span class="arithmatex">\(-\log_2 0.5 = 1\)</span> bit, while the Shannon entropy is 1.5 bits. A bit that comes up 1 sixty percent of the time has min-entropy <span class="arithmatex">\(-\log_2 0.6 = 0.737\)</span> bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[H = \min_{1 \le i \le k} \left(-\log_2 p_i\right) = -\log_2 \max_{1 \le i \le k} p_i\]</div>
+<div class="arithmatex">\[H_I = \min\!\left(H_{original},\ n \cdot H_{bitstring},\ H_{submitter}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(p_i\)</span> is the probability of value <span class="arithmatex">\(x_i\)</span>, and <span class="arithmatex">\(k\)</span> is the number of possible values, so <span class="arithmatex">\(H\)</span> is at most <span class="arithmatex">\(\log_2 k\)</span>.</li>
+<li><span class="arithmatex">\(H_{original}\)</span> is estimated on the samples, <span class="arithmatex">\(H_{bitstring}\)</span> on the same data read as a bit string, and <span class="arithmatex">\(n\)</span> is the number of bits per sample.</li>
+<li><span class="arithmatex">\(H_{submitter}\)</span> is your own design-based claim. For a binary source, <span class="arithmatex">\(H_I\)</span> uses only <span class="arithmatex">\(H_{original}\)</span> and <span class="arithmatex">\(H_{submitter}\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> This framing puts the attacker's best guess at the centre, which suits cryptography. It still only measures what the estimators can spot. A cleverly deterministic source can score high, which is why a design rationale is required.</p>
+<h2 id="53-permutation-tests-iid-track">5.3 Permutation tests (IID track)<a class="headerlink" href="#53-permutation-tests-iid-track" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Take the data, shuffle it, and measure something. Shuffling destroys any order but keeps the mix of values. If the data really is i.i.d., the original should look like just another shuffle. If its score sits at the extreme end of 10,000 shuffles, then order mattered, and the data is not i.i.d. It is like asking whether a dealt hand looks any different from one dealt after a good shuffle.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.3: Permutation tests (IID track)</p>
+<p>The excursion statistic on <span class="arithmatex">\(S = (2, 15, 4, 10, 9)\)</span> has mean 8, giving deviations 6, 1, 3, 1, 0, so <span class="arithmatex">\(T = 6\)</span>. For <span class="arithmatex">\(S = (2, 2, 2, 5, 7, 7, 9, 3, 1, 4, 4)\)</span> the steps are six ups, two downs, then two ups. That gives 3 directional runs, a longest run of 6, and 8 increases.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\text{reject i.i.d. if } C_{i,0} + C_{i,1} \le 5 \quad \text{or} \quad C_{i,0} \ge 9995\]</div>
+<ul>
+<li><span class="arithmatex">\(T_i\)</span> is statistic <span class="arithmatex">\(i\)</span> on the original data, and each of the 10,000 shuffles uses the Fisher-Yates algorithm, a standard shuffle that makes every ordering equally likely.</li>
+<li><span class="arithmatex">\(C_{i,0}\)</span> counts shuffles with a larger statistic, and <span class="arithmatex">\(C_{i,1}\)</span> counts ties.</li>
+<li>The cutoffs correspond to a type I error (rejecting good data, a false alarm) of 0.001.</li>
+</ul>
+<p>The statistics are: excursion, number of directional runs, length of directional runs, number of increases and decreases, number of runs about the median, length of runs about the median, average collision, maximum collision, periodicity and covariance (each at lags 1, 2, 8, 16 and 32), and compressed length under bzip2. Some are applied to binary data after grouping it into 8-bit blocks.</p>
+<p><strong>What it catches and misses.</strong> The reference distribution comes from the data itself, so no theory is assumed. It catches trends, repeats and lagged relations in the listed statistics. It cannot reject a source that is i.i.d. but heavily biased, because bias survives shuffling. That is a job for the estimators.</p>
+<h2 id="54-chi-square-tests-iid-track">5.4 Chi-square tests (IID track)<a class="headerlink" href="#54-chi-square-tests-iid-track" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Two more checks back up the shuffling. The independence test asks whether a value's neighbour tells you anything about it, by comparing pair counts with what the individual frequencies predict. The goodness-of-fit test asks whether ten slices of the data all share the same distribution, like checking that a factory's output does not change from shift to shift.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.4: Chi-square tests (IID track)</p>
+<p>The standard's non-binary example has <span class="arithmatex">\(k = 3\)</span> values, <span class="arithmatex">\(L = 100\)</span> and proportions 0.21, 0.41, 0.38. With six bins, the observed counts are 7, 6, 10, 8, 12, 7 against expected 6.2, 8.3, 11.53, 7.79, 7.79, 8.41. So <span class="arithmatex">\(T = 3.46\)</span> with 3 degrees of freedom, far below the critical value 16.266, and the test passes.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[T = \sum_{\text{bins}} \frac{(o_i - e_i)^2}{e_i}\]</div>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Data</th>
+<th>Expected count</th>
+<th>Degrees of freedom</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Independence</td>
+<td>non-binary</td>
+<td><span class="arithmatex">\(p_i p_j L/2\)</span> for non-overlapping pairs, binned so each bin expects at least 5</td>
+<td><span class="arithmatex">\(n_{bin} - k\)</span></td>
+</tr>
+<tr>
+<td>Goodness of fit</td>
+<td>non-binary</td>
+<td><span class="arithmatex">\(c_i/10\)</span> for each of ten subsets, binned the same way</td>
+<td><span class="arithmatex">\(9(n_{bin} - 1)\)</span></td>
+</tr>
+<tr>
+<td>Independence</td>
+<td>binary</td>
+<td><span class="arithmatex">\(p_1^w p_0^{m-w}\lfloor L/m \rfloor\)</span> for each <span class="arithmatex">\(m\)</span>-bit tuple with <span class="arithmatex">\(w\)</span> ones, <span class="arithmatex">\(m\)</span> at most 11</td>
+<td><span class="arithmatex">\(2^m - 2\)</span></td>
+</tr>
+<tr>
+<td>Goodness of fit</td>
+<td>binary</td>
+<td><span class="arithmatex">\((1-p)L/10\)</span> zeros and <span class="arithmatex">\(pL/10\)</span> ones in each of ten subsets</td>
+<td>9</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="arithmatex">\(o_i\)</span> and <span class="arithmatex">\(e_i\)</span> are observed and expected counts, and <span class="arithmatex">\(k\)</span> is the alphabet size.</li>
+<li><span class="arithmatex">\(p_i\)</span> is the proportion of value <span class="arithmatex">\(x_i\)</span>, and <span class="arithmatex">\(c_i\)</span> is its count.</li>
+<li>Each test fails if <span class="arithmatex">\(T\)</span> exceeds the chi-square critical value at 0.001. The document prints that value for 9 degrees of freedom as 27.887, while chi-square tables give 27.877.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> Independence catches dependence in adjacent samples or nearby bits, and goodness of fit catches drift over the run. Dependence at longer lag is out of reach here, so it relies on the permutation tests.</p>
+<h2 id="55-longest-repeated-substring-test-iid-track">5.5 Longest repeated substring test (IID track)<a class="headerlink" href="#55-longest-repeated-substring-test-iid-track" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> In random data, long repeated stretches are rare, and we can calculate how rare. Find the longest stretch that occurs twice and ask how likely a repeat that long would be if the samples were i.i.d. It is like finding the same long sentence in two parts of a book: past a certain length, chance stops being a good explanation.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.5: Longest repeated substring test (IID track)</p>
+<p>For <span class="arithmatex">\(S = (2, 2, 0, 1, 0, 2, 0, 1, 2, 1, 2, 0, 1, 2, 1, 0, 0, 1, 0, 0, 0)\)</span> we have <span class="arithmatex">\(L = 21\)</span>, <span class="arithmatex">\(p_{col} = 0.3469\)</span> and longest repeat <span class="arithmatex">\(W = 5\)</span>. That gives <span class="arithmatex">\(N = 136\)</span> pairs and <span class="arithmatex">\(\Pr(X \ge 1) = 0.496\)</span>, comfortably above 0.001, so it passes.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[p_{col} = \sum_{i=1}^{k} p_i^2, \qquad N = \binom{L-W+1}{2}, \qquad \Pr(X \ge 1) = 1 - \left(1 - p_{col}^{\,W}\right)^N\]</div>
+<ul>
+<li><span class="arithmatex">\(p_i\)</span> is the proportion of value <span class="arithmatex">\(x_i\)</span>, and <span class="arithmatex">\(L\)</span> is the sample count.</li>
+<li><span class="arithmatex">\(W\)</span> is the length of the longest repeated substring.</li>
+<li><span class="arithmatex">\(X\)</span> is binomial with <span class="arithmatex">\(N\)</span> trials and success probability <span class="arithmatex">\(p_{col}^{\,W}\)</span>.</li>
+</ul>
+<p>The test fails if <span class="arithmatex">\(\Pr(X \ge 1) &lt; 0.001\)</span>.</p>
+<p><strong>What it catches and misses.</strong> It catches long repeats, such as a source that loops or replays stored data, and it works on binary and non-binary input alike. It uses only the longest repeat, so a source full of medium-length repeats may slip through.</p>
+<h2 id="56-most-common-value-estimate">5.6 Most common value estimate<a class="headerlink" href="#56-most-common-value-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Find the most frequent value, then allow for sampling luck by taking the top of a 99 percent confidence interval. It is the simplest estimate of all, often shortened to MCV: the attacker's single best guess, treated cautiously. On the IID track, this is the only estimator used.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.6: Most common value estimate</p>
+<p>For <span class="arithmatex">\(S = (0, 1, 1, 2, 0, 1, 2, 2, 0, 1, 0, 1, 1, 0, 2, 2, 1, 0, 2, 1)\)</span>, <span class="arithmatex">\(L = 20\)</span> and the value 1 appears 8 times, so <span class="arithmatex">\(\hat{p} = 0.4\)</span>. Then <span class="arithmatex">\(p_u = 0.4 + 2.576\sqrt{0.24/19} = 0.6895\)</span> and the estimate is <span class="arithmatex">\(-\log_2 0.6895 = 0.5363\)</span> bits. The document prints 0.6822 inside its logarithm, but 0.5363 only follows from 0.6895.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\hat{p} = \max_i \frac{\#\{x_i \text{ in } S\}}{L}, \qquad p_u = \min\!\left(1,\ \hat{p} + 2.576\sqrt{\frac{\hat{p}(1-\hat{p})}{L-1}}\right), \qquad H = -\log_2 p_u\]</div>
+<ul>
+<li><span class="arithmatex">\(L\)</span> is the number of samples.</li>
+<li>2.576 is the normal quantile <span class="arithmatex">\(Z_{(1-0.005)}\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches bias well. On its own it is blind to dependence: a stream alternating 0, 1, 0, 1 has <span class="arithmatex">\(\hat{p}\)</span> near 0.5 and scores nearly a full bit per sample. NIST warns that it typically overestimates entropy when samples are not i.i.d.</p>
+<h2 id="57-collision-estimate">5.7 Collision estimate<a class="headerlink" href="#57-collision-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Read the stream until you see a value you have already seen, then start again. If one value dominates, repeats come quickly. So the average time to a repeat tells you about the most likely value, much like the birthday puzzle in reverse. This estimator is applied to binary input only.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.7: Collision estimate</p>
+<p>The standard's 40-bit example gives times 3, 3, 3, 3, 3, 2, 3, 2, 2, 3, 3, 3, 3, 2, so <span class="arithmatex">\(v = 14\)</span>, <span class="arithmatex">\(\bar{X} = 2.7143\)</span> and <span class="arithmatex">\(\hat{\sigma} = 0.4688\)</span>. The lower bound is <span class="arithmatex">\(\bar{X}' = 2.3915\)</span>. Solving gives <span class="arithmatex">\(p = 0.7329\)</span> and an estimate of 0.4483 bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\bar{X}' = \bar{X} - 2.576\frac{\hat{\sigma}}{\sqrt{v}}, \qquad \bar{X}' = pq^{-2}\left(1 + \tfrac{1}{2}(p^{-1} - q^{-1})\right)F(q) - pq^{-1}\,\tfrac{1}{2}(p^{-1} - q^{-1})\]</div>
+<ul>
+<li><span class="arithmatex">\(t_i\)</span> are the times to a repeat, with mean <span class="arithmatex">\(\bar{X}\)</span> and standard deviation <span class="arithmatex">\(\hat{\sigma}\)</span> across <span class="arithmatex">\(v\)</span> repeats.</li>
+<li><span class="arithmatex">\(q = 1 - p\)</span> with <span class="arithmatex">\(p \ge q\)</span>, and <span class="arithmatex">\(F(1/z) = \Gamma(3, z)z^{-3}e^z\)</span>, using the incomplete gamma function.</li>
+<li><span class="arithmatex">\(p\)</span> is found by binary search between <span class="arithmatex">\(1/2\)</span> and 1, and the estimate is <span class="arithmatex">\(-\log_2 p\)</span>, or 1 if there is no solution.</li>
+</ul>
+<p>For bits, the right-hand side works out to <span class="arithmatex">\(2 + 2pq\)</span>, which we checked against the standard's example.</p>
+<p><strong>What it catches and misses.</strong> It catches considerable bias towards one value. In bits, a repeat comes after two or three steps, so the measure is coarse. It sees only nearby repeats and cannot read longer-term structure.</p>
+<h2 id="58-markov-estimate">5.8 Markov estimate<a class="headerlink" href="#58-markov-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Suppose each bit depends only on the one before it. We measure the four transition chances from the data, then ask which 128-bit sequence is most likely and how likely it is. Dividing by 128 gives entropy per bit. Think of predicting tomorrow's weather from today's alone.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.8: Markov estimate</p>
+<p>The standard's 40-bit example gives <span class="arithmatex">\(P_0 = 0.475\)</span>, <span class="arithmatex">\(P_1 = 0.525\)</span>, <span class="arithmatex">\(P_{0,0} = 0.389\)</span>, <span class="arithmatex">\(P_{0,1} = 0.611\)</span>, <span class="arithmatex">\(P_{1,0} = 0.571\)</span> and <span class="arithmatex">\(P_{1,1} = 0.429\)</span>. The likeliest path is 1010...10, with probability about <span class="arithmatex">\(4.6288 \times 10^{-30}\)</span> on those rounded inputs. So the estimate is <span class="arithmatex">\(\min(-\log_2(4.6288 \times 10^{-30})/128, 1) = 0.761\)</span> bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\hat{p}_{max} = \max\left\{P_0 P_{0,0}^{127},\ P_0 P_{0,1}^{64} P_{1,0}^{63},\ P_0 P_{0,1} P_{1,1}^{126},\ P_1 P_{1,0} P_{0,0}^{126},\ P_1 P_{1,0}^{64} P_{0,1}^{63},\ P_1 P_{1,1}^{127}\right\}\]</div>
+<div class="arithmatex">\[H = \min\!\left(-\frac{\log_2 \hat{p}_{max}}{128},\ 1\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(P_0\)</span> and <span class="arithmatex">\(P_1\)</span> are the proportions of zeros and ones.</li>
+<li><span class="arithmatex">\(P_{a,b}\)</span> is the observed chance that bit <span class="arithmatex">\(a\)</span> is followed by bit <span class="arithmatex">\(b\)</span>.</li>
+</ul>
+<p>This is applied to binary input only. NIST notes that the per-sample extrapolation from a 128-long chain is not strictly correct but is close in practice.</p>
+<p><strong>What it catches and misses.</strong> It catches first-order dependence such as a stickiness or a tendency to alternate. It assumes a one-step memory, so it does not model dependence two or more steps back.</p>
+<h2 id="59-compression-estimate">5.9 Compression estimate<a class="headerlink" href="#59-compression-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This uses Maurer's idea from SP 800-22 in a new way. Warm up a dictionary, then measure how far back each block last appeared. Then find the most skewed distribution that would produce an average that small, and read off its entropy. In effect, we ask how compressible the data is, then assume the worst source consistent with that.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.9: Compression estimate</p>
+<p>The standard's illustration uses <span class="arithmatex">\(d = 4\)</span>, <span class="arithmatex">\(L = 48\)</span> and <span class="arithmatex">\(b = 6\)</span>, with test blocks at distances <span class="arithmatex">\(D = (5, 6, 7, 7)\)</span>. So <span class="arithmatex">\(\bar{X} = 2.6304\)</span>, <span class="arithmatex">\(\hat{\sigma} = 0.9074\)</span> and <span class="arithmatex">\(\bar{X}' = 1.4617\)</span>. Solving gives <span class="arithmatex">\(p = 0.5715\)</span> and <span class="arithmatex">\(H = -\log_2(0.5715)/6 = 0.1345\)</span> bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\bar{X} = \frac{1}{v}\sum_{i=1}^{v} \log_2 D_i, \qquad \hat{\sigma} = c\sqrt{\frac{\sum_i (\log_2 D_i)^2}{v-1} - \bar{X}^2}, \qquad \bar{X}' = \bar{X} - 2.576\frac{\hat{\sigma}}{\sqrt{v}}\]</div>
+<div class="arithmatex">\[\bar{X}' = G(p) + (2^b - 1)G(q), \qquad G(z) = \frac{1}{v}\sum_{t=d+1}^{\lfloor L/b \rfloor}\sum_{u=1}^{t} \log_2(u)\,F(z,t,u)\]</div>
+<ul>
+<li><span class="arithmatex">\(b = 6\)</span> is the block size, <span class="arithmatex">\(d = 1000\)</span> the dictionary size, and <span class="arithmatex">\(c = 0.5907\)</span> the correction factor.</li>
+<li><span class="arithmatex">\(q = (1-p)/(2^b - 1)\)</span>, and <span class="arithmatex">\(F(z,t,u) = z^2(1-z)^{u-1}\)</span> if <span class="arithmatex">\(u &lt; t\)</span> and <span class="arithmatex">\(z(1-z)^{t-1}\)</span> if <span class="arithmatex">\(u = t\)</span>.</li>
+<li><span class="arithmatex">\(p\)</span> is searched between <span class="arithmatex">\(2^{-b}\)</span> and 1, and <span class="arithmatex">\(H = -\log_2(p)/b\)</span>, or 1 if no solution exists.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It assumes no independence, so dependence does show through. It catches repeats at the 6-bit level. It reasons about a near-uniform worst case, and it is applied only to binary input.</p>
+<h2 id="510-t-tuple-estimate">5.10 t-tuple estimate<a class="headerlink" href="#510-t-tuple-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Rather than looking at single values, we also look at pairs, triples and longer groups. If some group is much too common, its frequency implies a high per-sample probability. We take the worst such implied probability. It is like noticing a loaded die through its favourite pairs of rolls, not just its single numbers.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.10: t-tuple estimate</p>
+<p>Using a cutoff of 3 for illustration and the <span class="arithmatex">\(L = 21\)</span> samples</p>
+<div class="arithmatex">\[S = (2, 2, 0, 1, 0, 2, 0, 1, 2, 1, 2, 0, 1, 2, 1, 0, 0, 1, 0, 0, 0),\]</div>
+<p>we get <span class="arithmatex">\(Q[1] = 9\)</span>, <span class="arithmatex">\(Q[2] = 4\)</span>, <span class="arithmatex">\(Q[3] = 3\)</span>. The values <span class="arithmatex">\(P_{max}[i]\)</span> are 0.4286, 0.4472, 0.5405. So <span class="arithmatex">\(p_u = 0.8276\)</span> and the estimate is 0.273 bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[P[i] = \frac{Q[i]}{L-i+1}, \qquad P_{max}[i] = P[i]^{1/i}, \qquad \hat{p}_{max} = \max_{1 \le i \le t} P_{max}[i]\]</div>
+<div class="arithmatex">\[p_u = \min\!\left(1,\ \hat{p}_{max} + 2.576\sqrt{\frac{\hat{p}_{max}(1-\hat{p}_{max})}{L-1}}\right), \qquad H = -\log_2 p_u\]</div>
+<ul>
+<li><span class="arithmatex">\(t\)</span> is the largest length whose most common tuple occurs at least 35 times.</li>
+<li><span class="arithmatex">\(Q[i]\)</span> is the count of the most common <span class="arithmatex">\(i\)</span>-tuple, with overlaps allowed.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches repeated short patterns that single-value counts miss. It is limited to tuples common enough to count at least 35 times, which leaves longer patterns for the next estimator.</p>
+<h2 id="511-longest-repeated-substring-lrs-estimate">5.11 Longest repeated substring (LRS) estimate<a class="headerlink" href="#511-longest-repeated-substring-lrs-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This one picks up where the t-tuple estimate stops. For tuple lengths too rare to count well, we look at how often two positions match, a collision measure. It estimates collision entropy, which is an upper bound on min-entropy, so NIST uses it to complement the other estimates.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.11: Longest repeated substring (LRS) estimate</p>
+<p>With the same <span class="arithmatex">\(S\)</span> and the same illustrative cutoff of 3, <span class="arithmatex">\(u = 4\)</span> and <span class="arithmatex">\(v = 5\)</span>. Then <span class="arithmatex">\(P_4 = 0.0131\)</span> and <span class="arithmatex">\(P_5 = 0.0074\)</span>, so <span class="arithmatex">\(P_{max,4} = 0.3381\)</span> and <span class="arithmatex">\(P_{max,5} = 0.3744\)</span>. So <span class="arithmatex">\(p_u = 0.6531\)</span> and the estimate is 0.6146 bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[P_W = \frac{\sum_i \binom{C_i}{2}}{\binom{L-W+1}{2}}, \qquad P_{max,W} = P_W^{1/W}, \qquad \hat{p} = \max_{u \le W \le v} P_{max,W}\]</div>
+<div class="arithmatex">\[p_u = \min\!\left(1,\ \hat{p} + 2.576\sqrt{\frac{\hat{p}(1-\hat{p})}{L-1}}\right), \qquad H = -\log_2 p_u\]</div>
+<ul>
+<li><span class="arithmatex">\(u\)</span> is the smallest length whose most common tuple occurs fewer than 35 times.</li>
+<li><span class="arithmatex">\(v\)</span> is the longest length that repeats at all. If <span class="arithmatex">\(v &lt; u\)</span> the estimate cannot be computed.</li>
+<li><span class="arithmatex">\(C_i\)</span> is the number of occurrences of the <span class="arithmatex">\(i\)</span>th distinct <span class="arithmatex">\(W\)</span>-tuple.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It handles tuple sizes too long for the t-tuple estimate, and so catches long repeats and replay. Because it measures collision rather than min-entropy, it can sit above the true min-entropy, and this is one reason the minimum across all estimates is taken.</p>
+<h2 id="512-multimcw-prediction-estimate">5.12 MultiMCW prediction estimate<a class="headerlink" href="#512-multimcw-prediction-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Here we stop counting and start guessing. Four simple predictors each guess the most common value in a recent window, and a scoreboard picks whichever has been right most often. If the guesses beat chance, the data is predictable. This suits sources whose favourite value drifts over time.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.12: MultiMCW prediction estimate</p>
+<p>The standard's illustration uses <span class="arithmatex">\(S = (1, 2, 1, 0, 2, 1, 1, 2, 2, 0, 0, 0)\)</span> with windows 3, 5, 7, 9. This gives correct <span class="arithmatex">\(= (0, 0, 0, 1, 0, 1, 0, 0, 1)\)</span>, so <span class="arithmatex">\(P_{global} = 0.3333\)</span>, <span class="arithmatex">\(P'_{global} = 0.7627\)</span> and <span class="arithmatex">\(P_{local} = 0.036\)</span>. The estimate is <span class="arithmatex">\(-\log_2 0.7627 = 0.3908\)</span> bits.</p>
+</div>
+<p><strong>The mathematics.</strong> All four prediction estimators share this ending.</p>
+<div class="arithmatex">\[P_{global} = \frac{C}{N}, \qquad P'_{global} = \min\!\left(1,\ P_{global} + 2.576\sqrt{\frac{P_{global}(1-P_{global})}{N-1}}\right)\]</div>
+<div class="arithmatex">\[0.99 = \frac{1 - P_{local}\,x}{(r + 1 - rx)\,q} \cdot \frac{1}{x^{N+1}}, \qquad x_j = 1 + q P_{local}^{\,r} x_{j-1}^{\,r+1}\]</div>
+<div class="arithmatex">\[H = -\log_2 \max\!\left(P'_{global},\ P_{local},\ \frac{1}{k}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(C\)</span> is the number of correct predictions out of <span class="arithmatex">\(N\)</span>. If <span class="arithmatex">\(C = 0\)</span>, <span class="arithmatex">\(P'_{global} = 1 - 0.01^{1/N}\)</span>.</li>
+<li><span class="arithmatex">\(r\)</span> is one more than the longest run of correct predictions, <span class="arithmatex">\(q = 1 - P_{local}\)</span>, <span class="arithmatex">\(x = x_{10}\)</span> and <span class="arithmatex">\(x_0 = 1\)</span>.</li>
+<li><span class="arithmatex">\(k\)</span> is the alphabet size. Here the windows are <span class="arithmatex">\(w = 63, 255, 1023, 4095\)</span> and <span class="arithmatex">\(N = L - 63\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches a most common value that shifts over time, and the local term catches bursts of predictability. A predictor can only prove structure it knows how to exploit, so a failure to predict is not proof of entropy.</p>
+<h2 id="513-lag-prediction-estimate">5.13 Lag prediction estimate<a class="headerlink" href="#513-lag-prediction-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> There are 128 subpredictors, and each simply guesses "the next value equals the one <span class="arithmatex">\(d\)</span> steps back". If the data has a rhythm of period <span class="arithmatex">\(d\)</span>, that subpredictor starts winning. It is like predicting that this week's quiz question will match the one from exactly a fortnight ago.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.13: Lag prediction estimate</p>
+<p>The standard's illustration uses <span class="arithmatex">\(S = (2, 1, 3, 2, 1, 3, 1, 3, 1, 2)\)</span> with <span class="arithmatex">\(D = 3\)</span>. This gives correct <span class="arithmatex">\(= (0, 0, 0, 1, 1, 0, 0, 0, 0)\)</span>, so <span class="arithmatex">\(P_{global} = 0.2222\)</span>, <span class="arithmatex">\(P'_{global} = 0.6008\)</span> and <span class="arithmatex">\(P_{local} = 0.1167\)</span>. The estimate is 0.735 bits.</p>
+</div>
+<p><strong>The mathematics.</strong> The prediction at step <span class="arithmatex">\(i\)</span> comes from the current winner <span class="arithmatex">\(d\)</span>:</p>
+<div class="arithmatex">\[\mathrm{lag}_d = s_{i-d}, \qquad 1 \le d \le D, \qquad D = 128, \qquad N = L - 1\]</div>
+<ul>
+<li><span class="arithmatex">\(s_i\)</span> is sample <span class="arithmatex">\(i\)</span>, and the winner is the subpredictor with the top score. When a subpredictor is correct and its score reaches or passes the winner's, it becomes the winner.</li>
+<li><span class="arithmatex">\(C\)</span>, <span class="arithmatex">\(r\)</span>, <span class="arithmatex">\(P'_{global}\)</span>, <span class="arithmatex">\(P_{local}\)</span> and <span class="arithmatex">\(H\)</span> follow the MultiMCW formulas above.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches periodic sources with a period of up to 128 samples, such as interference from a clock. It sees only exact repeats at a fixed lag, so a period beyond 128 or a pattern that drifts in phase is missed.</p>
+<h2 id="514-multimmc-prediction-estimate">5.14 MultiMMC prediction estimate<a class="headerlink" href="#514-multimmc-prediction-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> A Markov model with counting asks: after this recent context, which value usually came next? We run 16 of them, using contexts of length 1 to 16, and a scoreboard picks the best. Think of predictive text on a phone, trying short and long contexts at once.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.14: MultiMMC prediction estimate</p>
+<p>The standard's illustration uses <span class="arithmatex">\(S = (2, 1, 3, 2, 1, 3, 1, 3, 1)\)</span> with <span class="arithmatex">\(D = 3\)</span>. This gives correct <span class="arithmatex">\(= (0, 0, 1, 1, 0, 1, 0)\)</span>, so <span class="arithmatex">\(P_{global} = 0.4286\)</span>, <span class="arithmatex">\(P'_{global} = 0.9490\)</span> and <span class="arithmatex">\(P_{local} = 0.1307\)</span>. The estimate is 0.0755 bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\mathrm{subpredict}_d = \arg\max_{y}\ M_d\big[(s_{i-d}, \ldots, s_{i-1}),\ y\big], \qquad 1 \le d \le 16, \qquad N = L - 2\]</div>
+<ul>
+<li><span class="arithmatex">\(M_d[x, y]\)</span> counts how often context <span class="arithmatex">\(x\)</span> of length <span class="arithmatex">\(d\)</span> was followed by <span class="arithmatex">\(y\)</span>, with ties going to the greatest <span class="arithmatex">\(y\)</span>.</li>
+<li>Each model holds at most maxEntries <span class="arithmatex">\(= 100{,}000\)</span> entries.</li>
+<li><span class="arithmatex">\(C\)</span>, <span class="arithmatex">\(r\)</span>, <span class="arithmatex">\(P'_{global}\)</span>, <span class="arithmatex">\(P_{local}\)</span> and <span class="arithmatex">\(H\)</span> follow the MultiMCW formulas above.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches dependence on up to 16 previous samples, which suits non-binary sources with real memory. The entry limit means very rich context spaces fill up, and it cannot see dependence beyond 16 samples.</p>
+<h2 id="515-lz78y-prediction-estimate">5.15 LZ78Y prediction estimate<a class="headerlink" href="#515-lz78y-prediction-estimate" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This predictor builds a dictionary of the strings it has seen, as a compressor does, with each string recording what tends to follow it. To predict, it looks for the current context in the dictionary. If it has seen this story before, it bets on the same ending.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.15: LZ78Y prediction estimate</p>
+<p>The standard's illustration uses <span class="arithmatex">\(S = (2, 1, 3, 2, 1, 3, 1, 3, 1, 2, 1, 3, 2)\)</span> with <span class="arithmatex">\(B = 4\)</span>, so <span class="arithmatex">\(N = 8\)</span>. This gives correct <span class="arithmatex">\(= (0, 0, 1, 1, 0, 1, 1, 0)\)</span>, so <span class="arithmatex">\(P_{global} = 0.5\)</span>, <span class="arithmatex">\(P'_{global} = 0.9868\)</span> and <span class="arithmatex">\(P_{local} = 0.1229\)</span>. The estimate is 0.0191 bits.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\text{prediction} = \arg\max_{y}\ D[\mathrm{prev}][y] \text{ over the context lengths } j = B, \ldots, 1, \qquad B = 16, \qquad N = L - B - 1\]</div>
+<ul>
+<li><span class="arithmatex">\(D[\mathrm{prev}][y]\)</span> counts how often string prev was followed by <span class="arithmatex">\(y\)</span>.</li>
+<li>Each new sample updates every substring of the last <span class="arithmatex">\(B\)</span> samples, and the dictionary stops growing at 65,536 entries.</li>
+<li>Starting from the longest context, a shorter one replaces the current choice only if its count is higher. Ties between values go to the higher value.</li>
+<li><span class="arithmatex">\(C\)</span>, <span class="arithmatex">\(r\)</span>, <span class="arithmatex">\(P'_{global}\)</span>, <span class="arithmatex">\(P_{local}\)</span> and <span class="arithmatex">\(H\)</span> follow the MultiMCW formulas above.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches repeated strings of up to 16 samples, whether or not they sit at a fixed lag. Once the dictionary fills, strings not already stored are never added, so structure that first appears late in a long stream can be missed.</p>
+<h2 id="516-restart-tests">5.16 Restart tests<a class="headerlink" href="#516-restart-tests" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> A source might give a good estimate from one long run, yet start up the same way every time. An attacker who can reboot your device would love that. So we restart the source 1000 times, take 1000 samples each time, and check both across and along the results. It is like checking that a shuffled deck is not in the same order after every break.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.16: Restart tests</p>
+<p>Suppose <span class="arithmatex">\(H_I = 8\)</span>, so <span class="arithmatex">\(p = 2^{-8}\)</span>. If the highest count in any row or column is 15, then <span class="arithmatex">\(\Pr(X \ge 15) = 1.44 \times 10^{-5}\)</span>, above the limit of <span class="arithmatex">\(5 \times 10^{-6}\)</span>, so the sanity check passes. A highest count of 16 gives <span class="arithmatex">\(3.41 \times 10^{-6}\)</span> and fails.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\Pr(X \ge X_{max}) = \sum_{j=X_{max}}^{1000} \binom{1000}{j} p^j (1-p)^{1000-j} &lt; \alpha \implies \text{fail}, \qquad p = 2^{-H_I}, \quad \alpha = 0.000005\]</div>
+<div class="arithmatex">\[H_r, H_c \text{ estimated on row and column data}, \qquad \min(H_r, H_c) &lt; \frac{H_I}{2} \implies \text{fail}, \qquad H = \min(H_r, H_c, H_I)\]</div>
+<ul>
+<li><span class="arithmatex">\(X_{max}\)</span> is the highest count of any value in any row or column of the <span class="arithmatex">\(1000 \times 1000\)</span> matrix.</li>
+<li><span class="arithmatex">\(H_I\)</span> is the initial estimate from earlier.</li>
+<li><span class="arithmatex">\(\alpha = 0.000005\)</span> gives 0.01 overall across 2000 experiments.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches correlated start-up behaviour, and it is unique in testing the source across restarts. It needs real restarts, so it cannot be run from a stored file, and it only tests the restart process you define, under normal conditions.</p>
+<h2 id="517-repetition-count-test-rct">5.17 Repetition count test (RCT)<a class="headerlink" href="#517-repetition-count-test-rct" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This is a smoke alarm, running all the time inside the device. If the same sample repeats too many times in a row, the source has probably stuck. It is cheap and quick, and NIST describes it as an update of the older stuck test from FIPS modules.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.17: Repetition count test (RCT)</p>
+<p>With <span class="arithmatex">\(\alpha = 2^{-20}\)</span> and <span class="arithmatex">\(H = 2\)</span> bits per sample, <span class="arithmatex">\(C = 1 + \lceil 20/2 \rceil = 11\)</span>, the standard's example. A source assessed at 8 bits with <span class="arithmatex">\(C = 6\)</span> gives a false alarm about once in <span class="arithmatex">\(10^{12}\)</span> samples, as the standard notes.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[C = 1 + \left\lceil \frac{-\log_2 \alpha}{H} \right\rceil\]</div>
+<ul>
+<li><span class="arithmatex">\(H\)</span> is the assessed min-entropy per sample, and <span class="arithmatex">\(\alpha\)</span> is the accepted false-alarm probability.</li>
+<li>The chance of <span class="arithmatex">\(C\)</span> identical samples in a row is at most <span class="arithmatex">\(2^{-H(C-1)}\)</span>.</li>
+<li>An error is raised when a sample repeats <span class="arithmatex">\(C\)</span> or more times. NIST recommends <span class="arithmatex">\(\alpha\)</span> between <span class="arithmatex">\(2^{-20}\)</span> and <span class="arithmatex">\(2^{-40}\)</span>.</li>
+</ul>
+<p><strong>How a laboratory sets <span class="arithmatex">\(H\)</span>.</strong> NIST tests against the developer's claimed <span class="arithmatex">\(H\)</span>, so the lab accepts one as the declared min-entropy. Without a claim it uses the sample's most common value estimate, because the fuller assessment collapses on a single stuck patch and would hide the fault under test. If <span class="arithmatex">\(H\)</span> is so low that a cutoff cannot be reached, a measured value fails the test and a declared value skips it. The same applies to the APT below.</p>
+<p><strong>What it catches and misses.</strong> It catches total failure, where the source gets stuck. NIST is frank that it is not very powerful. If that 8-bit source drops to 4 bits per sample, each sample matching the last with chance <span class="arithmatex">\(1/16\)</span>, it would still take about a million samples to notice.</p>
+<h2 id="518-adaptive-proportion-test-apt">5.18 Adaptive proportion test (APT)<a class="headerlink" href="#518-adaptive-proportion-test-apt" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This alarm watches for a subtler failure, where one value becomes too common without necessarily repeating in a row. Take a sample, then count how often it comes up in the next window. If the count hits a cutoff, the source has probably lost entropy. It is like spotting that one face of a die has started turning up too often.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 5.18: Adaptive proportion test (APT)</p>
+<p>The standard's table for <span class="arithmatex">\(\alpha = 2^{-20}\)</span> follows. We recomputed every entry and they all match.</p>
+<table>
+<thead>
+<tr>
+<th>Binary, <span class="arithmatex">\(W = 1024\)</span>: <span class="arithmatex">\(H\)</span></th>
+<th>Cutoff <span class="arithmatex">\(C\)</span></th>
+<th>Non-binary, <span class="arithmatex">\(W = 512\)</span>: <span class="arithmatex">\(H\)</span></th>
+<th>Cutoff <span class="arithmatex">\(C\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0.2</td>
+<td>941</td>
+<td>0.5</td>
+<td>410</td>
+</tr>
+<tr>
+<td>0.4</td>
+<td>840</td>
+<td>1</td>
+<td>311</td>
+</tr>
+<tr>
+<td>0.6</td>
+<td>748</td>
+<td>2</td>
+<td>177</td>
+</tr>
+<tr>
+<td>0.8</td>
+<td>664</td>
+<td>4</td>
+<td>62</td>
+</tr>
+<tr>
+<td>1</td>
+<td>589</td>
+<td>8</td>
+<td>13</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\Pr(B \ge C) \le \alpha, \qquad B \sim \mathrm{Binomial}\!\left(W, 2^{-H}\right), \qquad C = 1 + \mathrm{CRITBINOM}\!\left(W, 2^{-H}, 1 - \alpha\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(W\)</span> is the window size: 1024 for binary sources and 512 otherwise.</li>
+<li><span class="arithmatex">\(B\)</span> counts how often the window's first sample occurs in the window, including itself.</li>
+<li>CRITBINOM is the spreadsheet function giving the smallest count whose cumulative binomial probability reaches <span class="arithmatex">\(1 - \alpha\)</span>.</li>
+</ul>
+<p>For binary sources, a developer may also check that <span class="arithmatex">\(W - B\)</span> stays below <span class="arithmatex">\(C\)</span>.</p>
+<p><strong>What it catches and misses.</strong> It catches a large loss of entropy from a physical fault or a change in environment. It follows only the first value of each window, so it needs some windows to see the fault. Failures that keep all value frequencies normal, such as a predictable cycle, pass straight through.</p>
+<h2 id="519-summary">5.19 Summary<a class="headerlink" href="#519-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>SP 800-90B estimates <strong>min-entropy per sample</strong> of a raw noise source, from at least <span class="arithmatex">\(10^6\)</span> consecutive samples and a <span class="arithmatex">\(1000\times1000\)</span> restart matrix. The result is the <strong>minimum</strong> over the estimators, which is deliberately cautious.</li>
+<li>The <strong>IID track</strong> applies only if the samples are claimed i.i.d. and the permutation, chi-square and longest-repeated-substring tests find nothing; everything else follows the <strong>non-IID track</strong> with the most-common-value, collision, Markov, compression, t-tuple, LRS and four predictor estimators.</li>
+<li>The <strong>predictor estimators</strong> (MultiMCW, Lag, MultiMMC and LZ78Y) turn guessing into entropy: if a predictor beats chance, the data is predictable. A failure to predict is not proof of entropy.</li>
+<li><strong>Restart tests</strong> check that a source does not start up the same way each time. <strong>RCT</strong> and <strong>APT</strong> are the continuous health tests: RCT catches a stuck source, APT catches one value becoming too common.</li>
+<li>The estimators support an analysis of the source; they do not replace it. A cleverly deterministic source can score high, which is why a design rationale is required.</li>
+</ul>
+<h2 id="520-exercises">5.20 Exercises<a class="headerlink" href="#520-exercises" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Three values have probabilities 0.5, 0.25 and 0.25. Find the Shannon entropy and the min-entropy. Which does SP 800-90B use, and why?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Shannon: <span class="arithmatex">\(-0.5\log_20.5-2\times0.25\log_20.25=0.5+1=1.5\)</span> bits. Min-entropy: <span class="arithmatex">\(-\log_20.5=1\)</span> bit. SP 800-90B uses min-entropy, because security depends on the attacker's best single guess, which is the most likely value.</p>
+</details>
+</li>
+<li>
+<p>Apply the most common value estimate to a sample of <span class="arithmatex">\(L=100\)</span> values in which the most common value appears 30 times.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(\hat p=0.30\)</span>. Then <span class="arithmatex">\(p_u=0.30+2.576\sqrt{0.30\times0.70/99}=0.30+2.576\times0.0461=0.4186\)</span> and the estimate is <span class="arithmatex">\(-\log_2 0.4186=1.256\)</span> bits per sample.</p>
+</details>
+</li>
+<li>
+<p>Find the repetition count cutoff <span class="arithmatex">\(C=1+\lceil20/H\rceil\)</span> for <span class="arithmatex">\(H=2\)</span>, <span class="arithmatex">\(H=4\)</span> and <span class="arithmatex">\(H=8\)</span> bits per sample at <span class="arithmatex">\(\alpha=2^{-20}\)</span>. What happens to the cutoff as <span class="arithmatex">\(H\)</span> rises, and why?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(H=2\)</span>: <span class="arithmatex">\(C=11\)</span>. <span class="arithmatex">\(H=4\)</span>: <span class="arithmatex">\(C=6\)</span>. <span class="arithmatex">\(H=8\)</span>: <span class="arithmatex">\(C=4\)</span>. As the source is assessed to have more entropy, a long run of identical samples becomes less plausible, so the cutoff falls: a run of 4 identical bytes from an 8-bit source is already very unlikely.</p>
+</details>
+</li>
+<li>
+<p>Why does the most-common-value estimate alone overestimate the entropy of a stream that simply alternates 0, 1, 0, 1, ...?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The two values are equally common, so <span class="arithmatex">\(\hat p\)</span> is close to 0.5 and the estimate is close to a full bit per sample. But the stream is completely predictable. The MCV estimate sees only frequencies and is blind to dependence, which is why the other estimators exist and why the final answer is the minimum over all of them.</p>
+</details>
+</li>
+<li>
+<p>Why are restart tests needed, and why can they not be run from a stored file?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>A source might give a good estimate from one long run yet start up the same way every time, which an attacker who can reboot the device would exploit. The restart tests restart the source 1000 times, take 1000 samples each time, and check the rows and columns of the resulting matrix. They need genuine restarts, so a stored file of one long run cannot supply them.</p>
+</details>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="nist-sp-800-22-ii-patterns-complexity-and-walks.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. NIST SP 800-22 (II): Patterns, Complexity and Walks">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. NIST SP 800-22 (II): Patterns, Complexity and Walks
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="diehard-and-dieharder.html" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Diehard and Dieharder">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                6. Diehard and Dieharder
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

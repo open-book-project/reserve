@@ -1,0 +1,1419 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/what-ram-is.html">
+  
+  
+    <link rel="prev" href="preface.html">
+  
+  
+    <link rel="next" href="cells-refresh-and-the-array.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>1. What RAM Is and Why There Are Several Kinds - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#11-what-ram-is" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. What RAM Is and Why There Are Several Kinds
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="what-ram-is.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-ram-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 What RAM is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-bits-bytes-and-capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Bits, bytes and capacity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-the-memory-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 The memory hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-volatile-and-non-volatile-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Volatile and non-volatile memory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-the-ram-family-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 The RAM family tree
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-speed-terms-mhz-mts-gbps-and-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Speed terms: MHz, MT/s, Gbps and bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-latency-cas-latency-and-nanoseconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Latency: CAS latency and nanoseconds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lpddr-and-gddr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-ram-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 What RAM is
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-bits-bytes-and-capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Bits, bytes and capacity
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-the-memory-hierarchy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 The memory hierarchy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-volatile-and-non-volatile-memory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Volatile and non-volatile memory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-the-ram-family-tree" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 The RAM family tree
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-speed-terms-mhz-mts-gbps-and-bandwidth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Speed terms: MHz, MT/s, Gbps and bandwidth
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-latency-cas-latency-and-nanoseconds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Latency: CAS latency and nanoseconds
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-1-what-ram-is-and-why-there-are-several-kinds">Chapter 1: What RAM Is and Why There Are Several Kinds<a class="headerlink" href="#chapter-1-what-ram-is-and-why-there-are-several-kinds" title="Permanent link">&para;</a></h1>
+<p>This chapter lays the groundwork for everything that follows. It explains what random-access memory does, how a bit and a byte relate to the capacity figures on a box, why computers stack several kinds of memory into a hierarchy, and how the family of RAM technologies is organised. It then defines the vocabulary of speed: clock frequency, megatransfers per second, bus width, bandwidth and latency, with the two formulas that every memory engineer uses daily. Later chapters use these terms without further comment, so it is worth working the examples here with a pencil.</p>
+<h2 id="11-what-ram-is">1.1 What RAM is<a class="headerlink" href="#11-what-ram-is" title="Permanent link">&para;</a></h2>
+<p>Random-access memory is memory in which any location can be read or written in about the same time, no matter which location was used last. The processor gives the memory an address, a number that names a location, and the memory returns or stores the data held there. This is different from a tape or a spinning disk, where reaching data that is far from the current position takes much longer. In a computer, RAM holds the programs and the data the processor is working on right now, while slower storage (an SSD or a disk) holds everything else.</p>
+<p>A kitchen is a useful picture. The processor is the chef, the SSD or hard disk is the pantry, huge but far away, and RAM is the counter next to the stove: smaller, but everything on it can be reached at once. Before cooking, ingredients are brought from the pantry to the counter. In the same way every program and file that is opened is copied from storage into RAM first. More RAM means more things can be open at once without the machine slowing down, in the way that a bigger counter lets the chef work on several dishes together.</p>
+<p>Almost all RAM is built from millions or billions of tiny storage cells, each holding one bit. The cells are arranged in a grid of rows and columns. A horizontal wire called the <strong>wordline</strong> (WL) selects a row, and vertical wires called <strong>bitlines</strong> (BL) carry data in and out of the cells of that row. Small amplifiers at the edge of the array, the <strong>sense amplifiers</strong>, detect the very small signals on the bitlines and turn them into clean 0s and 1s. The next two chapters look inside these cells and this grid in detail.</p>
+<p>Typical amounts are a few gigabytes to a few tens of gigabytes in a laptop or desktop and one to four terabytes in a large server.</p>
+<h2 id="12-bits-bytes-and-capacity">1.2 Bits, bytes and capacity<a class="headerlink" href="#12-bits-bytes-and-capacity" title="Permanent link">&para;</a></h2>
+<p>A <strong>bit</strong> holds one of two states, 0 or 1, like a light switch that is off or on. Eight bits make a <strong>byte</strong>, which has <span class="arithmatex">\(2^8 = 256\)</span> possible patterns, enough for one letter of text. Every photograph, song and program is a very long row of such switches.</p>
+<p>The size of the numbers involved is easy to underestimate. A memory module that stores 32 GB of data holds <span class="arithmatex">\(32 \times 2^{30} \times 8 = 2^{38}\)</span> bits, which is about 275 billion switches. Each one is a tiny electric charge that must be read and rewritten correctly, millions of times per second.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 1.1: How many cells in 32 GB?</p>
+<ol>
+<li>1 GB of DRAM is <span class="arithmatex">\(2^{30}\)</span> bytes, so 32 GB is <span class="arithmatex">\(32 \times 2^{30} = 2^{5} \times 2^{30} = 2^{35}\)</span> bytes.</li>
+<li>Each byte is 8 bits <span class="arithmatex">\(= 2^3\)</span>, so the total is <span class="arithmatex">\(2^{35} \times 2^{3} = 2^{38}\)</span> bits.</li>
+<li><span class="arithmatex">\(2^{38} = 274{,}877{,}906{,}944\)</span>, about <span class="arithmatex">\(2.75 \times 10^{11}\)</span>, or roughly 275 billion bit cells.</li>
+</ol>
+</div>
+<p>Two unit conventions are used throughout the book. <strong>Capacity</strong> of memory is binary: a "gigabyte" of DRAM is <span class="arithmatex">\(2^{30}\)</span> bytes, and chip sizes in gigabits (Gb) are binary multiples too. <strong>Bandwidth</strong> is decimal: 1 GB/s is 1000 MB/s. Mixing the two is a common source of small arithmetic errors, so units are always stated.</p>
+<h2 id="13-the-memory-hierarchy">1.3 The memory hierarchy<a class="headerlink" href="#13-the-memory-hierarchy" title="Permanent link">&para;</a></h2>
+<p>No single memory is fast, large, cheap and low-power at once, so computers combine several. Small, very fast memories sit close to the processor and hold the data used most often; each level farther away is larger and cheaper per bit but slower. Hardware and software move data between the levels automatically, so most accesses are served by the fast levels. Figure 1.1 shows the levels as they stood in 2026; the numbers are typical orders of magnitude, not exact values for any particular machine.</p>
+<figure class="fig fig-diagram">
+<img src="img/memory-hierarchy-pyramid.png" alt="The memory hierarchy as a pyramid: registers, SRAM caches, HBM or DRAM main memory, CXL far memory, SSD storage, with typical latency and capacity at each level" loading="lazy" width="1238" height="575">
+<figcaption><strong>Figure 1.1.</strong> The memory hierarchy as a pyramid: registers, SRAM caches, HBM or DRAM main memory, CXL far memory, SSD storage, with typical latency and capacity at each level</figcaption>
+</figure>
+
+<p>Registers and caches are SRAM, built inside the processor. Main memory is DRAM, the main subject of this book. A newer tier, CXL memory, sits between local DRAM and storage; it is DRAM reached over PCIe-style wires and is described in Chapter 8.</p>
+<p>The gaps between levels are so wide that a logarithmic scale is needed to draw them. Figure 1.2 repeats the typical times and adds a second reading: if one processor step took one second, how long would each fetch take?</p>
+<figure class="fig fig-diagram">
+<img src="img/latency-bars.png" alt="A log-scale bar chart of the time to fetch one piece of data: CPU register 0.3 ns, L1 1 ns, L3 10 ns, DRAM 80 ns, NVMe SSD 80 microseconds, hard disk 8 ms, each with its value scaled to a one-second processor step" loading="lazy" width="1600" height="720">
+<figcaption><strong>Figure 1.2.</strong> A log-scale bar chart of the time to fetch one piece of data: CPU register 0.3 ns, L1 1 ns, L3 10 ns, DRAM 80 ns, NVMe SSD 80 microseconds, hard disk 8 ms, each with its value scaled to a one-second processor step</figcaption>
+</figure>
+
+<p>The scaled figures make the point vividly. If a register access takes about one second, a DRAM access takes more than four minutes, an SSD more than three days and a hard disk about ten months. A processor that had to wait for storage on every access would spend nearly all its time idle. DRAM is roughly a thousand times faster than an SSD (80 ns against 80 µs), and that is why the working set of a program is kept in RAM.</p>
+<h2 id="14-volatile-and-non-volatile-memory">1.4 Volatile and non-volatile memory<a class="headerlink" href="#14-volatile-and-non-volatile-memory" title="Permanent link">&para;</a></h2>
+<p><strong>Volatile</strong> memory loses its contents when power is removed. SRAM and DRAM, the two technologies behind almost all working memory, are volatile. <strong>Non-volatile</strong> memory keeps its data with the power off. Flash memory, used in SSDs and USB sticks, is non-volatile but is not true RAM: it is written in large pages, erased in even larger blocks and wears out after a limited number of writes. A family of emerging non-volatile RAMs (MRAM, FeRAM, ReRAM, phase-change memory) tries to combine RAM-like byte access with non-volatility; Chapter 9 describes them.</p>
+<h2 id="15-the-ram-family-tree">1.5 The RAM family tree<a class="headerlink" href="#15-the-ram-family-tree" title="Permanent link">&para;</a></h2>
+<p>Figure 1.3 groups every memory covered in this book. The volatile branch splits into SRAM (on-chip memories and small standalone parts) and DRAM, which itself branches into families tuned for different goals: capacity and cost (DDR), power (LPDDR), per-pin speed (GDDR) and raw bandwidth (HBM). The non-volatile branch holds the emerging memories plus NVDIMMs, which combine DRAM with flash.</p>
+<figure class="fig fig-diagram">
+<img src="img/ram-family-tree.png" alt="A tree with RAM at the top, splitting into volatile (SRAM and DRAM branches) and non-volatile (MRAM, FeRAM, ReRAM, PCM, NVDIMM)" loading="lazy" width="1213" height="588">
+<figcaption><strong>Figure 1.3.</strong> A tree with RAM at the top, splitting into volatile (SRAM and DRAM branches) and non-volatile (MRAM, FeRAM, ReRAM, PCM, NVDIMM)</figcaption>
+</figure>
+
+<p>A quick table fixes the personalities of the main families before the later chapters study each one in turn.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Personality</th>
+<th>Where you find it</th>
+<th>Speed today (approx.)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DDR5</td>
+<td>The all-rounder: big capacity, plug-in modules</td>
+<td>Desktops, servers</td>
+<td>4800 to 8800 MT/s per pin</td>
+</tr>
+<tr>
+<td>LPDDR5X</td>
+<td>The energy saver: low voltage, soldered next to the processor</td>
+<td>Phones, thin laptops, Apple Silicon Macs</td>
+<td>8533 to 10,700 MT/s per pin</td>
+</tr>
+<tr>
+<td>GDDR7</td>
+<td>The sprinter: very fast pins, runs hot</td>
+<td>Graphics cards</td>
+<td>28 to 32 Gbps per pin</td>
+</tr>
+<tr>
+<td>HBM3E</td>
+<td>The skyscraper: 8 to 12 dies stacked, 1024 wires wide</td>
+<td>AI accelerators</td>
+<td>about 1.2 TB/s per stack</td>
+</tr>
+<tr>
+<td>SRAM</td>
+<td>The pocket notebook: tiny, fastest, no refresh</td>
+<td>Caches inside every processor</td>
+<td>about 1 ns access</td>
+</tr>
+</tbody>
+</table>
+<h2 id="16-speed-terms-mhz-mts-gbps-and-bandwidth">1.6 Speed terms: MHz, MT/s, Gbps and bandwidth<a class="headerlink" href="#16-speed-terms-mhz-mts-gbps-and-bandwidth" title="Permanent link">&para;</a></h2>
+<p>Memory speeds are quoted in several units that are easy to confuse.</p>
+<ul>
+<li><strong>Clock frequency (MHz)</strong> is how many clock cycles occur per second. Modern memory moves data on both the rising and the falling clock edge, so the clock number is half the data rate. Marketing labels such as "DDR5-6400" give the data rate, not the clock.</li>
+<li><strong>MT/s (megatransfers per second)</strong> counts how many times per second each data pin carries a new symbol. DDR5-6400 runs at 6400 MT/s on a 3200 MHz clock.</li>
+<li><strong>Gbps per pin</strong> is the same idea in larger units, used for very fast interfaces. 32 Gbps per pin for GDDR7 means 32,000 MT/s. With multi-level signalling a transfer can carry more than one bit (Section 3.4).</li>
+<li><strong>Bus width</strong> is how many data pins move in parallel: 64 bits for a standard DDR DIMM, 16 bits per LPDDR5 channel, 32 bits per GDDR chip, 1024 or 2048 bits per HBM stack.</li>
+<li><strong>Bandwidth</strong> is the total data moved per second: data rate multiplied by bus width.</li>
+</ul>
+<div class="arithmatex">\[\text{Bandwidth (GB/s)} = \frac{\text{data rate (MT/s)} \times \text{bus width (bits)}}{8 \times 1000}\]</div>
+<div class="admonition example">
+<p class="admonition-title">Example 1.2: Peak bandwidth of one DDR5-6400 DIMM</p>
+<ol>
+<li>Data rate 6400 MT/s on a 64-bit bus: <span class="arithmatex">\(6400 \times 64 = 409{,}600\)</span> megabits per second.</li>
+<li>Divide by 8 bits per byte: <span class="arithmatex">\(409{,}600 / 8 = 51{,}200\)</span> MB/s.</li>
+<li>Divide by 1000 to get GB/s: <strong>51.2 GB/s</strong>.</li>
+<li>A desktop with two such channels has a peak of <span class="arithmatex">\(2 \times 51.2 = 102.4\)</span> GB/s.</li>
+<li>Real programs typically reach 70 to 90 per cent of the peak, because of refresh, bank conflicts and switching between reads and writes. For the dual-channel desktop that is about 72 to 92 GB/s.</li>
+</ol>
+</div>
+<p>For per-pin rates in Gbps the answer comes out directly in GB/s when multiplied by the width and divided by 8, which is how GDDR and HBM figures are usually worked.</p>
+<h2 id="17-latency-cas-latency-and-nanoseconds">1.7 Latency: CAS latency and nanoseconds<a class="headerlink" href="#17-latency-cas-latency-and-nanoseconds" title="Permanent link">&para;</a></h2>
+<p>Latency is the delay between asking for data and receiving it. The most quoted number is <strong>CAS latency</strong> (CL): the number of clock cycles between a column read command and the first data appearing. Because the clock gets faster with each generation, CL has to be converted to nanoseconds before parts can be compared. The clock in MHz is half the data rate in MT/s, and one clock cycle lasts <span class="arithmatex">\(1000 / \text{MHz}\)</span> nanoseconds, so a cycle lasts <span class="arithmatex">\(2000 / \text{data rate}\)</span> nanoseconds. Hence</p>
+<div class="arithmatex">\[\text{CAS latency (ns)} = \frac{\text{CL} \times 2000}{\text{data rate (MT/s)}}\]</div>
+<div class="admonition example">
+<p class="admonition-title">Example 1.3: The same ten nanoseconds twice</p>
+<ul>
+<li>DDR4-3200 CL16: <span class="arithmatex">\(16 \times 2000 / 3200 = 10\)</span> ns.</li>
+<li>DDR5-6000 CL30: <span class="arithmatex">\(30 \times 2000 / 6000 = 10\)</span> ns.</li>
+<li>DDR5-4800 CL40: <span class="arithmatex">\(40 \times 2000 / 4800 \approx 16.7\)</span> ns.</li>
+</ul>
+<p>The first two answers are identical. The DRAM array has barely become faster in twenty years, so the extra speed of each generation goes into bandwidth and not into latency. The full time for a random access from a processor (cache miss, controller queueing, opening a row, CAS and the trip back) is typically 60 to 120 ns, much more than the CAS figure alone.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Do not compare CL numbers across generations</p>
+<p>A DDR5 module with CL40 is not slower than a DDR4 module with CL16 in the sense the numbers suggest. Always convert to nanoseconds first.</p>
+</div>
+<h2 id="18-summary">1.8 Summary<a class="headerlink" href="#18-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>RAM gives any location about the same access time; it holds what the processor is working on, while storage holds the rest.</li>
+<li>A bit is one of two states; a byte is eight bits; 32 GB of DRAM holds about 275 billion cells.</li>
+<li>The memory hierarchy exists because speed, size and cost pull in opposite directions. DRAM is about a thousand times faster than an SSD; caches are built from SRAM.</li>
+<li>RAM divides into volatile (SRAM, DRAM) and non-volatile families; flash is not true RAM.</li>
+<li>Bandwidth is data rate times bus width divided by 8 (decimal units); peak figures are never fully reached.</li>
+<li>CAS latency must be converted to nanoseconds: <span class="arithmatex">\(\text{CL} \times 2000 / \text{MT/s}\)</span>.</li>
+</ul>
+<h2 id="19-exercises">1.9 Exercises<a class="headerlink" href="#19-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 1.1.</strong> A laptop has 16 GB of DRAM. How many bit cells is that, in powers of two and approximately in decimal?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(16 \times 2^{30} \times 8 = 2^{4} \times 2^{30} \times 2^{3} = 2^{37}\)</span> bits <span class="arithmatex">\(= 137{,}438{,}953{,}472\)</span>, about <span class="arithmatex">\(1.37 \times 10^{11}\)</span> or 137 billion cells.</p>
+</details>
+<p><strong>Exercise 1.2.</strong> Compute the peak bandwidth of a single 64-bit DDR5-4800 DIMM and of a dual-channel DDR5-6400 desktop. By what factor is the second larger?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>DDR5-4800: <span class="arithmatex">\(4800 \times 64 / 8 / 1000 = 38.4\)</span> GB/s. Dual-channel DDR5-6400: <span class="arithmatex">\(2 \times 51.2 = 102.4\)</span> GB/s. The ratio is <span class="arithmatex">\(102.4 / 38.4 \approx 2.67\)</span>.</p>
+</details>
+<p><strong>Exercise 1.3.</strong> Convert to nanoseconds and rank the three modules: DDR4-2400 CL17, DDR5-5600 CL36, DDR5-6400 CL32.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>DDR4-2400 CL17: <span class="arithmatex">\(17 \times 2000 / 2400 = 14.17\)</span> ns. DDR5-5600 CL36: <span class="arithmatex">\(36 \times 2000 / 5600 = 12.86\)</span> ns. DDR5-6400 CL32: <span class="arithmatex">\(32 \times 2000 / 6400 = 10.0\)</span> ns. From lowest latency to highest: DDR5-6400 CL32, DDR5-5600 CL36, DDR4-2400 CL17.</p>
+</details>
+<p><strong>Exercise 1.4.</strong> DRAM takes about 80 ns to fetch a value and an NVMe SSD about 80 µs. If one processor step took one second, how long would each fetch take? Use 0.3 ns for the step.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The scale factor is <span class="arithmatex">\(1\,\text{s} / 0.3\,\text{ns} = 3.33 \times 10^{9}\)</span>. DRAM: <span class="arithmatex">\(80 \times 10^{-9} \times 3.33 \times 10^{9} = 267\)</span> s, about 4.4 minutes. SSD: <span class="arithmatex">\(80 \times 10^{-6} \times 3.33 \times 10^{9} = 267{,}000\)</span> s, about 3.1 days. The ratio is 1000.</p>
+</details>
+<p><strong>Exercise 1.5 (Assignment 1: a bandwidth and capacity calculator).</strong> Write a small Python script with two functions, <code>bandwidth(mts, width_bits)</code> returning GB/s and <code>capacity(chips, gbit_per_chip, ecc_chips)</code> returning the data capacity and the raw capacity in GB. Use them to print a table for DDR5-4800 and DDR5-6400 on a 64-bit bus and for a module of 20 chips of 16 Gb of which 4 are ECC chips.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><div class="language-python highlight"><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">bandwidth</span><span class="p">(</span><span class="n">mts</span><span class="p">,</span> <span class="n">width_bits</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Peak bandwidth in GB/s (decimal)."""</span>
+    <span class="k">return</span> <span class="n">mts</span> <span class="o">*</span> <span class="n">width_bits</span> <span class="o">/</span> <span class="mi">8</span> <span class="o">/</span> <span class="mi">1000</span>
+
+<span class="k">def</span><span class="w"> </span><span class="nf">capacity</span><span class="p">(</span><span class="n">chips</span><span class="p">,</span> <span class="n">gbit_per_chip</span><span class="p">,</span> <span class="n">ecc_chips</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">"""Return (data GB, raw GB); 1 GB = 8 Gb."""</span>
+    <span class="n">raw</span> <span class="o">=</span> <span class="n">chips</span> <span class="o">*</span> <span class="n">gbit_per_chip</span> <span class="o">/</span> <span class="mi">8</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="p">(</span><span class="n">chips</span> <span class="o">-</span> <span class="n">ecc_chips</span><span class="p">)</span> <span class="o">*</span> <span class="n">gbit_per_chip</span> <span class="o">/</span> <span class="mi">8</span>
+    <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">raw</span>
+
+<span class="k">for</span> <span class="n">rate</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">4800</span><span class="p">,</span> <span class="mi">6400</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"DDR5-</span><span class="si">{</span><span class="n">rate</span><span class="si">}</span><span class="s2">, 64-bit: </span><span class="si">{</span><span class="n">bandwidth</span><span class="p">(</span><span class="n">rate</span><span class="p">,</span><span class="w"> </span><span class="mi">64</span><span class="p">)</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> GB/s"</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">"module:"</span><span class="p">,</span> <span class="n">capacity</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+</code></pre></div>
+Expected output: DDR5-4800 gives 38.4 GB/s, DDR5-6400 gives 51.2 GB/s, and the module gives 32.0 GB of data from 40.0 GB raw. Hint: divide bits by 8 for bytes and by 1000 to go from MB/s to GB/s.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="preface.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Preface">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Preface
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="cells-refresh-and-the-array.html" class="md-footer__link md-footer__link--next" aria-label="Next: 2. Cells, Refresh and the Array">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                2. Cells, Refresh and the Array
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

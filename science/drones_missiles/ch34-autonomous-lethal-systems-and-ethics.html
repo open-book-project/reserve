@@ -1,0 +1,3814 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch34-autonomous-lethal-systems-and-ethics.html">
+  
+  
+    <link rel="prev" href="ch33-counter-uas-and-counter-drone-systems.html">
+  
+  
+    <link rel="next" href="ch35-future-technologies.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>34. Autonomous Lethal Systems and Ethics - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-aws_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              34. Autonomous Lethal Systems and Ethics
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-aws_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1 Introduction to Autonomous Weapons Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.1 Introduction to Autonomous Weapons Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.1 Definitional Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.2 Why Autonomy in Weapons: Operational Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.3 The Current Operational Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_stakeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.4 Key Stakeholders
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ihl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2 International Humanitarian Law
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.2 International Humanitarian Law">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ihl_principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.1 The Four Core Principles of IHL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-geneva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.2 Geneva Conventions and Additional Protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-accountability_gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.3 Command Responsibility and the Accountability Gap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-icrc_state_positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.4 ICRC Position and State Practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ccw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3 CCW Discussions and International Governance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.3 CCW Discussions and International Governance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ccw_framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.1 The CCW Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.2 Group of Governmental Experts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ccw_deadlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.3 The Deadlock Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-draft_treaties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.4 Draft Treaty Proposals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mhc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4 Meaningful Human Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.4 Meaningful Human Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mhc_concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.1 Conceptual Dimensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-hmt_cognitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.2 Human-Machine Teaming and Cognitive Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mhc_by_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.3 Technical Approaches to MHC by Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-art36_review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.4 Article 36 Weapons Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-targeting_discrimination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5 Targeting and Discrimination
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.5 Targeting and Discrimination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cv_targeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.1 Computer Vision for Target Identification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-training_bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.2 Training Data Bias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-adversarial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.3 Adversarial Examples and Deception
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-dph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.4 The “Direct Participation in Hostilities” Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-proportionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6 Proportionality Assessment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.6 Proportionality Assessment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mil_advantage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6.1 Military Advantage and Collateral Damage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-joint_targeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6.2 US Joint Targeting Methodology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-auto_proportionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6.3 Automated Proportionality: Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cyber_safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7 Cyber and Safety Risks of Autonomous Weapons
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.7 Cyber and Safety Risks of Autonomous Weapons">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-attack_surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.1 Attack Surfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-fail_safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.2 Fail-Safe Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.3 Certification and Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-emergent_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.4 Emergent Behaviour and Testing Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-case_studies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8 Case Studies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.8 Case Studies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-project_maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.1 Project Maven: Machine Learning for Drone Surveillance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-kargu2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.2 STM Kargu-2: Autonomous Engagement in Libya
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sgr_a1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.3 Samsung SGR-A1: Autonomous Sentry in the DMZ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-harpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.4 IAI Harpy: Autonomous Anti-Radiation Munition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-dod_3000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.5 US DoD Directive 3000.09
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ethical_frameworks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9 Ethical Frameworks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.9 Ethical Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-just_war" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.1 Just War Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-consequentialism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.2 Consequentialist Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-deontology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.3 Deontological Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-virtue_ethics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.4 Virtue Ethics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-engineering_ethics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.5 Engineering Ethics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10 Recommendations and Future Governance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.10 Recommendations and Future Governance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-tiered_approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.1 Tiered Regulatory Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-art36_implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.2 Article 36 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-technical_standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.3 Technical Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-treaty_pathways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.4 International Treaty Pathways
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cbms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.5 Confidence Building Measures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-research_priorities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.6 Research Priorities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ethics_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.11 Summary and Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-aws_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1 Introduction to Autonomous Weapons Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.1 Introduction to Autonomous Weapons Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.1 Definitional Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_drivers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.2 Why Autonomy in Weapons: Operational Drivers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.3 The Current Operational Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aws_stakeholders" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.1.4 Key Stakeholders
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ihl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2 International Humanitarian Law
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.2 International Humanitarian Law">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ihl_principles" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.1 The Four Core Principles of IHL
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-geneva" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.2 Geneva Conventions and Additional Protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-accountability_gap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.3 Command Responsibility and the Accountability Gap
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-icrc_state_positions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.2.4 ICRC Position and State Practice
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ccw" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3 CCW Discussions and International Governance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.3 CCW Discussions and International Governance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ccw_framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.1 The CCW Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-gge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.2 Group of Governmental Experts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-ccw_deadlock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.3 The Deadlock Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-draft_treaties" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.3.4 Draft Treaty Proposals
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mhc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4 Meaningful Human Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.4 Meaningful Human Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mhc_concept" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.1 Conceptual Dimensions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-hmt_cognitive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.2 Human-Machine Teaming and Cognitive Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mhc_by_design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.3 Technical Approaches to MHC by Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-art36_review" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.4.4 Article 36 Weapons Review
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-targeting_discrimination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5 Targeting and Discrimination
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.5 Targeting and Discrimination">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cv_targeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.1 Computer Vision for Target Identification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-training_bias" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.2 Training Data Bias
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-adversarial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.3 Adversarial Examples and Deception
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-dph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.5.4 The “Direct Participation in Hostilities” Problem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-proportionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6 Proportionality Assessment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.6 Proportionality Assessment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-mil_advantage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6.1 Military Advantage and Collateral Damage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-joint_targeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6.2 US Joint Targeting Methodology
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-auto_proportionality" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.6.3 Automated Proportionality: Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-cyber_safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7 Cyber and Safety Risks of Autonomous Weapons
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.7 Cyber and Safety Risks of Autonomous Weapons">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-attack_surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.1 Attack Surfaces
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-fail_safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.2 Fail-Safe Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.3 Certification and Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-emergent_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.7.4 Emergent Behaviour and Testing Limitations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-case_studies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8 Case Studies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.8 Case Studies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-project_maven" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.1 Project Maven: Machine Learning for Drone Surveillance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-kargu2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.2 STM Kargu-2: Autonomous Engagement in Libya
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-sgr_a1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.3 Samsung SGR-A1: Autonomous Sentry in the DMZ
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-harpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.4 IAI Harpy: Autonomous Anti-Radiation Munition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-dod_3000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.8.5 US DoD Directive 3000.09
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ethical_frameworks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9 Ethical Frameworks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.9 Ethical Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-just_war" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.1 Just War Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-consequentialism" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.2 Consequentialist Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-deontology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.3 Deontological Analysis
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-virtue_ethics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.4 Virtue Ethics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-engineering_ethics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.9.5 Engineering Ethics
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-governance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10 Recommendations and Future Governance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="34.10 Recommendations and Future Governance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-tiered_approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.1 Tiered Regulatory Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-art36_implementation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.2 Article 36 Implementation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-technical_standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.3 Technical Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-treaty_pathways" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.4 International Treaty Pathways
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cbms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.5 Confidence Building Measures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-research_priorities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.10.6 Research Priorities
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ethics_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        34.11 Summary and Conclusions
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-ethics">Chapter 34: Autonomous Lethal Systems and Ethics<a class="headerlink" href="#ch-ethics" title="Permanent link">&para;</a></h1>
+<h2 id="sec-aws_intro"><span class="secnum">34.1</span> Introduction to Autonomous Weapons Systems<a class="headerlink" href="#sec-aws_intro" title="Permanent link">&para;</a></h2>
+<p>The application of artificial intelligence and robotics to lethal force represents one of the most consequential technological developments of the twenty-first century. As sensors, computing power, and machine-learning capabilities advance, military systems increasingly operate with reduced human oversight over the decision to use force. Understanding the technical, legal, and ethical dimensions of this development requires precise terminology, a clear picture of the current operational landscape, and engagement with the stakeholders shaping the governance debate.</p>
+<h3 id="subsec-aws_definitions"><span class="secnum">34.1.1</span> Definitional Framework<a class="headerlink" href="#subsec-aws_definitions" title="Permanent link">&para;</a></h3>
+<p>Three principal terms delineate the spectrum of human involvement in weapon system operation:</p>
+<ul>
+<li>
+<p><strong>Automated weapon system</strong>: Operates according to pre-programmed rules within a constrained, well-defined environment. The human operator makes the decision to deploy the system; thereafter the system executes without further human input. Decision logic is deterministic and fully specified at design time. Example: Phalanx Close-In Weapon System (CIWS), which executes autonomous fire-control once activated by a human operator.</p>
+</li>
+<li>
+<p><strong>Semi-autonomous weapon system</strong>: Capable of independent action against a pre-specified target set, but requires positive human authorisation for each individual engagement or for a bounded engagement package. The human remains in a supervisory role with meaningful ability to halt, redirect, or cancel the attack. Examples include many current loitering munitions operated in man-in-loop mode.</p>
+</li>
+<li>
+<p><strong>Autonomous weapon system (AWS)</strong>: Selects and engages targets through its own sensing and decision-making processes, without human intervention during the engagement cycle. The system exercises discretion over whom to attack, when to attack, and with what level of force. When such systems are designed to apply lethal force, they are termed <strong>Lethal Autonomous Weapon Systems (LAWS)</strong>.</p>
+</li>
+</ul>
+<p>The International Committee of the Red Cross (ICRC) refined the core concept in its 2021 position paper, defining LAWS as systems that can independently identify, track, select, and attack targets. The critical distinguishing feature is not the level of automation in flight control, navigation, or even target detection—it is autonomy over the <em>critical functions</em> of target selection and the decision to apply lethal force.</p>
+<h4 id="subsubsec-human_control">Human Control Topologies<a class="headerlink" href="#subsubsec-human_control" title="Permanent link">&para;</a></h4>
+<p>Four canonical human-machine control configurations are recognised in the literature:</p>
+<div class="tbl" id="tab-human_control_topologies">
+<div class="tbl-caption"><strong>Table 34.1.</strong> Human Control Topologies in Autonomous Weapon Systems</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Configuration</strong></th>
+<th style="text-align: left;"><strong>Human Role</strong></th>
+<th style="text-align: left;"><strong>System Role</strong></th>
+<th style="text-align: left;"><strong>Example</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Human-in-the-loop</td>
+<td style="text-align: left;">Authorises every individual engagement; can abort at any point</td>
+<td style="text-align: left;">Provides targeting data, flight control; awaits human command</td>
+<td style="text-align: left;">Predator/Reaper with GCS</td>
+</tr>
+<tr>
+<td style="text-align: left;">Human-on-the-loop</td>
+<td style="text-align: left;">Monitors engagement; can interrupt but system acts autonomously</td>
+<td style="text-align: left;">Selects and engages autonomously within authorised parameters</td>
+<td style="text-align: left;">Phalanx CIWS (auto mode)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Human-out-of-the-loop</td>
+<td style="text-align: left;">Not present during engagement; sets mission parameters before launch</td>
+<td style="text-align: left;">Fully autonomous sensing, decision, and engagement</td>
+<td style="text-align: left;">Harpy anti-radiation munition (terminal phase)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Human-over-the-loop</td>
+<td style="text-align: left;">Commander authorises an engagement envelope; may not see individual targets</td>
+<td style="text-align: left;">Selects targets within envelope; no per-target authorisation</td>
+<td style="text-align: left;">Proposed future swarm configurations</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="subsec-aws_drivers"><span class="secnum">34.1.2</span> Why Autonomy in Weapons: Operational Drivers<a class="headerlink" href="#subsec-aws_drivers" title="Permanent link">&para;</a></h3>
+<p>Several converging military requirements create demand for increased weapon autonomy:</p>
+<div class="parahead">
+<p>Speed of Combat.</p>
+</div>
+<p>Hypersonic threats (Mach 5+) transit a ship’s radar horizon to impact in seconds. The OODA loop (Observe, Orient, Decide, Act) for a human operator may require 3–8 seconds; a Mach 8 missile travels approximately 2.7 km per second, giving a reaction window of perhaps 10–20 km under ideal sensor conditions. Automated engagement is therefore operationally necessary for hard-kill counter-hypersonic defence. This imperative does not, however, automatically justify autonomy in offensive operations or against human targets.</p>
+<div class="parahead">
+<p>GPS-Denied Environments.</p>
+</div>
+<p>Adversary electronic warfare capabilities increasingly deny GPS navigation to munitions and aircraft. In such environments, a munition relying on satellite guidance requires an autonomous fallback—whether inertial navigation with scene matching, terrain contour matching (TERCOM), or AI-based visual odometry.</p>
+<div class="parahead">
+<p>Contested Command and Control (C2).</p>
+</div>
+<p>Electronic jamming and cyber attacks may sever communication links between unmanned systems and their operators. A system that cannot communicate with its ground station must either abort its mission or continue autonomously. The choice made at design time determines the system’s level of autonomy under degraded communications.</p>
+<div class="parahead">
+<p>Swarm Scale.</p>
+</div>
+<p>Operating a 100-drone swarm with individual human operators for each platform is logistically infeasible. Swarm concepts require autonomous coordination, task allocation, and in some concepts, autonomous engagement decisions at scale. The multiplication of decision points far exceeds human cognitive bandwidth.</p>
+<div class="parahead">
+<p>Cognitive Load and Operator Fatigue.</p>
+</div>
+<p>Even where human oversight is notionally retained, the practical ability of a single operator to meaningfully review and authorise hundreds of AI-generated target engagements per hour is questionable. Speed and scale degrade the quality of human decision-making.</p>
+<h3 id="subsec-aws_spectrum"><span class="secnum">34.1.3</span> The Current Operational Spectrum<a class="headerlink" href="#subsec-aws_spectrum" title="Permanent link">&para;</a></h3>
+<p>A taxonomy of currently-deployed and near-term systems illustrates the spectrum:</p>
+<ul>
+<li>
+<p><strong>Phalanx CIWS (Raytheon, USA)</strong>: 20 mm rotary cannon; autonomous track-and-engage once activated; hard-coded rules; purely reactive; human-on-loop activation.</p>
+</li>
+<li>
+<p><strong>Iron Dome (Rafael, Israel)</strong>: Air defence; autonomous intercept selection and engagement; human sets engagement parameters; demonstrated in operational use.</p>
+</li>
+<li>
+<p><strong>Samsung SGR-A1 (South Korea)</strong>: Ground sentry robot on DMZ; equipped with autonomous detection and engagement; claimed human-on-loop override; raises questions about reliability in practice.</p>
+</li>
+<li>
+<p><strong>Harpy / Harop (IAI, Israel)</strong>: Anti-radiation loitering munition; loiters until radar emissions detected, then autonomous terminal dive; human launches but does not authorise individual engagements.</p>
+</li>
+<li>
+<p><strong>STM Kargu-2 (Turkey)</strong>: Multi-rotor loitering munition; autonomous engagement mode; reported use in Libya 2020; subject of UN Panel of Experts scrutiny.</p>
+</li>
+<li>
+<p><strong>AeroVironment Switchblade</strong>: Human-in-loop; operator designates target via video feed; operator must confirm engagement; current generation retains meaningful human control.</p>
+</li>
+<li>
+<p><strong>Future LAWS (notional)</strong>: Fully autonomous target selection and engagement against human combatants; no per-engagement human authorisation; object of the current governance debate.</p>
+</li>
+</ul>
+<h3 id="subsec-aws_stakeholders"><span class="secnum">34.1.4</span> Key Stakeholders<a class="headerlink" href="#subsec-aws_stakeholders" title="Permanent link">&para;</a></h3>
+<p>The debate over LAWS involves a diverse and sometimes adversarial coalition of actors:</p>
+<div class="parahead">
+<p>States.</p>
+</div>
+<p>Permanent members of the UN Security Council hold diametrically opposed positions. The United States maintains that meaningful human control is required but resists a binding treaty, preferring operational policies. Russia opposes binding restrictions. China has called for a ban on <em>use</em> of LAWS but not development, a position critics interpret as preserving domestic research freedom. The United Kingdom supports existing IHL as sufficient without new treaty law. Austria, Belgium, and numerous smaller states advocate a binding prohibition.</p>
+<div class="parahead">
+<p>Non-Governmental Organisations.</p>
+</div>
+<p>The <strong>Campaign to Stop Killer Robots</strong> (CSKR), founded 2012, is a coalition of over 170 NGOs in 68 countries. It advocates a preemptive prohibition on LAWS. The <strong>ICRC</strong> maintains an authoritative technical and legal voice, calling for both prohibitions on specific categories of LAWS and positive rules on human control.</p>
+<div class="parahead">
+<p>Academic Community.</p>
+</div>
+<p>Researchers across computer science, law, philosophy, and security studies contribute technical assessments, legal analyses, and ethical frameworks. The <strong>Future of Life Institute</strong> and the <strong>Centre for the Study of Existential Risk</strong> (CSER, Cambridge) publish extensively on long-term risks.</p>
+<div class="parahead">
+<p>Technology Companies.</p>
+</div>
+<p>The <strong>Google Project Maven</strong> controversy (2018) revealed deep tensions within the technology sector. When Google employees learned the company held a contract to apply machine learning to drone surveillance footage for the US Department of Defense, over 4,000 employees signed a petition and 12 resigned. Google subsequently declined to renew the contract and published AI principles excluding weapons applications. This episode established that technology workers consider themselves ethical stakeholders in the deployment of their tools.</p>
+<h2 id="sec-ihl"><span class="secnum">34.2</span> International Humanitarian Law<a class="headerlink" href="#sec-ihl" title="Permanent link">&para;</a></h2>
+<p>International Humanitarian Law (IHL), also known as the Law of Armed Conflict (LOAC) or the Laws of War, comprises the body of international law regulating the conduct of armed conflict. Its primary sources are the four Geneva Conventions of 1949, the two Additional Protocols of 1977 (AP I and AP II), customary international law, and the Hague Regulations. LAWS must comply fully with IHL; the question is whether compliance is technically achievable and, if not, whether any level of human control is required as a legal prerequisite.</p>
+<h3 id="subsec-ihl_principles"><span class="secnum">34.2.1</span> The Four Core Principles of IHL<a class="headerlink" href="#subsec-ihl_principles" title="Permanent link">&para;</a></h3>
+<p>Four peremptory principles constrain all attacks under IHL:</p>
+<h4 id="subsubsec-distinction">Principle of Distinction<a class="headerlink" href="#subsubsec-distinction" title="Permanent link">&para;</a></h4>
+<p>Article 48 of AP I requires that parties to a conflict distinguish at all times between civilians and combatants, and between civilian objects and military objectives. Only military objectives may be attacked. A <em>combatant</em> is a member of the armed forces of a party to a conflict (with exceptions for medical and religious personnel). A <em>civilian</em> is anyone who is not a combatant; civilians lose protection against direct attack only while and for such time as they directly participate in hostilities.</p>
+<p>Formally, define the target space <span class="arithmatex">\(\mathcal{T}\)</span> partitioned into lawful military targets <span class="arithmatex">\(\mathcal{M}\)</span> and protected civilian objects <span class="arithmatex">\(\mathcal{C}\)</span>:</p>
+<div id="eq-target_partition"></div>
+<div class="arithmatex">\[\mathcal{T} = \mathcal{M} \cup \mathcal{C}, \quad \mathcal{M} \cap \mathcal{C} = \emptyset\tag{34.1}\]</div>
+<p>An IHL-compliant engagement function <span class="arithmatex">\(f: \mathcal{S} \to \{0,1\}\)</span> (where <span class="arithmatex">\(\mathcal{S}\)</span> is the sensor observation space) must satisfy:</p>
+<div id="eq-distinction_constraint"></div>
+<div class="arithmatex">\[\Pr[f(s) = 1 \mid s \in \phi(\mathcal{C})] \leq \epsilon_c\tag{34.2}\]</div>
+<p>where <span class="arithmatex">\(\phi: \mathcal{T} \to \mathcal{S}\)</span> is the sensing function and <span class="arithmatex">\(\epsilon_c\)</span> is the maximum permissible false-positive rate for civilian targets. IHL provides no explicit numerical value for <span class="arithmatex">\(\epsilon_c\)</span>; it is determined by the proportionality assessment (<a href="#sec-proportionality">Section 34.6</a>). The practical challenge is that <span class="arithmatex">\(\phi\)</span> is noisy, <span class="arithmatex">\(\mathcal{C}\)</span> is dynamic and context-dependent, and the boundary between <span class="arithmatex">\(\mathcal{M}\)</span> and <span class="arithmatex">\(\mathcal{C}\)</span> shifts continuously during urban combat.</p>
+<h4 id="subsubsec-proportionality_ihl">Principle of Proportionality<a class="headerlink" href="#subsubsec-proportionality_ihl" title="Permanent link">&para;</a></h4>
+<p>Article 51(5)(b) AP I prohibits attacks expected to cause incidental civilian casualties or damage to civilian objects that would be excessive in relation to the concrete and direct military advantage anticipated. This principle requires a comparison of incommensurable values—human life against military gain—a comparison that some philosophers argue cannot be reduced to an algorithmic computation (see <a href="#sec-proportionality">Section 34.6</a>).</p>
+<h4 id="subsubsec-precaution">Principle of Precaution<a class="headerlink" href="#subsubsec-precaution" title="Permanent link">&para;</a></h4>
+<p>Article 57 AP I requires attackers to take all feasible precautions to minimise civilian harm. Precautionary obligations include:</p>
+<ul>
+<li>
+<p>Verify that the target is a military objective.</p>
+</li>
+<li>
+<p>Choose means and methods of attack expected to minimise civilian casualties.</p>
+</li>
+<li>
+<p>Give effective advance warning to civilians when circumstances permit.</p>
+</li>
+<li>
+<p>Cancel or suspend an attack if it becomes apparent that the target is civilian or that incidental casualties would be excessive.</p>
+</li>
+</ul>
+<p>The duty to cancel or suspend an attack in real time is particularly challenging for autonomous systems. Once a terminal-phase autonomous weapon has committed to an engagement, whether it possesses sufficient sensor resolution and processing capability to detect and respond to a civilian appearing in the engagement zone is an engineering—and legal—question.</p>
+<h4 id="subsubsec-necessity">Principle of Military Necessity<a class="headerlink" href="#subsubsec-necessity" title="Permanent link">&para;</a></h4>
+<p>Military necessity permits only such force as is actually necessary to achieve a legitimate military objective. It prohibits destruction and injury beyond what is required for military success. This principle interacts with proportionality: even a small military advantage does not justify large civilian casualties, but a proportionate attack against a legitimate target is permissible even if it results in collateral civilian harm.</p>
+<h3 id="subsec-geneva"><span class="secnum">34.2.2</span> Geneva Conventions and Additional Protocols<a class="headerlink" href="#subsec-geneva" title="Permanent link">&para;</a></h3>
+<p>The four Geneva Conventions (GC I–IV, 1949) primarily protect the wounded, sick, shipwrecked, prisoners of war, and civilians in occupied territory. Additional Protocol I (1977) extends protections and codifies the principles of distinction, proportionality, and precaution for international armed conflicts. Additional Protocol II (1977) extends protections in non-international armed conflicts. 174 states are parties to the Additional Protocols; notable non-signatories to AP I include the United States and Israel.</p>
+<p>Article 36 of AP I imposes a weapons review obligation: states must determine whether new weapons, means, or methods of warfare are prohibited by IHL. This review obligation applies to all new weapons, including software-defined or AI-enabled systems, and is the primary legal mechanism through which LAWS should be assessed.</p>
+<h3 id="subsec-accountability_gap"><span class="secnum">34.2.3</span> Command Responsibility and the Accountability Gap<a class="headerlink" href="#subsec-accountability_gap" title="Permanent link">&para;</a></h3>
+<p>IHL establishes both individual criminal responsibility (the Nuremberg principle) and command responsibility (Article 86–87 AP I; Yamashita standard). Command responsibility holds a superior responsible for crimes committed by subordinates if:</p>
+<ol>
+<li>
+<p>The superior knew or had reason to know the subordinate was about to commit or had committed an offence.</p>
+</li>
+<li>
+<p>The superior failed to take necessary and reasonable measures to prevent or punish.</p>
+</li>
+</ol>
+<p>When a LAWS commits what would constitute a war crime—attacking a civilian, disproportionate harm—the accountability gap arises: the machine cannot be prosecuted, the operator may be geographically and temporally remote, the programmer wrote code at a prior time, and the commander authorised a class of engagements without knowledge of each individual act.</p>
+<div class="tbl" id="tab-accountability_gap">
+<div class="tbl-caption"><strong>Table 34.2.</strong> Accountability Gap Analysis for LAWS War Crimes</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Actor</strong></th>
+<th style="text-align: left;"><strong>Potential Liability Basis</strong></th>
+<th style="text-align: left;"><strong>Defence / Gap</strong></th>
+<th style="text-align: left;"><strong>Mitigation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Operator</td>
+<td style="text-align: left;">Command responsibility; direct participation</td>
+<td style="text-align: left;">May not have seen individual engagement; link severed by autonomy</td>
+<td style="text-align: left;">Require per-engagement authorisation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Commander</td>
+<td style="text-align: left;">Superior responsibility; mission authorisation</td>
+<td style="text-align: left;">Authorised engagement <em>envelope</em>, not specific target</td>
+<td style="text-align: left;">Restrict engagement envelope</td>
+</tr>
+<tr>
+<td style="text-align: left;">Programmer</td>
+<td style="text-align: left;">Negligence; product liability (civil)</td>
+<td style="text-align: left;">Wrote code years before; could not foresee specific incident</td>
+<td style="text-align: left;">Rigorous safety cases; documentation</td>
+</tr>
+<tr>
+<td style="text-align: left;">State</td>
+<td style="text-align: left;">State responsibility under international law</td>
+<td style="text-align: left;">Cannot be criminally prosecuted; sanctions possible</td>
+<td style="text-align: left;">Treaty obligations; domestic law</td>
+</tr>
+<tr>
+<td style="text-align: left;">Machine</td>
+<td style="text-align: left;">None in current legal framework</td>
+<td style="text-align: left;">No legal personhood; cannot be deterred</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Legal scholars including Sassòli (2014) and Roff (2016) conclude that in many plausible scenarios involving fully autonomous lethal decisions, no individual can be held legally responsible in a meaningful sense. This structural accountability gap is itself argued to violate the spirit of IHL, which depends on individual responsibility to deter violations.</p>
+<h3 id="subsec-icrc_state_positions"><span class="secnum">34.2.4</span> ICRC Position and State Practice<a class="headerlink" href="#subsec-icrc_state_positions" title="Permanent link">&para;</a></h3>
+<p>The ICRC, in its 2021 position paper, called for:</p>
+<ol>
+<li>
+<p>A prohibition on autonomous weapon systems that are designed or used to apply force against persons.</p>
+</li>
+<li>
+<p>A prohibition on autonomous weapon systems that cannot be used in accordance with IHL (e.g., because they cannot distinguish or assess proportionality).</p>
+</li>
+<li>
+<p>Positive requirements of human control over all other autonomous weapons, including the ability to deactivate.</p>
+</li>
+</ol>
+<p>State positions diverge significantly. Austria submitted a draft treaty calling for a prohibition, supported by approximately 50 states. The United States issued DoD Directive 3000.09 (updated 2023), which requires meaningful human judgment over the selection and engagement of targets and mandates senior DoD official approval for any waiver. Russia opposes binding regulation. China’s position— prohibit use, not development—is viewed by many as strategically inconsistent.</p>
+<h2 id="sec-ccw"><span class="secnum">34.3</span> CCW Discussions and International Governance<a class="headerlink" href="#sec-ccw" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-ccw_framework"><span class="secnum">34.3.1</span> The CCW Framework<a class="headerlink" href="#subsec-ccw_framework" title="Permanent link">&para;</a></h3>
+<p>The <strong>Convention on Certain Conventional Weapons</strong> (CCW), opened for signature 1980, prohibits or restricts the use of specific weapons deemed to cause unnecessary suffering or to strike indiscriminately. It operates through Protocols (mines, incendiary weapons, laser blinding weapons, explosive remnants of war) and through a process of diplomatic deliberation. The CCW meets in Geneva under UN auspices and requires consensus among High Contracting Parties for binding decisions.</p>
+<h3 id="subsec-gge"><span class="secnum">34.3.2</span> Group of Governmental Experts<a class="headerlink" href="#subsec-gge" title="Permanent link">&para;</a></h3>
+<p>In 2014, the CCW established an informal Meeting of Experts on LAWS, elevated to a formal <strong>Group of Governmental Experts (GGE)</strong> in 2016. The GGE meets annually in Geneva and has produced three key documents:</p>
+<ol>
+<li>
+<p><strong>2018 Possible Guiding Principles</strong>: Ten non-binding principles on LAWS, including that IHL applies fully; that human responsibility cannot be transferred to machines; and that a core element of human judgement must be retained.</p>
+</li>
+<li>
+<p><strong>2019 Guiding Principles</strong>: Eleven principles endorsed by the GGE, including that human accountability for decisions on LAWS must be retained; that new weapons must be reviewed under Article 36; and that a precautionary approach should be taken.</p>
+</li>
+<li>
+<p><strong>2021–2023 Working Papers</strong>: Detailed technical and legal analyses without consensus on binding measures.</p>
+</li>
+</ol>
+<h3 id="subsec-ccw_deadlock"><span class="secnum">34.3.3</span> The Deadlock Problem<a class="headerlink" href="#subsec-ccw_deadlock" title="Permanent link">&para;</a></h3>
+<p>The CCW operates by consensus. Any single High Contracting Party can block adoption of a new Protocol. The permanent members of the UN Security Council—particularly Russia, China, and to a lesser extent the United States and United Kingdom—have consistently blocked progress toward binding regulation. Russia has explicitly stated that a ban on LAWS would be premature and that existing IHL is sufficient.</p>
+<p>This procedural constraint has led advocacy groups to propose alternative forums:</p>
+<ul>
+<li>
+<p><strong>UN General Assembly</strong>: Can adopt resolutions (non-binding) and convene treaty conferences outside the CCW. The Ottawa Process on anti-personnel mines succeeded outside the CCW framework.</p>
+</li>
+<li>
+<p><strong>Standalone Treaty</strong>: Modelled on the Mine Ban Treaty (1997) or the Convention on Cluster Munitions (2008); negotiated among a coalition of willing states; does not require unanimity; major military powers likely would not join.</p>
+</li>
+<li>
+<p><strong>UNGA First Committee</strong>: Has passed resolutions on LAWS (A/RES/78/241, 2023) calling for the Secretary-General to seek state views; non-binding but signals emerging norm.</p>
+</li>
+</ul>
+<h3 id="subsec-draft_treaties"><span class="secnum">34.3.4</span> Draft Treaty Proposals<a class="headerlink" href="#subsec-draft_treaties" title="Permanent link">&para;</a></h3>
+<p>The <strong>Campaign to Stop Killer Robots</strong> has circulated draft treaty language calling for:</p>
+<ul>
+<li>
+<p>A prohibition on the development, production, and use of fully autonomous weapons.</p>
+</li>
+<li>
+<p>A prohibition on any weapon that selects and attacks targets without meaningful human control.</p>
+</li>
+<li>
+<p>Positive obligation to retain human control over the critical functions of selecting and attacking human targets.</p>
+</li>
+</ul>
+<p>Austria submitted formal draft elements to the CCW GGE in 2019 and 2022. As of 2025, no binding instrument has been agreed under the CCW framework.</p>
+<h2 id="sec-mhc"><span class="secnum">34.4</span> Meaningful Human Control<a class="headerlink" href="#sec-mhc" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-mhc_concept"><span class="secnum">34.4.1</span> Conceptual Dimensions<a class="headerlink" href="#subsec-mhc_concept" title="Permanent link">&para;</a></h3>
+<p><strong>Meaningful Human Control</strong> (MHC) is the dominant concept in the current governance debate, yet it lacks a universally accepted definition. Proposed dimensions of MHC include:</p>
+<ol>
+<li>
+<p><strong>Target selection</strong>: A human must identify and designate the specific target.</p>
+</li>
+<li>
+<p><strong>Engagement authorisation</strong>: A human must positively authorise the use of force against the designated target.</p>
+</li>
+<li>
+<p><strong>Temporal control</strong>: The human must be able to halt the engagement up to and including the terminal phase.</p>
+</li>
+<li>
+<p><strong>Spatial control</strong>: The engagement must occur within a geographically bounded area that the human has verified is appropriate.</p>
+</li>
+<li>
+<p><strong>Force level</strong>: The human must set and verify the level of force employed.</p>
+</li>
+<li>
+<p><strong>Contextual understanding</strong>: The human must have sufficient situational awareness to make an informed decision consistent with IHL.</p>
+</li>
+</ol>
+<p>Define a control adequacy function <span class="arithmatex">\(\Psi\)</span>:</p>
+<div id="eq-mhc_adequacy"></div>
+<div class="arithmatex">\[\Psi = \sum_{i=1}^{6} w_i \cdot c_i\tag{34.3}\]</div>
+<p>where <span class="arithmatex">\(w_i\)</span> is the weight (importance) of control dimension <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(c_i \in [0,1]\)</span> is the degree of control exercised. MHC is satisfied when <span class="arithmatex">\(\Psi \geq \Psi_{\min}\)</span>, where <span class="arithmatex">\(\Psi_{\min}\)</span> is the minimum legally and ethically required control threshold. No current international agreement specifies <span class="arithmatex">\(\Psi_{\min}\)</span> or the weights <span class="arithmatex">\(w_i\)</span>.</p>
+<h3 id="subsec-hmt_cognitive"><span class="secnum">34.4.2</span> Human-Machine Teaming and Cognitive Constraints<a class="headerlink" href="#subsec-hmt_cognitive" title="Permanent link">&para;</a></h3>
+<p>A central challenge is that the notional preservation of human oversight may not constitute <em>meaningful</em> control when the system operates at machine speed and scale. Consider an AI-enabled system that generates 100 targeting recommendations per minute. Even with a human operator nominally “in the loop”, each target receives on average 0.6 seconds of human attention—insufficient for meaningful judgement, IHL assessment, or informed decision-making.</p>
+<p>The information-processing constraint can be formalised. Let <span class="arithmatex">\(\lambda\)</span> be the target presentation rate (targets/second), <span class="arithmatex">\(T_h\)</span> be the minimum human deliberation time per target (seconds), and <span class="arithmatex">\(N_o\)</span> be the number of operators:</p>
+<div id="eq-cognitive_constraint"></div>
+<div class="arithmatex">\[\lambda \cdot T_h \leq N_o\tag{34.4}\]</div>
+<p>For <span class="arithmatex">\(\lambda = 2\)</span> targets/s, <span class="arithmatex">\(T_h = 5\)</span> s, and <span class="arithmatex">\(N_o = 1\)</span>: <span class="arithmatex">\(2 \times 5 = 10 \gg 1\)</span>. The system violates the cognitive constraint; human control is nominal, not meaningful.</p>
+<p>Research in cognitive science (Parasuraman and Manzey, 2010; Cummings, 2012) consistently finds that automation bias—the tendency to accept automated recommendations without critical evaluation—degrades decision quality precisely when operators are overloaded. A human rubber-stamping AI recommendations is not exercising meaningful control.</p>
+<h3 id="subsec-mhc_by_design"><span class="secnum">34.4.3</span> Technical Approaches to MHC by Design<a class="headerlink" href="#subsec-mhc_by_design" title="Permanent link">&para;</a></h3>
+<p>Engineering approaches to preserving MHC include:</p>
+<ol>
+<li>
+<p><strong>Engagement Authorisation Interface</strong>: A positive physical action (e.g., two-key turn, biometric confirm) required before each engagement; prevents autonomous fire.</p>
+</li>
+<li>
+<p><strong>Abort Capability</strong>: Hardware and software interrupt that the operator can trigger at any point; must operate on a communication link verified to be unjammable or with a fail-safe default (abort on comms loss).</p>
+</li>
+<li>
+<p><strong>Engagement Envelope Constraints</strong>: Hard-coded geographic, temporal, and target-class constraints within which autonomous action is permitted; any target outside the envelope requires human override.</p>
+</li>
+<li>
+<p><strong>Confidence Threshold Gates</strong>: The system only autonomously engages if its target classification confidence exceeds a high threshold <span class="arithmatex">\(\tau_c\)</span> (e.g., <span class="arithmatex">\(\tau_c = 0.99\)</span>); lower-confidence detections are queued for human review.</p>
+</li>
+<li>
+<p><strong>Explainability Interface</strong>: The system presents to the operator not only its target recommendation but the evidence and reasoning supporting it, enabling informed review.</p>
+</li>
+</ol>
+<h3 id="subsec-art36_review"><span class="secnum">34.4.4</span> Article 36 Weapons Review<a class="headerlink" href="#subsec-art36_review" title="Permanent link">&para;</a></h3>
+<p>Article 36 of AP I imposes a legal obligation on all states party to review new weapons in their development, acquisition, or adoption. The review must determine whether the weapon is prohibited under IHL in all circumstances or in some circumstances. The United States, United Kingdom, Australia, and a small number of other states have established formal weapons review processes. The vast majority of states have not.</p>
+<p>The Article 36 review of an AI-enabled weapon system raises novel challenges:</p>
+<ul>
+<li>
+<p>How do you certify the behaviour of a system whose behaviour emerges from trained parameters rather than explicit rules?</p>
+</li>
+<li>
+<p>How do you test a system that may exhibit emergent behaviour not seen in training?</p>
+</li>
+<li>
+<p>How do you review a system whose behaviour may adapt after deployment?</p>
+</li>
+</ul>
+<p>These questions highlight the need for new technical standards and legal frameworks tailored to AI-enabled weapons.</p>
+<h2 id="sec-targeting_discrimination"><span class="secnum">34.5</span> Targeting and Discrimination<a class="headerlink" href="#sec-targeting_discrimination" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-cv_targeting"><span class="secnum">34.5.1</span> Computer Vision for Target Identification<a class="headerlink" href="#subsec-cv_targeting" title="Permanent link">&para;</a></h3>
+<p>Modern military target identification increasingly relies on deep neural networks, particularly convolutional neural networks (CNNs) and transformer architectures, applied to electro-optical (EO), infrared (IR), synthetic aperture radar (SAR), and hyperspectral imagery. The fundamental object of discrimination is to correctly classify each object in the sensor field as belonging to <span class="arithmatex">\(\mathcal{M}\)</span> or <span class="arithmatex">\(\mathcal{C}\)</span> (<a href="#eq-target_partition">Equation (34.1)</a>).</p>
+<p>The performance of a binary classifier is characterised by the confusion matrix. Let:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\text{TP}\)</span>: True Positives — military targets correctly identified</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\text{FP}\)</span>: False Positives — civilians misclassified as military targets (illegal engagement)</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\text{TN}\)</span>: True Negatives — civilians correctly spared</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\text{FN}\)</span>: False Negatives — military targets missed (operational failure)</p>
+</li>
+</ul>
+<p>Key performance metrics: <span id="eq-precision"></span></p>
+<div class="arithmatex">\[\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}\tag{34.5}\]</div>
+<div id="eq-recall"></div>
+<div class="arithmatex">\[\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}\tag{34.6}\]</div>
+<div id="eq-fpr"></div>
+<div class="arithmatex">\[\text{False Positive Rate (FPR)} = \frac{\text{FP}}{\text{FP} + \text{TN}}\tag{34.7}\]</div>
+<p>From a legal and ethical perspective, minimising FPR—attacks on civilians—is paramount. There is an inherent precision-recall trade-off: as the confidence threshold <span class="arithmatex">\(\tau_c\)</span> increases, FPR decreases but FN rate increases. For an autonomous weapon system, the legally required FPR is effectively zero; any systematic misclassification of civilians as military targets constitutes a fundamental IHL violation.</p>
+<h3 id="subsec-training_bias"><span class="secnum">34.5.2</span> Training Data Bias<a class="headerlink" href="#subsec-training_bias" title="Permanent link">&para;</a></h3>
+<p>Deep learning models learn from training datasets. In military applications, training datasets typically comprise imagery of Western military equipment—US/NATO vehicles, uniforms, and equipment types—collected in controlled testing environments. Deployment in geographically and culturally different contexts introduces systematic bias:</p>
+<ul>
+<li>
+<p>A model trained on NATO military vehicles may fail to correctly classify Russian, Chinese, or non-state actor equipment.</p>
+</li>
+<li>
+<p>A model trained on desert environments may perform poorly in dense urban jungle settings.</p>
+</li>
+<li>
+<p>A model that never encountered a particular ambiguous scenario during training cannot generalise reliably to it.</p>
+</li>
+<li>
+<p>Biased training data produces a model whose <span class="arithmatex">\(\text{FPR}\)</span> is not uniformly distributed across target classes and environments.</p>
+</li>
+</ul>
+<p>Quantitatively, if the model’s decision boundary was trained on a distribution <span class="arithmatex">\(p_{\text{train}}\)</span> and deployed on <span class="arithmatex">\(p_{\text{deploy}}\)</span>, the expected FPR on deployment:</p>
+<div id="eq-distribution_shift_fpr"></div>
+<div class="arithmatex">\[\text{FPR}_{\text{deploy}} = \text{FPR}_{\text{train}} + \int_{\mathcal{X}} |p_{\text{deploy}}(x) - p_{\text{train}}(x)| \, \Delta \text{FPR}(x) \, dx\tag{34.8}\]</div>
+<p>where <span class="arithmatex">\(\Delta \text{FPR}(x)\)</span> is the local FPR change due to distribution shift. This integral will generally be non-zero for any realistic deployment outside the training domain.</p>
+<h3 id="subsec-adversarial"><span class="secnum">34.5.3</span> Adversarial Examples and Deception<a class="headerlink" href="#subsec-adversarial" title="Permanent link">&para;</a></h3>
+<p>A profound vulnerability of deep neural network classifiers is their susceptibility to <em>adversarial examples</em>: inputs crafted with small, often imperceptible perturbations that cause the model to misclassify. Goodfellow et al. (2014) demonstrated that adding a small perturbation <span class="arithmatex">\(\delta\)</span> to an image <span class="arithmatex">\(x\)</span> can cause a high-confidence misclassification:</p>
+<div id="eq-adversarial"></div>
+<div class="arithmatex">\[\arg\max_k f_k(x + \delta) \neq \arg\max_k f_k(x), \quad \|\delta\|_\infty \leq \epsilon\tag{34.9}\]</div>
+<p>In the military context, this means:</p>
+<ul>
+<li>
+<p>An adversary can apply carefully designed paint patterns to vehicles, personnel, or structures to cause an autonomous weapon to misclassify them.</p>
+</li>
+<li>
+<p>Printed patterns on clothing, termed <em>adversarial camouflage</em>, can cause a person to be classified as an inanimate object.</p>
+</li>
+<li>
+<p>Adversarial stickers placed on an object can cause misclassification across a wide range of viewing angles and lighting conditions.</p>
+</li>
+</ul>
+<p>This creates both an attack vector (adversary deceives the autonomous weapon) and a defensive vulnerability (the autonomous weapon attacks deceived-to targets). The existence of adversarial examples fundamentally undermines reliance on neural network classifiers for legally consequential decisions in adversarial environments.</p>
+<h3 id="subsec-dph"><span class="secnum">34.5.4</span> The “Direct Participation in Hostilities” Problem<a class="headerlink" href="#subsec-dph" title="Permanent link">&para;</a></h3>
+<p>IHL protects civilians except for such time as they take direct part in hostilities (DPH). The ICRC Interpretive Guidance on DPH (Melzer, 2009) specifies that DPH requires:</p>
+<ol>
+<li>
+<p>A threshold of harm likely to result.</p>
+</li>
+<li>
+<p>Direct causal link between the act and the harm.</p>
+</li>
+<li>
+<p>Belligerent nexus—the act must be specifically designed to directly cause the harm.</p>
+</li>
+</ol>
+<p>An algorithm cannot assess belligerent nexus. DPH assessment requires understanding intent, context, role, and the specific act being performed—judgements that depend on situational awareness, cultural understanding, and contextual reasoning beyond current AI capabilities. A person carrying a weapon may be a soldier, a farmer, or a child in some regions; context determines the legal status. An AI system trained to associate weapon-carrying with combatant status will systematically misclassify civilians in such contexts.</p>
+<h2 id="sec-proportionality"><span class="secnum">34.6</span> Proportionality Assessment<a class="headerlink" href="#sec-proportionality" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-mil_advantage"><span class="secnum">34.6.1</span> Military Advantage and Collateral Damage<a class="headerlink" href="#subsec-mil_advantage" title="Permanent link">&para;</a></h3>
+<p>The proportionality rule (<a href="#subsubsec-proportionality_ihl">Section 34.2.1</a>) requires balancing the anticipated military advantage against expected incidental civilian harm. Define:</p>
+<div id="eq-proportionality_basic"></div>
+<div class="arithmatex">\[P = \text{MA} - \lambda_c \cdot \text{CDE}\tag{34.10}\]</div>
+<p>where <span class="arithmatex">\(\text{MA}\)</span> is military advantage (measured in relevant military terms), <span class="arithmatex">\(\text{CDE}\)</span> is the collateral damage estimate (number of civilians expected to be harmed), and <span class="arithmatex">\(\lambda_c\)</span> is a weighting coefficient. An attack is proportionate if <span class="arithmatex">\(P \geq 0\)</span>, but IHL does not provide values for <span class="arithmatex">\(\lambda_c\)</span> or units for <span class="arithmatex">\(\text{MA}\)</span>. The comparison is deliberated by a “reasonable military commander” applying military experience and moral judgment.</p>
+<h3 id="subsec-joint_targeting"><span class="secnum">34.6.2</span> US Joint Targeting Methodology<a class="headerlink" href="#subsec-joint_targeting" title="Permanent link">&para;</a></h3>
+<p>The United States employs a six-step Collateral Damage Estimation (CDE) methodology defined in JP 3-60 (Joint Targeting) and implemented via the Bugsplat software system:</p>
+<ol>
+<li>
+<p><strong>Target characterisation</strong>: Identify target type, dimensions, construction.</p>
+</li>
+<li>
+<p><strong>Weaponeering</strong>: Select munition type, fusing, delivery parameters to achieve required effects on target.</p>
+</li>
+<li>
+<p><strong>Collateral damage radius calculation</strong>: Compute the distance from the aim point at which specific injury/damage probabilities fall below thresholds.</p>
+</li>
+<li>
+<p><strong>Collateral object analysis</strong>: Identify civilian objects within the collateral damage radius.</p>
+</li>
+<li>
+<p><strong>Collateral casualty estimate</strong>: Estimate civilians at risk based on time of day, population patterns, and shelter.</p>
+</li>
+<li>
+<p><strong>Commander’s proportionality assessment</strong>: Commander weighs CDE against MA.</p>
+</li>
+</ol>
+<p>Steps 1–5 can, in principle, be automated with appropriate sensor data and databases. Step 6 is the human moral judgement that IHL arguably requires to be exercised by a human commander. Whether an algorithm can substitute for this judgement—given that MA and civilian life are incommensurable—is a fundamental ethical question examined in <a href="#sec-ethical_frameworks">Section 34.9</a>.</p>
+<h3 id="subsec-auto_proportionality"><span class="secnum">34.6.3</span> Automated Proportionality: Limitations<a class="headerlink" href="#subsec-auto_proportionality" title="Permanent link">&para;</a></h3>
+<p>Several authors (Schmitt, 2013; Sassòli, 2014) argue that while an algorithm can compute a numerical proxy for proportionality, it cannot perform the genuine moral weighing IHL requires. Key limitations:</p>
+<ul>
+<li>
+<p><strong>Incommensurability</strong>: Military advantage and human life are not on the same scale; no conversion factor is universally agreed.</p>
+</li>
+<li>
+<p><strong>Context dependence</strong>: The same military objective may have vastly different strategic value at different points in a conflict.</p>
+</li>
+<li>
+<p><strong>Uncertainty</strong>: Both MA and CDE are estimates with large uncertainties; a proportionality decision under deep uncertainty requires human judgment.</p>
+</li>
+<li>
+<p><strong>Dynamic change</strong>: A target may move; civilians may enter or leave the target area; the system may not be able to update its assessment in real time.</p>
+</li>
+</ul>
+<h2 id="sec-cyber_safety"><span class="secnum">34.7</span> Cyber and Safety Risks of Autonomous Weapons<a class="headerlink" href="#sec-cyber_safety" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-attack_surfaces"><span class="secnum">34.7.1</span> Attack Surfaces<a class="headerlink" href="#subsec-attack_surfaces" title="Permanent link">&para;</a></h3>
+<p>An autonomous weapon system presents an expanded cyber attack surface compared to a crewed platform. Key vectors:</p>
+<ol>
+<li>
+<p><strong>Sensor spoofing</strong>: GPS spoofing, radar jamming, laser dazzling, or acoustic interference alters the system’s perception of its environment, causing misnavigation or misidentification.</p>
+</li>
+<li>
+<p><strong>Data link compromise</strong>: If the system can receive target updates or software updates over a data link, an adversary who compromises the link can alter targeting parameters or inject malicious commands.</p>
+</li>
+<li>
+<p><strong>Supply chain attack</strong>: Compromised hardware or firmware introduced at manufacture can create exploitable backdoors.</p>
+</li>
+<li>
+<p><strong>Model poisoning</strong>: If the AI model was trained on adversary-influenced data, backdoor triggers can cause predictable misclassification.</p>
+</li>
+<li>
+<p><strong>Physical interface exploitation</strong>: Maintenance access ports, JTAG, or recovery mode can be exploited during field maintenance.</p>
+</li>
+</ol>
+<h3 id="subsec-fail_safe"><span class="secnum">34.7.2</span> Fail-Safe Design<a class="headerlink" href="#subsec-fail_safe" title="Permanent link">&para;</a></h3>
+<p>For conventional safety-critical systems, failure mode analysis (FMEA) and fault tree analysis (FTA) guide the design of fail-safe behaviour. For an autonomous weapon, the fail-safe default must be non-lethal: a system that defaults to attacking on sensor failure is a fail-deadly design and is ethically and legally impermissible.</p>
+<p>Define the system state <span class="arithmatex">\(S_k\)</span> at time <span class="arithmatex">\(k\)</span>. The fail-safe condition is:</p>
+<div id="eq-fail_safe"></div>
+<div class="arithmatex">\[\forall S_k \in \mathcal{F}: \quad a(S_k) = a_{\text{safe}}\tag{34.11}\]</div>
+<p>where <span class="arithmatex">\(\mathcal{F}\)</span> is the set of fault states and <span class="arithmatex">\(a_{\text{safe}}\)</span> is a safe action (abort mission, self-destruct in a pre-cleared area, return to base). This is straightforward to specify but difficult to guarantee: fault states include scenarios not anticipated at design time, software bugs, and adversarially-induced states.</p>
+<h3 id="subsec-certification"><span class="secnum">34.7.3</span> Certification and Verification<a class="headerlink" href="#subsec-certification" title="Permanent link">&para;</a></h3>
+<p>Aviation software certification standard DO-178C (Software Considerations in Airborne Systems) defines rigorous processes for software verification and validation, including structural coverage requirements at four Design Assurance Levels (DAL A–D). DO-178C was designed for deterministic, rule-based software. Its applicability to learned neural network systems is fundamentally limited:</p>
+<ul>
+<li>
+<p>Structural coverage (MC/DC) is not defined for neural network weights.</p>
+</li>
+<li>
+<p>The number of inputs to a neural network is effectively infinite; exhaustive testing is impossible.</p>
+</li>
+<li>
+<p>A neural network’s decision boundary can change after retraining; re-certification would be required.</p>
+</li>
+<li>
+<p>Emergent behaviours—capabilities not explicitly programmed—may arise from training but are not discoverable by conventional test methods.</p>
+</li>
+</ul>
+<p>EASA (European Union Aviation Safety Agency) has published AI Roadmap 2.0 (2023) and the USAF has proposed ML qualification guidelines, but as of 2025 no military-specific certification standard for AI-enabled weapons exists. The DARPA Assured Autonomy programme is developing formal verification approaches for safety-critical autonomous systems using Lyapunov-based neural network verification and satisfiability modulo theories (SMT) solvers.</p>
+<div class="tbl" id="tab-certification_comparison">
+<div class="tbl-caption"><strong>Table 34.3.</strong> Comparison of Safety Certification Approaches for Autonomous Weapons</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Approach</strong></th>
+<th style="text-align: left;"><strong>Applicability to AI</strong></th>
+<th style="text-align: left;"><strong>Limitations</strong></th>
+<th style="text-align: left;"><strong>Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">DO-178C</td>
+<td style="text-align: left;">Partial — process requirements applicable</td>
+<td style="text-align: left;">No neural network coverage criteria; deterministic assumption</td>
+<td style="text-align: left;">Adapted for UAV avionics; not AI targeting</td>
+</tr>
+<tr>
+<td style="text-align: left;">IEEE P7009 (Fail-safe AI)</td>
+<td style="text-align: left;">Directly applicable</td>
+<td style="text-align: left;">Standard still in development</td>
+<td style="text-align: left;">Draft under revision</td>
+</tr>
+<tr>
+<td style="text-align: left;">DARPA Assured Autonomy</td>
+<td style="text-align: left;">High — designed for ML</td>
+<td style="text-align: left;">Limited to reachability properties; scalability issues</td>
+<td style="text-align: left;">Active research programme</td>
+</tr>
+<tr>
+<td style="text-align: left;">ISO/IEC 42001 (AI Management)</td>
+<td style="text-align: left;">Process/governance only</td>
+<td style="text-align: left;">Does not address technical weapon behaviour</td>
+<td style="text-align: left;">Published 2023; adoption beginning</td>
+</tr>
+<tr>
+<td style="text-align: left;">Formal verification (SMT/model checking)</td>
+<td style="text-align: left;">Applicable to small networks</td>
+<td style="text-align: left;">Does not scale to large CNNs; state space explosion</td>
+<td style="text-align: left;">Research stage</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="subsec-emergent_testing"><span class="secnum">34.7.4</span> Emergent Behaviour and Testing Limitations<a class="headerlink" href="#subsec-emergent_testing" title="Permanent link">&para;</a></h3>
+<p>AI systems, particularly those trained with reinforcement learning, can exhibit emergent behaviours— strategies and capabilities that were not explicitly designed and may not have appeared in testing. In the context of weapons, emergent behaviour is a safety risk of the first order. OpenAI’s work on hide-and-seek agents (Baker et al., 2020) demonstrated that RL agents develop unexpected strategies that exploit environment physics. A weapon trained to maximise target destruction with minimum exposure may develop strategies that violate rules of engagement in unexpected ways.</p>
+<p>The coverage problem is fundamental: a neural network with <span class="arithmatex">\(n\)</span> parameters has a decision boundary of dimension <span class="arithmatex">\(n - 1\)</span> embedded in <span class="arithmatex">\(n\)</span>-dimensional space. Even <span class="arithmatex">\(10^9\)</span> test cases do not provide meaningful coverage of a space with <span class="arithmatex">\(n = 10^6\)</span> parameters. The formal notion of neural network verification—proving that no input within a perturbation ball <span class="arithmatex">\(\|x - x_0\|_\infty \leq \epsilon\)</span> causes a misclassification—is NP-hard in general (Katz et al., 2017).</p>
+<h2 id="sec-case_studies"><span class="secnum">34.8</span> Case Studies<a class="headerlink" href="#sec-case_studies" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-project_maven"><span class="secnum">34.8.1</span> Project Maven: Machine Learning for Drone Surveillance<a class="headerlink" href="#subsec-project_maven" title="Permanent link">&para;</a></h3>
+<p>Project Maven (officially the Algorithmic Warfare Cross-Functional Team) was established by the US Department of Defense in April 2017 to accelerate the fielding of AI capabilities. Its initial application was object recognition in drone video footage: automatically detecting and labelling vehicles, people, and buildings in full-motion video (FMV) from MQ-1/MQ-9 platforms.</p>
+<p>In 2017, Google won a contract to provide TensorFlow-based object recognition capabilities for Project Maven. In March 2018, The Intercept published details of the contract; within weeks, over 4,000 Google employees signed an internal petition objecting to participation in “warfare technology.” Twelve employees resigned. In June 2018, Google declined to renew the contract upon its expiry and published its AI Principles, which excluded weapons applications.</p>
+<p>Lessons: (1) Technology workers consider themselves ethical stakeholders in downstream uses of their work. (2) Corporate decisions on AI and weapons applications occur in a public arena and have reputational consequences. (3) The boundary between civilian AI research and military AI application is functionally non-existent in dual-use technologies.</p>
+<h3 id="subsec-kargu2"><span class="secnum">34.8.2</span> STM Kargu-2: Autonomous Engagement in Libya<a class="headerlink" href="#subsec-kargu2" title="Permanent link">&para;</a></h3>
+<p>The Kargu-2 is a Turkish-manufactured rotary-wing loitering munition produced by STM (Savunma Teknolojileri Mühendislik). It is equipped with computer vision for autonomous target identification and, according to the manufacturer, can operate in an autonomous engagement mode. A March 2021 UN Panel of Experts report on Libya (S/2021/229) stated:</p>
+<blockquote>
+<p>“The logistics convoy and the Haftar Affiliated Forces (HAF) were subsequently hunted down and remotely engaged by the lethal autonomous weapons systems such as the <em>lethal autonomous weapons systems</em> Kargu-2 and other loitering munitions.”</p>
+</blockquote>
+<p>This is the first documented probable use of a LAWS with autonomous engagement capability against human targets in an armed conflict. Subsequent analysis disputed whether the autonomous mode was actually used; the manufacturer disputed the Panel’s characterisation. The episode illustrates the governance gap: an autonomous lethal engagement may occur before any international rules are in place to prohibit or regulate it.</p>
+<h3 id="subsec-sgr_a1"><span class="secnum">34.8.3</span> Samsung SGR-A1: Autonomous Sentry in the DMZ<a class="headerlink" href="#subsec-sgr_a1" title="Permanent link">&para;</a></h3>
+<p>The SGR-A1 is a stationary sentry robot deployed by the Republic of Korea Army in the demilitarized zone (DMZ) with North Korea. It is equipped with a day/night camera, pattern recognition for intruder detection, a loudspeaker for voice challenges, and a 5.56 mm rifle and 40 mm grenade launcher. It reportedly has an autonomous engagement mode in which it can detect and fire on targets without human authorisation; the South Korean Ministry of Defence has stated that human authorisation is required for lethal engagement.</p>
+<p>The SGR-A1 illustrates the human-on-loop configuration: the system autonomously tracks and aims; a human operator can observe and must (in principle) authorise fire. The practical reliability of this human override, under conditions of battlefield stress, communication latency, and alert fatigue, is not publicly documented.</p>
+<h3 id="subsec-harpy"><span class="secnum">34.8.4</span> IAI Harpy: Autonomous Anti-Radiation Munition<a class="headerlink" href="#subsec-harpy" title="Permanent link">&para;</a></h3>
+<p>The Harpy, produced by Israel Aerospace Industries, is a loitering munition specifically designed to detect and destroy radar emitters. Launched from a ground vehicle or aircraft, it autonomously patrols a designated area, detects radar emissions, homes on the emitter, and dives to destroy it—all without any per-engagement human authorisation after launch. The Harpy has been operational since the 1990s and exported to multiple states.</p>
+<p>The Harpy represents a narrow but clearly autonomous engagement capability: the target class (radar emitter) and discriminating characteristic (specific emissions) are well-defined and technically assessable, making false-positive engagement of a civilian radar plausible if civilian and military radar emissions overlap in frequency and waveform.</p>
+<h3 id="subsec-dod_3000"><span class="secnum">34.8.5</span> US DoD Directive 3000.09<a class="headerlink" href="#subsec-dod_3000" title="Permanent link">&para;</a></h3>
+<p>DoD Directive 3000.09, “Autonomy in Weapon Systems” (originally 2012, updated 2023), is the primary US policy instrument governing autonomous weapons. Key provisions:</p>
+<ul>
+<li>
+<p>Requires that autonomous and semi-autonomous weapon systems shall be designed to allow commanders and operators to exercise appropriate levels of human judgement over the use of force.</p>
+</li>
+<li>
+<p>Requires that such systems shall only engage targets in accordance with mission parameters, ROE, LOAC, and commander’s intent.</p>
+</li>
+<li>
+<p>Requires USD(P) approval for any program of record that intends to use full autonomy in the lethal selection and engagement of targets.</p>
+</li>
+<li>
+<p>Establishes a Senior Designated Official review process.</p>
+</li>
+</ul>
+<p>The Directive does not define “meaningful human control” numerically or specify technical requirements. Critics note that the approval process provides an exception mechanism while nominally maintaining the policy.</p>
+<h2 id="sec-ethical_frameworks"><span class="secnum">34.9</span> Ethical Frameworks<a class="headerlink" href="#sec-ethical_frameworks" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-just_war"><span class="secnum">34.9.1</span> Just War Theory<a class="headerlink" href="#subsec-just_war" title="Permanent link">&para;</a></h3>
+<p>The Just War Tradition, deriving from Augustine and Aquinas and developed in modern form by Michael Walzer (<em>Just and Unjust Wars</em>, 1977), provides the moral framework underlying IHL. It comprises two components:</p>
+<ul>
+<li>
+<p><strong>Jus ad bellum</strong>: The justice of going to war—requires just cause, right intention, legitimate authority, last resort, probability of success, and proportionality.</p>
+</li>
+<li>
+<p><strong>Jus in bello</strong>: Justice in the conduct of war—requires discrimination and proportionality in all attacks, regardless of the justice of the war itself.</p>
+</li>
+</ul>
+<p>LAWS do not alter jus ad bellum directly, but critics argue they lower the threshold for resort to force by reducing the human cost to the attacking side. A state that can conduct warfare without risking the lives of its own soldiers may be more willing to initiate conflict, undermining the deterrent effect of mutual vulnerability. This is the “risk transfer” objection.</p>
+<h3 id="subsec-consequentialism"><span class="secnum">34.9.2</span> Consequentialist Analysis<a class="headerlink" href="#subsec-consequentialism" title="Permanent link">&para;</a></h3>
+<p>Consequentialist ethics judges actions by their outcomes. The consequentialist case for LAWS:</p>
+<ul>
+<li>
+<p>If LAWS are more precise than human combatants, they may cause fewer civilian casualties.</p>
+</li>
+<li>
+<p>If LAWS do not experience fear, anger, revenge, or peer pressure, they may make more consistent decisions than stressed human soldiers.</p>
+</li>
+<li>
+<p>If LAWS reduce friendly casualties, states may be willing to engage in fewer wars of attrition.</p>
+</li>
+</ul>
+<p>Counter-arguments:</p>
+<ul>
+<li>
+<p>Precision claims are unproven in real adversarial environments (see <a href="#sec-targeting_discrimination">Section 34.5</a>).</p>
+</li>
+<li>
+<p>Reducing the cost of war for one side may increase its frequency.</p>
+</li>
+<li>
+<p>Consequentialist calculations do not capture the moral significance of the act of killing.</p>
+</li>
+</ul>
+<h3 id="subsec-deontology"><span class="secnum">34.9.3</span> Deontological Analysis<a class="headerlink" href="#subsec-deontology" title="Permanent link">&para;</a></h3>
+<p>Kantian deontological ethics holds that some acts are intrinsically right or wrong, regardless of their consequences. The deontological case against LAWS rests on:</p>
+<ul>
+<li>
+<p><strong>Human dignity</strong>: The decision to take a human life must be made by a moral agent capable of recognising the victim’s humanity. A machine cannot recognise or respect human dignity.</p>
+</li>
+<li>
+<p><strong>Categorical Imperative</strong>: “Act only according to that maxim by which you can at the same time will that it should become a universal law.” Universal deployment of LAWS would create a world in which machines routinely kill humans without moral agency—universalisably impermissible.</p>
+</li>
+<li>
+<p><strong>Treating persons as ends</strong>: Kant requires we treat persons as ends in themselves, never merely as means. A machine that kills a person treats that person purely as a means—a military obstacle—without any recognition of their humanity.</p>
+</li>
+</ul>
+<h3 id="subsec-virtue_ethics"><span class="secnum">34.9.4</span> Virtue Ethics<a class="headerlink" href="#subsec-virtue_ethics" title="Permanent link">&para;</a></h3>
+<p>Virtue ethics, following Aristotle, evaluates actions by the character traits (virtues) they express. Warfare, even in the just war tradition, requires the exercise of virtues: courage (facing personal risk to achieve a just objective), practical wisdom (phronesis—discerning the right action in complex circumstances), and justice (treating enemies with appropriate respect for their humanity, including permitting surrender).</p>
+<p>A machine cannot possess virtues; it can only simulate behavioural outputs associated with virtuous action. The soldier who spares an enemy combatant who throws down his weapon acts virtuously; a machine programmed to spare surrendering combatants only simulates the outcome, not the virtue. Shannon Vallor (2016) argues that technologies that replace virtue with automation degrade moral agency at the civilisational level.</p>
+<h3 id="subsec-engineering_ethics"><span class="secnum">34.9.5</span> Engineering Ethics<a class="headerlink" href="#subsec-engineering_ethics" title="Permanent link">&para;</a></h3>
+<p>The <strong>IEEE Code of Ethics</strong> requires engineers to hold paramount the safety, health, and welfare of the public. The <strong>NSPE Code of Ethics</strong> states that engineers shall hold public safety, health, and welfare paramount and shall notify appropriate authorities if their professional judgment is overruled in a matter involving public safety.</p>
+<p>The dual-use dilemma is acute in autonomous weapons engineering: the same computer vision, reinforcement learning, and robotics capabilities developed for civilian autonomous vehicles, medical imaging, and industrial automation are directly applicable to autonomous weapons. An engineer who develops object recognition software cannot fully control its downstream military application.</p>
+<div class="tbl" id="tab-ethics_frameworks">
+<div class="tbl-caption"><strong>Table 34.4.</strong> Summary of Ethical Framework Positions on LAWS</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Framework</strong></th>
+<th style="text-align: left;"><strong>Key Criterion</strong></th>
+<th style="text-align: left;"><strong>Position on LAWS</strong></th>
+<th style="text-align: left;"><strong>Key Objection</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Consequentialism</td>
+<td style="text-align: left;">Outcomes: minimise harm</td>
+<td style="text-align: left;">Potentially permissible if more precise</td>
+<td style="text-align: left;">Precision unproven; lowers threshold for war</td>
+</tr>
+<tr>
+<td style="text-align: left;">Deontology</td>
+<td style="text-align: left;">Intrinsic rightness; human dignity</td>
+<td style="text-align: left;">Impermissible — machine cannot respect human dignity</td>
+<td style="text-align: left;">Overly absolute; ignores empirical outcomes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Just War Theory</td>
+<td style="text-align: left;">Discrimination, proportionality</td>
+<td style="text-align: left;">Permissible only if IHL compliance demonstrated</td>
+<td style="text-align: left;">IHL compliance technically unachievable</td>
+</tr>
+<tr>
+<td style="text-align: left;">Virtue Ethics</td>
+<td style="text-align: left;">Character; moral agency</td>
+<td style="text-align: left;">Impermissible — machine cannot possess virtues</td>
+<td style="text-align: left;">Not all killing requires virtue</td>
+</tr>
+<tr>
+<td style="text-align: left;">Engineering Ethics</td>
+<td style="text-align: left;">Public safety paramount</td>
+<td style="text-align: left;">Duty to refuse participation in LAWS without safety proof</td>
+<td style="text-align: left;">Collective action problem</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-governance"><span class="secnum">34.10</span> Recommendations and Future Governance<a class="headerlink" href="#sec-governance" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-tiered_approach"><span class="secnum">34.10.1</span> Tiered Regulatory Approach<a class="headerlink" href="#subsec-tiered_approach" title="Permanent link">&para;</a></h3>
+<p>Given the deadlock in the CCW and the diversity of state positions, a tiered approach—regulating different categories of LAWS differently—may achieve broader agreement:</p>
+<ul>
+<li>
+<p><strong>Tier 1 — Absolute prohibition</strong>: Autonomous weapon systems designed or used to apply lethal force against human beings without positive human authorisation for each engagement.</p>
+</li>
+<li>
+<p><strong>Tier 2 — Restricted use</strong>: Autonomous countermeasures against inanimate military objects (radar, vehicles), permitted within defined engagement envelopes and subject to Article 36 review.</p>
+</li>
+<li>
+<p><strong>Tier 3 — Regulated autonomy</strong>: Autonomous flight, navigation, and sensor processing permitted without restriction; lethal force decisions require human authorisation.</p>
+</li>
+<li>
+<p><strong>Tier 4 — Defensive systems</strong>: Automated defensive systems (CIWS against incoming missiles) not requiring per-engagement authorisation, given the speed constraints of defensive response.</p>
+</li>
+</ul>
+<h3 id="subsec-art36_implementation"><span class="secnum">34.10.2</span> Article 36 Implementation<a class="headerlink" href="#subsec-art36_implementation" title="Permanent link">&para;</a></h3>
+<p>States should implement Article 36 weapons review processes specifically adapted to AI-enabled systems. A minimum review process for an AI weapon should include:</p>
+<ol>
+<li>
+<p>Documented training data provenance and bias assessment.</p>
+</li>
+<li>
+<p>Statistical characterisation of FPR across all anticipated deployment contexts.</p>
+</li>
+<li>
+<p>Adversarial robustness testing under realistic conditions.</p>
+</li>
+<li>
+<p>Fail-safe behaviour verification.</p>
+</li>
+<li>
+<p>Red-team assessment of emergent behaviour.</p>
+</li>
+<li>
+<p>Legal review of proportionality computation methods.</p>
+</li>
+<li>
+<p>Commander’s operational judgment on adequacy of MHC.</p>
+</li>
+</ol>
+<h3 id="subsec-technical_standards"><span class="secnum">34.10.3</span> Technical Standards<a class="headerlink" href="#subsec-technical_standards" title="Permanent link">&para;</a></h3>
+<p>Several technical standards initiatives are directly relevant:</p>
+<ul>
+<li>
+<p><strong>IEEE P7009</strong>: Standard for Fail-Safe Design of Autonomous and Semi-Autonomous Systems; requires that autonomous systems default to a safe state on failure.</p>
+</li>
+<li>
+<p><strong>ISO/IEC 42001</strong>: AI Management System standard; provides a governance framework for responsible AI development.</p>
+</li>
+<li>
+<p><strong>NIST AI Risk Management Framework</strong>: Identifies and mitigates AI risks including harmful outcomes; adaptable to military context.</p>
+</li>
+<li>
+<p><strong>STANAG 4671</strong>: NATO airworthiness certification for unmanned aircraft systems; basis for extending to autonomy.</p>
+</li>
+</ul>
+<h3 id="subsec-treaty_pathways"><span class="secnum">34.10.4</span> International Treaty Pathways<a class="headerlink" href="#subsec-treaty_pathways" title="Permanent link">&para;</a></h3>
+<p>The Ottawa Process on anti-personnel landmines (1996–1997) succeeded in creating a binding prohibition treaty outside the CCW framework in 14 months, driven by a coalition of middle powers and civil society. A similar process for LAWS could:</p>
+<ol>
+<li>
+<p>Draft treaty text with clear, technically precise definitions.</p>
+</li>
+<li>
+<p>Circulate among states committed to a prohibition or strong regulation.</p>
+</li>
+<li>
+<p>Convene a diplomatic conference outside the CCW.</p>
+</li>
+<li>
+<p>Open the treaty for signature with a practical entry-into-force threshold.</p>
+</li>
+</ol>
+<p>The treaty would not bind the United States, Russia, or China in the short term, but would establish a norm and create reputational costs for non-compliance, as the Mine Ban Treaty has done.</p>
+<h3 id="subsec-cbms"><span class="secnum">34.10.5</span> Confidence Building Measures<a class="headerlink" href="#subsec-cbms" title="Permanent link">&para;</a></h3>
+<p>Short of a binding treaty, confidence building measures (CBMs) can reduce risks:</p>
+<ul>
+<li>
+<p><strong>Transparency reports</strong>: Annual publication of states’ LAWS policy, weapons under development, and Article 36 review processes.</p>
+</li>
+<li>
+<p><strong>Notification mechanisms</strong>: Pre-notification of autonomous weapon deployment zones and engagement envelopes, similar to military exercise notifications.</p>
+</li>
+<li>
+<p><strong>Incident reporting</strong>: Agreed mechanism for reporting autonomous weapon malfunctions or unintended engagements.</p>
+</li>
+<li>
+<p><strong>Shared testing standards</strong>: Agreement on technical benchmarks for IHL compliance testing of AI targeting systems.</p>
+</li>
+</ul>
+<h3 id="subsec-research_priorities"><span class="secnum">34.10.6</span> Research Priorities<a class="headerlink" href="#subsec-research_priorities" title="Permanent link">&para;</a></h3>
+<p>The governance debate depends on resolving technical questions that are open research problems:</p>
+<ol>
+<li>
+<p><strong>Explainable AI for targeting</strong>: Systems that can articulate their target classification reasoning in human-understandable terms, enabling meaningful operator review.</p>
+</li>
+<li>
+<p><strong>Formal verification of neural networks</strong>: Scalable methods for proving safety properties of large neural networks.</p>
+</li>
+<li>
+<p><strong>Out-of-distribution detection</strong>: Reliable detection when an input is outside the training distribution, triggering a default to human control.</p>
+</li>
+<li>
+<p><strong>Robust adversarial defences</strong>: Certifiably robust classifiers with proven resistance to adversarial perturbations.</p>
+</li>
+<li>
+<p><strong>Human-AI teaming optimisation</strong>: Cognitive engineering of interfaces that enable genuine—not nominal—human oversight at operationally relevant timescales.</p>
+</li>
+</ol>
+<p>Define the out-of-distribution (OOD) detection problem formally. Given training distribution <span class="arithmatex">\(p_{\text{train}}\)</span> and input <span class="arithmatex">\(x\)</span>, an OOD detector <span class="arithmatex">\(D\)</span> should satisfy:</p>
+<div id="eq-ood_detector"></div>
+<div class="arithmatex">\[D(x) = \begin{cases} 1 &amp; \text{if } p_{\text{train}}(x) &lt; \delta_{\text{ood}} \\ 0 &amp; \text{otherwise} \end{cases}\tag{34.12}\]</div>
+<p>where <span class="arithmatex">\(\delta_{\text{ood}}\)</span> is the OOD threshold. On detection (<span class="arithmatex">\(D(x)=1\)</span>), the system should route the decision to a human operator rather than act autonomously. Current OOD detection methods (energy-based, Mahalanobis distance, deep ensembles) have false negative rates that are operationally unacceptable for high-stakes decisions.</p>
+<h2 id="sec-ethics_summary"><span class="secnum">34.11</span> Summary and Conclusions<a class="headerlink" href="#sec-ethics_summary" title="Permanent link">&para;</a></h2>
+<p>The development of lethal autonomous weapon systems poses challenges that span engineering, law, ethics, and governance in ways that existing frameworks are not fully equipped to address. The following conclusions emerge from the analysis in this chapter:</p>
+<ol>
+<li>
+<p><strong>Technical compliance with IHL is not currently demonstrated.</strong> No known AI system has been validated to perform target discrimination, proportionality assessment, and precautionary verification at the level IHL requires, in an adversarial environment with distribution shift, adversarial examples, and dynamic civilian presence.</p>
+</li>
+<li>
+<p><strong>The accountability gap is real and unresolved.</strong> The existing framework of individual criminal responsibility and command responsibility does not map cleanly onto the diffuse, distributed responsibility structure of autonomous weapon systems.</p>
+</li>
+<li>
+<p><strong>Meaningful human control is technically achievable in principle but requires deliberate design.</strong> Systems can be designed with per-engagement authorisation requirements, abort capabilities, and engagement envelope constraints that preserve genuine human oversight. Whether operational requirements permit this depends on the specific context.</p>
+</li>
+<li>
+<p><strong>The CCW process is deadlocked.</strong> Progress toward binding international regulation requires either a breakthrough in the CCW or an Ottawa-process alternative. Civil society, middle-power states, and the ICRC are the most likely drivers of treaty progress.</p>
+</li>
+<li>
+<p><strong>Technical standards are needed urgently.</strong> Article 36 review processes must be updated for AI-enabled weapons; international technical standards for AI weapon safety certification are a prerequisite for both governance and responsible development.</p>
+</li>
+<li>
+<p><strong>The ethical objections to LAWS are not merely sentimental.</strong> Deontological, virtue-ethical, and dignity-based arguments identify structural problems—the accountability gap, the impossibility of machine moral agency—that cannot be dismissed as technological conservatism.</p>
+</li>
+</ol>
+<p>The engineer working on drone or missile systems in the twenty-first century is, whether consciously or not, a participant in these debates. The professional obligation to hold public safety paramount requires active engagement with these questions, not mere deference to policy and procurement decisions.</p>
+<div class="tbl" id="tab-key_equations">
+<div class="tbl-caption"><strong>Table 34.5.</strong> Key Formal Definitions and Equations in Autonomous Weapons Ethics</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Concept</strong></th>
+<th style="text-align: left;"><strong>Equation</strong></th>
+<th style="text-align: left;"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Target partition</td>
+<td style="text-align: left;"><span class="math inline">\(\mathcal{T} = \mathcal{M} \cup \mathcal{C}\)</span>, <span class="math inline">\(\mathcal{M} \cap \mathcal{C} = \emptyset\)</span></td>
+<td style="text-align: left;">Lawful vs. protected targets</td>
+</tr>
+<tr>
+<td style="text-align: left;">Distinction constraint</td>
+<td style="text-align: left;"><span class="math inline">\(\Pr[f(s)=1 \mid s \in \phi(\mathcal{C})] \leq \epsilon_c\)</span></td>
+<td style="text-align: left;">Max false positive rate on civilians</td>
+</tr>
+<tr>
+<td style="text-align: left;">MHC adequacy</td>
+<td style="text-align: left;"><span class="math inline">\(\Psi = \sum_{i=1}^6 w_i c_i \geq \Psi_{\min}\)</span></td>
+<td style="text-align: left;">Meaningful human control threshold</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cognitive constraint</td>
+<td style="text-align: left;"><span class="math inline">\(\lambda \cdot T_h \leq N_o\)</span></td>
+<td style="text-align: left;">Operator bandwidth for LAWS oversight</td>
+</tr>
+<tr>
+<td style="text-align: left;">Proportionality</td>
+<td style="text-align: left;"><span class="math inline">\(P = \text{MA} - \lambda_c \cdot \text{CDE} \geq 0\)</span></td>
+<td style="text-align: left;">Attack permissible if proportionate</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fail-safe condition</td>
+<td style="text-align: left;"><span class="math inline">\(\forall S_k \in \mathcal{F}: a(S_k) = a_{\text{safe}}\)</span></td>
+<td style="text-align: left;">Safe action in all fault states</td>
+</tr>
+<tr>
+<td style="text-align: left;">OOD detection</td>
+<td style="text-align: left;"><span class="math inline">\(D(x) = \mathbf{1}[p_{\text{train}}(x) &lt; \delta_{\text{ood}}]\)</span></td>
+<td style="text-align: left;">Route OOD inputs to human</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 33. Counter-UAS and Counter-Drone Systems">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                33. Counter-UAS and Counter-Drone Systems
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch35-future-technologies.html" class="md-footer__link md-footer__link--next" aria-label="Next: 35. Future Technologies">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                35. Future Technologies
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

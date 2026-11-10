@@ -1,0 +1,1389 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/ram_ddr5/hbm-and-specialty-dram.html">
+  
+  
+    <link rel="prev" href="lpddr-and-gddr.html">
+  
+  
+    <link rel="next" href="memory-module-form-factors.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>7. HBM and Specialty DRAM - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#71-how-hbm-is-built" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. HBM and Specialty DRAM
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">RAM Types and DDR5 Memory</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="what-ram-is.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What RAM Is and Why There Are Several Kinds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="cells-refresh-and-the-array.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Cells, Refresh and the Array
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="reading-writing-and-the-interface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Reading, Writing and the Interface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-sram-family.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. The SRAM Family
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standard-ddr-sdram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Standard DDR SDRAM: From SDR to DDR6
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="lpddr-and-gddr.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. LPDDR and GDDR
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="hbm-and-specialty-dram.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. HBM and Specialty DRAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-how-hbm-is-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 How HBM is built
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-why-ai-needs-hbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Why AI needs HBM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-cost-and-supply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Cost and supply
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-hbm-generations-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 HBM generations at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-specialty-and-historic-dram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Specialty and historic DRAM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="memory-module-form-factors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Memory Module Form Factors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="non-volatile-and-emerging-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Non-volatile and Emerging RAM
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="choosing-ram.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Choosing RAM and Comparing the Families
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="case-study-a-32-gb-ddr5-rdimm.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Case Study: A 32 GB DDR5 Registered Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signals-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Signals: When a Wire Stops Being Just a Wire
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="power-delivery-on-the-module.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Power: Clean, Steady Voltage for Twenty Chips
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="board-spd-testing-and-manufacture.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. The Board, the SPD and Making a Module
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="designing-an-sram-pdks-and-process-nodes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Designing an SRAM, Process Kits and Process Nodes
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="controllers-dram-chips-and-the-tools-behind-them.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Controllers, DRAM Chips and the Tools Behind Them
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-market-and-what-you-can-build.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. The Market, and What You Can Build with Open Tools
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#71-how-hbm-is-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.1 How HBM is built
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#72-why-ai-needs-hbm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.2 Why AI needs HBM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#73-cost-and-supply" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.3 Cost and supply
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#74-hbm-generations-at-a-glance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.4 HBM generations at a glance
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#75-specialty-and-historic-dram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.5 Specialty and historic DRAM
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#76-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.6 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#77-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7.7 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-7-hbm-and-specialty-dram">Chapter 7: HBM and Specialty DRAM<a class="headerlink" href="#chapter-7-hbm-and-specialty-dram" title="Permanent link">&para;</a></h1>
+<p>High Bandwidth Memory stacks DRAM dies vertically and connects them to the processor through a very wide, short interface. It delivers by far the most bandwidth of any memory and is the defining memory of the AI era. This chapter explains how a stack is built, why accelerators need it, what it costs, and how its generations compare. The second half turns to the specialty and historic DRAMs, the designs adapted for special jobs, some of which are still made while others matter mainly as history that shaped modern designs.</p>
+<h2 id="71-how-hbm-is-built">7.1 How HBM is built<a class="headerlink" href="#71-how-hbm-is-built" title="Permanent link">&para;</a></h2>
+<p>An HBM stack is a tower of DRAM dies, 8, 12 or 16 high in current parts, sitting on a base die, also called the logic die. Each DRAM die is thinned and pierced by thousands of <strong>TSVs</strong> (through-silicon vias): vertical copper connections that carry signals and power straight through the silicon. The base die contains the interface circuits (the PHY), test logic and buffers.</p>
+<p>Instead of a few fast pins, HBM uses a very wide, relatively slow bus: 1024 bits per stack up to HBM3E, and 2048 bits for HBM4. So many wires cannot run through an ordinary circuit board, so the stacks and the processor sit side by side on a <strong>silicon interposer</strong>, a slab of silicon with very fine wiring. This is called 2.5D packaging, and TSMC's CoWoS (chip-on-wafer-on-substrate) is the best-known example. Because the wires are only millimetres long, each bit costs little energy to move.</p>
+<figure class="fig fig-diagram">
+<img src="img/hbm-cross-section.png" alt="Cross-section of a GPU or system chip with two HBM stacks on a silicon interposer over a package substrate with solder balls, labelling DRAM core dies, TSVs, the base logic die, the interposer, the substrate and the solder balls" loading="lazy" width="1226" height="438">
+<figcaption><strong>Figure 7.1.</strong> Cross-section of a GPU or system chip with two HBM stacks on a silicon interposer over a package substrate with solder balls, labelling DRAM core dies, TSVs, the base logic die, the interposer, the substrate and the solder balls</figcaption>
+</figure>
+
+<p><em>Figure 7.1 is a simplified cross-section, not to scale; real accelerators carry up to eight or more stacks.</em></p>
+<h2 id="72-why-ai-needs-hbm">7.2 Why AI needs HBM<a class="headerlink" href="#72-why-ai-needs-hbm" title="Permanent link">&para;</a></h2>
+<p>Training and running large AI models is often limited not by arithmetic but by how fast model weights and activations can be streamed from memory. When generating text, for example, every new token may require reading most of the model's weights. An accelerator with eight HBM3E stacks has roughly 8 TB/s of bandwidth. Capacity matters too: bigger stacks let larger models fit on fewer chips.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 7.1: HBM bandwidth against a desktop</p>
+<ol>
+<li>One HBM3E stack at 9.6 Gbps per pin: <span class="arithmatex">\(9.6 \times 1024 / 8 = 1228.8\)</span> GB/s, about 1.2 TB/s.</li>
+<li>Eight such stacks: <span class="arithmatex">\(8 \times 1.2288 = 9.8\)</span> TB/s. At the lower end of the HBM3E speed range (9.2 Gbps) eight stacks give <span class="arithmatex">\(8 \times 1177.6 = 9.4\)</span> TB/s; the figure "8 to 10 TB/s" covers the range of accelerators.</li>
+<li>A dual-channel DDR5-6400 desktop reaches 102.4 GB/s (Example 1.2). The ratio is <span class="arithmatex">\(9830 / 102.4 \approx 96\)</span> for ten TB/s, and <span class="arithmatex">\(8000/102.4 \approx 78\)</span> for 8 TB/s.</li>
+</ol>
+<p>So an eight-stack accelerator has roughly 80 to 95 times the bandwidth of a dual-channel desktop.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">A correction</p>
+<p>The tutorial text says "more than a hundred times a dual-channel desktop" for 8 TB/s. The arithmetic gives 78 to 96 times, so "roughly eighty to ninety times" is the accurate statement.</p>
+</div>
+<h2 id="73-cost-and-supply">7.3 Cost and supply<a class="headerlink" href="#73-cost-and-supply" title="Permanent link">&para;</a></h2>
+<p>HBM is expensive: it costs several times more per gigabyte than DDR5, because stacking, TSVs and thinning reduce yield, and each die is larger than a comparable DDR die. It also needs costly interposer packaging with limited factory capacity. Only three companies make it in volume (SK hynix, Samsung and Micron), and AI demand has kept supply tight. HBM4 moves the base die to a logic process, opening the door to custom base dies designed with the customer (Chapter 15).</p>
+<h2 id="74-hbm-generations-at-a-glance">7.4 HBM generations at a glance<a class="headerlink" href="#74-hbm-generations-at-a-glance" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Generation</th>
+<th>Year</th>
+<th>Bus width</th>
+<th>Speed per pin</th>
+<th>Bandwidth per stack</th>
+<th>Max capacity per stack</th>
+<th>Used in</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HBM</td>
+<td>2015</td>
+<td>1024-bit</td>
+<td>1 Gbps</td>
+<td>128 GB/s</td>
+<td>1 GB</td>
+<td>AMD Fury</td>
+</tr>
+<tr>
+<td>HBM2/2E</td>
+<td>2016/2020</td>
+<td>1024-bit</td>
+<td>2–3.6 Gbps</td>
+<td>256–460 GB/s</td>
+<td>8–16 GB</td>
+<td>V100, A100</td>
+</tr>
+<tr>
+<td>HBM3</td>
+<td>2022</td>
+<td>1024-bit</td>
+<td>6.4 Gbps</td>
+<td>819 GB/s</td>
+<td>24 GB</td>
+<td>H100</td>
+</tr>
+<tr>
+<td>HBM3E</td>
+<td>2024</td>
+<td>1024-bit</td>
+<td>9.2–9.8 Gbps</td>
+<td>~1.2 TB/s</td>
+<td>36 GB (12-high)</td>
+<td>H200, B200/B300, MI325X/MI350</td>
+</tr>
+<tr>
+<td>HBM4</td>
+<td>2026</td>
+<td>2048-bit</td>
+<td>8–10+ Gbps</td>
+<td>2+ TB/s</td>
+<td>48–64 GB (16-high)</td>
+<td>Nvidia Rubin, AMD MI400</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition example">
+<p class="admonition-title">Example 7.2: Checking the HBM table</p>
+<ul>
+<li>HBM3: <span class="arithmatex">\(6.4 \times 1024 / 8 = 819.2\)</span> GB/s, matching 819 GB/s.</li>
+<li>HBM4 at 8 Gbps: <span class="arithmatex">\(8 \times 2048 / 8 = 2048\)</span> GB/s, about 2 TB/s. Doubling the bus width halves the pin speed needed for a given bandwidth, which is an advantage because wires can then run slower.</li>
+<li>Capacity: a 12-high HBM3E stack of 36 GB means <span class="arithmatex">\(36 \times 8 / 12 = 24\)</span> Gb per die; a 16-high stack of 48 GB means 24 Gb dies again, and 64 GB means 32 Gb dies.</li>
+</ul>
+</div>
+<h2 id="75-specialty-and-historic-dram">7.5 Specialty and historic DRAM<a class="headerlink" href="#75-specialty-and-historic-dram" title="Permanent link">&para;</a></h2>
+<p>Beyond the four big families, DRAM has been adapted for special jobs.</p>
+<p><strong>RLDRAM (reduced-latency DRAM).</strong> RLDRAM uses smaller, more numerous banks and an SRAM-like interface with no need to manage rows, so a random access completes much sooner than in standard DRAM. It sits between QDR SRAM (faster, smaller) and DDR (larger, slower) in cost and performance, and is used mainly for packet buffers and lookup tables in network equipment.</p>
+<p><strong>eDRAM (embedded DRAM).</strong> eDRAM puts DRAM cells on the same die as logic (or in the same package), usually with a deep-trench or special capacitor. It gives several times the density of SRAM at somewhat higher latency, plus refresh. Examples are the large L3 caches in IBM POWER and IBM Z mainframe processors, the Intel Iris Pro graphics cache ("Crystal Well") and the 10 MB of eDRAM next to the Xbox 360 GPU. It is rare at the newest process nodes, where stacked SRAM has largely taken its place.</p>
+<p><strong>FPM and EDO DRAM.</strong> Fast Page Mode DRAM let the controller read several columns from an already-open row without repeating the row address. Extended Data Out DRAM kept output data valid while the next column address was supplied, overlapping the two steps. Both were asynchronous (no clock) and powered the PCs of the 1990s on SIMM modules before SDRAM replaced them.</p>
+<p><strong>RDRAM (Rambus DRAM).</strong> Rambus DRAM used a narrow, very fast packet-based bus with chips daisy-chained along the channel. It offered high bandwidth for its day but had high latency, high cost, heat and licensing disputes. It appeared in the Nintendo 64, the PlayStation 2 and early Pentium 4 PCs (RIMM modules) before DDR won the PC market.</p>
+<p><strong>XDR DRAM.</strong> XDR was Rambus's successor to RDRAM, using differential signalling and multiple transfers per clock for high per-pin bandwidth. Its best-known use was as the main memory of the Sony PlayStation 3, alongside GDDR3 for graphics.</p>
+<p><strong>VRAM, SGRAM and WRAM.</strong> The graphics cards of the 1990s used special DRAMs. VRAM was dual-ported: one port for the processor to draw into, and a serial port that streamed pixels to the display at the same time. SGRAM (synchronous graphics RAM) added features such as block writes to fill areas quickly, and evolved into GDDR. WRAM (window RAM) was a cheaper, faster dual-ported variant used in cards such as the Matrox Millennium.</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Key idea</th>
+<th>Where used</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RLDRAM</td>
+<td>Many small banks, SRAM-like interface, low random-access latency</td>
+<td>Network packet buffers</td>
+<td>Niche, still made</td>
+</tr>
+<tr>
+<td>eDRAM</td>
+<td>DRAM cells on (or next to) a logic die</td>
+<td>IBM POWER/Z caches, Intel Iris Pro, Xbox 360</td>
+<td>Rare at new nodes</td>
+</tr>
+<tr>
+<td>FPM / EDO DRAM</td>
+<td>Asynchronous; faster access within an open row</td>
+<td>1990s PCs</td>
+<td>Obsolete</td>
+</tr>
+<tr>
+<td>RDRAM (Rambus)</td>
+<td>Narrow, fast, packet-based bus</td>
+<td>Pentium 4, N64, PS2</td>
+<td>Obsolete</td>
+</tr>
+<tr>
+<td>XDR DRAM</td>
+<td>Differential, multi-transfer Rambus successor</td>
+<td>PS3</td>
+<td>Obsolete</td>
+</tr>
+<tr>
+<td>VRAM / SGRAM / WRAM</td>
+<td>Dual-ported or graphics-optimised DRAM</td>
+<td>1990s graphics cards</td>
+<td>Obsolete (SGRAM led to GDDR)</td>
+</tr>
+</tbody>
+</table>
+<h2 id="76-summary">7.6 Summary<a class="headerlink" href="#76-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>HBM stacks 8, 12 or 16 DRAM dies joined by TSVs on a base die and reaches the processor through a 1024-bit (HBM4: 2048-bit) bus on a silicon interposer.</li>
+<li>A stack gives about 1.2 TB/s (HBM3E) to over 2 TB/s (HBM4); eight stacks give 8 to 10 TB/s, roughly 80 to 95 times a dual-channel desktop.</li>
+<li>HBM costs several times more per gigabyte than DDR5 and is made by three companies.</li>
+<li>The specialty DRAMs adapted the cell and interface for latency (RLDRAM), density next to logic (eDRAM), or graphics (VRAM, SGRAM); the Rambus designs lost to DDR.</li>
+</ul>
+<h2 id="77-exercises">7.7 Exercises<a class="headerlink" href="#77-exercises" title="Permanent link">&para;</a></h2>
+<p><strong>Exercise 7.1.</strong> Compute the bandwidth of one HBM2E stack at 3.2 Gbps per pin on a 1024-bit bus.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(3.2 \times 1024 / 8 = 409.6\)</span> GB/s, inside the 256 to 460 GB/s range for HBM2/2E.</p>
+</details>
+<p><strong>Exercise 7.2.</strong> An accelerator has six HBM3E stacks at 9.6 Gbps. What is its total bandwidth and how many 12-high 36 GB stacks give its capacity?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Bandwidth <span class="arithmatex">\(= 6 \times 1228.8 = 7372.8\)</span> GB/s, about 7.4 TB/s. Capacity <span class="arithmatex">\(= 6 \times 36 = 216\)</span> GB.</p>
+</details>
+<p><strong>Exercise 7.3.</strong> Why do HBM stacks sit on a silicon interposer instead of an ordinary circuit board?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>A 1024-bit or 2048-bit interface per stack has thousands of wires, too many and too fine for an ordinary board. A silicon interposer has very fine wiring, so the thousands of wires fit and are only millimetres long, which also keeps the energy per bit low.</p>
+</details>
+<p><strong>Exercise 7.4.</strong> Suppose a model needs all of its 140 GB of weights read once for every generated token, and the accelerator has 8 TB/s of memory bandwidth. What is the best-case token rate set by memory bandwidth alone?</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(8000 \text{ GB/s} / 140 \text{ GB} \approx 57\)</span> tokens per second at most. This is a supposed example to show why bandwidth limits text generation; real rates are lower.</p>
+</details>
+<p><strong>Exercise 7.5.</strong> Match each memory to its niche: eDRAM, RLDRAM, SGRAM, RDRAM. (a) network packet buffers; (b) large caches next to a processor core; (c) graphics cards of the 1990s that evolved into GDDR; (d) a narrow packet-based bus used by the Nintendo 64.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>eDRAM: (b). RLDRAM: (a). SGRAM: (c). RDRAM: (d).</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="lpddr-and-gddr.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. LPDDR and GDDR">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. LPDDR and GDDR
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="memory-module-form-factors.html" class="md-footer__link md-footer__link--next" aria-label="Next: 8. Memory Module Form Factors">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                8. Memory Module Form Factors
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

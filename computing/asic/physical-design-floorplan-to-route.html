@@ -1,0 +1,3648 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/asic/physical-design-floorplan-to-route.html">
+  
+  
+    <link rel="prev" href="logic-synthesis-design-for-test.html">
+  
+  
+    <link rel="next" href="signoff-tapeout.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>5. Physical Design: Floorplan to Route - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#51-physical-design-data-and-file-formats" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Physical Design: Floorplan to Route
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">ASIC Design: A Field Guide</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to-read-this-guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to read this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="chip-design-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Chip Design Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="specification-architecture-rtl-design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Specification, Architecture & RTL Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="functional-verification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Functional Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logic-synthesis-design-for-test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Logic Synthesis & Design for Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Physical Design: Floorplan to Route
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="physical-design-floorplan-to-route.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Physical Design: Floorplan to Route
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-physical-design-data-and-file-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Physical Design Data and File Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Physical Design Data and File Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-part-of-a-def-file-simplified-sky130-units-1000-dbu-1-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Part of a DEF file (simplified, SKY130 units: 1000 DBU = 1 µm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-floorplanning-die-size-macros-and-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Floorplanning: Die Size, Macros and I/O
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Floorplanning: Die Size, Macros and I/O">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-floorplan-in-openroad-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Floorplan in OpenROAD (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-power-planning-rings-straps-and-the-power-grid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Power Planning: Rings, Straps and the Power Grid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Power Planning: Rings, Straps and the Power Grid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-power-grid-with-openroad-pdngen-sky130-illustrative-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Power grid with OpenROAD pdngen (SKY130, illustrative values)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-placement-and-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Placement and Optimisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 Placement and Optimisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-placement-in-openroad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Placement in OpenROAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-clock-tree-synthesis-cts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Clock Tree Synthesis (CTS)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Clock Tree Synthesis (CTS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-cts-and-hold-fixing-in-openroad-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: CTS and hold fixing in OpenROAD (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-routing-global-detailed-layers-vias-and-antenna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 Routing: Global, Detailed, Layers, Vias and Antenna
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 Routing: Global, Detailed, Layers, Vias and Antenna">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-routing-in-openroad-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Routing in OpenROAD (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-place-and-route-tools-innovus-fusion-compiler-icc2-aprisa-and-openroad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Place-and-Route Tools: Innovus, Fusion Compiler, ICC2, Aprisa and OpenROAD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 Place-and-Route Tools: Innovus, Fusion Compiler, ICC2, Aprisa and OpenROAD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-main-pr-stages-in-two-commercial-tools-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Main P&amp;R stages in two commercial tools (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58-pd-sanity-checks-reports-and-qor-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 PD Sanity Checks, Reports and QoR Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 PD Sanity Checks, Reports and QoR Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-quick-health-check-in-openroadopensta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Quick health check in OpenROAD/OpenSTA
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59-timing-closure-and-ecos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Timing Closure and ECOs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.9 Timing Closure and ECOs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-signoff-driven-eco-in-primetime-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Signoff-driven ECO in PrimeTime (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510-signal-integrity-crosstalk-and-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 Signal Integrity: Crosstalk and Noise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511-io-pads-package-co-design-and-system-level-sipi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 I/O Pads, Package Co-Design and System-Level SI/PI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.11 I/O Pads, Package Co-Design and System-Level SI/PI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-target-impedance-for-a-core-supply-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Target impedance for a core supply in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512-implementing-multi-voltage-and-power-domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 Implementing Multi-Voltage and Power Domains
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.12 Implementing Multi-Voltage and Power Domains">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-upf-for-a-switchable-cpu-domain-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: UPF for a switchable CPU domain (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513-hierarchical-design-and-full-chip-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.13 Hierarchical Design and Full-Chip Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#514-chiplets-25d-and-3d-ic-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.14 Chiplets, 2.5D and 3D-IC Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#515-advanced-node-physical-design-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.15 Advanced-Node Physical Design Challenges
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signoff-tapeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Signoff & Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fabrication-packaging-test-bring-up.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Fabrication, Packaging, Test & Bring-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="eda-industry-open-source-silicon-analog-ai-in-eda-careers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. EDA Industry, Open-Source Silicon, Analog, AI-in-EDA & Careers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ten-things-every-asic-student-should-master.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ten Things Every ASIC Student Should Master
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-of-terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary of Terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#51-physical-design-data-and-file-formats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Physical Design Data and File Formats
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Physical Design Data and File Formats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-part-of-a-def-file-simplified-sky130-units-1000-dbu-1-m" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Part of a DEF file (simplified, SKY130 units: 1000 DBU = 1 µm)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#52-floorplanning-die-size-macros-and-io" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Floorplanning: Die Size, Macros and I/O
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Floorplanning: Die Size, Macros and I/O">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-floorplan-in-openroad-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Floorplan in OpenROAD (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#53-power-planning-rings-straps-and-the-power-grid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Power Planning: Rings, Straps and the Power Grid
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Power Planning: Rings, Straps and the Power Grid">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-power-grid-with-openroad-pdngen-sky130-illustrative-values" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Power grid with OpenROAD pdngen (SKY130, illustrative values)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#54-placement-and-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Placement and Optimisation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 Placement and Optimisation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-placement-in-openroad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Placement in OpenROAD
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#55-clock-tree-synthesis-cts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Clock Tree Synthesis (CTS)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Clock Tree Synthesis (CTS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-cts-and-hold-fixing-in-openroad-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: CTS and hold fixing in OpenROAD (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#56-routing-global-detailed-layers-vias-and-antenna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 Routing: Global, Detailed, Layers, Vias and Antenna
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 Routing: Global, Detailed, Layers, Vias and Antenna">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-routing-in-openroad-sky130" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Routing in OpenROAD (SKY130)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#57-place-and-route-tools-innovus-fusion-compiler-icc2-aprisa-and-openroad" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Place-and-Route Tools: Innovus, Fusion Compiler, ICC2, Aprisa and OpenROAD
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 Place-and-Route Tools: Innovus, Fusion Compiler, ICC2, Aprisa and OpenROAD">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-main-pr-stages-in-two-commercial-tools-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Main P&amp;R stages in two commercial tools (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#58-pd-sanity-checks-reports-and-qor-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 PD Sanity Checks, Reports and QoR Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 PD Sanity Checks, Reports and QoR Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-quick-health-check-in-openroadopensta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Quick health check in OpenROAD/OpenSTA
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#59-timing-closure-and-ecos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Timing Closure and ECOs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.9 Timing Closure and ECOs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-signoff-driven-eco-in-primetime-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Signoff-driven ECO in PrimeTime (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#510-signal-integrity-crosstalk-and-noise" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 Signal Integrity: Crosstalk and Noise
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#511-io-pads-package-co-design-and-system-level-sipi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 I/O Pads, Package Co-Design and System-Level SI/PI
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.11 I/O Pads, Package Co-Design and System-Level SI/PI">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-target-impedance-for-a-core-supply-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Target impedance for a core supply in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#512-implementing-multi-voltage-and-power-domains" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 Implementing Multi-Voltage and Power Domains
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.12 Implementing Multi-Voltage and Power Domains">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-upf-for-a-switchable-cpu-domain-simplified" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: UPF for a switchable CPU domain (simplified)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#513-hierarchical-design-and-full-chip-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.13 Hierarchical Design and Full-Chip Integration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#514-chiplets-25d-and-3d-ic-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.14 Chiplets, 2.5D and 3D-IC Design
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#515-advanced-node-physical-design-challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.15 Advanced-Node Physical Design Challenges
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-5-physical-design-floorplan-to-route">Chapter 5: Physical Design: Floorplan to Route<a class="headerlink" href="#chapter-5-physical-design-floorplan-to-route" title="Permanent link">&para;</a></h1>
+<p>Physical design (the 'back end') turns a gate-level netlist into real geometry: where every cell sits on the silicon and how every wire is routed across a dozen or more metal layers. This chapter explains the data formats tools exchange, then follows the implementation flow: floorplanning, power planning, placement, clock tree synthesis and routing, plus the tools and the everyday health checks engineers run. It finishes with timing closure, signal integrity, I/O pads and chip-package-board co-design, multi-voltage implementation, hierarchical design, chiplets and 3D-ICs, and advanced-node challenges.</p>
+<h2 id="51-physical-design-data-and-file-formats">5.1 Physical Design Data and File Formats<a class="headerlink" href="#51-physical-design-data-and-file-formats" title="Permanent link">&para;</a></h2>
+<p>Physical design tools exchange information through standard files. The netlist (Verilog) says what is connected; Liberty (.lib) gives timing; LEF describes the shapes of cells and the technology's metal layers; DEF describes the placed and routed design; SDC gives constraints; SPEF holds extracted wire parasitics; and GDSII/OASIS holds the final polygons. Knowing which file carries what is basic PD literacy.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-01-physical-design-data-and-file-formats.svg" alt="Each arrow is a file hand-off; knowing which file carries what is basic PD literacy." loading="lazy" width="1000" height="389">
+<figcaption><strong>Files into and out of place-and-route.</strong> Each arrow is a file hand-off; knowing which file carries what is basic PD literacy.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like building a house from several documents: the parts list (netlist), the product catalogue (LEF/LIB), the site plan (DEF), the schedule (SDC) and the final architectural drawings (GDS).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>When Elif's block is handed from synthesis to place-and-route, she receives top.v (netlist), top.sdc and top.upf. From the library team she gets tech.lef, cells.lef, memory LEFs and Liberty files for 12 corners. After routing, Innovus writes top.def and SPEF files from Quantus; signoff reads them for STA, and the final top.gds goes to physical verification.</p>
+</div>
+<h4 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Inputs to P&amp;R: netlist (.v), constraints (.sdc), power intent (.upf), libraries (.lib, .lef), technology LEF and rule files.</li>
+<li>During P&amp;R: the design lives in a tool database (OpenAccess, NDM, Innovus DB, OpenDB).</li>
+<li>Exchange formats: DEF for placement/routing, SPEF for parasitics, SDF for delays.</li>
+<li>Final layout: GDSII or OASIS merged with cell and macro layouts.</li>
+<li>Signoff tools read GDS/OASIS (DRC/LVS), SPEF + netlist (STA) and DEF (power).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design, CAD and signoff engineers; library and IP teams supply these views.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Classic interview question: 'What is in a LEF vs a DEF vs a Liberty file?' — LEF = abstract shapes and layers, DEF = actual design placement/routing, LIB = timing and power.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>LEF has two parts: the technology LEF (layers, pitches, vias, sites, antenna rules) and cell/macro LEFs (SIZE, PIN shapes, OBS blockages). Tools must read the technology LEF first.</li>
+<li>DEF coordinates are integers in database units: 'UNITS DISTANCE MICRONS 1000' means 1 µm = 1000 units, so a SKY130 row height of 2.72 µm appears as 2720.</li>
+<li>SPEF (IEEE 1481) stores one *D_NET block per net with *CONN, *CAP and *RES sections; full-chip SPEFs reach tens of gigabytes and are read gzipped, one per RC corner.</li>
+<li>Cell names, pin names and sizes must match across Verilog, Liberty, LEF, CDL and GDS views of a library; any mismatch shows up as link errors, missing pins or LVS failures.</li>
+<li>Native databases (Synopsys NDM, Innovus DB, OpenROAD's OpenDB) are faster and hold more than DEF; LEF/DEF are for exchange between tools, and OpenDB closely follows the LEF/DEF data model.</li>
+<li>GDSII identifies layers only by number pairs (layer/datatype), so a layer map is needed to translate names like 'met1 drawing' into the foundry's numbers.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Mixing library releases (LEF from one version, Liberty from another) gives plausible but wrong results; lock every view to the same release.</li>
+<li>Thinking DEF contains timing: it holds geometry and connectivity only. Timing comes from Liberty, SDC and SPEF.</li>
+<li>Reading DEF numbers as microns; divide by the UNITS value first, or die sizes and pin positions will be off by 1000×.</li>
+</ul>
+</div>
+<h3 id="try-it-part-of-a-def-file-simplified-sky130-units-1000-dbu-1-m">Try it: Part of a DEF file (simplified, SKY130 units: 1000 DBU = 1 µm)<a class="headerlink" href="#try-it-part-of-a-def-file-simplified-sky130-units-1000-dbu-1-m" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code>VERSION 5.8 ;
+DESIGN counter ;
+UNITS DISTANCE MICRONS 1000 ;
+DIEAREA ( 0 0 ) ( 100000 100000 ) ;
+ROW ROW_0 unithd 5520 10880 N DO 162 BY 1 STEP 460 0 ;
+TRACKS Y 170 DO 294 STEP 340 LAYER met1 ;
+COMPONENTS 2 ;
+  - u1 sky130_fd_sc_hd__nand2_1 + PLACED ( 10120 10880 ) N ;
+  - u2 sky130_fd_sc_hd__dfxtp_1 + PLACED ( 15640 10880 ) N ;
+END COMPONENTS
+END DESIGN
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Verilog gate-level netlist</strong><br><em>IEEE 1364/1800 structural Verilog · File format · Physical Design</em></td>
+<td>Structural description listing cell instances and their connections.</td>
+<td>'NAND2_X1 u5 (.A(n1), .B(n2), .Y(n3));' is one netlist line.</td>
+</tr>
+<tr>
+<td><strong>LEF (Library Exchange Format)</strong><br><em>Cadence (openly published; LEF/DEF 5.8) · File format · Physical Design</em></td>
+<td>Abstract view of cells and macros (size, pins, blockages) plus technology layers and vias.</td>
+<td>An SRAM LEF shows its outline, pin locations and metal blockages without internal detail.</td>
+</tr>
+<tr>
+<td><strong>DEF (Design Exchange Format)</strong><br><em>Cadence (openly published; LEF/DEF 5.8) · File format · Physical Design</em></td>
+<td>Describes a specific design's die area, rows, placement, pins and routing.</td>
+<td>A floorplan DEF passes macro positions from floorplanning to synthesis.</td>
+</tr>
+<tr>
+<td><strong>SPEF (Standard Parasitic Exchange Format)</strong><br><em>IEEE 1481 · File format · Signoff</em></td>
+<td>Resistance and capacitance of every routed net, produced by extraction for timing analysis.</td>
+<td>PrimeTime reads one SPEF per RC corner for signoff STA.</td>
+</tr>
+<tr>
+<td><strong>OpenAccess (OA)</strong><br><em>Si2 (originally Cadence) · Standard · Physical Design</em></td>
+<td>Open database API and format for IC design data, used heavily in custom and mixed-signal flows.</td>
+<td>A Virtuoso analog block and an Innovus digital block share data via OpenAccess.</td>
+</tr>
+<tr>
+<td><strong>Tool databases (NDM, Innovus DB, OpenDB)</strong><br><em>Synopsys (NDM), Cadence (Innovus), OpenROAD (OpenDB) · File format · Physical Design</em></td>
+<td>Native internal databases each P&amp;R tool uses to store the design between steps.</td>
+<td>OpenROAD saves an .odb file after each stage of the flow.</td>
+</tr>
+<tr>
+<td><strong>Technology file / tech LEF</strong><br><em>Foundry / PDK · File format · Physical Design</em></td>
+<td>Defines metal layers, pitches, widths, spacing and via rules used by routers.</td>
+<td>The tech LEF says metal 2 has a 64 nm pitch and runs horizontally.</td>
+</tr>
+<tr>
+<td><strong>GDSII and OASIS</strong><br><em>Calma (GDSII); SEMI P39 (OASIS) · File format · Signoff</em></td>
+<td>Hierarchical polygon formats holding final layout for physical verification and mask making.</td>
+<td>The final tapeout database is a multi-gigabyte OASIS file.</td>
+</tr>
+<tr>
+<td><strong>ITF / QRC techfile / nxtgrd</strong><br><em>Foundry; Synopsys and Cadence formats · File format · Signoff</em></td>
+<td>Interconnect technology data describing metal thickness and dielectrics for parasitic extraction.</td>
+<td>StarRC uses nxtgrd files built from the foundry's ITF.</td>
+</tr>
+<tr>
+<td><strong>Floorplan/pin and constraint files (e.g. .tcl, .io)</strong><br><em>Tool-specific · File format · Physical Design</em></td>
+<td>Scripts and files capturing die size, pin placement, macro locations and blockages.</td>
+<td>A pin-placement file assigns 300 ports along the top and left edges.</td>
+</tr>
+<tr>
+<td><strong>Sites and rows (SITE, ROW)</strong><br><em>LEF/DEF placement grid · Concept · Physical Design</em></td>
+<td>A LEF SITE is the smallest placement slot; DEF ROWs repeat sites across the core so every cell lands on a legal position.</td>
+<td>SKY130's unithd site is 0.46 × 2.72 µm, so every hd cell is a whole number of 0.46 µm sites wide.</td>
+</tr>
+<tr>
+<td><strong>Routing tracks (TRACKS)</strong><br><em>DEF / tech LEF · Concept · Physical Design</em></td>
+<td>Evenly spaced lines on each metal layer along which routers draw wires, set by the layer pitch.</td>
+<td>SKY130 met1 tracks run horizontally every 0.34 µm; met2 tracks run vertically every 0.46 µm.</td>
+</tr>
+<tr>
+<td><strong>Abstract vs full layout views</strong><br><em>Library and IP deliverables · Concept · Physical Design</em></td>
+<td>P&amp;R works with lightweight LEF abstracts; the full transistor-level GDS of each cell is merged only at stream-out.</td>
+<td>An SRAM's LEF is a few kilobytes of pins and blockages; its GDS holds millions of polygons.</td>
+</tr>
+<tr>
+<td><strong>Power-aware (PG) netlist</strong><br><em>Written by P&amp;R tools · File format · Signoff</em></td>
+<td>Verilog netlist that also lists power/ground pins and physical-only cells, used for LVS, power and low-power checks.</td>
+<td>The PG netlist shows each cell's VPWR and VGND connected to the right supply net.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="52-floorplanning-die-size-macros-and-io">5.2 Floorplanning: Die Size, Macros and I/O<a class="headerlink" href="#52-floorplanning-die-size-macros-and-io" title="Permanent link">&para;</a></h2>
+<p>Floorplanning decides the overall layout of the chip or block: its size and shape, where large macros like memories and PHYs go, where I/O pins sit, and how much space is left for standard cells. A good floorplan makes everything later easier; a bad one causes congestion, long wires and timing problems that no later step can fix.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-02-floorplanning-die-size-macros-and-i-o.svg" alt="Big decisions come first; a quick trial placement tells you whether the floorplan is healthy." loading="lazy" width="1000" height="389">
+<figcaption><strong>A floorplanning sequence.</strong> Big decisions come first; a quick trial placement tells you whether the floorplan is healthy.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Floorplanning is like arranging furniture in a new flat before moving in: put the big heavy pieces (macros) sensibly first, leave walkways (routing channels), and the small items fit easily afterwards.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Emma floorplans a 4 mm² video block. She places 24 SRAM macros along two edges with their pins facing the logic, leaves 10 µm channels between them for routing, and puts I/O pins near the neighbouring blocks they connect to. Target utilisation is 70 %. Her first try placed memories in the centre; congestion maps showed red hot spots, so she moved them to the periphery.</p>
+</div>
+<h4 id="how-it-works_1">How it works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Choose die/block size and aspect ratio from area estimates and target utilisation.</li>
+<li>Place I/O pads or block pins to match neighbouring blocks and package.</li>
+<li>Place hard macros (memories, PHYs, analog), oriented with pins toward logic.</li>
+<li>Add placement blockages, halos and routing channels around macros.</li>
+<li>Check early congestion, timing and power estimates; iterate.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design engineers, SoC floorplanners and architects.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Macros at the edges with pins facing the core, plus halos, is the most common good starting point.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Typical starting core utilisation is around 60-75 % for logic-heavy blocks; very high utilisation only works for regular, low-congestion logic with few macros.</li>
+<li>Macros are usually stacked in columns along block edges with pins facing the core, avoiding narrow notches and isolated islands of standard cells that are hard to route and buffer.</li>
+<li>Flylines and dataflow views in Innovus and ICC2 (and OpenROAD's RTL-MP macro placer) show which macros talk to which, guiding macro placement before any cell is placed.</li>
+<li>Floorplans are judged by fast trial runs: early global placement, global-route overflow and rough timing. Teams compare several candidates before committing.</li>
+<li>At chip level, the pad ring or bump map is co-designed with the package team: power pad counts per supply, ESD and simultaneous-switching noise all set the I/O plan.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Placing macros in the middle of the core slices the standard-cell area into fragments; prefer edges and grouped arrays unless data flow demands otherwise.</li>
+<li>Chasing minimum area with very high utilisation; the savings are lost to congestion, extra buffering and schedule slips.</li>
+<li>Packing macros too tightly without room for power straps and pin access, causing IR hot spots and unroutable pins.</li>
+</ul>
+</div>
+<h3 id="try-it-floorplan-in-openroad-sky130">Try it: Floorplan in OpenROAD (SKY130)<a class="headerlink" href="#try-it-floorplan-in-openroad-sky130" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">initialize_floorplan</span><span class="w"> </span><span class="o">-</span>utilization<span class="w"> </span><span class="mi">60</span><span class="w"> </span><span class="o">-</span>aspect_ratio<span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="nv">-core_space</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span><span class="o">-</span>site<span class="w"> </span>unithd
+<span class="nv">make_tracks</span>
+<span class="nv">place_pins</span><span class="w"> </span><span class="o">-</span>hor_layers<span class="w"> </span>met3<span class="w"> </span><span class="o">-</span>ver_layers<span class="w"> </span>met2
+<span class="nv">report_design_area</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_1">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Floorplan</strong><br><em>Physical design step · Concept · Physical Design</em></td>
+<td>The high-level arrangement of die area, macros, pins and power structures.</td>
+<td>The SoC floorplan places CPU, GPU and DDR PHYs in fixed regions.</td>
+</tr>
+<tr>
+<td><strong>Core utilisation</strong><br><em>PD metric · Concept · Physical Design</em></td>
+<td>Percentage of the core area occupied by standard cells and macros.</td>
+<td>70 % utilisation leaves room for buffering and routing.</td>
+</tr>
+<tr>
+<td><strong>Aspect ratio</strong><br><em>PD metric · Concept · Physical Design</em></td>
+<td>Ratio of height to width of the block or die.</td>
+<td>A long thin block suits a design with a pipeline flowing left to right.</td>
+</tr>
+<tr>
+<td><strong>Macro placement</strong><br><em>PD step · Methodology · Physical Design</em></td>
+<td>Positioning large hard blocks to minimise wire length and congestion.</td>
+<td>Machine-learning macro placers like Cadence's and Synopsys's AI tools suggest arrangements.</td>
+</tr>
+<tr>
+<td><strong>Halo / keep-out margin</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>A space around a macro where standard cells may not be placed.</td>
+<td>A 5 µm halo keeps cells from crowding memory pins.</td>
+</tr>
+<tr>
+<td><strong>Placement blockage (hard/soft/partial)</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Areas where placement is forbidden or limited to reduce congestion.</td>
+<td>A 50 % partial blockage in a channel limits cell density there.</td>
+</tr>
+<tr>
+<td><strong>I/O ring and pad cells</strong><br><em>Chip-level design · Concept · Physical Design</em></td>
+<td>Special cells at the chip edge providing ESD protection, level shifting and drive for pins.</td>
+<td>A wire-bonded chip has a ring of 120 I/O pads around its edge.</td>
+</tr>
+<tr>
+<td><strong>Flip-chip bump planning</strong><br><em>Chip-package co-design · Methodology · Physical Design</em></td>
+<td>Assigning solder bumps across the die area for power and signals in flip-chip packages.</td>
+<td>Power bumps are spread evenly to reduce IR drop in the core.</td>
+</tr>
+<tr>
+<td><strong>Pad-limited vs core-limited</strong><br><em>Chip-level design · Concept · Physical Design</em></td>
+<td>Whether die size is set by the number of I/O pads or by the logic area.</td>
+<td>A small sensor chip with 100 pins is pad-limited; an AI chip is core-limited.</td>
+</tr>
+<tr>
+<td><strong>Early congestion analysis</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Estimating routing demand from a quick placement to validate the floorplan.</td>
+<td>A congestion map highlights a hot spot near a crossbar, prompting a macro move.</td>
+</tr>
+<tr>
+<td><strong>Die-size estimation</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Estimating core area from cell area divided by target utilisation, plus macros, power grid, I/O ring and seal ring.</td>
+<td>1.4 mm² of standard cells at 70 % utilisation needs a 2 mm² core before adding 0.8 mm² of SRAM.</td>
+</tr>
+<tr>
+<td><strong>Placement bounds (guides, regions, fences)</strong><br><em>PD constraints · Concept · Physical Design</em></td>
+<td>Constraints keeping a module's cells near or inside an area: guides are soft, regions allow others in, fences are exclusive.</td>
+<td>A fence keeps the always-on controller's cells inside its own voltage area.</td>
+</tr>
+<tr>
+<td><strong>Routing channels</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Gaps left between macros or blocks so wires and power straps can pass through.</td>
+<td>Ten-micron channels between SRAM columns leave room for dozens of signal tracks per layer.</td>
+</tr>
+<tr>
+<td><strong>Dataflow-driven floorplanning</strong><br><em>PD practice (Innovus, ICC2, OpenROAD RTL-MP) · Methodology · Physical Design</em></td>
+<td>Arranging macros and logic by how data flows between them, using flylines and connectivity views.</td>
+<td>Flylines show the DMA engine talks mostly to two SRAM banks, so they are placed side by side.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="53-power-planning-rings-straps-and-the-power-grid">5.3 Power Planning: Rings, Straps and the Power Grid<a class="headerlink" href="#53-power-planning-rings-straps-and-the-power-grid" title="Permanent link">&para;</a></h2>
+<p>Every cell needs a supply (VDD) and ground (VSS). Power planning builds the power distribution network (PDN): wide rings around blocks, a mesh of straps on upper metal layers, and rails along each standard-cell row, connected by stacks of vias. The grid must deliver current with little voltage loss (IR drop) and without wearing out wires (electromigration).</p>
+<figure class="fig fig-diagram">
+<img src="img/05-03-power-planning-rings-straps-and-the.svg" alt="Current flows down from bumps through ever-thinner metal; every level adds resistance." loading="lazy" width="1000" height="437">
+<figcaption><strong>How power reaches a transistor.</strong> Current flows down from bumps through ever-thinner metal; every level adds resistance.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>The PDN is like a city's water mains: big pipes from the reservoir, smaller pipes down each street, and a tap at every house. Too-thin pipes mean low pressure at the far end.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>For a 15 W block at 0.75 V, about 20 A must flow. Jamal designs a mesh of M10/M11 straps every 20 µm, with M1 rails in each row and via stacks between. Early IR analysis shows 45 mV drop in the centre, above the 5 % budget of 37.5 mV. He adds more straps in the hot spot and decap cells nearby, bringing it to 30 mV.</p>
+</div>
+<h4 id="how-it-works_2">How it works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Estimate block power and current; set an IR-drop budget (often a few percent of VDD).</li>
+<li>Create power rings around the core and macros.</li>
+<li>Add horizontal/vertical straps on upper metals in a mesh.</li>
+<li>Connect standard-cell rails and macro power pins with via stacks.</li>
+<li>Run early static and dynamic IR/EM analysis; add straps, decaps or bumps where needed.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design and power-integrity engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Power planning uses routing resources that signals also need: too dense a grid causes congestion, too sparse causes IR drop.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Current is I = P / V: a 15 W block at 0.75 V draws 20 A. Lower supply voltages mean larger currents, so the same percentage drop needs much lower grid resistance.</li>
+<li>IR budgets are commonly a few percent up to about 10 % of VDD in total, split between package, static and dynamic components; timing libraries or margins assume that voltage loss.</li>
+<li>The PDN competes with signals for tracks: upper-layer straps can consume a large fraction of those layers, so pitch and width are tuned with congestion and IR results together.</li>
+<li>At advanced nodes via resistance dominates, so the number of vias in each stack and the density of rail-to-strap connections matter as much as strap width.</li>
+<li>Power-gated domains have a 'virtual' VDD grid behind header switches; switch count is set by on-state IR drop across switches and by wake-up inrush limits.</li>
+<li>OpenROAD's pdngen describes the grid declaratively: global connections, rings, follow-pin stripes, upper stripes with width/pitch/offset, and connect statements between layers.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Sizing the grid for average current only; dynamic droop from simultaneous switching (clock edges, wake-up) is often the real limiter.</li>
+<li>Forgetting macros: SRAMs and PHYs need their PG pins connected with enough vias or they become IR hot spots.</li>
+<li>Assuming more straps is always better; excess straps steal routing tracks and cause congestion and timing loss.</li>
+</ul>
+</div>
+<h3 id="try-it-power-grid-with-openroad-pdngen-sky130-illustrative-values">Try it: Power grid with OpenROAD pdngen (SKY130, illustrative values)<a class="headerlink" href="#try-it-power-grid-with-openroad-pdngen-sky130-illustrative-values" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">add_global_connection</span><span class="w"> </span><span class="o">-</span>net<span class="w"> </span>VDD<span class="w"> </span><span class="o">-</span>pin_pattern<span class="w"> </span><span class="k">{</span><span class="o">^</span><span class="nv">VPWR</span><span class="err">$</span><span class="k">}</span><span class="w"> </span><span class="o">-</span>power
+<span class="nv">add_global_connection</span><span class="w"> </span><span class="o">-</span>net<span class="w"> </span>VSS<span class="w"> </span><span class="o">-</span>pin_pattern<span class="w"> </span><span class="k">{</span><span class="o">^</span><span class="nv">VGND</span><span class="err">$</span><span class="k">}</span><span class="w"> </span><span class="o">-</span>ground
+<span class="nv">set_voltage_domain</span><span class="w"> </span><span class="o">-</span>power<span class="w"> </span>VDD<span class="w"> </span><span class="o">-</span>ground<span class="w"> </span>VSS
+<span class="nv">define_pdn_grid</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>core
+<span class="nv">add_pdn_stripe</span><span class="w"> </span><span class="o">-</span>grid<span class="w"> </span>core<span class="w"> </span><span class="o">-</span>layer<span class="w"> </span>met1<span class="w"> </span><span class="o">-</span>width<span class="w"> </span><span class="mf">0.48</span><span class="w"> </span><span class="o">-</span>followpins
+<span class="nv">add_pdn_stripe</span><span class="w"> </span><span class="o">-</span>grid<span class="w"> </span>core<span class="w"> </span><span class="o">-</span>layer<span class="w"> </span>met4<span class="w"> </span><span class="o">-</span>width<span class="w"> </span><span class="mf">1.6</span><span class="w"> </span><span class="o">-</span>pitch<span class="w"> </span><span class="mf">27.14</span><span class="w"> </span><span class="o">-</span>offset<span class="w"> </span><span class="mf">13.57</span>
+<span class="nv">add_pdn_stripe</span><span class="w"> </span><span class="o">-</span>grid<span class="w"> </span>core<span class="w"> </span><span class="o">-</span>layer<span class="w"> </span>met5<span class="w"> </span><span class="o">-</span>width<span class="w"> </span><span class="mf">1.6</span><span class="w"> </span><span class="o">-</span>pitch<span class="w"> </span><span class="mf">27.2</span><span class="w"> </span><span class="o">-</span>offset<span class="w"> </span><span class="mf">13.6</span>
+<span class="nv">add_pdn_connect</span><span class="w"> </span><span class="o">-</span>grid<span class="w"> </span>core<span class="w"> </span><span class="o">-</span>layers<span class="w"> </span><span class="k">{</span><span class="nv">met1</span><span class="w"> </span>met4<span class="k">}</span>
+<span class="nv">add_pdn_connect</span><span class="w"> </span><span class="o">-</span>grid<span class="w"> </span>core<span class="w"> </span><span class="o">-</span>layers<span class="w"> </span><span class="k">{</span><span class="nv">met4</span><span class="w"> </span>met5<span class="k">}</span>
+<span class="nv">pdngen</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_2">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Power distribution network (PDN)</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>The complete network of rings, straps, rails and vias delivering supply to every cell.</td>
+<td>The PDN uses about 20 % of upper-metal routing resources.</td>
+</tr>
+<tr>
+<td><strong>Power rings</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Wide VDD/VSS wires encircling the core or a macro to feed current from all sides.</td>
+<td>An SRAM macro gets its own ring connected to the main mesh.</td>
+</tr>
+<tr>
+<td><strong>Power straps / mesh</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Regular grid of power wires across the block on upper metal layers.</td>
+<td>M9 vertical and M10 horizontal straps form the main mesh.</td>
+</tr>
+<tr>
+<td><strong>Standard-cell rails (follow pins)</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Thin power and ground lines along each cell row connecting to the cells' power pins.</td>
+<td>M1 rails alternate VDD and VSS on every row boundary.</td>
+</tr>
+<tr>
+<td><strong>IR drop</strong><br><em>Ohm's law (V = I × R) · Concept · Signoff</em></td>
+<td>Voltage lost across the resistance of power wires, lowering the voltage cells actually see.</td>
+<td>A 40 mV drop slows cells and can cause timing failures.</td>
+</tr>
+<tr>
+<td><strong>Electromigration (EM)</strong><br><em>Reliability physics · Concept · Signoff</em></td>
+<td>Gradual movement of metal atoms under high current density, eventually opening or shorting wires.</td>
+<td>A thin power strap carrying too much current could fail after 3 years.</td>
+</tr>
+<tr>
+<td><strong>Decoupling capacitors (decaps)</strong><br><em>PD element · Concept · Physical Design</em></td>
+<td>On-chip capacitors that supply charge locally during sudden current demands.</td>
+<td>Decap cells near a busy clock buffer reduce dynamic voltage droop.</td>
+</tr>
+<tr>
+<td><strong>Power switches (header/footer)</strong><br><em>Low-power PD element · Concept · Physical Design</em></td>
+<td>Transistor switches inserted in a grid to power-gate a domain.</td>
+<td>800 header switch cells are distributed across the GPU domain.</td>
+</tr>
+<tr>
+<td><strong>Backside PDN</strong><br><em>Intel PowerVia; TSMC Super Power Rail · Concept · Physical Design</em></td>
+<td>Delivering power from the wafer's backside, a new PD task at the most advanced nodes.</td>
+<td>On 18A, power straps move under the transistors, freeing front metals for signals.</td>
+</tr>
+<tr>
+<td><strong>Via stacks and via arrays</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Columns of vias connecting upper power straps down to lower layers and cell rails; their resistance adds to IR drop.</td>
+<td>Each M10-to-M1 stack uses arrays of 2 × 2 vias per level to carry current safely.</td>
+</tr>
+<tr>
+<td><strong>IR-drop budget</strong><br><em>Power-integrity target · Concept · Physical Design</em></td>
+<td>Maximum allowed supply loss, split between package, static grid drop and dynamic droop, agreed early in the project.</td>
+<td>At 0.75 V, a 5 % budget allows 37.5 mV of total drop to the cells.</td>
+</tr>
+<tr>
+<td><strong>Early rail analysis</strong><br><em>Power-integrity practice · Methodology · Physical Design</em></td>
+<td>Quick IR-drop analysis on the floorplan using estimated power, used to size the grid before placement.</td>
+<td>Rail analysis on the first floorplan shows the centre needs straps every 20 µm instead of 40 µm.</td>
+</tr>
+<tr>
+<td><strong>PDN generators</strong><br><em>Innovus add_stripes, ICC2 compile_pg, OpenROAD pdngen · Tool · Physical Design</em></td>
+<td>Tool commands that build rings, straps, rails and via connections from a pattern description.</td>
+<td>An ICC2 compile_pg run rebuilds the whole grid after the floorplan changes.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="54-placement-and-optimisation">5.4 Placement and Optimisation<a class="headerlink" href="#54-placement-and-optimisation" title="Permanent link">&para;</a></h2>
+<p>Placement decides the exact position of every standard cell in the rows of the floorplan. First a global placer spreads cells to minimise total wire length and congestion, then legalisation snaps them into legal sites without overlap, and detailed placement fine-tunes. Throughout, optimisation resizes cells, adds buffers and restructures logic to meet timing.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-04-placement-and-optimisation.svg" alt="Timing and congestion are checked together; a timing-clean but congested placement will fail later." loading="lazy" width="1000" height="389">
+<figcaption><strong>The placement stage.</strong> Timing and congestion are checked together; a timing-clean but congested placement will fail later.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Placement is like seating guests at a wedding: people who talk a lot (connected cells) sit together, nobody shares a chair (no overlap), and the busy aisles (routing channels) stay clear.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Placing a 2-million-cell block takes a few hours. After global placement, the timing report shows -80 ps WNS. Placement optimisation upsizes 6,000 cells, buffers long nets and swaps some cells to low-Vt, reaching -5 ps. The congestion map shows one hot spot; adding a soft blockage and re-running fixes it, and pre-CTS timing finally passes.</p>
+</div>
+<h4 id="how-it-works_3">How it works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Global placement: analytically spread cells to minimise wire length and density.</li>
+<li>Legalisation: align cells to rows and sites without overlaps.</li>
+<li>Timing- and congestion-driven optimisation: sizing, buffering, Vt swap, restructuring.</li>
+<li>Scan-chain reordering and placement of special cells (tap, endcap, spare cells).</li>
+<li>Detailed placement: local swaps to improve wire length and timing.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Placement quality determines routability: watch congestion and cell density maps, not just timing.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Modern analytic placers (the ePlace/RePlAce family used in OpenROAD) treat cells as charges and density as an electric field, minimising wirelength plus a density penalty with Nesterov-style gradient steps.</li>
+<li>Pre-route timing uses estimated parasitics, so long nets can be off by tens of percent; teams keep some setup margin at placement to absorb the change after routing.</li>
+<li>place_opt-style commands interleave placement with sizing, buffering, Vt swapping and logic restructuring; OpenROAD exposes similar steps as repair_design and repair_timing.</li>
+<li>Target density settings (for example 0.6-0.7 in global placement) deliberately leave whitespace for later buffers, clock cells and hold fixes.</li>
+<li>Scan chains are reordered after placement using SCANDEF so that each chain follows physical proximity, cutting scan wirelength dramatically without changing test coverage.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Judging placement only by WNS; check congestion and pin density too, or detailed routing will fail.</li>
+<li>Letting the placer use cells marked dont_use in synthesis or signoff, leading to late library violations.</li>
+<li>Over-constraining with many hard fences and blockages, leaving the optimiser no room to fix timing.</li>
+</ul>
+</div>
+<h3 id="try-it-placement-in-openroad">Try it: Placement in OpenROAD<a class="headerlink" href="#try-it-placement-in-openroad" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">global_placement</span><span class="w"> </span><span class="o">-</span>density<span class="w"> </span><span class="mf">0.6</span>
+<span class="nv">estimate_parasitics</span><span class="w"> </span><span class="o">-</span>placement
+<span class="nv">repair_design</span>
+<span class="nv">detailed_placement</span>
+<span class="nv">check_placement</span><span class="w"> </span><span class="o">-</span>verbose
+<span class="nv">report_checks</span><span class="w"> </span><span class="o">-</span>path_delay<span class="w"> </span>max
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_3">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_3" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Global placement</strong><br><em>PD step · Concept · Physical Design</em></td>
+<td>Rough placement of all cells optimising wire length and density, allowing temporary overlaps.</td>
+<td>OpenROAD's RePlAce uses an electrostatics analogy to spread cells evenly.</td>
+</tr>
+<tr>
+<td><strong>Legalisation</strong><br><em>PD step · Concept · Physical Design</em></td>
+<td>Moving cells to legal row sites with no overlaps and correct orientation.</td>
+<td>Cells snap to 0.46 µm-wide unithd sites on SKY130's 2.72 µm-tall rows.</td>
+</tr>
+<tr>
+<td><strong>Detailed placement</strong><br><em>PD step · Concept · Physical Design</em></td>
+<td>Local cell moves and swaps that improve wire length and timing after legalisation.</td>
+<td>Swapping two adjacent cells shortens a critical net.</td>
+</tr>
+<tr>
+<td><strong>Timing-driven placement</strong><br><em>PD technique · Methodology · Physical Design</em></td>
+<td>Placement weighting critical nets so their cells sit closer together.</td>
+<td>Cells on a -50 ps path are pulled into a tight cluster.</td>
+</tr>
+<tr>
+<td><strong>Congestion</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Areas where routing demand exceeds available tracks, making routing difficult or impossible.</td>
+<td>A congestion map shows overflow in red around a dense crossbar.</td>
+</tr>
+<tr>
+<td><strong>Buffering and repeaters</strong><br><em>PD optimisation · Concept · Physical Design</em></td>
+<td>Inserting buffers on long or high-fanout nets to reduce delay and fix transitions.</td>
+<td>A 2 mm wire is broken into five segments with repeaters.</td>
+</tr>
+<tr>
+<td><strong>Vt swapping</strong><br><em>PD optimisation · Methodology · Physical Design</em></td>
+<td>Replacing cells with lower or higher threshold-voltage versions to trade speed and leakage.</td>
+<td>Non-critical cells are swapped to high-Vt to cut leakage by 30 %.</td>
+</tr>
+<tr>
+<td><strong>Well taps and endcaps</strong><br><em>PD special cells · Concept · Physical Design</em></td>
+<td>Cells connecting wells to supplies (preventing latch-up) and terminating rows.</td>
+<td>Tap cells are placed in a checkerboard every 25 µm per foundry rules.</td>
+</tr>
+<tr>
+<td><strong>Placement density / cell padding</strong><br><em>PD controls · Concept · Physical Design</em></td>
+<td>Limits on how tightly cells pack, to leave space for buffers and routing.</td>
+<td>Padding around large flops prevents pin-access problems.</td>
+</tr>
+<tr>
+<td><strong>HPWL (half-perimeter wirelength)</strong><br><em>Placement metric · Concept · Physical Design</em></td>
+<td>Fast wirelength estimate: half the perimeter of the box enclosing all pins of a net, summed over nets.</td>
+<td>A net whose pins span a 40 × 10 µm box has an HPWL of 50 µm.</td>
+</tr>
+<tr>
+<td><strong>Pre-CTS optimisation (place_opt)</strong><br><em>Innovus place_opt_design, ICC2 place_opt, OpenROAD repair_design · Methodology · Physical Design</em></td>
+<td>Combined placement and optimisation step that sizes, buffers, swaps Vt and restructures logic before CTS.</td>
+<td>place_opt cuts WNS from -80 ps to -5 ps while keeping utilisation under 72 %.</td>
+</tr>
+<tr>
+<td><strong>Relative (structured) placement</strong><br><em>PD technique · Methodology · Physical Design</em></td>
+<td>Placing cells of regular datapaths in fixed row/column patterns instead of letting the placer scatter them.</td>
+<td>A 64-bit register file's bit slices are aligned in columns, shortening every bus wire.</td>
+</tr>
+<tr>
+<td><strong>Pre-route parasitic estimation</strong><br><em>PD timing · Concept · Physical Design</em></td>
+<td>Before routing, net delays come from estimated Steiner-tree lengths and per-micron RC, not real wires.</td>
+<td>OpenROAD's estimate_parasitics -placement lets STA run straight after global placement.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="55-clock-tree-synthesis-cts">5.5 Clock Tree Synthesis (CTS)<a class="headerlink" href="#55-clock-tree-synthesis-cts" title="Permanent link">&para;</a></h2>
+<p>Clock tree synthesis builds the network that delivers the clock from its source to every flip-flop, often hundreds of thousands of them. The goal is for the clock to arrive at all flops at nearly the same time (low skew), with sharp edges, using as little power as possible, because clocks switch every cycle and can use a third of a chip's dynamic power.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-05-clock-tree-synthesis-cts.svg" alt="One source fans out through trunk buffers and clock gates to hundreds of thousands of flops." loading="lazy" width="1000" height="570">
+<figcaption><strong>Tiers of a clock tree.</strong> One source fans out through trunk buffers and clock gates to hundreds of thousands of flops.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>CTS is like a city's water system designed so every house gets water at exactly the same moment, using carefully balanced pipe lengths.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A block has 180,000 flops on a 1.2 GHz clock. Mateo runs CTS with targets of 30 ps skew and 60 ps transition. The tool builds a multi-level buffer tree with 4,200 clock buffers, using double-width, double-spacing routing rules on clock nets to reduce crosstalk. Final skew is 24 ps; clock power is 28 % of the block total. Useful-skew optimisation then fixes the last few setup paths.</p>
+</div>
+<h4 id="how-it-works_4">How it works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Define clock tree specs: targets for skew, latency, transition and allowed cells.</li>
+<li>Apply non-default routing rules (wider, spaced, shielded) to clock nets.</li>
+<li>Build the tree: cluster sinks, insert buffers/inverters, balance delays.</li>
+<li>Optimise for skew, latency, power; optionally use useful skew.</li>
+<li>Fix hold violations after CTS now that real clock arrival times are known.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design and clock specialists; high-performance CPU teams have dedicated clock-design engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Before CTS, timing uses ideal clocks; after CTS it uses propagated clocks, which is why hold fixing happens after CTS.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Clock nets toggle every cycle (activity 1, versus perhaps 0.1-0.2 for typical data nets), which is why the clock network takes such a large share of dynamic power.</li>
+<li>Concurrent clock and data optimisation (CCOpt in Innovus, CCD in Fusion Compiler) targets slack instead of zero skew, applying useful skew automatically where it helps.</li>
+<li>Setup is checked at slow corners and hold at fast ones; real skew appears only after CTS, so bulk hold fixing is done post-CTS with propagated clocks.</li>
+<li>Clock nets are often routed first, on mid or upper layers with double-width/double-space NDRs, and the most sensitive trunks are shielded with VSS wires.</li>
+<li>On-chip variation hits clocks too: CRPR removes pessimism on the shared part of launch and capture paths, so trees with long common trunks show less pessimism.</li>
+<li>OpenROAD's clock_tree_synthesis clusters sinks and builds an H-tree; report_cts summarises buffers inserted, clock subnets and sinks.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Aiming for zero skew everywhere; perfectly balanced trees waste buffers and power. Target slack and use skew where it helps.</li>
+<li>Fixing hold before CTS with ideal clocks, which inserts thousands of unnecessary delay cells.</li>
+<li>Leaving generated clocks, dividers and clock muxes out of the CTS spec, so the tool balances through them wrongly.</li>
+</ul>
+</div>
+<h3 id="try-it-cts-and-hold-fixing-in-openroad-sky130">Try it: CTS and hold fixing in OpenROAD (SKY130)<a class="headerlink" href="#try-it-cts-and-hold-fixing-in-openroad-sky130" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">clock_tree_synthesis</span><span class="w"> </span><span class="o">-</span>root_buf<span class="w"> </span>sky130_fd_sc_hd__clkbuf_16<span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="nv">-buf_list</span><span class="w"> </span>sky130_fd_sc_hd__clkbuf_4<span class="w"> </span><span class="o">-</span>sink_clustering_enable
+<span class="nv">set_propagated_clock</span><span class="w"> </span><span class="k">[</span><span class="nv">all_clocks</span><span class="k">]</span>
+<span class="nv">estimate_parasitics</span><span class="w"> </span><span class="o">-</span>placement
+<span class="nv">repair_timing</span><span class="w"> </span><span class="o">-</span>hold
+<span class="nv">report_cts</span>
+<span class="nv">report_clock_skew</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_4">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_4" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clock tree synthesis (CTS)</strong><br><em>PD step · Methodology · Physical Design</em></td>
+<td>Automatic construction of a buffered clock distribution network to all sinks.</td>
+<td>OpenROAD's TritonCTS builds the clock tree in open-source flows.</td>
+</tr>
+<tr>
+<td><strong>Clock skew and latency</strong><br><em>Clock metrics · Concept · Physical Design</em></td>
+<td>Skew is arrival difference between sinks; latency is delay from clock source to sinks.</td>
+<td>Latency 400 ps with 25 ps skew across 100,000 flops.</td>
+</tr>
+<tr>
+<td><strong>H-tree</strong><br><em>Clock topology · Concept · Physical Design</em></td>
+<td>Symmetric recursive H-shaped clock structure giving equal path lengths.</td>
+<td>High-performance CPUs use H-tree-based top-level clock distribution.</td>
+</tr>
+<tr>
+<td><strong>Clock mesh</strong><br><em>Clock topology · Concept · Physical Design</em></td>
+<td>A grid of shorted clock wires driven from many points, giving very low skew at high power.</td>
+<td>Server CPU cores use clock meshes for robustness to variation.</td>
+</tr>
+<tr>
+<td><strong>Multi-source CTS</strong><br><em>Clock topology (Innovus, Fusion Compiler) · Methodology · Physical Design</em></td>
+<td>Hybrid of a top-level H-tree or mesh feeding local trees.</td>
+<td>A GPU uses multi-source CTS for a large, fast clock domain.</td>
+</tr>
+<tr>
+<td><strong>Useful skew</strong><br><em>Timing optimisation · Concept · Physical Design</em></td>
+<td>Intentionally delaying or advancing clocks to some flops to borrow time between stages.</td>
+<td>Delaying a capture flop's clock by 20 ps fixes a setup violation.</td>
+</tr>
+<tr>
+<td><strong>Non-default routing rule (NDR)</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>Wider or more widely spaced routing rules applied to sensitive nets like clocks.</td>
+<td>Clock nets use double width, double spacing to cut resistance and crosstalk.</td>
+</tr>
+<tr>
+<td><strong>Clock gating in CTS</strong><br><em>PD/low-power · Concept · Physical Design</em></td>
+<td>Placing and cloning integrated clock-gating cells in the tree to balance and save power.</td>
+<td>CTS clones a clock gate driving 3,000 flops into four clones.</td>
+</tr>
+<tr>
+<td><strong>Hold fixing</strong><br><em>PD step · Methodology · Physical Design</em></td>
+<td>Adding delay cells on short paths after CTS so data does not change too soon.</td>
+<td>12,000 hold buffers are inserted at the fast corner.</td>
+</tr>
+<tr>
+<td><strong>Clock-net pre-routing</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Routing clock nets right after CTS, before signal routing, so they get the best layers, NDRs and shielding.</td>
+<td>Clock nets are routed on M5-M6 with double spacing before 2 million signal nets are routed.</td>
+</tr>
+<tr>
+<td><strong>Skew groups</strong><br><em>CTS term (Cadence CCOpt and others) · Concept · Physical Design</em></td>
+<td>Sets of clock sinks that CTS must balance against each other; sinks in different groups need not match.</td>
+<td>Flops of the CPU core form one skew group; a slow debug interface forms another.</td>
+</tr>
+<tr>
+<td><strong>Clock cells (buffers and inverters)</strong><br><em>Standard-cell libraries · Concept · Physical Design</em></td>
+<td>Special cells with balanced rise/fall delays used to build clock trees; inverter pairs help preserve duty cycle.</td>
+<td>CTS is restricted to CLKBUF and CLKINV cells; ordinary buffers are marked dont_use for clocks.</td>
+</tr>
+<tr>
+<td><strong>CTS exceptions (stop, ignore and exclude pins)</strong><br><em>CTS constraints · Concept · Physical Design</em></td>
+<td>Pins where CTS stops balancing or which it ignores, such as macro clock pins with internal delay.</td>
+<td>An SRAM clock pin is given a pin insertion delay so CTS balances it correctly.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="56-routing-global-detailed-layers-vias-and-antenna">5.6 Routing: Global, Detailed, Layers, Vias and Antenna<a class="headerlink" href="#56-routing-global-detailed-layers-vias-and-antenna" title="Permanent link">&para;</a></h2>
+<p>Routing draws the actual metal wires connecting every pin, across a stack of metal layers joined by vias. Global routing plans rough paths through a grid of regions; track assignment and detailed routing then lay exact wires that obey all the foundry's spacing and width rules. Lower layers are thin and dense for local connections; upper layers are thick and fast for long wires and power.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-06-routing-global-detailed-layers-vias-and.svg" alt="Directions alternate layer by layer, and pitch grows towards the top, where wires are thick and fast." loading="lazy" width="1000" height="507">
+<figcaption><strong>SKY130 metal stack (from the tech LEF).</strong> Directions alternate layer by layer, and pitch grows towards the top, where wires are thick and fast.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Routing is like planning a city's roads on multiple levels: local streets at ground level, flyovers above, and ramps (vias) between levels, all without any two roads crossing on the same level.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Ana routes a 3-million-net block on a 13-metal-layer stack. Global routing shows overflow below 0.5 %, so she proceeds. Detailed routing finishes with 2,300 DRC violations, mostly spacing near memory pins. Search-and-repair iterations reduce them to 12, which she fixes by hand. Antenna checks flag 40 long nets; the router inserts diodes and jumpers to higher layers.</p>
+</div>
+<h4 id="how-it-works_5">How it works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Global routing: assign nets to coarse routing cells; estimate congestion.</li>
+<li>Track assignment: allocate nets to specific tracks in each layer.</li>
+<li>Detailed routing: draw exact wires and vias obeying design rules.</li>
+<li>Search and repair: fix shorts, spacing and other DRC violations.</li>
+<li>Post-route optimisation: fix timing, crosstalk and antenna problems; add fill later.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design engineers; router developers at EDA companies.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know what the antenna effect is and its two fixes: layer jumping and antenna diodes.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Global routing works on GCells a few tracks wide; very low overflow (well under 1 %) usually predicts a clean detailed route, while hot spots point back to placement or floorplan.</li>
+<li>Wire resistance per micron rises quickly as widths shrink, and via resistance adds up; long or critical nets are promoted to upper, thicker layers.</li>
+<li>Detailed routers follow the tech LEF: SKY130 met1 tracks are 0.34 µm apart running horizontally, met2 0.46 µm vertically, met5 3.4 µm. Advanced nodes add colour and cut rules.</li>
+<li>Antenna rules limit how much metal can connect to a gate during each etch step; the tech LEF encodes them as ratio tables, and routers fix violations with diodes or layer jumps.</li>
+<li>Post-route optimisation runs with real extracted RC and crosstalk; expect some timing loss versus pre-route estimates, especially on long, coupled nets.</li>
+<li>After routing, fillers keep rows continuous; metal fill for density is usually added at the end and checked in signoff.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Starting detailed routing with high global-route overflow and hoping the router copes; fix placement or the floorplan first.</li>
+<li>Hand-fixing thousands of DRCs; systematic violations point to pin access, NDR or floorplan problems.</li>
+<li>Ignoring via resistance: long chains of single vias on critical nets hurt timing and electromigration.</li>
+</ul>
+</div>
+<h3 id="try-it-routing-in-openroad-sky130">Try it: Routing in OpenROAD (SKY130)<a class="headerlink" href="#try-it-routing-in-openroad-sky130" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">set_routing_layers</span><span class="w"> </span><span class="o">-</span>signal<span class="w"> </span>met1-met5<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>met3-met5
+<span class="nv">global_route</span><span class="w"> </span><span class="o">-</span>congestion_iterations<span class="w"> </span><span class="mi">50</span>
+<span class="nv">repair_antennas</span>
+<span class="nv">detailed_route</span><span class="w"> </span><span class="o">-</span>output_drc<span class="w"> </span>route_drc.rpt
+<span class="nv">filler_placement</span><span class="w"> </span>sky130_fd_sc_hd__fill<span class="o">*</span>
+<span class="nv">check_antennas</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_5">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Global routing</strong><br><em>PD step · Concept · Physical Design</em></td>
+<td>Coarse routing assigning each net to a path through a grid of routing regions.</td>
+<td>Global routing reveals overflow in a channel between two macros.</td>
+</tr>
+<tr>
+<td><strong>Detailed routing</strong><br><em>PD step · Concept · Physical Design</em></td>
+<td>Exact wire and via geometry satisfying all spacing, width and via rules.</td>
+<td>TritonRoute performs detailed routing in OpenROAD.</td>
+</tr>
+<tr>
+<td><strong>Metal stack</strong><br><em>Foundry technology · Concept · Physical Design</em></td>
+<td>The set of metal layers (often 10-15+ at advanced nodes) with different thicknesses and pitches.</td>
+<td>M0-M3 are tight local layers; the top two thick layers carry power and clock.</td>
+</tr>
+<tr>
+<td><strong>Via</strong><br><em>Foundry technology · Concept · Physical Design</em></td>
+<td>A vertical connection between two adjacent metal layers.</td>
+<td>Double vias are used where possible for reliability and lower resistance.</td>
+</tr>
+<tr>
+<td><strong>Preferred routing direction</strong><br><em>Router convention · Concept · Physical Design</em></td>
+<td>Each layer is routed mainly horizontally or vertically, alternating between layers.</td>
+<td>M2 horizontal, M3 vertical, M4 horizontal, and so on.</td>
+</tr>
+<tr>
+<td><strong>Antenna effect</strong><br><em>Manufacturing physics · Concept · Physical Design</em></td>
+<td>Charge collected on long wires during etching can damage thin gate oxides connected to them.</td>
+<td>A long M2 wire to a gate violates the antenna ratio and needs a diode.</td>
+</tr>
+<tr>
+<td><strong>Antenna diode / layer jumping</strong><br><em>PD fix · Methodology · Physical Design</em></td>
+<td>Fixes for antenna violations: add a discharge diode or break the wire with a hop to a higher layer.</td>
+<td>The router jumps a net up to M5 near the gate to cut the antenna ratio.</td>
+</tr>
+<tr>
+<td><strong>Design rules (DRC rules)</strong><br><em>Foundry rule deck · Concept · Physical Design</em></td>
+<td>Geometric rules for width, spacing, enclosure, density and more that layout must obey.</td>
+<td>M1 minimum spacing might be tens of nanometres at an advanced node.</td>
+</tr>
+<tr>
+<td><strong>Redundant via insertion</strong><br><em>DFM technique · Methodology · Physical Design</em></td>
+<td>Replacing single vias with double vias to improve yield and reliability.</td>
+<td>Post-route, 92 % of vias are converted to redundant vias.</td>
+</tr>
+<tr>
+<td><strong>Track assignment</strong><br><em>PD step · Concept · Physical Design</em></td>
+<td>Step between global and detailed routing that assigns each net segment to a specific track on its layer.</td>
+<td>Track assignment spreads a 64-bit bus across adjacent M4 tracks before detailed routing.</td>
+</tr>
+<tr>
+<td><strong>GCells and overflow</strong><br><em>Global-routing metric · Concept · Physical Design</em></td>
+<td>Global routing divides the die into tiles (GCells); overflow counts demand exceeding track capacity at tile edges.</td>
+<td>0.2 % total overflow is fine; 5 % overflow near a macro corner predicts unroutable shorts.</td>
+</tr>
+<tr>
+<td><strong>Search and repair</strong><br><em>Detailed-routing technique · Methodology · Physical Design</em></td>
+<td>Rip-up-and-reroute iterations that remove shorts and spacing violations left after the first routing pass.</td>
+<td>Twenty search-and-repair iterations reduce 2,300 DRCs to 12.</td>
+</tr>
+<tr>
+<td><strong>Filler insertion</strong><br><em>PD step · Methodology · Physical Design</em></td>
+<td>Filling empty row gaps with filler or decap-filler cells so wells and implants stay continuous.</td>
+<td>filler_placement sky130_fd_sc_hd__fill* fills every gap after detailed routing.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="57-place-and-route-tools-innovus-fusion-compiler-icc2-aprisa-and-openroad">5.7 Place-and-Route Tools: Innovus, Fusion Compiler, ICC2, Aprisa and OpenROAD<a class="headerlink" href="#57-place-and-route-tools-innovus-fusion-compiler-icc2-aprisa-and-openroad" title="Permanent link">&para;</a></h2>
+<p>Place-and-route (P&amp;R) tools run floorplanning, placement, CTS, routing and optimisation in one environment. Cadence Innovus and Synopsys Fusion Compiler/IC Compiler II dominate commercial work, Siemens Aprisa is a growing alternative, and OpenROAD is the leading open-source option used in LibreLane and research.</p>
+<p><strong>Three P&amp;R ecosystems</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Cadence Innovus</th>
+<th>Synopsys ICC2 / FC</th>
+<th>OpenROAD</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Licence</strong></td>
+<td>Commercial</td>
+<td>Commercial</td>
+<td>Open source (BSD)</td>
+</tr>
+<tr>
+<td><strong>Placer</strong></td>
+<td>GigaPlace</td>
+<td>place_opt engine</td>
+<td>RePlAce</td>
+</tr>
+<tr>
+<td><strong>CTS</strong></td>
+<td>CCOpt</td>
+<td>clock_opt / CCD</td>
+<td>TritonCTS</td>
+</tr>
+<tr>
+<td><strong>Router</strong></td>
+<td>NanoRoute</td>
+<td>Zroute</td>
+<td>FastRoute + TritonRoute</td>
+</tr>
+<tr>
+<td><strong>Signoff partners</strong></td>
+<td>Tempus, Quantus</td>
+<td>PrimeTime, StarRC</td>
+<td>OpenSTA, OpenRCX</td>
+</tr>
+<tr>
+<td><strong>Typical users</strong></td>
+<td>Mobile, AI, networking SoCs</td>
+<td>CPU, GPU, AI SoCs</td>
+<td>Education, research, open shuttles</td>
+</tr>
+</tbody>
+</table>
+<p><em>The engines differ, but the flow stages and concepts are the same everywhere.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>P&amp;R tools are like the construction company that takes the architect's plans and actually builds the house, with each company having its own machinery and methods.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>At a large CPU company, the PD team runs Fusion Compiler for synthesis through route, then hands off to PrimeTime for signoff. A networking start-up uses Cadence Genus, Innovus and Tempus. A university group uses OpenROAD-flow-scripts on SKY130 and compares the area of their AI accelerator with a commercial-tool run in a research paper.</p>
+</div>
+<h4 id="how-it-works_6">How it works<a class="headerlink" href="#how-it-works_6" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Import netlist, libraries, constraints and floorplan.</li>
+<li>Run floorplan, power plan and placement with optimisation.</li>
+<li>Run CTS and post-CTS optimisation.</li>
+<li>Route and run post-route optimisation.</li>
+<li>Export DEF/GDS/netlist/SPEF for signoff; iterate ECOs.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design engineers; CAD engineers write the flow scripts (often in Tcl and Python).</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Employers usually want experience in Innovus or Fusion Compiler/ICC2; OpenROAD is a great way to learn the concepts first.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Commercial flows run a handful of 'super commands' (Innovus place_opt_design, ccopt_design, route_design; ICC2 place_opt, clock_opt, route_auto, route_opt), each bundling many engines.</li>
+<li>Foundries certify specific tool versions per node, and projects freeze one version for the whole tapeout because QoR changes between releases.</li>
+<li>OpenROAD-flow-scripts runs Yosys synthesis through KLayout GDS output in Makefile stages (synth, floorplan, place, cts, route, finish) on SKY130, GF180, IHP SG13G2, ASAP7 and others.</li>
+<li>AI design-space optimisation (Synopsys DSO.ai, Cadence Cerebrus) runs many tool-setting variants in parallel and is now common on large blocks.</li>
+<li>Most PD automation is Tcl inside the tools plus Python or Make around them; reading and writing these scripts is an everyday job skill.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Learning only tool menus; interviews test flow reasoning (why CTS comes before routing, what place_opt does), which transfers between tools.</li>
+<li>Assuming open-source results match commercial tools at advanced nodes; OpenROAD is excellent for learning and mature nodes but is not foundry-certified for leading-edge nodes.</li>
+<li>Upgrading the tool version mid-project without re-checking QoR and correlation.</li>
+</ul>
+</div>
+<h3 id="try-it-main-pr-stages-in-two-commercial-tools-simplified">Try it: Main P&amp;R stages in two commercial tools (simplified)<a class="headerlink" href="#try-it-main-pr-stages-in-two-commercial-tools-simplified" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Cadence Innovus (Stylus UI)</span>
+place_opt_design
+ccopt_design
+route_design
+opt_design<span class="w"> </span>-post_route
+write_stream<span class="w"> </span>final.gds
+
+<span class="c1"># Synopsys ICC2 / Fusion Compiler</span>
+place_opt
+clock_opt
+route_auto
+route_opt
+write_gds<span class="w"> </span>final.gds
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_6">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_6" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Cadence Innovus Implementation System</strong><br><em>Cadence Design Systems · Tool · Physical Design · Commercial</em></td>
+<td>Leading P&amp;R tool for floorplanning, placement, CTS (CCOpt), routing (NanoRoute) and optimisation.</td>
+<td>A mobile SoC team implements its GPU blocks in Innovus.</td>
+</tr>
+<tr>
+<td><strong>Synopsys IC Compiler II (ICC2) and the Fusion Compiler back end</strong><br><em>Synopsys · Tool · Physical Design · Commercial</em></td>
+<td>Synopsys's place-and-route engine; inside Fusion Compiler it shares one data model with synthesis for RTL-to-GDS runs.</td>
+<td>Job adverts ask for ICC2 skills: place_opt, clock_opt, route_auto and route_opt.</td>
+</tr>
+<tr>
+<td><strong>Siemens Aprisa</strong><br><em>Siemens EDA (acquired Avatar Integrated Systems, 2020) · Tool · Physical Design · Commercial</em></td>
+<td>Detail-route-centric place-and-route tool aimed at fast timing closure.</td>
+<td>A team uses Aprisa for blocks with difficult routing congestion.</td>
+</tr>
+<tr>
+<td><strong>OpenROAD</strong><br><em>OpenROAD project (UC San Diego-led, Precision Innovations) · Tool · Physical Design · Open source</em></td>
+<td>Open-source P&amp;R engine: Tcl commands for floorplan, RePlAce placement, TritonCTS, FastRoute/TritonRoute routing, with OpenSTA timing built in.</td>
+<td>Students run initialize_floorplan, global_placement and detailed_route interactively in the OpenROAD Tcl shell.</td>
+</tr>
+<tr>
+<td><strong>OpenROAD-flow-scripts (ORFS)</strong><br><em>OpenROAD project · Tool · Physical Design · Open source</em></td>
+<td>Makefile-based reference flow running Yosys and OpenROAD on several open PDKs.</td>
+<td>'make DESIGN_CONFIG=./designs/sky130hd/gcd/config.mk' runs a full flow.</td>
+</tr>
+<tr>
+<td><strong>ASAP7 predictive PDK</strong><br><em>Arizona State University and Arm Research · Resource · Physical Design · Open source</em></td>
+<td>Academic 7 nm FinFET predictive PDK for research (not manufacturable).</td>
+<td>Researchers compare placement algorithms on ASAP7 designs.</td>
+</tr>
+<tr>
+<td><strong>Flow scripts and reference flows</strong><br><em>EDA vendors, foundries, CAD teams · Concept · Physical Design</em></td>
+<td>Tcl/Python scripts encoding the recommended steps and settings for a tool and node.</td>
+<td>The foundry supplies a reference flow tuned for its N3 library.</td>
+</tr>
+<tr>
+<td><strong>Design-space exploration with AI (DSO.ai, Cerebrus)</strong><br><em>Synopsys DSO.ai; Cadence Cerebrus · Tool · Physical Design · Commercial</em></td>
+<td>AI systems that run many P&amp;R variants and learn the best tool settings automatically.</td>
+<td>Cerebrus finds settings giving 8 % lower power than the engineer's best run.</td>
+</tr>
+<tr>
+<td><strong>Cadence Stylus Common UI</strong><br><em>Cadence Design Systems · Concept · Physical Design · Commercial</em></td>
+<td>Shared Tcl command interface and database access across Genus, Innovus and Tempus.</td>
+<td>The same get_db queries work in synthesis, P&amp;R and signoff scripts.</td>
+</tr>
+<tr>
+<td><strong>Flow managers (e.g. Synopsys Lynx)</strong><br><em>Synopsys Lynx; in-house Make/Python flows · Tool · Physical Design · Commercial</em></td>
+<td>Frameworks that run each implementation stage in order, track settings and collect QoR metrics.</td>
+<td>The CAD team's flow launches 200 block runs each night and publishes a QoR table.</td>
+</tr>
+<tr>
+<td><strong>Compute farms and job schedulers</strong><br><em>IBM Spectrum LSF, Slurm, cloud batch · Tool · Whole flow</em></td>
+<td>Systems queueing thousands of EDA jobs on shared servers, matching jobs to licences and memory.</td>
+<td>A route job requests 16 cores and 256 GB through LSF.</td>
+</tr>
+<tr>
+<td><strong>Hammer</strong><br><em>UC Berkeley (Chipyard project) · Tool · Physical Design · Open source</em></td>
+<td>Open-source Python framework that drives commercial or open tools through a common configuration.</td>
+<td>Chipyard users switch between commercial and OpenROAD back ends via Hammer configs.</td>
+</tr>
+<tr>
+<td><strong>Coriolis</strong><br><em>LIP6, Sorbonne Université · Tool · Physical Design · Open source</em></td>
+<td>Open-source place-and-route toolchain from French academia, used with open PDKs.</td>
+<td>A European research group places and routes a RISC-V core with Coriolis.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="58-pd-sanity-checks-reports-and-qor-metrics">5.8 PD Sanity Checks, Reports and QoR Metrics<a class="headerlink" href="#58-pd-sanity-checks-reports-and-qor-metrics" title="Permanent link">&para;</a></h2>
+<p>Throughout place-and-route, engineers run sanity checks and read standard reports to see if a design is healthy: are the input files consistent, is the placement legal, how crowded is the routing, how much timing slack is left, how big is it? Reading these reports quickly and spotting what is wrong is a core everyday skill.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-08-pd-sanity-checks-reports-and-qor-metrics.svg" alt="Catching a problem at import or floorplan is far cheaper than finding it after routing." loading="lazy" width="1000" height="341">
+<figcaption><strong>Health checks at each P&amp;R stage.</strong> Catching a problem at import or floorplan is far cheaper than finding it after routing.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a doctor's routine check-up: temperature, blood pressure and a blood test give quick numbers that show whether deeper investigation is needed.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Before starting P&amp;R, Priya imports a new netlist and reads the import and constraint checks; they show 14 unconstrained endpoints and 3 cells missing from the LEF. After the inputs are fixed, her nightly dashboard shows WNS -12 ps, 0.3 % route overflow, 68 % utilisation and zero shorts, so she knows her floorplan change helped.</p>
+</div>
+<h4 id="how-it-works_7">How it works<a class="headerlink" href="#how-it-works_7" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Check inputs: netlist, libraries and constraints load without errors or ignored commands.</li>
+<li>After placement: legality, density, utilisation and congestion maps.</li>
+<li>After CTS: skew, latency, max transition/capacitance and hold.</li>
+<li>After routing: DRCs, opens and shorts, antenna and power-grid connectivity.</li>
+<li>Every stage: timing summary (WNS, TNS, violating paths) and log warnings, recorded in a QoR dashboard.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PD engineers, CAD/flow engineers and PD leads reviewing block health every day.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>In interviews, describe a debug order: inputs and constraints first, then floorplan and congestion, and only then tool settings.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A timing report reads top to bottom: clock edge plus clock latency, then each cell and net delay (data arrival), compared with the capture edge minus setup and uncertainty (data required); slack = required − arrival.</li>
+<li>WNS gives the single worst path, TNS the sum over all violating endpoints, and the violating-path count shows breadth; track all three per scenario and path group.</li>
+<li>Congestion is reported as overflow per GCell, layer and direction; hot spots usually trace back to macro corners, high-pin-density cells or blockages.</li>
+<li>P&amp;R logs contain thousands of messages; comparing errors and warnings with the previous good run quickly finds causes like a missing LEF, ignored SDC lines or dont_use conflicts.</li>
+<li>OpenROAD flows write metrics as JSON (METRICS2.1) so dashboards can compare runs automatically; commercial teams build similar in-house dashboards.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Ignoring SDC warnings such as 'object not found'; a silently dropped constraint can make timing look clean when it is not.</li>
+<li>Comparing QoR across runs with different constraints, corners or libraries; compare like with like.</li>
+<li>Looking only at the final route report; problems caught at floorplan or placement cost far less to fix.</li>
+</ul>
+</div>
+<h3 id="try-it-quick-health-check-in-openroadopensta">Try it: Quick health check in OpenROAD/OpenSTA<a class="headerlink" href="#try-it-quick-health-check-in-openroadopensta" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">report_checks</span><span class="w"> </span><span class="o">-</span>path_delay<span class="w"> </span>max<span class="w"> </span><span class="o">-</span>fields<span class="w"> </span><span class="k">{</span><span class="nv">slew</span><span class="w"> </span>cap<span class="w"> </span>fanout<span class="k">}</span><span class="w"> </span><span class="o">-</span>digits<span class="w"> </span><span class="mi">3</span>
+<span class="nv">report_wns</span>
+<span class="nv">report_tns</span>
+<span class="nv">report_check_types</span><span class="w"> </span><span class="o">-</span>max_slew<span class="w"> </span><span class="o">-</span>max_capacitance<span class="w"> </span><span class="o">-</span>max_fanout<span class="w"> </span><span class="o">-</span>violators
+<span class="nv">report_design_area</span>
+<span class="nv">check_placement</span><span class="w"> </span><span class="o">-</span>verbose
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_7">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_7" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Design import checks</strong><br><em>P&amp;R tool import and link reports · Methodology · Physical Design</em></td>
+<td>At P&amp;R import, confirming every netlist cell has LEF and Liberty views, the SDC applies cleanly and nothing is unresolved.</td>
+<td>The import log shows an SRAM instance with no matching LEF macro and 14 outputs without output delays.</td>
+</tr>
+<tr>
+<td><strong>CTS QoR report</strong><br><em>report_cts, clock-tree summaries · Concept · Physical Design</em></td>
+<td>Post-CTS summary of skew, insertion delay, clock transition, buffer count and clock power per clock.</td>
+<td>The CTS report shows 24 ps skew, 410 ps latency and 4,200 clock buffers.</td>
+</tr>
+<tr>
+<td><strong>Library consistency checks</strong><br><em>CAD practice · Methodology · Physical Design</em></td>
+<td>Confirming cell and pin names, sizes and pin directions agree across Verilog, Liberty, LEF and GDS views.</td>
+<td>A script flags a cell whose LEF lacks the 'SLEEP' pin present in Liberty.</td>
+</tr>
+<tr>
+<td><strong>Placement legality check</strong><br><em>check_legality (ICC2), check_placement (OpenROAD) · Methodology · Physical Design</em></td>
+<td>Verifies every cell is on a legal site, unoverlapped, correctly oriented and outside blockages.</td>
+<td>check_placement reports 3 cells overlapping a macro halo after an ECO.</td>
+</tr>
+<tr>
+<td><strong>QoR summary report</strong><br><em>report_qor (Synopsys), timing summaries (Cadence) · Concept · Physical Design</em></td>
+<td>One-page summary of WNS, TNS, violating paths, cell area, cell count and buffers per path group.</td>
+<td>report_qor shows reg2reg WNS -12 ps with 41 violating paths.</td>
+</tr>
+<tr>
+<td><strong>Timing path report</strong><br><em>report_timing / report_checks · Concept · Signoff</em></td>
+<td>Detailed path listing launch and capture clocks, each cell and net delay, arrival, required time and slack.</td>
+<td>The worst path shows one 120 ps net delay: a wire crossing the whole block.</td>
+</tr>
+<tr>
+<td><strong>Design-rule violation (DRV) report</strong><br><em>Max transition, capacitance and fanout checks · Concept · Physical Design</em></td>
+<td>Electrical-rule violations against Liberty and SDC limits that hurt delay accuracy and reliability.</td>
+<td>86 nets exceed max transition after CTS and are fixed by buffering.</td>
+</tr>
+<tr>
+<td><strong>Utilisation and density report</strong><br><em>PD metric · Concept · Physical Design</em></td>
+<td>Area used by cells versus available, overall and in local bins, to spot overly dense regions.</td>
+<td>Overall utilisation is 68 %, but one bin near the crossbar is at 95 %.</td>
+</tr>
+<tr>
+<td><strong>Connectivity check (opens and shorts)</strong><br><em>Innovus verify_connectivity and equivalents · Methodology · Physical Design</em></td>
+<td>In-tool check that every net is fully connected and no two nets touch.</td>
+<td>verify_connectivity finds two unrouted pins left after an aborted ECO route.</td>
+</tr>
+<tr>
+<td><strong>Power-grid connectivity check</strong><br><em>ICC2 check_pg_connectivity, Innovus PG checks · Methodology · Physical Design</em></td>
+<td>Confirms every cell and macro power pin connects to the grid with no floating straps.</td>
+<td>The check finds an SRAM ring with no via to the main mesh.</td>
+</tr>
+<tr>
+<td><strong>Route DRC report</strong><br><em>Router DRC counts · Concept · Physical Design</em></td>
+<td>The router's own count of shorts, spacing and other violations, before signoff physical verification.</td>
+<td>Detailed routing ends with 12 violations, all at one macro corner.</td>
+</tr>
+<tr>
+<td><strong>Run-to-run QoR tracking</strong><br><em>Flow dashboards; OpenROAD METRICS2.1 JSON · Methodology · Whole flow</em></td>
+<td>Recording key metrics from every run so changes in settings or inputs can be compared fairly.</td>
+<td>The dashboard shows TNS worsened the night a new SDC was checked in.</td>
+</tr>
+<tr>
+<td><strong>Log triage</strong><br><em>PD practice · Methodology · Whole flow</em></td>
+<td>Scanning tool logs for errors and new warnings, which often reveal the real cause of bad results.</td>
+<td>A warning that 200 SDC lines were ignored explains suspiciously clean timing.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="59-timing-closure-and-ecos">5.9 Timing Closure and ECOs<a class="headerlink" href="#59-timing-closure-and-ecos" title="Permanent link">&para;</a></h2>
+<p>Timing closure is the iterative work of getting every path to meet setup and hold timing in every mode and corner, while keeping power, area, congestion and noise within limits. Late in the project, small changes are made through ECOs (engineering change orders): targeted edits to the netlist and layout rather than re-running the whole flow.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-09-timing-closure-and-ecos.svg" alt="Each loop shrinks the violation list; big misses go back to RTL or floorplan, not to ECO tricks." loading="lazy" width="1000" height="560">
+<figcaption><strong>The timing-closure loop.</strong> Each loop shrinks the violation list; big misses go back to RTL or floorplan, not to ECO tricks.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Timing closure is like tuning an orchestra before a concert: fixing one section's timing can throw off another, so you iterate until everyone is in sync.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Three weeks before tapeout, Yuki's block has 140 setup violations at the slow corner and 2,000 hold violations at the fast corner. PrimeTime's ECO feature proposes cell sizing, Vt swaps and buffer insertions; Innovus implements them incrementally. After four ECO loops, all scenarios are clean. A late functional bug fix arrives as a 20-gate ECO, implemented with spare cells to avoid disturbing the rest.</p>
+</div>
+<h4 id="how-it-works_8">How it works<a class="headerlink" href="#how-it-works_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Analyse violations by corner/mode and group them by root cause.</li>
+<li>Fix big structural issues early (floorplan, RTL pipelining, constraints).</li>
+<li>Use optimisation: sizing, buffering, Vt swap, useful skew, restructuring.</li>
+<li>Late in the flow, generate signoff-driven ECOs and implement incrementally.</li>
+<li>Re-extract, re-run STA and repeat until all scenarios pass.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PD, STA and implementation engineers; RTL designers help with structural fixes.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>If a path fails by hundreds of picoseconds, fix it in RTL or floorplan; ECO tricks are for the last few tens of picoseconds.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A useful fix ladder: tens of ps — sizing, Vt swap, useful skew; around 100 ps — buffering, cell relocation, layer promotion; hundreds of ps — RTL retiming, pipelining or a floorplan change.</li>
+<li>Teams track WNS, TNS and the number of violating paths per scenario every day; falling TNS with flat WNS usually means one structural path needs RTL or floorplan attention.</li>
+<li>Setup and hold fixes interact across corners: a hold buffer can break setup elsewhere, so ECO tools optimise all scenarios together.</li>
+<li>Late functional ECOs come from Conformal ECO or Formality ECO as minimal patches, which are proven with LEC before they are implemented physically.</li>
+<li>Late in the project, a change board approves each ECO, and every ECO loop ends with full re-extraction and signoff STA.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Over-constraining the whole design (tighter clocks everywhere) to 'make margin'; it inflates area and power. Target the failing paths.</li>
+<li>Spending days on violations caused by constraint bugs; check SDC (missing false paths, wrong generated clocks) before heroic fixes.</li>
+<li>Closing timing in the P&amp;R tool only and discovering signoff STA disagrees; check correlation early.</li>
+</ul>
+</div>
+<h3 id="try-it-signoff-driven-eco-in-primetime-simplified">Try it: Signoff-driven ECO in PrimeTime (simplified)<a class="headerlink" href="#try-it-signoff-driven-eco-in-primetime-simplified" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code>fix_eco_drc<span class="w"> </span>-type<span class="w"> </span>max_transition
+fix_eco_timing<span class="w"> </span>-type<span class="w"> </span>setup
+fix_eco_timing<span class="w"> </span>-type<span class="w"> </span>hold<span class="w"> </span>-buffer_list<span class="w"> </span><span class="o">{</span>DLY1<span class="w"> </span>DLY2<span class="o">}</span>
+write_changes<span class="w"> </span>-format<span class="w"> </span>icc2tcl<span class="w"> </span>-output<span class="w"> </span>eco_changes.tcl
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_8">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Timing closure</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Iterating design and implementation until all timing requirements are met in all scenarios.</td>
+<td>Timing closure on a 3 GHz CPU core can take months.</td>
+</tr>
+<tr>
+<td><strong>ECO (Engineering Change Order)</strong><br><em>Industry practice · Methodology · Signoff</em></td>
+<td>A small, incremental change to the netlist and layout late in the flow.</td>
+<td>A functional ECO changes 15 gates to fix a register-reset bug.</td>
+</tr>
+<tr>
+<td><strong>Timing ECO vs functional ECO</strong><br><em>Industry terms · Concept · Signoff</em></td>
+<td>Timing ECOs fix slack without changing function; functional ECOs change logic to fix bugs.</td>
+<td>Upsizing a buffer is a timing ECO; inverting a signal is a functional ECO.</td>
+</tr>
+<tr>
+<td><strong>Signoff-driven ECO tools</strong><br><em>Synopsys PrimeTime ECO, Cadence Tempus ECO · Tool · Signoff · Commercial</em></td>
+<td>STA tools that compute fixes using signoff-accurate timing and export them to P&amp;R.</td>
+<td>Tempus ECO fixes 3,000 hold violations across 10 scenarios in one pass.</td>
+</tr>
+<tr>
+<td><strong>Functional ECO tools</strong><br><em>Cadence Conformal ECO, Synopsys Formality ECO · Tool · Signoff · Commercial</em></td>
+<td>Tools that compare old and new RTL and generate minimal netlist patches.</td>
+<td>Conformal ECO turns a 3-line RTL fix into a 12-gate netlist patch.</td>
+</tr>
+<tr>
+<td><strong>Incremental implementation</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Updating only changed parts of placement and routing to protect converged results.</td>
+<td>ECO routing reroutes 50 nets instead of the whole block.</td>
+</tr>
+<tr>
+<td><strong>Critical path restructuring</strong><br><em>RTL/PD practice · Methodology · RTL Design</em></td>
+<td>Changing logic structure or adding pipeline stages to fix deep timing problems.</td>
+<td>Moving a comparison earlier in the pipeline removes 200 ps from a path.</td>
+</tr>
+<tr>
+<td><strong>Timing budgeting</strong><br><em>Hierarchical design practice · Methodology · Physical Design</em></td>
+<td>Splitting chip-level timing into block-level constraints so blocks close independently.</td>
+<td>Each block gets 40 % of the cycle for input paths and 40 % for outputs.</td>
+</tr>
+<tr>
+<td><strong>Tapeout schedule pressure</strong><br><em>Project reality · Concept · Signoff</em></td>
+<td>Tight deadlines in the final weeks, requiring disciplined ECO management and change control.</td>
+<td>Only ECOs approved by the change board go in during the last two weeks.</td>
+</tr>
+<tr>
+<td><strong>Path groups</strong><br><em>STA/optimisation setting · Concept · Physical Design</em></td>
+<td>Grouping paths (reg-to-reg, input, output, clock-gating) so each group gets its own optimisation focus and reporting.</td>
+<td>A separate in2reg group stops I/O paths hiding real reg-to-reg violations.</td>
+</tr>
+<tr>
+<td><strong>Physically aware ECO</strong><br><em>PrimeTime ECO, Tempus ECO with layout data · Methodology · Signoff</em></td>
+<td>Signoff ECO that checks free placement space and routing so fixes are legal in the real layout.</td>
+<td>The ECO places a hold buffer in a gap 3 µm from the flop instead of overlapping cells.</td>
+</tr>
+<tr>
+<td><strong>Guardbands and margins</strong><br><em>Signoff practice · Concept · Signoff</em></td>
+<td>Extra timing margin (clock uncertainty, flat derates) covering jitter, model error and unmodelled effects.</td>
+<td>Setup uncertainty of 50 ps covers PLL jitter plus a small modelling margin.</td>
+</tr>
+<tr>
+<td><strong>MCMM-aware ECO fixing</strong><br><em>Signoff ECO practice · Methodology · Signoff</em></td>
+<td>Choosing each fix while checking every mode and corner at once, so repairing one scenario does not break another.</td>
+<td>A hold buffer is sized so the fast corner passes without creating a setup failure at the slow corner.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="510-signal-integrity-crosstalk-and-noise">5.10 Signal Integrity: Crosstalk and Noise<a class="headerlink" href="#510-signal-integrity-crosstalk-and-noise" title="Permanent link">&para;</a></h2>
+<p>Wires packed tightly together are coupled by capacitance. When one wire (the aggressor) switches, it can disturb its neighbour (the victim), either slowing or speeding its transition (crosstalk delay) or creating a glitch that may flip a value (crosstalk noise). At advanced nodes, wires are so close that signal integrity must be analysed and fixed on every design.</p>
+<p><strong>What an aggressor does to a victim</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Quiet victim</th>
+<th>Same direction</th>
+<th>Opposite direction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Effect</strong></td>
+<td>Glitch / noise bump</td>
+<td>Faster transition</td>
+<td>Slower transition</td>
+</tr>
+<tr>
+<td><strong>Coupling seen</strong></td>
+<td>≈1× Cc injects charge</td>
+<td>≈0× Cc</td>
+<td>≈2× Cc</td>
+</tr>
+<tr>
+<td><strong>Main risk</strong></td>
+<td>False value or reset</td>
+<td>Hold violation</td>
+<td>Setup violation</td>
+</tr>
+<tr>
+<td><strong>Checked at</strong></td>
+<td>Noise analysis</td>
+<td>Min (fast) corner</td>
+<td>Max (slow) corner</td>
+</tr>
+<tr>
+<td><strong>Typical fix</strong></td>
+<td>Shield, upsize driver</td>
+<td>Space, add delay</td>
+<td>Space, upsize, re-layer</td>
+</tr>
+</tbody>
+</table>
+<p><em>Direction of switching decides whether crosstalk threatens setup, hold or function.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Crosstalk is like trying to whisper to a friend while someone shouts next to you: the shout can drown out or distort your message.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>After routing, Tempus SI analysis shows a victim net running 800 µm alongside a busy data bus. When both switch in opposite directions, the victim's delay grows by 35 ps, causing a setup violation. A glitch analysis also shows a 180 mV bump on a reset line. Lucia fixes both by spacing the nets, upsizing the victim's driver and shielding the reset line with a ground wire.</p>
+</div>
+<h4 id="how-it-works_9">How it works<a class="headerlink" href="#how-it-works_9" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Extract coupling capacitances between neighbouring wires.</li>
+<li>Find aggressors whose switching windows overlap the victim's.</li>
+<li>Compute delta delay (crosstalk effect on timing) and glitch noise.</li>
+<li>Fix by spacing, shielding, layer change, driver upsizing or buffering.</li>
+<li>Re-run SI-aware STA in signoff.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PD, STA and signoff engineers; high-speed and analog designers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Opposite-direction aggressor switching slows the victim (setup risk); same-direction speeds it up (hold risk).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>At tight pitches, coupling to neighbours is often more than half of a wire's capacitance, so SI must be analysed on every advanced-node design.</li>
+<li>The 0×/2× Miller factors are idealisations; signoff tools compute the actual effect from aggressor and victim waveforms and their timing windows.</li>
+<li>SI analysis iterates: timing windows depend on delays, and delays depend on crosstalk, so tools repeat until the windows converge.</li>
+<li>Glitch checks compare noise height and width against receiver noise-immunity data; a tall but very narrow glitch can be harmless.</li>
+<li>Crosstalk on clock nets adds uncertainty to every flop they drive, which is why clocks get NDR spacing or shielding.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Treating SI as a signoff-only problem; enable SI-aware optimisation in post-route so fixes happen in P&amp;R.</li>
+<li>Shielding everything; shields consume tracks and add capacitance. Reserve them for clocks and critical asynchronous signals.</li>
+<li>Assuming same-direction coupling is harmless; speeding up a path can create hold violations.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_9">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Crosstalk</strong><br><em>Signal integrity · Concept · Signoff</em></td>
+<td>Unwanted coupling between adjacent wires through mutual capacitance.</td>
+<td>A long bus running beside a clock picks up coupling noise.</td>
+</tr>
+<tr>
+<td><strong>Aggressor and victim</strong><br><em>SI terms · Concept · Signoff</em></td>
+<td>The switching net causing disturbance and the net being disturbed.</td>
+<td>Five aggressors switching together create a large glitch on one victim.</td>
+</tr>
+<tr>
+<td><strong>Crosstalk delta delay</strong><br><em>SI analysis · Concept · Signoff</em></td>
+<td>Change in a net's delay due to neighbouring switching, included in SI-aware STA.</td>
+<td>A path gains 30 ps of delta delay at the worst corner.</td>
+</tr>
+<tr>
+<td><strong>Glitch / noise bump</strong><br><em>SI analysis · Concept · Signoff</em></td>
+<td>A voltage spike on a quiet net that may propagate as a false transition.</td>
+<td>A glitch on an asynchronous reset could reset a block by mistake.</td>
+</tr>
+<tr>
+<td><strong>Shielding</strong><br><em>SI fix · Methodology · Physical Design</em></td>
+<td>Running grounded or powered wires beside a sensitive net to block coupling.</td>
+<td>Clock trunks are shielded with VSS wires on both sides.</td>
+</tr>
+<tr>
+<td><strong>Spacing / NDR for SI</strong><br><em>SI fix · Methodology · Physical Design</em></td>
+<td>Increasing distance between sensitive nets to cut coupling capacitance.</td>
+<td>Double spacing halves the coupling on a critical net.</td>
+</tr>
+<tr>
+<td><strong>Timing windows</strong><br><em>SI analysis · Concept · Signoff</em></td>
+<td>The time range in which a net can switch; only overlapping windows cause crosstalk.</td>
+<td>An aggressor that switches only early in the cycle cannot affect a late victim.</td>
+</tr>
+<tr>
+<td><strong>Power supply noise (dynamic IR) on timing</strong><br><em>Power integrity · Concept · Signoff</em></td>
+<td>Voltage droop during switching that slows cells, analysed together with timing.</td>
+<td>IR-aware STA reveals a path failing only during a large switching burst.</td>
+</tr>
+<tr>
+<td><strong>Electrostatic coupling vs inductive effects</strong><br><em>SI physics · Concept · Signoff</em></td>
+<td>On-chip SI is mainly capacitive; inductance matters for very fast, long or package-level signals.</td>
+<td>Package and board designers model inductance for SerDes channels.</td>
+</tr>
+<tr>
+<td><strong>Miller effect on coupling</strong><br><em>SI physics · Concept · Signoff</em></td>
+<td>Opposite switching makes coupling capacitance act roughly doubled; same-direction switching makes it nearly vanish.</td>
+<td>A victim's 20 fF coupling behaves like about 40 fF when its neighbour switches the opposite way.</td>
+</tr>
+<tr>
+<td><strong>Noise immunity curves</strong><br><em>Library data (e.g. CCS noise) · Concept · Signoff</em></td>
+<td>Library data saying how tall and wide a glitch a cell input can tolerate before the output flips.</td>
+<td>A 250 mV, 30 ps glitch is filtered; a 400 mV, 120 ps glitch propagates.</td>
+</tr>
+<tr>
+<td><strong>SI analysis tools</strong><br><em>Synopsys PrimeTime SI, Cadence Tempus SI · Tool · Signoff · Commercial</em></td>
+<td>Signoff STA options computing crosstalk delta delays and glitch noise from coupled parasitics.</td>
+<td>PrimeTime SI reports 37 noise violations on long asynchronous nets.</td>
+</tr>
+<tr>
+<td><strong>Victim driver strength and slew</strong><br><em>SI robustness · Concept · Physical Design</em></td>
+<td>Strong drivers and sharp slews make a net harder to disturb; weak drivers on long wires are easy victims.</td>
+<td>Upsizing a victim's driver from X1 to X4 removes a 30 ps delta delay.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="511-io-pads-package-co-design-and-system-level-sipi">5.11 I/O Pads, Package Co-Design and System-Level SI/PI<a class="headerlink" href="#511-io-pads-package-co-design-and-system-level-sipi" title="Permanent link">&para;</a></h2>
+<p>A chip only works if signals and power get in and out cleanly. The pad ring or bump array connects the die to the package, I/O cells drive and receive signals at board voltages and protect against static discharge, and the package and board must deliver clean power and carry fast signals without distortion. Chip, package and board engineers therefore plan these together, which is called co-design.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-11-i-o-pads-package-co-design-and-system.svg" alt="Signal and power paths cross all three levels, so they are designed and simulated together." loading="lazy" width="1000" height="318">
+<figcaption><strong>Die, package and board share one electrical system.</strong> Signal and power paths cross all three levels, so they are designed and simulated together.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>The die is a city, the pads are its gates, the package is the motorway network and the board is the national road grid; a perfect city still fails if its gates are too few or its motorways jam.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Brightwave Silicon's networking chip has about 2,400 flip-chip bumps. Early in floorplanning, the package engineer and PD lead agree a bump map: SerDes lanes on the die edge nearest the board connectors, power and ground bumps spread evenly over the core. Package power-integrity simulation shows the 0.75 V rail's impedance rising above target at tens of megahertz, so extra package capacitors are added. IBIS models of the GPIOs go to the board team for their signal checks.</p>
+</div>
+<h4 id="how-it-works_10">How it works<a class="headerlink" href="#how-it-works_10" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Count signals, supplies and grounds; choose a wire-bond pad ring or a flip-chip bump array.</li>
+<li>Pick cells from the I/O library: GPIO, high-speed, analog, power, ground, corner and ESD clamp cells.</li>
+<li>Build the pad ring or bump map with the package team, grouping by voltage and spreading power and ground.</li>
+<li>Route the package and simulate signal integrity: reflections, crosstalk, loss and eye diagrams.</li>
+<li>Simulate power integrity from die to board: PDN impedance, decoupling and simultaneous switching noise.</li>
+<li>Hand IBIS models, package models and the pin list to the board team, and iterate until all three agree.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Full-chip integration and physical design engineers, I/O and ESD designers, package designers and SI/PI engineers at chip, OSAT and system companies.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember target impedance: Z_target ≈ allowed ripple ÷ transient current step; 5 % of 0.75 V with a 30 A step gives about 1.25 mΩ.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Wire-bond dies place pads in a ring at the edge, so pad count can set die size (pad-limited); flip-chip dies spread bumps over the whole area, giving far more I/O and lower-inductance power.</li>
+<li>Package inductance creates di/dt noise: V = L × di/dt, so 1 nH of loop inductance with a 1 A change in 1 ns gives 1 V of noise, which is why power and ground use many parallel pads.</li>
+<li>Power integrity is analysed as impedance versus frequency: the regulator handles low frequencies, board capacitors up to a few megahertz, package capacitors tens of megahertz and on-die capacitance beyond that.</li>
+<li>High-speed interfaces specify loss budgets at the Nyquist frequency; a 112 Gb/s PAM4 lane runs at 56 GBd, so its Nyquist frequency of 28 GHz sets package, board and connector loss limits.</li>
+<li>Bump maps are frozen early because package substrates have long lead times; late bump changes can delay tapeout or force a new package design.</li>
+<li>I/O cells contain level shifting between core and I/O voltages, so pad rings also carry power-on control signals that keep outputs safe while the core supply ramps.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Leaving the bump or pad plan to the end; the package and board are on the critical path and need the pin map months before tapeout.</li>
+<li>Under-counting I/O supply and ground pads; simultaneous switching noise then causes failures that only appear in the system.</li>
+<li>Treating SI/PI as the board team's problem; die, package and board share one power network and must be simulated together.</li>
+</ul>
+</div>
+<h3 id="try-it-target-impedance-for-a-core-supply-in-python">Try it: Target impedance for a core supply in Python<a class="headerlink" href="#try-it-target-impedance-for-a-core-supply-in-python" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">vdd</span><span class="p">,</span> <span class="n">ripple</span><span class="p">,</span> <span class="n">i_step</span> <span class="o">=</span> <span class="mf">0.75</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">,</span> <span class="mf">30.0</span>   <span class="c1"># volts, 5 % ripple, amps</span>
+<span class="n">z_target</span> <span class="o">=</span> <span class="n">vdd</span> <span class="o">*</span> <span class="n">ripple</span> <span class="o">/</span> <span class="n">i_step</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Z_target = </span><span class="si">{</span><span class="n">z_target</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="mi">1000</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> mOhm"</span><span class="p">)</span>   <span class="c1"># 1.25 mOhm</span>
+
+<span class="c1"># Noise from package inductance: V = L * di/dt</span>
+<span class="n">L</span><span class="p">,</span> <span class="n">di</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">1e-9</span>   <span class="c1"># 1 nH, 1 A change in 1 ns</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"L*di/dt = </span><span class="si">{</span><span class="n">L</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">di</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="n">dt</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> V"</span><span class="p">)</span>        <span class="c1"># 1.00 V</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_10">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_10" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>I/O cell library</strong><br><em>Foundries and I/O IP vendors · IP · Physical design</em></td>
+<td>Library of pad cells (GPIO, power, ground, analog, corner and filler) matched to the process, package style and board voltages.</td>
+<td>A 22 nm SoC uses the foundry's 1.8 V/3.3 V GPIO library, with corner cells joining the ring's supply buses.</td>
+</tr>
+<tr>
+<td><strong>GPIO pad cell</strong><br><em>I/O libraries · IP · Physical design</em></td>
+<td>General-purpose I/O cell with output driver, input receiver, pull-ups or pull-downs, programmable drive strength and slew rate, plus ESD protection.</td>
+<td>Firmware sets a GPIO to strong drive for a long cable but slow slew for a nearby LED to cut noise.</td>
+</tr>
+<tr>
+<td><strong>Core and I/O supply pads</strong><br><em>Pad-ring and bump planning · Concept · Physical design</em></td>
+<td>Pads bringing in core supplies and separate I/O supplies; their number is set by current, IR drop, electromigration and noise.</td>
+<td>A 15 W chip needs dozens of core power and ground bump pairs but only a few 1.8 V I/O supply pads.</td>
+</tr>
+<tr>
+<td><strong>ESD bus and rail-clamp spacing</strong><br><em>I/O and ESD design rules · Concept · Physical design</em></td>
+<td>Rules limiting each pad's distance from a supply clamp and setting ESD bus widths, so discharge current finds a low-resistance path.</td>
+<td>A pad-ring check flags a GPIO too far from the nearest rail clamp, so an extra clamp cell is inserted.</td>
+</tr>
+<tr>
+<td><strong>Simultaneous switching noise (SSN/SSO)</strong><br><em>I/O and package design · Concept · Signoff</em></td>
+<td>Ground bounce and supply droop when many outputs switch together through package inductance; it limits outputs per supply pad.</td>
+<td>The I/O vendor's SSO table allows a set number of fast outputs per VDDIO/VSS pair, so the bus gets extra supply pads.</td>
+</tr>
+<tr>
+<td><strong>IBIS models</strong><br><em>IBIS Open Forum · Standard · Packaging &amp; test</em></td>
+<td>Behavioural I/O buffer models made of voltage-current and voltage-time tables, letting board engineers simulate signals without transistor netlists.</td>
+<td>The chip team publishes IBIS models so customers can simulate the DDR and GPIO signals on their own boards.</td>
+</tr>
+<tr>
+<td><strong>IBIS-AMI models</strong><br><em>IBIS Open Forum (Algorithmic Modelling Interface) · Standard · Packaging &amp; test</em></td>
+<td>IBIS extension adding executable models of SerDes equalisation and clock recovery, so channel simulators can predict eyes and error rates.</td>
+<td>A switch vendor ships IBIS-AMI models of its 112G SerDes so board designers can check their backplane links.</td>
+</tr>
+<tr>
+<td><strong>S-parameters (Touchstone files)</strong><br><em>Touchstone format, maintained by the IBIS Open Forum · File format · Packaging &amp; test</em></td>
+<td>Frequency-domain models of how packages, traces and connectors reflect and pass signals, stored as .sNp files.</td>
+<td>The package team sends a 16-port .s16p file of the SerDes routes for the system channel simulation.</td>
+</tr>
+<tr>
+<td><strong>Eye diagram and channel simulation</strong><br><em>SI practice · Concept · Packaging &amp; test</em></td>
+<td>Overlaying many bit periods of a received signal; eye height and width show margin, and channel simulation predicts them before hardware exists.</td>
+<td>Simulation shows a closed eye at 32 GT/s until the board trace is shortened and a connector changed.</td>
+</tr>
+<tr>
+<td><strong>PDN target impedance</strong><br><em>Power-integrity practice · Concept · Signoff</em></td>
+<td>The maximum impedance the power network may present across frequency so supply ripple stays within budget during load steps.</td>
+<td>The 0.75 V rail with 5 % ripple and a 30 A step needs about 1.25 mΩ across the frequencies that matter.</td>
+</tr>
+<tr>
+<td><strong>Decoupling hierarchy (die, package, board)</strong><br><em>Power-integrity practice · Concept · Packaging &amp; test</em></td>
+<td>Capacitors at each level cover different frequency bands: board bulk capacitors the lowest, package capacitors the middle, on-die capacitance the highest.</td>
+<td>An impedance peak at tens of megahertz is fixed with package capacitors, since board capacitors are too far away to help.</td>
+</tr>
+<tr>
+<td><strong>Chip power model</strong><br><em>Power-integrity tools (e.g. RedHawk-SC, Voltus) · Concept · Signoff</em></td>
+<td>A compact electrical model of the die's switching current and capacitance handed to package and board engineers for system PI simulation.</td>
+<td>The board team plugs the chip power model into their simulation to size voltage-regulator capacitors.</td>
+</tr>
+<tr>
+<td><strong>SI/PI simulation tools</strong><br><em>Cadence Sigrity X and Clarity; Siemens HyperLynx; Synopsys SIwave and HFSS; Keysight ADS · Tool · Packaging &amp; test · Commercial</em></td>
+<td>Tools that extract package and board electrical models and simulate signal and power integrity from die to system.</td>
+<td>An SI engineer extracts the package in a 3D field solver, then runs a DDR5 channel simulation with IBIS models.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="512-implementing-multi-voltage-and-power-domains">5.12 Implementing Multi-Voltage and Power Domains<a class="headerlink" href="#512-implementing-multi-voltage-and-power-domains" title="Permanent link">&para;</a></h2>
+<p>When a chip has multiple voltages or switchable power domains, physical design must build them: separate regions for each domain, power switches, isolation cells, level shifters and always-on buffers, all following the UPF. The tools read the same UPF used in verification so implementation and simulation agree.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-12-implementing-multi-voltage-and-power.svg" alt="What the UPF drives in physical design" loading="lazy" width="1000" height="580">
+<figcaption><strong>What the UPF drives in physical design.</strong></figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like wiring a building where some floors run on a backup generator, some can be switched off at night, and adapters are needed wherever two different voltage systems meet.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Tariq implements a phone SoC subsystem with three domains: always-on at 0.65 V, a switchable CPU domain at 0.75-1.0 V (DVFS) and a 0.8 V modem. He creates voltage areas in the floorplan, places 1,200 header switches in a staggered daisy chain to limit inrush current, inserts level shifters and isolation cells at boundaries, and uses always-on buffers for control signals routed through the switchable domain.</p>
+</div>
+<h4 id="how-it-works_11">How it works<a class="headerlink" href="#how-it-works_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Read UPF; create voltage areas (physical regions) for each power domain.</li>
+<li>Build the domain's power grid and insert power switches with an enable chain.</li>
+<li>Place isolation cells, level shifters and retention flops as UPF specifies.</li>
+<li>Route always-on signals with always-on buffers; respect domain boundaries.</li>
+<li>Verify with low-power checks (static UPF checks) and power-aware signoff.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Physical design and low-power implementation engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Daisy-chaining power-switch enables limits the inrush current that could otherwise cause a voltage dip when a domain wakes up.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Level shifters are needed when a signal crosses between different voltages (especially low to high); isolation cells clamp outputs of a domain that may be off to 0, 1 or a latched value.</li>
+<li>Isolation is usually powered from an always-on supply and placed per the UPF -location option; the wrong supply or location makes the clamp useless.</li>
+<li>Switch arrays are sized for on-state IR drop across the switches and for wake-up time; daisy-chained enables with an acknowledge spread inrush current over time.</li>
+<li>Dual-rail cells (retention flops, always-on buffers, many level shifters) need a secondary power pin connection, handled by special secondary PG routing.</li>
+<li>Static low-power verification runs at RTL+UPF, on the synthesised netlist and on the final PG netlist, catching missing or wrongly supplied cells at each stage.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Placing isolation cells inside the domain being switched off, so they lose power exactly when needed.</li>
+<li>Turning on all power switches at once, causing a large inrush that droops neighbouring domains.</li>
+<li>Using normal buffers on an always-on path through a switchable region; wake-up silently breaks.</li>
+</ul>
+</div>
+<h3 id="try-it-upf-for-a-switchable-cpu-domain-simplified">Try it: UPF for a switchable CPU domain (simplified)<a class="headerlink" href="#try-it-upf-for-a-switchable-cpu-domain-simplified" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">create_power_domain</span><span class="w"> </span>PD_CPU<span class="w"> </span><span class="o">-</span>elements<span class="w"> </span><span class="k">{</span><span class="nv">u_cpu</span><span class="k">}</span>
+<span class="nv">create_supply_net</span><span class="w"> </span>VDD_CPU_V<span class="w"> </span><span class="o">-</span>domain<span class="w"> </span>PD_CPU
+<span class="nv">create_power_switch</span><span class="w"> </span>SW_CPU<span class="w"> </span><span class="o">-</span>domain<span class="w"> </span>PD_CPU<span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="nv">-input_supply_port</span><span class="w"> </span><span class="k">{</span><span class="nv">in</span><span class="w"> </span>VDD<span class="k">}</span><span class="w"> </span><span class="o">-</span>output_supply_port<span class="w"> </span><span class="k">{</span><span class="nv">out</span><span class="w"> </span>VDD_CPU_V<span class="k">}</span><span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="nv">-control_port</span><span class="w"> </span><span class="k">{</span><span class="nv">en</span><span class="w"> </span>cpu_pwr_en<span class="k">}</span><span class="w"> </span><span class="o">-</span>on_state<span class="w"> </span><span class="k">{</span><span class="nv">on_s</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="k">{</span><span class="nv">en</span><span class="k">}}</span>
+<span class="nv">set_isolation</span><span class="w"> </span>iso_cpu<span class="w"> </span><span class="o">-</span>domain<span class="w"> </span>PD_CPU<span class="w"> </span><span class="o">-</span>isolation_power_net<span class="w"> </span>VDD<span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="nv">-clamp_value</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="o">-</span>applies_to<span class="w"> </span>outputs
+<span class="nv">set_isolation_control</span><span class="w"> </span>iso_cpu<span class="w"> </span><span class="o">-</span>domain<span class="w"> </span>PD_CPU<span class="w"> </span><span class="err">\</span>
+<span class="w">  </span><span class="nv">-isolation_signal</span><span class="w"> </span>cpu_iso_en<span class="w"> </span><span class="o">-</span>isolation_sense<span class="w"> </span>high
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_11">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_11" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Voltage area / power domain region</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>A physical region of the floorplan assigned to one power domain.</td>
+<td>The CPU voltage area sits in the top-left of the die with its own grid.</td>
+</tr>
+<tr>
+<td><strong>Power-switch network</strong><br><em>Low-power PD · Concept · Physical Design</em></td>
+<td>An array of header or footer switches connecting a domain's virtual supply to the real supply.</td>
+<td>Switches are placed in columns every 40 µm across the domain.</td>
+</tr>
+<tr>
+<td><strong>Inrush current</strong><br><em>Power integrity · Concept · Physical Design</em></td>
+<td>Surge current when a powered-off domain turns on and its capacitance charges.</td>
+<td>Staged switch enabling keeps the inrush below the regulator's limit.</td>
+</tr>
+<tr>
+<td><strong>Always-on buffers</strong><br><em>Low-power PD · Concept · Physical Design</em></td>
+<td>Buffers powered from an always-on supply, used to route signals through switchable domains.</td>
+<td>A wake-up signal crosses the GPU domain using always-on buffers.</td>
+</tr>
+<tr>
+<td><strong>Dual-rail cells</strong><br><em>Low-power libraries · Concept · Physical Design</em></td>
+<td>Cells with two supply pins, such as level shifters and retention flops.</td>
+<td>A retention flop's shadow latch uses the always-on rail.</td>
+</tr>
+<tr>
+<td><strong>Static low-power verification</strong><br><em>Synopsys VC LP, Cadence Conformal Low Power, Siemens Questa · Methodology · Signoff · Commercial</em></td>
+<td>Structural checks that every crossing has correct isolation and level shifting per UPF.</td>
+<td>VC LP finds a missing level shifter on a 0.65 V to 0.9 V crossing.</td>
+</tr>
+<tr>
+<td><strong>Multi-voltage MCMM</strong><br><em>PD/STA practice · Methodology · Signoff</em></td>
+<td>Analysing timing with each domain at its own voltage across DVFS operating points.</td>
+<td>Timing is signed off at 0.6 V/400 MHz and 1.0 V/2 GHz CPU operating points.</td>
+</tr>
+<tr>
+<td><strong>Body biasing implementation</strong><br><em>FD-SOI and some bulk nodes · Concept · Physical Design</em></td>
+<td>Routing separate well-bias supplies to adjust transistor thresholds at run time.</td>
+<td>A 22FDX chip uses forward body bias to boost speed in turbo mode.</td>
+</tr>
+<tr>
+<td><strong>Power state table</strong><br><em>UPF · Concept · RTL Design</em></td>
+<td>Table listing legal combinations of domain states and voltages.</td>
+<td>State 'sleep' has CPU off, always-on at 0.6 V, modem off.</td>
+</tr>
+<tr>
+<td><strong>Isolation and level-shifter placement</strong><br><em>Low-power PD · Methodology · Physical Design</em></td>
+<td>Placing boundary cells in the right domain and supply so they work whenever their outputs are needed.</td>
+<td>Output isolation cells sit in the always-on domain so they can clamp while the CPU is off.</td>
+</tr>
+<tr>
+<td><strong>Secondary PG routing</strong><br><em>Low-power PD · Methodology · Physical Design</em></td>
+<td>Routing the second supply pin of dual-rail cells (retention flops, always-on buffers) to the correct supply.</td>
+<td>Retention flops in the GPU get their VDD_AON pin routed from nearby always-on straps.</td>
+</tr>
+<tr>
+<td><strong>Switch enable chain</strong><br><em>Low-power PD · Concept · Physical Design</em></td>
+<td>Power switches turned on one after another through a daisy chain, with an acknowledge signal at the end.</td>
+<td>The power controller waits for the chain's ack before releasing isolation.</td>
+</tr>
+<tr>
+<td><strong>Implementation (output) UPF</strong><br><em>IEEE 1801, written by implementation tools · File format · Signoff</em></td>
+<td>Updated UPF written after synthesis and P&amp;R that reflects the cells and supplies actually inserted.</td>
+<td>Signoff low-power checks read the P&amp;R output UPF with the PG netlist.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="513-hierarchical-design-and-full-chip-integration">5.13 Hierarchical Design and Full-Chip Integration<a class="headerlink" href="#513-hierarchical-design-and-full-chip-integration" title="Permanent link">&para;</a></h2>
+<p>Big SoCs are too large to implement as one flat design, so they are split into blocks (partitions) that teams implement in parallel, then assembled at the top level. Each block gets budgets for timing, pins and power. Abstract models of blocks keep the top-level run manageable. Repeated blocks, like CPU cores, are implemented once and reused many times.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-13-hierarchical-design-and-full-chip.svg" alt="Teams own partitions in parallel; the top level stitches them together." loading="lazy" width="1000" height="454">
+<figcaption><strong>Hierarchy of a large SoC.</strong> Teams own partitions in parallel; the top level stitches them together.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like building a cruise ship in sections at different shipyards and welding them together, with strict agreements about where pipes and cables connect.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A 600 mm² AI chip is divided into 40 partitions: compute tiles (implemented once, placed 64 times), memory controllers, PCIe, NoC routers and a top level. Each partition team receives pin locations and timing budgets. Block teams deliver abstracts (ETMs, LEFs); the top-level team assembles them, routes global nets and runs full-chip signoff, which needs servers with terabytes of memory.</p>
+</div>
+<h4 id="how-it-works_12">How it works<a class="headerlink" href="#how-it-works_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Partition the design by function, size and physical location.</li>
+<li>Plan pins, feedthroughs and timing/power budgets for each block.</li>
+<li>Implement blocks in parallel; generate abstract models.</li>
+<li>Assemble at top level; route top-level nets, clocks and power.</li>
+<li>Run full-chip signoff, iterating budgets and ECOs between levels.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>SoC physical design leads, top-level integrators and block owners.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know what an ETM (extracted timing model) or ILM (interface logic model) is: they summarise a block's timing for top-level analysis.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Partition size balances tool capacity, runtime and team ownership; many teams aim for blocks that complete a full P&amp;R iteration within about a day.</li>
+<li>Timing budgets turn top-level paths into block I/O constraints; budgets are refined as real block timing replaces estimates.</li>
+<li>Abstractions: ETMs keep only interface timing arcs, ILMs keep the interface logic netlist, and LEF abstracts keep the physical outline and pins; top-level runs swap them in to save memory.</li>
+<li>Abutted tile designs need careful feedthrough, clock and power alignment at tile edges; channel-based designs spend area on channels but integrate more easily.</li>
+<li>A block instantiated many times must close timing in every context: different orientations, neighbours and IR environments.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Freezing block pins too early without top-level feedback, causing long detours and failing inter-block paths.</li>
+<li>Trusting abstracts blindly; final signoff must use validated models or flat analysis of the assembled chip.</li>
+<li>Budgets that add up to more than the clock period, leaving no time for top-level wires.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_12">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Partition / block</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>A part of the chip implemented separately as its own physical design.</td>
+<td>The GPU is split into 8 shader-core partitions and a top-level glue partition.</td>
+</tr>
+<tr>
+<td><strong>Top-level integration</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Assembling implemented blocks and finishing chip-level routing, clocks, power and I/O.</td>
+<td>The top team routes 20,000 inter-block nets through channels and feedthroughs.</td>
+</tr>
+<tr>
+<td><strong>Pin assignment</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Deciding where each block's ports sit on its boundary to keep top-level wires short.</td>
+<td>Pins of a NoC router face its neighbours to minimise wire length.</td>
+</tr>
+<tr>
+<td><strong>Feedthrough</strong><br><em>PD term · Concept · Physical Design</em></td>
+<td>A signal that passes through a block without being used, to cross the chip.</td>
+<td>Abutted designs route top-level nets as feedthroughs through tiles.</td>
+</tr>
+<tr>
+<td><strong>ETM / ILM / abstract models</strong><br><em>Timing model types · Concept · Signoff</em></td>
+<td>Simplified timing models of a block used at top level instead of the full netlist.</td>
+<td>An ETM of a CPU core is a Liberty-like file with interface timing arcs.</td>
+</tr>
+<tr>
+<td><strong>Abutment vs channel-based floorplan</strong><br><em>PD styles · Concept · Physical Design</em></td>
+<td>Blocks touching directly (abutted) or separated by top-level routing channels.</td>
+<td>Tiled AI chips often use full abutment to avoid wasted channel area.</td>
+</tr>
+<tr>
+<td><strong>Block reuse (multiply-instantiated modules)</strong><br><em>PD practice · Methodology · Physical Design</em></td>
+<td>Implementing an identical block once and placing it many times.</td>
+<td>One CPU core layout is placed 16 times, possibly mirrored.</td>
+</tr>
+<tr>
+<td><strong>Full-chip signoff</strong><br><em>Signoff practice · Methodology · Signoff</em></td>
+<td>Running STA, power, DRC and LVS on the complete assembled chip.</td>
+<td>Full-chip DRC on a large die uses hundreds of CPU cores for a day.</td>
+</tr>
+<tr>
+<td><strong>Design data management</strong><br><em>Perforce, Git, Keysight SOS, Cliosoft (Keysight) · Tool · Whole flow</em></td>
+<td>Systems that version and share huge design databases across teams.</td>
+<td>Each block's tapeout-ready database is tagged and locked in the DM system.</td>
+</tr>
+<tr>
+<td><strong>Top-level clock distribution</strong><br><em>SoC PD practice · Methodology · Physical Design</em></td>
+<td>Delivering clocks from PLLs to every block with controlled latency and skew between blocks.</td>
+<td>A balanced top-level tree gives all 16 cores clock latency within 20 ps of each other.</td>
+</tr>
+<tr>
+<td><strong>Black-box planning</strong><br><em>Early SoC floorplanning · Methodology · Physical Design</em></td>
+<td>Planning the chip with estimated block sizes and shapes before block netlists exist.</td>
+<td>The top team plans pins and power for an unfinished NPU using a 6 mm² black box.</td>
+</tr>
+<tr>
+<td><strong>Block LEF abstract</strong><br><em>Generated by P&amp;R tools · File format · Physical Design</em></td>
+<td>Physical summary of a finished block (outline, pins, blockages) used by the top-level tools.</td>
+<td>The top-level router sees the CPU core only as its LEF outline and pins.</td>
+</tr>
+<tr>
+<td><strong>Top-level repeaters</strong><br><em>SoC PD practice · Concept · Physical Design</em></td>
+<td>Buffers inserted in channels or reserved islands so long inter-block wires meet timing.</td>
+<td>A 4 mm NoC link needs repeaters every few hundred micrometres, placed in top-level buffer islands.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="514-chiplets-25d-and-3d-ic-design">5.14 Chiplets, 2.5D and 3D-IC Design<a class="headerlink" href="#514-chiplets-25d-and-3d-ic-design" title="Permanent link">&para;</a></h2>
+<p>Instead of one huge die, many products now combine several smaller dies (chiplets) in one package. In 2.5D, chiplets sit side by side on a silicon interposer or bridge; in 3D, dies are stacked on top of each other and connected by through-silicon vias or hybrid bonding. Designing these requires new tools that plan and analyse the whole stack: interconnects, power, thermal and stress.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-14-chiplets-2-5d-and-3d-ic-design.svg" alt="Each level down has coarser connections: hybrid bonds, micro-bumps, C4 bumps, then BGA balls." loading="lazy" width="1000" height="564">
+<figcaption><strong>Anatomy of a 2.5D/3D package.</strong> Each level down has coarser connections: hybrid bonds, micro-bumps, C4 bumps, then BGA balls.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Chiplets are like building a house from prefabricated modules made in different factories, instead of carving the whole house from one giant block of stone.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Pinecone Compute's AI accelerator uses two N3 compute chiplets, one N6 I/O chiplet and eight HBM stacks on a TSMC CoWoS interposer. Compute dies talk over UCIe. The team uses Cadence Integrity 3D-IC to plan bumps and interposer routing, checks thermal hot spots with Celsius, and verifies die-to-die connectivity with Calibre 3DSTACK. Splitting the design improved yield and let the I/O die use a cheaper node.</p>
+</div>
+<h4 id="how-it-works_13">How it works<a class="headerlink" href="#how-it-works_13" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Partition the system into chiplets by function, node and yield.</li>
+<li>Choose integration: 2.5D interposer/bridge, 3D stacking, or fan-out packaging.</li>
+<li>Plan die-to-die interfaces (UCIe, BoW, proprietary) and bump/TSV maps.</li>
+<li>Co-design dies and package: power delivery, signal integrity, thermal, stress.</li>
+<li>Verify the assembly: connectivity (LVS across dies), timing, thermal and test (IEEE 1838).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>SoC architects, package and 3D-IC designers, PD and signoff engineers, thermal engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the main reasons for chiplets: better yield, mixing process nodes, reuse, and getting past reticle size limits.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Smaller dies yield better because yield falls roughly exponentially with die area for a given defect density; chiplets also let I/O and analog stay on cheaper mature nodes.</li>
+<li>Interconnect density climbs from organic substrates (bump pitch around 100 µm or more) to micro-bumps (tens of µm) to hybrid bonding (below 10 µm), multiplying die-to-die bandwidth.</li>
+<li>Short-reach parallel die-to-die links such as UCIe reach sub-picojoule-per-bit energy, far below long-reach SerDes, which makes splitting a design across dies affordable.</li>
+<li>Multi-die signoff adds cross-die LVS/connectivity, cross-die STA, power delivery through TSVs and bumps, and coupled thermal-mechanical analysis.</li>
+<li>Test is planned from the start: die wrappers (IEEE 1838) and known-good-die screening, because one bad die scraps the whole assembly.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming chiplets are always cheaper; packaging, test, interface area and power overheads can outweigh yield gains for smaller designs.</li>
+<li>Leaving thermal analysis to the end; stacked dies trap heat, so hot spots must not sit on top of each other.</li>
+<li>Designing each die in isolation; bump maps, power delivery and timing must be co-designed across dies and package.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_13">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_13" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Chiplet</strong><br><em>Industry term · Concept · Spec/Architecture</em></td>
+<td>A small die designed to be combined with others in one package to form a complete system.</td>
+<td>AMD EPYC processors combine CPU chiplets with a central I/O die.</td>
+</tr>
+<tr>
+<td><strong>2.5D integration (interposer, bridge)</strong><br><em>Packaging architecture · Concept · Packaging &amp; Test</em></td>
+<td>Dies placed side by side on a silicon interposer or connected by embedded bridges.</td>
+<td>GPUs and HBM stacks sit on a silicon interposer in CoWoS packages.</td>
+</tr>
+<tr>
+<td><strong>3D-IC (die stacking)</strong><br><em>Packaging architecture · Concept · Packaging &amp; Test</em></td>
+<td>Dies stacked vertically and connected through TSVs or hybrid bonds.</td>
+<td>A cache die is hybrid-bonded on top of a CPU die.</td>
+</tr>
+<tr>
+<td><strong>TSV (Through-Silicon Via)</strong><br><em>3D technology · Concept · Fabrication</em></td>
+<td>A vertical copper connection passing through a silicon die.</td>
+<td>HBM stacks connect their DRAM layers using thousands of TSVs.</td>
+</tr>
+<tr>
+<td><strong>Hybrid bonding</strong><br><em>TSMC SoIC, Intel Foveros Direct, others · Process · Packaging &amp; Test</em></td>
+<td>Direct copper-to-copper bonding of dies with micron-scale pitch and no solder bumps.</td>
+<td>Hybrid bonding allows over 10,000 connections per square millimetre.</td>
+</tr>
+<tr>
+<td><strong>Cadence Integrity 3D-IC Platform</strong><br><em>Cadence Design Systems · Tool · Physical Design · Commercial</em></td>
+<td>Unified planning, implementation and analysis platform for multi-die systems.</td>
+<td>Integrity 3D-IC co-optimises bump maps between a logic die and an interposer.</td>
+</tr>
+<tr>
+<td><strong>Synopsys 3DIC Compiler</strong><br><em>Synopsys · Tool · Physical Design · Commercial</em></td>
+<td>Synopsys platform for exploring, implementing and analysing 2.5D/3D multi-die designs.</td>
+<td>3DIC Compiler plans UCIe routing across a silicon bridge.</td>
+</tr>
+<tr>
+<td><strong>Siemens Innovator3D IC and Calibre 3DSTACK</strong><br><em>Siemens EDA · Tool · Signoff · Commercial</em></td>
+<td>Siemens's 3D-IC planning tool and multi-die physical verification extension.</td>
+<td>Calibre 3DSTACK verifies that bumps on stacked dies align and connect correctly.</td>
+</tr>
+<tr>
+<td><strong>Reticle limit</strong><br><em>Lithography constraint · Concept · Fabrication</em></td>
+<td>Maximum die size a scanner can expose in one shot, about 26 × 33 mm (858 mm²).</td>
+<td>The largest AI chips hit the reticle limit, so they combine multiple dies.</td>
+</tr>
+<tr>
+<td><strong>Known good die (KGD)</strong><br><em>Test term · Concept · Packaging &amp; Test</em></td>
+<td>A die fully tested before assembly so expensive packages are not wasted on bad dies.</td>
+<td>Each chiplet is wafer-tested at high coverage before going on the interposer.</td>
+</tr>
+<tr>
+<td><strong>Thermal and stress analysis</strong><br><em>Synopsys (Ansys), Cadence Celsius, Siemens · Methodology · Signoff</em></td>
+<td>Simulating heat flow and mechanical stress in stacked dies and packages.</td>
+<td>Thermal analysis shows the top die in a stack reaching 105 °C under load.</td>
+</tr>
+<tr>
+<td><strong>Die-to-die PHY and bump map</strong><br><em>Chiplet interface design · Concept · Physical Design</em></td>
+<td>The interface circuit at a die edge plus the matching arrangement of bumps on both dies.</td>
+<td>Both chiplets mirror their UCIe bump maps so lanes line up across the bridge.</td>
+</tr>
+<tr>
+<td><strong>Micro-bump pitch</strong><br><em>Packaging technology · Concept · Packaging &amp; Test</em></td>
+<td>Spacing between die-to-die bumps; finer pitch means more connections per mm² and wider interfaces.</td>
+<td>Micro-bumps at tens of µm pitch give far more wires than 100 µm-plus C4 bumps.</td>
+</tr>
+<tr>
+<td><strong>3Dblox</strong><br><em>Introduced by TSMC (2022), open language · Standard · Physical Design</em></td>
+<td>Open language describing multi-die assemblies (dies, interfaces, stacking) so different EDA tools can share one 3D-IC description.</td>
+<td>A team describes its interposer stack once in 3Dblox and loads it into several vendors' tools.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="515-advanced-node-physical-design-challenges">5.15 Advanced-Node Physical Design Challenges<a class="headerlink" href="#515-advanced-node-physical-design-challenges" title="Permanent link">&para;</a></h2>
+<p>At 7 nm and below, physical design gets harder. Features are smaller than the wavelength of light used to print them, so layers need multiple exposures or EUV, and layout must follow strict patterns. Wires have much higher resistance, pin access is crowded, and variation is larger. Tools and designers must handle many new rules and effects.</p>
+<figure class="fig fig-diagram">
+<img src="img/05-15-advanced-node-physical-design-challenges.svg" alt="Each generation added new layout restrictions that tools and engineers must handle." loading="lazy" width="1000" height="179">
+<figcaption><strong>How PD got harder, node by node.</strong> Each generation added new layout restrictions that tools and engineers must handle.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like writing with a thick marker on a tiny piece of paper: you can still write, but only in very regular strokes, and every extra line costs space.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Moving from 16 nm to 3 nm, Grace's PD team found that via resistance on lower metals had grown dramatically, so long nets needed promotion to upper layers. Cells needed specific placement spacing rules (e.g. minimum implant widths), and pin access to dense cells caused routing failures until they adjusted cell padding. Runtime also doubled because of the much larger rule decks.</p>
+</div>
+<h4 id="how-it-works_14">How it works<a class="headerlink" href="#how-it-works_14" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Understand foundry restrictions: gridded, unidirectional metals, color/mask assignments.</li>
+<li>Handle high wire and via resistance by layer promotion and via pillars.</li>
+<li>Manage cell-placement rules (spacing, abutment, implant) and pin access.</li>
+<li>Model larger variation with POCV/LVF and stricter EM rules.</li>
+<li>Use foundry-certified tool versions and reference flows for the node.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Advanced-node PD engineers, CAD/methodology teams, foundry application engineers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Ask foundries and tools 'is this flow certified for the node?': foundry certification of EDA tools is mandatory at advanced nodes.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Once metal pitch drops below what one DUV immersion exposure can print (roughly 80 nm), layers need multi-patterning (SADP/SAQP) or EUV, forcing gridded, unidirectional wires with separate cut shapes.</li>
+<li>Copper resistivity rises sharply in narrow lines because of barrier layers and scattering; foundries have introduced other metals (such as cobalt or ruthenium) in some of the narrowest local layers.</li>
+<li>Placement legality now includes diffusion-break, Vt-island and cell-edge rules, so placers check neighbour compatibility, not just overlaps.</li>
+<li>Leading-edge rule decks contain thousands of checks; foundry-certified tool versions, reference flows and qualified libraries are released together with the PDK.</li>
+<li>Backside power (Intel PowerVia on 18A, TSMC Super Power Rail on A16) moves the PDN under the transistors, freeing front-side tracks and cutting IR drop but adding thermal and debug challenges.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming a smaller node means faster wires; wire RC gets worse every node, so interconnect-aware design matters more.</li>
+<li>Treating colouring as a router detail; colour conflicts in custom IP or late ECOs can make a layout unmanufacturable.</li>
+<li>Using a non-certified tool version 'just to try' at signoff; foundries do not accept its results.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_14">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_14" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Multi-patterning (LELE, SADP, SAQP)</strong><br><em>Lithography technique · Process · Fabrication</em></td>
+<td>Printing one layer with two or more exposures or spacer steps to achieve finer pitch than one exposure allows.</td>
+<td>At 7 nm DUV, metal layers used self-aligned quadruple patterning.</td>
+</tr>
+<tr>
+<td><strong>Coloring / mask assignment</strong><br><em>Multi-patterning design · Concept · Physical Design</em></td>
+<td>Assigning shapes on one layer to different masks so neighbours are printed separately.</td>
+<td>Two adjacent M1 wires must be on different colours (masks).</td>
+</tr>
+<tr>
+<td><strong>EUV impact on layout rules</strong><br><em>Foundry design rules at EUV nodes · Concept · Physical Design</em></td>
+<td>EUV lets some critical layers return to single exposure, easing colouring but adding stochastic-defect-driven line-end and spacing rules.</td>
+<td>On EUV layers the router meets fewer colour conflicts but must respect stricter tip-to-tip rules.</td>
+</tr>
+<tr>
+<td><strong>Via pillars / layer promotion</strong><br><em>Advanced-node PD technique · Methodology · Physical Design</em></td>
+<td>Moving critical nets to thicker upper layers and stacking vias to reduce resistance.</td>
+<td>Timing-critical nets are promoted to M8 with via pillars from the driver.</td>
+</tr>
+<tr>
+<td><strong>Pin access</strong><br><em>Advanced-node routing challenge · Concept · Physical Design</em></td>
+<td>Whether the router can legally reach each cell pin in crowded areas.</td>
+<td>Dense multi-input cells cause pin-access DRCs until spacing is added.</td>
+</tr>
+<tr>
+<td><strong>Foundry tool certification</strong><br><em>TSMC, Samsung, Intel Foundry programmes · Concept · Whole flow</em></td>
+<td>Foundry qualification that a tool version correctly handles a node's rules and models.</td>
+<td>Only certified versions of Innovus and Fusion Compiler are used for N2 tapeouts.</td>
+</tr>
+<tr>
+<td><strong>DTCO (Design-Technology Co-Optimization)</strong><br><em>Foundries and design houses · Methodology · Fabrication</em></td>
+<td>Developing process technology and cell/design rules together for the best PPA.</td>
+<td>Cell height shrinks from 6 to 5 tracks through DTCO at a new node.</td>
+</tr>
+<tr>
+<td><strong>Self-heating</strong><br><em>Device physics (FinFET/GAA) · Concept · Signoff</em></td>
+<td>Local transistor heating in narrow 3D devices that worsens EM and aging.</td>
+<td>Signoff EM checks include self-heating temperature rise on high-activity cells.</td>
+</tr>
+<tr>
+<td><strong>Layout-dependent effects (LDE)</strong><br><em>Device physics · Concept · Signoff</em></td>
+<td>Transistor behaviour changing with nearby layout (well proximity, stress, diffusion length).</td>
+<td>A cell placed next to a well edge runs a few percent slower.</td>
+</tr>
+<tr>
+<td><strong>Gridded, unidirectional routing and cut metal</strong><br><em>Advanced-node routing rules · Concept · Physical Design</em></td>
+<td>Lower metals allow only straight wires on fixed tracks in one direction; separate cut shapes split lines.</td>
+<td>A jog on M2 is illegal; the router instead hops up to M3 and back.</td>
+</tr>
+<tr>
+<td><strong>Cell-edge placement rules</strong><br><em>Advanced-node placement rules · Concept · Physical Design</em></td>
+<td>Rules on which cell edges, Vt types and implants may sit next to each other.</td>
+<td>Two different-Vt cells need a spacer site between them to meet a minimum implant width.</td>
+</tr>
+<tr>
+<td><strong>Diffusion breaks (single/double)</strong><br><em>FinFET/GAA layout · Concept · Physical Design</em></td>
+<td>Breaks in the continuous diffusion between neighbouring cells; their type affects area and transistor speed.</td>
+<td>Placing cells to share single diffusion breaks saves sites compared with double breaks.</td>
+</tr>
+<tr>
+<td><strong>Wire and via resistance scaling</strong><br><em>Interconnect physics · Concept · Physical Design</em></td>
+<td>As wires narrow, barrier layers and electron scattering raise resistance much faster than geometry alone predicts.</td>
+<td>A long route on a lower metal becomes slower than the logic it connects, so it is promoted upwards.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="logic-synthesis-design-for-test.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Logic Synthesis &amp; Design for Test">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. Logic Synthesis & Design for Test
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="signoff-tapeout.html" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Signoff &amp; Tapeout">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                6. Signoff & Tapeout
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

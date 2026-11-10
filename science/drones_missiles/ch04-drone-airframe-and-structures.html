@@ -1,0 +1,4934 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch04-drone-airframe-and-structures.html">
+  
+  
+    <link rel="prev" href="ch03-aerodynamics-for-uavs.html">
+  
+  
+    <link rel="next" href="ch05-drone-propulsion-systems.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>4. Drone Airframe and Structures - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch-airframe" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Drone Airframe and Structures
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch-airframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Drone Airframe and Structures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-design_philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Structural Design Philosophy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Structural Design Philosophy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-design-load-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 Design Load Definitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-load-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 Load Paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#423-mass-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.3 Mass Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#424-structural-efficiency-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.4 Structural Efficiency Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#425-structural-design-philosophies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.5 Structural Design Philosophies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fuselage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Fuselage Design Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Fuselage Design Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-monocoque-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Monocoque Construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-semi-monocoque-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 Semi-Monocoque Construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-truss-frame-space-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.3 Truss Frame (Space Frame)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#434-pod-and-boom-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.4 Pod-and-Boom Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#435-flying-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.5 Flying Wing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#436-blended-wing-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.6 Blended Wing Body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Wing Structural Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 Wing Structural Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441-wing-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.1 Wing Box
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#442-spar-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.2 Spar Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#443-rib-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.3 Rib Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#444-wing-skin-panel-buckling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.4 Wing Skin Panel Buckling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#445-swept-wing-structural-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.5 Swept Wing Structural Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#446-high-aspect-ratio-wing-tip-deflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.6 High-Aspect-Ratio Wing Tip Deflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-control_surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Control Surfaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Control Surfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451-ailerons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.1 Ailerons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#452-elevator-and-tail-volume-coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.2 Elevator and Tail Volume Coefficient
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#453-rudder-and-directional-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.3 Rudder and Directional Stability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#454-elevons-flying-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.4 Elevons (Flying Wing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#455-spoilers-flaperons-and-split-flaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.5 Spoilers, Flaperons, and Split Flaps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#456-actuator-hinge-moment-and-servo-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.6 Actuator Hinge Moment and Servo Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-landing_gear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Landing Gear Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 Landing Gear Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#461-fixed-tricycle-gear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.1 Fixed Tricycle Gear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#462-retractable-gear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.2 Retractable Gear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#463-skid-landing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.3 Skid Landing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#464-floats-and-water-takeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.4 Floats and Water Takeoff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#465-catapult-launch-and-net-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.5 Catapult Launch and Net Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#466-parachute-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.6 Parachute Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Structural Materials
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.7 Structural Materials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#471-carbon-fibre-reinforced-polymer-cfrp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.1 Carbon Fibre Reinforced Polymer (CFRP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#472-glass-fibre-reinforced-polymer-gfrp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.2 Glass Fibre Reinforced Polymer (GFRP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#473-aluminium-alloys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.3 Aluminium Alloys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#474-titanium-ti-6al-4v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.4 Titanium Ti-6Al-4V
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#475-core-materials-for-sandwich-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.5 Core Materials for Sandwich Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#476-chromoly-steel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.6 Chromoly Steel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sandwich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 Sandwich Structures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.8 Sandwich Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#481-bending-stiffness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.1 Bending Stiffness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#482-face-wrinkling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.2 Face Wrinkling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#483-core-shear-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.3 Core Shear Failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#484-panel-mass-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.4 Panel Mass Optimisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-joints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9 Joints and Fasteners
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.9 Joints and Fasteners">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#491-bolted-joints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9.1 Bolted Joints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#492-bonded-joints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9.2 Bonded Joints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#493-galvanic-corrosion-and-fastener-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9.3 Galvanic Corrosion and Fastener Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-stealth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10 Stealth Design of UAV Airframes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.10 Stealth Design of UAV Airframes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4101-radar-cross-section-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.1 Radar Cross Section Fundamentals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4102-planform-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.2 Planform Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4103-serpentine-inlet-duct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.3 Serpentine Inlet Duct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4104-radar-absorbing-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.4 Radar Absorbing Materials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4105-infrared-signature-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.5 Infrared Signature Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4106-acoustic-and-visual-signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.6 Acoustic and Visual Signature
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fatigue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11 Fatigue and Damage Tolerance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.11 Fatigue and Damage Tolerance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4111-s-n-curve-and-basquin-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.1 S-N Curve and Basquin Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4112-stress-concentration-and-notch-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.2 Stress Concentration and Notch Sensitivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4113-linear-elastic-fracture-mechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.3 Linear Elastic Fracture Mechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4114-crack-growth-paris-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.4 Crack Growth: Paris Law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4115-cfrp-fatigue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.5 CFRP Fatigue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4116-uav-fatigue-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.6 UAV Fatigue Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12 Structural Analysis Tools and Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.12 Structural Analysis Tools and Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4121-classical-hand-calculations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.1 Classical Hand Calculations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4122-finite-element-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.2 Finite Element Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4123-buckling-fea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.3 Buckling FEA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4124-topology-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.4 Topology Optimisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4125-software-ecosystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.5 Software Ecosystem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-manufacturing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13 Manufacturing and Quality Assurance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.13 Manufacturing and Quality Assurance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4131-cnc-machining-tolerances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.1 CNC Machining Tolerances
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4132-composite-layup-and-cure-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.2 Composite Layup and Cure Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4133-non-destructive-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.3 Non-Destructive Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4134-assembly-and-datum-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.4 Assembly and Datum Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-aeroelasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14 Aeroelasticity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.14 Aeroelasticity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4141-static-aeroelasticity-divergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14.1 Static Aeroelasticity: Divergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4142-control-reversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14.2 Control Reversal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4143-flutter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14.3 Flutter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-thermal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.15 Thermal and Environmental Effects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.15 Thermal and Environmental Effects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4151-thermal-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.15.1 Thermal Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4152-moisture-absorption-in-composites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.15.2 Moisture Absorption in Composites
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.16 Crash Energy Management and Payload Protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17 Structural Certification and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.17 Structural Certification and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4171-building-block-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17.1 Building Block Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4172-design-allowables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17.2 Design Allowables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4173-ground-vibration-testing-and-flutter-clearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17.3 Ground Vibration Testing and Flutter Clearance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emerging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18 Emerging Technologies in UAV Airframe Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.18 Emerging Technologies in UAV Airframe Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4181-additively-manufactured-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18.1 Additively Manufactured Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4182-morphing-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18.2 Morphing Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4183-structural-health-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18.3 Structural Health Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-af_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.19 Summary and Design Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch-airframe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 Drone Airframe and Structures
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-design_philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 Structural Design Philosophy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.2 Structural Design Philosophy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#421-design-load-definitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.1 Design Load Definitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#422-load-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.2 Load Paths
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#423-mass-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.3 Mass Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#424-structural-efficiency-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.4 Structural Efficiency Metrics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#425-structural-design-philosophies" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2.5 Structural Design Philosophies
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fuselage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 Fuselage Design Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.3 Fuselage Design Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#431-monocoque-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.1 Monocoque Construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#432-semi-monocoque-construction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.2 Semi-Monocoque Construction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#433-truss-frame-space-frame" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.3 Truss Frame (Space Frame)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#434-pod-and-boom-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.4 Pod-and-Boom Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#435-flying-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.5 Flying Wing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#436-blended-wing-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3.6 Blended Wing Body
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 Wing Structural Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.4 Wing Structural Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#441-wing-box" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.1 Wing Box
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#442-spar-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.2 Spar Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#443-rib-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.3 Rib Design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#444-wing-skin-panel-buckling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.4 Wing Skin Panel Buckling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#445-swept-wing-structural-implications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.5 Swept Wing Structural Implications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#446-high-aspect-ratio-wing-tip-deflection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4.6 High-Aspect-Ratio Wing Tip Deflection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-control_surfaces" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 Control Surfaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.5 Control Surfaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#451-ailerons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.1 Ailerons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#452-elevator-and-tail-volume-coefficient" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.2 Elevator and Tail Volume Coefficient
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#453-rudder-and-directional-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.3 Rudder and Directional Stability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#454-elevons-flying-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.4 Elevons (Flying Wing)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#455-spoilers-flaperons-and-split-flaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.5 Spoilers, Flaperons, and Split Flaps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#456-actuator-hinge-moment-and-servo-sizing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5.6 Actuator Hinge Moment and Servo Sizing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-landing_gear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6 Landing Gear Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.6 Landing Gear Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#461-fixed-tricycle-gear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.1 Fixed Tricycle Gear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#462-retractable-gear" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.2 Retractable Gear
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#463-skid-landing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.3 Skid Landing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#464-floats-and-water-takeoff" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.4 Floats and Water Takeoff
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#465-catapult-launch-and-net-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.5 Catapult Launch and Net Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#466-parachute-recovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.6.6 Parachute Recovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7 Structural Materials
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.7 Structural Materials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#471-carbon-fibre-reinforced-polymer-cfrp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.1 Carbon Fibre Reinforced Polymer (CFRP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#472-glass-fibre-reinforced-polymer-gfrp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.2 Glass Fibre Reinforced Polymer (GFRP)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#473-aluminium-alloys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.3 Aluminium Alloys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#474-titanium-ti-6al-4v" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.4 Titanium Ti-6Al-4V
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#475-core-materials-for-sandwich-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.5 Core Materials for Sandwich Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#476-chromoly-steel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.7.6 Chromoly Steel
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-sandwich" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8 Sandwich Structures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.8 Sandwich Structures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#481-bending-stiffness" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.1 Bending Stiffness
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#482-face-wrinkling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.2 Face Wrinkling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#483-core-shear-failure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.3 Core Shear Failure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#484-panel-mass-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.8.4 Panel Mass Optimisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-joints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9 Joints and Fasteners
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.9 Joints and Fasteners">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#491-bolted-joints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9.1 Bolted Joints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#492-bonded-joints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9.2 Bonded Joints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#493-galvanic-corrosion-and-fastener-selection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.9.3 Galvanic Corrosion and Fastener Selection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-stealth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10 Stealth Design of UAV Airframes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.10 Stealth Design of UAV Airframes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4101-radar-cross-section-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.1 Radar Cross Section Fundamentals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4102-planform-alignment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.2 Planform Alignment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4103-serpentine-inlet-duct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.3 Serpentine Inlet Duct
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4104-radar-absorbing-materials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.4 Radar Absorbing Materials
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4105-infrared-signature-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.5 Infrared Signature Reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4106-acoustic-and-visual-signature" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.10.6 Acoustic and Visual Signature
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-fatigue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11 Fatigue and Damage Tolerance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.11 Fatigue and Damage Tolerance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4111-s-n-curve-and-basquin-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.1 S-N Curve and Basquin Equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4112-stress-concentration-and-notch-sensitivity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.2 Stress Concentration and Notch Sensitivity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4113-linear-elastic-fracture-mechanics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.3 Linear Elastic Fracture Mechanics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4114-crack-growth-paris-law" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.4 Crack Growth: Paris Law
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4115-cfrp-fatigue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.5 CFRP Fatigue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4116-uav-fatigue-spectrum" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.11.6 UAV Fatigue Spectrum
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12 Structural Analysis Tools and Methods
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.12 Structural Analysis Tools and Methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4121-classical-hand-calculations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.1 Classical Hand Calculations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4122-finite-element-method" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.2 Finite Element Method
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4123-buckling-fea" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.3 Buckling FEA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4124-topology-optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.4 Topology Optimisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4125-software-ecosystem" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.12.5 Software Ecosystem
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-manufacturing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13 Manufacturing and Quality Assurance
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.13 Manufacturing and Quality Assurance">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4131-cnc-machining-tolerances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.1 CNC Machining Tolerances
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4132-composite-layup-and-cure-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.2 Composite Layup and Cure Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4133-non-destructive-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.3 Non-Destructive Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4134-assembly-and-datum-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.13.4 Assembly and Datum Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-aeroelasticity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14 Aeroelasticity
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.14 Aeroelasticity">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4141-static-aeroelasticity-divergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14.1 Static Aeroelasticity: Divergence
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4142-control-reversal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14.2 Control Reversal
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4143-flutter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.14.3 Flutter
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-thermal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.15 Thermal and Environmental Effects
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.15 Thermal and Environmental Effects">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4151-thermal-loading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.15.1 Thermal Loading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4152-moisture-absorption-in-composites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.15.2 Moisture Absorption in Composites
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-crash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.16 Crash Energy Management and Payload Protection
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17 Structural Certification and Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.17 Structural Certification and Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4171-building-block-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17.1 Building Block Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4172-design-allowables" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17.2 Design Allowables
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4173-ground-vibration-testing-and-flutter-clearance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.17.3 Ground Vibration Testing and Flutter Clearance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emerging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18 Emerging Technologies in UAV Airframe Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4.18 Emerging Technologies in UAV Airframe Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#4181-additively-manufactured-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18.1 Additively Manufactured Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4182-morphing-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18.2 Morphing Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4183-structural-health-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.18.3 Structural Health Monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-af_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.19 Summary and Design Guidelines
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-airframe">Chapter 4: Drone Airframe and Structures<a class="headerlink" href="#ch-airframe" title="Permanent link">&para;</a></h1>
+<h2 id="ch-airframe"><span class="secnum">4.1</span> Drone Airframe and Structures<a class="headerlink" href="#ch-airframe" title="Permanent link">&para;</a></h2>
+<p>The airframe of an unmanned aerial vehicle (UAV) is the primary load-carrying skeleton that supports all aerodynamic, inertial, and ground loads throughout the vehicle’s operational life. Unlike manned aircraft, UAV airframes must simultaneously satisfy contradictory requirements: minimum mass for endurance, sufficient stiffness for aeroelastic stability, adequate toughness for autonomous recovery operations, and geometric precision for low-observability coatings. This chapter presents the underlying structural mechanics, material science, manufacturing methods, and analytical tools necessary to design and certify a UAV airframe from preliminary concept through production release.</p>
+<h2 id="sec-design_philosophy"><span class="secnum">4.2</span> Structural Design Philosophy<a class="headerlink" href="#sec-design_philosophy" title="Permanent link">&para;</a></h2>
+<h3 id="421-design-load-definitions"><span class="secnum">4.2.1</span> Design Load Definitions<a class="headerlink" href="#421-design-load-definitions" title="Permanent link">&para;</a></h3>
+<p>Every structural component must be sized against a defined design load that captures the worst credible combination of aerodynamic, inertial, propulsive, and ground-reaction forces. Three load levels govern the structural design process.</p>
+<p><strong>Limit load</strong> (LL) is the maximum load the structure is expected to experience in service without permanent deformation. The structure must carry limit load with no yielding or permanent set; it must remain elastic throughout.</p>
+<p><strong>Ultimate load</strong> (UL) is the product of limit load and the safety factor <span class="arithmatex">\(\gamma\)</span>: <span id="eq-ultimate_load"></span></p>
+<div class="arithmatex">\[P_\text{UL} = \gamma \cdot P_\text{LL}\tag{4.1}\]</div>
+<p>The structure must sustain ultimate load for at least three seconds without collapse; permanent deformation is acceptable. Two safety factor regimes are standard:</p>
+<ul>
+<li>
+<p>Military UAVs (MIL-HDBK-516C, DEF-STAN 00-970): <span class="arithmatex">\(\gamma = 1.5\)</span></p>
+</li>
+<li>
+<p>Civil UAVs (EASA CS-UAS, FAA AC 21.17-2): <span class="arithmatex">\(\gamma = 2.0\)</span> for Category C and above, reflecting lower structural inspection confidence and remotely-piloted risk assumptions.</p>
+</li>
+</ul>
+<p>Additional scatter factors (<span class="arithmatex">\(k_s = 1.15\)</span>–<span class="arithmatex">\(1.25\)</span>) account for material property scatter, environmental degradation, and manufacturing variability in composite structures, resulting in a combined safety factor: <span id="eq-effective_safety"></span></p>
+<div class="arithmatex">\[\gamma_\text{eff} = \gamma \cdot k_s \cdot k_\text{env}\tag{4.2}\]</div>
+<p>where <span class="arithmatex">\(k_\text{env} = 1.1\)</span>–<span class="arithmatex">\(1.2\)</span> for composites exposed to temperature–moisture cycling.</p>
+<h3 id="422-load-paths"><span class="secnum">4.2.2</span> Load Paths<a class="headerlink" href="#422-load-paths" title="Permanent link">&para;</a></h3>
+<p>A <em>load path</em> describes the continuous chain of structural elements through which an externally applied force is resolved into reactions at the aircraft’s centre of gravity (CG) and, ultimately, at the attachment points of propulsion, undercarriage, and payload. Efficient structural design demands the shortest, most direct load paths with minimum eccentricity to avoid secondary bending.</p>
+<p>Wing aerodynamic lift <span class="arithmatex">\(L\)</span> generates a distributed pressure load on the skin. The skin transfers shear into the wing ribs; the ribs transfer bending and shear into the front and rear spars; the spars carry the bending moment and shear as a box beam into the carry-through structure at the fuselage centreline. The root fitting transmits bending moment <span class="arithmatex">\(M_r\)</span> and shear <span class="arithmatex">\(V_r\)</span> into the fuselage frames, which in turn deliver the resultant through the fuselage skin to the CG station. Propulsive thrust <span class="arithmatex">\(T\)</span> travels from the motor mount through the motor-mount frame, along the boom or fuselage keel, to the main bulkhead, and thence to the CG. Ground reactions at landing gear are channelled through gear-leg fittings into the primary keel or main spar carry-through. Any break in this chain forces load to find an alternative, longer path—introducing stress concentrations and weight penalties.</p>
+<h3 id="423-mass-budget"><span class="secnum">4.2.3</span> Mass Budget<a class="headerlink" href="#423-mass-budget" title="Permanent link">&para;</a></h3>
+<p>Airframe mass fraction <span class="arithmatex">\(f_\text{af}\)</span> is the ratio of empty airframe mass <span class="arithmatex">\(m_\text{af}\)</span> to maximum take-off weight (MTOW): <span id="eq-mass_fraction"></span></p>
+<div class="arithmatex">\[f_\text{af} = \frac{m_\text{af}}{m_\text{MTOW}}\tag{4.3}\]</div>
+<p>Typical values span a wide range depending on mission and technology readiness:</p>
+<div class="tbl" id="tab-mass_fractions">
+<div class="tbl-caption"><strong>Table 4.1.</strong> Airframe mass fractions for representative UAV classes</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">UAV Class</th>
+<th style="text-align: center;">MTOW (kg)</th>
+<th style="text-align: center;"><span class="math inline">\(f_\text{af}\)</span></th>
+<th style="text-align: center;">Primary material</th>
+<th style="text-align: center;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Nano/micro quadrotor</td>
+<td style="text-align: center;"><span class="math inline">\(&lt;0.1\)</span></td>
+<td style="text-align: center;">0.30–0.45</td>
+<td style="text-align: center;">Injection-moulded PA/ABS</td>
+<td style="text-align: center;">Motors dominate mass</td>
+</tr>
+<tr>
+<td style="text-align: left;">Racing FPV quad</td>
+<td style="text-align: center;">0.5–1</td>
+<td style="text-align: center;">0.20–0.30</td>
+<td style="text-align: center;">Carbon fibre pultruded arms</td>
+<td style="text-align: center;">High-G crash loading</td>
+</tr>
+<tr>
+<td style="text-align: left;">Small fixed-wing MALE</td>
+<td style="text-align: center;">5–25</td>
+<td style="text-align: center;">0.12–0.18</td>
+<td style="text-align: center;">GFRP/CFRP sandwich</td>
+<td style="text-align: center;">Fuel/battery dominates</td>
+</tr>
+<tr>
+<td style="text-align: left;">Medium MALE (MQ-9)</td>
+<td style="text-align: center;">4765</td>
+<td style="text-align: center;">0.15–0.20</td>
+<td style="text-align: center;">CFRP/Al hybrid</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">HALE (Global Hawk)</td>
+<td style="text-align: center;">14628</td>
+<td style="text-align: center;">0.12–0.16</td>
+<td style="text-align: center;">CFRP primary structure</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Combat UCAV</td>
+<td style="text-align: center;">5000–15000</td>
+<td style="text-align: center;">0.18–0.25</td>
+<td style="text-align: center;">CFRP with stealth coatings</td>
+<td style="text-align: center;">Stealth adds mass</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="424-structural-efficiency-metrics"><span class="secnum">4.2.4</span> Structural Efficiency Metrics<a class="headerlink" href="#424-structural-efficiency-metrics" title="Permanent link">&para;</a></h3>
+<p>The <em>structural index</em> <span class="arithmatex">\(\phi\)</span> relates applied load to the planform area of the loaded panel, providing a load-intensity measure independent of scale: <span id="eq-structural_index"></span></p>
+<div class="arithmatex">\[\phi = \frac{P}{A} \quad [\text{N m 2}]\tag{4.4}\]</div>
+<p>Specific strength <span class="arithmatex">\(\hat{\sigma}\)</span> and specific stiffness <span class="arithmatex">\(\hat{E}\)</span> normalise material properties by density: <span id="eq-specific_props"></span></p>
+<div class="arithmatex">\[\hat{\sigma} = \frac{\sigma_\text{UTS}}{\rho}, \qquad \hat{E} = \frac{E}{\rho}\tag{4.5}\]</div>
+<p>Minimum-mass beam design under bending constrains the section modulus per unit mass, leading to the material index <span class="arithmatex">\(M_b = \sigma_\text{y}^{2/3}/\rho\)</span> for strength-limited beams and <span class="arithmatex">\(M_s = E^{1/2}/\rho\)</span> for deflection-limited ones (Ashby, 2011). CFRP consistently scores 3–5<span class="arithmatex">\(\times\)</span> higher than aluminium on both indices, which explains its dominance in high-performance UAV primary structure.</p>
+<h3 id="425-structural-design-philosophies"><span class="secnum">4.2.5</span> Structural Design Philosophies<a class="headerlink" href="#425-structural-design-philosophies" title="Permanent link">&para;</a></h3>
+<p>Three philosophies govern how airframe structures are designed to accommodate damage:</p>
+<p><strong>Safe-life design</strong>: The structure is sized so that the initiation and growth of cracks to critical size takes longer than the design service life multiplied by a retirement scatter factor (typically 4). The component is retired at its safe-life limit regardless of observed condition. Simple to certify, but wasteful: parts may have substantial residual life at retirement. Used in small UAVs with non-inspectable structure.</p>
+<p><strong>Fail-safe design</strong>: The structure contains multiple load paths, so that the failure of any single element does not precipitate total structural failure. The remaining structure must carry limit load until the next inspection. Requires redundant load paths and periodic inspection, but allows components to remain in service longer.</p>
+<p><strong>Damage-tolerant design</strong>: Based on fracture mechanics, this philosophy accepts the existence of cracks up to a detectable size <span class="arithmatex">\(a_\text{det}\)</span> and ensures that the time for a crack to grow from <span class="arithmatex">\(a_\text{det}\)</span> to critical size <span class="arithmatex">\(a_\text{cr}\)</span> is at least twice the inspection interval. Required by MIL-STD-1530D for all primary structure on military aircraft including combat UAVs. CFRP structures require adaptation of the methodology to account for delamination rather than metallic crack growth.</p>
+<h2 id="sec-fuselage"><span class="secnum">4.3</span> Fuselage Design Concepts<a class="headerlink" href="#sec-fuselage" title="Permanent link">&para;</a></h2>
+<h3 id="431-monocoque-construction"><span class="secnum">4.3.1</span> Monocoque Construction<a class="headerlink" href="#431-monocoque-construction" title="Permanent link">&para;</a></h3>
+<p>In a <em>monocoque</em> (French: single shell) fuselage, the outer skin carries all structural loads—bending, shear, and torsion—with no internal framework. The fuselage behaves as a thin-walled closed section under combined loading.</p>
+<p><strong>Bending stress</strong> in the skin at distance <span class="arithmatex">\(y\)</span> from the neutral axis: <span id="eq-bending_stress"></span></p>
+<div class="arithmatex">\[\sigma = \frac{M \cdot y}{I_{xx}}\tag{4.6}\]</div>
+<p>where <span class="arithmatex">\(M\)</span> is the bending moment at the section and <span class="arithmatex">\(I_{xx}\)</span> is the second moment of area of the cross-section.</p>
+<p><strong>Shear flow</strong> in the skin under transverse shear <span class="arithmatex">\(V\)</span>: <span id="eq-shear_flow"></span></p>
+<div class="arithmatex">\[q = \frac{V \cdot Q}{I_{xx}}\tag{4.7}\]</div>
+<p>where <span class="arithmatex">\(Q = \int_0^s y \, t \, ds\)</span> is the first moment of area of the skin above the cut. In a closed section, the constant-of-integration shear flow <span class="arithmatex">\(q_0\)</span> must be determined from the zero-twist condition: <span id="eq-closed_section"></span></p>
+<div class="arithmatex">\[\oint \frac{q}{G t} \, ds = 0 \implies q_0 = -\frac{\oint (q_s / Gt) \, ds}{\oint (1/Gt) \, ds}\tag{4.8}\]</div>
+<p><strong>Torsional shear flow</strong> in a closed section (Bredt–Batho): <span id="eq-torsion"></span></p>
+<div class="arithmatex">\[q_T = \frac{T}{2A_\text{enc}}\tag{4.9}\]</div>
+<p>where <span class="arithmatex">\(A_\text{enc}\)</span> is the area enclosed by the mid-plane of the skin. The monocoque is highly efficient in torsion but is vulnerable to buckling under compression, since the skin lacks stiffeners to inhibit local buckling. Euler column buckling of the compressed skin panel occurs at: <span id="eq-panel_buckling"></span></p>
+<div class="arithmatex">\[\sigma_\text{cr} = k_c \frac{\pi^2 E}{12(1-\nu^2)} \left(\frac{t}{b}\right)^2\tag{4.10}\]</div>
+<p>where <span class="arithmatex">\(k_c\)</span> is the buckling coefficient (4.0 for a simply supported panel under uniform compression), <span class="arithmatex">\(t\)</span> is skin thickness, <span class="arithmatex">\(b\)</span> is panel width, <span class="arithmatex">\(E\)</span> is Young’s modulus, and <span class="arithmatex">\(\nu\)</span> is Poisson’s ratio.</p>
+<p><strong>Monocoque manufacturing sequence</strong> for a small CFRP fuselage:</p>
+<ol>
+<li>
+<p><em>Mandrel preparation</em>: male mandrel (foam, soluble plaster, or inflatable bladder) is machined to outer mould line dimensions, coated with release agent.</p>
+</li>
+<li>
+<p><em>Ply kit cutting</em>: pre-preg plies are cut by CNC flat-bed cutter to net shape from ply-book definition.</p>
+</li>
+<li>
+<p><em>Layup</em>: plies are placed over mandrel in prescribed fibre orientations (<span class="arithmatex">\([0/{\pm}45/90]_s\)</span> quasi-isotropic typical); vacuum-bag debulk applied every 3–4 plies.</p>
+</li>
+<li>
+<p><em>Bagging</em>: perforated release film, breather fabric, and vacuum bag applied and sealed.</p>
+</li>
+<li>
+<p><em>Cure</em>: oven cure at 120 °C (epoxy pre-preg) or autoclave cure at 120 °C/6 b a r (high-performance parts).</p>
+</li>
+<li>
+<p><em>Mandrel extraction</em>: foam mandrel dissolved (acetone-soluble foam) or bladder deflated.</p>
+</li>
+<li>
+<p><em>Trim and drill</em>: CNC trimming of edges; controlled drilling of fastener holes at low feed rates to prevent delamination.</p>
+</li>
+<li>
+<p><em>NDT</em>: ultrasonic C-scan to detect voids, delaminations, and porosity; reject criteria per ASTM E2533.</p>
+</li>
+<li>
+<p><em>Surface treatment</em>: peel-ply removal, abrasion, primer, top coat.</p>
+</li>
+</ol>
+<h3 id="432-semi-monocoque-construction"><span class="secnum">4.3.2</span> Semi-Monocoque Construction<a class="headerlink" href="#432-semi-monocoque-construction" title="Permanent link">&para;</a></h3>
+<p>Semi-monocoque structures add internal longitudinal stringers (longerons) and transverse frames (bulkheads, frames, formers) to the outer skin. The frames prevent the skin from collapsing under compression by reducing the unsupported panel width <span class="arithmatex">\(b\)</span> in <a href="#eq-panel_buckling">Eq. (4.10)</a>. The stringers carry axial bending stress, reducing the skin’s contribution and thus its required thickness.</p>
+<p>The <em>idealised boom model</em> concentrates stringer area into point booms of area <span class="arithmatex">\(B_i\)</span>, each carrying axial stress <span class="arithmatex">\(\sigma_i\)</span>, while the skin carries only shear. This idealisation greatly simplifies the shear flow calculation to: <span id="eq-boom_shear"></span></p>
+<div class="arithmatex">\[q_{s,i} = q_{s,0} - \frac{V_y}{I_{xx}} \sum_{r=1}^{i} B_r y_r\tag{4.11}\]</div>
+<p>Semi-monocoque construction is standard for medium and large UAVs (Predator, MQ-9, Global Hawk), balancing weight, repairability, and manufacturing complexity. Unlike the pure monocoque, a skin crack in a semi-monocoque arrests at the next frame, providing inherent fail-safety.</p>
+<h3 id="433-truss-frame-space-frame"><span class="secnum">4.3.3</span> Truss Frame (Space Frame)<a class="headerlink" href="#433-truss-frame-space-frame" title="Permanent link">&para;</a></h3>
+<p>The open truss or space frame fuselage consists of welded or bonded tubes forming triangulated cells. All members carry only axial tension or compression (pin-joint assumption); bending is eliminated. By the <em>method of sections</em>, the force in any member is found by applying equilibrium to the free body on one side of a section cut through at most three members: <span id="eq-method_sections"></span></p>
+<div class="arithmatex">\[\sum F_x = 0, \qquad \sum F_y = 0, \qquad \sum M_O = 0\tag{4.12}\]</div>
+<p>Truss frames are almost universally used in hobby and FPV racing drones: carbon-fibre pultruded arms bolt to a central plate, forming a simple truss that is easily repaired by arm replacement. The open structure allows excellent motor cooling airflow but generates high aerodynamic drag (<span class="arithmatex">\(C_{D,\text{body}} \approx 0.8\)</span>–<span class="arithmatex">\(1.2\)</span> referenced to projected area).</p>
+<h3 id="434-pod-and-boom-configuration"><span class="secnum">4.3.4</span> Pod-and-Boom Configuration<a class="headerlink" href="#434-pod-and-boom-configuration" title="Permanent link">&para;</a></h3>
+<p>In pod-and-boom designs, a separate forward pod (housing payload, avionics, and battery) is connected to the empennage by a slender tail boom. The boom must resist:</p>
+<ul>
+<li>
+<p>Bending moment <span class="arithmatex">\(M_b = F_T \cdot L_\text{boom}\)</span> from tail aerodynamic loads <span class="arithmatex">\(F_T\)</span></p>
+</li>
+<li>
+<p>Torsion <span class="arithmatex">\(T = M_y\)</span> from asymmetric elevator/rudder deflections</p>
+</li>
+</ul>
+<p>The torsional stiffness of a circular boom of outer radius <span class="arithmatex">\(r_o\)</span> and inner radius <span class="arithmatex">\(r_i\)</span>: <span id="eq-boom_torsion"></span></p>
+<div class="arithmatex">\[GJ = G \frac{\pi (r_o^4 - r_i^4)}{2}\tag{4.13}\]</div>
+<p>Carbon fibre pultruded circular tubes are standard for boom construction, providing high bending and torsional stiffness-to-weight ratios. Common on hand-launched ISR platforms (Penguin C, Stalker XE).</p>
+<h3 id="435-flying-wing"><span class="secnum">4.3.5</span> Flying Wing<a class="headerlink" href="#435-flying-wing" title="Permanent link">&para;</a></h3>
+<p>The flying wing eliminates the fuselage entirely; all lift, stability, and pitch control is provided by the wing. All payload and systems must be housed within the wing volume, creating a direct conflict between aerodynamic thickness ratio <span class="arithmatex">\(t/c\)</span> (which drives volume) and drag (which penalises thickness). Structural challenges include:</p>
+<ul>
+<li>
+<p>No clear longitudinal load path between nose and tail — the wing must carry all pitching moments internally.</p>
+</li>
+<li>
+<p>Torsional flexibility is critical: swept flying wings exhibit bending-torsion coupling that can lead to aeroelastic divergence if the elastic axis is aft of the aerodynamic centre.</p>
+</li>
+<li>
+<p>Winglet loads must be carried without a fuselage frame for reactions.</p>
+</li>
+</ul>
+<p>Examples: Northrop Grumman RQ-170 Sentinel, B-21 Raider-derived UCAV concepts.</p>
+<h3 id="436-blended-wing-body"><span class="secnum">4.3.6</span> Blended Wing Body<a class="headerlink" href="#436-blended-wing-body" title="Permanent link">&para;</a></h3>
+<p>The blended wing body (BWB) integrates the payload bay into a thick, cambered centre body that generates lift, with conventional outboard wing panels. Structural challenges are concentrated in the centre body: the flat-sided pressure vessel is structurally inefficient (the optimal pressure shell is cylindrical or spherical), requiring heavy frames and stiffened skin to resist lateral pressure loads. The spanwise bending moment distribution is altered because the centre body itself generates lift outboard of the CG, partly relieving the spar root moment — a structural advantage that partially offsets the centre body penalty.</p>
+<h2 id="sec-wing"><span class="secnum">4.4</span> Wing Structural Design<a class="headerlink" href="#sec-wing" title="Permanent link">&para;</a></h2>
+<h3 id="441-wing-box"><span class="secnum">4.4.1</span> Wing Box<a class="headerlink" href="#441-wing-box" title="Permanent link">&para;</a></h3>
+<p>The wing box is the primary structural element of a fixed-wing UAV. It consists of a front spar, a rear spar, upper and lower skin panels, and ribs at regular spanwise intervals. Under positive-g flight, the upper surface skin is in compression and the lower skin is in tension; the spars carry transverse shear.</p>
+<figure class="fig fig-diagram" id="fig-wing_box">
+<img class="tikz" src="img/tikz-7cd812c5c166.svg" alt="Wing box cross-section (aerofoil section view). Front and rear spars form the vertical shear webs; upper skin (in compression) and lower skin (in tension) act as flanges. Ribs maintain aerofoil shape…" loading="lazy" width="102" height="48">
+<figcaption><strong>Figure 4.1.</strong> Wing box cross-section (aerofoil section view). Front and rear spars form the vertical shear webs; upper skin (in compression) and lower skin (in tension) act as flanges. Ribs maintain aerofoil shape and stabilise skin panels against buckling.</figcaption>
+</figure>
+
+<p>The box beam bending stiffness <span class="arithmatex">\(EI\)</span> of the wing box, treating upper and lower spar caps and adjacent skin strips as the dominant contributors: <span id="eq-box_bending_stiffness"></span></p>
+<div class="arithmatex">\[EI \approx 2 E_f \cdot A_f \cdot \left(\frac{h}{2}\right)^2\tag{4.14}\]</div>
+<p>where <span class="arithmatex">\(A_f\)</span> is the cross-sectional area of one flange (spar caps plus effective skin strips), <span class="arithmatex">\(h\)</span> is the distance between upper and lower flange centroids, and <span class="arithmatex">\(E_f\)</span> is the flange axial modulus. The factor of 2 accounts for both upper and lower flanges.</p>
+<h3 id="442-spar-design"><span class="secnum">4.4.2</span> Spar Design<a class="headerlink" href="#442-spar-design" title="Permanent link">&para;</a></h3>
+<p>Wing spars are the primary spanwise bending-moment carriers. Three common spar cross-sections are used in UAV design:</p>
+<ul>
+<li>
+<p><strong>I-beam</strong>: flanges carry bending stress <span class="arithmatex">\(\sigma = My/I\)</span>; thin web carries shear stress <span class="arithmatex">\(\tau = VQ/(It)\)</span>. High efficiency per unit mass for uniaxial bending.</p>
+</li>
+<li>
+<p><strong>C-channel</strong>: one open side; lower torsional stiffness but easier to lay up in composite. Used as secondary spars.</p>
+</li>
+<li>
+<p><strong>Box spar</strong>: closed rectangular section; excellent torsion and biaxial bending resistance. Standard for high aspect-ratio MALE UAV wings.</p>
+</li>
+</ul>
+<p>Web shear stress at the neutral axis of an I-beam spar: <span id="eq-web_shear"></span></p>
+<div class="arithmatex">\[\tau_\text{max} = \frac{3V}{2A_\text{web}}\tag{4.15}\]</div>
+<p>for a rectangular web of area <span class="arithmatex">\(A_\text{web}\)</span>. Web shear buckling occurs at: <span id="eq-web_buckling"></span></p>
+<div class="arithmatex">\[\tau_\text{cr} = k_s \frac{\pi^2 E}{12(1-\nu^2)} \left(\frac{t_w}{d}\right)^2\tag{4.16}\]</div>
+<p>where <span class="arithmatex">\(k_s = 5.35 + 4(d/a)^2\)</span> for a web panel of depth <span class="arithmatex">\(d\)</span> and length <span class="arithmatex">\(a\)</span> with simply supported edges. To resist web buckling, diagonal tension field (post-buckling) design is permitted; the spar then acts as a Pratt truss with the web in pure tension after buckling, and vertical stiffeners acting as compression struts.</p>
+<h3 id="443-rib-design"><span class="secnum">4.4.3</span> Rib Design<a class="headerlink" href="#443-rib-design" title="Permanent link">&para;</a></h3>
+<p>Wing ribs serve four functions: (1) maintain aerofoil profile shape; (2) transfer concentrated loads (landing gear, store stations, control surface actuators) into the wing box; (3) act as anti-buckling restraints for skin panels; and (4) provide reaction boundaries for leading-edge and trailing-edge structure.</p>
+<p>Rib spacing <span class="arithmatex">\(s_r\)</span> is typically 10–20% of wing chord, chosen as a compromise between panel buckling (favours close spacing) and rib mass penalty (favours wide spacing). Lightening holes reduce rib mass by 30–50%; circular holes of diameter up to 60% of rib depth are acceptable if flanged to suppress local buckling. The rib web shear stress: <span id="eq-rib_shear"></span></p>
+<div class="arithmatex">\[\tau_\text{rib} = \frac{q_\text{skin} \cdot c_\text{box}}{t_r \cdot h}\tag{4.17}\]</div>
+<p>where <span class="arithmatex">\(q_\text{skin}\)</span> is the skin shear flow transferred to the rib, <span class="arithmatex">\(c_\text{box}\)</span> is box chord, <span class="arithmatex">\(t_r\)</span> is rib web thickness, and <span class="arithmatex">\(h\)</span> is rib depth.</p>
+<h3 id="444-wing-skin-panel-buckling"><span class="secnum">4.4.4</span> Wing Skin Panel Buckling<a class="headerlink" href="#444-wing-skin-panel-buckling" title="Permanent link">&para;</a></h3>
+<p>The upper wing skin is a compression panel stabilised by ribs and spars. The critical compression stress is given by <a href="#eq-panel_buckling">Eq. (4.10)</a>. Stiffened skin panels with blade or hat stringers raise the effective <span class="arithmatex">\(k_c\)</span> by reducing the unsupported width. The panel efficiency factor <span class="arithmatex">\(\eta\)</span> (ratio of mean stress at collapse to panel critical stress) approaches 1.0 for well-optimised integrally stiffened panels.</p>
+<p>For post-buckled panels using effective width theory (von Kármán): <span id="eq-effective_width"></span></p>
+<div class="arithmatex">\[b_\text{eff} = t \sqrt{\frac{E}{\sigma_\text{max}}}\tag{4.18}\]</div>
+<p>The stringer carries the peak stress <span class="arithmatex">\(\sigma_\text{max}\)</span> while the buckled skin contributes only through the effective strips <span class="arithmatex">\(b_\text{eff}/2\)</span> on each side of each stringer.</p>
+<h3 id="445-swept-wing-structural-implications"><span class="secnum">4.4.5</span> Swept Wing Structural Implications<a class="headerlink" href="#445-swept-wing-structural-implications" title="Permanent link">&para;</a></h3>
+<p>Sweep angle <span class="arithmatex">\(\Lambda\)</span> introduces <em>bending-torsion coupling</em>: a spanwise bending load produces both bending and twist of the wing. For a swept wing with elastic-axis sweep <span class="arithmatex">\(\Lambda_\text{EA}\)</span> and aerodynamic-centre sweep <span class="arithmatex">\(\Lambda_\text{AC}\)</span>: <span id="eq-aeroelastic_twist"></span></p>
+<div class="arithmatex">\[\phi_\text{twist} \propto \frac{(e_\text{AC} - e_\text{EA}) \cdot L}{GJ}\tag{4.19}\]</div>
+<p>where <span class="arithmatex">\(e_\text{AC}\)</span> and <span class="arithmatex">\(e_\text{EA}\)</span> are chordwise positions of aerodynamic centre and elastic axis respectively. For forward-swept wings, bending increases angle of attack (aeroelastic divergence risk); for aft-swept wings, bending reduces angle of attack (wash-out, generally stabilising). Combat UCAV designs typically use aft sweep of <span class="arithmatex">\(20\)</span>–<span class="arithmatex">\(45^\circ\)</span> with the elastic axis placed forward of the aerodynamic centre to ensure wash-out under load.</p>
+<h3 id="446-high-aspect-ratio-wing-tip-deflection"><span class="secnum">4.4.6</span> High-Aspect-Ratio Wing Tip Deflection<a class="headerlink" href="#446-high-aspect-ratio-wing-tip-deflection" title="Permanent link">&para;</a></h3>
+<p>For a cantilever wing treated as a beam under a distributed lift load approximated as uniform for order-of-magnitude sizing, the tip deflection under total semi-span lift <span class="arithmatex">\(W\)</span> is: <span id="eq-tip_deflection"></span></p>
+<div class="arithmatex">\[\delta_\text{tip} = \frac{W L^3}{3 E I}\tag{4.20}\]</div>
+<p>where <span class="arithmatex">\(L\)</span> is the semi-span, <span class="arithmatex">\(E\)</span> is spar modulus, and <span class="arithmatex">\(I\)</span> is root section second moment of area. HALE UAV wings (aspect ratio 20–35) may exhibit tip deflections of 15–25% of semi-span at cruise; this requires non-linear structural analysis accounting for geometric large-deflection effects. The Global Hawk wing deflects approximately 1.5 m at MTOW cruise.</p>
+<h2 id="sec-control_surfaces"><span class="secnum">4.5</span> Control Surfaces<a class="headerlink" href="#sec-control_surfaces" title="Permanent link">&para;</a></h2>
+<h3 id="451-ailerons"><span class="secnum">4.5.1</span> Ailerons<a class="headerlink" href="#451-ailerons" title="Permanent link">&para;</a></h3>
+<p>Ailerons generate differential lift between left and right wings to produce a rolling moment. The steady-state roll rate <span class="arithmatex">\(p\)</span> achieved by aileron deflection <span class="arithmatex">\(\delta_a\)</span> is: <span id="eq-roll_rate"></span></p>
+<div class="arithmatex">\[p = \frac{\bar{q}\, S\, b\; C_{l_{\delta_a}}\, \delta_a}{2 V I_x / b}\tag{4.21}\]</div>
+<p>where <span class="arithmatex">\(\bar{q} = \tfrac{1}{2}\rho V^2\)</span> is dynamic pressure, <span class="arithmatex">\(S\)</span> is wing reference area, <span class="arithmatex">\(b\)</span> is wingspan, <span class="arithmatex">\(C_{l_{\delta_a}}\)</span> is the roll power derivative (typically 0.1–0.2 per radian for a simple aileron), <span class="arithmatex">\(V\)</span> is airspeed, and <span class="arithmatex">\(I_x\)</span> is the roll moment of inertia. The roll time constant <span class="arithmatex">\(\tau_r = I_x / (\bar{q}\, S\, b^2\, C_{l_p} / (2V))\)</span> where <span class="arithmatex">\(C_{l_p}\)</span> is the roll-damping derivative.</p>
+<p>Aileron span typically occupies 35–50% of the outboard semi-span, starting at 50–65% semi-span. Aileron chord ratio <span class="arithmatex">\(c_a/c = 0.25\)</span>–<span class="arithmatex">\(0.30\)</span> balances control power against hinge moment.</p>
+<h3 id="452-elevator-and-tail-volume-coefficient"><span class="secnum">4.5.2</span> Elevator and Tail Volume Coefficient<a class="headerlink" href="#452-elevator-and-tail-volume-coefficient" title="Permanent link">&para;</a></h3>
+<p>The horizontal tail generates a pitching moment about the aircraft CG. The <em>tail volume coefficient</em> <span class="arithmatex">\(\bar{V}_H\)</span> quantifies the pitch control authority: <span id="eq-tail_volume"></span></p>
+<div class="arithmatex">\[\bar{V}_H = \frac{S_H \cdot l_H}{S \cdot \bar{c}}\tag{4.22}\]</div>
+<p>where <span class="arithmatex">\(S_H\)</span> is horizontal tail area, <span class="arithmatex">\(l_H\)</span> is tail moment arm (distance from wing quarter-chord to tail quarter-chord), <span class="arithmatex">\(S\)</span> is wing area, and <span class="arithmatex">\(\bar{c}\)</span> is mean aerodynamic chord. Typical values: <span class="arithmatex">\(\bar{V}_H = 0.30\)</span>–<span class="arithmatex">\(0.50\)</span> for conventional UAVs.</p>
+<p>The pitch moment generated by elevator deflection <span class="arithmatex">\(\delta_e\)</span>: <span id="eq-pitch_moment"></span></p>
+<div class="arithmatex">\[\Delta M_y = \bar{q}\, S\, \bar{c}\; C_{m_{\delta_e}}\, \delta_e\tag{4.23}\]</div>
+<p>where <span class="arithmatex">\(C_{m_{\delta_e}} = -\bar{V}_H \cdot (\partial C_{L_H}/\partial \delta_e) \cdot (1 - \mathrm{d}\varepsilon/\mathrm{d}\alpha)\)</span> and <span class="arithmatex">\(\mathrm{d}\varepsilon/\mathrm{d}\alpha\)</span> is the downwash gradient at the tail.</p>
+<h3 id="453-rudder-and-directional-stability"><span class="secnum">4.5.3</span> Rudder and Directional Stability<a class="headerlink" href="#453-rudder-and-directional-stability" title="Permanent link">&para;</a></h3>
+<p>The vertical tail and rudder provide yaw control and weathercock (directional) stability. The vertical tail volume coefficient: <span id="eq-vert_tail_volume"></span></p>
+<div class="arithmatex">\[\bar{V}_V = \frac{S_V \cdot l_V}{S \cdot b}\tag{4.24}\]</div>
+<p>Typical values: <span class="arithmatex">\(\bar{V}_V = 0.04\)</span>–<span class="arithmatex">\(0.07\)</span>. The directional stability derivative <span class="arithmatex">\(C_{n_\beta} &gt; 0\)</span> is required for positive weathercock stability; the rudder provides <span class="arithmatex">\(C_{n_{\delta_r}}\)</span> for crosswind landing and engine-out control.</p>
+<h3 id="454-elevons-flying-wing"><span class="secnum">4.5.4</span> Elevons (Flying Wing)<a class="headerlink" href="#454-elevons-flying-wing" title="Permanent link">&para;</a></h3>
+<p>On a flying wing with no separate horizontal tail, elevons combine the functions of elevator and aileron. Symmetric deflection produces pitching moment; asymmetric deflection produces roll. The elevon mixing law: <span id="eq-elevon_l"></span><span id="eq-elevon_r"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \delta_{e,\text{left}}  &amp;= \delta_e - \delta_a  \\
+  \delta_{e,\text{right}} &amp;= \delta_e + \delta_a
+\end{align*}\]</div>
+<p>Elevon effectiveness is sensitive to sweep angle: highly swept flying wings require large elevon chords and may suffer from control reversal at high dynamic pressure.</p>
+<h3 id="455-spoilers-flaperons-and-split-flaps"><span class="secnum">4.5.5</span> Spoilers, Flaperons, and Split Flaps<a class="headerlink" href="#455-spoilers-flaperons-and-split-flaps" title="Permanent link">&para;</a></h3>
+<p><strong>Spoilers</strong> interrupt boundary layer flow on the upper surface, asymmetrically reducing lift on one wing for roll control or symmetrically increasing descent gradient. They generate no hinge moment reversal and are favoured in fly-by-wire systems.</p>
+<p><strong>Flaperons</strong> combine trailing-edge flap and aileron functions in a single surface: they droop symmetrically for take-off/landing and deploy differentially for roll control. The mixed deflection:</p>
+<div class="arithmatex">\[\begin{align*}
+  \delta_\text{left}  &amp;= \delta_f - \delta_a \\
+  \delta_\text{right} &amp;= \delta_f + \delta_a
+\end{align*}\]</div>
+<p>Common on small tactical UAVs where simplicity (fewer surface types) offsets the aerodynamic compromise of combining two functions.</p>
+<h3 id="456-actuator-hinge-moment-and-servo-sizing"><span class="secnum">4.5.6</span> Actuator Hinge Moment and Servo Sizing<a class="headerlink" href="#456-actuator-hinge-moment-and-servo-sizing" title="Permanent link">&para;</a></h3>
+<p>The aerodynamic hinge moment coefficient on a control surface depends on the local angle of attack <span class="arithmatex">\(\alpha\)</span> and deflection angle <span class="arithmatex">\(\delta\)</span>: <span id="eq-hinge_moment"></span></p>
+<div class="arithmatex">\[C_H = b_1 \alpha + b_2 \delta\tag{4.29}\]</div>
+<p>where <span class="arithmatex">\(b_1\)</span> and <span class="arithmatex">\(b_2\)</span> are the hinge-moment derivatives (both typically negative for a balanced surface). The dimensional hinge moment: <span id="eq-hinge_moment_dim"></span></p>
+<div class="arithmatex">\[H = \bar{q}\, S_\text{cs}\, c_\text{cs}\, C_H\tag{4.30}\]</div>
+<p>where <span class="arithmatex">\(S_\text{cs}\)</span> is control surface area and <span class="arithmatex">\(c_\text{cs}\)</span> is control surface chord. Servo selection requires that the servo stall torque <span class="arithmatex">\(\tau_s\)</span> exceeds the peak hinge moment multiplied by the mechanical advantage ratio: <span id="eq-servo_sizing"></span></p>
+<div class="arithmatex">\[\tau_s \geq \frac{H_\text{max}}{\eta_\text{linkage}} \cdot r_\text{arm}\tag{4.31}\]</div>
+<p>where <span class="arithmatex">\(r_\text{arm}\)</span> is the servo arm radius and <span class="arithmatex">\(\eta_\text{linkage} \approx 0.85\)</span>–<span class="arithmatex">\(0.95\)</span> accounts for linkage friction losses.</p>
+<h2 id="sec-landing_gear"><span class="secnum">4.6</span> Landing Gear Systems<a class="headerlink" href="#sec-landing_gear" title="Permanent link">&para;</a></h2>
+<h3 id="461-fixed-tricycle-gear"><span class="secnum">4.6.1</span> Fixed Tricycle Gear<a class="headerlink" href="#461-fixed-tricycle-gear" title="Permanent link">&para;</a></h3>
+<p>The tricycle arrangement (nose wheel plus two main wheels aft of CG) is the default for fixed-wing UAVs operating from prepared strips. Structural load analysis at touchdown assumes a descent velocity <span class="arithmatex">\(V_d = 2\)</span>–3 m s (MIL-A-8862A) and a load factor: <span id="eq-gear_load_factor"></span></p>
+<div class="arithmatex">\[n = 1 + \frac{V_d^2}{2 g \Delta_\text{st}}\tag{4.32}\]</div>
+<p>where <span class="arithmatex">\(\Delta_\text{st}\)</span> is the static deflection of the landing gear oleo or spring. The main gear must absorb energy: <span id="eq-impact_energy"></span></p>
+<div class="arithmatex">\[E_\text{impact} = \frac{1}{2} m_\text{MTOW}\, V_d^2\tag{4.33}\]</div>
+<p>Drag penalty of fixed tricycle gear is approximately 3–5% of total aircraft drag at cruise, representing a significant endurance penalty for long-duration ISR missions.</p>
+<h3 id="462-retractable-gear"><span class="secnum">4.6.2</span> Retractable Gear<a class="headerlink" href="#462-retractable-gear" title="Permanent link">&para;</a></h3>
+<p>Retractable gear eliminates the cruise drag penalty at the cost of mechanism mass (typically 2–4% of MTOW) and complexity. Electric actuators are standard for small/medium UAVs; hydraulic systems are used in larger platforms (MQ-9, Global Hawk) for their actuating force density advantage. The mass trade-off break-even is approximately 1000 k m range or 8 hours endurance: below this threshold, fixed gear is lighter; above it, retractable gear saves fuel mass that more than offsets mechanism mass.</p>
+<h3 id="463-skid-landing"><span class="secnum">4.6.3</span> Skid Landing<a class="headerlink" href="#463-skid-landing" title="Permanent link">&para;</a></h3>
+<p>Rotary-wing UAVs and some VTOL fixed-wings use simple skid undercarriage. The skid must absorb impact energy through elastic bending of curved aluminium or CFRP skid tube: <span id="eq-skid_deflection"></span></p>
+<div class="arithmatex">\[\delta_\text{skid} = \frac{F L^3}{3 EI}\tag{4.34}\]</div>
+<p>Ground friction during sliding generates a horizontal braking force; the skid material must resist abrasion (6061-T6 aluminium with hard anodising, or GFRP with embedded tungsten carbide particles for higher wear resistance).</p>
+<h3 id="464-floats-and-water-takeoff"><span class="secnum">4.6.4</span> Floats and Water Takeoff<a class="headerlink" href="#464-floats-and-water-takeoff" title="Permanent link">&para;</a></h3>
+<p>Water-based UAVs require floats sized for buoyancy and hydrodynamic lift during water takeoff. Float buoyancy must equal or exceed: <span id="eq-buoyancy"></span></p>
+<div class="arithmatex">\[F_B = \rho_w g V_\text{float} \geq 1.5\, m_\text{MTOW}\, g\tag{4.35}\]</div>
+<p>A safety factor of 1.5<span class="arithmatex">\(\times\)</span> MTOW in buoyancy is standard (one float must support the full aircraft weight in a wing-down waterlooping incident). The step location (hydrodynamic discontinuity that breaks the suction during water run) is placed at 95–105% of CG longitudinal position to ensure nose-up rotation is achievable before the hull separates from the water.</p>
+<h3 id="465-catapult-launch-and-net-recovery"><span class="secnum">4.6.5</span> Catapult Launch and Net Recovery<a class="headerlink" href="#465-catapult-launch-and-net-recovery" title="Permanent link">&para;</a></h3>
+<p>Expeditionary UAVs are commonly launched from bungee or pneumatic catapults and recovered in nets to eliminate runway requirements. Launch rail structural loads: <span id="eq-launch_force"></span></p>
+<div class="arithmatex">\[F_\text{launch} = m \left( a_\text{cat} + g \sin\theta \right)\tag{4.36}\]</div>
+<p>where <span class="arithmatex">\(a_\text{cat}\)</span> is catapult acceleration (typically 5–15 g) and <span class="arithmatex">\(\theta\)</span> is rail elevation angle. Net arrest loads are peak force impulses of 10–20 g with duration 0.05–0.2 s; a crushable foam energy absorber or a sacrificial weak-link in the arrest bridle limits peak structural load.</p>
+<h3 id="466-parachute-recovery"><span class="secnum">4.6.6</span> Parachute Recovery<a class="headerlink" href="#466-parachute-recovery" title="Permanent link">&para;</a></h3>
+<p>For systems without landing gear, a parachute recovery system deploys at a low-altitude waypoint. The parachute opening (snatch) load: <span id="eq-snatch_load"></span></p>
+<div class="arithmatex">\[F_\text{snatch} = C_x \cdot \bar{q} \cdot S_p\tag{4.37}\]</div>
+<p>where <span class="arithmatex">\(C_x\)</span> is the opening force coefficient (1.5–2.5 for conventional flat circular canopies, 0.8–1.2 for cruciform canopies), and <span class="arithmatex">\(S_p\)</span> is parachute reference area. The bridle attachment point on the UAV must react this peak load; typically a dedicated structural spool fitting bolted through the fuselage primary bulkhead.</p>
+<h2 id="sec-materials"><span class="secnum">4.7</span> Structural Materials<a class="headerlink" href="#sec-materials" title="Permanent link">&para;</a></h2>
+<h3 id="471-carbon-fibre-reinforced-polymer-cfrp"><span class="secnum">4.7.1</span> Carbon Fibre Reinforced Polymer (CFRP)<a class="headerlink" href="#471-carbon-fibre-reinforced-polymer-cfrp" title="Permanent link">&para;</a></h3>
+<p>CFRP is the dominant material for high-performance UAV primary structure. A unidirectional CFRP lamina (e.g., Toray T700/MTM45-1) exhibits orthotropic elastic behaviour described by four independent elastic constants. The compliance relation for a lamina in its principal material directions is: <span id="eq-cfrp_compliance"></span></p>
+<div class="arithmatex">\[\begin{bmatrix} \varepsilon_1 \\ \varepsilon_2 \\ \gamma_{12} \end{bmatrix}
+  =
+  \begin{bmatrix} 1/E_1 &amp; -\nu_{12}/E_1 &amp; 0 \\ -\nu_{21}/E_2 &amp; 1/E_2 &amp; 0 \\ 0 &amp; 0 &amp; 1/G_{12} \end{bmatrix}
+  \begin{bmatrix} \sigma_1 \\ \sigma_2 \\ \tau_{12} \end{bmatrix}\tag{4.38}\]</div>
+<p>Typical UD lamina engineering constants and strength values are given in <a href="#tab-cfrp_properties">Table 4.2</a>.</p>
+<div class="tbl" id="tab-cfrp_properties">
+<div class="tbl-caption"><strong>Table 4.2.</strong> Mechanical properties of representative CFRP unidirectional lamina (Toray T700/Epoxy, <span class="math inline">\(V_f = 60\%\)</span>, conditioned at room temperature/dry)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Symbol</th>
+<th style="text-align: center;">Value</th>
+<th style="text-align: center;">Unit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Longitudinal modulus</td>
+<td style="text-align: left;"><span class="math inline">\(E_1\)</span></td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">GPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Transverse modulus</td>
+<td style="text-align: left;"><span class="math inline">\(E_2\)</span></td>
+<td style="text-align: center;">8.5</td>
+<td style="text-align: center;">GPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">In-plane shear modulus</td>
+<td style="text-align: left;"><span class="math inline">\(G_{12}\)</span></td>
+<td style="text-align: center;">4.2</td>
+<td style="text-align: center;">GPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Major Poisson’s ratio</td>
+<td style="text-align: left;"><span class="math inline">\(\nu_{12}\)</span></td>
+<td style="text-align: center;">0.32</td>
+<td style="text-align: center;">—</td>
+</tr>
+<tr>
+<td style="text-align: left;">Longitudinal tensile strength</td>
+<td style="text-align: left;"><span class="math inline">\(X_T\)</span></td>
+<td style="text-align: center;">2100</td>
+<td style="text-align: center;">MPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Longitudinal comp. strength</td>
+<td style="text-align: left;"><span class="math inline">\(X_C\)</span></td>
+<td style="text-align: center;">1200</td>
+<td style="text-align: center;">MPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Transverse tensile strength</td>
+<td style="text-align: left;"><span class="math inline">\(Y_T\)</span></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">MPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Transverse comp. strength</td>
+<td style="text-align: left;"><span class="math inline">\(Y_C\)</span></td>
+<td style="text-align: center;">200</td>
+<td style="text-align: center;">MPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">In-plane shear strength</td>
+<td style="text-align: left;"><span class="math inline">\(S\)</span></td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">MPa</td>
+</tr>
+<tr>
+<td style="text-align: left;">Density</td>
+<td style="text-align: left;"><span class="math inline">\(\rho\)</span></td>
+<td style="text-align: center;">1560</td>
+<td style="text-align: center;">kg/m<span class="math inline">\(^3\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Specific tensile strength</td>
+<td style="text-align: left;"><span class="math inline">\(X_T/\rho\)</span></td>
+<td style="text-align: center;">1346</td>
+<td style="text-align: center;">kN<span class="math inline">\(\cdot\)</span>m/kg</td>
+</tr>
+<tr>
+<td style="text-align: left;">Specific modulus</td>
+<td style="text-align: left;"><span class="math inline">\(E_1/\rho\)</span></td>
+<td style="text-align: center;">83.3</td>
+<td style="text-align: center;">MN<span class="math inline">\(\cdot\)</span>m/kg</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Failure prediction in multi-directional laminates uses the Tsai–Wu polynomial criterion: <span id="eq-tsai_wu"></span></p>
+<div class="arithmatex">\[F_1 \sigma_1 + F_2 \sigma_2 + F_{11}\sigma_1^2 + F_{22}\sigma_2^2 + 2F_{12}\sigma_1\sigma_2 + F_{66}\tau_{12}^2 = 1\tag{4.39}\]</div>
+<p>where the <span class="arithmatex">\(F\)</span> coefficients are functions of the strength values <span class="arithmatex">\(X_T, X_C, Y_T, Y_C, S\)</span>. A failure index <span class="arithmatex">\(\text{FI} &lt; 1.0\)</span> indicates the ply is safe; <span class="arithmatex">\(\text{FI} &gt; 1.0\)</span> indicates ply failure.</p>
+<h3 id="472-glass-fibre-reinforced-polymer-gfrp"><span class="secnum">4.7.2</span> Glass Fibre Reinforced Polymer (GFRP)<a class="headerlink" href="#472-glass-fibre-reinforced-polymer-gfrp" title="Permanent link">&para;</a></h3>
+<p>GFRP is chosen where RF transparency is required: antenna radomes, wing-tip fairings, and fuselage panels covering antenna bays. E-glass/epoxy UD lamina has <span class="arithmatex">\(E_1 = 40\)</span> GPa, <span class="arithmatex">\(\rho = 1900\)</span> kg/m<span class="arithmatex">\(^3\)</span>, and <span class="arithmatex">\(X_T = 1100\)</span> MPa — substantially inferior to CFRP on specific stiffness but adequate for secondary structure. The RF attenuation of GFRP is <span class="arithmatex">\(&lt; 0.5\)</span> dB through a 3 m m panel at X-band (9.4 GHz), compared to CFRP which blocks practically all RF energy due to its conductive fibre network.</p>
+<h3 id="473-aluminium-alloys"><span class="secnum">4.7.3</span> Aluminium Alloys<a class="headerlink" href="#473-aluminium-alloys" title="Permanent link">&para;</a></h3>
+<p>Two alloys dominate UAV metal structure:</p>
+<p><strong>6061-T6</strong>: <span class="arithmatex">\(\sigma_\text{UTS} = 310\)</span> MPa, <span class="arithmatex">\(\sigma_y = 276\)</span> MPa, <span class="arithmatex">\(E = 68.9\)</span> GPa, <span class="arithmatex">\(\rho = 2700\)</span> kg/m<span class="arithmatex">\(^3\)</span>. Excellent machinability (rated A), weldable, good corrosion resistance. Used for CNC-machined ribs, frames, and secondary fittings.</p>
+<p><strong>7075-T6</strong>: <span class="arithmatex">\(\sigma_\text{UTS} = 572\)</span> MPa, <span class="arithmatex">\(\sigma_y = 503\)</span> MPa, <span class="arithmatex">\(E = 71.7\)</span> GPa, <span class="arithmatex">\(\rho = 2810\)</span> kg/m<span class="arithmatex">\(^3\)</span>. Superior strength but poor weldability and lower corrosion resistance; used for high-load fittings, spar caps, and wing root joints.</p>
+<h3 id="474-titanium-ti-6al-4v"><span class="secnum">4.7.4</span> Titanium Ti-6Al-4V<a class="headerlink" href="#474-titanium-ti-6al-4v" title="Permanent link">&para;</a></h3>
+<p>Ti-6Al-4V (Grade 5) offers <span class="arithmatex">\(\sigma_\text{UTS} = 950\)</span> MPa, <span class="arithmatex">\(\sigma_y = 880\)</span> MPa, <span class="arithmatex">\(E = 114\)</span> GPa, <span class="arithmatex">\(\rho = 4430\)</span> kg/m<span class="arithmatex">\(^3\)</span>. Key advantages:</p>
+<ul>
+<li>
+<p>Galvanic compatibility with CFRP (no corrosion couple).</p>
+</li>
+<li>
+<p>Excellent fatigue life (<span class="arithmatex">\(\sigma_e \approx 0.45\,\sigma_\text{UTS}\)</span> at <span class="arithmatex">\(10^7\)</span> cycles).</p>
+</li>
+<li>
+<p>Additive manufacturing (EBM, LPBF) enables near-net-shape complex fittings, reducing buy-to-fly ratio from 15:1 (machined billet) to 1.5:1 (AM).</p>
+</li>
+<li>
+<p>High temperature capability (up to 315 °C sustained) for engine-bay structure.</p>
+</li>
+</ul>
+<h3 id="475-core-materials-for-sandwich-structures"><span class="secnum">4.7.5</span> Core Materials for Sandwich Structures<a class="headerlink" href="#475-core-materials-for-sandwich-structures" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-core_materials">
+<div class="tbl-caption"><strong>Table 4.3.</strong> Comparison of common core materials for UAV sandwich panels</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Core material</th>
+<th style="text-align: center;">Density (kg/m<span class="math inline">\(^3\)</span>)</th>
+<th style="text-align: center;"><span class="math inline">\(\tau_\text{UTS}\)</span> (MPa)</th>
+<th style="text-align: center;"><span class="math inline">\(G_c\)</span> (MPa)</th>
+<th style="text-align: center;"><span class="math inline">\(T_\text{max}\)</span> (°C)</th>
+<th style="text-align: center;">Cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Rohacell 31 RIST</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rohacell 51 RIST</td>
+<td style="text-align: center;">52</td>
+<td style="text-align: center;">0.70</td>
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rohacell 71 RIST</td>
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">1.30</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">High</td>
+</tr>
+<tr>
+<td style="text-align: left;">Divinycell H45</td>
+<td style="text-align: center;">45</td>
+<td style="text-align: center;">0.54</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td style="text-align: left;">Divinycell H80</td>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">1.15</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nomex 1/8-3.0</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: center;">29</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td style="text-align: left;">Nomex 1/8-6.0</td>
+<td style="text-align: center;">96</td>
+<td style="text-align: center;">2.10</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">Medium</td>
+</tr>
+<tr>
+<td style="text-align: left;">Al 5052 1/4-3.1 lb</td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">3.10</td>
+<td style="text-align: center;">310</td>
+<td style="text-align: center;">350</td>
+<td style="text-align: center;">Low–Med</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="476-chromoly-steel"><span class="secnum">4.7.6</span> Chromoly Steel<a class="headerlink" href="#476-chromoly-steel" title="Permanent link">&para;</a></h3>
+<p>4130 chromoly steel (<span class="arithmatex">\(\sigma_\text{UTS} = 560\)</span> MPa annealed, up to 1100 MPa normalised and tempered, <span class="arithmatex">\(E = 205\)</span> GPa, <span class="arithmatex">\(\rho = 7850\)</span> kg/m<span class="arithmatex">\(^3\)</span>) is used for landing gear legs, hinge pins, and carry-through fittings. 4340 (<span class="arithmatex">\(\sigma_\text{UTS} &gt; 1240\)</span> MPa) is reserved for highly stressed fittings and fasteners.</p>
+<div class="tbl" id="tab-material_comparison">
+<div class="tbl-caption"><strong>Table 4.4.</strong> Structural material comparison: key metrics for UAV airframe selection</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Material</th>
+<th style="text-align: center;"><span class="math inline">\(E\)</span> (GPa)</th>
+<th style="text-align: center;"><span class="math inline">\(\sigma_\text{UTS}\)</span> (MPa)</th>
+<th style="text-align: center;"><span class="math inline">\(\rho\)</span> (kg/m<span class="math inline">\(^3\)</span>)</th>
+<th style="text-align: center;"><span class="math inline">\(\hat{E}\)</span> (MN<span class="math inline">\(\cdot\)</span>m/kg)</th>
+<th style="text-align: center;"><span class="math inline">\(\hat{\sigma}\)</span> (kN<span class="math inline">\(\cdot\)</span>m/kg)</th>
+<th style="text-align: center;">Machinability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CFRP UD 0<span class="math inline">\(^\circ\)</span> (T700)</td>
+<td style="text-align: center;">130</td>
+<td style="text-align: center;">2100</td>
+<td style="text-align: center;">1560</td>
+<td style="text-align: center;">83.3</td>
+<td style="text-align: center;">1346</td>
+<td style="text-align: center;">Poor (abrasive)</td>
+</tr>
+<tr>
+<td style="text-align: left;">CFRP QI <span class="math inline">\([0/{\pm}45/90]_s\)</span></td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">600</td>
+<td style="text-align: center;">1560</td>
+<td style="text-align: center;">35.3</td>
+<td style="text-align: center;">385</td>
+<td style="text-align: center;">Poor</td>
+</tr>
+<tr>
+<td style="text-align: left;">GFRP UD 0<span class="math inline">\(^\circ\)</span> (E-gl.)</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">1100</td>
+<td style="text-align: center;">1900</td>
+<td style="text-align: center;">21.1</td>
+<td style="text-align: center;">579</td>
+<td style="text-align: center;">Fair</td>
+</tr>
+<tr>
+<td style="text-align: left;">Al 6061-T6</td>
+<td style="text-align: center;">68.9</td>
+<td style="text-align: center;">310</td>
+<td style="text-align: center;">2700</td>
+<td style="text-align: center;">25.5</td>
+<td style="text-align: center;">115</td>
+<td style="text-align: center;">Excellent</td>
+</tr>
+<tr>
+<td style="text-align: left;">Al 7075-T6</td>
+<td style="text-align: center;">71.7</td>
+<td style="text-align: center;">572</td>
+<td style="text-align: center;">2810</td>
+<td style="text-align: center;">25.5</td>
+<td style="text-align: center;">204</td>
+<td style="text-align: center;">Good</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ti-6Al-4V</td>
+<td style="text-align: center;">114</td>
+<td style="text-align: center;">950</td>
+<td style="text-align: center;">4430</td>
+<td style="text-align: center;">25.7</td>
+<td style="text-align: center;">214</td>
+<td style="text-align: center;">Poor</td>
+</tr>
+<tr>
+<td style="text-align: left;">4130 steel (norm.)</td>
+<td style="text-align: center;">205</td>
+<td style="text-align: center;">670</td>
+<td style="text-align: center;">7850</td>
+<td style="text-align: center;">26.1</td>
+<td style="text-align: center;">85</td>
+<td style="text-align: center;">Good</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-sandwich"><span class="secnum">4.8</span> Sandwich Structures<a class="headerlink" href="#sec-sandwich" title="Permanent link">&para;</a></h2>
+<p>Sandwich panels consist of two thin, stiff face sheets bonded to a thick, light core. The core separates the faces, dramatically increasing the effective bending stiffness for minimal mass penalty.</p>
+<figure class="fig fig-diagram" id="fig-sandwich_beam">
+<img class="tikz" src="img/tikz-f6cdb86bc0ce.svg" alt="Sandwich beam cross-section. The CFRP face sheets carry the bending normal stresses (linear over face thickness, shown in red); the core transfers transverse shear (approximately uniform, shown in…" loading="lazy" width="319" height="125">
+<figcaption><strong>Figure 4.2.</strong> Sandwich beam cross-section. The CFRP face sheets carry the bending normal stresses (linear over face thickness, shown in red); the core transfers transverse shear (approximately uniform, shown in blue). The neutral axis lies at mid-height for a symmetric panel.</figcaption>
+</figure>
+
+<h3 id="481-bending-stiffness"><span class="secnum">4.8.1</span> Bending Stiffness<a class="headerlink" href="#481-bending-stiffness" title="Permanent link">&para;</a></h3>
+<p>The flexural rigidity of a symmetric sandwich beam (per unit width): <span id="eq-sandwich_stiffness_full"></span></p>
+<div class="arithmatex">\[D = \frac{E_f t_f^3}{6} + \frac{E_f t_f (t_c + t_f)^2}{2} + \frac{E_c t_c^3}{12}\tag{4.40}\]</div>
+<p>For the common case where <span class="arithmatex">\(t_c \gg t_f\)</span> and <span class="arithmatex">\(E_f \gg E_c\)</span> (eliminating the first and third terms): <span id="eq-sandwich_stiffness_approx"></span></p>
+<div class="arithmatex">\[D \approx \frac{E_f \, t_f \, (t_c + t_f)^2}{2}\tag{4.41}\]</div>
+<p>The sandwich is typically 20–100<span class="arithmatex">\(\times\)</span> stiffer in bending than the same face sheets in direct contact, depending on <span class="arithmatex">\(t_c/t_f\)</span> ratio.</p>
+<h3 id="482-face-wrinkling"><span class="secnum">4.8.2</span> Face Wrinkling<a class="headerlink" href="#482-face-wrinkling" title="Permanent link">&para;</a></h3>
+<p>The compressed face sheet may wrinkle locally, buckling into the core. The critical wrinkling stress (Hoff–Mautner formula): <span id="eq-face_wrinkling"></span></p>
+<div class="arithmatex">\[\sigma_w = 0.5 \left( E_f \cdot E_c \cdot G_c \right)^{1/3}\tag{4.42}\]</div>
+<p>where <span class="arithmatex">\(G_c\)</span> is the core shear modulus. The applied compressive face stress must satisfy <span class="arithmatex">\(\sigma_f \leq \sigma_w / \gamma\)</span>. Wrinkling is the most critical failure mode for closed-cell foam cores; Rohacell provides higher <span class="arithmatex">\(E_c\)</span> and <span class="arithmatex">\(G_c\)</span> than PVC foam, raising <span class="arithmatex">\(\sigma_w\)</span> and enabling thinner face sheets.</p>
+<h3 id="483-core-shear-failure"><span class="secnum">4.8.3</span> Core Shear Failure<a class="headerlink" href="#483-core-shear-failure" title="Permanent link">&para;</a></h3>
+<p>The core carries transverse shear between the face sheets. Core shear stress under transverse load <span class="arithmatex">\(V\)</span> per unit width: <span id="eq-core_shear"></span></p>
+<div class="arithmatex">\[\tau_c = \frac{V}{(t_c + t_f) \cdot b}\tag{4.43}\]</div>
+<p>The core must satisfy <span class="arithmatex">\(\tau_c \leq \tau_{c,\text{allow}} = \tau_{c,\text{UTS}} / \gamma\)</span>.</p>
+<h3 id="484-panel-mass-optimisation"><span class="secnum">4.8.4</span> Panel Mass Optimisation<a class="headerlink" href="#484-panel-mass-optimisation" title="Permanent link">&para;</a></h3>
+<p>For a given bending stiffness requirement <span class="arithmatex">\(D^*\)</span>, the sandwich panel mass per unit area <span class="arithmatex">\(m” = 2\rho_f t_f + \rho_c t_c\)</span> is minimised subject to the constraint of <a href="#eq-sandwich_stiffness_approx">Eq. (4.41)</a>. Using a Lagrange multiplier approach (Allen, 1969), the optimum face and core thicknesses are: <span id="eq-sandwich_optimum"></span></p>
+<div class="arithmatex">\[t_{f,\text{opt}} = \left(\frac{D^* \rho_c^2}{E_f \rho_f^2}\right)^{1/3}, \qquad
+  t_{c,\text{opt}} = 2 \left(\frac{D^* \rho_f}{E_f \rho_c^2}\right)^{1/3}\tag{4.44}\]</div>
+<p>These expressions show that a lower-density core always yields a lighter panel for the same stiffness, driving designers toward the lowest density core that satisfies the shear and wrinkling constraints.</p>
+<h2 id="sec-joints"><span class="secnum">4.9</span> Joints and Fasteners<a class="headerlink" href="#sec-joints" title="Permanent link">&para;</a></h2>
+<h3 id="491-bolted-joints"><span class="secnum">4.9.1</span> Bolted Joints<a class="headerlink" href="#491-bolted-joints" title="Permanent link">&para;</a></h3>
+<p>The bearing stress at a bolt hole in a composite or metallic plate under in-plane pull-through load <span class="arithmatex">\(P\)</span>: <span id="eq-bearing_stress"></span></p>
+<div class="arithmatex">\[\sigma_\text{br} = \frac{P}{d \cdot t}\tag{4.45}\]</div>
+<p>where <span class="arithmatex">\(d\)</span> is fastener diameter and <span class="arithmatex">\(t\)</span> is plate thickness. For CFRP, the bearing allowable <span class="arithmatex">\(\sigma_\text{br,allow}\)</span> is 600–900 MPa depending on layup and fibre orientation at the hole. Net-tension failure at the reduced cross-section: <span id="eq-net_tension"></span></p>
+<div class="arithmatex">\[\sigma_\text{net} = \frac{P}{(w - d) \cdot t}\tag{4.46}\]</div>
+<p>Shear-out failure of the material between bolt hole and panel edge: <span id="eq-shear_out"></span></p>
+<div class="arithmatex">\[\tau_\text{shear} = \frac{P}{2 \cdot e \cdot t}\tag{4.47}\]</div>
+<p>Minimum edge distances: <span class="arithmatex">\(e \geq 2D\)</span> (metal), <span class="arithmatex">\(e \geq 3D\)</span> (CFRP) from hole centre to plate edge; minimum pitch: <span class="arithmatex">\(p \geq 3D\)</span> between adjacent holes. Stricter limits for composites reflect lower bearing-to-shear strength ratios and the tendency for interlaminar shear failure.</p>
+<h3 id="492-bonded-joints"><span class="secnum">4.9.2</span> Bonded Joints<a class="headerlink" href="#492-bonded-joints" title="Permanent link">&para;</a></h3>
+<p>Adhesive bonding avoids stress concentrations at fastener holes and distributes load over a large area. For a single-lap joint under tensile load <span class="arithmatex">\(P\)</span> (Volkersen analysis), the adhesive shear stress distribution along the overlap of length <span class="arithmatex">\(2L\)</span> is: <span id="eq-volkersen_sym"></span></p>
+<div class="arithmatex">\[\tau(x) = \frac{P\,\omega}{2b\sinh(\omega L)} \cosh(\omega x)
+  \quad \text{(symmetric case, equal adherends)}\tag{4.48}\]</div>
+<p>where the shear-lag parameter: <span id="eq-omega_volkersen"></span></p>
+<div class="arithmatex">\[\omega = \sqrt{\frac{G_a}{t_a} \cdot \frac{2}{E t_\text{adh}}}\tag{4.49}\]</div>
+<p><span class="arithmatex">\(G_a\)</span> is adhesive shear modulus, <span class="arithmatex">\(t_a\)</span> is bond-line thickness, <span class="arithmatex">\(t_\text{adh}\)</span> is adherend thickness, and <span class="arithmatex">\(b\)</span> is joint width. Peak shear stress concentrates at the overlap ends; increasing overlap length beyond <span class="arithmatex">\(L \approx 3/\omega\)</span> yields diminishing returns.</p>
+<p><strong>Peel stress</strong> at the overlap end is the dominant failure initiator in CFRP bonded structures. Spew fillets and tapered adherend ends reduce peel by directing the stress angle toward shear. Recommended structural adhesives:</p>
+<ul>
+<li>
+<p><strong>Araldite 420 A/B</strong>: two-part methacrylate; <span class="arithmatex">\(\tau_\text{UTS} = 30\)</span> MPa; bonds CFRP, aluminium, steel without surface primer; elongation to break 8%.</p>
+</li>
+<li>
+<p><strong>Loctite EA 9394 (Hysol)</strong>: two-part epoxy; <span class="arithmatex">\(\tau_\text{UTS} = 48\)</span> MPa; excellent environmental durability to 120 °C; aerospace qualified (BMS 5-89).</p>
+</li>
+<li>
+<p><strong>Cytec FM 300-2</strong>: supported film adhesive; <span class="arithmatex">\(\tau_\text{UTS} = 45\)</span> MPa; co-cure with pre-preg; uniform bond-line thickness 0.12 m m.</p>
+</li>
+</ul>
+<h3 id="493-galvanic-corrosion-and-fastener-selection"><span class="secnum">4.9.3</span> Galvanic Corrosion and Fastener Selection<a class="headerlink" href="#493-galvanic-corrosion-and-fastener-selection" title="Permanent link">&para;</a></h3>
+<p>CFRP has a galvanic potential of approximately <span class="arithmatex">\(+0.25\)</span> V (SCE), making it strongly cathodic relative to aluminium (<span class="arithmatex">\(-0.75\)</span> V). When CFRP and aluminium share an electrolytic path (condensation, rain), aluminium corrodes preferentially at the interface. Three mitigation strategies:</p>
+<ol>
+<li>
+<p>Replace aluminium fasteners with titanium (<span class="arithmatex">\(-0.10\)</span> V, nearly iso-galvanic to CFRP) — the standard solution for primary CFRP joints.</p>
+</li>
+<li>
+<p>Install dielectric isolation bushings (GFRP or PTFE) between CFRP and aluminium to break the electrical circuit.</p>
+</li>
+<li>
+<p>Use sealed wet-layup joints with adhesive acting as moisture barrier.</p>
+</li>
+</ol>
+<p>Stainless-steel fasteners (316L: <span class="arithmatex">\(0.0\)</span> V) are acceptable in secondary CFRP structure. Standard aluminium alloy fasteners (AN/MS series) must not be used in direct contact with CFRP primary structure.</p>
+<h2 id="sec-stealth"><span class="secnum">4.10</span> Stealth Design of UAV Airframes<a class="headerlink" href="#sec-stealth" title="Permanent link">&para;</a></h2>
+<h3 id="4101-radar-cross-section-fundamentals"><span class="secnum">4.10.1</span> Radar Cross Section Fundamentals<a class="headerlink" href="#4101-radar-cross-section-fundamentals" title="Permanent link">&para;</a></h3>
+<p>Radar cross section (RCS) <span class="arithmatex">\(\sigma\)</span> quantifies the effective reflecting area of a target: <span id="eq-rcs_definition"></span></p>
+<div class="arithmatex">\[\sigma = 4\pi \frac{|E_s|^2}{|E_i|^2} r^2\tag{4.50}\]</div>
+<p>For a large flat plate of area <span class="arithmatex">\(A\)</span> illuminated at normal incidence (specular reflection): <span id="eq-rcs_plate"></span></p>
+<div class="arithmatex">\[\sigma_\text{specular} = \frac{4\pi A^2}{\lambda^2}\tag{4.51}\]</div>
+<p>where <span class="arithmatex">\(\lambda\)</span> is radar wavelength. A <span class="arithmatex">\(1\,\text{m}^2\)</span> flat plate at X-band (<span class="arithmatex">\(\lambda = 3\)</span> cm) produces <span class="arithmatex">\(\sigma \approx 14\,000\)</span> m<span class="arithmatex">\(^2\)</span> (41 dBsm) in the specular direction — vastly larger than the aircraft’s physical cross-section. Low-observable design therefore aims to avoid specular reflection toward the radar’s line-of-sight.</p>
+<h3 id="4102-planform-alignment"><span class="secnum">4.10.2</span> Planform Alignment<a class="headerlink" href="#4102-planform-alignment" title="Permanent link">&para;</a></h3>
+<p>All airframe edges — wing leading edges, wing trailing edges, inlet lips, exhaust nozzle lips, access panel edges, and weapon bay door edges — are aligned to a small number of discrete azimuth angles (typically 2–4). This <em>planform alignment</em> concentrates specular returns into narrow angular sectors away from the threat sector, rather than distributing returns over all angles. The B-2 Spirit uses two aligned edge angles; the RQ-170 uses four. Manufacturing tolerance for edge alignment: <span class="arithmatex">\(\pm 0.5^\circ\)</span> maximum angular deviation from design alignment is required.</p>
+<h3 id="4103-serpentine-inlet-duct"><span class="secnum">4.10.3</span> Serpentine Inlet Duct<a class="headerlink" href="#4103-serpentine-inlet-duct" title="Permanent link">&para;</a></h3>
+<p>A straight inlet duct provides a direct line-of-sight to the highly reflective engine face (RCS <span class="arithmatex">\(\approx\)</span> physical engine face area). A serpentine S-duct eliminates this direct path: the engine face is not visible from the inlet aperture. The additional duct length increases total pressure loss by approximately 0.5–1.5%, a modest penalty. RAM coatings inside the duct further attenuate engine-face reflections that still reach the engine via diffraction.</p>
+<h3 id="4104-radar-absorbing-materials"><span class="secnum">4.10.4</span> Radar Absorbing Materials<a class="headerlink" href="#4104-radar-absorbing-materials" title="Permanent link">&para;</a></h3>
+<p>Three classes of RAM are used on UAV airframes:</p>
+<ol>
+<li>
+<p><strong>Pyramidal carbon-foam absorber</strong>: broadband (2–40 GHz); reflection loss <span class="arithmatex">\(&gt; 40\)</span> dB. Used inside cavities. Mass penalty significant; not suitable for exterior aerodynamic surfaces.</p>
+</li>
+<li>
+<p><strong>Salisbury screen</strong>: thin resistive sheet spaced <span class="arithmatex">\(\lambda/4\)</span> from a conducting ground plane. Narrow bandwidth (one octave), peak absorption at design frequency. Used as exterior skin treatment where bandwidth requirements are modest.</p>
+</li>
+<li>
+<p><strong>Jaumann absorber</strong>: multi-layer stack of Salisbury screens with graded resistance and intermediate dielectric spacers. Bandwidth 2–3 octaves; thickness 25–50 mm; used on combat UCAV fuselage sides and upper wing surfaces.</p>
+</li>
+</ol>
+<p>The effective complex permittivity <span class="arithmatex">\(\varepsilon_r = \varepsilon' - j\varepsilon”\)</span> of the RAM is tuned by loading a polymer binder with carbonyl-iron particles or carbon black at 10–40% volume fraction.</p>
+<h3 id="4105-infrared-signature-reduction"><span class="secnum">4.10.5</span> Infrared Signature Reduction<a class="headerlink" href="#4105-infrared-signature-reduction" title="Permanent link">&para;</a></h3>
+<p>UAV propulsion systems emit IR radiation from hot exhaust gases and heated structures. Mitigation approaches:</p>
+<ul>
+<li>
+<p><strong>Exhaust mixing nozzle</strong>: bypass cold air is mixed with hot core gas before exit, reducing plume temperature from <span class="arithmatex">\({\sim}800\)</span> K to <span class="arithmatex">\({\sim}500\)</span> K. Reduces mid-wave IR (3–5 m) signature by 10–15 dB.</p>
+</li>
+<li>
+<p><strong>Suppressed exhaust slot</strong>: flat rectangular outlet on upper fuselage shields hot plume from ground-based sensors; used on B-2, RQ-170.</p>
+</li>
+<li>
+<p><strong>Thermal insulation of upper skin</strong>: multi-layer aerogel blankets (conductivity <span class="arithmatex">\(\approx 0.015\)</span> W/m<span class="arithmatex">\(\cdot\)</span>K) beneath upper skin panels reduce skin temperature elevation above ambient.</p>
+</li>
+<li>
+<p><strong>Low-emissivity coatings</strong>: metallic coatings (<span class="arithmatex">\(\varepsilon &lt; 0.15\)</span>) on leading edges reduce long-wave radiation; however, these increase radar reflectivity and must be used only on non-RAM surfaces.</p>
+</li>
+</ul>
+<h3 id="4106-acoustic-and-visual-signature"><span class="secnum">4.10.6</span> Acoustic and Visual Signature<a class="headerlink" href="#4106-acoustic-and-visual-signature" title="Permanent link">&para;</a></h3>
+<p><strong>Acoustic</strong>: Propeller tip Mach number is the primary driver of far-field acoustic signature. Tip speed below <span class="arithmatex">\(M = 0.4\)</span> reduces the tonal peak by approximately 12 dB relative to <span class="arithmatex">\(M = 0.8\)</span> tips. Increasing blade count from 2 to 4 shifts the blade-passing frequency above 2 kHz (where atmospheric propagation loss is higher), while each individual harmonic amplitude decreases. Scimitar-shaped blades with swept tips reduce leading-edge noise by 3–6 dB.</p>
+<p><strong>Visual</strong>: Low-contrast paint schemes matching sky background luminance (light grey, <span class="arithmatex">\(L^* = 70\)</span>–<span class="arithmatex">\(80\)</span>) reduce naked-eye detection range from 5 km to <span class="arithmatex">\(&lt;2\)</span> km. Planform minimisation — narrow aspect ratio viewed from below — further reduces visual detection probability.</p>
+<h2 id="sec-fatigue"><span class="secnum">4.11</span> Fatigue and Damage Tolerance<a class="headerlink" href="#sec-fatigue" title="Permanent link">&para;</a></h2>
+<h3 id="4111-s-n-curve-and-basquin-equation"><span class="secnum">4.11.1</span> S-N Curve and Basquin Equation<a class="headerlink" href="#4111-s-n-curve-and-basquin-equation" title="Permanent link">&para;</a></h3>
+<p>Under cyclic loading, metallic materials fail at stress amplitudes far below the static ultimate strength. The Basquin power-law relationship between stress amplitude <span class="arithmatex">\(\sigma_a\)</span> and cycles to failure <span class="arithmatex">\(N_f\)</span>: <span id="eq-basquin"></span></p>
+<div class="arithmatex">\[\sigma_a = \sigma_f' \left(2N_f\right)^b\tag{4.52}\]</div>
+<p>where <span class="arithmatex">\(\sigma_f'\)</span> is the fatigue strength coefficient (approximately equal to the true fracture stress) and <span class="arithmatex">\(b\)</span> is the fatigue strength exponent (<span class="arithmatex">\(-0.05\)</span> to <span class="arithmatex">\(-0.12\)</span> for metals). Mean stress correction by Morrow: <span id="eq-morrow"></span></p>
+<div class="arithmatex">\[\sigma_a = \left(\sigma_f' - \sigma_m\right)\left(2N_f\right)^b\tag{4.53}\]</div>
+<p>Practical endurance limits at <span class="arithmatex">\(10^7\)</span> cycles: Al 7075-T6: 159 MPa (<span class="arithmatex">\(R = -1\)</span>); Ti-6Al-4V: 620 MPa (<span class="arithmatex">\(R = -1\)</span>); 4130 steel: 400 MPa (<span class="arithmatex">\(R = -1\)</span>).</p>
+<h3 id="4112-stress-concentration-and-notch-sensitivity"><span class="secnum">4.11.2</span> Stress Concentration and Notch Sensitivity<a class="headerlink" href="#4112-stress-concentration-and-notch-sensitivity" title="Permanent link">&para;</a></h3>
+<p>Geometric discontinuities (holes, fillets, changes of section) raise local stress by a factor <span class="arithmatex">\(K_t\)</span> (theoretical stress concentration factor). For fatigue, the effective stress concentration factor <span class="arithmatex">\(K_f\)</span> is: <span id="eq-kf"></span></p>
+<div class="arithmatex">\[K_f = 1 + q(K_t - 1)\tag{4.54}\]</div>
+<p>where <span class="arithmatex">\(q\)</span> is the notch sensitivity index (<span class="arithmatex">\(0 \leq q \leq 1\)</span>), increasing with material ultimate strength and fillet radius. For high-strength aluminium at small notch radii, <span class="arithmatex">\(q \approx 0.9\)</span>–<span class="arithmatex">\(1.0\)</span>; for soft aluminium, <span class="arithmatex">\(q \approx 0.3\)</span>–<span class="arithmatex">\(0.6\)</span>.</p>
+<p>The Neuber correction relates elastic stress concentration to actual elasto-plastic notch stress and strain: <span id="eq-neuber"></span></p>
+<div class="arithmatex">\[K_\varepsilon \cdot K_\sigma = K_t^2\tag{4.55}\]</div>
+<p>providing the actual notch stress <span class="arithmatex">\(\sigma_\text{notch}\)</span> when the nominal stress exceeds the material yield stress.</p>
+<h3 id="4113-linear-elastic-fracture-mechanics"><span class="secnum">4.11.3</span> Linear Elastic Fracture Mechanics<a class="headerlink" href="#4113-linear-elastic-fracture-mechanics" title="Permanent link">&para;</a></h3>
+<p>A crack of half-length <span class="arithmatex">\(a\)</span> in a large plate under remote tensile stress <span class="arithmatex">\(\sigma\)</span> generates a Mode-I stress intensity factor: <span id="eq-stress_intensity"></span></p>
+<div class="arithmatex">\[K_I = \sigma \sqrt{\pi a} \cdot F(a/W)\tag{4.56}\]</div>
+<p>where <span class="arithmatex">\(F(a/W)\)</span> is a geometry correction factor (unity for infinite plate, tabulated in handbooks for standard geometries). Fracture occurs when <span class="arithmatex">\(K_I \geq K_{Ic}\)</span>, the plane-strain fracture toughness. The critical crack size for fracture: <span id="eq-critical_crack"></span></p>
+<div class="arithmatex">\[a_\text{cr} = \frac{1}{\pi} \left(\frac{K_{Ic}}{\sigma F}\right)^2\tag{4.57}\]</div>
+<p>Material fracture toughness values: Al 7075-T6: <span class="arithmatex">\(K_{Ic} = 24\)</span> MPa<span class="arithmatex">\(\sqrt{\text{m}}\)</span>; Ti-6Al-4V: <span class="arithmatex">\(K_{Ic} = 44\)</span>–<span class="arithmatex">\(66\)</span> MPa<span class="arithmatex">\(\sqrt{\text{m}}\)</span>; 4340 steel: <span class="arithmatex">\(K_{Ic} = 50\)</span>–<span class="arithmatex">\(80\)</span> MPa<span class="arithmatex">\(\sqrt{\text{m}}\)</span>.</p>
+<h3 id="4114-crack-growth-paris-law"><span class="secnum">4.11.4</span> Crack Growth: Paris Law<a class="headerlink" href="#4114-crack-growth-paris-law" title="Permanent link">&para;</a></h3>
+<p>Under cyclic loading with stress intensity range <span class="arithmatex">\(\Delta K = K_\text{max} - K_\text{min}\)</span>, crack growth per cycle is described by the Paris–Erdogan law: <span id="eq-paris"></span></p>
+<div class="arithmatex">\[\frac{da}{dN} = C \left(\Delta K\right)^m\tag{4.58}\]</div>
+<p>where <span class="arithmatex">\(C\)</span> and <span class="arithmatex">\(m\)</span> are material constants (<span class="arithmatex">\(m = 2\)</span>–<span class="arithmatex">\(4\)</span> for aluminium, <span class="arithmatex">\(m = 3\)</span>–<span class="arithmatex">\(4\)</span> for steel). The number of cycles to grow a crack from initial size <span class="arithmatex">\(a_0\)</span> to critical size <span class="arithmatex">\(a_\text{cr}\)</span>: <span id="eq-cycles_to_failure"></span></p>
+<div class="arithmatex">\[N_f = \int_{a_0}^{a_\text{cr}} \frac{da}{C(\Delta K)^m}\tag{4.59}\]</div>
+<p>The inspection interval must be set such that <span class="arithmatex">\(N_\text{inspect} \leq N_f / 2\)</span>, ensuring that a crack detectable at the previous inspection has grown to at most half its critical size by the time of the next inspection.</p>
+<h3 id="4115-cfrp-fatigue"><span class="secnum">4.11.5</span> CFRP Fatigue<a class="headerlink" href="#4115-cfrp-fatigue" title="Permanent link">&para;</a></h3>
+<p>CFRP exhibits fundamentally different fatigue behaviour from metals. Fibre-dominated laminates show very shallow S-N slopes (<span class="arithmatex">\(b \approx -0.05\)</span> to <span class="arithmatex">\(-0.02\)</span>) because carbon fibres are immune to fatigue; failure is driven by progressive matrix cracking, delamination, and eventual fibre failure. CFRP fatigue life is often expressed as: <span id="eq-cfrp_fatigue"></span></p>
+<div class="arithmatex">\[\sigma_\text{max} = \sigma_0 \left(1 - \beta \log N_f \right)\tag{4.60}\]</div>
+<p>where <span class="arithmatex">\(\sigma_0\)</span> is the static strength and <span class="arithmatex">\(\beta \approx 0.05\)</span>–<span class="arithmatex">\(0.10\)</span>. Delamination growth is characterised by the strain energy release rate <span class="arithmatex">\(G_I\)</span> and the Paris-like law <span class="arithmatex">\(da/dN = C_G G_I^m\)</span> with <span class="arithmatex">\(m = 4\)</span>–<span class="arithmatex">\(8\)</span>.</p>
+<h3 id="4116-uav-fatigue-spectrum"><span class="secnum">4.11.6</span> UAV Fatigue Spectrum<a class="headerlink" href="#4116-uav-fatigue-spectrum" title="Permanent link">&para;</a></h3>
+<p>A typical medium UAV (MALE class) accumulates fatigue damage from:</p>
+<ul>
+<li>
+<p><em>Ground-air-ground (GAG) cycle</em>: each flight constitutes one major 1g-to-cruise cycle.</p>
+</li>
+<li>
+<p><em>Manoeuvre loads</em>: autopilot corrections, bank angles 15–30<span class="arithmatex">\(^\circ\)</span>; approximately 50–200 significant cycles per flight hour.</p>
+</li>
+<li>
+<p><em>Gust loads</em>: Dryden or von Kármán turbulence spectra; 1000–5000 gust cycles per flight hour depending on altitude and turbulence intensity.</p>
+</li>
+<li>
+<p><em>Taxi loads</em>: each takeoff/landing includes 20–100 taxi cycles on the landing gear.</p>
+</li>
+</ul>
+<p>The design fatigue life is typically 5 000–20 000 flight hours for MALE UAVs (MQ-9 design life: 20 000 h), with safe-life limits for landing gear structure and damage-tolerant design for wing and fuselage primary structure.</p>
+<h2 id="sec-analysis"><span class="secnum">4.12</span> Structural Analysis Tools and Methods<a class="headerlink" href="#sec-analysis" title="Permanent link">&para;</a></h2>
+<h3 id="4121-classical-hand-calculations"><span class="secnum">4.12.1</span> Classical Hand Calculations<a class="headerlink" href="#4121-classical-hand-calculations" title="Permanent link">&para;</a></h3>
+<p>Hand calculations remain essential for preliminary sizing, sanity-checking FEA outputs, and rapid trade studies. Key methods:</p>
+<ul>
+<li>
+<p><strong>Euler column buckling</strong>: critical compressive load <span class="arithmatex">\(P_\text{cr} = \pi^2 EI / (KL)^2\)</span> where <span class="arithmatex">\(K\)</span> is the effective length factor (0.5 for both-ends-fixed, 1.0 for pinned-pinned, 2.0 for fixed-free).</p>
+</li>
+<li>
+<p><strong>Johnson buckling</strong>: corrects Euler for intermediate slenderness <span class="arithmatex">\(\lambda = L/r\)</span>: <span class="arithmatex">\(\sigma_\text{cr} = \sigma_y \left[1 - \sigma_y\lambda^2/(4\pi^2 E)\right]\)</span> for <span class="arithmatex">\(\lambda &lt; \lambda_c = \pi\sqrt{2E/\sigma_y}\)</span>.</p>
+</li>
+<li>
+<p><strong>Plate buckling</strong>: <a href="#eq-panel_buckling">Eq. (4.10)</a>; coefficient <span class="arithmatex">\(k_c\)</span> from NACA TN 3781 tables for various boundary and loading conditions.</p>
+</li>
+<li>
+<p><strong>Beam bending</strong>: standard <span class="arithmatex">\(M/I = \sigma/y = E/R\)</span>; deflection by moment-area method or Castigliano’s second theorem.</p>
+</li>
+</ul>
+<h3 id="4122-finite-element-method"><span class="secnum">4.12.2</span> Finite Element Method<a class="headerlink" href="#4122-finite-element-method" title="Permanent link">&para;</a></h3>
+<p>The finite element method (FEM) discretises the continuous structure into a mesh of finite elements, each represented by a stiffness matrix <span class="arithmatex">\([k]^e\)</span>. Global assembly and solution: <span id="eq-fem_global"></span></p>
+<div class="arithmatex">\[[K]\{u\} = \{F\}\tag{4.61}\]</div>
+<p>where <span class="arithmatex">\([K]\)</span> is the global stiffness matrix, <span class="arithmatex">\(\{u\}\)</span> is the nodal displacement vector, and <span class="arithmatex">\(\{F\}\)</span> is the applied load vector. Element types for UAV structural analysis:</p>
+<ul>
+<li>
+<p><strong>Beam elements</strong>: 2-node, 6 DOF/node; model longerons, frames, spar caps. Efficient but cannot represent stress concentrations.</p>
+</li>
+<li>
+<p><strong>Shell elements</strong>: 4-node QUAD4 or 8-node QUAD8; model skins, webs, ribs. The standard element for aircraft primary structure. Meshing guideline: minimum 4 elements across panel width; element aspect ratio <span class="arithmatex">\(&lt; 5\!:\!1\)</span>.</p>
+</li>
+<li>
+<p><strong>Solid elements</strong>: 8-node HEX8 or 10-node TET10; model solid fittings, bolted joints. Use only where through-thickness stresses are important.</p>
+</li>
+</ul>
+<p>Composite shell elements require definition of the ply stack-up through Classical Lamination Theory (CLT), relating in-plane force resultants <span class="arithmatex">\(\{N\}\)</span> and bending moment resultants <span class="arithmatex">\(\{M\}\)</span> to mid-plane strains <span class="arithmatex">\(\{\varepsilon^0\}\)</span> and curvatures <span class="arithmatex">\(\{\kappa\}\)</span>: <span id="eq-clt"></span></p>
+<div class="arithmatex">\[\begin{bmatrix} N \\ M \end{bmatrix}
+  =
+  \begin{bmatrix} A &amp; B \\ B &amp; D \end{bmatrix}
+  \begin{bmatrix} \varepsilon^0 \\ \kappa \end{bmatrix}\tag{4.62}\]</div>
+<p>where <span class="arithmatex">\(A\)</span>, <span class="arithmatex">\(B\)</span>, <span class="arithmatex">\(D\)</span> are the extensional, bending-extensional coupling, and bending stiffness matrices respectively. Symmetric laminates (<span class="arithmatex">\(B = 0\)</span>) decouple in-plane and bending behaviour, simplifying analysis and eliminating thermally induced warping on cure.</p>
+<h3 id="4123-buckling-fea"><span class="secnum">4.12.3</span> Buckling FEA<a class="headerlink" href="#4123-buckling-fea" title="Permanent link">&para;</a></h3>
+<p>Linear eigenvalue buckling analysis solves: <span id="eq-buckling_eigenvalue"></span></p>
+<div class="arithmatex">\[\left([K] + \lambda_i [K_G]\right)\{\phi_i\} = \{0\}\tag{4.63}\]</div>
+<p>where <span class="arithmatex">\([K_G]\)</span> is the geometric stiffness matrix (function of pre-stress state), <span class="arithmatex">\(\lambda_i\)</span> is the <span class="arithmatex">\(i\)</span>-th buckling eigenvalue (load multiplier), and <span class="arithmatex">\(\{\phi_i\}\)</span> is the buckling mode shape. The critical load is <span class="arithmatex">\(P_\text{cr} = \lambda_1 P_\text{applied}\)</span>. Linear buckling overpredicts <span class="arithmatex">\(P_\text{cr}\)</span> for imperfection-sensitive structures (cylindrical shells); non-linear post-buckling analysis (Riks arc-length method) or knockdown factor (KDF) application is required.</p>
+<h3 id="4124-topology-optimisation"><span class="secnum">4.12.4</span> Topology Optimisation<a class="headerlink" href="#4124-topology-optimisation" title="Permanent link">&para;</a></h3>
+<p>Topology optimisation determines the optimal distribution of material within a design domain to minimise compliance (maximise stiffness) for a given mass fraction constraint. The SIMP (Solid Isotropic Material with Penalisation) method assigns a density variable <span class="arithmatex">\(\rho_e \in [0,1]\)</span> to each element and penalises intermediate densities: <span id="eq-simp"></span></p>
+<div class="arithmatex">\[E_e(\rho_e) = E_\text{min} + \rho_e^p (E_0 - E_\text{min}), \quad p = 3\tag{4.64}\]</div>
+<p>The compliance minimisation problem: <span id="eq-topology_opt"></span></p>
+<div class="arithmatex">\[\min_{\{\rho_e\}} \; c = \{F\}^T\{u\} \quad \text{subject to} \quad \sum_e \rho_e v_e \leq V^*, \quad \rho_\text{min} \leq \rho_e \leq 1\tag{4.65}\]</div>
+<p>Topology optimisation is used to design CFRP rib lightening patterns, spar web cut-outs, and complex printed titanium fittings, producing organic geometries directly manufacturable by additive manufacturing.</p>
+<h3 id="4125-software-ecosystem"><span class="secnum">4.12.5</span> Software Ecosystem<a class="headerlink" href="#4125-software-ecosystem" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-software">
+<div class="tbl-caption"><strong>Table 4.5.</strong> Structural analysis software commonly used in UAV airframe design</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Software</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Key capability</th>
+<th style="text-align: left;">Typical application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">MSC NASTRAN</td>
+<td style="text-align: left;">Commercial FEA</td>
+<td style="text-align: left;">Aeroelastic, buckling, dynamic</td>
+<td style="text-align: left;">MALE/HALE primary structure</td>
+</tr>
+<tr>
+<td style="text-align: left;">ABAQUS/Standard</td>
+<td style="text-align: left;">Commercial FEA</td>
+<td style="text-align: left;">Non-linear, fracture mechanics</td>
+<td style="text-align: left;">Fitting analysis, crash</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ansys Mechanical</td>
+<td style="text-align: left;">Commercial FEA</td>
+<td style="text-align: left;">Broad multiphysics</td>
+<td style="text-align: left;">Thermal-structural, fatigue</td>
+</tr>
+<tr>
+<td style="text-align: left;">CalculiX</td>
+<td style="text-align: left;">Open-source FEA</td>
+<td style="text-align: left;">NASTRAN-compatible solver</td>
+<td style="text-align: left;">Academic / SME projects</td>
+</tr>
+<tr>
+<td style="text-align: left;">Code_Aster</td>
+<td style="text-align: left;">Open-source FEA</td>
+<td style="text-align: left;">Fracture, dynamics</td>
+<td style="text-align: left;">French government / SME</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hypermesh</td>
+<td style="text-align: left;">Pre/post-processor</td>
+<td style="text-align: left;">Rapid meshing</td>
+<td style="text-align: left;">All commercial FEA codes</td>
+</tr>
+<tr>
+<td style="text-align: left;">Femap</td>
+<td style="text-align: left;">Pre/post-processor</td>
+<td style="text-align: left;">NASTRAN integration</td>
+<td style="text-align: left;">NASTRAN model build</td>
+</tr>
+<tr>
+<td style="text-align: left;">OptiStruct</td>
+<td style="text-align: left;">Topology optim.</td>
+<td style="text-align: left;">Composite optimisation</td>
+<td style="text-align: left;">Rib/panel mass reduction</td>
+</tr>
+<tr>
+<td style="text-align: left;">TOSCA Structure</td>
+<td style="text-align: left;">Topology optim.</td>
+<td style="text-align: left;">Free-size, size, shape</td>
+<td style="text-align: left;">Metal fitting optimisation</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-manufacturing"><span class="secnum">4.13</span> Manufacturing and Quality Assurance<a class="headerlink" href="#sec-manufacturing" title="Permanent link">&para;</a></h2>
+<h3 id="4131-cnc-machining-tolerances"><span class="secnum">4.13.1</span> CNC Machining Tolerances<a class="headerlink" href="#4131-cnc-machining-tolerances" title="Permanent link">&para;</a></h3>
+<p>Metal UAV structural components are machined on 3- or 5-axis CNC machining centres to tight dimensional tolerances. Standard tolerances for UAV structural parts:</p>
+<ul>
+<li>
+<p><em>Primary structural interfaces</em> (spar fittings, wing root joints): <span class="arithmatex">\(\pm 0.05\)</span> mm on critical dimensions, <span class="arithmatex">\(\pm 0.1^\circ\)</span> on angular features.</p>
+</li>
+<li>
+<p><em>Secondary structure</em> (ribs, brackets): <span class="arithmatex">\(\pm 0.1\)</span> mm general machining tolerance.</p>
+</li>
+<li>
+<p><em>Aerodynamic outer mould line</em> (metal control surface skins): <span class="arithmatex">\(\pm 0.25\)</span> mm profile tolerance.</p>
+</li>
+<li>
+<p><em>Fastener holes</em>: <span class="arithmatex">\(+0.05\)</span>/<span class="arithmatex">\(-0.0\)</span> mm for interference-fit titanium fasteners; <span class="arithmatex">\(+0.1\)</span>/<span class="arithmatex">\(-0.0\)</span> mm for clearance-fit bolts.</p>
+</li>
+</ul>
+<p>High-performance CNC machining of 7075-T6 uses carbide end-mills at surface speeds 250–450 m/min with 20–40% stepover, flood coolant, and vibration-monitoring spindle bearings to prevent chatter marks that initiate fatigue cracks.</p>
+<h3 id="4132-composite-layup-and-cure-monitoring"><span class="secnum">4.13.2</span> Composite Layup and Cure Monitoring<a class="headerlink" href="#4132-composite-layup-and-cure-monitoring" title="Permanent link">&para;</a></h3>
+<p>Pre-preg composite parts require controlled temperature, humidity, and cure cycle to achieve design fibre volume fraction <span class="arithmatex">\(V_f = 57\)</span>–<span class="arithmatex">\(63\%\)</span> and void content <span class="arithmatex">\(&lt; 1\%\)</span>:</p>
+<ul>
+<li>
+<p><em>Ply placement</em>: hand layup or automated fibre placement (AFP) at <span class="arithmatex">\(\pm 1\)</span> mm positional accuracy, <span class="arithmatex">\(\pm 1^\circ\)</span> orientation accuracy.</p>
+</li>
+<li>
+<p><em>Cure monitoring by dielectrometry</em>: real-time measurement of ionic viscosity <span class="arithmatex">\(\log(\sigma^{-1})\)</span> tracks resin flow and gel point; the cure cycle is advanced when viscosity plateaus at the gel point.</p>
+</li>
+<li>
+<p><em>Fibre Bragg grating (FBG) sensors</em>: embedded in the laminate during layup, FBG sensors measure internal strain and temperature throughout cure; the residual strain state post-cure indicates cure shrinkage and residual stress.</p>
+</li>
+<li>
+<p><em>Autoclave processing</em>: 120 °C/6 bar for standard aerospace epoxies; 180 °C/7 bar for high-service-temperature systems (BMI, cyanate ester).</p>
+</li>
+</ul>
+<p>Void content is driven by resin hydrostatic pressure during consolidation. Void content below 1% requires resin pressure <span class="arithmatex">\(p_r &gt; 0.35\)</span> bar throughout the gel period; autoclave overpressure ensures this condition throughout the tool geometry.</p>
+<h3 id="4133-non-destructive-testing"><span class="secnum">4.13.3</span> Non-Destructive Testing<a class="headerlink" href="#4133-non-destructive-testing" title="Permanent link">&para;</a></h3>
+<p>NDT of composite UAV structure uses three primary methods:</p>
+<ol>
+<li>
+<p><strong>Ultrasonic C-scan</strong>: a focused ultrasonic beam at 5–15 MHz is scanned over the panel surface; echo time-of-flight reveals delaminations, porosity clusters, and foreign object inclusions. Detection limit: <span class="arithmatex">\(&gt; 6\)</span> mm<span class="arithmatex">\(^2\)</span> delamination per ASTM E2533. Throughput: 0.1–0.5 m<span class="arithmatex">\(^2\)</span>/hour. Both pulse-echo and through-transmission configurations are used.</p>
+</li>
+<li>
+<p><strong>X-ray radiography and CT</strong>: reveals internal geometry, fastener fit, and core cell damage. Computed tomography (CT) provides 3D voxel data at 50–200 m resolution; used for complex printed titanium fittings and cast aluminium nodes.</p>
+</li>
+<li>
+<p><strong>Thermographic inspection (pulsed or lock-in)</strong>: flash lamps deliver a thermal pulse; an IR camera records surface temperature decay; delaminations and bond-line voids appear as hot spots due to reduced local thermal conductivity. Fast (full-panel scan in 5–60 s), but depth sensitivity is limited to 4–5 mm in CFRP.</p>
+</li>
+</ol>
+<p>Accept/reject criteria for primary composite structure (per MIL-HDBK-17 and OEM specifications):</p>
+<ul>
+<li>
+<p>Void/porosity: reject if area <span class="arithmatex">\(&gt; 6\)</span> mm<span class="arithmatex">\(^2\)</span> or if area fraction <span class="arithmatex">\(&gt; 2\%\)</span> over any 100 mm <span class="arithmatex">\(\times\)</span> 100 mm region.</p>
+</li>
+<li>
+<p>Delamination: reject if through-thickness delamination <span class="arithmatex">\(&gt; 25\)</span> mm<span class="arithmatex">\(^2\)</span> in primary spar or wing skin.</p>
+</li>
+<li>
+<p>Ply orientation error: reject if measured fibre angle deviates <span class="arithmatex">\(&gt; 3^\circ\)</span> from the design angle.</p>
+</li>
+</ul>
+<h3 id="4134-assembly-and-datum-control"><span class="secnum">4.13.4</span> Assembly and Datum Control<a class="headerlink" href="#4134-assembly-and-datum-control" title="Permanent link">&para;</a></h3>
+<p>UAV assembly uses a datum-based philosophy: all major subassemblies (wings, fuselage halves, tail surfaces) are located relative to a global datum reference frame defined by tooling balls or precision datums on the primary structure. This ensures that interchangeable parts are truly interchangeable without selective fitting.</p>
+<p><strong>Shimming</strong>: dimensional variation in composite mould tools and parts produces gaps at structural interfaces. Liquid shim (Hysol EA9394 or Loctite 9466) fills gaps of 0.1–2.0 mm without creating unplanned load eccentricities. For gaps <span class="arithmatex">\(&gt; 2.0\)</span> mm, solid CFRP or aluminium shim stock is used.</p>
+<p><strong>Fastener torque</strong>: bolted joints are assembled to defined torque specifications to ensure proper clamping load, which generates friction load transfer and prevents fretting fatigue. Torque for titanium fasteners in CFRP: <span id="eq-fastener_torque"></span></p>
+<div class="arithmatex">\[\tau_\text{fastener} = K \cdot d \cdot F_\text{clamp}\tag{4.66}\]</div>
+<p>where <span class="arithmatex">\(K \approx 0.15\)</span>–<span class="arithmatex">\(0.18\)</span> (nut factor, dry), <span class="arithmatex">\(d\)</span> is fastener diameter, and <span class="arithmatex">\(F_\text{clamp}\)</span> is the required clamp load (typically 60–70% of fastener proof load). Torque wrenches are calibrated to <span class="arithmatex">\(\pm 4\%\)</span> accuracy per ASME B107.300.</p>
+<h2 id="sec-aeroelasticity"><span class="secnum">4.14</span> Aeroelasticity<a class="headerlink" href="#sec-aeroelasticity" title="Permanent link">&para;</a></h2>
+<h3 id="4141-static-aeroelasticity-divergence"><span class="secnum">4.14.1</span> Static Aeroelasticity: Divergence<a class="headerlink" href="#4141-static-aeroelasticity-divergence" title="Permanent link">&para;</a></h3>
+<p>The divergence speed <span class="arithmatex">\(V_D\)</span> is the airspeed at which an aerodynamic surface becomes statically unstable: <span id="eq-divergence"></span></p>
+<div class="arithmatex">\[V_D = \sqrt{\frac{2\, G J}{\rho_\infty\, c^2\, S \left(e_\text{AC} - e_\text{EA}\right)\, C_{L_\alpha}}}\tag{4.67}\]</div>
+<p>where <span class="arithmatex">\(GJ\)</span> is torsional stiffness of the wing, <span class="arithmatex">\(c\)</span> is chord, <span class="arithmatex">\(e_\text{AC}\)</span> and <span class="arithmatex">\(e_\text{EA}\)</span> are chordwise positions of aerodynamic centre and elastic axis, and <span class="arithmatex">\(C_{L_\alpha}\)</span> is lift-curve slope. For aft-swept wings with <span class="arithmatex">\(e_\text{EA} &lt; e_\text{AC}\)</span> (elastic axis forward of aerodynamic centre), wash-out under bending is stabilising and divergence is suppressed.</p>
+<h3 id="4142-control-reversal"><span class="secnum">4.14.2</span> Control Reversal<a class="headerlink" href="#4142-control-reversal" title="Permanent link">&para;</a></h3>
+<p>Control reversal occurs when aileron deflection produces sufficient wing twist to nullify and eventually reverse the intended roll control. The reversal dynamic pressure: <span id="eq-control_reversal"></span></p>
+<div class="arithmatex">\[q_R = \frac{G J}{S_a\, e_a\, c_a\, (\partial C_L/\partial \delta_a)}\tag{4.68}\]</div>
+<p>where <span class="arithmatex">\(S_a\)</span> and <span class="arithmatex">\(c_a\)</span> are aileron area and chord, and <span class="arithmatex">\(e_a\)</span> is the aileron hinge distance from the elastic axis.</p>
+<h3 id="4143-flutter"><span class="secnum">4.14.3</span> Flutter<a class="headerlink" href="#4143-flutter" title="Permanent link">&para;</a></h3>
+<p>Flutter is the self-excited oscillatory instability that arises when aerodynamic forces couple bending and torsion modes. The flutter speed <span class="arithmatex">\(V_F\)</span> must satisfy: <span id="eq-flutter_margin"></span></p>
+<div class="arithmatex">\[V_F \geq 1.15\, V_D \quad \text{(military requirement, MIL-SPEC-8856)}\tag{4.69}\]</div>
+<p>The classical binary flutter analysis considers coupled bending-torsion equations with aerodynamic damping. In matrix form: <span id="eq-flutter_eq"></span></p>
+<div class="arithmatex">\[[M]\{\ddot{q}\} + [C_\text{aero}(V)]\{\dot{q}\} + \left[K + K_\text{aero}(V)\right]\{q\} = \{0\}\tag{4.70}\]</div>
+<p>Flutter speed is found by searching for the airspeed at which the real part of an eigenvalue becomes zero. Modern UCAV airframes use active flutter suppression (AFS) through real-time control surface deflection commands derived from structural accelerometers.</p>
+<h2 id="sec-thermal"><span class="secnum">4.15</span> Thermal and Environmental Effects<a class="headerlink" href="#sec-thermal" title="Permanent link">&para;</a></h2>
+<h3 id="4151-thermal-loading"><span class="secnum">4.15.1</span> Thermal Loading<a class="headerlink" href="#4151-thermal-loading" title="Permanent link">&para;</a></h3>
+<p>UAVs operating at high altitude (HALE: 15–20 km) experience skin temperatures of <span class="arithmatex">\(-60\)</span> °C to <span class="arithmatex">\(+50\)</span> °C over the mission profile, creating differential thermal strains in multi-material structures. The thermal stress in a fully constrained member: <span id="eq-thermal_stress"></span></p>
+<div class="arithmatex">\[\sigma_T = -E \alpha_T \Delta T\tag{4.71}\]</div>
+<p>where <span class="arithmatex">\(\alpha_T\)</span> is the coefficient of thermal expansion (CTE). CTE mismatch between CFRP (<span class="arithmatex">\(\alpha_T \approx 0\)</span>–<span class="arithmatex">\(2 \times 10^{-6}\)</span> °C<span class="arithmatex">\(^{-1}\)</span>, fibre-direction) and aluminium (<span class="arithmatex">\(\alpha_T = 23 \times 10^{-6}\)</span> °C<span class="arithmatex">\(^{-1}\)</span>) creates thermal peel stress at bonded joints during thermal cycling — a critical design consideration for multi-material primary structures.</p>
+<h3 id="4152-moisture-absorption-in-composites"><span class="secnum">4.15.2</span> Moisture Absorption in Composites<a class="headerlink" href="#4152-moisture-absorption-in-composites" title="Permanent link">&para;</a></h3>
+<p>Epoxy matrix resins absorb moisture from the atmosphere (equilibrium moisture content <span class="arithmatex">\(M_\infty = 1.5\)</span>–<span class="arithmatex">\(3\%\)</span> by mass at 100% RH). Moisture plasticises the matrix, reducing the glass transition temperature <span class="arithmatex">\(T_g\)</span> by approximately 20–30 °C per percent moisture. The in-service design temperature limit must include a hot-wet allowable: typically <span class="arithmatex">\(T_\text{design} \leq T_g - 30\)</span> °C (wet). Moisture also reduces matrix-dominated strength properties (<span class="arithmatex">\(X_C, Y_T, Y_C, S\)</span>) by 5–25%, requiring environmental knockdown factors (EKDF) in structural sizing.</p>
+<h2 id="sec-crash"><span class="secnum">4.16</span> Crash Energy Management and Payload Protection<a class="headerlink" href="#sec-crash" title="Permanent link">&para;</a></h2>
+<p>Unmanned aircraft carry no human occupants but must protect high-value payloads (EO/IR gimbals, SIGINT equipment, synthetic aperture radar) from crash damage, both to preserve mission data and to limit ground hazard from scattered wreckage. Crash energy absorption is achieved by:</p>
+<ul>
+<li>
+<p><strong>Sacrificial nose section</strong>: a crushable foam or CFRP nose cone designed to collapse progressively in a nose-first impact at 10–20 m/s, absorbing energy <span class="arithmatex">\(E = \sigma_\text{crush} \cdot A_\text{crush} \cdot \delta\)</span> where <span class="arithmatex">\(\sigma_\text{crush}\)</span> is the plateau crush stress and <span class="arithmatex">\(\delta\)</span> is crush stroke.</p>
+</li>
+<li>
+<p><strong>Payload pod isolation</strong>: the payload pod is mounted on energy-absorbing isolators (rubber-metal, viscoelastic foam) with a natural frequency of 15–30 Hz to isolate from crash impulse.</p>
+</li>
+<li>
+<p><strong>Battery containment</strong>: LiPo cells are housed in rigid aluminium-walled boxes rated to 10 g crash load without cell breaching; thermal runaway barriers (ceramic fibre mat) prevent fire propagation to structure.</p>
+</li>
+<li>
+<p><strong>Progressive joint failure</strong>: primary attachment fittings between payload pod and fuselage use shear pins sized to fail at 15 g longitudinal load, protecting the fuselage from transmitted impact forces.</p>
+</li>
+</ul>
+<h2 id="sec-certification"><span class="secnum">4.17</span> Structural Certification and Testing<a class="headerlink" href="#sec-certification" title="Permanent link">&para;</a></h2>
+<h3 id="4171-building-block-approach"><span class="secnum">4.17.1</span> Building Block Approach<a class="headerlink" href="#4171-building-block-approach" title="Permanent link">&para;</a></h3>
+<p>UAV structural certification follows the building block test pyramid:</p>
+<ol>
+<li>
+<p><em>Coupon tests</em> (Level 1): hundreds of flat laminate coupons tested per ASTM D3039 (tension), D6641 (compression), D5379 (shear), D7264 (flexure). Establish A- and B-basis material allowables.</p>
+</li>
+<li>
+<p><em>Element tests</em> (Level 2): open-hole tension/compression (ASTM D5766/D6484), filled-hole tension/compression, bolted joint bearing (ASTM D5961). Validate joint design rules.</p>
+</li>
+<li>
+<p><em>Sub-component tests</em> (Level 3): wing box beam tests, frame shear tests, control surface hinge tests. Validate structural analysis predictions and design allowables.</p>
+</li>
+<li>
+<p><em>Component tests</em> (Level 4): full wing panels, fuselage sections. Validate structural analysis at assembly level including manufacturing effects.</p>
+</li>
+<li>
+<p><em>Full-scale structural test</em> (Level 5): one complete airframe tested statically to 150% LL (ultimate load) with simultaneous application of all critical load cases. Separate fatigue specimen cycled to <span class="arithmatex">\(2\times\)</span> design life.</p>
+</li>
+</ol>
+<h3 id="4172-design-allowables"><span class="secnum">4.17.2</span> Design Allowables<a class="headerlink" href="#4172-design-allowables" title="Permanent link">&para;</a></h3>
+<p>Statistical material allowables are established from coupon data:</p>
+<ul>
+<li>
+<p><strong>A-basis allowable</strong>: 99th percentile lower bound with 95% confidence. Used where a single element failure is critical.</p>
+</li>
+<li>
+<p><strong>B-basis allowable</strong>: 90th percentile lower bound with 95% confidence. Used where multiple load paths exist (fail-safe structure).</p>
+</li>
+</ul>
+<p>Minimum 18 specimens per batch per ASTM E122 for B-basis; minimum 5 batches from 3 material lots for A-basis. The two-parameter Weibull distribution is commonly used to model composite strength scatter; the shape factor <span class="arithmatex">\(k\)</span> typically ranges from 15 to 30 for CFRP tensile strength.</p>
+<h3 id="4173-ground-vibration-testing-and-flutter-clearance"><span class="secnum">4.17.3</span> Ground Vibration Testing and Flutter Clearance<a class="headerlink" href="#4173-ground-vibration-testing-and-flutter-clearance" title="Permanent link">&para;</a></h3>
+<p>Ground vibration testing (GVT) measures the structural natural frequencies, mode shapes, and modal damping of the assembled airframe. A multi-axis excitation system (electrodynamic shakers, impact hammers) excites the structure, and a multi-axis accelerometer array records the response. Modal parameter extraction uses polyreference frequency domain (pFD) or PolyMAX algorithms. GVT results validate the finite element model; flutter predictions from the correlated FEM provide flutter speed estimates within <span class="arithmatex">\(\pm 5\%\)</span>.</p>
+<h2 id="sec-emerging"><span class="secnum">4.18</span> Emerging Technologies in UAV Airframe Design<a class="headerlink" href="#sec-emerging" title="Permanent link">&para;</a></h2>
+<h3 id="4181-additively-manufactured-structures"><span class="secnum">4.18.1</span> Additively Manufactured Structures<a class="headerlink" href="#4181-additively-manufactured-structures" title="Permanent link">&para;</a></h3>
+<p>Additive manufacturing (AM) is transforming UAV airframe design at both small and large scales:</p>
+<ul>
+<li>
+<p><strong>FDM polymer</strong>: Markforged Onyx (chopped carbon PETG), Ultem 9085 for small UAV frames; <span class="arithmatex">\(\sigma_\text{UTS} = 50\)</span>–<span class="arithmatex">\(80\)</span> MPa; layer anisotropy 20–30% strength penalty in the build direction.</p>
+</li>
+<li>
+<p><strong>Continuous fibre FDM</strong>: Markforged Mark Two system embeds continuous carbon or Kevlar fibre; tensile strength 700 MPa, modulus 54 GPa (fibre-direction); enables rapid prototyping of CFRP-like parts.</p>
+</li>
+<li>
+<p><strong>LPBF titanium</strong>: laser powder bed fusion of Ti-6Al-4V at layer thickness 30–60 m; <span class="arithmatex">\(\sigma_\text{UTS} = 1100\)</span>–<span class="arithmatex">\(1270\)</span> MPa, fatigue properties approaching wrought material after HIP post-processing.</p>
+</li>
+<li>
+<p><strong>Directed energy deposition (DED)</strong>: large titanium or Inconel parts built by powder or wire feed; used for large bulkheads where AM reduces buy-to-fly ratio from 15:1 (machined billet) to 1.5:1.</p>
+</li>
+</ul>
+<h3 id="4182-morphing-structures"><span class="secnum">4.18.2</span> Morphing Structures<a class="headerlink" href="#4182-morphing-structures" title="Permanent link">&para;</a></h3>
+<p>Morphing airframes replace discrete control surfaces with continuously deformable skins, reducing hinge-line drag and enabling adaptive wing shapes matched to instantaneous flight conditions. Key challenges:</p>
+<ul>
+<li>
+<p>Skin must be stiff in-plane (carry aerodynamic pressure without excessive deflection) but compliant in bending (morph with low actuation energy). Shape memory polymer composites and corrugated CFRP skins achieve this paradoxical combination.</p>
+</li>
+<li>
+<p>Actuator options: SMA (shape memory alloy) wire at 6–8% strain, torque tube with eccentric cam, pneumatic silicone bladder.</p>
+</li>
+<li>
+<p>DARPA Smart Wing programme demonstrated 12% drag reduction and 8% L/D improvement using morphing trailing edge on a scaled combat UAV.</p>
+</li>
+</ul>
+<h3 id="4183-structural-health-monitoring"><span class="secnum">4.18.3</span> Structural Health Monitoring<a class="headerlink" href="#4183-structural-health-monitoring" title="Permanent link">&para;</a></h3>
+<p>Embedded sensor networks enable real-time structural health monitoring (SHM), reducing inspection cost and enabling condition-based maintenance:</p>
+<ul>
+<li>
+<p><strong>Fibre Bragg grating (FBG) arrays</strong>: 500–2000 sensors per wing; measure distributed strain and temperature; wavelength-division multiplexed on a single optical fibre. Detection threshold: <span class="arithmatex">\(\pm 10\,\mu\varepsilon\)</span> strain change, sufficient to detect skin disbonding.</p>
+</li>
+<li>
+<p><strong>Piezoelectric (PZT) transducer networks</strong>: Lamb wave propagation between PZT patches detects delaminations and cracks from wavefield perturbations; detection of a 10 mm delamination at 1 m range has been demonstrated on CFRP panels.</p>
+</li>
+<li>
+<p><strong>Acoustic emission</strong>: PZT sensors passively detect high-frequency stress wave bursts emitted by crack growth or delamination; real-time crack monitoring without scheduled active inspection intervals.</p>
+</li>
+</ul>
+<h2 id="sec-af_summary"><span class="secnum">4.19</span> Summary and Design Guidelines<a class="headerlink" href="#sec-af_summary" title="Permanent link">&para;</a></h2>
+<p>The structural design of a UAV airframe requires an integrated systems approach that simultaneously addresses structural efficiency, aerodynamic performance, manufacturing feasibility, material durability, and — for combat platforms — low-observability. The following condensed design guidelines summarise the key engineering principles presented in this chapter:</p>
+<ol>
+<li>
+<p><strong>Load sizing</strong>: establish the critical load cases (manoeuvre <span class="arithmatex">\(n_\text{max}\)</span>, gust, ground) early and carry them consistently through all sizing phases. Apply the correct safety factor for the certification basis: 1.5 (military) or 2.0 (civil).</p>
+</li>
+<li>
+<p><strong>Material selection</strong>: use CFRP for primary structure wherever mass is critical; aluminium alloys for machined fittings where fabrication ease outweighs the mass penalty; titanium for CFRP joint fittings to avoid galvanic corrosion.</p>
+</li>
+<li>
+<p><strong>Load paths</strong>: keep load paths short and direct; minimise eccentricities; ensure positive bolt-bearing by using minimum edge distances <span class="arithmatex">\(e \geq 3D\)</span> (CFRP) and <span class="arithmatex">\(e \geq 2D\)</span> (aluminium).</p>
+</li>
+<li>
+<p><strong>Sandwich structures</strong>: use sandwich panels for all aerodynamic surfaces to maximise bending stiffness per unit mass; size core for face wrinkling (<span class="arithmatex">\(\sigma_w &gt; \sigma_f\)</span>) and core shear (<span class="arithmatex">\(\tau_c &lt; \tau_\text{allow}\)</span>).</p>
+</li>
+<li>
+<p><strong>Fatigue</strong>: for aluminium structure, design to <span class="arithmatex">\(\sigma_\text{max} &lt; 0.45\,\sigma_\text{UTS}\)</span> at all stress concentrations; for CFRP, ensure compressive strain <span class="arithmatex">\(&lt; 3000\,\mu\varepsilon\)</span> at limit load to avoid matrix fatigue damage.</p>
+</li>
+<li>
+<p><strong>Stealth</strong>: align all airframe edges to <span class="arithmatex">\(\leq 4\)</span> discrete angles; apply Jaumann or Salisbury RAM to large flat surfaces; ensure no direct line-of-sight to engine face through inlet duct.</p>
+</li>
+<li>
+<p><strong>Manufacturing</strong>: exploit AFP and autoclave processing for large CFRP panels; use RTM for complex geometry parts; apply 100% NDT (ultrasonic C-scan) to all primary structure.</p>
+</li>
+<li>
+<p><strong>Analysis</strong>: validate all FEA models against hand calculations for simple load cases; confirm FEM boundary conditions model real structural interfaces; perform sensitivity studies on critical design parameters.</p>
+</li>
+<li>
+<p><strong>Testing</strong>: follow the building-block pyramid from coupon through full-scale; the static ultimate load test is a certification requirement, not optional validation.</p>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch03-aerodynamics-for-uavs.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Aerodynamics for UAVs">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Aerodynamics for UAVs
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch05-drone-propulsion-systems.html" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Drone Propulsion Systems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                5. Drone Propulsion Systems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,3871 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch11-swarm-systems.html">
+  
+  
+    <link rel="prev" href="ch10-software-autonomy-and-artificial-intelligence.html">
+  
+  
+    <link rel="next" href="ch12-ground-control-systems.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>11. Swarm Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ch-swarm" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              11. Swarm Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch11-swarm-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch-swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Swarm Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Swarm Intelligence Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.2 Swarm Intelligence Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-bio_inspiration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.1 Biological Inspiration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.2 Emergence and Stigmergy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-boids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.3 Reynolds Boids Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-pso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.4 Particle Swarm Optimisation (PSO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.5 Ant Colony Optimisation (ACO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_arch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Drone Swarm Architectures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.3 Drone Swarm Architectures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1131-centralised-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.1 Centralised Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1132-decentralised-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.2 Decentralised Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1133-leader-follower-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.3 Leader-Follower Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1134-virtual-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.4 Virtual Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1135-behaviour-based-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.5 Behaviour-Based Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cbba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.6 Market-Based / CBBA Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Consensus and Coordination Algorithms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.4 Consensus and Coordination Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1141-graph-theoretic-foundations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.1 Graph-Theoretic Foundations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1142-average-consensus-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.2 Average Consensus Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1143-discrete-time-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.3 Discrete-Time Consensus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1144-formation-error-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.4 Formation Error Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1145-time-varying-communication-topology-and-lyapunov-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.5 Time-Varying Communication Topology and Lyapunov Stability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1146-flocking-with-obstacle-avoidance-via-artificial-potential-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.6 Flocking with Obstacle Avoidance via Artificial Potential Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_comms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Communication in Swarms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Communication in Swarms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1151-mesh-radio-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.1 Mesh Radio Networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1152-ieee-80211p-and-80211bd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.2 IEEE 802.11p and 802.11bd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1153-time-synchronisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.3 Time Synchronisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1154-channel-capacity-and-bandwidth-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.4 Channel Capacity and Bandwidth Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1155-delay-tolerant-networking-dtn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.5 Delay-Tolerant Networking (DTN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-task_alloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 Task Allocation and Mission Planning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.6 Task Allocation and Mission Planning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cbba_detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.1 Consensus-Based Bundle Algorithm (CBBA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1162-hungarian-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.2 Hungarian Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1163-coverage-path-planning-boustrophedon-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.3 Coverage Path Planning: Boustrophedon Decomposition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1164-bayesian-target-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.4 Bayesian Target Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-formation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 Formation Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.7 Formation Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1171-classification-of-formation-control-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.1 Classification of Formation Control Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1172-distance-based-formation-and-rigidity-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.2 Distance-Based Formation and Rigidity Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1173-optimal-reciprocal-collision-avoidance-orca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.3 Optimal Reciprocal Collision Avoidance (ORCA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1174-formation-reconfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.4 Formation Reconfiguration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mil_swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 Military Swarm Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.8 Military Swarm Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1181-saturation-attack-doctrine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.1 Saturation Attack Doctrine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1182-heterogeneous-swarm-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.2 Heterogeneous Swarm Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1183-darpa-offset-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.3 DARPA OFFSET Programme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1184-perdix-micro-drone-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.4 Perdix Micro-Drone Programme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1185-autonomous-engagement-authority-and-loac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.5 Autonomous Engagement Authority and LOAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-civil_swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 Civil Swarm Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.9 Civil Swarm Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1191-precision-agricultural-spraying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.1 Precision Agricultural Spraying
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1192-drone-light-shows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.2 Drone Light Shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1193-search-and-rescue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.3 Search and Rescue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1194-infrastructure-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.4 Infrastructure Inspection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 Simulation and Testing Environments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.10 Simulation and Testing Environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11101-crazyswarm-and-crazyflie-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.1 Crazyswarm and Crazyflie Platform
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11102-airsim-multi-agent-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.2 AirSim Multi-Agent Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11103-netlogo-agent-based-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.3 NetLogo Agent-Based Modelling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11104-hardware-in-the-loop-hil-swarm-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.4 Hardware-in-the-Loop (HiL) Swarm Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11 Challenges and Future Directions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.11 Challenges and Future Directions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11111-scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.1 Scalability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11112-security-and-byzantine-fault-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.2 Security and Byzantine Fault Tolerance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11113-ethical-and-legal-dimensions-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.3 Ethical and Legal Dimensions: LAWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11114-heterogeneous-air-ground-swarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.4 Heterogeneous Air-Ground Swarms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11115-quantum-secured-swarm-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.5 Quantum-Secured Swarm Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.12 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ch-swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.1 Swarm Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2 Swarm Intelligence Theory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.2 Swarm Intelligence Theory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-bio_inspiration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.1 Biological Inspiration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-emergence" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.2 Emergence and Stigmergy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-boids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.3 Reynolds Boids Model
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-pso" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.4 Particle Swarm Optimisation (PSO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-aco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.2.5 Ant Colony Optimisation (ACO)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_arch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3 Drone Swarm Architectures
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.3 Drone Swarm Architectures">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1131-centralised-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.1 Centralised Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1132-decentralised-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.2 Decentralised Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1133-leader-follower-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.3 Leader-Follower Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1134-virtual-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.4 Virtual Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1135-behaviour-based-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.5 Behaviour-Based Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cbba" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.3.6 Market-Based / CBBA Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4 Consensus and Coordination Algorithms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.4 Consensus and Coordination Algorithms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1141-graph-theoretic-foundations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.1 Graph-Theoretic Foundations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1142-average-consensus-protocol" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.2 Average Consensus Protocol
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1143-discrete-time-consensus" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.3 Discrete-Time Consensus
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1144-formation-error-dynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.4 Formation Error Dynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1145-time-varying-communication-topology-and-lyapunov-stability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.5 Time-Varying Communication Topology and Lyapunov Stability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1146-flocking-with-obstacle-avoidance-via-artificial-potential-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.4.6 Flocking with Obstacle Avoidance via Artificial Potential Fields
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_comms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5 Communication in Swarms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.5 Communication in Swarms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1151-mesh-radio-networks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.1 Mesh Radio Networks
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1152-ieee-80211p-and-80211bd" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.2 IEEE 802.11p and 802.11bd
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1153-time-synchronisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.3 Time Synchronisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1154-channel-capacity-and-bandwidth-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.4 Channel Capacity and Bandwidth Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1155-delay-tolerant-networking-dtn" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.5.5 Delay-Tolerant Networking (DTN)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-task_alloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6 Task Allocation and Mission Planning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.6 Task Allocation and Mission Planning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#subsec-cbba_detail" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.1 Consensus-Based Bundle Algorithm (CBBA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1162-hungarian-algorithm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.2 Hungarian Algorithm
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1163-coverage-path-planning-boustrophedon-decomposition" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.3 Coverage Path Planning: Boustrophedon Decomposition
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1164-bayesian-target-search" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.6.4 Bayesian Target Search
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-formation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7 Formation Control
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.7 Formation Control">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1171-classification-of-formation-control-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.1 Classification of Formation Control Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1172-distance-based-formation-and-rigidity-theory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.2 Distance-Based Formation and Rigidity Theory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1173-optimal-reciprocal-collision-avoidance-orca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.3 Optimal Reciprocal Collision Avoidance (ORCA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1174-formation-reconfiguration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.7.4 Formation Reconfiguration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-mil_swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8 Military Swarm Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.8 Military Swarm Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1181-saturation-attack-doctrine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.1 Saturation Attack Doctrine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1182-heterogeneous-swarm-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.2 Heterogeneous Swarm Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1183-darpa-offset-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.3 DARPA OFFSET Programme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1184-perdix-micro-drone-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.4 Perdix Micro-Drone Programme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1185-autonomous-engagement-authority-and-loac" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.8.5 Autonomous Engagement Authority and LOAC
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-civil_swarm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9 Civil Swarm Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.9 Civil Swarm Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1191-precision-agricultural-spraying" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.1 Precision Agricultural Spraying
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1192-drone-light-shows" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.2 Drone Light Shows
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1193-search-and-rescue" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.3 Search and Rescue
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1194-infrastructure-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.9.4 Infrastructure Inspection
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_sim" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10 Simulation and Testing Environments
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.10 Simulation and Testing Environments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11101-crazyswarm-and-crazyflie-platform" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.1 Crazyswarm and Crazyflie Platform
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11102-airsim-multi-agent-simulation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.2 AirSim Multi-Agent Simulation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11103-netlogo-agent-based-modelling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.3 NetLogo Agent-Based Modelling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11104-hardware-in-the-loop-hil-swarm-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.10.4 Hardware-in-the-Loop (HiL) Swarm Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_challenges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11 Challenges and Future Directions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11.11 Challenges and Future Directions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#11111-scalability" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.1 Scalability
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11112-security-and-byzantine-fault-tolerance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.2 Security and Byzantine Fault Tolerance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11113-ethical-and-legal-dimensions-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.3 Ethical and Legal Dimensions: LAWS
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11114-heterogeneous-air-ground-swarms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.4 Heterogeneous Air-Ground Swarms
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#11115-quantum-secured-swarm-communication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.11.5 Quantum-Secured Swarm Communication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-swarm_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        11.12 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-swarm">Chapter 11: Swarm Systems<a class="headerlink" href="#ch-swarm" title="Permanent link">&para;</a></h1>
+<h2 id="ch-swarm"><span class="secnum">11.1</span> Swarm Systems<a class="headerlink" href="#ch-swarm" title="Permanent link">&para;</a></h2>
+<p>The emergence of affordable, miniaturised unmanned aerial vehicles has made it practical to deploy tens, hundreds, and — in near-future programmes — thousands of individual agents acting in a coordinated, goal-directed manner. A <em>swarm</em> in this engineering context is a multi-agent system in which each platform executes relatively simple local rules, yet the collective produces complex, adaptive global behaviour that far exceeds what any single agent could accomplish alone. This chapter presents the theoretical foundations drawn from collective intelligence, the communication and networking infrastructure that ties agents together, the formation-control mathematics that keeps them spatially organised, and the mission-planning algorithms that distribute work across the fleet. Military and civil applications are surveyed in depth, and the chapter closes with an honest assessment of the open engineering and ethical challenges that remain.</p>
+<h2 id="sec-swarm_theory"><span class="secnum">11.2</span> Swarm Intelligence Theory<a class="headerlink" href="#sec-swarm_theory" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-bio_inspiration"><span class="secnum">11.2.1</span> Biological Inspiration<a class="headerlink" href="#subsec-bio_inspiration" title="Permanent link">&para;</a></h3>
+<p>Swarm intelligence (SI) is rooted in the observation that social insects and certain vertebrates achieve highly efficient, resilient collective behaviour without a centralised controller. Three biological systems have been particularly influential in shaping engineering algorithms.</p>
+<div class="parahead">
+<p>Ant Colonies (<em>Formica</em> spp.).</p>
+</div>
+<p>Individual ants are cognitively limited, yet a colony of <span class="arithmatex">\(10^5\)</span>–<span class="arithmatex">\(10^6\)</span> individuals can locate the shortest path between nest and food source, adaptively re-route around obstacles, and allocate labour across foraging, defence, and construction roles. The key mechanism is <em>stigmergy</em>: ants deposit pheromone trails on successful paths, and other ants preferentially follow higher-concentration gradients. Evaporation of pheromone over time prevents premature convergence to a sub-optimal path. This indirect, environment-mediated communication is cheap, anonymous, and asynchronous — properties shared with many engineered swarm protocols.</p>
+<div class="parahead">
+<p>Honeybee Swarms (<em>Apis mellifera</em>).</p>
+</div>
+<p>When a bee colony outgrows its hive, approximately half the workers depart with the old queen to find a new nest site. Scout bees explore candidate sites and communicate their quality via the <em>waggle dance</em>, a figure-eight motion whose duration encodes distance and whose orientation encodes direction. High-quality sites attract more dances, which recruit more scouts in a positive-feedback loop that converges the swarm to a single site with remarkable reliability. The analogy to distributed optimisation — and specifically to the Consensus-Based Bundle Algorithm (§<a href="#subsec-cbba">11.3.6</a>) — is direct: agents broadcast bids, superior bids attract imitation, and the collective converges to a near-optimal solution.</p>
+<div class="parahead">
+<p>Starling Murmurations (<em>Sturnus vulgaris</em>).</p>
+</div>
+<p>Flocks of 10,000–100,000 starlings produce fluid, three-dimensional formations that evade aerial predators. High-speed video analysis by Ballerini et al. (2008) revealed that each bird responds to its six or seven nearest <em>topological</em> neighbours regardless of metric distance, giving the interaction radius a density-independent character. This topological coupling, combined with a maximum turn-rate constraint, produces wave-like coherence propagation at speeds of <span class="arithmatex">\(\sim\)</span>20–40 ms<span class="arithmatex">\(^{-1}\)</span> through the flock — far faster than individual reaction times. The practical implication for drone swarms is that metric-range thresholds can fail in variable-density swarms; topological neighbour graphs are more robust.</p>
+<h3 id="subsec-emergence"><span class="secnum">11.2.2</span> Emergence and Stigmergy<a class="headerlink" href="#subsec-emergence" title="Permanent link">&para;</a></h3>
+<p><em>Emergence</em> is the appearance of macroscopic order that is qualitatively different from, and irreducible to, the microscopic rules from which it arises. In the swarm context, each agent obeys simple local rules operating on locally sensed information; the global pattern — formation, path, assignment — is an emergent property of the collective. Emergent systems are intrinsically robust: removing one agent perturbs the collective only incrementally, because there is no single node whose failure cascades globally.</p>
+<p><em>Stigmergy</em> is a specific mechanism of emergence in which agents communicate indirectly by modifying a shared environment. In drone swarms the “environment” may be a shared data structure in cloud memory, a heat-map overlaid on a battlefield, or pheromone-analogue variables updated on a central blackboard. The defining feature — that agents read and write the environment rather than exchanging direct point-to-point messages — reduces communication overhead from <span class="arithmatex">\(O(N^2)\)</span> to <span class="arithmatex">\(O(N)\)</span> in many realisations.</p>
+<h3 id="subsec-boids"><span class="secnum">11.2.3</span> Reynolds Boids Model<a class="headerlink" href="#subsec-boids" title="Permanent link">&para;</a></h3>
+<p>Craig Reynolds (1987) introduced the <em>Boids</em> model, demonstrating that three simple rules applied to simulated bird-like agents produce convincing flocking behaviour. Each agent <span class="arithmatex">\(i\)</span> at position <span class="arithmatex">\(\mathbf{p}_i \in \mathbb{R}^3\)</span> with velocity <span class="arithmatex">\(\mathbf{v}_i \in \mathbb{R}^3\)</span> applies three steering accelerations:</p>
+<div class="parahead">
+<p>Rule 1 — Separation.</p>
+</div>
+<p>Avoid collisions with nearby neighbours. Let <span class="arithmatex">\(\mathcal{N}_s(i)\)</span> be the set of agents within separation radius <span class="arithmatex">\(r_s\)</span>: <span id="eq-boids_sep"></span></p>
+<div class="arithmatex">\[\mathbf{a}_{i,\text{sep}} = -k_s \sum_{j \in \mathcal{N}_s(i)}
+    \frac{\mathbf{p}_i - \mathbf{p}_j}{\|\mathbf{p}_i - \mathbf{p}_j\|^2}\tag{11.1}\]</div>
+<p>The inverse-square weighting ensures that very close neighbours produce strong repulsion.</p>
+<div class="parahead">
+<p>Rule 2 — Alignment.</p>
+</div>
+<p>Match velocity with neighbours within alignment radius <span class="arithmatex">\(r_a\)</span>: <span id="eq-boids_ali"></span></p>
+<div class="arithmatex">\[\mathbf{a}_{i,\text{ali}} = k_a \left(
+    \frac{1}{|\mathcal{N}_a(i)|}\sum_{j \in \mathcal{N}_a(i)} \mathbf{v}_j
+    - \mathbf{v}_i \right)\tag{11.2}\]</div>
+<div class="parahead">
+<p>Rule 3 — Cohesion.</p>
+</div>
+<p>Steer towards the centroid of neighbours within cohesion radius <span class="arithmatex">\(r_c\)</span>: <span id="eq-boids_coh"></span></p>
+<div class="arithmatex">\[\mathbf{a}_{i,\text{coh}} = k_c \left(
+    \frac{1}{|\mathcal{N}_c(i)|}\sum_{j \in \mathcal{N}_c(i)} \mathbf{p}_j
+    - \mathbf{p}_i \right)\tag{11.3}\]</div>
+<p>The total acceleration is a weighted sum: <span id="eq-boids_total"></span></p>
+<div class="arithmatex">\[\mathbf{a}_i = w_s\,\mathbf{a}_{i,\text{sep}}
+               + w_a\,\mathbf{a}_{i,\text{ali}}
+               + w_c\,\mathbf{a}_{i,\text{coh}}\tag{11.4}\]</div>
+<p>with gains <span class="arithmatex">\(k_s, k_a, k_c &gt; 0\)</span> and weights <span class="arithmatex">\(w_s, w_a, w_c\)</span> tuned to application. In practice, separation is given highest priority (largest <span class="arithmatex">\(w_s\)</span>) to prevent mid-air collisions; this is realised through a priority-ordered subsumption hierarchy rather than a weighted sum.</p>
+<div class="tbl" id="tab-boids_params">
+<div class="tbl-caption"><strong>Table 11.1.</strong> Reynolds Boids model parameters and typical values for a 20-drone outdoor swarm operating at 8 m/s cruise speed.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Parameter</strong></th>
+<th style="text-align: left;"><strong>Symbol</strong></th>
+<th style="text-align: left;"><strong>Value</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Separation radius</td>
+<td style="text-align: left;"><span class="math inline">\(r_s\)</span></td>
+<td style="text-align: left;">3 m</td>
+<td style="text-align: left;">Hard minimum inter-agent gap</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alignment radius</td>
+<td style="text-align: left;"><span class="math inline">\(r_a\)</span></td>
+<td style="text-align: left;">15 m</td>
+<td style="text-align: left;">Velocity matching range</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cohesion radius</td>
+<td style="text-align: left;"><span class="math inline">\(r_c\)</span></td>
+<td style="text-align: left;">25 m</td>
+<td style="text-align: left;">Group staying range</td>
+</tr>
+<tr>
+<td style="text-align: left;">Separation gain</td>
+<td style="text-align: left;"><span class="math inline">\(k_s\)</span></td>
+<td style="text-align: left;">5.0</td>
+<td style="text-align: left;">Strong; collision critical</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alignment gain</td>
+<td style="text-align: left;"><span class="math inline">\(k_a\)</span></td>
+<td style="text-align: left;">1.2</td>
+<td style="text-align: left;">Moderate</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cohesion gain</td>
+<td style="text-align: left;"><span class="math inline">\(k_c\)</span></td>
+<td style="text-align: left;">0.8</td>
+<td style="text-align: left;">Weak; loose formation</td>
+</tr>
+<tr>
+<td style="text-align: left;">Max speed</td>
+<td style="text-align: left;"><span class="math inline">\(v_{\max}\)</span></td>
+<td style="text-align: left;">12 m/s</td>
+<td style="text-align: left;">Battery and airframe limit</td>
+</tr>
+<tr>
+<td style="text-align: left;">Max acceleration</td>
+<td style="text-align: left;"><span class="math inline">\(a_{\max}\)</span></td>
+<td style="text-align: left;">4 m/s<span class="math inline">\(^2\)</span></td>
+<td style="text-align: left;">Motor torque limit</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="subsec-pso"><span class="secnum">11.2.4</span> Particle Swarm Optimisation (PSO)<a class="headerlink" href="#subsec-pso" title="Permanent link">&para;</a></h3>
+<p>PSO, introduced by Kennedy and Eberhart (1995), treats candidate solutions as particles moving through a search space. Each particle <span class="arithmatex">\(i\)</span> maintains a position <span class="arithmatex">\(\mathbf{x}_i\)</span>, a velocity <span class="arithmatex">\(\mathbf{v}_i\)</span>, a personal best position <span class="arithmatex">\(\mathbf{p}_{\text{best},i}\)</span>, and shares knowledge of the global best <span class="arithmatex">\(\mathbf{g}_{\text{best}}\)</span>. The velocity update equation is: <span id="eq-pso_velocity"></span></p>
+<div class="arithmatex">\[\mathbf{v}_i^{(t+1)} = w\,\mathbf{v}_i^{(t)}
+    + c_1 r_1 \bigl(\mathbf{p}_{\text{best},i} - \mathbf{x}_i^{(t)}\bigr)
+    + c_2 r_2 \bigl(\mathbf{g}_{\text{best}}  - \mathbf{x}_i^{(t)}\bigr)\tag{11.5}\]</div>
+<div id="eq-pso_position"></div>
+<div class="arithmatex">\[\mathbf{x}_i^{(t+1)} = \mathbf{x}_i^{(t)} + \mathbf{v}_i^{(t+1)}\tag{11.6}\]</div>
+<p>where <span class="arithmatex">\(w\)</span> is the inertia weight (typically 0.4–0.9, often linearly decayed), <span class="arithmatex">\(c_1\)</span> is the cognitive coefficient (<span class="arithmatex">\(\approx\)</span>2.05), <span class="arithmatex">\(c_2\)</span> is the social coefficient (<span class="arithmatex">\(\approx\)</span>2.05), and <span class="arithmatex">\(r_1, r_2 \sim \mathcal{U}(0,1)\)</span> are independent random scalars drawn each iteration.</p>
+<p>In drone swarm mission planning, PSO has been applied to: (a) optimising waypoint sequences for multi-drone area coverage, (b) solving the multi-target assignment problem, (c) tuning PID autopilot gains distributed across the fleet. The inertia weight <span class="arithmatex">\(w\)</span> controls exploitation versus exploration: large <span class="arithmatex">\(w\)</span> favours broad exploration; small <span class="arithmatex">\(w\)</span> drives refinement around known good solutions. Clerc and Kennedy (2002) derived a constriction-factor form that guarantees convergence: <span id="eq-pso_constriction"></span></p>
+<div class="arithmatex">\[\chi = \frac{2}{\left|2 - \phi - \sqrt{\phi^2 - 4\phi}\right|},
+  \quad \phi = c_1 + c_2 &gt; 4\tag{11.7}\]</div>
+<h3 id="subsec-aco"><span class="secnum">11.2.5</span> Ant Colony Optimisation (ACO)<a class="headerlink" href="#subsec-aco" title="Permanent link">&para;</a></h3>
+<p>ACO (Dorigo, 1992) solves combinatorial optimisation problems, notably the travelling salesman problem (TSP), by modelling artificial pheromone trails. Consider a graph <span class="arithmatex">\(G = (V, E)\)</span> of <span class="arithmatex">\(n\)</span> nodes representing waypoints or targets. A synthetic ant <span class="arithmatex">\(k\)</span> at node <span class="arithmatex">\(i\)</span> selects the next node <span class="arithmatex">\(j\)</span> probabilistically: <span id="eq-aco_prob"></span></p>
+<div class="arithmatex">\[p_{ij}^k(t) = \frac{\bigl[\tau_{ij}(t)\bigr]^\alpha
+                       \bigl[\eta_{ij}\bigr]^\beta}
+                      {\displaystyle\sum_{l \in \mathcal{A}_k}
+                       \bigl[\tau_{il}(t)\bigr]^\alpha
+                       \bigl[\eta_{il}\bigr]^\beta}\tag{11.8}\]</div>
+<p>where <span class="arithmatex">\(\tau_{ij}(t)\)</span> is the pheromone intensity on edge <span class="arithmatex">\((i,j)\)</span> at time <span class="arithmatex">\(t\)</span>, <span class="arithmatex">\(\eta_{ij} = 1/d_{ij}\)</span> is a heuristic visibility (inverse distance), <span class="arithmatex">\(\alpha\)</span> controls pheromone influence (<span class="arithmatex">\(\approx\)</span>1), <span class="arithmatex">\(\beta\)</span> controls heuristic influence (<span class="arithmatex">\(\approx\)</span>2–5), and <span class="arithmatex">\(\mathcal{A}_k\)</span> is the set of allowed next nodes (not yet visited).</p>
+<p>After all ants complete tours, pheromone is updated: <span id="eq-aco_update"></span></p>
+<div class="arithmatex">\[\tau_{ij}(t+1) = (1-\rho)\,\tau_{ij}(t) + \sum_{k=1}^{m} \Delta\tau_{ij}^k\tag{11.9}\]</div>
+<p>where <span class="arithmatex">\(\rho \in (0,1)\)</span> is the evaporation rate and <span class="arithmatex">\(\Delta\tau_{ij}^k = Q/L_k\)</span> if ant <span class="arithmatex">\(k\)</span> used edge <span class="arithmatex">\((i,j)\)</span> in its tour of length <span class="arithmatex">\(L_k\)</span>, else 0. Evaporation <span class="arithmatex">\(\rho\)</span> prevents unlimited pheromone accumulation and enables adaptation when the environment changes. In multi-drone path planning, each drone acts as an ant, depositing virtual pheromone on its communication network; convergence to near-optimal routes has been demonstrated in simulation for fleets up to <span class="arithmatex">\(N = 100\)</span>.</p>
+<h2 id="sec-swarm_arch"><span class="secnum">11.3</span> Drone Swarm Architectures<a class="headerlink" href="#sec-swarm_arch" title="Permanent link">&para;</a></h2>
+<h3 id="1131-centralised-architecture"><span class="secnum">11.3.1</span> Centralised Architecture<a class="headerlink" href="#1131-centralised-architecture" title="Permanent link">&para;</a></h3>
+<p>A ground-based mission computer computes plans and sends explicit commands to every agent.</p>
+<ul>
+<li>
+<p><strong>Advantages:</strong> global optimality possible; simple agent software; easy operator override.</p>
+</li>
+<li>
+<p><strong>Disadvantages:</strong> single point of failure; uplink bandwidth scales as <span class="arithmatex">\(O(N)\)</span>; round-trip latency limits real-time responsiveness; loss of the C2 link renders the entire swarm inoperative.</p>
+</li>
+</ul>
+<h3 id="1132-decentralised-architecture"><span class="secnum">11.3.2</span> Decentralised Architecture<a class="headerlink" href="#1132-decentralised-architecture" title="Permanent link">&para;</a></h3>
+<p>Each agent maintains its own world model and computes its own decisions using locally available information. Communication is peer-to-peer or via broadcast.</p>
+<ul>
+<li>
+<p><strong>Advantages:</strong> no single point of failure; scales to large <span class="arithmatex">\(N\)</span>; continues to operate under partial communication loss.</p>
+</li>
+<li>
+<p><strong>Disadvantages:</strong> sub-global optimality; harder to guarantee conflict-free task assignment; debugging and verification is complex.</p>
+</li>
+</ul>
+<h3 id="1133-leader-follower-architecture"><span class="secnum">11.3.3</span> Leader-Follower Architecture<a class="headerlink" href="#1133-leader-follower-architecture" title="Permanent link">&para;</a></h3>
+<p>One designated leader navigates a prescribed trajectory; followers maintain desired relative offsets <span class="arithmatex">\(\mathbf{d}_i\)</span> from the leader. If the leader’s state is <span class="arithmatex">\(\mathbf{x}_L\)</span>, follower <span class="arithmatex">\(i\)</span> tracks: <span id="eq-leader_follower"></span></p>
+<div class="arithmatex">\[\mathbf{x}_i^* = \mathbf{x}_L + \mathbf{R}_L\,\mathbf{d}_i\tag{11.10}\]</div>
+<p>where <span class="arithmatex">\(\mathbf{R}_L\)</span> is the leader’s rotation matrix so the formation rotates with the leader. Vulnerability: if the leader is destroyed or jammed, the formation dissolves unless followers automatically elect a successor through a consensus vote.</p>
+<h3 id="1134-virtual-structure"><span class="secnum">11.3.4</span> Virtual Structure<a class="headerlink" href="#1134-virtual-structure" title="Permanent link">&para;</a></h3>
+<p>The entire formation is modelled as a rigid body with a virtual centre of mass <span class="arithmatex">\(\mathbf{p}_c\)</span> and orientation <span class="arithmatex">\(\psi_c\)</span>. Each agent <span class="arithmatex">\(i\)</span> is assigned a body-frame offset <span class="arithmatex">\(\boldsymbol{\delta}_i\)</span>; its desired world-frame position is: <span id="eq-virtual_struct"></span></p>
+<div class="arithmatex">\[\mathbf{p}_i^* = \mathbf{p}_c + \mathbf{R}(\psi_c)\,\boldsymbol{\delta}_i\tag{11.11}\]</div>
+<p>Formation error for agent <span class="arithmatex">\(i\)</span> is <span class="arithmatex">\(\mathbf{e}_i = \mathbf{p}_i - \mathbf{p}_i^*\)</span>. A proportional-derivative controller drives <span class="arithmatex">\(\mathbf{e}_i \to \mathbf{0}\)</span>. The virtual structure simplifies collision avoidance analysis because, by construction, no two desired positions overlap.</p>
+<h3 id="1135-behaviour-based-architecture"><span class="secnum">11.3.5</span> Behaviour-Based Architecture<a class="headerlink" href="#1135-behaviour-based-architecture" title="Permanent link">&para;</a></h3>
+<p>Derived from Brooks’ (1986) <em>subsumption architecture</em>, each agent runs a stack of simple <em>behaviour modules</em>, ordered by priority:</p>
+<ol>
+<li>
+<p>Avoid collision (highest priority)</p>
+</li>
+<li>
+<p>Maintain formation</p>
+</li>
+<li>
+<p>Follow waypoint</p>
+</li>
+<li>
+<p>Loiter (lowest priority — default)</p>
+</li>
+</ol>
+<p>Higher-priority modules can <em>subsume</em> (inhibit the output of) lower-priority modules. The architecture is inherently reactive and requires no world model, making it computationally lean and suitable for resource-constrained nano-drones.</p>
+<h3 id="subsec-cbba"><span class="secnum">11.3.6</span> Market-Based / CBBA Architecture<a class="headerlink" href="#subsec-cbba" title="Permanent link">&para;</a></h3>
+<p>Agents bid on tasks as in an economic auction. The Consensus-Based Bundle Algorithm (CBBA, Choi et al. 2009) is the leading distributed task allocation algorithm for drone swarms (see §<a href="#subsec-cbba_detail">11.6.1</a> for full treatment).</p>
+<h2 id="sec-consensus"><span class="secnum">11.4</span> Consensus and Coordination Algorithms<a class="headerlink" href="#sec-consensus" title="Permanent link">&para;</a></h2>
+<h3 id="1141-graph-theoretic-foundations"><span class="secnum">11.4.1</span> Graph-Theoretic Foundations<a class="headerlink" href="#1141-graph-theoretic-foundations" title="Permanent link">&para;</a></h3>
+<p>A drone swarm communication topology is modelled as a directed or undirected graph <span class="arithmatex">\(G = (V, E)\)</span> with vertex set <span class="arithmatex">\(V = \{1, …, N\}\)</span> (agents) and edge set <span class="arithmatex">\(E \subseteq V \times V\)</span> (communication links). Key matrices:</p>
+<div class="parahead">
+<p>Adjacency matrix <span class="arithmatex">\(\mathbf{A}\)</span>.</p>
+</div>
+<p><span class="arithmatex">\(A_{ij} = 1\)</span> if agent <span class="arithmatex">\(j\)</span> can communicate with agent <span class="arithmatex">\(i\)</span>, else 0. For an undirected graph <span class="arithmatex">\(\mathbf{A} = \mathbf{A}^\top\)</span>.</p>
+<div class="parahead">
+<p>Degree matrix <span class="arithmatex">\(\mathbf{D}\)</span>.</p>
+</div>
+<p><span class="arithmatex">\(D_{ii} = \sum_j A_{ij}\)</span>, all off-diagonal entries zero.</p>
+<div class="parahead">
+<p>Laplacian matrix <span class="arithmatex">\(\mathbf{L}\)</span>.</p>
+</div>
+<div id="eq-laplacian"></div>
+<div class="arithmatex">\[\mathbf{L} = \mathbf{D} - \mathbf{A}\tag{11.12}\]</div>
+<p><span class="arithmatex">\(\mathbf{L}\)</span> is positive semi-definite for undirected graphs. Its eigenvalues satisfy <span class="arithmatex">\(0 = \lambda_1 \le \lambda_2 \le \cdots \le \lambda_N\)</span>. The <em>algebraic connectivity</em> <span class="arithmatex">\(\lambda_2\)</span> (Fiedler, 1973) quantifies how well-connected the graph is.</p>
+<figure class="fig fig-diagram" id="fig-comm_graph">
+<img class="tikz" src="img/tikz-9a924775c29a.svg" alt="Communication graph topology for a 7-agent leader-follower swarm. Adding cross-links more than doubles algebraic connectivity \lambda_2, halving convergence time of consensus protocols." loading="lazy" width="217" height="236">
+<figcaption><strong>Figure 11.1.</strong> Communication graph topology for a 7-agent leader-follower swarm. Adding cross-links more than doubles algebraic connectivity <span class="math inline">\(\lambda_2\)</span>, halving convergence time of consensus protocols.</figcaption>
+</figure>
+
+<h3 id="1142-average-consensus-protocol"><span class="secnum">11.4.2</span> Average Consensus Protocol<a class="headerlink" href="#1142-average-consensus-protocol" title="Permanent link">&para;</a></h3>
+<p>Each agent <span class="arithmatex">\(i\)</span> maintains a scalar state <span class="arithmatex">\(x_i\)</span> (e.g., a sensor measurement). The continuous-time consensus protocol drives all states to the average: <span id="eq-consensus"></span></p>
+<div class="arithmatex">\[\dot{x}_i = -\sum_{j \in \mathcal{N}_i} a_{ij}(x_i - x_j)
+             = -\bigl[\mathbf{L}\,\mathbf{x}\bigr]_i\tag{11.13}\]</div>
+<p>In vector form <span class="arithmatex">\(\dot{\mathbf{x}} = -\mathbf{L}\,\mathbf{x}\)</span>, with solution <span class="arithmatex">\(\mathbf{x}(t) = e^{-\mathbf{L}t}\mathbf{x}(0)\)</span>. Because <span class="arithmatex">\(\mathbf{L}\)</span> has one zero eigenvalue (eigenvector <span class="arithmatex">\(\mathbf{1}\)</span>), the state converges to <span class="arithmatex">\(x^* = \frac{1}{N}\sum_i x_i(0)\)</span> (the initial average) with exponential rate <span class="arithmatex">\(\lambda_2\)</span>: <span id="eq-consensus_conv"></span></p>
+<div class="arithmatex">\[\|\mathbf{x}(t) - x^*\mathbf{1}\| \le e^{-\lambda_2 t}\,\|\mathbf{x}(0) - x^*\mathbf{1}\|\tag{11.14}\]</div>
+<p>Increasing graph connectivity (larger <span class="arithmatex">\(\lambda_2\)</span>) directly accelerates consensus — justifying the cross-links in <a href="#fig-comm_graph">Figure 11.1</a>.</p>
+<h3 id="1143-discrete-time-consensus"><span class="secnum">11.4.3</span> Discrete-Time Consensus<a class="headerlink" href="#1143-discrete-time-consensus" title="Permanent link">&para;</a></h3>
+<p>The discrete-time analogue uses update matrix <span class="arithmatex">\(\mathbf{W} = \mathbf{I} - \varepsilon\mathbf{L}\)</span> with step-size <span class="arithmatex">\(\varepsilon &lt; 2/\lambda_N\)</span>: <span id="eq-discrete_consensus"></span></p>
+<div class="arithmatex">\[\mathbf{x}[k+1] = \mathbf{W}\,\mathbf{x}[k]\tag{11.15}\]</div>
+<p>Convergence condition: all eigenvalues of <span class="arithmatex">\(\mathbf{W}\)</span> inside the unit circle except the leading eigenvalue at 1. The spectral gap <span class="arithmatex">\(1 - |\mu_2(\mathbf{W})|\)</span> governs convergence speed.</p>
+<h3 id="1144-formation-error-dynamics"><span class="secnum">11.4.4</span> Formation Error Dynamics<a class="headerlink" href="#1144-formation-error-dynamics" title="Permanent link">&para;</a></h3>
+<p>For a <span class="arithmatex">\(N\)</span>-agent formation with desired relative displacements <span class="arithmatex">\(\mathbf{d}_{ij}\)</span>, define formation error: <span id="eq-formation_error"></span></p>
+<div class="arithmatex">\[\mathbf{e}_{ij} = \bigl(\mathbf{p}_i - \mathbf{p}_j\bigr) - \mathbf{d}_{ij}\tag{11.16}\]</div>
+<p>A distributed proportional control law <span class="arithmatex">\(\mathbf{u}_i = -k_p \sum_{j} a_{ij}\mathbf{e}_{ij}\)</span> yields the closed-loop error dynamics: <span id="eq-formation_dynamics"></span></p>
+<div class="arithmatex">\[\dot{\mathbf{e}} = -k_p\,(\mathbf{L} \otimes \mathbf{I}_3)\,\mathbf{e}\tag{11.17}\]</div>
+<p>which converges exponentially with rate <span class="arithmatex">\(k_p \lambda_2\)</span>.</p>
+<h3 id="1145-time-varying-communication-topology-and-lyapunov-stability"><span class="secnum">11.4.5</span> Time-Varying Communication Topology and Lyapunov Stability<a class="headerlink" href="#1145-time-varying-communication-topology-and-lyapunov-stability" title="Permanent link">&para;</a></h3>
+<p>In practice, communication links appear and disappear due to range limits, obstacle shadowing, or jamming. Let <span class="arithmatex">\(\mathbf{L}_\sigma(t)\)</span> be a <em>switched</em> Laplacian indexed by mode <span class="arithmatex">\(\sigma(t) \in \mathcal{P}\)</span> (a finite set of graphs). A common Lyapunov function candidate is: <span id="eq-lyapunov"></span></p>
+<div class="arithmatex">\[V(\mathbf{e}) = \tfrac{1}{2}\mathbf{e}^\top \mathbf{e}\tag{11.18}\]</div>
+<div id="eq-lyapunov_deriv"></div>
+<div class="arithmatex">\[\dot{V} = \mathbf{e}^\top \dot{\mathbf{e}}
+           = -k_p\,\mathbf{e}^\top\,(\mathbf{L}_\sigma \otimes \mathbf{I}_3)\,\mathbf{e}
+           \le -k_p\,\lambda_2^\sigma\,\|\mathbf{e}\|^2\tag{11.19}\]</div>
+<p>If every possible graph topology in <span class="arithmatex">\(\mathcal{P}\)</span> is connected (<span class="arithmatex">\(\lambda_2^\sigma &gt; 0\)</span> for all <span class="arithmatex">\(\sigma\)</span>), <span class="arithmatex">\(\dot{V} &lt; 0\)</span> and the formation is asymptotically stable under arbitrary switching. When some graphs are disconnected, stability requires that the overall communication is <em>jointly connected</em> across time windows of length <span class="arithmatex">\(T\)</span> (the <em>dwell-time condition</em>).</p>
+<h3 id="1146-flocking-with-obstacle-avoidance-via-artificial-potential-fields"><span class="secnum">11.4.6</span> Flocking with Obstacle Avoidance via Artificial Potential Fields<a class="headerlink" href="#1146-flocking-with-obstacle-avoidance-via-artificial-potential-fields" title="Permanent link">&para;</a></h3>
+<p>The artificial potential field (APF) method (Khatib, 1986) assigns each agent a scalar potential field <span class="arithmatex">\(U_i\)</span> composed of attractive and repulsive terms.</p>
+<div class="parahead">
+<p>Attractive potential (toward goal <span class="arithmatex">\(\mathbf{p}_g\)</span>):</p>
+</div>
+<div id="eq-apf_att"></div>
+<div class="arithmatex">\[U_{\text{att},i} = \tfrac{1}{2}\,k_{\text{att}}\,\|\mathbf{p}_i - \mathbf{p}_g\|^2\tag{11.20}\]</div>
+<div class="parahead">
+<p>Repulsive potential (from obstacle <span class="arithmatex">\(o\)</span> at <span class="arithmatex">\(\mathbf{p}_o\)</span>, influence radius <span class="arithmatex">\(d_0\)</span>):</p>
+</div>
+<div id="eq-apf_rep"></div>
+<div class="arithmatex">\[U_{\text{rep},i} =
+  \begin{cases}
+    \dfrac{1}{2}k_{\text{rep}}\!\left(\dfrac{1}{d_i} - \dfrac{1}{d_0}\right)^{\!2}
+      &amp; d_i \le d_0 \\
+    0 &amp; d_i &gt; d_0
+  \end{cases}\tag{11.21}\]</div>
+<p>where <span class="arithmatex">\(d_i = \|\mathbf{p}_i - \mathbf{p}_o\|\)</span>. The total control force is <span class="arithmatex">\(\mathbf{F}_i = -\nabla_{\mathbf{p}_i} U_i\)</span>.</p>
+<figure class="fig fig-diagram" id="fig-apf">
+<img class="tikz" src="img/tikz-9045e622beb9.svg" alt="Superposition of quadratic attractive potential (goal at origin) and repulsive Khatib potential (obstacle near origin, d_0=2 m). The saddle structure in the combined field can create local minima;…" loading="lazy" width="334" height="216">
+<figcaption><strong>Figure 11.2.</strong> Superposition of quadratic attractive potential (goal at origin) and repulsive Khatib potential (obstacle near origin, <span class="math inline">\(d_0=2\)</span> m). The saddle structure in the combined field can create local minima; randomised perturbations or harmonic-field methods are used to escape them.</figcaption>
+</figure>
+
+<h2 id="sec-swarm_comms"><span class="secnum">11.5</span> Communication in Swarms<a class="headerlink" href="#sec-swarm_comms" title="Permanent link">&para;</a></h2>
+<h3 id="1151-mesh-radio-networks"><span class="secnum">11.5.1</span> Mesh Radio Networks<a class="headerlink" href="#1151-mesh-radio-networks" title="Permanent link">&para;</a></h3>
+<p>Swarm communication typically employs self-forming, self-healing mesh networks that do not require ground infrastructure. <a href="#tab-mesh_radios">Table 11.2</a> summarises commercially available mesh radios used in military and research swarms.</p>
+<div class="tbl" id="tab-mesh_radios">
+<div class="tbl-caption"><strong>Table 11.2.</strong> Mesh radio modules used in drone swarm systems (2025).</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Module</strong></th>
+<th style="text-align: left;"><strong>Band</strong></th>
+<th style="text-align: left;"><strong>Data rate</strong></th>
+<th style="text-align: left;"><strong>Range</strong></th>
+<th style="text-align: left;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Doodle Labs RM-915</td>
+<td style="text-align: left;">900 MHz</td>
+<td style="text-align: left;">12 Mbps</td>
+<td style="text-align: left;">1–5 km</td>
+<td style="text-align: left;">Long range, foliage penetration</td>
+</tr>
+<tr>
+<td style="text-align: left;">Doodle Labs RM-2450</td>
+<td style="text-align: left;">2.4/5 GHz</td>
+<td style="text-align: left;">54 Mbps</td>
+<td style="text-align: left;">0.5 km</td>
+<td style="text-align: left;">High throughput, ISR video</td>
+</tr>
+<tr>
+<td style="text-align: left;">silvus StreamCaster</td>
+<td style="text-align: left;">2.4 GHz</td>
+<td style="text-align: left;">40 Mbps</td>
+<td style="text-align: left;">1 km</td>
+<td style="text-align: left;">MIMO MANET, military grade</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rajant Sparrow</td>
+<td style="text-align: left;">900 MHz / 2.4 GHz</td>
+<td style="text-align: left;">54 Mbps</td>
+<td style="text-align: left;">2 km</td>
+<td style="text-align: left;">BreadCrumb protocol, US mil</td>
+</tr>
+<tr>
+<td style="text-align: left;">Persistent Systems MPU5</td>
+<td style="text-align: left;">2.4/5 GHz</td>
+<td style="text-align: left;">100 Mbps</td>
+<td style="text-align: left;">1 km</td>
+<td style="text-align: left;">MANET; used in DARPA OFFSET</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="1152-ieee-80211p-and-80211bd"><span class="secnum">11.5.2</span> IEEE 802.11p and 802.11bd<a class="headerlink" href="#1152-ieee-80211p-and-80211bd" title="Permanent link">&para;</a></h3>
+<p>Originally designed for vehicular-to-vehicle (V2V) communications in intelligent transport systems, IEEE 802.11p operates in the 5.9 GHz DSRC band and is characterised by:</p>
+<ul>
+<li>
+<p>10 MHz channel bandwidth (half OFDM subcarrier spacing of 802.11a)</p>
+</li>
+<li>
+<p>Guard interval doubled to 1.6 µs to handle Doppler spread at vehicle speeds</p>
+</li>
+<li>
+<p>Single-hop broadcast dominant; no AP association overhead</p>
+</li>
+<li>
+<p>Latency: <span class="arithmatex">\(\sim\)</span>2 ms one-way for 64-byte beacon at 6 Mbps</p>
+</li>
+</ul>
+<p>IEEE 802.11bd (2022) extends 802.11p with dual-carrier modulation, LDPC codes, and up to <span class="arithmatex">\(4 \times\)</span> throughput improvement while maintaining backward compatibility. Its applicability to drone swarms operating below 150 m AGL has been demonstrated by NIST, with Doppler shifts of up to <span class="arithmatex">\(\pm\)</span>2 kHz at 30 m/s within the system’s tolerance.</p>
+<h3 id="1153-time-synchronisation"><span class="secnum">11.5.3</span> Time Synchronisation<a class="headerlink" href="#1153-time-synchronisation" title="Permanent link">&para;</a></h3>
+<p>Distributed algorithms (consensus, multi-agent path planning, sensor fusion) require tight time synchronisation across all agents.</p>
+<div class="parahead">
+<p>IEEE 1588 Precision Time Protocol (PTP).</p>
+</div>
+<p>PTP synchronises clocks over an Ethernet-like network to sub-microsecond precision using hardware timestamping of Sync/Follow_Up/Delay_Req/Delay_Resp message exchanges. A PTP grandmaster (GPS-disciplined oscillator on the GCS or a designated leader drone) distributes time to boundary and ordinary clocks. Achievable accuracy: <span class="arithmatex">\(&lt;\)</span>1 µs with hardware assist; <span class="arithmatex">\(&lt;\)</span>10 µs in software-only mode.</p>
+<div class="parahead">
+<p>GPS-Disciplined Oscillators.</p>
+</div>
+<p>Each drone carrying a GNSS receiver can discipline its local oscillator to GPS time (UTC traceable, <span class="arithmatex">\(&lt;\)</span>30 ns absolute accuracy). In GPS-denied environments, the Kalman-filtered local clock model maintains <span class="arithmatex">\(&lt;\)</span>1 µs holdover for <span class="arithmatex">\(\sim\)</span>100 seconds, sufficient for a typical jamming window.</p>
+<h3 id="1154-channel-capacity-and-bandwidth-constraints"><span class="secnum">11.5.4</span> Channel Capacity and Bandwidth Constraints<a class="headerlink" href="#1154-channel-capacity-and-bandwidth-constraints" title="Permanent link">&para;</a></h3>
+<p>With <span class="arithmatex">\(N\)</span> agents each generating telemetry at rate <span class="arithmatex">\(R_t\)</span> bytes/s and video at <span class="arithmatex">\(R_v\)</span> bytes/s, the required aggregate throughput on the mesh is: <span id="eq-bw_req"></span></p>
+<div class="arithmatex">\[C_{\text{req}} = N(R_t + R_v)\tag{11.22}\]</div>
+<p>For a 50-drone swarm with <span class="arithmatex">\(R_t = 2\)</span> kbps and <span class="arithmatex">\(R_v = 4\)</span> Mbps (compressed 1080p  H.265), <span class="arithmatex">\(C_{\text{req}} = 200\)</span> Mbps — already beyond practical mesh capacity. Mitigation strategies: (a) route video only from designated sensor drones; (b) aggregate telemetry at a relay drone before forwarding to the GCS; (c) apply channel capacity limit via Shannon’s theorem: <span id="eq-shannon"></span></p>
+<div class="arithmatex">\[C = B\log_2(1 + \text{SNR})\tag{11.23}\]</div>
+<p>where <span class="arithmatex">\(B\)</span> is bandwidth (Hz) and SNR is received signal-to-noise ratio. A 10 MHz channel with SNR = 20 dB (100 linear) yields <span class="arithmatex">\(C = 66.4\)</span> Mbps.</p>
+<h3 id="1155-delay-tolerant-networking-dtn"><span class="secnum">11.5.5</span> Delay-Tolerant Networking (DTN)<a class="headerlink" href="#1155-delay-tolerant-networking-dtn" title="Permanent link">&para;</a></h3>
+<p>When swarm agents operate in environments with <em>intermittent</em> connectivity — urban canyons, underground tunnels, or GPS-denied areas — end-to-end paths may not exist simultaneously. DTN (RFC 4838; Bundle Protocol RFC 5050) enables store-carry-forward delivery:</p>
+<ol>
+<li>
+<p>A message is encapsulated in a <em>bundle</em> with custody-transfer metadata.</p>
+</li>
+<li>
+<p>An agent carrying a bundle stores it if the next-hop is unreachable.</p>
+</li>
+<li>
+<p>When a contact window opens, bundles are forwarded to the next custodian.</p>
+</li>
+<li>
+<p>Epidemic routing (broadcast to all neighbours) or PRoPHET (history-based probabilistic routing) selects forwarding candidates.</p>
+</li>
+</ol>
+<p>DTN adds latency (seconds to minutes) but guarantees eventual delivery, making it suitable for ISR data mule applications rather than real-time control.</p>
+<h2 id="sec-task_alloc"><span class="secnum">11.6</span> Task Allocation and Mission Planning<a class="headerlink" href="#sec-task_alloc" title="Permanent link">&para;</a></h2>
+<h3 id="subsec-cbba_detail"><span class="secnum">11.6.1</span> Consensus-Based Bundle Algorithm (CBBA)<a class="headerlink" href="#subsec-cbba_detail" title="Permanent link">&para;</a></h3>
+<p>CBBA (Choi et al. 2009) solves the multi-agent, multi-task assignment problem in a distributed manner without a central coordinator. Each agent <span class="arithmatex">\(i\)</span> maintains:</p>
+<ul>
+<li>
+<p>A <em>bundle</em> <span class="arithmatex">\(\mathcal{B}_i\)</span>: ordered list of tasks it will execute.</p>
+</li>
+<li>
+<p>A <em>path</em> <span class="arithmatex">\(\mathcal{P}_i\)</span>: ordered insertion path for bundle tasks.</p>
+</li>
+<li>
+<p>A <em>winning bid list</em> <span class="arithmatex">\(\mathbf{y}\)</span>: agent <span class="arithmatex">\(i\)</span>’s local estimate of the highest bid on each task.</p>
+</li>
+<li>
+<p>A <em>winning agent list</em> <span class="arithmatex">\(\mathbf{z}\)</span>: local estimate of who won each task.</p>
+</li>
+</ul>
+<p>Each iteration has two phases:</p>
+<div class="parahead">
+<p>Phase 1 — Bundle Construction.</p>
+</div>
+<p>Agent <span class="arithmatex">\(i\)</span> iteratively adds the task <span class="arithmatex">\(j^*\)</span> that maximises marginal score: <span id="eq-cbba_bid"></span></p>
+<div class="arithmatex">\[j^* = \arg\max_{j \notin \mathcal{B}_i} \bigl[S_i(\mathcal{B}_i \cup \{j\}) - S_i(\mathcal{B}_i)\bigr]\tag{11.24}\]</div>
+<p>where <span class="arithmatex">\(S_i(\cdot)\)</span> is a score function (e.g., reward minus travel time). Agent <span class="arithmatex">\(i\)</span> bids <span class="arithmatex">\(c_{ij} = S_i(\mathcal{B}_i \cup \{j\}) - S_i(\mathcal{B}_i)\)</span> and wins task <span class="arithmatex">\(j\)</span> if <span class="arithmatex">\(c_{ij} &gt; y_j\)</span> (current winning bid).</p>
+<div class="parahead">
+<p>Phase 2 — Consensus.</p>
+</div>
+<p>Agents exchange <span class="arithmatex">\((\mathbf{y}, \mathbf{z})\)</span> lists with neighbours. Conflicts (two agents claim same task) are resolved by keeping the higher bid. After convergence, each task is assigned to exactly one agent.</p>
+<p>CBBA converges in finite time and produces solutions within a bounded factor of the centralised optimum (Choi et al. 2009 prove a sub-optimality bound of <span class="arithmatex">\((1 - 1/e)\)</span> for submodular score functions with at most <span class="arithmatex">\(k\)</span> tasks per agent).</p>
+<h3 id="1162-hungarian-algorithm"><span class="secnum">11.6.2</span> Hungarian Algorithm<a class="headerlink" href="#1162-hungarian-algorithm" title="Permanent link">&para;</a></h3>
+<p>The Hungarian algorithm (Kuhn, 1955) solves the linear assignment problem optimally in <span class="arithmatex">\(O(N^3)\)</span> time. Given <span class="arithmatex">\(N\)</span> agents and <span class="arithmatex">\(N\)</span> tasks with cost matrix <span class="arithmatex">\(\mathbf{C}\)</span> where <span class="arithmatex">\(C_{ij}\)</span> is the cost of assigning agent <span class="arithmatex">\(i\)</span> to task <span class="arithmatex">\(j\)</span>: <span id="eq-hungarian"></span></p>
+<div class="arithmatex">\[\min_{\boldsymbol{\pi}} \sum_{i=1}^N C_{i,\pi(i)}
+  \quad \text{s.t.}\ \boldsymbol{\pi} \text{ is a permutation}\tag{11.25}\]</div>
+<p>The algorithm operates by augmenting the cost matrix via row/column reductions and constructing a maximal matching in a bipartite graph. Being centralised and <span class="arithmatex">\(O(N^3)\)</span>, it is impractical for large <span class="arithmatex">\(N\)</span> (<span class="arithmatex">\(&gt;\)</span>200) or dynamic task arrivals, but serves as an offline benchmark against which distributed algorithms are compared.</p>
+<h3 id="1163-coverage-path-planning-boustrophedon-decomposition"><span class="secnum">11.6.3</span> Coverage Path Planning: Boustrophedon Decomposition<a class="headerlink" href="#1163-coverage-path-planning-boustrophedon-decomposition" title="Permanent link">&para;</a></h3>
+<p>For area surveillance or agricultural spraying, the operational area <span class="arithmatex">\(\Omega\)</span> is decomposed into convex cells using a <em>boustrophedon</em> (back-and-forth) decomposition:</p>
+<ol>
+<li>
+<p>Identify critical event points (vertices, obstacles) and create a Reeb graph of <span class="arithmatex">\(\Omega\)</span>.</p>
+</li>
+<li>
+<p>Assign cells to drones using CBBA or Hungarian algorithm.</p>
+</li>
+<li>
+<p>Each drone executes a lawnmower pattern within its cell at offset <span class="arithmatex">\(s = (1 - f_o)\,w\)</span> between passes, where <span class="arithmatex">\(w\)</span> is sensor/spray footprint and <span class="arithmatex">\(f_o\)</span> is overlap fraction.</p>
+</li>
+</ol>
+<p>For a rectangular field of area <span class="arithmatex">\(A\)</span> m<span class="arithmatex">\(^2\)</span> with drone footprint <span class="arithmatex">\(w\)</span> m and ground speed <span class="arithmatex">\(v\)</span> m/s, single-drone time is <span class="arithmatex">\(T_1 = A/(wv)\)</span>. With <span class="arithmatex">\(N\)</span> drones and optimal partitioning, <span class="arithmatex">\(T_N \approx T_1/N\)</span> (ignoring transit overheads).</p>
+<h3 id="1164-bayesian-target-search"><span class="secnum">11.6.4</span> Bayesian Target Search<a class="headerlink" href="#1164-bayesian-target-search" title="Permanent link">&para;</a></h3>
+<p>In search and rescue, the probability distribution of a target over map cells <span class="arithmatex">\(\{c_k\}\)</span> is maintained as <span class="arithmatex">\(P(c_k | \mathcal{Z})\)</span> where <span class="arithmatex">\(\mathcal{Z}\)</span> is the history of sensor observations. Bayes’ update rule: <span id="eq-bayes"></span></p>
+<div class="arithmatex">\[P(c_k | z_t) = \frac{P(z_t | c_k)\,P(c_k)}{\sum_l P(z_t | c_l)\,P(c_l)}\tag{11.26}\]</div>
+<p>where <span class="arithmatex">\(P(z_t | c_k)\)</span> is the sensor likelihood model. Each drone selects the next cell to search that maximises expected information gain (reduction in entropy): <span id="eq-info_gain"></span></p>
+<div class="arithmatex">\[c^* = \arg\max_{c_k} H\bigl(P(c_k)\bigr) - \mathbb{E}\bigl[H\bigl(P(c_k | z)\bigr)\bigr]\tag{11.27}\]</div>
+<p>Multi-drone coordination ensures non-overlapping search through an entropy-based allocation variant of CBBA.</p>
+<h2 id="sec-formation"><span class="secnum">11.7</span> Formation Control<a class="headerlink" href="#sec-formation" title="Permanent link">&para;</a></h2>
+<h3 id="1171-classification-of-formation-control-methods"><span class="secnum">11.7.1</span> Classification of Formation Control Methods<a class="headerlink" href="#1171-classification-of-formation-control-methods" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-formation_comparison">
+<div class="tbl-caption"><strong>Table 11.3.</strong> Classification of formation control approaches and their properties.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Method</strong></th>
+<th style="text-align: left;"><strong>Sensing requirement</strong></th>
+<th style="text-align: left;"><strong>Frame needed</strong></th>
+<th style="text-align: left;"><strong>Scalability</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Position-based</td>
+<td style="text-align: left;">Absolute position (GPS)</td>
+<td style="text-align: left;">Global</td>
+<td style="text-align: left;">Moderate</td>
+</tr>
+<tr>
+<td style="text-align: left;">Displacement-based</td>
+<td style="text-align: left;">Relative position to neighbours</td>
+<td style="text-align: left;">Global (heading ref)</td>
+<td style="text-align: left;">Good</td>
+</tr>
+<tr>
+<td style="text-align: left;">Distance-based</td>
+<td style="text-align: left;">Distances to neighbours only</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Good</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bearing-based</td>
+<td style="text-align: left;">Bearing angles to neighbours</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Good</td>
+</tr>
+<tr>
+<td style="text-align: left;">Angle-based</td>
+<td style="text-align: left;">Interior angles of formation</td>
+<td style="text-align: left;">None</td>
+<td style="text-align: left;">Limited</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="1172-distance-based-formation-and-rigidity-theory"><span class="secnum">11.7.2</span> Distance-Based Formation and Rigidity Theory<a class="headerlink" href="#1172-distance-based-formation-and-rigidity-theory" title="Permanent link">&para;</a></h3>
+<p>Distance-based formation control requires only inter-agent distance measurements, making it applicable to GPS-denied environments where only ranging radios (UWB, FMCW radar) are available. A formation is <em>rigid</em> if the only motions that preserve all inter-agent distances are Euclidean isometries (translations and rotations). In 2D, Laman’s theorem provides the combinatorial rigidity condition: a graph <span class="arithmatex">\(G = (V, E)\)</span> is generically rigid in <span class="arithmatex">\(\mathbb{R}^2\)</span> if <span id="eq-laman"></span></p>
+<div class="arithmatex">\[|E| = 2|V| - 3 \quad \text{and every subgraph on $k$ vertices has $\leq 2k-3$ edges}\tag{11.28}\]</div>
+<p>In 3D, Laman’s theorem does not directly generalise; pebble-game algorithms (Jacobs and Hendrickson, 1997) are used computationally to test rigidity.</p>
+<p>A distance-based control law drives each inter-agent distance <span class="arithmatex">\(d_{ij}\)</span> to its desired value <span class="arithmatex">\(d_{ij}^*\)</span>: <span id="eq-dist_control"></span></p>
+<div class="arithmatex">\[\dot{\mathbf{p}}_i = -\sum_{j \in \mathcal{N}(i)} \bigl(d_{ij}^2 - d_{ij}^{*2}\bigr)
+                       (\mathbf{p}_i - \mathbf{p}_j)\tag{11.29}\]</div>
+<p>This gradient-descent law on the potential <span class="arithmatex">\(V_d = \frac{1}{4}\sum_{(i,j)\in E}(d_{ij}^2 - d_{ij}^{*2})^2\)</span> is known to converge to the desired distances for <em>infinitesimally rigid</em> formations from generic initial conditions.</p>
+<h3 id="1173-optimal-reciprocal-collision-avoidance-orca"><span class="secnum">11.7.3</span> Optimal Reciprocal Collision Avoidance (ORCA)<a class="headerlink" href="#1173-optimal-reciprocal-collision-avoidance-orca" title="Permanent link">&para;</a></h3>
+<p>ORCA (van den Berg et al., 2011) is a decentralised, real-time collision avoidance algorithm. For agents <span class="arithmatex">\(i\)</span> and <span class="arithmatex">\(j\)</span> with positions <span class="arithmatex">\(\mathbf{p}_i, \mathbf{p}_j\)</span> and velocities <span class="arithmatex">\(\mathbf{v}_i, \mathbf{v}_j\)</span>: Define the <em>velocity obstacle</em> <span class="arithmatex">\(\text{VO}_{ij}^\tau\)</span> as the set of relative velocities that would lead to collision within time <span class="arithmatex">\(\tau\)</span>: <span id="eq-vo"></span></p>
+<div class="arithmatex">\[\text{VO}_{ij}^\tau = \left\{ \mathbf{v} :\ \exists\, t \in [0,\tau],\
+    \|(\mathbf{v})t + \mathbf{p}_i - \mathbf{p}_j\| &lt; r_i + r_j \right\}\tag{11.30}\]</div>
+<p>Each agent <span class="arithmatex">\(i\)</span> solves a linear programme to find the velocity <span class="arithmatex">\(\mathbf{v}_i^{\text{new}}\)</span> closest to its preferred velocity while satisfying <span class="arithmatex">\(N{-}1\)</span> half-plane constraints (one per neighbour). ORCA guarantees collision-free motion in static environments with <span class="arithmatex">\(N\)</span> agents in <span class="arithmatex">\(O(N)\)</span> time per agent per timestep.</p>
+<h3 id="1174-formation-reconfiguration"><span class="secnum">11.7.4</span> Formation Reconfiguration<a class="headerlink" href="#1174-formation-reconfiguration" title="Permanent link">&para;</a></h3>
+<p>Changing from one formation to another (e.g., line → wedge → column for urban entry) requires solving a smooth trajectory problem with collision avoidance. A practical approach:</p>
+<ol>
+<li>
+<p>Compute the optimal assignment of current positions to target positions using the Hungarian algorithm (minimise total travel distance).</p>
+</li>
+<li>
+<p>Generate minimum-snap polynomial trajectories for each agent between its current and target waypoint.</p>
+</li>
+<li>
+<p>Verify collision-free via space-time path checking; bump conflicting agents’ timing offsets if needed.</p>
+</li>
+</ol>
+<p>The minimum-snap trajectory for agent <span class="arithmatex">\(i\)</span> minimises <span class="arithmatex">\(\int_0^T \|\dddot{\mathbf{p}}_i^{(4)}(t)\|^2 dt\)</span> subject to boundary conditions on position, velocity, and acceleration.</p>
+<h2 id="sec-mil_swarm"><span class="secnum">11.8</span> Military Swarm Applications<a class="headerlink" href="#sec-mil_swarm" title="Permanent link">&para;</a></h2>
+<h3 id="1181-saturation-attack-doctrine"><span class="secnum">11.8.1</span> Saturation Attack Doctrine<a class="headerlink" href="#1181-saturation-attack-doctrine" title="Permanent link">&para;</a></h3>
+<p>A saturation attack deploys <span class="arithmatex">\(N\)</span> attacking drones simultaneously against a defended target, overwhelming the defender’s point-defence capacity. Let the defender fire <span class="arithmatex">\(K\)</span> interceptors per second with a kill probability <span class="arithmatex">\(P_k\)</span> per engagement and minimum engagement time <span class="arithmatex">\(\Delta t_e\)</span> seconds. The maximum defended throughput rate is: <span id="eq-saturation"></span></p>
+<div class="arithmatex">\[\lambda_{\text{def}} = \frac{K \cdot P_k}{\Delta t_e} \quad [\text{kills/s}]\tag{11.31}\]</div>
+<p>For <span class="arithmatex">\(K = 2\)</span> interceptors/s, <span class="arithmatex">\(P_k = 0.85\)</span>, <span class="arithmatex">\(\Delta t_e = 0.5\)</span> s: <span class="arithmatex">\(\lambda_{\text{def}} = 3.4\)</span> kills/s. If the swarm presents <span class="arithmatex">\(N_{\text{arr}} = 50\)</span> drones within a <span class="arithmatex">\(T_{\text{arr}} = 5\)</span> s window, the defender can kill at most <span class="arithmatex">\(3.4 \times 5 = 17\)</span> drones; 33 drones penetrate. This simple model underlies the threat calculus for counter-swarm system sizing.</p>
+<h3 id="1182-heterogeneous-swarm-architecture"><span class="secnum">11.8.2</span> Heterogeneous Swarm Architecture<a class="headerlink" href="#1182-heterogeneous-swarm-architecture" title="Permanent link">&para;</a></h3>
+<p>A militarily effective swarm typically mixes agent types:</p>
+<ul>
+<li>
+<p><strong>ISR drones</strong> (fixed-wing; EO/IR; 4–8 hr endurance): persistent surveillance; target designation; battle damage assessment.</p>
+</li>
+<li>
+<p><strong>Strike drones</strong> (loitering munition; 40–120 mm warhead): terminate high-value targets on operator command.</p>
+</li>
+<li>
+<p><strong>Electronic warfare (EW) drones</strong> (jammer payload; 10–50 W EIRP): deny enemy C2, GPS, radar.</p>
+</li>
+<li>
+<p><strong>Decoy drones</strong> (radar-reflective chaff/Luneburg lens): saturate enemy radar track file capacity; draw interceptors.</p>
+</li>
+<li>
+<p><strong>Relay drones</strong> (mesh radio hub; high altitude): extend communication range, provide BLOS C2.</p>
+</li>
+</ul>
+<h3 id="1183-darpa-offset-programme"><span class="secnum">11.8.3</span> DARPA OFFSET Programme<a class="headerlink" href="#1183-darpa-offset-programme" title="Permanent link">&para;</a></h3>
+<p>DARPA’s OFFensive Swarm-Enabled Tactics (OFFSET) programme (2017–2023) demonstrated swarms of up to 250 unmanned air and ground vehicles in complex urban environments. Key achievements:</p>
+<ul>
+<li>
+<p>Plug-and-play hardware integration via a standardised swarm API.</p>
+</li>
+<li>
+<p>Swarm tactics crowdsourced via gamification (operators design tactics in a video-game-like interface; verified tactics uploaded to swarm).</p>
+</li>
+<li>
+<p>Physical field exercises at JRTC Fort Polk; 130+ UAS demonstrated concurrent indoor/outdoor teaming.</p>
+</li>
+<li>
+<p>Sprint 5 (2022): human-swarm teaming ratio 1 operator : 130 vehicles.</p>
+</li>
+</ul>
+<h3 id="1184-perdix-micro-drone-programme"><span class="secnum">11.8.4</span> Perdix Micro-Drone Programme<a class="headerlink" href="#1184-perdix-micro-drone-programme" title="Permanent link">&para;</a></h3>
+<p>The Perdix programme (MIT Lincoln Laboratory / Strategic Capabilities Office) demonstrated autonomous swarming from tactical aircraft. In October 2016, three F/A-18 Super Hornets dispensed 103 Perdix micro-drones from M-130 countermeasure dispensers at 430 KCAS. Key specifications:</p>
+<ul>
+<li>
+<p>Mass: <span class="arithmatex">\(\approx\)</span>290 g; span: 30 cm; endurance: 20 minutes.</p>
+</li>
+<li>
+<p>Processor: commercial Snapdragon 800; Linux OS.</p>
+</li>
+<li>
+<p>Swarming: distributed consensus; no pre-programmed roles; emergent formation and tasking.</p>
+</li>
+<li>
+<p>Demonstrated collective decision-making, adaptive formation, and self-healing after agent loss.</p>
+</li>
+</ul>
+<h3 id="1185-autonomous-engagement-authority-and-loac"><span class="secnum">11.8.5</span> Autonomous Engagement Authority and LOAC<a class="headerlink" href="#1185-autonomous-engagement-authority-and-loac" title="Permanent link">&para;</a></h3>
+<p>Collaborative swarm targeting raises profound legal and operational questions. The kill chain in an autonomous swarm typically is:</p>
+<ol>
+<li>
+<p><strong>Detect</strong>: distributed sensor fusion generates target track.</p>
+</li>
+<li>
+<p><strong>Identify</strong>: collaborative classification (IFF, visual AI); consensus vote across <span class="arithmatex">\(K\)</span> agents confirms target identity.</p>
+</li>
+<li>
+<p><strong>Decide</strong>: engagement authority — either human-in-the-loop (operator approves each strike), human-on-the-loop (operator can veto within a time window), or fully autonomous (no human approval).</p>
+</li>
+<li>
+<p><strong>Engage</strong>: strike drone fires; EW drone degrades target comms.</p>
+</li>
+</ol>
+<p>The Law of Armed Conflict (LOAC) requirements — distinction, proportionality, military necessity — demand that the classify-and-engage decision be legally accountable. Current US DoD Directive 3000.09 (2023 revision) requires “appropriate levels of human judgment” before lethal action, effectively mandating human-in-the-loop for semi-autonomous platforms.</p>
+<h2 id="sec-civil_swarm"><span class="secnum">11.9</span> Civil Swarm Applications<a class="headerlink" href="#sec-civil_swarm" title="Permanent link">&para;</a></h2>
+<h3 id="1191-precision-agricultural-spraying"><span class="secnum">11.9.1</span> Precision Agricultural Spraying<a class="headerlink" href="#1191-precision-agricultural-spraying" title="Permanent link">&para;</a></h3>
+<p>Agricultural swarms (DJI Agras T40, XAG P100) execute coordinated spraying missions:</p>
+<ul>
+<li>
+<p>Field is subdivided into <span class="arithmatex">\(N\)</span> strips; each drone assigned one or more contiguous strips.</p>
+</li>
+<li>
+<p>Drones maintain 3 m lateral and 2 m vertical separation during simultaneous spraying of adjacent strips.</p>
+</li>
+<li>
+<p>Refill/recharge sequence: drone with lowest battery breaks off to the base station while others continue; seamless coverage maintained.</p>
+</li>
+<li>
+<p>GPS RTK accuracy: <span class="arithmatex">\(\pm\)</span>2 cm horizontal; ensures <span class="arithmatex">\(\pm\)</span>0.5 m swath registration.</p>
+</li>
+<li>
+<p>Typical coverage rate: 10 ha/hr per drone (T40 at 7 m/s, 10 m swath). A fleet of 10 achieves 100 ha/hr, matching tractor spray rates for irregular terrain.</p>
+</li>
+</ul>
+<h3 id="1192-drone-light-shows"><span class="secnum">11.9.2</span> Drone Light Shows<a class="headerlink" href="#1192-drone-light-shows" title="Permanent link">&para;</a></h3>
+<p>Drone light shows (Intel Drone Light Show, Verge Aero, EHang) operate large swarms (50–5,000 drones) in precisely choreographed formations:</p>
+<ul>
+<li>
+<p>Each drone carries GPS+RTK receiver and RGB LED strip (thousands of colour combinations).</p>
+</li>
+<li>
+<p>Pre-computed 3D trajectory splines are loaded to each drone; execution is time-synchronised via PTP to <span class="arithmatex">\(&lt;\)</span>100 ms absolute timing accuracy.</p>
+</li>
+<li>
+<p>Safety checks: geofence; altitude ceiling; inter-drone collision detection with <span class="arithmatex">\(&gt;\)</span>2 m separation enforced at all times.</p>
+</li>
+<li>
+<p>Ground station monitors battery voltage, GPS fix quality, motor RPM; any anomaly triggers automated RTH for affected drone.</p>
+</li>
+<li>
+<p>World record (Shenzhen, 2024): 10,197 drones forming a 3D globe above Shenzhen Bay, coordinated by 6 base station radios.</p>
+</li>
+</ul>
+<h3 id="1193-search-and-rescue"><span class="secnum">11.9.3</span> Search and Rescue<a class="headerlink" href="#1193-search-and-rescue" title="Permanent link">&para;</a></h3>
+<p>In a search and rescue (SAR) mission, a swarm provides:</p>
+<ol>
+<li>
+<p><strong>Area coverage</strong>: divide search area using boustrophedon; drones execute parallel sweep at 30 m altitude, thermal camera resolving a human at <span class="arithmatex">\(&gt;\)</span>100 m range.</p>
+</li>
+<li>
+<p><strong>Victim mapping</strong>: GPS-stamped detections fused into a shared probability map.</p>
+</li>
+<li>
+<p><strong>Relay communication</strong>: one drone acts as relay to extend operator comms to beyond-LOS areas.</p>
+</li>
+<li>
+<p><strong>Payload drop</strong>: once victim confirmed, a drone loiters overhead and drops a survival kit (5 kg capability).</p>
+</li>
+</ol>
+<h3 id="1194-infrastructure-inspection"><span class="secnum">11.9.4</span> Infrastructure Inspection<a class="headerlink" href="#1194-infrastructure-inspection" title="Permanent link">&para;</a></h3>
+<p>Wind turbine farm inspection using a swarm of 4–8 drones:</p>
+<ul>
+<li>
+<p>Each drone assigned 2–3 turbines; follows pre-planned helical trajectory around each tower and blade tip path.</p>
+</li>
+<li>
+<p>Images are geo-referenced and ingested into a defect-detection AI pipeline (ResNet-50 fine-tuned on blade-crack dataset; mAP <span class="arithmatex">\(&gt;\)</span>0.85).</p>
+</li>
+<li>
+<p>Inspection time per turbine: <span class="arithmatex">\(\approx\)</span>12 min; swarm completes 20-turbine farm in <span class="arithmatex">\(&lt;\)</span>1 hr versus 4 hr for a single drone.</p>
+</li>
+</ul>
+<h2 id="sec-swarm_sim"><span class="secnum">11.10</span> Simulation and Testing Environments<a class="headerlink" href="#sec-swarm_sim" title="Permanent link">&para;</a></h2>
+<h3 id="11101-crazyswarm-and-crazyflie-platform"><span class="secnum">11.10.1</span> Crazyswarm and Crazyflie Platform<a class="headerlink" href="#11101-crazyswarm-and-crazyflie-platform" title="Permanent link">&para;</a></h3>
+<p>The Crazyflie 2.x (Bitcraze) is a 27-g quadrotor used as the standard laboratory swarm testbed. The Crazyswarm framework (Preiss et al., 2017) supports:</p>
+<ul>
+<li>
+<p>Up to 50 Crazyflies in a 7 m <span class="arithmatex">\(\times\)</span> 3.5 m Vicon motion-capture arena.</p>
+</li>
+<li>
+<p>ROS-based Python API; trajectory upload via 2.4 GHz radio.</p>
+</li>
+<li>
+<p>Collision-checked trajectory generation at 50 Hz.</p>
+</li>
+<li>
+<p>Open-source; used in 200+ published swarm research papers.</p>
+</li>
+</ul>
+<h3 id="11102-airsim-multi-agent-simulation"><span class="secnum">11.10.2</span> AirSim Multi-Agent Simulation<a class="headerlink" href="#11102-airsim-multi-agent-simulation" title="Permanent link">&para;</a></h3>
+<p>Microsoft AirSim (deprecated 2024; forked as Colosseum) provides Unreal Engine-based simulation with:</p>
+<ul>
+<li>
+<p>Physics-accurate multi-rotor and fixed-wing dynamics.</p>
+</li>
+<li>
+<p>ROS bridge for seamless transition from simulation to hardware.</p>
+</li>
+<li>
+<p>Support for 10–100 simultaneous agents on a GPU-accelerated workstation.</p>
+</li>
+<li>
+<p>Camera, lidar, IMU, GPS sensor emulation with configurable noise.</p>
+</li>
+</ul>
+<h3 id="11103-netlogo-agent-based-modelling"><span class="secnum">11.10.3</span> NetLogo Agent-Based Modelling<a class="headerlink" href="#11103-netlogo-agent-based-modelling" title="Permanent link">&para;</a></h3>
+<p>NetLogo (Wilensky, 1999) is a high-level multi-agent simulation language particularly suited for exploring emergent swarm behaviours:</p>
+<ul>
+<li>
+<p>Boids, ant foraging, firefly synchronisation models distributed in the NetLogo library.</p>
+</li>
+<li>
+<p>BehaviorSpace tool enables automated parameter sweeps (<span class="arithmatex">\(10^4\)</span>+ runs) for sensitivity analysis.</p>
+</li>
+<li>
+<p>Not suitable for control-system fidelity, but invaluable for exploring swarm algorithm design space rapidly.</p>
+</li>
+</ul>
+<h3 id="11104-hardware-in-the-loop-hil-swarm-testing"><span class="secnum">11.10.4</span> Hardware-in-the-Loop (HiL) Swarm Testing<a class="headerlink" href="#11104-hardware-in-the-loop-hil-swarm-testing" title="Permanent link">&para;</a></h3>
+<p>A HiL swarm test mixes physical drones with simulated agents to reduce cost:</p>
+<ol>
+<li>
+<p><span class="arithmatex">\(N_r\)</span> real drones fly in a test arena; their positions streamed to a simulation engine.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(N_s\)</span> simulated drones run in the same simulation; their virtual positions are injected into the real drones’ neighbour lists.</p>
+</li>
+<li>
+<p>The combined <span class="arithmatex">\(N_r + N_s\)</span> system exercises swarm algorithms at scale impossible in a real arena.</p>
+</li>
+</ol>
+<p>Latency injection (realistic network delays between simulated and real agents) ensures algorithm performance is not artificially optimistic.</p>
+<h2 id="sec-swarm_challenges"><span class="secnum">11.11</span> Challenges and Future Directions<a class="headerlink" href="#sec-swarm_challenges" title="Permanent link">&para;</a></h2>
+<h3 id="11111-scalability"><span class="secnum">11.11.1</span> Scalability<a class="headerlink" href="#11111-scalability" title="Permanent link">&para;</a></h3>
+<p>The fundamental scalability challenge is that naive all-to-all communication grows as <span class="arithmatex">\(O(N^2)\)</span> messages per round. Mitigation approaches:</p>
+<ul>
+<li>
+<p><strong>Sparse communication graphs</strong>: each agent communicates with <span class="arithmatex">\(k\)</span> nearest neighbours; total messages <span class="arithmatex">\(O(kN)\)</span>.</p>
+</li>
+<li>
+<p><strong>Hierarchical clustering</strong>: divide swarm into clusters of <span class="arithmatex">\(\sqrt{N}\)</span> agents; intra-cluster mesh + inter-cluster backbone.</p>
+</li>
+<li>
+<p><strong>Event-triggered communication</strong>: agents broadcast only when state changes exceed a threshold <span class="arithmatex">\(\epsilon\)</span>, reducing unnecessary traffic.</p>
+</li>
+</ul>
+<h3 id="11112-security-and-byzantine-fault-tolerance"><span class="secnum">11.11.2</span> Security and Byzantine Fault Tolerance<a class="headerlink" href="#11112-security-and-byzantine-fault-tolerance" title="Permanent link">&para;</a></h3>
+<p>A swarm operating in a contested environment faces:</p>
+<ul>
+<li>
+<p><strong>GPS spoofing</strong>: false position broadcast by compromised agents corrupts consensus and formation.</p>
+</li>
+<li>
+<p><strong>Agent injection</strong>: adversary introduces fake agents into the swarm network, broadcasting malicious commands.</p>
+</li>
+<li>
+<p><strong>Byzantine fault tolerance</strong>: consensus algorithms that tolerate <span class="arithmatex">\(f\)</span> malicious agents require <span class="arithmatex">\(N \geq 3f + 1\)</span> agents and signed message authentication.</p>
+</li>
+<li>
+<p><strong>Physical capture</strong>: tamper-evident enclosures; cryptographic attestation (TPM); self-destruct of sensitive code upon detected tampering.</p>
+</li>
+</ul>
+<p>PBFT (Practical Byzantine Fault Tolerance, Castro and Liskov, 1999) achieves consensus in <span class="arithmatex">\(O(N^2)\)</span> messages, limiting practical <span class="arithmatex">\(N\)</span> to <span class="arithmatex">\(&lt;\)</span>100 in latency-sensitive scenarios.</p>
+<h3 id="11113-ethical-and-legal-dimensions-laws"><span class="secnum">11.11.3</span> Ethical and Legal Dimensions: LAWS<a class="headerlink" href="#11113-ethical-and-legal-dimensions-laws" title="Permanent link">&para;</a></h3>
+<p>Lethal Autonomous Weapon Systems (LAWS) equipped with swarm AI are the subject of ongoing debate at the UN Convention on Certain Conventional Weapons (CCW) forum. Key engineering-relevant conclusions from CCW deliberations (2014–2025):</p>
+<ul>
+<li>
+<p>No binding international treaty restricts LAWS as of 2025, though <span class="arithmatex">\(&gt;\)</span>90 states endorse a political declaration calling for human control.</p>
+</li>
+<li>
+<p>The “meaningful human control” standard is technically ill-defined; consensus is building around LOAC-compliance criteria: can the system distinguish combatant from civilian, apply proportionality, ensure accountability?</p>
+</li>
+<li>
+<p>Swarm-specific risks: once launched, a saturation attack may be irreversible; communication latency or jamming prevents late abort; designer’s responsibility for engagement envelope definition is paramount.</p>
+</li>
+</ul>
+<h3 id="11114-heterogeneous-air-ground-swarms"><span class="secnum">11.11.4</span> Heterogeneous Air-Ground Swarms<a class="headerlink" href="#11114-heterogeneous-air-ground-swarms" title="Permanent link">&para;</a></h3>
+<p>Future swarms will combine fixed-wing aircraft, rotary drones, and unmanned ground vehicles (UGVs):</p>
+<ul>
+<li>
+<p>Fixed-wing provides long-endurance ISR and strike.</p>
+</li>
+<li>
+<p>Rotary provides hover, vertical entry into buildings.</p>
+</li>
+<li>
+<p>UGV provides ground reconnaissance, EOD, resupply.</p>
+</li>
+</ul>
+<p>Coordination challenges: heterogeneous kinematics (UGV <span class="arithmatex">\(\leq\)</span>15 km/h vs. fixed-wing <span class="arithmatex">\(\geq\)</span>80 km/h); different communication ranges; synchronised timing of simultaneous arrival.</p>
+<h3 id="11115-quantum-secured-swarm-communication"><span class="secnum">11.11.5</span> Quantum-Secured Swarm Communication<a class="headerlink" href="#11115-quantum-secured-swarm-communication" title="Permanent link">&para;</a></h3>
+<p>Quantum key distribution (QKD) using BB84 protocol offers information-theoretic security for swarm C2 links. Satellite QKD (China’s Micius satellite demonstrated ground-to-satellite QKD at 1,200 km range in 2017) points toward a future where swarm authentication is unbreakable. Free-space QKD between an airborne relay and swarm agents has been demonstrated at ranges of 10–20 km (2023 DLR experiments). Miniaturisation of QKD transceivers to drone-compatible form factors (<span class="arithmatex">\(&lt;\)</span>500 g) is projected for the 2030–2035 timeframe.</p>
+<div class="tbl" id="tab-swarm_trl">
+<div class="tbl-caption"><strong>Table 11.4.</strong> Technology readiness of key swarm technologies (2025 assessment).</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Technology</strong></th>
+<th style="text-align: center;"><strong>TRL (2025)</strong></th>
+<th style="text-align: center;"><strong>Target TRL 9 (est.)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Mesh networking (MANET)</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">Deployed</td>
+</tr>
+<tr>
+<td style="text-align: left;">GPS-based formation flight</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">Deployed</td>
+</tr>
+<tr>
+<td style="text-align: left;">Distributed task allocation (CBBA)</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">2027</td>
+</tr>
+<tr>
+<td style="text-align: left;">Byzantine fault-tolerant consensus</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2029</td>
+</tr>
+<tr>
+<td style="text-align: left;">Visual-inertial GPS-denied swarm</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2028</td>
+</tr>
+<tr>
+<td style="text-align: left;">Heterogeneous air-ground swarm</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2030</td>
+</tr>
+<tr>
+<td style="text-align: left;">Quantum-secured C2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2035</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fully autonomous lethal swarm</td>
+<td style="text-align: center;">4 (tech.)</td>
+<td style="text-align: center;">N/A (policy)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-swarm_summary"><span class="secnum">11.12</span> Summary<a class="headerlink" href="#sec-swarm_summary" title="Permanent link">&para;</a></h2>
+<p>Drone swarm technology represents one of the most disruptive capability shifts in aerial systems since the introduction of stealth. The theoretical foundations — Reynolds’ Boids rules, PSO, ACO, consensus-on-graphs — provide a rich mathematical toolkit. Practical deployments such as DARPA OFFSET and Perdix have demonstrated that 100+ agent swarms can be fielded today, while the trajectory of miniaturisation and AI integration points toward 1,000+ agent systems within this decade.</p>
+<p>The engineering challenges of scalability, security, GPS-denied operation, and real-time reconfiguration are tractable research problems with clear solution pathways. The ethical and legal challenges — particularly meaningful human control over lethal swarms — are less tractable and require sustained engagement between engineers, legal scholars, and policymakers. Engineers designing swarm systems must internalise the LOAC constraints from the earliest design phase rather than treating them as post-hoc policy compliance.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 10. Software, Autonomy and Artificial Intelligence">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                10. Software, Autonomy and Artificial Intelligence
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch12-ground-control-systems.html" class="md-footer__link md-footer__link--next" aria-label="Next: 12. Ground Control Systems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                12. Ground Control Systems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

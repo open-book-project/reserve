@@ -1,0 +1,3137 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/trust/running-pki-private-cas-automation-lifecycle.html">
+  
+  
+    <link rel="prev" href="root-cas-in-depth.html">
+  
+  
+    <link rel="next" href="standards-careers-learning.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>8. Running PKI: Private CAs, Automation & Lifecycle - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#81-enterprise-private-pki-when-why-and-how-to-distribute-trust" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. Running PKI: Private CAs, Automation & Lifecycle
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Roots of Trust, TPM & PKI</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to-read-this-guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to read this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trust-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Trust Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="hardware-roots-of-trust.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Hardware Roots of Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-trusted-platform-module-in-depth.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. The Trusted Platform Module, In Depth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="secure-boot-measured-boot-firmware-trust.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Secure Boot, Measured Boot & Firmware Trust
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="trusted-execution-confidential-computing-attestation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Trusted Execution, Confidential Computing & Attestation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="pki-x-509-certificates-in-depth.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. PKI & X.509 Certificates, In Depth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="root-cas-in-depth.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Root CAs, In Depth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Running PKI: Private CAs, Automation & Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="running-pki-private-cas-automation-lifecycle.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Running PKI: Private CAs, Automation & Lifecycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#81-enterprise-private-pki-when-why-and-how-to-distribute-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Enterprise &amp; Private PKI: When, Why and How to Distribute Trust
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 Enterprise &amp; Private PKI: When, Why and How to Distribute Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-list-the-trusted-roots-your-machine-already-carries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: List the trusted roots your machine already carries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-microsoft-ad-cs-enterprise-cas-templates-and-autoenrolment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Microsoft AD CS: Enterprise CAs, Templates and Autoenrolment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Microsoft AD CS: Enterprise CAs, Templates and Autoenrolment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-list-ca-templates-and-verify-a-chain-read-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: List CA templates and verify a chain (read-only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-auditing-and-hardening-your-own-ad-cs-esc1-esc17-defensively" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Auditing and Hardening Your Own AD CS (ESC1-ESC17, Defensively)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Auditing and Hardening Your Own AD CS (ESC1-ESC17, Defensively)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-defensively-enumerate-your-own-ca-and-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Defensively enumerate your own CA and templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-ca-software-open-source-and-commercial-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 CA Software: Open-Source and Commercial Platforms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 CA Software: Open-Source and Commercial Platforms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-initialise-a-local-lab-ca-with-step-ca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Initialise a local lab CA with step-ca
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-cloud-managed-cas-pki-as-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Cloud-Managed CAs: PKI as a Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-acme-automated-certificate-issuance-and-renewal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 ACME: Automated Certificate Issuance and Renewal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 ACME: Automated Certificate Issuance and Renewal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-dry-run-a-certificate-request-with-certbot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Dry-run a certificate request with certbot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-enrolment-protocols-beyond-acme-est-scep-cmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7 Enrolment Protocols Beyond ACME: EST, SCEP, CMP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#88-certificate-lifecycle-management-and-the-47-day-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8 Certificate Lifecycle Management and the 47-Day Future
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.8 Certificate Lifecycle Management and the 47-Day Future">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-spot-certificates-expiring-soon-with-a-quick-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Spot certificates expiring soon with a quick check
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#89-workload-machine-identity-spiffe-service-mesh-and-ssh-certs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.9 Workload &amp; Machine Identity: SPIFFE, Service Mesh and SSH Certs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.9 Workload &amp; Machine Identity: SPIFFE, Service Mesh and SSH Certs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-create-a-short-lived-ssh-user-certificate-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Create a short-lived SSH user certificate (lab)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#810-device-pki-at-scale-manufacturing-matter-v2x-and-ev-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10 Device PKI at Scale: Manufacturing, Matter, V2X and EV Charging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#811-code-signing-and-document-signing-pki-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.11 Code-Signing and Document-Signing PKI Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.11 Code-Signing and Document-Signing PKI Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-verify-a-signature-and-its-timestamp-read-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Verify a signature and its timestamp (read-only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#812-expired-certificate-outages-and-how-to-monitor-against-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.12 Expired-Certificate Outages and How to Monitor Against Them
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.12 Expired-Certificate Outages and How to Monitor Against Them">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-script-an-expiry-check-you-can-put-in-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Script an expiry check you can put in monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#813-post-quantum-migration-for-pki-inventory-timelines-and-hybrids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.13 Post-Quantum Migration for PKI: Inventory, Timelines and Hybrids
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.13 Post-Quantum Migration for PKI: Inventory, Timelines and Hybrids">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-whether-your-browser-negotiated-post-quantum-key-exchange" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See whether your browser negotiated post-quantum key exchange
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#814-pki-security-best-practices-and-an-audit-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.14 PKI Security Best Practices and an Audit Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="standards-careers-learning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Standards, Careers & Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ten-things-every-student-of-trust-should-master.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ten Things Every Student of Trust Should Master
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-of-terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary of Terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#81-enterprise-private-pki-when-why-and-how-to-distribute-trust" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 Enterprise &amp; Private PKI: When, Why and How to Distribute Trust
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.1 Enterprise &amp; Private PKI: When, Why and How to Distribute Trust">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-list-the-trusted-roots-your-machine-already-carries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: List the trusted roots your machine already carries
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-microsoft-ad-cs-enterprise-cas-templates-and-autoenrolment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Microsoft AD CS: Enterprise CAs, Templates and Autoenrolment
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.2 Microsoft AD CS: Enterprise CAs, Templates and Autoenrolment">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-list-ca-templates-and-verify-a-chain-read-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: List CA templates and verify a chain (read-only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-auditing-and-hardening-your-own-ad-cs-esc1-esc17-defensively" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Auditing and Hardening Your Own AD CS (ESC1-ESC17, Defensively)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.3 Auditing and Hardening Your Own AD CS (ESC1-ESC17, Defensively)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-defensively-enumerate-your-own-ca-and-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Defensively enumerate your own CA and templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-ca-software-open-source-and-commercial-platforms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 CA Software: Open-Source and Commercial Platforms
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.4 CA Software: Open-Source and Commercial Platforms">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-initialise-a-local-lab-ca-with-step-ca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Initialise a local lab CA with step-ca
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-cloud-managed-cas-pki-as-a-service" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Cloud-Managed CAs: PKI as a Service
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-acme-automated-certificate-issuance-and-renewal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 ACME: Automated Certificate Issuance and Renewal
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.6 ACME: Automated Certificate Issuance and Renewal">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-dry-run-a-certificate-request-with-certbot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Dry-run a certificate request with certbot
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-enrolment-protocols-beyond-acme-est-scep-cmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7 Enrolment Protocols Beyond ACME: EST, SCEP, CMP
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#88-certificate-lifecycle-management-and-the-47-day-future" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8 Certificate Lifecycle Management and the 47-Day Future
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.8 Certificate Lifecycle Management and the 47-Day Future">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-spot-certificates-expiring-soon-with-a-quick-check" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Spot certificates expiring soon with a quick check
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#89-workload-machine-identity-spiffe-service-mesh-and-ssh-certs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.9 Workload &amp; Machine Identity: SPIFFE, Service Mesh and SSH Certs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.9 Workload &amp; Machine Identity: SPIFFE, Service Mesh and SSH Certs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-create-a-short-lived-ssh-user-certificate-lab" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Create a short-lived SSH user certificate (lab)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#810-device-pki-at-scale-manufacturing-matter-v2x-and-ev-charging" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10 Device PKI at Scale: Manufacturing, Matter, V2X and EV Charging
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#811-code-signing-and-document-signing-pki-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.11 Code-Signing and Document-Signing PKI Operations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.11 Code-Signing and Document-Signing PKI Operations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-verify-a-signature-and-its-timestamp-read-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Verify a signature and its timestamp (read-only)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#812-expired-certificate-outages-and-how-to-monitor-against-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.12 Expired-Certificate Outages and How to Monitor Against Them
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.12 Expired-Certificate Outages and How to Monitor Against Them">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-script-an-expiry-check-you-can-put-in-monitoring" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Script an expiry check you can put in monitoring
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#813-post-quantum-migration-for-pki-inventory-timelines-and-hybrids" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.13 Post-Quantum Migration for PKI: Inventory, Timelines and Hybrids
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8.13 Post-Quantum Migration for PKI: Inventory, Timelines and Hybrids">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-see-whether-your-browser-negotiated-post-quantum-key-exchange" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: See whether your browser negotiated post-quantum key exchange
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#814-pki-security-best-practices-and-an-audit-checklist" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.14 PKI Security Best Practices and an Audit Checklist
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-8-running-pki-private-cas-automation-lifecycle">Chapter 8: Running PKI: Private CAs, Automation &amp; Lifecycle<a class="headerlink" href="#chapter-8-running-pki-private-cas-automation-lifecycle" title="Permanent link">&para;</a></h1>
+<p>Most certificates are never seen by a browser. They live inside companies, data centres, phones and billions of devices, issued by private certificate authorities that an organisation runs itself. This chapter is about operating PKI for real: standing up an internal CA, hardening Microsoft AD CS, automating issue-and-renew with ACME and friends, tracking every certificate before it expires, giving workloads and devices short-lived identities, and planning the move to post-quantum cryptography.</p>
+<h2 id="81-enterprise-private-pki-when-why-and-how-to-distribute-trust">8.1 Enterprise &amp; Private PKI: When, Why and How to Distribute Trust<a class="headerlink" href="#81-enterprise-private-pki-when-why-and-how-to-distribute-trust" title="Permanent link">&para;</a></h2>
+<p>A private PKI is a certificate authority an organisation runs for itself. It issues certificates to that organisation's own servers, employees, laptops and devices, and only computers told to trust its root will accept them.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-01-enterprise-private-pki-when-why-and-how.svg" alt="The root stays offline; only the issuing CA talks to clients, and trust is pushed to devices." loading="lazy" width="1000" height="464">
+<figcaption><strong>A typical enterprise two-tier PKI.</strong> The root stays offline; only the issuing CA talks to clients, and trust is pushed to devices.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A public CA is like a government passport office the whole world recognises. A private PKI is like a company building pass: perfectly valid inside the campus, meaningless at the airport.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Northwind Logistics runs an internal two-tier CA. Its offline root signs one issuing CA, which issues certificates for intranet sites, VPN, Wi-Fi and 9,000 laptops. The root certificate is pushed to every device by group policy, so none of it needs a public CA.</p>
+</div>
+<h4 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Decide what needs certificates internally: servers, users, devices, VPN, Wi-Fi, code signing, service-to-service mTLS.</li>
+<li>Design a hierarchy (usually offline root plus one or more online issuing CAs) and write a short policy for it.</li>
+<li>Generate the root in a ceremony, protect its key in an HSM, and keep it offline.</li>
+<li>Stand up issuing CAs that handle day-to-day requests through enrolment protocols.</li>
+<li>Distribute the root (and intermediates) as trust anchors to every relying device via GPO, MDM, Jamf or a config-management tool.</li>
+<li>Monitor issuance, publish CRLs/OCSP, and plan renewal before anything expires.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PKI engineers, Windows/Active Directory admins, platform and DevOps teams, and security architects building internal trust for an organisation.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Interviewers love the distinction: public PKI proves identity to strangers on the internet; private PKI proves identity among systems you already control, so you own the trust store.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Private roots never go into public trust stores, so they are not bound by CA/Browser Forum Baseline Requirements — you choose key sizes, validity periods and extensions, which is freedom and responsibility at once.</li>
+<li>Trust-anchor distribution is the make-or-break step: on Windows the root goes to the Trusted Root store and intermediates to the Intermediate store via GPO; on macOS/iOS via a configuration profile; on Linux into /etc/ssl/certs or the distro's ca-certificates bundle.</li>
+<li>A common mistake is issuing certificates that chain to a public CA for internal names — public CAs can no longer issue certificates for non-public names, so internal services need a private PKI.</li>
+<li>Even a private PKI needs revocation reachable by clients: publish CRL distribution points and OCSP URLs that resolve inside the network, or short-lived certs that avoid revocation entirely.</li>
+<li>Right-size the hierarchy: a tiny shop may use one online CA; large enterprises use an offline root, several policy/issuing CAs, and separate hierarchies for TLS, user auth, and device identity.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Putting the root CA online so it is 'easier to manage' — if that key is stolen, every certificate it ever signed is suspect and the whole PKI must be rebuilt.</li>
+<li>Forgetting that a relying device only trusts certificates whose root it already holds; miss the GPO/MDM push and users see constant certificate errors.</li>
+<li>Trying to get a public CA to certify internal hostnames like server01.corp.local — public CAs are forbidden from issuing for non-registrable names.</li>
+</ul>
+</div>
+<h3 id="try-it-list-the-trusted-roots-your-machine-already-carries">Try it: List the trusted roots your machine already carries<a class="headerlink" href="#try-it-list-the-trusted-roots-your-machine-already-carries" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Windows (PowerShell): list root store subjects</span>
+Get-ChildItem<span class="w"> </span>Cert:<span class="se">\L</span>ocalMachine<span class="se">\R</span>oot<span class="w"> </span><span class="p">|</span><span class="w"> </span>Select-Object<span class="w"> </span>Subject,<span class="w"> </span>NotAfter
+<span class="c1"># Linux: where distro roots live</span>
+ls<span class="w"> </span>/etc/ssl/certs<span class="w"> </span><span class="p">|</span><span class="w"> </span>head
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Private PKI</strong><br><em>Operated by each organisation · Concept · Current · Private PKI</em></td>
+<td>A certificate authority an organisation runs internally, trusted only by systems configured to trust its root.</td>
+<td>A bank issues VPN and Wi-Fi certificates to 40,000 laptops from its own CA, trusted by none of them by default until the root is pushed out.</td>
+</tr>
+<tr>
+<td><strong>Trust anchor distribution</strong><br><em>GPO / MDM / config management · Concept · Current · Private PKI</em></td>
+<td>Installing the private root (and intermediates) into every relying device's trust store so its certificates are accepted.</td>
+<td>Group Policy adds Northwind's root to the Trusted Root store of every domain-joined PC automatically.</td>
+</tr>
+<tr>
+<td><strong>Offline root</strong><br><em>Best-practice design · Concept · Current · Private PKI</em></td>
+<td>A root CA whose key is kept disconnected in an HSM and used only in rare, witnessed ceremonies.</td>
+<td>Northwind's root lives in a safe and is booted once a year to re-sign CRLs.</td>
+</tr>
+<tr>
+<td><strong>Group Policy (GPO) cert deployment</strong><br><em>Microsoft Active Directory · Service · Current · Platform &amp; OS</em></td>
+<td>Active Directory feature that pushes trusted roots and auto-enrols certificates to domain-joined Windows machines.</td>
+<td>Admins add the root under Computer Configuration &gt; Trusted Root Certification Authorities and it replicates to all PCs.</td>
+</tr>
+<tr>
+<td><strong>MDM certificate profiles</strong><br><em>Intune, Jamf, VMware Workspace ONE · Service · Current · Mobile</em></td>
+<td>Mobile-device-management profiles that install trusted roots and request device/user certificates on managed phones and laptops.</td>
+<td>An Intune configuration profile installs the corporate root on every enrolled iPhone and iPad.</td>
+</tr>
+<tr>
+<td><strong>Internal name</strong><br><em>RFC 6125 / CA/B Forum · Concept · Current · Private PKI</em></td>
+<td>A hostname not resolvable on the public internet (e.g. .corp, .internal); only a private CA may certify it.</td>
+<td>db.payroll.internal can only get a certificate from Northwind's own CA, never from a public one.</td>
+</tr>
+<tr>
+<td><strong>Certificate Policy for internal PKI</strong><br><em>RFC 3647 format · Concept · Current · Private PKI</em></td>
+<td>A short document saying what your private CA issues, to whom, how keys are protected, and how certificates are revoked.</td>
+<td>Even a one-page CP forces decisions about key length, validity and who may approve requests.</td>
+</tr>
+<tr>
+<td><strong>.internal reserved TLD</strong><br><em>ICANN (reserved 2024) · Standard · Emerging · Private PKI</em></td>
+<td>A top-level domain ICANN reserved for private internal use, giving enterprises a safe namespace for internal certificates.</td>
+<td>New internal services use host.svc.internal instead of squatting on a real public domain.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="82-microsoft-ad-cs-enterprise-cas-templates-and-autoenrolment">8.2 Microsoft AD CS: Enterprise CAs, Templates and Autoenrolment<a class="headerlink" href="#82-microsoft-ad-cs-enterprise-cas-templates-and-autoenrolment" title="Permanent link">&para;</a></h2>
+<p>Active Directory Certificate Services (AD CS) is Microsoft's built-in CA for Windows networks. It uses templates to define what each kind of certificate looks like, and can hand certificates to users and computers automatically through autoenrolment.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-02-microsoft-ad-cs-enterprise-cas.svg" alt="Templates and AD permissions decide who gets what, with no human in the loop." loading="lazy" width="1000" height="397">
+<figcaption><strong>How an AD CS autoenrolment request flows.</strong> Templates and AD permissions decide who gets what, with no human in the loop.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>AD CS is like a company's in-house ID-card printer wired into the HR database: templates are the card designs, and autoenrolment means eligible staff get their card printed the moment they join, without filling in a form.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>At Meridian Health, an enterprise CA issues computer certificates to every domain-joined PC through an autoenrolment policy. When a nurse's laptop joins the domain, AD CS silently issues it a certificate it uses for 802.1X Wi-Fi, all driven by a 'Workstation Authentication' template.</p>
+</div>
+<h4 id="how-it-works_1">How it works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Install the AD CS role and choose enterprise (AD-integrated) or standalone (manual) mode.</li>
+<li>The CA publishes its certificate and CRLs; enterprise CAs store config in Active Directory.</li>
+<li>An admin creates or duplicates a certificate template defining key usage, EKUs, validity and who may enrol.</li>
+<li>Permissions on the template control which users/computers can request that certificate.</li>
+<li>Autoenrolment policy makes eligible principals request and renew matching certificates automatically.</li>
+<li>NDES/SCEP can extend enrolment to network devices and non-domain clients.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Windows and Active Directory administrators, identity engineers and the security teams who must audit and defend internal Windows PKI.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember the two modes: an enterprise CA is tied to Active Directory and supports templates and autoenrolment; a standalone CA is not and requires manual approval. Interview favourite.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Certificate templates are AD objects with a schema version (v1-v4); the version controls which features (like key attestation or application policies) are available and affects how 'Supply in request' behaves.</li>
+<li>Enterprise CAs honour the certificate template's defined validity but cap it at the CA certificate's own remaining lifetime and the registry-configured maximum.</li>
+<li>NDES (the Network Device Enrolment Service) implements SCEP so routers, switches and MDM-managed phones can enrol; it is powerful and historically a juicy target, so it is isolated and monitored.</li>
+<li>Strong certificate mapping: after Microsoft's KB5014754, domain controllers moved to Full Enforcement in February 2025, requiring certificates to carry a strong, tamper-resistant link (the SID security extension) to the account they authenticate.</li>
+<li>AD CS writes rich events; enabling auditing on the CA and forwarding the Security and CertificateServices logs is the foundation for detecting misuse.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Treating 'Supply in the request' subject templates as harmless — letting requesters name any subject is the root of several privilege-escalation paths and must be tightly controlled.</li>
+<li>Leaving old, over-permissive templates published 'just in case'; every enabled template is attack surface and should be removed if unused.</li>
+<li>Assuming autoenrolment is set-and-forget: without monitoring, a template or CA misconfiguration can silently issue thousands of wrong certificates.</li>
+</ul>
+</div>
+<h3 id="try-it-list-ca-templates-and-verify-a-chain-read-only">Try it: List CA templates and verify a chain (read-only)<a class="headerlink" href="#try-it-list-ca-templates-and-verify-a-chain-read-only" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># On a domain-joined Windows box:</span>
+certutil<span class="w"> </span>-template<span class="w"> </span><span class="p">|</span><span class="w"> </span>findstr<span class="w"> </span>/i<span class="w"> </span><span class="s2">"TemplatePropCommonName"</span>
+<span class="c1"># Verify a certificate's chain and revocation:</span>
+certutil<span class="w"> </span>-verify<span class="w"> </span>-urlfetch<span class="w"> </span>cert.cer
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_1">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AD CS (Active Directory Certificate Services)</strong><br><em>Microsoft · Software · Current · Private PKI</em></td>
+<td>Microsoft's Windows Server CA role for issuing and managing certificates inside an Active Directory environment.</td>
+<td>A Windows domain runs an enterprise CA on a hardened server to issue all internal TLS and user authentication certificates.</td>
+</tr>
+<tr>
+<td><strong>Enterprise CA</strong><br><em>Microsoft AD CS · Concept · Current · Private PKI</em></td>
+<td>An AD-integrated AD CS CA that supports certificate templates, AD permissions and automatic enrolment.</td>
+<td>Meridian's enterprise CA auto-issues computer certificates the moment a PC joins the domain.</td>
+</tr>
+<tr>
+<td><strong>Standalone CA</strong><br><em>Microsoft AD CS · Concept · Current · Private PKI</em></td>
+<td>An AD CS CA not integrated with Active Directory; requests are submitted and approved manually, with no templates.</td>
+<td>An offline root is usually built as a standalone CA so it needs no domain connection.</td>
+</tr>
+<tr>
+<td><strong>Certificate template</strong><br><em>Microsoft AD CS · Concept · Current · Private PKI</em></td>
+<td>A reusable definition of a certificate type: its key usage, EKUs, validity, subject rules and who may enrol.</td>
+<td>The 'Web Server' template defines serverAuth EKU and a two-year validity for intranet HTTPS certificates.</td>
+</tr>
+<tr>
+<td><strong>Autoenrolment</strong><br><em>Microsoft AD CS + GPO · Concept · Current · Private PKI</em></td>
+<td>Policy-driven automatic request, issuance and renewal of certificates to eligible users and computers.</td>
+<td>A GPO makes every laptop silently obtain and renew its 802.1X Wi-Fi certificate.</td>
+</tr>
+<tr>
+<td><strong>NDES / SCEP service</strong><br><em>Microsoft AD CS · Service · Current · Private PKI</em></td>
+<td>The Network Device Enrolment Service, Microsoft's SCEP implementation for enrolling network devices and MDM-managed clients.</td>
+<td>Intune uses NDES to deliver certificates to managed iPhones via SCEP.</td>
+</tr>
+<tr>
+<td><strong>certutil</strong><br><em>Microsoft · Command · Current · Platform &amp; OS</em></td>
+<td>Built-in Windows command-line tool for viewing CA config, templates, verifying chains and dumping certificates.</td>
+<td>certutil -verify -urlfetch cert.cer checks a certificate's chain and fetches CRLs/OCSP.</td>
+</tr>
+<tr>
+<td><strong>Strong certificate mapping (KB5014754)</strong><br><em>Microsoft · Concept · Current · Platform &amp; OS</em></td>
+<td>A hardening change requiring certificates to carry a tamper-resistant SID link to the account, enforced on domain controllers since 2025.</td>
+<td>Weakly mapped certificates began failing authentication once Full Enforcement arrived in February 2025.</td>
+</tr>
+<tr>
+<td><strong>PKIView / Enterprise PKI snap-in</strong><br><em>Microsoft · Tool · Current · Private PKI</em></td>
+<td>A Windows console that shows CA health, CRL freshness and AIA/CDP reachability across an AD CS hierarchy.</td>
+<td>Admins open pkiview.msc to confirm every CA's CRL is published and not expired.</td>
+</tr>
+<tr>
+<td><strong>Online Responder (OCSP) role</strong><br><em>Microsoft AD CS · Service · Current · Private PKI</em></td>
+<td>An AD CS role that answers OCSP status queries, so clients can check revocation without downloading full CRLs.</td>
+<td>Meridian deploys the Online Responder so VPN clients get fast per-certificate revocation answers.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="83-auditing-and-hardening-your-own-ad-cs-esc1-esc17-defensively">8.3 Auditing and Hardening Your Own AD CS (ESC1-ESC17, Defensively)<a class="headerlink" href="#83-auditing-and-hardening-your-own-ad-cs-esc1-esc17-defensively" title="Permanent link">&para;</a></h2>
+<p>AD CS is powerful, and small misconfigurations can let an ordinary user obtain a certificate that impersonates an administrator. Security researchers catalogued these as ESC1 through ESC17. This section is about finding and fixing them on your own CA before an attacker does.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-03-auditing-and-hardening-your-own-ad-cs.svg" alt="Fix the template and permission layers first; monitoring catches what hardening missed." loading="lazy" width="1000" height="367">
+<figcaption><strong>Defence-in-depth for AD CS.</strong> Fix the template and permission layers first; monitoring catches what hardening missed.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like auditing your own building-pass printer: if one card design lets any employee print a 'CEO' badge, you want to discover and disable that design yourself, during a review, not after someone walks into the vault.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Priya, a blue-team engineer at Meridian, runs PSPKIAudit against her own CA. It flags a template that allows low-privileged users to supply any subject name and request a client-auth certificate (an ESC1 pattern). She removes the 'Supply in the request' flag, tightens enrol permissions, and enables issuance auditing.</p>
+</div>
+<h4 id="how-it-works_2">How it works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Inventory every CA, published template, and the permissions on each (who may enrol, who may configure).</li>
+<li>Run a defensive auditing tool (PSPKIAudit, Locksmith, or Certipy's find in audit mode) against your own environment.</li>
+<li>Map each finding to its ESC pattern: dangerous subject supply, over-broad EKUs, weak enrolment rights, or CA-level settings.</li>
+<li>Remediate: remove risky templates, restrict 'Supply in the request', require manager approval, fix the SID security extension.</li>
+<li>Turn on CA auditing and forward CertificateServices and DC authentication events to your SIEM.</li>
+<li>Re-scan and re-check after every template or CA change, because drift reintroduces risk.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Blue teams, Active Directory security engineers, internal auditors and incident responders protecting Windows PKI.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the three ingredients behind most AD CS escalations: a client-auth-capable EKU, attacker control over the subject, and low enrolment permissions. Remove any one and the path usually closes.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>ESC1 is the classic: a template with a client-authentication EKU, 'Supply in the request' for the subject, and enrolment open to normal users — an attacker requests a certificate as a domain admin. Fix by removing subject supply or restricting the template.</li>
+<li>ESC6 is a CA-wide flag (EDITF_ATTRIBUTESUBJECTALTNAME2) that lets any requester add a SAN to any template; it should be off, and its absence confirmed with certutil -getreg.</li>
+<li>ESC8/ESC11 abuse NTLM relay to the CA's web or RPC enrolment interfaces; mitigations include requiring HTTPS with channel binding (EPA), disabling unused enrolment endpoints, and enforcing SMB/LDAP signing.</li>
+<li>ESC9/ESC16 concern the SID security extension being suppressed on a template (ESC9) or disabled CA-wide (ESC16); with strong mapping enforced since 2025, keep the extension enabled so certificates bind firmly to accounts.</li>
+<li>ESC15 (EKUwu, CVE-2024-49019) lets a requester inject application policies into v1 templates; Microsoft's November 2024 patch addresses it, so patch the CA and retire schema-v1 'supply in request' templates.</li>
+<li>ESC14 abuses write access to the altSecurityIdentities attribute (explicit certificate mapping); ESC17 (added to Certipy in 2026) abuses server-auth templates that allow a supplied SAN to spoof HTTPS WSUS — audit which principals can edit mappings and which templates allow SAN supply.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Running offensive tooling like Certipy against production without written authorisation — use read-only audit modes in a lab or with explicit approval; this is defensive work, not a free hunting licence.</li>
+<li>Fixing one flagged template and declaring victory; escalation paths chain, and a second permissive template or CA flag can reopen the door.</li>
+<li>Leaving CA auditing off, so even after hardening you cannot tell whether a bad certificate was ever issued or who requested it.</li>
+</ul>
+</div>
+<h3 id="try-it-defensively-enumerate-your-own-ca-and-templates">Try it: Defensively enumerate your own CA and templates<a class="headerlink" href="#try-it-defensively-enumerate-your-own-ca-and-templates" title="Permanent link">&para;</a></h3>
+<div class="language-powershell highlight"><pre><span></span><code><span class="c"># PowerShell PSPKIAudit (run against your OWN lab/domain):</span>
+<span class="nb">Import-Module</span> <span class="n">PSPKIAudit</span>
+<span class="nb">Invoke-PKIAudit</span> <span class="n">-Domain</span> <span class="n">corp</span><span class="p">.</span><span class="n">northwind</span><span class="p">.</span><span class="n">internal</span>
+<span class="c"># Review which templates allow EnrolleeSuppliesSubject + client auth.</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_2">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ESC1 (enrollee-supplied subject)</strong><br><em>SpecterOps 'Certified Pre-Owned' (2021) · Attack · Current · Private PKI</em></td>
+<td>A template allowing client-auth plus an arbitrary requester-supplied subject lets a user get a certificate as anyone.</td>
+<td>Audit finds a template open to Domain Users with 'Supply in the request'; it is remediated by removing subject supply.</td>
+</tr>
+<tr>
+<td><strong>ESC6 (EDITF_ATTRIBUTESUBJECTALTNAME2)</strong><br><em>SpecterOps · Attack · Current · Private PKI</em></td>
+<td>A CA-wide flag letting any requester inject a Subject Alternative Name into any issued certificate.</td>
+<td>certutil -getreg policy\EditFlags confirms the flag is off on a hardened CA.</td>
+</tr>
+<tr>
+<td><strong>ESC8 / ESC11 (NTLM relay to CA)</strong><br><em>SpecterOps / Compass Security · Attack · Current · Private PKI</em></td>
+<td>Relaying coerced NTLM authentication to the CA's web or RPC enrolment endpoints to obtain certificates.</td>
+<td>Mitigated by enabling Extended Protection (EPA), HTTPS and disabling unused enrolment interfaces.</td>
+</tr>
+<tr>
+<td><strong>ESC9 / ESC16 (SID extension disabled)</strong><br><em>Research community · Attack · Current · Private PKI</em></td>
+<td>Suppressing the SID security extension on a template (ESC9) or across the whole CA (ESC16) to weaken certificate-to-account mapping.</td>
+<td>After the 2025 strong-mapping enforcement, keeping the SID extension enabled closes this gap.</td>
+</tr>
+<tr>
+<td><strong>ESC15 (EKUwu, CVE-2024-49019)</strong><br><em>TrustedSec (2024) · Attack · Current · Private PKI</em></td>
+<td>Injecting arbitrary application policies into schema-version-1 templates that allow requester-supplied values.</td>
+<td>Patching the CA (November 2024 update) and retiring v1 supply-in-request templates removes the path.</td>
+</tr>
+<tr>
+<td><strong>ESC14 (altSecurityIdentities abuse)</strong><br><em>SpecterOps · Attack · Current · Private PKI</em></td>
+<td>Abusing write access to a principal's explicit certificate-mapping attribute to bind an attacker-held certificate to it.</td>
+<td>Audit who can edit altSecurityIdentities on privileged accounts and remove unnecessary write rights.</td>
+</tr>
+<tr>
+<td><strong>ESC17 (HTTPS WSUS spoofing)</strong><br><em>Added to Certipy, 2026 · Attack · Emerging · Private PKI</em></td>
+<td>Abusing server-auth templates that allow a supplied SAN to issue certificates spoofing an HTTPS WSUS update server.</td>
+<td>Reviewing which templates combine serverAuth with SAN supply, and locking them down, blocks the spoof.</td>
+</tr>
+<tr>
+<td><strong>Certipy (audit mode)</strong><br><em>Oliver Lyak (ly4k) · Tool · Current · Private PKI</em></td>
+<td>A Python toolkit that can enumerate AD CS CAs and templates; defenders use its find output to spot misconfigurations.</td>
+<td>certipy find produces a report of vulnerable templates to feed into a remediation plan.</td>
+</tr>
+<tr>
+<td><strong>PSPKIAudit</strong><br><em>SpecterOps (open source) · Tool · Current · Private PKI</em></td>
+<td>A PowerShell module that audits AD CS configuration and templates against known escalation patterns for defenders.</td>
+<td>Invoke-PKIAudit flags templates with dangerous subject and EKU settings for review.</td>
+</tr>
+<tr>
+<td><strong>Locksmith</strong><br><em>Jake Hildreth (open source) · Tool · Current · Private PKI</em></td>
+<td>A PowerShell tool that finds and can help fix common AD CS misconfigurations, aimed squarely at defenders.</td>
+<td>Locksmith -Mode 4 reports ESC findings with suggested remediation commands.</td>
+</tr>
+<tr>
+<td><strong>CA issuance auditing</strong><br><em>Microsoft AD CS · Concept · Current · Private PKI</em></td>
+<td>Enabling detailed CA audit events and forwarding them so every certificate request and issuance is recorded.</td>
+<td>Security log event 4886/4887 shows who requested and received each certificate.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="84-ca-software-open-source-and-commercial-platforms">8.4 CA Software: Open-Source and Commercial Platforms<a class="headerlink" href="#84-ca-software-open-source-and-commercial-platforms" title="Permanent link">&para;</a></h2>
+<p>Beyond Microsoft AD CS, many programs can be a certificate authority. Some are free and open source, some are commercial platforms with support and automation. Picking the right one depends on scale, how much automation you need, and whether you want managed hardware-key support.</p>
+<p><strong>Choosing CA software by need</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Cloud-native / mTLS</th>
+<th>Enterprise / audited</th>
+<th>Small / scripted</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Typical pick</strong></td>
+<td>step-ca, Vault/OpenBao</td>
+<td>EJBCA, OpenXPKI, Dogtag</td>
+<td>XCA, cfssl</td>
+</tr>
+<tr>
+<td><strong>Enrolment</strong></td>
+<td>ACME, short-lived</td>
+<td>EST/SCEP/CMP/ACME</td>
+<td>manual / CLI</td>
+</tr>
+<tr>
+<td><strong>Key storage</strong></td>
+<td>software or KMS</td>
+<td>PKCS #11 HSM</td>
+<td>software</td>
+</tr>
+<tr>
+<td><strong>Best for</strong></td>
+<td>microservice identity</td>
+<td>regulated, large scale</td>
+<td>labs, few certs</td>
+</tr>
+</tbody>
+</table>
+<p><em>No single tool is best; match it to scale, automation and compliance.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Choosing CA software is like choosing a printing press: a hobby press (XCA) is fine for a few cards, a workshop press (step-ca, EJBCA Community) for a department, and an industrial line (EJBCA Enterprise, Idira/ex-Venafi) for a whole country's worth of documents.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A fintech startup, Larkspur Pay, runs Smallstep step-ca in a container to issue short-lived mTLS certificates between microservices, renewed every hour over ACME. When it needs an auditable, HSM-backed CA for its regulated product, it moves that hierarchy to EJBCA Enterprise.</p>
+</div>
+<h4 id="how-it-works_3">How it works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Decide the use case: internal TLS, device identity, mTLS mesh, code signing, or a public-facing regulated CA.</li>
+<li>Match scale and compliance needs: lightweight automation vs full audit, role separation and HSM integration.</li>
+<li>Check enrolment-protocol support (ACME, EST, SCEP, CMP) against what your clients speak.</li>
+<li>Confirm key protection: software keys for labs, PKCS #11 HSM for anything that matters.</li>
+<li>Pilot in a lab, test revocation (CRL/OCSP), then promote with monitoring and backups.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PKI engineers, DevOps/platform teams, and architects selecting the engine that will issue an organisation's certificates.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Map the tool to the job: step-ca and Vault/OpenBao for cloud-native short-lived certs; EJBCA and OpenXPKI for heavyweight, audited enterprise PKI; XCA/cfssl for small or scripted needs.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>EJBCA (by Keyfactor, formerly PrimeKey) is a Java enterprise CA used by governments and large telcos; EJBCA Community is the LGPL open-source subset, while EJBCA Enterprise adds support, HSM integration and Common Criteria evaluation.</li>
+<li>Smallstep step-ca is a small Go CA built for automation and short-lived certificates over ACME and its own API, popular for internal mTLS and SSH certificates.</li>
+<li>HashiCorp Vault's PKI secrets engine issues certificates on demand with very short lifetimes; after Vault's 2023 move to the Business Source License, the community forked the last MPL-2.0 release into OpenBao under the Linux Foundation.</li>
+<li>OpenBao reached a production 2.0 release in September 2024, joined the OpenSSF in 2025, keeps an MPL-2.0 licence, and has been adopted by vendors such as NVIDIA; its PKI engine is largely drop-in compatible with Vault's.</li>
+<li>OpenXPKI and Dogtag (the upstream of Red Hat Certificate System) are long-standing open-source enterprise CAs; XCA and cfssl (Cloudflare) are lightweight GUI/CLI tools for small or scripted PKIs.</li>
+<li>Commercial lifecycle platforms (Keyfactor Command, Idira Certificate Manager, AppViewX) often sit above one or more CA engines, adding discovery, workflow, and automation rather than replacing the CA.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Choosing a heavyweight enterprise CA for a job that needs three certificates a week — the operational burden outweighs the benefit; a small tool is safer and simpler.</li>
+<li>Assuming OpenBao and Vault are identical forever: they share heritage and most PKI features but have begun to diverge, so pin versions and test before relying on parity.</li>
+<li>Running any production CA with software-only keys; the signing key belongs in an HSM or KMS, or a single server compromise exposes your whole PKI.</li>
+</ul>
+</div>
+<h3 id="try-it-initialise-a-local-lab-ca-with-step-ca">Try it: Initialise a local lab CA with step-ca<a class="headerlink" href="#try-it-initialise-a-local-lab-ca-with-step-ca" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code># In a throwaway lab only:
+step ca init --name "Lab Root" --dns localhost \
+  --address 127.0.0.1:8443 --provisioner admin
+# Then inspect the generated root:
+step certificate inspect .step/certs/root_ca.crt
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_3">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_3" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EJBCA</strong><br><em>Keyfactor (formerly PrimeKey) · Software · Current · Private PKI</em></td>
+<td>A full-featured Java enterprise CA; Community edition is open source (LGPL), Enterprise adds support and HSM/CC options.</td>
+<td>National ID programmes and telcos run EJBCA Enterprise with HSMs to issue millions of certificates.</td>
+</tr>
+<tr>
+<td><strong>Smallstep step-ca</strong><br><em>Smallstep (open source) · Software · Current · Private PKI</em></td>
+<td>A lightweight Go CA built for automation, ACME and short-lived certificates for TLS and SSH.</td>
+<td>Larkspur Pay issues one-hour mTLS certificates to its services from step-ca over ACME.</td>
+</tr>
+<tr>
+<td><strong>HashiCorp Vault PKI</strong><br><em>HashiCorp (IBM) · Software · Current · Private PKI</em></td>
+<td>Vault's PKI secrets engine that issues certificates on demand, typically with very short lifetimes.</td>
+<td>A platform team configures a Vault PKI role to mint 72-hour service certificates automatically.</td>
+</tr>
+<tr>
+<td><strong>OpenBao</strong><br><em>Linux Foundation / OpenSSF · Software · Current · Private PKI</em></td>
+<td>An open-source (MPL-2.0) fork of Vault created after Vault's 2023 licence change, with a compatible PKI engine.</td>
+<td>A company avoiding BSL licensing runs OpenBao's PKI engine in place of Vault for internal certificates.</td>
+</tr>
+<tr>
+<td><strong>OpenXPKI</strong><br><em>The OpenXPKI Project · Software · Current · Private PKI</em></td>
+<td>A mature open-source enterprise PKI platform with workflow, web UI and multiple enrolment protocols.</td>
+<td>A university runs OpenXPKI to issue and renew certificates for staff, servers and devices.</td>
+</tr>
+<tr>
+<td><strong>Dogtag / Red Hat Certificate System</strong><br><em>Dogtag PKI project / Red Hat · Software · Current · Private PKI</em></td>
+<td>An open-source enterprise CA (Dogtag) and its supported Red Hat build, part of FreeIPA deployments.</td>
+<td>A FreeIPA identity server uses Dogtag as its embedded CA for host and service certificates.</td>
+</tr>
+<tr>
+<td><strong>cfssl</strong><br><em>Cloudflare (open source) · Tool · Current · Private PKI</em></td>
+<td>Cloudflare's CLI and library for signing, bundling and verifying certificates, handy in scripts and CI.</td>
+<td>A build pipeline uses cfssl to generate a local CA and issue test certificates.</td>
+</tr>
+<tr>
+<td><strong>XCA</strong><br><em>Christian Hohnstädt (open source) · Tool · Current · Private PKI</em></td>
+<td>A desktop GUI for creating and managing a small CA, certificates and keys stored in a local database.</td>
+<td>A lab instructor uses XCA to hand-build a two-tier CA for a teaching exercise.</td>
+</tr>
+<tr>
+<td><strong>Boulder</strong><br><em>ISRG / Let's Encrypt (open source) · Software · Current · Web PKI</em></td>
+<td>The open-source ACME CA software that powers Let's Encrypt and can be run to operate your own ACME CA.</td>
+<td>A large provider studies Boulder to learn how an ACME CA issues certificates at internet scale.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="85-cloud-managed-cas-pki-as-a-service">8.5 Cloud-Managed CAs: PKI as a Service<a class="headerlink" href="#85-cloud-managed-cas-pki-as-a-service" title="Permanent link">&para;</a></h2>
+<p>Cloud providers and vendors now offer the CA itself as a managed service. You configure a hierarchy and policies; they run the servers, protect the keys in HSMs, and scale issuance. You get a private CA without racking hardware or patching CA servers.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-05-cloud-managed-cas-pki-as-a-service.svg" alt="The provider runs and protects the CA; clients enrol over standard protocols." loading="lazy" width="1000" height="500">
+<figcaption><strong>A managed CA serving many clients.</strong> The provider runs and protects the CA; clients enrol over standard protocols.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Instead of buying and maintaining your own printing press, you rent time at a fully staffed print shop: you supply the design and approvals, they run the machines, guard the plates, and keep the lights on.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A SaaS company, Tideline, uses AWS Private CA to issue certificates for its internal load balancers and IoT fleet. Keys never leave AWS's FIPS-validated HSMs, CRLs publish to S3 automatically, and cert-manager in their Kubernetes cluster requests certificates from it over an AWS issuer.</p>
+</div>
+<h4 id="how-it-works_4">How it works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Create a CA in the provider console or API and choose root or subordinate mode.</li>
+<li>Set policies: allowed templates/EKUs, validity, naming and who/what may request.</li>
+<li>Integrate enrolment: ACME, SCEP, an API, or a Kubernetes issuer.</li>
+<li>Point revocation (CRL/OCSP) at provider-managed endpoints.</li>
+<li>Wire issuance and expiry metrics into monitoring and set budget alarms, since per-certificate billing adds up.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Cloud and platform engineers, SREs and architects who want private PKI without operating CA infrastructure.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>The trade-off to state in interviews: managed CAs remove operational toil and give you HSM-backed keys, but you depend on the provider's availability, pricing and region coverage, and your trust now extends to them.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>AWS Private CA lets you run a root or subordinate CA, publish CRLs to S3 and run OCSP responders; in November 2025 it added ML-DSA post-quantum CAs and certificates for early PQC testing.</li>
+<li>Google Cloud Certificate Authority Service (CAS) offers managed CA pools with Cloud HSM-backed keys and tight integration with Google's load balancers and GKE.</li>
+<li>Microsoft Intune Cloud PKI (GA 2024) is PKI-as-a-service for Intune-managed endpoints, removing the need to run AD CS and NDES; its Bring-Your-Own-CA (BYOCA) option chains the cloud issuing CA to an existing on-prem root.</li>
+<li>Managed CAs usually bill per certificate or per CA per month, so very short-lived, high-volume issuance (mesh mTLS) can get expensive — model the cost before committing.</li>
+<li>Public-CA vendors also sell managed private CA: DigiCert ONE and Sectigo offer hosted private hierarchies with lifecycle tooling for teams that want a vendor rather than a cloud account.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Forgetting that a managed CA is still your trust root: misconfigure its policy or access controls and it will happily issue certificates to the wrong party.</li>
+<li>Ignoring per-certificate pricing and then being surprised when a service mesh issuing millions of short-lived certs produces a large bill.</li>
+<li>Assuming region/sovereignty is handled — confirm the CA and its keys live in regions your compliance rules allow before issuing anything.</li>
+</ul>
+</div>
+<h4 id="key-chips-standards-protocols-products-terms_4">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_4" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AWS Private CA</strong><br><em>Amazon Web Services · Service · Current · Cloud</em></td>
+<td>A managed private CA service for creating hierarchies and issuing certificates with HSM-backed keys.</td>
+<td>Tideline issues internal load-balancer and IoT certificates from AWS Private CA with CRLs in S3.</td>
+</tr>
+<tr>
+<td><strong>AWS Private CA ML-DSA support</strong><br><em>Amazon Web Services · Service · Emerging · Cloud</em></td>
+<td>A 2025 addition letting AWS Private CA create CAs and issue certificates using the ML-DSA post-quantum signature algorithm.</td>
+<td>Teams test FIPS 204 ML-DSA certificate issuance and code signing without buying PQC hardware.</td>
+</tr>
+<tr>
+<td><strong>Google Cloud CAS</strong><br><em>Google Cloud · Service · Current · Cloud</em></td>
+<td>Certificate Authority Service: managed CA pools with Cloud HSM keys, integrated with Google load balancers and GKE.</td>
+<td>A GKE platform issues workload certificates from a CAS pool via a cert-manager Google issuer.</td>
+</tr>
+<tr>
+<td><strong>Microsoft Intune Cloud PKI</strong><br><em>Microsoft · Service · Current · Cloud</em></td>
+<td>PKI-as-a-service for Intune-managed devices, issuing user and device certificates without on-prem AD CS or NDES.</td>
+<td>An IT team retires its NDES servers and issues Wi-Fi certificates to managed laptops via Cloud PKI.</td>
+</tr>
+<tr>
+<td><strong>Cloud PKI BYOCA</strong><br><em>Microsoft Intune · Concept · Current · Cloud</em></td>
+<td>Bring-Your-Own-CA: a cloud issuing CA chained to an organisation's existing on-premises root CA.</td>
+<td>A firm keeps its trusted on-prem root but issues device certificates from a chained cloud CA.</td>
+</tr>
+<tr>
+<td><strong>DigiCert ONE private CA</strong><br><em>DigiCert · Service · Current · Cloud</em></td>
+<td>DigiCert's platform offering hosted private CA hierarchies with certificate lifecycle management.</td>
+<td>A manufacturer runs its device PKI on DigiCert ONE rather than building its own CA farm.</td>
+</tr>
+<tr>
+<td><strong>Sectigo private CA</strong><br><em>Sectigo · Service · Current · Cloud</em></td>
+<td>Sectigo's managed private PKI and certificate lifecycle service for enterprise internal certificates.</td>
+<td>A retailer uses Sectigo's hosted private CA for store-network device certificates.</td>
+</tr>
+<tr>
+<td><strong>Managed OCSP/CRL endpoints</strong><br><em>Cloud CA providers · Service · Current · Cloud</em></td>
+<td>Provider-hosted revocation endpoints that publish CRLs and answer OCSP so you need not run responders.</td>
+<td>AWS Private CA writes CRLs to an S3 bucket and optionally runs an OCSP responder for you.</td>
+</tr>
+<tr>
+<td><strong>Per-certificate pricing model</strong><br><em>Cloud CA providers · Concept · Current · Cloud</em></td>
+<td>Billing based on certificates issued or CAs per month, which shapes design decisions for high-volume issuance.</td>
+<td>A mesh issuing millions of short-lived certs reconsiders lifetimes once the monthly bill arrives.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="86-acme-automated-certificate-issuance-and-renewal">8.6 ACME: Automated Certificate Issuance and Renewal<a class="headerlink" href="#86-acme-automated-certificate-issuance-and-renewal" title="Permanent link">&para;</a></h2>
+<p>ACME is the protocol that lets a machine prove it controls a domain and get a certificate automatically, with no human clicking buttons. Let's Encrypt made it famous; now it is everywhere, and it is how short-lived certificates are kept fresh.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-06-acme-automated-certificate-issuance-and.svg" alt="The CA only issues after the client proves control of the domain." loading="lazy" width="1000" height="421">
+<figcaption><strong>An ACME HTTP-01 issuance.</strong> The CA only issues after the client proves control of the domain.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>ACME is like a self-renewing library card: the moment yours is about to expire, a robot checks you are still you and prints a new one, so your card never lapses and you never queue at the desk.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Rafael runs a blog on a small VPS. He installs Caddy, points it at his domain, and never thinks about certificates again: Caddy speaks ACME to Let's Encrypt, proves control via an HTTP challenge, installs the certificate, and renews it automatically well before expiry.</p>
+</div>
+<h4 id="how-it-works_5">How it works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>The ACME client generates a key pair and registers an account with the ACME server (CA).</li>
+<li>The client requests a certificate for one or more identifiers (domains).</li>
+<li>The server issues a challenge; the client proves control via HTTP-01 (a file), DNS-01 (a TXT record) or TLS-ALPN-01.</li>
+<li>The server validates the challenge, optionally from multiple network vantage points.</li>
+<li>The client submits a CSR; the server issues the certificate.</li>
+<li>The client renews automatically, ideally guided by renewal-timing hints (ARI).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Web admins, DevOps/SRE teams, Kubernetes operators and anyone who wants certificates to renew themselves.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the three challenge types and when each fits: HTTP-01 for a single host, DNS-01 for wildcards and hosts not reachable on port 80, TLS-ALPN-01 when only port 443 is available.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>ACME is defined in RFC 8555; the account key signs all requests, and the certificate key is separate, so losing one need not mean losing the other.</li>
+<li>Multi-perspective issuance corroboration means the CA validates challenges from several network locations to resist BGP-hijack and local spoofing attacks; CA/Browser Forum rules now require it for public issuance.</li>
+<li>ACME Renewal Information (ARI), standardised as RFC 9773 in 2025, lets the CA tell clients the ideal renewal window, so a CA can spread load or trigger early renewal if a certificate must be replaced.</li>
+<li>ACME supports more than domain validation: profiles and extensions cover S/MIME and, increasingly, device and short-lived-certificate use cases, and private CAs (step-ca, Vault/OpenBao) speak ACME too.</li>
+<li>Wildcard certificates require DNS-01 because the CA must see control of the whole domain, not just one host responding on port 80.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Testing against the production endpoint and hitting rate limits — use the CA's staging environment and --dry-run while you debug.</li>
+<li>Relying on HTTP-01 for a host that is not reachable on port 80 from the public internet; it will fail silently at renewal and the certificate will lapse.</li>
+<li>Forgetting to reload the service after renewal: the new certificate sits on disk but the running server keeps serving the old one until restarted or signalled.</li>
+</ul>
+</div>
+<h3 id="try-it-dry-run-a-certificate-request-with-certbot">Try it: Dry-run a certificate request with certbot<a class="headerlink" href="#try-it-dry-run-a-certificate-request-with-certbot" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Safe staging test (no rate-limit hit, no real cert):</span>
+certbot<span class="w"> </span>certonly<span class="w"> </span>--dry-run<span class="w"> </span>--standalone<span class="w"> </span>-d<span class="w"> </span>test.example.com
+<span class="c1"># Or inspect acme.sh's issued certs:</span>
+acme.sh<span class="w"> </span>--list
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_5">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ACME (RFC 8555)</strong><br><em>IETF · Protocol · Current · Web PKI</em></td>
+<td>The Automatic Certificate Management Environment protocol for proving domain control and issuing/renewing certificates automatically.</td>
+<td>Let's Encrypt issues hundreds of millions of certificates over ACME with no human involvement.</td>
+</tr>
+<tr>
+<td><strong>certbot</strong><br><em>Electronic Frontier Foundation · Tool · Current · Web PKI</em></td>
+<td>The reference ACME client that obtains and renews Let's Encrypt certificates and configures common web servers.</td>
+<td>certbot --nginx installs and auto-renews a certificate for an Nginx site in one command.</td>
+</tr>
+<tr>
+<td><strong>acme.sh</strong><br><em>Neil Pang (open source) · Tool · Current · Web PKI</em></td>
+<td>A pure-shell ACME client popular for its many DNS providers and tiny footprint.</td>
+<td>A router with limited tooling uses acme.sh with DNS-01 to get a wildcard certificate.</td>
+</tr>
+<tr>
+<td><strong>Caddy</strong><br><em>Caddy / ZeroSSL · Software · Current · Web PKI</em></td>
+<td>A web server that obtains and renews certificates over ACME automatically, HTTPS on by default.</td>
+<td>Rafael's Caddy site serves HTTPS with zero certificate configuration.</td>
+</tr>
+<tr>
+<td><strong>cert-manager</strong><br><em>CNCF (graduated 2024) · Software · Current · Cloud</em></td>
+<td>The standard Kubernetes add-on that requests, stores and renews certificates from ACME and other issuers.</td>
+<td>cert-manager issues and rotates TLS certificates for every Ingress in a cluster via Let's Encrypt.</td>
+</tr>
+<tr>
+<td><strong>HTTP-01 challenge</strong><br><em>RFC 8555 · Concept · Current · Web PKI</em></td>
+<td>Domain-control proof where the client serves a specific file under /.well-known/acme-challenge on port 80.</td>
+<td>The CA fetches http://example.com/.well-known/acme-challenge/&lt;token&gt; to confirm control.</td>
+</tr>
+<tr>
+<td><strong>DNS-01 challenge</strong><br><em>RFC 8555 · Concept · Current · Web PKI</em></td>
+<td>Domain-control proof via a TXT record under _acme-challenge; the only way to get wildcard certificates.</td>
+<td>acme.sh adds a _acme-challenge TXT record through the DNS provider's API to get *.example.com.</td>
+</tr>
+<tr>
+<td><strong>ACME Renewal Information (ARI)</strong><br><em>IETF (RFC 9773, 2025) · RFC · Emerging · Web PKI</em></td>
+<td>An ACME extension letting the CA suggest when a client should renew, enabling load-spreading and forced early renewal.</td>
+<td>A CA uses ARI to tell clients to renew early when a batch of certificates must be replaced.</td>
+</tr>
+<tr>
+<td><strong>Multi-perspective validation</strong><br><em>CA/Browser Forum · Concept · Current · Web PKI</em></td>
+<td>Validating ACME challenges from several network vantage points to resist routing-based domain-control spoofing.</td>
+<td>Let's Encrypt checks an HTTP-01 challenge from multiple regions before issuing.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="87-enrolment-protocols-beyond-acme-est-scep-cmp">8.7 Enrolment Protocols Beyond ACME: EST, SCEP, CMP<a class="headerlink" href="#87-enrolment-protocols-beyond-acme-est-scep-cmp" title="Permanent link">&para;</a></h2>
+<p>ACME is great for web servers, but devices, routers and industrial gear often speak other enrolment languages. EST, SCEP and CMP are the main ones: standard ways for a client to request, receive and renew certificates from a CA.</p>
+<p><strong>EST vs SCEP vs CMP</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>EST</th>
+<th>SCEP</th>
+<th>CMP</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Spec</strong></td>
+<td>RFC 7030</td>
+<td>RFC 8894</td>
+<td>RFC 9810/9480</td>
+</tr>
+<tr>
+<td><strong>Transport</strong></td>
+<td>HTTPS (TLS)</td>
+<td>HTTP</td>
+<td>HTTP/TCP</td>
+</tr>
+<tr>
+<td><strong>Strength</strong></td>
+<td>modern, TLS-secured</td>
+<td>simple, widely supported</td>
+<td>rich lifecycle, PQC-ready</td>
+</tr>
+<tr>
+<td><strong>Typical use</strong></td>
+<td>IoT, modern devices</td>
+<td>legacy network gear, MDM</td>
+<td>industrial, telco/5G</td>
+</tr>
+</tbody>
+</table>
+<p><em>Pick by what your devices speak and how much lifecycle capability you need.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>If ACME is the online passport-renewal website, EST, SCEP and CMP are the other official channels — the embassy counter, the postal form and the courier service — each suited to a different kind of applicant.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A utility, Fenwick Power, enrols thousands of field routers. The routers only speak SCEP, so they enrol through the CA's SCEP endpoint. The newer smart meters use EST over TLS, and the industrial controllers use CMP because the vendor's PKI toolkit standardised on it.</p>
+</div>
+<h4 id="how-it-works_6">How it works<a class="headerlink" href="#how-it-works_6" title="Permanent link">&para;</a></h4>
+<ol>
+<li>The client authenticates to the enrolment endpoint (shared secret, existing certificate, or TLS).</li>
+<li>It submits a certificate request (usually a PKCS #10 CSR).</li>
+<li>The CA/RA checks authorisation against policy.</li>
+<li>The CA issues the certificate and returns it (plus its chain).</li>
+<li>The protocol handles renewal/re-enrolment and, in CMP's case, richer lifecycle messages.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Network, IoT and OT engineers, device manufacturers, and PKI teams integrating certificates into non-web systems.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Match the protocol to the client: SCEP is old and simple but weak on authentication (pairs with NDES/MDM); EST is the modern TLS-based successor; CMP is the most capable and is favoured in industrial and 5G PKI.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>EST (RFC 7030) runs over TLS and uses PKCS #10 requests and PKCS #7 responses; mutual TLS with an existing certificate makes renewal clean, which suits device fleets with an initial (birth) certificate.</li>
+<li>SCEP (finally standardised as RFC 8894 in 2020 after decades as a draft) is simple and ubiquitous in routers and MDM, but its shared-secret challenge model is weak, so it is wrapped in MDM authorisation and tightly scoped.</li>
+<li>CMP (Certificate Management Protocol) is the most capable: RFC 9810 (July 2025) is the updated core that obsoletes RFC 4210, and together with RFC 9811 it supersedes the RFC 9480 profile; it now supports managing KEM (post-quantum) public keys.</li>
+<li>CMP's Lightweight profile cut its historical complexity, which drove adoption in industrial automation (IEC 62443 contexts) and 3GPP/5G network-function PKI.</li>
+<li>All three ultimately carry a PKCS #10 CSR to the CA; the differences are in transport, authentication and how much of the certificate lifecycle (revocation, key update, confirmation) the protocol covers.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Deploying SCEP with a static, shared challenge password reused across devices — treat SCEP enrolment as needing external authorisation (MDM) and short-lived challenges.</li>
+<li>Assuming EST and SCEP are interchangeable; EST needs TLS and often a client certificate, so a device with no initial identity may need a different bootstrap.</li>
+<li>Quoting the old CMP RFC numbers: the current core is RFC 9810 (2025), not RFC 4210 or RFC 9480, and specs listing only the old numbers are out of date.</li>
+</ul>
+</div>
+<h4 id="key-chips-standards-protocols-products-terms_6">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_6" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>EST (RFC 7030)</strong><br><em>IETF · RFC · Current · Devices &amp; IoT</em></td>
+<td>Enrolment over Secure Transport: a TLS-based protocol for requesting and renewing certificates, successor to SCEP.</td>
+<td>Smart meters re-enrol over EST using mutual TLS with their birth certificate.</td>
+</tr>
+<tr>
+<td><strong>SCEP (RFC 8894)</strong><br><em>IETF (originally Cisco) · RFC · Legacy · Devices &amp; IoT</em></td>
+<td>Simple Certificate Enrolment Protocol: an old, widely supported HTTP protocol for device certificate enrolment.</td>
+<td>Intune uses SCEP (via NDES) to deliver certificates to managed phones and routers.</td>
+</tr>
+<tr>
+<td><strong>CMP (RFC 9810)</strong><br><em>IETF · RFC · Current · Devices &amp; IoT</em></td>
+<td>Certificate Management Protocol: a feature-rich lifecycle protocol updated in 2025, obsoleting RFC 4210.</td>
+<td>An industrial automation vendor enrols PLCs over CMP's Lightweight profile.</td>
+</tr>
+<tr>
+<td><strong>CMP Lightweight profile</strong><br><em>IETF (RFC 9483) · Specification · Current · Devices &amp; IoT</em></td>
+<td>A simplified, mandatory-to-implement subset of CMP that made it practical for constrained industrial devices.</td>
+<td>A 5G network-function uses the Lightweight CMP profile to enrol its operational certificate.</td>
+</tr>
+<tr>
+<td><strong>RFC 9811 (CMP updates)</strong><br><em>IETF · RFC · Current · Devices &amp; IoT</em></td>
+<td>Companion to RFC 9810 that, together with it, obsoletes the earlier RFC 9480 CMP algorithms/profile document.</td>
+<td>Implementers cite RFC 9810 and RFC 9811 for current CMP algorithm support, including KEM keys.</td>
+</tr>
+<tr>
+<td><strong>PKCS #10 CSR</strong><br><em>RSA / IETF (RFC 2986) · Format · Current · Private PKI</em></td>
+<td>The standard Certificate Signing Request format carrying a public key and requested subject, used by all these protocols.</td>
+<td>openssl req -new produces a PKCS #10 CSR to hand to EST, SCEP or CMP.</td>
+</tr>
+<tr>
+<td><strong>NDES bootstrap for SCEP</strong><br><em>Microsoft · Concept · Legacy · Private PKI</em></td>
+<td>Using Microsoft's NDES to issue SCEP challenge passwords, usually brokered by an MDM for authorisation.</td>
+<td>Intune generates a one-time SCEP challenge per device so the password is never reused.</td>
+</tr>
+<tr>
+<td><strong>Birth certificate (IDevID) enrolment</strong><br><em>IEEE 802.1AR · Concept · Current · Devices &amp; IoT</em></td>
+<td>Using a factory-installed device identity certificate to authenticate the first EST/CMP enrolment for operational certs.</td>
+<td>A switch presents its IDevID over EST to obtain its network (LDevID) certificate on first boot.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="88-certificate-lifecycle-management-and-the-47-day-future">8.8 Certificate Lifecycle Management and the 47-Day Future<a class="headerlink" href="#88-certificate-lifecycle-management-and-the-47-day-future" title="Permanent link">&para;</a></h2>
+<p>Certificate lifecycle management (CLM) is the discipline of knowing every certificate you have, who owns it, when it expires, and renewing or replacing it on time. As public certificate lifetimes shrink toward 47 days, doing this by hand becomes impossible.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-08-certificate-lifecycle-management-and.svg" alt="Shorter lifetimes mean this loop runs constantly, so it must be automated." loading="lazy" width="1000" height="560">
+<figcaption><strong>The certificate lifecycle loop.</strong> Shorter lifetimes mean this loop runs constantly, so it must be automated.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>CLM is like fleet maintenance for a delivery company: you need a register of every vehicle, its service dates and its driver, so none ever breaks down on the road. Shorter lifetimes are like service intervals dropping from yearly to monthly.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Harborview Bank once tracked certificates in a spreadsheet and suffered an outage when a payment gateway certificate expired unnoticed. It deployed a CLM platform that discovers certificates across the network, assigns each an owner, alerts before expiry and automates renewal via ACME. The next near-miss was caught weeks early.</p>
+</div>
+<h4 id="how-it-works_7">How it works<a class="headerlink" href="#how-it-works_7" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Discover: scan networks, load balancers, cloud and CT logs to find every certificate, including forgotten ones.</li>
+<li>Inventory: record issuer, key, expiry, location and owner in one authoritative system.</li>
+<li>Monitor: alert well before expiry and flag weak keys or non-compliant certificates.</li>
+<li>Automate: renew and deploy through ACME or APIs instead of manual steps.</li>
+<li>Prepare for agility: be able to swap algorithms or reissue in bulk if a CA is distrusted or an algorithm weakens.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PKI engineers, SREs, security operations and compliance teams responsible for keeping services online and audits clean.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Memorise the public-TLS lifetime glide path driven by the 2025 ballot SC-081: 200 days in 2026, 100 days in 2027 and 47 days from 2029 — this is why automation is now mandatory, not optional.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>CA/Browser Forum ballot SC-081 (passed 2025) sets a stepped reduction in public TLS certificate maximum validity: 200 days from 15 March 2026, 100 days from 15 March 2027 and 47 days from 15 March 2029, with domain-validation reuse periods shrinking in parallel.</li>
+<li>At a 47-day lifetime a certificate renews roughly eight times a year, so any manual renewal process will eventually miss one; discovery plus automated ACME renewal is the only sustainable answer.</li>
+<li>Discovery must include CT-log monitoring and network scanning, because the dangerous certificates are the ones nobody remembered to put in the inventory.</li>
+<li>Crypto agility — the ability to reissue in bulk with a different algorithm or from a different CA — is now a first-class CLM requirement, driven by distrust events and the coming post-quantum migration.</li>
+<li>Leading platforms (Keyfactor Command, Idira Certificate Manager, AppViewX CERT+, DigiCert Trust Lifecycle Manager, Sectigo Certificate Manager) combine discovery, ownership, policy and automation across public and private CAs.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Tracking certificates in a spreadsheet: it is always out of date, misses shadow certificates, and is the classic cause of expiry outages.</li>
+<li>Automating renewal but not deployment and reload, so a renewed certificate sits unused while the server keeps serving the expired one.</li>
+<li>Planning for today's lifetimes and being caught out when the ballot-SC-081 steps halve them again — design for 47 days now.</li>
+</ul>
+</div>
+<h3 id="try-it-spot-certificates-expiring-soon-with-a-quick-check">Try it: Spot certificates expiring soon with a quick check<a class="headerlink" href="#try-it-spot-certificates-expiring-soon-with-a-quick-check" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code># Check a server certificate's expiry date:
+echo | openssl s_client -connect example.com:443 2&gt;/dev/null \
+  | openssl x509 -noout -enddate
+# Scale this across your inventory with a CLM tool or cron script.
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_7">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_7" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Certificate lifecycle management (CLM)</strong><br><em>Industry practice · Concept · Current · Private PKI</em></td>
+<td>The end-to-end discipline of discovering, inventorying, owning, renewing and revoking every certificate an organisation holds.</td>
+<td>Harborview Bank's CLM platform catches expiring certificates weeks ahead across thousands of services.</td>
+</tr>
+<tr>
+<td><strong>Certificate discovery</strong><br><em>CLM tooling · Concept · Current · Private PKI</em></td>
+<td>Actively finding certificates across networks, cloud, endpoints and CT logs, including ones no one remembers.</td>
+<td>A network scan reveals 400 certificates on load balancers that were never in the official inventory.</td>
+</tr>
+<tr>
+<td><strong>Ballot SC-081 lifetime schedule</strong><br><em>CA/Browser Forum (2025) · Standard · Current · Web PKI</em></td>
+<td>The agreed step-down of public TLS maximum validity to 200 days (2026), 100 days (2027) and 47 days (2029).</td>
+<td>Teams plan automation knowing manual renewal cannot survive a 47-day lifetime.</td>
+</tr>
+<tr>
+<td><strong>Crypto agility</strong><br><em>Industry / NIST guidance · Concept · Current · General</em></td>
+<td>The ability to swap cryptographic algorithms or reissue certificates in bulk quickly, without re-architecting systems.</td>
+<td>During a CA distrust, an agile org reissues thousands of certificates from a new CA in hours.</td>
+</tr>
+<tr>
+<td><strong>Keyfactor Command</strong><br><em>Keyfactor · Product · Current · Private PKI</em></td>
+<td>A certificate lifecycle platform for discovery, inventory, automation and governance across many CAs.</td>
+<td>An enterprise orchestrates AD CS, EJBCA and public-CA certificates from one Keyfactor console.</td>
+</tr>
+<tr>
+<td><strong>Idira Certificate Manager (formerly Venafi)</strong><br><em>Palo Alto Networks (Idira; ex-CyberArk, ex-Venafi) · Product · Current · Private PKI</em></td>
+<td>Machine-identity and certificate lifecycle platform, originally Venafi TLS Protect; CyberArk bought Venafi in 2024, and Palo Alto Networks rebranded it Idira in 2026.</td>
+<td>A bank governs tens of thousands of TLS certificates and keys with policy and automated renewal.</td>
+</tr>
+<tr>
+<td><strong>AppViewX CERT+</strong><br><em>AppViewX · Product · Current · Private PKI</em></td>
+<td>A certificate lifecycle automation platform with discovery, workflow and integrations into load balancers and CAs.</td>
+<td>A telco automates renewal and push-to-device across its F5 load balancers with AppViewX.</td>
+</tr>
+<tr>
+<td><strong>DigiCert Trust Lifecycle Manager</strong><br><em>DigiCert · Product · Current · Private PKI</em></td>
+<td>DigiCert ONE's module for unified public and private certificate lifecycle management and automation.</td>
+<td>A retailer manages both its public web certificates and private device certificates in one DigiCert workflow.</td>
+</tr>
+<tr>
+<td><strong>Expiry monitoring &amp; alerting</strong><br><em>CLM / monitoring tools · Concept · Current · Private PKI</em></td>
+<td>Automated checks that warn owners well before certificates expire, the simplest high-value CLM control.</td>
+<td>A dashboard flags every certificate expiring within 30 days and pages its owner at 7 days.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="89-workload-machine-identity-spiffe-service-mesh-and-ssh-certs">8.9 Workload &amp; Machine Identity: SPIFFE, Service Mesh and SSH Certs<a class="headerlink" href="#89-workload-machine-identity-spiffe-service-mesh-and-ssh-certs" title="Permanent link">&para;</a></h2>
+<p>In modern systems, software talks to software: microservices, containers and jobs. Each needs an identity so the others can trust it. Workload identity gives every service a short-lived certificate, automatically, so they can authenticate with mutual TLS instead of shared passwords.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-09-workload-machine-identity-spiffe.svg" alt="Attestation first; the identity is short-lived and rotated automatically." loading="lazy" width="1000" height="193">
+<figcaption><strong>How a workload gets its identity (SPIFFE/SPIRE).</strong> Attestation first; the identity is short-lived and rotated automatically.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Instead of every delivery driver sharing one master key (a static secret), each gets a photo badge that expires at the end of their shift. Lose a badge and it is useless by morning; there is no master key to steal.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>At streaming company Kestrel, hundreds of services run in Kubernetes. SPIRE issues each pod a SPIFFE identity as a short-lived X.509 certificate (an SVID). The Istio service mesh uses those certificates for mutual TLS between services, so a stolen certificate is worthless within minutes and no service holds a long-lived password.</p>
+</div>
+<h4 id="how-it-works_8">How it works<a class="headerlink" href="#how-it-works_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Attest the workload: prove what it is (its node, container image, Kubernetes service account).</li>
+<li>Issue a short-lived identity document (an X.509 or JWT SVID) bound to a SPIFFE ID.</li>
+<li>Services present these certificates to each other and verify them for mutual TLS.</li>
+<li>Rotate constantly: identities live minutes to hours and are refreshed automatically.</li>
+<li>For humans and servers, issue short-lived SSH certificates the same way instead of static keys.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Platform engineers, Kubernetes and service-mesh operators, and security teams replacing static secrets with identities.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Learn the SPIFFE vocabulary: a SPIFFE ID is a URI like spiffe://kestrel.io/ns/prod/sa/payments, and an SVID is the signed document (X.509 cert or JWT) that proves it. SPIRE is the implementation.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>SPIFFE is the specification and SPIRE the reference implementation; both are CNCF graduated projects, and the identity (SVID) can be an X.509 certificate or a signed JWT, each tied to a SPIFFE ID URI.</li>
+<li>Service meshes (Istio, Linkerd) automate mTLS: sidecar or ambient proxies obtain certificates (Istio from istiod/SPIRE, Linkerd from its identity service) and encrypt and authenticate all service-to-service traffic transparently.</li>
+<li>In Kubernetes, cert-manager is often the issuing glue, and the csi-driver or SPIRE agent delivers rotating certificates into pods without baking secrets into images.</li>
+<li>SSH certificates replace the sprawl of authorized_keys: a small SSH CA signs short-lived user and host certificates, so access expires automatically and host keys are verifiable — tools like step-ca, Vault/OpenBao and Teleport issue them.</li>
+<li>Short lifetimes change the security model: because identities expire in minutes, revocation is rarely needed, and a leaked credential is useless almost immediately.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Confusing SPIFFE (the standard) with SPIRE (the software) in interviews; also note an SVID can be a JWT, not only an X.509 certificate.</li>
+<li>Turning on a service mesh and assuming mTLS is enforced, when it is actually in permissive mode and still accepting plaintext — verify strict mTLS is on.</li>
+<li>Issuing SSH host certificates but never configuring clients to trust the SSH CA, so users still get 'unknown host' prompts and the benefit is lost.</li>
+</ul>
+</div>
+<h3 id="try-it-create-a-short-lived-ssh-user-certificate-lab">Try it: Create a short-lived SSH user certificate (lab)<a class="headerlink" href="#try-it-create-a-short-lived-ssh-user-certificate-lab" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Sign a user key with a CA key for 1 hour (lab example):</span>
+ssh-keygen<span class="w"> </span>-s<span class="w"> </span>ca_key<span class="w"> </span>-I<span class="w"> </span>alice<span class="w"> </span>-n<span class="w"> </span>alice<span class="w"> </span>-V<span class="w"> </span>+1h<span class="w"> </span>user_key.pub
+<span class="c1"># Inspect it:</span>
+ssh-keygen<span class="w"> </span>-L<span class="w"> </span>-f<span class="w"> </span>user_key-cert.pub
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_8">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SPIFFE</strong><br><em>CNCF (graduated) · Standard · Current · Cloud</em></td>
+<td>A standard for giving workloads cryptographic identities expressed as SPIFFE ID URIs, independent of platform.</td>
+<td>A payments service is identified as spiffe://kestrel.io/ns/prod/sa/payments across clouds.</td>
+</tr>
+<tr>
+<td><strong>SPIRE</strong><br><em>CNCF (graduated) · Software · Current · Cloud</em></td>
+<td>The reference SPIFFE implementation that attests workloads and issues short-lived SVID certificates to them.</td>
+<td>SPIRE agents hand each Kubernetes pod a rotating X.509 SVID after verifying its identity.</td>
+</tr>
+<tr>
+<td><strong>SVID (X.509 / JWT)</strong><br><em>SPIFFE spec · Concept · Current · Cloud</em></td>
+<td>The SPIFFE Verifiable Identity Document: a short-lived X.509 certificate or JWT proving a workload's SPIFFE ID.</td>
+<td>A service presents its X.509 SVID to a peer, which checks the SPIFFE ID before accepting the connection.</td>
+</tr>
+<tr>
+<td><strong>Istio</strong><br><em>CNCF (Google, IBM origins) · Software · Current · Cloud</em></td>
+<td>A service mesh that automates mutual TLS and identity for services, issuing and rotating their certificates.</td>
+<td>Istio enforces strict mTLS so all traffic between Kestrel's services is encrypted and authenticated.</td>
+</tr>
+<tr>
+<td><strong>Linkerd</strong><br><em>CNCF (Buoyant) · Software · Current · Cloud</em></td>
+<td>A lightweight service mesh that provides automatic mTLS between pods with short-lived, rotating certificates.</td>
+<td>Linkerd issues 24-hour certificates to pods and rotates them without operator action.</td>
+</tr>
+<tr>
+<td><strong>Kubernetes mTLS via cert-manager</strong><br><em>CNCF · Concept · Current · Cloud</em></td>
+<td>Using cert-manager to issue and rotate certificates that workloads use for mutual TLS inside a cluster.</td>
+<td>cert-manager mints internal service certificates that Ingress and sidecars use for mTLS.</td>
+</tr>
+<tr>
+<td><strong>SSH certificates</strong><br><em>OpenSSH · Concept · Current · Platform &amp; OS</em></td>
+<td>Short-lived certificates signed by an SSH CA that replace static authorized_keys for user and host authentication.</td>
+<td>Engineers get a one-hour SSH user certificate at login instead of adding keys to servers.</td>
+</tr>
+<tr>
+<td><strong>Teleport</strong><br><em>Gravitational / Teleport · Product · Current · Platform &amp; OS</em></td>
+<td>An access platform that issues short-lived SSH and X.509 certificates for engineers and services, with audit.</td>
+<td>A team uses Teleport so every SSH session uses an expiring certificate and is recorded.</td>
+</tr>
+<tr>
+<td><strong>Workload attestation</strong><br><em>SPIFFE/SPIRE · Concept · Current · Cloud</em></td>
+<td>Verifying what a workload actually is (node, image, service account) before issuing it an identity.</td>
+<td>SPIRE checks a pod's Kubernetes service account and image digest before granting an SVID.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="810-device-pki-at-scale-manufacturing-matter-v2x-and-ev-charging">8.10 Device PKI at Scale: Manufacturing, Matter, V2X and EV Charging<a class="headerlink" href="#810-device-pki-at-scale-manufacturing-matter-v2x-and-ev-charging" title="Permanent link">&para;</a></h2>
+<p>Billions of devices need identities too: smart-home gadgets, cars, EV chargers and electricity meters. Device PKI gives each one a certificate at the factory and uses it to prove authenticity and secure communication for its whole life.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-10-device-pki-at-scale-manufacturing.svg" alt="A device proves it is genuine by chaining its DAC up to a trusted attestation authority." loading="lazy" width="1000" height="484">
+<figcaption><strong>Matter device-attestation PKI.</strong> A device proves it is genuine by chaining its DAC up to a trusted attestation authority.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like stamping a tamper-proof serial plate and giving a birth certificate to every appliance on the production line, so anyone who meets it later can confirm it is genuine and not a counterfeit or a fake.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>An appliance maker, Brightleaf, injects a unique key and certificate into each smart thermostat during manufacturing. In the home, the Matter standard uses that Device Attestation Certificate to prove the thermostat is a genuine certified product before it joins the network, blocking counterfeits.</p>
+</div>
+<h4 id="how-it-works_9">How it works<a class="headerlink" href="#how-it-works_9" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Generate or inject a unique key per device at manufacture, ideally inside a secure element.</li>
+<li>Issue a birth/identity certificate (IDevID or a scheme-specific certificate) chained to a manufacturer CA.</li>
+<li>Ship the device; it proves authenticity using that certificate when onboarding.</li>
+<li>Enrol an operational certificate for day-to-day use via EST/CMP where supported.</li>
+<li>Plan for renewal, revocation and the device's full lifespan, which may be decades.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Device manufacturers, IoT/embedded and OT security engineers, automotive and energy-sector PKI specialists.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Each ecosystem has its own PKI vocabulary: Matter uses DAC/PAI/PAA, cars use IEEE 1609.2 and SCMS for V2X, and EV charging uses ISO 15118 Plug &amp; Charge — know which belongs to which.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Manufacturing PKI must issue at line speed and offline-tolerant: keys are often generated in or injected into a secure element, and the issuing infrastructure is isolated because a leaked manufacturer key lets attackers forge genuine-looking devices.</li>
+<li>Matter (the smart-home standard) uses a Device Attestation Certificate (DAC) under a Product Attestation Intermediate (PAI) and Product Attestation Authority (PAA), plus a Certification Declaration, so a commissioner can verify a device is a genuine certified product.</li>
+<li>Automotive V2X uses IEEE 1609.2 certificates and a Security Credential Management System (SCMS) that issues rotating pseudonym certificates so cars can trust each other's safety messages without being individually tracked.</li>
+<li>EV charging's ISO 15118 'Plug &amp; Charge' uses certificates so a car and charger authenticate and bill automatically when the cable is connected, with a multi-party PKI behind it (OEM, mobility operator, charge-point operator).</li>
+<li>Smart meters and grid devices use long-lived device PKI with strict key protection because they are deployed for 15-20 years in the field and are hard to update.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Reusing one key across a product line to save manufacturing cost; one extraction then clones the entire fleet and cannot be revoked device-by-device.</li>
+<li>Designing device PKI for today and ignoring the device's 20-year life, with no plan for certificate renewal, algorithm change or CA rollover in the field.</li>
+<li>Confusing the ecosystem certificates — a Matter DAC, an 802.1AR IDevID and an ISO 15118 contract certificate solve different problems and are not interchangeable.</li>
+</ul>
+</div>
+<h4 id="key-chips-standards-protocols-products-terms_9">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Manufacturing PKI</strong><br><em>Device makers · Concept · Current · Devices &amp; IoT</em></td>
+<td>Infrastructure that injects a unique key and identity certificate into each device during production.</td>
+<td>Brightleaf provisions a key and certificate into every thermostat's secure element on the assembly line.</td>
+</tr>
+<tr>
+<td><strong>IDevID (IEEE 802.1AR)</strong><br><em>IEEE · Standard · Current · Devices &amp; IoT</em></td>
+<td>A manufacturer-installed Initial Device Identifier certificate and key that gives a device a verifiable birth identity.</td>
+<td>A switch uses its IDevID to authenticate the first network enrolment before getting an operational certificate.</td>
+</tr>
+<tr>
+<td><strong>Matter DAC</strong><br><em>Connectivity Standards Alliance · Certificate · Current · Devices &amp; IoT</em></td>
+<td>Device Attestation Certificate proving a smart-home device is a genuine certified Matter product.</td>
+<td>A hub checks a bulb's DAC chain before letting it join the Matter fabric.</td>
+</tr>
+<tr>
+<td><strong>Matter PAA / PAI</strong><br><em>Connectivity Standards Alliance · Certificate · Current · Devices &amp; IoT</em></td>
+<td>Product Attestation Authority (root) and Intermediate that anchor the chain above a device's DAC.</td>
+<td>A manufacturer's PAI, under the CSA-recognised PAA, signs the DACs for its product line.</td>
+</tr>
+<tr>
+<td><strong>IEEE 1609.2 (V2X certificates)</strong><br><em>IEEE · Standard · Current · Devices &amp; IoT</em></td>
+<td>The certificate format and security for vehicle-to-everything safety messages, using compact certificates.</td>
+<td>Cars sign broadcast safety messages with 1609.2 certificates so neighbours can trust them.</td>
+</tr>
+<tr>
+<td><strong>SCMS (V2X PKI)</strong><br><em>US DOT / automotive industry · Concept · Current · Devices &amp; IoT</em></td>
+<td>Security Credential Management System: issues rotating pseudonym certificates so vehicles stay trusted yet unlinkable.</td>
+<td>A car cycles through pseudonym certificates so its messages are authentic but not trackable over time.</td>
+</tr>
+<tr>
+<td><strong>ISO 15118 Plug &amp; Charge</strong><br><em>ISO/IEC · Standard · Current · Devices &amp; IoT</em></td>
+<td>A standard using certificates so an EV and charger authenticate and bill automatically on plug-in.</td>
+<td>A driver plugs in and the session authenticates and bills via contract certificates, no app or card.</td>
+</tr>
+<tr>
+<td><strong>Secure element provisioning</strong><br><em>Device makers · Concept · Current · Devices &amp; IoT</em></td>
+<td>Generating or storing device keys inside a tamper-resistant chip so they cannot be extracted or cloned.</td>
+<td>A smart-lock maker injects per-device keys into an embedded secure element at the factory.</td>
+</tr>
+<tr>
+<td><strong>Smart-meter PKI</strong><br><em>Utilities / grid standards · Concept · Current · Devices &amp; IoT</em></td>
+<td>Long-lived device PKI securing electricity meters deployed for 15-20 years, with strict key protection.</td>
+<td>A utility issues per-meter certificates so command messages to meters are authenticated.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="811-code-signing-and-document-signing-pki-operations">8.11 Code-Signing and Document-Signing PKI Operations<a class="headerlink" href="#811-code-signing-and-document-signing-pki-operations" title="Permanent link">&para;</a></h2>
+<p>Software and documents are signed so users can tell they are genuine and unaltered. Running this well means protecting the signing keys in hardware, timestamping signatures so they stay valid after the certificate expires, and managing the whole process as a controlled pipeline.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-11-code-signing-and-document-signing-pki.svg" alt="The key never leaves the HSM; the timestamp preserves validity past certificate expiry." loading="lazy" width="1000" height="309">
+<figcaption><strong>Signing with an HSM and a timestamp.</strong> The key never leaves the HSM; the timestamp preserves validity past certificate expiry.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A code-signing key is like a company's official wax seal. You keep it in a vault (an HSM), only trusted staff may use it, and you note the date on every sealed letter (timestamping) so it still counts years later even after the seal-holder has left.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Software firm Umbra Tools signs its Windows installers. The signing key lives in a cloud HSM; a build server calls the HSM to sign each release and adds an RFC 3161 timestamp. Because of the timestamp, installers signed last year remain trusted even though the signing certificate has since been renewed.</p>
+</div>
+<h4 id="how-it-works_10">How it works<a class="headerlink" href="#how-it-works_10" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Generate the signing key in an HSM; since 2023 public code-signing keys must be hardware-protected.</li>
+<li>Restrict who and what can invoke signing (build pipeline, named approvers).</li>
+<li>Sign the artefact (Authenticode, jarsigner, cosign, PAdES for PDFs).</li>
+<li>Add a trusted timestamp so the signature outlives the certificate.</li>
+<li>Log every signing operation and monitor for unexpected use.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Release engineers, DevSecOps teams, PKI operators and anyone publishing signed software, drivers or legal documents.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Always explain why timestamping matters: without it, a signature becomes invalid the moment the certificate expires; with an RFC 3161 timestamp, verifiers know it was signed while the certificate was valid, so it stays trusted.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Since June 2023 the CA/Browser Forum has required private keys for publicly trusted code-signing certificates to be generated and kept in hardware (HSM or hardware token), which killed casual key handling and pushed teams to cloud signing services.</li>
+<li>Ballot CSC-31 cut the maximum code-signing certificate validity to 460 days, effective 1 March 2026 (Code Signing Baseline Requirements 3.10.0); many CAs issue at 459 days for clock-skew headroom.</li>
+<li>RFC 3161 timestamping binds a signature to a trusted time; combined with long-term validation formats, it lets a signature remain verifiable for years after the signing certificate has expired or been renewed.</li>
+<li>Document signing uses eIDAS-aligned formats: PAdES for PDFs, XAdES for XML and CAdES for generic data, each defining how to embed signatures, timestamps and revocation data for long-term validation (LTV).</li>
+<li>Modern software supply-chain signing (Sigstore/cosign) issues very short-lived certificates tied to an OIDC identity and records signatures in a transparency log, so there is no long-lived key to protect at all.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Signing without a trusted timestamp, so every signed artefact silently becomes untrusted the day the certificate expires.</li>
+<li>Leaving the signing key reachable by the whole build farm or on a developer laptop — an HSM plus tightly scoped invocation is the baseline, and is now mandatory for public code signing.</li>
+<li>Assuming a one-off signature is enough for documents that must last; without LTV (embedded timestamp and revocation data) a PDF signature cannot be verified years later.</li>
+</ul>
+</div>
+<h3 id="try-it-verify-a-signature-and-its-timestamp-read-only">Try it: Verify a signature and its timestamp (read-only)<a class="headerlink" href="#try-it-verify-a-signature-and-its-timestamp-read-only" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Linux: verify a GPG-signed file</span>
+gpg<span class="w"> </span>--verify<span class="w"> </span>release.tar.gz.sig<span class="w"> </span>release.tar.gz
+<span class="c1"># Inspect a PDF's signatures with pdfsig (poppler):</span>
+pdfsig<span class="w"> </span>signed-contract.pdf
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_10">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_10" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Authenticode</strong><br><em>Microsoft · Protocol · Current · Platform &amp; OS</em></td>
+<td>Microsoft's code-signing format for Windows executables, drivers and installers, verified by the OS.</td>
+<td>Umbra Tools signs its .exe installer with Authenticode so SmartScreen trusts it.</td>
+</tr>
+<tr>
+<td><strong>RFC 3161 timestamping</strong><br><em>IETF · RFC · Current · General</em></td>
+<td>A protocol for a Timestamp Authority to sign a hash with a trusted time, proving when something was signed.</td>
+<td>A build adds an RFC 3161 timestamp so last year's signed installer is still trusted today.</td>
+</tr>
+<tr>
+<td><strong>HSM-backed code signing</strong><br><em>CA/Browser Forum requirement · Concept · Current · General</em></td>
+<td>Keeping code-signing private keys in hardware; mandatory for publicly trusted code-signing certificates since 2023.</td>
+<td>A cloud HSM signs each release; the key never exists in plaintext on the build server.</td>
+</tr>
+<tr>
+<td><strong>CSC-31 validity reduction</strong><br><em>CA/Browser Forum (2026) · Standard · Current · General</em></td>
+<td>A ballot cutting maximum code-signing certificate validity to 460 days, effective 1 March 2026.</td>
+<td>A CA now issues code-signing certificates at 459 days instead of three years.</td>
+</tr>
+<tr>
+<td><strong>PAdES</strong><br><em>ETSI · Standard · Current · General</em></td>
+<td>PDF Advanced Electronic Signatures: the eIDAS-aligned format for embedding long-term-valid signatures in PDFs.</td>
+<td>A signed PDF contract uses PAdES so its signature verifies years later with embedded timestamp and CRL data.</td>
+</tr>
+<tr>
+<td><strong>CAdES / XAdES</strong><br><em>ETSI · Standard · Current · General</em></td>
+<td>Advanced electronic signature formats for generic data (CAdES) and XML (XAdES) with long-term validation.</td>
+<td>An e-invoicing system uses XAdES to sign XML invoices for regulatory acceptance.</td>
+</tr>
+<tr>
+<td><strong>Sigstore / cosign</strong><br><em>Linux Foundation / OpenSSF · Tool · Current · Cloud</em></td>
+<td>Keyless software signing using short-lived certificates tied to an identity, with a public transparency log.</td>
+<td>A project signs container images with cosign; the signature is logged in Rekor, no long-lived key kept.</td>
+</tr>
+<tr>
+<td><strong>jarsigner</strong><br><em>Oracle (JDK) · Tool · Current · Platform &amp; OS</em></td>
+<td>The JDK tool for signing and verifying Java archives (JARs) with a code-signing certificate.</td>
+<td>A Java vendor signs its JAR and timestamps it so the signature survives certificate renewal.</td>
+</tr>
+<tr>
+<td><strong>Long-term validation (LTV)</strong><br><em>ETSI / ISO signature standards · Concept · Current · General</em></td>
+<td>Embedding timestamps and revocation data in a signature so it stays verifiable long after certificates expire.</td>
+<td>An archived legal PDF includes LTV data so it can be validated decades later offline.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="812-expired-certificate-outages-and-how-to-monitor-against-them">8.12 Expired-Certificate Outages and How to Monitor Against Them<a class="headerlink" href="#812-expired-certificate-outages-and-how-to-monitor-against-them" title="Permanent link">&para;</a></h2>
+<p>A surprising number of major outages come down to one expired certificate. The fix is not clever cryptography but boring operational discipline: know every certificate, watch its expiry, and renew early. Monitoring is the safety net under all the automation.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-12-expired-certificate-outages-and-how-to.svg" alt="Monitoring both outside and inside gives two chances to catch a lapse." loading="lazy" width="1000" height="170">
+<figcaption><strong>Catching an expiry before it bites.</strong> Monitoring both outside and inside gives two chances to catch a lapse.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a smoke detector for your PKI. The automation is the wiring that should prevent a fire, but the detector is what wakes you at 3am when something slipped through — and certificates always eventually slip through without one.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>On a quiet Sunday, a certificate on Meridian Health's appointment API expired. No alert existed, so the first sign was patients unable to book, and it took two hours to diagnose. Afterwards the team added expiry monitoring that pages the owner 30, 7 and 1 days before any certificate expires.</p>
+</div>
+<h4 id="how-it-works_11">How it works<a class="headerlink" href="#how-it-works_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Inventory every certificate and give each an owner and a renewal method.</li>
+<li>Monitor expiry from the outside (probe the live endpoint) and the inside (scan hosts and stores).</li>
+<li>Alert early and repeatedly, escalating as expiry approaches.</li>
+<li>Watch the whole chain, not just the leaf: an expired intermediate breaks everything under it.</li>
+<li>Review every incident and close the gap that let it happen.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>SREs, on-call engineers, PKI and operations teams, and anyone who owns an internet-facing or internal service.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Famous outages — Microsoft Teams, Microsoft Azure, LinkedIn, Spotify, Ericsson's mobile-network outage affecting millions — were all traced to expired certificates. The lesson examiners want: monitor expiry and renew early.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>The classic failure is a certificate nobody owned: it was issued once, forgotten, and no renewal process or alert existed, so it expired silently and took a service down.</li>
+<li>Monitoring the leaf certificate is not enough — intermediates and even roots expire too; the 2021 Let's Encrypt chain change and root expiries broke clients that only watched their own leaf.</li>
+<li>External (black-box) probing catches what is actually served to users, while internal scanning finds certificates on hosts, load balancers and in key stores before they are ever exposed; mature teams do both.</li>
+<li>Alerts must be tiered and escalate (for example 30, 14, 7 and 1 day out) and must reach a human who can act, or they become noise that is ignored until the outage.</li>
+<li>Shorter lifetimes cut both ways: a 47-day certificate gives less warning if renewal breaks, so automation health itself must be monitored, not just certificate expiry.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Monitoring only your own leaf certificate and being blindsided when an intermediate or root in the chain expires or is distrusted.</li>
+<li>Setting a single alert a few days before expiry with no escalation, so a holiday or a busy on-call means it is missed entirely.</li>
+<li>Trusting automation blindly: if the ACME renewal job has silently failed for weeks, you still get an outage unless you monitor the renewal process too.</li>
+</ul>
+</div>
+<h3 id="try-it-script-an-expiry-check-you-can-put-in-monitoring">Try it: Script an expiry check you can put in monitoring<a class="headerlink" href="#try-it-script-an-expiry-check-you-can-put-in-monitoring" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code># Days until a server certificate expires:
+end=$(echo | openssl s_client -connect example.com:443 2&gt;/dev/null \
+  | openssl x509 -noout -enddate | cut -d= -f2)
+echo "Expires: $end"
+# Feed this into Nagios/Prometheus blackbox exporter for alerts.
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_11">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_11" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Expired-certificate outage</strong><br><em>Many organisations · Incident · Current · General</em></td>
+<td>A service failure caused by a certificate lapsing, among the most common and avoidable production outages.</td>
+<td>Meridian's booking API went down for two hours because one certificate expired unmonitored on a weekend.</td>
+</tr>
+<tr>
+<td><strong>External (black-box) monitoring</strong><br><em>Monitoring practice · Concept · Current · General</em></td>
+<td>Probing a live endpoint from outside to check the certificate actually served and its expiry.</td>
+<td>A blackbox exporter connects to the site hourly and alerts if the served certificate nears expiry.</td>
+</tr>
+<tr>
+<td><strong>Internal certificate scanning</strong><br><em>CLM / scanning tools · Concept · Current · Private PKI</em></td>
+<td>Scanning hosts, load balancers and key stores to find certificates before they are exposed or expire.</td>
+<td>A nightly scan finds a soon-to-expire certificate on an internal load balancer no one remembered.</td>
+</tr>
+<tr>
+<td><strong>Chain expiry awareness</strong><br><em>Operations practice · Concept · Current · General</em></td>
+<td>Watching intermediate and root expiry, not just the leaf, because a lapsed issuer breaks everything beneath it.</td>
+<td>A team tracks its intermediate's expiry after the 2021 Let's Encrypt chain change broke older clients.</td>
+</tr>
+<tr>
+<td><strong>Tiered expiry alerting</strong><br><em>Monitoring practice · Concept · Current · General</em></td>
+<td>Escalating notifications at set intervals before expiry so a lapse is caught even if one alert is missed.</td>
+<td>Owners are paged 30, 7 and 1 days before any certificate expires.</td>
+</tr>
+<tr>
+<td><strong>Renewal-health monitoring</strong><br><em>Automation practice · Concept · Current · General</em></td>
+<td>Monitoring that automated renewal jobs actually succeed, not just that certificates are not yet expired.</td>
+<td>An alert fires if the ACME renewal cron has not produced a fresh certificate in the expected window.</td>
+</tr>
+<tr>
+<td><strong>Prometheus blackbox exporter</strong><br><em>Prometheus community · Tool · Current · General</em></td>
+<td>A widely used probe that can report TLS certificate expiry as a metric for alerting dashboards.</td>
+<td>A Grafana panel shows days-to-expiry for every monitored endpoint, red under seven days.</td>
+</tr>
+<tr>
+<td><strong>Post-incident review</strong><br><em>SRE practice · Concept · Current · General</em></td>
+<td>Analysing each expiry outage to find and close the ownership or monitoring gap that allowed it.</td>
+<td>After the booking outage, the review mandated owners and tiered alerts for every certificate.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="813-post-quantum-migration-for-pki-inventory-timelines-and-hybrids">8.13 Post-Quantum Migration for PKI: Inventory, Timelines and Hybrids<a class="headerlink" href="#813-post-quantum-migration-for-pki-inventory-timelines-and-hybrids" title="Permanent link">&para;</a></h2>
+<p>A future quantum computer could break the RSA and elliptic-curve maths that today's certificates rely on. Migrating PKI means finding everywhere you use those algorithms, planning the switch to quantum-safe ones, and starting now because certificates and devices can live for decades.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-13-post-quantum-migration-for-pki.svg" alt="Standards landed in 2024-2026; deprecation dates make starting now essential." loading="lazy" width="1000" height="162">
+<figcaption><strong>The post-quantum PKI timeline.</strong> Standards landed in 2024-2026; deprecation dates make starting now essential.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a city replacing every lock before a master key leaks. You cannot do it overnight, so you make an inventory of every door, start fitting new locks on the most sensitive ones first, and fit dual locks where you cannot yet commit.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A government agency, Ridgeway, starts its migration by discovering every certificate and the algorithm each uses. It flags long-lived roots and code-signing keys first, pilots ML-DSA certificates from AWS Private CA, and enables hybrid ML-KEM key exchange on its web front ends, which already protects most browser traffic.</p>
+</div>
+<h4 id="how-it-works_12">How it works<a class="headerlink" href="#how-it-works_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Inventory all cryptography: keys, certificates, algorithms, and where each is used and for how long.</li>
+<li>Prioritise by risk and lifespan: long-lived roots, firmware/code-signing keys and 'harvest-now, decrypt-later' data first.</li>
+<li>Pilot post-quantum algorithms (ML-KEM for key exchange, ML-DSA for signatures) in test environments.</li>
+<li>Deploy hybrids where possible so you keep classical security while adding quantum resistance.</li>
+<li>Track the published timelines and build crypto agility so future swaps are routine.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Security architects, PKI and crypto engineers, and compliance teams in government, finance, telecoms and critical infrastructure.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the standards and dates: NIST finalised ML-KEM (FIPS 203), ML-DSA (FIPS 204) and SLH-DSA (FIPS 205) in 2024; NIST IR 8547 proposes deprecating RSA/ECC after 2030 and disallowing them after 2035; CNSA 2.0 requires PQC for US national-security systems on a staged schedule.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>The urgency is 'harvest now, decrypt later': adversaries can record encrypted traffic today and decrypt it once quantum computers arrive, so data that must stay secret for years needs quantum-safe key exchange now.</li>
+<li>Hybrid key exchange (X25519MLKEM768) is already real: by mid-2026 Cloudflare reported roughly two-thirds of human browser traffic to its network used hybrid ML-KEM, because Chrome, Edge and Firefox negotiate it by default.</li>
+<li>Signatures lag key exchange because ML-DSA signatures and keys are far larger than ECDSA, which bloats certificates and chains; RFC 9881 (2025) defines ML-DSA in certificates and vendors like AWS Private CA now issue them for testing.</li>
+<li>CNSA 2.0 sets staged US national-security deadlines: software and firmware signing should use PQC exclusively by 2030, and web browsers, servers and cloud services by 2033, with new NSS acquisitions expected CNSA 2.0-ready from 2027.</li>
+<li>Composite and hybrid certificates (carrying both a classical and a PQC key) ease transition but roughly double size and add validation complexity, so they are a bridge, not a destination.</li>
+<li>Executive Order 14306 (2025) directed CISA to publish PQC-ready product categories (released January 2026) and agencies to support TLS 1.3 by January 2030, aligning US procurement with the migration.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Waiting for a quantum computer to exist before starting: long-lived roots, firmware keys and secret data must be protected years ahead, and 'harvest now, decrypt later' is already happening.</li>
+<li>Assuming a drop-in swap: ML-DSA certificates are much larger than ECDSA, so test chain sizes, buffers and protocol limits before rolling out.</li>
+<li>Treating hybrids as the end state; they are a transition tool that doubles size and complexity, so plan the eventual move to pure PQC.</li>
+</ul>
+</div>
+<h3 id="try-it-see-whether-your-browser-negotiated-post-quantum-key-exchange">Try it: See whether your browser negotiated post-quantum key exchange<a class="headerlink" href="#try-it-see-whether-your-browser-negotiated-post-quantum-key-exchange" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Visit a PQC test page, or check the negotiated group:</span>
+openssl<span class="w"> </span>s_client<span class="w"> </span>-connect<span class="w"> </span>pq.cloudflareresearch.com:443<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-i<span class="w"> </span><span class="s2">"Negotiated\|group"</span>
+<span class="c1"># Look for X25519MLKEM768 (hybrid ML-KEM).</span>
+</code></pre></div>
+<h4 id="key-chips-standards-protocols-products-terms_12">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ML-KEM (FIPS 203)</strong><br><em>NIST · Algorithm · Emerging · General</em></td>
+<td>The standardised post-quantum key-encapsulation mechanism (from CRYSTALS-Kyber), used for quantum-safe key exchange.</td>
+<td>Browsers use ML-KEM-768 inside a hybrid TLS key exchange to protect session keys against future quantum attacks.</td>
+</tr>
+<tr>
+<td><strong>ML-DSA (FIPS 204)</strong><br><em>NIST · Algorithm · Emerging · General</em></td>
+<td>The standardised post-quantum digital signature algorithm (from CRYSTALS-Dilithium) for certificates and code signing.</td>
+<td>AWS Private CA issues ML-DSA certificates so teams can test post-quantum signing today.</td>
+</tr>
+<tr>
+<td><strong>SLH-DSA (FIPS 205)</strong><br><em>NIST · Algorithm · Emerging · General</em></td>
+<td>A stateless hash-based post-quantum signature scheme (from SPHINCS+), conservative but with large signatures.</td>
+<td>A firmware team considers SLH-DSA for signing because hash-based security is well understood for long-lived roots.</td>
+</tr>
+<tr>
+<td><strong>Hybrid key exchange (X25519MLKEM768)</strong><br><em>IETF TLS WG · Concept · Current · Web PKI</em></td>
+<td>Combining a classical and a post-quantum key exchange so the session is safe unless both are broken.</td>
+<td>Chrome and Cloudflare negotiate X25519MLKEM768 for most HTTPS connections automatically.</td>
+</tr>
+<tr>
+<td><strong>NIST IR 8547</strong><br><em>NIST · Standard · Emerging · General</em></td>
+<td>NIST's transition report proposing RSA/ECC be deprecated after 2030 and disallowed after 2035; still draft in 2026.</td>
+<td>Agencies use IR 8547's 2030/2035 dates as the planning baseline for retiring classical public-key crypto.</td>
+</tr>
+<tr>
+<td><strong>CNSA 2.0</strong><br><em>NSA · Standard · Emerging · General</em></td>
+<td>The NSA suite mandating post-quantum algorithms for US national-security systems on a staged timeline to 2033.</td>
+<td>A defence contractor plans PQC code signing by 2030 and PQC web services by 2033 to meet CNSA 2.0.</td>
+</tr>
+<tr>
+<td><strong>RFC 9935 (ML-KEM in certificates)</strong><br><em>IETF (2026) · RFC · Emerging · Web PKI</em></td>
+<td>Defines how to carry ML-KEM public keys in X.509 certificates for KEM-based authentication and key establishment.</td>
+<td>A KEMTLS pilot issues ML-KEM certificates following RFC 9935.</td>
+</tr>
+<tr>
+<td><strong>Cryptographic inventory (CBOM)</strong><br><em>Industry / NIST guidance · Concept · Current · General</em></td>
+<td>A catalogue of all cryptography in use (a cryptographic bill of materials), the first step of any PQC migration.</td>
+<td>Ridgeway builds a CBOM and discovers code-signing keys it had never tracked.</td>
+</tr>
+<tr>
+<td><strong>Composite / hybrid certificates</strong><br><em>IETF LAMPS · Concept · Emerging · General</em></td>
+<td>Certificates carrying both a classical and a post-quantum key, easing transition at the cost of size.</td>
+<td>A pilot issues composite ECDSA+ML-DSA certificates so old and new verifiers both work.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="814-pki-security-best-practices-and-an-audit-checklist">8.14 PKI Security Best Practices and an Audit Checklist<a class="headerlink" href="#814-pki-security-best-practices-and-an-audit-checklist" title="Permanent link">&para;</a></h2>
+<p>This brings the chapter together into a practical checklist for running a PKI safely: protect keys in hardware, keep the root offline, least-privilege everything, automate renewal, log and monitor, and test your recovery. It is the list an auditor will walk through.</p>
+<figure class="fig fig-diagram">
+<img src="img/08-14-pki-security-best-practices-and-an.svg" alt="Each layer is a question an auditor will ask; a gap in any one undermines the rest." loading="lazy" width="1000" height="450">
+<figcaption><strong>PKI security checklist, top to bottom.</strong> Each layer is a question an auditor will ask; a gap in any one undermines the rest.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is the pre-flight checklist for a PKI. Pilots do not rely on memory for something this important; they run the same list every time, because the one item skipped is the one that causes the crash.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Before a compliance audit, Larkspur Pay's security lead works the checklist: root key in an HSM and offline (yes), signing limited to the pipeline (yes), CRL/OCSP published and fresh (yes), issuance logged to the SIEM (yes), renewal automated (yes), and a tested CA-recovery runbook (now added after a gap was found).</p>
+</div>
+<h4 id="how-it-works_13">How it works<a class="headerlink" href="#how-it-works_13" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Protect keys: HSMs for CA and signing keys, documented access, no plaintext keys anywhere.</li>
+<li>Minimise and separate: offline root, least-privilege roles, dual control for sensitive actions.</li>
+<li>Operate safely: automate issuance/renewal, publish fresh CRL/OCSP, keep templates tight.</li>
+<li>Observe: log every issuance and configuration change and monitor expiry and anomalies.</li>
+<li>Prepare for failure: back up CA state securely and rehearse revocation and recovery.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>PKI operators, security engineers, auditors (WebTrust/ETSI contexts) and architects signing off on a PKI's security posture.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>If you memorise one auditable principle, make it least privilege plus offline root with HSM-protected keys — nearly every serious PKI failure traces back to a key that was too exposed or a role that was too powerful.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Key protection is the foundation: CA and code-signing keys belong in a FIPS 140-3 (or FIPS 140-2 historical) validated HSM, the root is kept offline, and no process should ever hold a CA private key in plaintext.</li>
+<li>Separation of duties and dual control stop a single insider or compromised account from issuing rogue certificates; sensitive actions (root use, template changes) require more than one authorised person.</li>
+<li>Template and policy hygiene closes the AD CS-style escalation paths: no arbitrary requester-supplied subjects, minimal EKUs, manager approval where risk warrants, and periodic review.</li>
+<li>Observability is non-negotiable: every issuance and configuration change is logged to a SIEM, expiry is monitored, and anomalies (a flood of requests, an unexpected template use) trigger alerts.</li>
+<li>Recovery must be rehearsed, not assumed: back up CA databases and HSM material securely, document how to revoke and reissue at scale, and test the plan, because a CA compromise or key loss is an existential event.</li>
+<li>Public CAs prove all of this through annual WebTrust or ETSI audits; private PKIs benefit from the same disciplines even without a formal audit requirement.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Treating the checklist as a one-time project: configuration drifts, templates get added, and keys get copied, so these controls need continuous verification.</li>
+<li>Backing up CA keys 'to be safe' in a way that itself exposes them (an unencrypted export, a shared drive) — the backup must be as protected as the HSM it came from.</li>
+<li>Having a disaster-recovery plan on paper that has never been tested, so the first real attempt happens during an actual outage.</li>
+</ul>
+</div>
+<h4 id="key-chips-standards-protocols-products-terms_13">Key chips, standards, protocols, products &amp; terms<a class="headerlink" href="#key-chips-standards-protocols-products-terms_13" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>HSM key protection</strong><br><em>FIPS 140-3 / vendor HSMs · Concept · Current · Private PKI</em></td>
+<td>Generating and using CA and signing keys only inside tamper-resistant hardware so they are never exposed.</td>
+<td>Larkspur's CA signs via a networked HSM; the private key has never existed outside it.</td>
+</tr>
+<tr>
+<td><strong>M-of-N key control</strong><br><em>Key-ceremony practice · Concept · Current · Private PKI</em></td>
+<td>Splitting control of a root or signing key across custodians so a quorum (e.g. 3 of 5) is needed to use it.</td>
+<td>Larkspur's root can only be activated when three of five keyholders present their smart cards.</td>
+</tr>
+<tr>
+<td><strong>Separation of duties</strong><br><em>Security governance · Concept · Current · Private PKI</em></td>
+<td>Splitting sensitive PKI actions across multiple roles so no single person can issue rogue certificates.</td>
+<td>Issuing from the root requires both a ceremony administrator and an independent witness.</td>
+</tr>
+<tr>
+<td><strong>Least-privilege templates</strong><br><em>PKI hardening practice · Concept · Current · Private PKI</em></td>
+<td>Configuring certificate templates and enrolment rights to grant only what each use case genuinely needs.</td>
+<td>The web-server template allows only serverAuth and cannot be enrolled by ordinary users.</td>
+</tr>
+<tr>
+<td><strong>CP/CPS documentation</strong><br><em>RFC 3647 format · Concept · Current · Private PKI</em></td>
+<td>A written Certificate Policy and Certification Practice Statement describing what the PKI does and how it is secured.</td>
+<td>Auditors check that Larkspur's CPS matches how the CA is actually operated.</td>
+</tr>
+<tr>
+<td><strong>Issuance &amp; config logging</strong><br><em>Operations / SIEM · Concept · Current · Private PKI</em></td>
+<td>Recording every certificate issuance and CA configuration change to a tamper-evident log for audit and detection.</td>
+<td>A SIEM rule alerts when a privileged template is used or a new one is published.</td>
+</tr>
+<tr>
+<td><strong>Revocation readiness</strong><br><em>PKI operations · Concept · Current · Private PKI</em></td>
+<td>Being able to revoke certificates quickly and publish fresh CRL/OCSP that relying parties can actually reach.</td>
+<td>A rehearsal confirms a compromised intermediate can be revoked and clients see it within the hour.</td>
+</tr>
+<tr>
+<td><strong>CA backup &amp; disaster recovery</strong><br><em>PKI operations · Concept · Current · Private PKI</em></td>
+<td>Securely backing up CA state and HSM material and rehearsing recovery so a compromise or loss is survivable.</td>
+<td>Larkspur tests restoring its issuing CA from backup into an isolated lab each year.</td>
+</tr>
+<tr>
+<td><strong>WebTrust / ETSI audit</strong><br><em>CPA Canada / ETSI · Concept · Current · Web PKI</em></td>
+<td>The independent annual audits public CAs must pass; a useful benchmark even for private PKI maturity.</td>
+<td>A private PKI adopts WebTrust-style controls to prepare for becoming publicly trusted later.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="root-cas-in-depth.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. Root CAs, In Depth">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                7. Root CAs, In Depth
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="standards-careers-learning.html" class="md-footer__link md-footer__link--next" aria-label="Next: 9. Standards, Careers &amp; Learning">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                9. Standards, Careers & Learning
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,4112 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch14-testing-certification-and-regulation.html">
+  
+  
+    <link rel="prev" href="ch13-drone-manufacturing-and-materials.html">
+  
+  
+    <link rel="next" href="ch15-special-drone-categories.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>14. Testing, Certification and Regulation - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-test_intro" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              14. Testing, Certification and Regulation
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Introduction to UAV Testing and Certification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Test Philosophy and Planning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 Test Philosophy and Planning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1421-building-block-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.1 Building-Block Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1422-verification-vs-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.2 Verification vs. Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1423-test-plan-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.3 Test Plan Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1424-instrumentation-and-measurement-uncertainty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.4 Instrumentation and Measurement Uncertainty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-structural_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Structural Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.3 Structural Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1431-static-load-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.1 Static Load Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1432-fatigue-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.2 Fatigue Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1433-modal-testing-and-ground-vibration-test-gvt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.3 Modal Testing and Ground Vibration Test (GVT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1434-flutter-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.4 Flutter Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-propulsion_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Propulsion Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Propulsion Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1441-electric-motor-and-propeller-thrust-stand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.1 Electric Motor and Propeller Thrust Stand
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1442-endurance-and-thermal-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.2 Endurance and Thermal Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1443-internal-combustion-and-turbine-engine-test-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.3 Internal Combustion and Turbine Engine Test Cell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-avionics_sw_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Avionics and Software Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Avionics and Software Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1451-software-development-assurance-do-178c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.1 Software Development Assurance: DO-178C
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1452-software-in-the-loop-sil-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.2 Software-in-the-Loop (SIL) Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1453-hardware-in-the-loop-hil-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.3 Hardware-in-the-Loop (HIL) Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1454-hardware-qualification-do-254" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.4 Hardware Qualification: DO-254
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1455-unit-integration-and-regression-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.5 Unit, Integration, and Regression Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-env_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 Environmental Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.6 Environmental Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1461-mil-std-810-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.1 MIL-STD-810 Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1462-temperature-testing-method-5017-5027" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.2 Temperature Testing (Method 501.7 / 502.7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1463-humidity-testing-method-5076" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.3 Humidity Testing (Method 507.6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1464-vibration-testing-method-5148" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.4 Vibration Testing (Method 514.8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1465-mechanical-shock-testing-method-5168" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.5 Mechanical Shock Testing (Method 516.8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1466-additional-environmental-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.6 Additional Environmental Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emc_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7 Electromagnetic Compatibility (EMC) Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.7 Electromagnetic Compatibility (EMC) Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1471-mil-std-461g-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.1 MIL-STD-461G Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1472-conducted-emissions-ce101-ce102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.2 Conducted Emissions (CE101, CE102)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1473-radiated-emissions-re101-re102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.3 Radiated Emissions (RE101, RE102)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1474-conducted-susceptibility-cs101-cs114-cs115-cs116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.4 Conducted Susceptibility (CS101, CS114, CS115, CS116)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1475-radiated-susceptibility-rs101-rs103" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.5 Radiated Susceptibility (RS101, RS103)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1476-hirf-high-intensity-radiated-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.6 HIRF (High Intensity Radiated Fields)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-flight_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8 Flight Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8 Flight Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1481-flight-test-instrumentation-fti" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.1 Flight Test Instrumentation (FTI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1482-build-up-test-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.2 Build-Up Test Programme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1483-performance-testing-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.3 Performance Testing Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1484-handling-qualities-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.4 Handling Qualities Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1485-emergency-procedure-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.5 Emergency Procedure Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9 Civil Certification Frameworks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.9 Civil Certification Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1491-faa-regulatory-framework-usa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.1 FAA Regulatory Framework (USA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1492-easa-regulatory-framework-europe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.2 EASA Regulatory Framework (Europe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1493-icao-framework-and-annex-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.3 ICAO Framework and Annex 8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1494-military-airworthiness-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.4 Military Airworthiness Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1495-do-178c-and-do-254-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.5 DO-178C and DO-254 Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-operational_approval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10 Operational Approval
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.10 Operational Approval">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14101-bvlos-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10.1 BVLOS Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14102-utm-u-space-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10.2 UTM / U-Space Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14103-range-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10.3 Range Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-intl_regs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.11 International Regulations Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-special_cert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12 Special Certification Topics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.12 Special Certification Topics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14121-cs-uas-and-stanag-4671" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12.1 CS-UAS and STANAG 4671
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14122-airworthiness-evidence-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12.2 Airworthiness Evidence Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14123-security-considerations-in-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12.3 Security Considerations in Certification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-integrated_TE" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13 Integrated Test and Evaluation Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.13 Integrated Test and Evaluation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14131-test-readiness-reviews" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13.1 Test Readiness Reviews
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14132-anomaly-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13.2 Anomaly Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14133-test-data-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13.3 Test Data Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-safety_analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.14 Safety Analysis and Risk Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.14 Safety Analysis and Risk Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14141-failure-modes-and-effects-analysis-fmeafmeca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.14.1 Failure Modes and Effects Analysis (FMEA/FMECA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14142-fault-tree-analysis-fta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.14.2 Fault Tree Analysis (FTA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.15 Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_intro" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.1 Introduction to UAV Testing and Certification
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_philosophy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2 Test Philosophy and Planning
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.2 Test Philosophy and Planning">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1421-building-block-approach" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.1 Building-Block Approach
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1422-verification-vs-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.2 Verification vs. Validation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1423-test-plan-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.3 Test Plan Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1424-instrumentation-and-measurement-uncertainty" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.2.4 Instrumentation and Measurement Uncertainty
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-structural_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3 Structural Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.3 Structural Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1431-static-load-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.1 Static Load Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1432-fatigue-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.2 Fatigue Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1433-modal-testing-and-ground-vibration-test-gvt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.3 Modal Testing and Ground Vibration Test (GVT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1434-flutter-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.3.4 Flutter Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-propulsion_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4 Propulsion Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.4 Propulsion Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1441-electric-motor-and-propeller-thrust-stand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.1 Electric Motor and Propeller Thrust Stand
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1442-endurance-and-thermal-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.2 Endurance and Thermal Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1443-internal-combustion-and-turbine-engine-test-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.4.3 Internal Combustion and Turbine Engine Test Cell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-avionics_sw_test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5 Avionics and Software Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.5 Avionics and Software Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1451-software-development-assurance-do-178c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.1 Software Development Assurance: DO-178C
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1452-software-in-the-loop-sil-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.2 Software-in-the-Loop (SIL) Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1453-hardware-in-the-loop-hil-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.3 Hardware-in-the-Loop (HIL) Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1454-hardware-qualification-do-254" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.4 Hardware Qualification: DO-254
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1455-unit-integration-and-regression-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.5.5 Unit, Integration, and Regression Testing
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-env_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6 Environmental Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.6 Environmental Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1461-mil-std-810-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.1 MIL-STD-810 Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1462-temperature-testing-method-5017-5027" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.2 Temperature Testing (Method 501.7 / 502.7)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1463-humidity-testing-method-5076" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.3 Humidity Testing (Method 507.6)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1464-vibration-testing-method-5148" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.4 Vibration Testing (Method 514.8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1465-mechanical-shock-testing-method-5168" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.5 Mechanical Shock Testing (Method 516.8)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1466-additional-environmental-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.6.6 Additional Environmental Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-emc_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7 Electromagnetic Compatibility (EMC) Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.7 Electromagnetic Compatibility (EMC) Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1471-mil-std-461g-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.1 MIL-STD-461G Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1472-conducted-emissions-ce101-ce102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.2 Conducted Emissions (CE101, CE102)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1473-radiated-emissions-re101-re102" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.3 Radiated Emissions (RE101, RE102)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1474-conducted-susceptibility-cs101-cs114-cs115-cs116" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.4 Conducted Susceptibility (CS101, CS114, CS115, CS116)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1475-radiated-susceptibility-rs101-rs103" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.5 Radiated Susceptibility (RS101, RS103)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1476-hirf-high-intensity-radiated-fields" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.7.6 HIRF (High Intensity Radiated Fields)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-flight_testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8 Flight Testing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.8 Flight Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1481-flight-test-instrumentation-fti" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.1 Flight Test Instrumentation (FTI)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1482-build-up-test-programme" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.2 Build-Up Test Programme
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1483-performance-testing-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.3 Performance Testing Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1484-handling-qualities-assessment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.4 Handling Qualities Assessment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1485-emergency-procedure-verification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.8.5 Emergency Procedure Verification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9 Civil Certification Frameworks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.9 Civil Certification Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1491-faa-regulatory-framework-usa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.1 FAA Regulatory Framework (USA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1492-easa-regulatory-framework-europe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.2 EASA Regulatory Framework (Europe)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1493-icao-framework-and-annex-8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.3 ICAO Framework and Annex 8
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1494-military-airworthiness-standards" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.4 Military Airworthiness Standards
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1495-do-178c-and-do-254-compliance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.9.5 DO-178C and DO-254 Compliance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-operational_approval" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10 Operational Approval
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.10 Operational Approval">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14101-bvlos-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10.1 BVLOS Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14102-utm-u-space-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10.2 UTM / U-Space Integration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14103-range-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.10.3 Range Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-intl_regs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.11 International Regulations Comparison
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-special_cert" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12 Special Certification Topics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.12 Special Certification Topics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14121-cs-uas-and-stanag-4671" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12.1 CS-UAS and STANAG 4671
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14122-airworthiness-evidence-methods" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12.2 Airworthiness Evidence Methods
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14123-security-considerations-in-certification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.12.3 Security Considerations in Certification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-integrated_TE" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13 Integrated Test and Evaluation Strategy
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.13 Integrated Test and Evaluation Strategy">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14131-test-readiness-reviews" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13.1 Test Readiness Reviews
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14132-anomaly-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13.2 Anomaly Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14133-test-data-management" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.13.3 Test Data Management
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-safety_analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.14 Safety Analysis and Risk Management
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="14.14 Safety Analysis and Risk Management">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#14141-failure-modes-and-effects-analysis-fmeafmeca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.14.1 Failure Modes and Effects Analysis (FMEA/FMECA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#14142-fault-tree-analysis-fta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.14.2 Fault Tree Analysis (FTA)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-test_summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        14.15 Chapter Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-testing_drone">Chapter 14: Testing, Certification and Regulation<a class="headerlink" href="#ch-testing_drone" title="Permanent link">&para;</a></h1>
+<h2 id="sec-test_intro"><span class="secnum">14.1</span> Introduction to UAV Testing and Certification<a class="headerlink" href="#sec-test_intro" title="Permanent link">&para;</a></h2>
+<p>The path from a designed UAV airframe to a certificated operational system is governed by a structured body of test philosophy, standards, and regulatory frameworks. Testing provides objective evidence that the design meets its specified requirements across all intended operating conditions; certification converts that evidence into a legal authorisation to operate. For unmanned systems, this path is more complex than for conventionally crewed aircraft because regulators must account for the absence of an on-board pilot and the heterogeneous operating environments ranging from controlled military ranges to unsegregated civil airspace above populated areas.</p>
+<p>This chapter covers the full testing programme from material coupons through full-vehicle qualification, environmental and electromagnetic compliance testing, software verification and validation, flight testing methodologies, civil and military certification frameworks, and international regulatory comparison. All major test standards are referenced at the point of application.</p>
+<h2 id="sec-test_philosophy"><span class="secnum">14.2</span> Test Philosophy and Planning<a class="headerlink" href="#sec-test_philosophy" title="Permanent link">&para;</a></h2>
+<h3 id="1421-building-block-approach"><span class="secnum">14.2.1</span> Building-Block Approach<a class="headerlink" href="#1421-building-block-approach" title="Permanent link">&para;</a></h3>
+<p>The building-block approach (BBA), defined in ASTM E1049 and widely adopted in aerospace structural test programmes, organises tests in a pyramid from inexpensive, numerous coupons at the base to expensive, few full-scale articles at the apex:</p>
+<ol>
+<li>
+<p><strong>Coupon tests:</strong> flat plates, simple joints, and laminate specimens. Used to characterise material allowables and validate failure models. Typical quantity: hundreds to thousands per material system.</p>
+</li>
+<li>
+<p><strong>Element tests:</strong> simple structural elements (open-hole tension plates, filled-hole compression, bonded lap joints). Validate local failure modes.</p>
+</li>
+<li>
+<p><strong>Sub-component tests:</strong> structural details (skin-stringer panels, spar-rib intersections, door surrounds). Validate joint and load-introduction design.</p>
+</li>
+<li>
+<p><strong>Component tests:</strong> complete wing, fuselage bay, or undercarriage. Validate global structural response and boundary conditions.</p>
+</li>
+<li>
+<p><strong>Full-vehicle tests:</strong> complete airframe under combined loads. Validates design margins and ultimate load capability.</p>
+</li>
+</ol>
+<p>The building-block approach reduces overall programme risk: failures discovered at lower levels are far cheaper to remediate than failures at vehicle level. Statistical structural allowables are established at the coupon level and propagated to higher levels. The A-basis allowable (99% exceedance with 95% confidence) is used for single load path elements; B-basis (90% exceedance with 95% confidence) for redundant structures.</p>
+<h3 id="1422-verification-vs-validation"><span class="secnum">14.2.2</span> Verification vs. Validation<a class="headerlink" href="#1422-verification-vs-validation" title="Permanent link">&para;</a></h3>
+<p>INCOSE and FAA AC 20-115D distinguish:</p>
+<dl>
+<dt>Verification</dt>
+<dd>Confirms that the product was built correctly (“did we build the system right?”). Demonstrated by inspection, analysis, similarity, and test.</dd>
+<dt>Validation</dt>
+<dd>Confirms that the correct product was built (“did we build the right system?”). Demonstrated by representative mission simulation and operational evaluation.</dd>
+</dl>
+<p>A Requirements Verification Matrix (RVM) maps every system requirement to the verification method (T = test, A = analysis, I = inspection, D = demonstration) and the responsible test event. Traceability is bidirectional: each test links upward to the requirement it verifies and downward to the test procedure that defines pass/fail criteria.</p>
+<h3 id="1423-test-plan-structure"><span class="secnum">14.2.3</span> Test Plan Structure<a class="headerlink" href="#1423-test-plan-structure" title="Permanent link">&para;</a></h3>
+<p>A master test plan (MTP) encompasses:</p>
+<ol>
+<li>
+<p>Test objectives and success criteria.</p>
+</li>
+<li>
+<p>Applicable standards and regulatory requirements.</p>
+</li>
+<li>
+<p>Test item description, serial number, and configuration.</p>
+</li>
+<li>
+<p>Instrumentation plan and calibration requirements.</p>
+</li>
+<li>
+<p>Safety plan: hazard identification, emergency stop procedures, range safety.</p>
+</li>
+<li>
+<p>Schedule and resource allocation (test article, facility, support equipment).</p>
+</li>
+<li>
+<p>Data reduction and analysis plan.</p>
+</li>
+<li>
+<p>Anomaly reporting and disposition process.</p>
+</li>
+</ol>
+<h3 id="1424-instrumentation-and-measurement-uncertainty"><span class="secnum">14.2.4</span> Instrumentation and Measurement Uncertainty<a class="headerlink" href="#1424-instrumentation-and-measurement-uncertainty" title="Permanent link">&para;</a></h3>
+<p>The Guide to the Expression of Uncertainty in Measurement (GUM, JCGM 100:2008) provides the framework for evaluating measurement uncertainty. The combined standard uncertainty is: <span id="eq-gum_uncertainty"></span></p>
+<div class="arithmatex">\[u_c(y) = \sqrt{\sum_{i=1}^N \left(\frac{\partial f}{\partial x_i}\right)^2 u^2(x_i)
+            + 2\sum_{i=1}^{N-1}\sum_{j=i+1}^N
+              \frac{\partial f}{\partial x_i}\frac{\partial f}{\partial x_j}
+              u(x_i,x_j)}\tag{14.1}\]</div>
+<p>where <span class="arithmatex">\(y = f(x_1, …, x_N)\)</span> is the measurand and <span class="arithmatex">\(u(x_i)\)</span> is the standard uncertainty of the <span class="arithmatex">\(i\)</span>-th input quantity. Expanded uncertainty at 95% confidence level: <span class="arithmatex">\(U_{95} = k\,u_c(y)\)</span> with coverage factor <span class="arithmatex">\(k = 2.0\)</span> for normal distributions.</p>
+<p>All test instrumentation must be calibrated at intervals not exceeding the manufacturer’s recommendation, with calibration traceability to national standards (NIST, NPL, PTB). Strain gauge rosettes are installed per ASTM E251; signal conditioning must correct for lead resistance and thermal apparent strain.</p>
+<h2 id="sec-structural_testing"><span class="secnum">14.3</span> Structural Testing<a class="headerlink" href="#sec-structural_testing" title="Permanent link">&para;</a></h2>
+<h3 id="1431-static-load-testing"><span class="secnum">14.3.1</span> Static Load Testing<a class="headerlink" href="#1431-static-load-testing" title="Permanent link">&para;</a></h3>
+<p>Static tests apply loads to the airframe using hydraulic actuators, whiffle-trees, and sandbags to simulate aerodynamic and inertial loads. Load introduction points must be designed to avoid stress concentrations not present in flight.</p>
+<p>Strain gauge rosettes at critical locations record principal strains <span class="arithmatex">\(\varepsilon_1\)</span> and <span class="arithmatex">\(\varepsilon_2\)</span>, from which principal stresses are recovered: <span id="eq-principal_stress"></span></p>
+<div class="arithmatex">\[\sigma_1 = \frac{E}{1-\nu^2}(\varepsilon_1 + \nu\varepsilon_2), \quad
+  \sigma_2 = \frac{E}{1-\nu^2}(\varepsilon_2 + \nu\varepsilon_1)\tag{14.2}\]</div>
+<p>LVDTs (linear variable differential transformers) measure deflection at load introduction points; photogrammetry (ARAMIS, GOM) provides full-field displacement maps.</p>
+<p>Test load levels:</p>
+<ul>
+<li>
+<p><strong>Limit load (<span class="arithmatex">\(P_L\)</span>):</strong> Maximum load expected in service. No permanent deformation after limit load application.</p>
+</li>
+<li>
+<p><strong>Ultimate load (<span class="arithmatex">\(P_U = 1.5\,P_L\)</span>):</strong> Applied for 3 seconds without collapse. Required for civil certification; factor of 1.5 compensates for analytical uncertainties.</p>
+</li>
+<li>
+<p><strong>Design Load <span class="arithmatex">\(\times\)</span> factor:</strong> For composite structures, the knock-down factor <span class="arithmatex">\(k_{cad}\)</span> accounts for environmental degradation (hot-wet) and damage: <span id="eq-knockdown"></span></p>
+<div class="arithmatex">\[P_{\mathrm{design}} = \frac{P_U}{k_{cad}}, \quad k_{cad} = 0.65\text{--}0.80\tag{14.3}\]</div>
+</li>
+</ul>
+<h3 id="1432-fatigue-testing"><span class="secnum">14.3.2</span> Fatigue Testing<a class="headerlink" href="#1432-fatigue-testing" title="Permanent link">&para;</a></h3>
+<p>Fatigue testing subjects the airframe to a representative load spectrum derived from the design service life. The load sequence is typically defined by a flight-by-flight spectrum synthesised from representative missions.</p>
+<p>The Miner’s rule cumulative damage index: <span id="eq-miners_rule"></span></p>
+<div class="arithmatex">\[D = \sum_{i=1}^{k} \frac{n_i}{N_i}\tag{14.4}\]</div>
+<p>where <span class="arithmatex">\(n_i\)</span> is the number of applied cycles at stress amplitude <span class="arithmatex">\(\sigma_i\)</span> and <span class="arithmatex">\(N_i\)</span> is the number of cycles to failure at <span class="arithmatex">\(\sigma_i\)</span> from the S-N curve. Failure is predicted when <span class="arithmatex">\(D = 1.0\)</span>; the conservatively accepted limit is <span class="arithmatex">\(D \leq 1.0\)</span>.</p>
+<p>For composite structures, the fatigue life scatter factor <span class="arithmatex">\(J\)</span> is applied to the test life to obtain the certified life: <span id="eq-fatigue_scatter"></span></p>
+<div class="arithmatex">\[L_{\mathrm{certified}} = \frac{L_{\mathrm{test}}}{J}\tag{14.5}\]</div>
+<p>For a single-article test with no residual strength measurement, <span class="arithmatex">\(J = 4.0\)</span> (ASTM composite structure guidance); with residual strength demonstration at end of test life, <span class="arithmatex">\(J\)</span> may reduce to 2.0.</p>
+<h3 id="1433-modal-testing-and-ground-vibration-test-gvt"><span class="secnum">14.3.3</span> Modal Testing and Ground Vibration Test (GVT)<a class="headerlink" href="#1433-modal-testing-and-ground-vibration-test-gvt" title="Permanent link">&para;</a></h3>
+<p>Modal testing identifies the natural frequencies, damping ratios, and mode shapes of the structure. Two excitation methods:</p>
+<dl>
+<dt>Hammer impact</dt>
+<dd>
+<p>Instrumented hammer delivers broadband impulse; FFT analysis yields the FRF (Frequency Response Function): <span id="eq-frf"></span></p>
+<div class="arithmatex">\[H(\omega) = \frac{X(\omega)}{F(\omega)}\tag{14.6}\]</div>
+<p>where <span class="arithmatex">\(X(\omega)\)</span> is the response spectrum and <span class="arithmatex">\(F(\omega)\)</span> the force spectrum. Mode shapes are extracted using polynomial or rational fraction polynomial curve-fitting.</p>
+</dd>
+<dt>Electrodynamic shaker</dt>
+<dd>Swept sine or random broadband excitation. Higher SNR than hammer for lightly damped modes; simultaneous multi-point excitation via MIMO testing separates closely-spaced modes.</dd>
+</dl>
+<p>The GVT (Ground Vibration Test) is performed on the complete airframe before first flight. Its primary purpose is to identify natural frequencies for flutter clearance. The MAC (Modal Assurance Criterion) quantifies correlation between experimental and analytical mode shapes: <span id="eq-mac"></span></p>
+<div class="arithmatex">\[\mathrm{MAC}(r,s) = \frac{|\boldsymbol{\psi}_r^T \boldsymbol{\phi}_s|^2}
+    {(\boldsymbol{\psi}_r^T \boldsymbol{\psi}_r)(\boldsymbol{\phi}_s^T \boldsymbol{\phi}_s)}\tag{14.7}\]</div>
+<p>A <span class="arithmatex">\(\mathrm{MAC} \geq 0.9\)</span> between test and analysis modes confirms adequate model correlation.</p>
+<h3 id="1434-flutter-testing"><span class="secnum">14.3.4</span> Flutter Testing<a class="headerlink" href="#1434-flutter-testing" title="Permanent link">&para;</a></h3>
+<p>Flutter is an aeroelastic instability coupling aerodynamics, elasticity, and inertia. The flutter speed <span class="arithmatex">\(V_f\)</span> must exceed 1.15 times the design dive speed <span class="arithmatex">\(V_D\)</span>. Flutter testing builds up through the speed envelope incrementally:</p>
+<ol>
+<li>
+<p>Analytical prediction of flutter speed and frequency (doublet-lattice method or CFD-based).</p>
+</li>
+<li>
+<p>GVT correlation to validate structural model.</p>
+</li>
+<li>
+<p>Subcritical response methods: measure the damping trend vs. airspeed; extrapolate to find flutter speed. The flutter margin from subcritical data: <span id="eq-flutter_margin"></span></p>
+<div class="arithmatex">\[g_f = 1 - \left(\frac{V}{V_f}\right)^2\tag{14.8}\]</div>
+</li>
+<li>
+<p>Flight testing: Acceleration-damping data collected at each speed point; if damping is decreasing at an alarming rate, testing stops.</p>
+</li>
+</ol>
+<h2 id="sec-propulsion_testing"><span class="secnum">14.4</span> Propulsion Testing<a class="headerlink" href="#sec-propulsion_testing" title="Permanent link">&para;</a></h2>
+<h3 id="1441-electric-motor-and-propeller-thrust-stand"><span class="secnum">14.4.1</span> Electric Motor and Propeller Thrust Stand<a class="headerlink" href="#1441-electric-motor-and-propeller-thrust-stand" title="Permanent link">&para;</a></h3>
+<p>Motor characterisation uses an instrumented thrust stand:</p>
+<ul>
+<li>
+<p>Load cell: measures thrust <span class="arithmatex">\(T\)</span> and torque <span class="arithmatex">\(Q\)</span> simultaneously.</p>
+</li>
+<li>
+<p>Current and voltage transducers: measure electrical power input <span class="arithmatex">\(P_e = V I\)</span>.</p>
+</li>
+<li>
+<p>Tachometer (optical or Hall-effect): measures rotor speed <span class="arithmatex">\(n\)</span> (rpm).</p>
+</li>
+<li>
+<p>Ambient temperature and pressure sensors: correct for air density <span class="arithmatex">\(\rho_a\)</span>.</p>
+</li>
+</ul>
+<p>The figure of merit (FM) for a hovering rotor: <span id="eq-figure_of_merit"></span></p>
+<div class="arithmatex">\[\mathrm{FM} = \frac{T^{3/2}/\sqrt{2\rho_a A}}{P_{\mathrm{shaft}}}\tag{14.9}\]</div>
+<p>Propeller aerodynamic coefficients as functions of advance ratio <span class="arithmatex">\(J = V_a/(n\,D)\)</span>: <span id="eq-ct_cp"></span></p>
+<div class="arithmatex">\[C_T = \frac{T}{\rho_a n^2 D^4}, \qquad
+  C_P = \frac{P}{\rho_a n^3 D^5}\tag{14.10}\]</div>
+<p>The propulsive efficiency: <span id="eq-prop_eff"></span></p>
+<div class="arithmatex">\[\eta_p = \frac{C_T}{C_P}\,J\tag{14.11}\]</div>
+<p>Test uncertainty in thrust measurement is typically <span class="arithmatex">\(\pm 0.5\%\)</span> of reading with a calibrated S-beam load cell (<span class="arithmatex">\(5\,\mathrm{N}\)</span>–<span class="arithmatex">\(500\,\mathrm{N}\)</span> range).</p>
+<h3 id="1442-endurance-and-thermal-testing"><span class="secnum">14.4.2</span> Endurance and Thermal Testing<a class="headerlink" href="#1442-endurance-and-thermal-testing" title="Permanent link">&para;</a></h3>
+<p>Full endurance run at rated power for the stated design life:</p>
+<ul>
+<li>
+<p>Commercial drones: 500 h motor endurance test.</p>
+</li>
+<li>
+<p>Military qualification: 100 h civil baseline plus additional thermal cycling.</p>
+</li>
+</ul>
+<p>Winding temperature (thermocouples or embedded PT100 sensors) must remain below the insulation class temperature rating: Class H (180<span class="arithmatex">\(^\circ\)</span>C), Class C (<span class="arithmatex">\(&gt;220\,^\circ\)</span>C). Bearing vibration (accelerometers) trended over the endurance run to detect wear.</p>
+<h3 id="1443-internal-combustion-and-turbine-engine-test-cell"><span class="secnum">14.4.3</span> Internal Combustion and Turbine Engine Test Cell<a class="headerlink" href="#1443-internal-combustion-and-turbine-engine-test-cell" title="Permanent link">&para;</a></h3>
+<p>For UAVs with IC engines or micro-turbines, test-cell measurements include:</p>
+<ul>
+<li>
+<p>Fuel flow rate (Coriolis or turbine flow meter); specific fuel consumption: <span id="eq-sfc"></span></p>
+<div class="arithmatex">\[\mathrm{SFC} = \frac{\dot{m}_f}{T}\tag{14.12}\]</div>
+</li>
+<li>
+<p>Exhaust gas temperature (EGT, thermocouple type K or N).</p>
+</li>
+<li>
+<p>Cylinder head temperature (CHT) for piston engines.</p>
+</li>
+<li>
+<p>Throttle linearity and step-response time.</p>
+</li>
+</ul>
+<p>Engine qualification typically requires a 100-hour acceptance test followed by a post-test teardown inspection.</p>
+<h2 id="sec-avionics_sw_test"><span class="secnum">14.5</span> Avionics and Software Testing<a class="headerlink" href="#sec-avionics_sw_test" title="Permanent link">&para;</a></h2>
+<h3 id="1451-software-development-assurance-do-178c"><span class="secnum">14.5.1</span> Software Development Assurance: DO-178C<a class="headerlink" href="#1451-software-development-assurance-do-178c" title="Permanent link">&para;</a></h3>
+<p>RTCA/EUROCAE DO-178C (Software Considerations in Airborne Systems and Equipment Certification) defines five Design Assurance Levels (DAL) based on failure condition severity:</p>
+<ul>
+<li>
+<p>DAL-A (Catastrophic): software error could cause loss of aircraft. Full MC/DC (Modified Condition/Decision Coverage) required; <span class="arithmatex">\(&gt;99\%\)</span> requirements coverage.</p>
+</li>
+<li>
+<p>DAL-B (Hazardous): may cause serious injury or major failure. Decision coverage required.</p>
+</li>
+<li>
+<p>DAL-C (Major): significant reduction in safety margins. Statement and decision coverage <span class="arithmatex">\(&gt; 90\%\)</span>.</p>
+</li>
+<li>
+<p>DAL-D (Minor): reduction in functional capability. Statement coverage.</p>
+</li>
+<li>
+<p>DAL-E (No effect): no requirement.</p>
+</li>
+</ul>
+<p>MC/DC requires that each condition in a decision independently affects the outcome. For a decision with <span class="arithmatex">\(N\)</span> conditions, MC/DC requires <span class="arithmatex">\(N+1\)</span> test cases (vs. <span class="arithmatex">\(2^N\)</span> for full condition coverage).</p>
+<h3 id="1452-software-in-the-loop-sil-testing"><span class="secnum">14.5.2</span> Software-in-the-Loop (SIL) Testing<a class="headerlink" href="#1452-software-in-the-loop-sil-testing" title="Permanent link">&para;</a></h3>
+<p>SIL simulation executes the actual flight control software binary in a host computer against a simulated flight dynamics model. The simulation loop time step <span class="arithmatex">\(\Delta t\)</span> must satisfy the Nyquist criterion for the highest-frequency dynamics being modelled: <span id="eq-nyquist_sim"></span></p>
+<div class="arithmatex">\[\Delta t \leq \frac{1}{2 f_{\max}}\tag{14.13}\]</div>
+<p>Advantages: rapid execution (100<span class="arithmatex">\(\times\)</span> real time), easy fault injection, full observability. SIL is used for regression testing with a coverage target of <span class="arithmatex">\(&gt;90\%\)</span> of flight code paths.</p>
+<h3 id="1453-hardware-in-the-loop-hil-testing"><span class="secnum">14.5.3</span> Hardware-in-the-Loop (HIL) Testing<a class="headerlink" href="#1453-hardware-in-the-loop-hil-testing" title="Permanent link">&para;</a></h3>
+<p>HIL testing inserts the real flight computer hardware and firmware into the simulation loop. A real-time target (dSPACE, Speedgoat, National Instruments PXI) simulates sensors (IMU, GPS, barometer, airspeed) and actuators with hardware-accurate timing. The simulation model runs at rates of <span class="arithmatex">\(500\,\mathrm{Hz}\)</span>–<span class="arithmatex">\(2\,\mathrm{kHz}\)</span> to capture flight dynamics and sensor dynamics accurately.</p>
+<p>HIL test scenarios include:</p>
+<ul>
+<li>
+<p>Nominal mission: full autonomous flight profile.</p>
+</li>
+<li>
+<p>Engine-out at various phases of flight.</p>
+</li>
+<li>
+<p>GPS spoofing / denial; INS-only navigation.</p>
+</li>
+<li>
+<p>Datalink loss; lost-link failsafe activation.</p>
+</li>
+<li>
+<p>Sensor hard failure injection (IMU NaN output, barometer freeze).</p>
+</li>
+</ul>
+<h3 id="1454-hardware-qualification-do-254"><span class="secnum">14.5.4</span> Hardware Qualification: DO-254<a class="headerlink" href="#1454-hardware-qualification-do-254" title="Permanent link">&para;</a></h3>
+<p>RTCA/EUROCAE DO-254 (Design Assurance Guidance for Airborne Electronic Hardware) applies to complex hardware including FPGAs and ASICs. It mirrors DO-178C structure with hardware design assurance levels. Requirements capture, conceptual design, detailed design, implementation, and production transition are all documented and reviewed. Formal verification methods (model checking, theorem proving) may supplement testing for DAL-A/B hardware.</p>
+<h3 id="1455-unit-integration-and-regression-testing"><span class="secnum">14.5.5</span> Unit, Integration, and Regression Testing<a class="headerlink" href="#1455-unit-integration-and-regression-testing" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>Unit testing</dt>
+<dd>Tests individual software modules in isolation. GoogleTest (C++) and pytest (Python) are commonly used frameworks. Line/branch coverage measured by gcov, lcov, or Bullseye Coverage.</dd>
+<dt>Integration testing</dt>
+<dd>Tests interactions between modules: FC firmware, RTOS, HAL drivers, and communication stacks. End-to-end mission simulation.</dd>
+<dt>Regression testing</dt>
+<dd>Automated test suite run on every code commit via CI/CD pipeline (Jenkins, GitLab CI, GitHub Actions). Any coverage reduction or new failure blocks the merge. Test suite execution time <span class="arithmatex">\(&lt; 30\)</span> min target to maintain developer productivity.</dd>
+</dl>
+<h2 id="sec-env_testing"><span class="secnum">14.6</span> Environmental Testing<a class="headerlink" href="#sec-env_testing" title="Permanent link">&para;</a></h2>
+<h3 id="1461-mil-std-810-framework"><span class="secnum">14.6.1</span> MIL-STD-810 Framework<a class="headerlink" href="#1461-mil-std-810-framework" title="Permanent link">&para;</a></h3>
+<p>MIL-STD-810H (Environmental Engineering Considerations and Laboratory Tests) defines test methods for exposing equipment to natural and induced environments. The test tailoring process selects methods based on the equipment’s life-cycle environmental profile (LCEP), not on default values.</p>
+<h3 id="1462-temperature-testing-method-5017-5027"><span class="secnum">14.6.2</span> Temperature Testing (Method 501.7 / 502.7)<a class="headerlink" href="#1462-temperature-testing-method-5017-5027" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p>Storage: <span class="arithmatex">\(-51\,^\circ\mathrm{C}\)</span> to <span class="arithmatex">\(+71\,^\circ\mathrm{C}\)</span>; 4-hour dwells.</p>
+</li>
+<li>
+<p>Operational low temperature: <span class="arithmatex">\(-40\,^\circ\mathrm{C}\)</span>; demonstrate full function after cold soak.</p>
+</li>
+<li>
+<p>Operational high temperature: <span class="arithmatex">\(+55\,^\circ\mathrm{C}\)</span> (civil); <span class="arithmatex">\(+71\,^\circ\mathrm{C}\)</span> (desert/ground vehicle-transported).</p>
+</li>
+<li>
+<p>Thermal shock (Method 503.7): air-to-air transfer between <span class="arithmatex">\(-51\,^\circ\mathrm{C}\)</span> and <span class="arithmatex">\(+71\,^\circ\mathrm{C}\)</span> chambers in <span class="arithmatex">\(&lt;1\)</span> minute.</p>
+</li>
+</ul>
+<h3 id="1463-humidity-testing-method-5076"><span class="secnum">14.6.3</span> Humidity Testing (Method 507.6)<a class="headerlink" href="#1463-humidity-testing-method-5076" title="Permanent link">&para;</a></h3>
+<p>Procedure I (aggravated): 95% RH at <span class="arithmatex">\(30\,^\circ\mathrm{C}\)</span> with temperature cycling between <span class="arithmatex">\(30\,^\circ\mathrm{C}\)</span> and <span class="arithmatex">\(60\,^\circ\mathrm{C}\)</span>; 10 cycles of 24 h. Induced condensation on cooling evaluates corrosion, fungus resistance, and electrical insulation degradation. Procedure III (induced): 24 h at 95% RH with intermediate performance checks.</p>
+<h3 id="1464-vibration-testing-method-5148"><span class="secnum">14.6.4</span> Vibration Testing (Method 514.8)<a class="headerlink" href="#1464-vibration-testing-method-5148" title="Permanent link">&para;</a></h3>
+<p>Random vibration profile (PSD) is derived from measured or predicted field data. The grms acceleration is: <span id="eq-grms"></span></p>
+<div class="arithmatex">\[a_{\mathrm{rms}} = \sqrt{\int_{f_1}^{f_2} G(f)\,df}\tag{14.14}\]</div>
+<p>where <span class="arithmatex">\(G(f)\)</span> is the one-sided PSD in <span class="arithmatex">\(\mathrm{g^2/Hz}\)</span>. A typical UAV shipment random vibration profile for the 20–2000 Hz band yields <span class="arithmatex">\(a_{\mathrm{rms}} = 6\)</span>–<span class="arithmatex">\(15\,\mathrm{Grms}\)</span>. Swept sinusoidal resonance dwell test identifies and overstresses resonance frequencies. Fatigue equivalence between field and lab profiles is established using the power spectral density damage equivalence: <span id="eq-psd_damage"></span></p>
+<div class="arithmatex">\[D \propto \int_0^\infty [G(f)]^{b/2}\,df\tag{14.15}\]</div>
+<p>where <span class="arithmatex">\(b\)</span> is the fatigue exponent (typically 4–8 for metals).</p>
+<h3 id="1465-mechanical-shock-testing-method-5168"><span class="secnum">14.6.5</span> Mechanical Shock Testing (Method 516.8)<a class="headerlink" href="#1465-mechanical-shock-testing-method-5168" title="Permanent link">&para;</a></h3>
+<p>Classical shock waveforms:</p>
+<dl>
+<dt>Half-sine</dt>
+<dd>Duration 11 ms, peak <span class="arithmatex">\(40\,\mathrm{g}\)</span>; simulates equipment drop or vehicle bump.</dd>
+<dt>Sawtooth (terminal peak)</dt>
+<dd>Amplitude <span class="arithmatex">\(40\,\mathrm{g}\)</span>, duration 11 ms; simulates crash landing.</dd>
+<dt>Trapezoidal</dt>
+<dd>Simulates pyrotechnic shock at separation events.</dd>
+</dl>
+<p>Shock response spectrum (SRS) characterises the severity of a shock pulse: <span id="eq-srs"></span></p>
+<div class="arithmatex">\[\mathrm{SRS}(f_n) = \max_t\left|\ddot{x}_{\mathrm{abs}}(t)\right|\tag{14.16}\]</div>
+<p>where <span class="arithmatex">\(\ddot{x}_{\mathrm{abs}}\)</span> is the absolute acceleration of a single-degree-of-freedom oscillator tuned to <span class="arithmatex">\(f_n\)</span>.</p>
+<h3 id="1466-additional-environmental-methods"><span class="secnum">14.6.6</span> Additional Environmental Methods<a class="headerlink" href="#1466-additional-environmental-methods" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>Rain (Method 506.6)</dt>
+<dd>Blowing rain at <span class="arithmatex">\(4\,\mathrm{mm/hr}\)</span>, wind <span class="arithmatex">\(8.9\,\mathrm{m/s}\)</span>; 30 min; evaluates water ingress and aerodynamic degradation.</dd>
+<dt>Sand and dust (Method 510.7)</dt>
+<dd>Blowing sand (150–850 <span class="arithmatex">\(\mu\)</span>m) at <span class="arithmatex">\(18\,\mathrm{m/s}\)</span>; 6 h; dust (0–150 <span class="arithmatex">\(\mu\)</span>m) at <span class="arithmatex">\(2.5\,\mathrm{m/s}\)</span>; 6 h. IP67/IP68 ratings per IEC 60529: IP67 = immersion to 1 m for 30 min; IP68 = <span class="arithmatex">\(&gt;1\)</span> m per manufacturer specification.</dd>
+<dt>Altitude (Method 500.6)</dt>
+<dd>
+<p>Low-pressure chamber test to <span class="arithmatex">\(15,000\,\mathrm{m}\)</span> equivalent (<span class="arithmatex">\(\approx 12\,\mathrm{kPa}\)</span>); checks pressure relief vents, sealed volumes, and corona discharge risks. The pressure altitude relationship: <span id="eq-isa_pressure"></span></p>
+<div class="arithmatex">\[P(h) = P_0\left(1 - \frac{Lh}{T_0}\right)^{gM/(RL)}\tag{14.17}\]</div>
+<p>where <span class="arithmatex">\(L = 0.0065\,\mathrm{K/m}\)</span>, <span class="arithmatex">\(T_0 = 288.15\,\mathrm{K}\)</span>, <span class="arithmatex">\(g = 9.80665\,\mathrm{m/s^2}\)</span>, <span class="arithmatex">\(M = 0.0289644\,\mathrm{kg/mol}\)</span>, <span class="arithmatex">\(R = 8.314\,\mathrm{J/(mol\cdot K)}\)</span>.</p>
+</dd>
+<dt>Salt fog (Method 509.7)</dt>
+<dd>5% NaCl solution, <span class="arithmatex">\(35\,^\circ\mathrm{C}\)</span>, pH 6.5–7.2, 720 h of exposure; evaluates corrosion protection of finishes, connectors, and metals.</dd>
+</dl>
+<div class="tbl" id="tab-milstd810">
+<div class="tbl-caption"><strong>Table 14.1.</strong> MIL-STD-810H test methods applied to UAV qualification</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Method</th>
+<th style="text-align: left;">Category</th>
+<th style="text-align: left;">Key Parameter</th>
+<th style="text-align: center;">Duration</th>
+<th style="text-align: center;">Pass Criterion</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">501.7 / 502.7</td>
+<td style="text-align: left;">Temperature (high/low)</td>
+<td style="text-align: left;"><span class="math inline">\(-40\)</span> to <span class="math inline">\(+71\,^\circ\)</span>C</td>
+<td style="text-align: center;">4 h dwell</td>
+<td style="text-align: center;">Full function</td>
+</tr>
+<tr>
+<td style="text-align: left;">503.7</td>
+<td style="text-align: left;">Thermal shock</td>
+<td style="text-align: left;"><span class="math inline">\(-51\)</span> / <span class="math inline">\(+71\,^\circ\)</span>C</td>
+<td style="text-align: center;">3 cycles</td>
+<td style="text-align: center;">No cracking</td>
+</tr>
+<tr>
+<td style="text-align: left;">507.6</td>
+<td style="text-align: left;">Humidity</td>
+<td style="text-align: left;">95% RH, <span class="math inline">\(60\,^\circ\)</span>C</td>
+<td style="text-align: center;">10 cycles</td>
+<td style="text-align: center;">No corrosion</td>
+</tr>
+<tr>
+<td style="text-align: left;">514.8</td>
+<td style="text-align: left;">Vibration (random)</td>
+<td style="text-align: left;">PSD per LCEP</td>
+<td style="text-align: center;">1 h/axis</td>
+<td style="text-align: center;">No damage</td>
+</tr>
+<tr>
+<td style="text-align: left;">516.8</td>
+<td style="text-align: left;">Mechanical shock</td>
+<td style="text-align: left;">40 g, 11 ms</td>
+<td style="text-align: center;">3 shocks/axis</td>
+<td style="text-align: center;">No damage</td>
+</tr>
+<tr>
+<td style="text-align: left;">506.6</td>
+<td style="text-align: left;">Rain</td>
+<td style="text-align: left;">4 mm/hr</td>
+<td style="text-align: center;">30 min</td>
+<td style="text-align: center;">No ingress</td>
+</tr>
+<tr>
+<td style="text-align: left;">510.7</td>
+<td style="text-align: left;">Sand/dust</td>
+<td style="text-align: left;">0–850 <span class="math inline">\(\mu\)</span>m</td>
+<td style="text-align: center;">6 h each</td>
+<td style="text-align: center;">No blockage</td>
+</tr>
+<tr>
+<td style="text-align: left;">500.6</td>
+<td style="text-align: left;">Altitude</td>
+<td style="text-align: left;">15,000 m</td>
+<td style="text-align: center;">2 h</td>
+<td style="text-align: center;">Full function</td>
+</tr>
+<tr>
+<td style="text-align: left;">509.7</td>
+<td style="text-align: left;">Salt fog</td>
+<td style="text-align: left;">5% NaCl</td>
+<td style="text-align: center;">720 h</td>
+<td style="text-align: center;">No corrosion</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-emc_testing"><span class="secnum">14.7</span> Electromagnetic Compatibility (EMC) Testing<a class="headerlink" href="#sec-emc_testing" title="Permanent link">&para;</a></h2>
+<h3 id="1471-mil-std-461g-framework"><span class="secnum">14.7.1</span> MIL-STD-461G Framework<a class="headerlink" href="#1471-mil-std-461g-framework" title="Permanent link">&para;</a></h3>
+<p>MIL-STD-461G (Requirements for the Control of Electromagnetic Interference Characteristics of Subsystems and Equipment) specifies EMC limits for defence equipment. It is required for all US military UAV programmes; STANAG 3090 is the NATO equivalent.</p>
+<h3 id="1472-conducted-emissions-ce101-ce102"><span class="secnum">14.7.2</span> Conducted Emissions (CE101, CE102)<a class="headerlink" href="#1472-conducted-emissions-ce101-ce102" title="Permanent link">&para;</a></h3>
+<p>CE101 measures current emissions on power leads from 30 Hz to 10 kHz using a current probe. CE102 measures voltage emissions on power leads from 10 kHz to 10 MHz using a line impedance stabilisation network (LISN). Limits are expressed in dB<span class="arithmatex">\(\mu\)</span>V. The EMI voltage measured at the LISN: <span id="eq-lisn_voltage"></span></p>
+<div class="arithmatex">\[V_{\mathrm{LISN}} = Z_{\mathrm{LISN}} \cdot I_{\mathrm{noise}}\tag{14.18}\]</div>
+<p>where <span class="arithmatex">\(Z_{\mathrm{LISN}} = 50\,\Omega\)</span> in the standardised frequency range.</p>
+<h3 id="1473-radiated-emissions-re101-re102"><span class="secnum">14.7.3</span> Radiated Emissions (RE101, RE102)<a class="headerlink" href="#1473-radiated-emissions-re101-re102" title="Permanent link">&para;</a></h3>
+<p>RE102 measures electric field strength from 10 kHz to 18 GHz in an anechoic chamber or shielded room. A biconical, log-periodic, or double-ridged horn antenna is positioned at 1 m from the equipment under test (EUT). Limits are expressed in dB<span class="arithmatex">\(\mu\)</span>V/m. The relationship between transmit power and field strength at distance <span class="arithmatex">\(r\)</span> in free space: <span id="eq-field_strength"></span></p>
+<div class="arithmatex">\[E = \frac{\sqrt{30\,P_t\,G_t}}{r}\tag{14.19}\]</div>
+<p>For UAV flight control datalinks, RE102 compliance is critical to avoid self-interference with onboard GPS and telemetry receivers.</p>
+<h3 id="1474-conducted-susceptibility-cs101-cs114-cs115-cs116"><span class="secnum">14.7.4</span> Conducted Susceptibility (CS101, CS114, CS115, CS116)<a class="headerlink" href="#1474-conducted-susceptibility-cs101-cs114-cs115-cs116" title="Permanent link">&para;</a></h3>
+<p>CS114 (bulk current injection) injects RF current onto cables from 10 kHz to 200 MHz using a current injection probe. The injected current level: <span id="eq-cs114_current"></span></p>
+<div class="arithmatex">\[I_{\mathrm{inj}} = 10^{L_{\mathrm{dBmA}}/20}\,\mu\mathrm{A}\tag{14.20}\]</div>
+<p>Pass criterion: no loss of function, no change in performance outside specification. CS116 covers damped sinusoidal transients simulating nuclear EMP coupling and cable-to-cable crosstalk.</p>
+<h3 id="1475-radiated-susceptibility-rs101-rs103"><span class="secnum">14.7.5</span> Radiated Susceptibility (RS101, RS103)<a class="headerlink" href="#1475-radiated-susceptibility-rs101-rs103" title="Permanent link">&para;</a></h3>
+<p>RS103 applies a broadband electric field (<span class="arithmatex">\(10\,\mathrm{V/m}\)</span>–<span class="arithmatex">\(200\,\mathrm{V/m}\)</span> depending on platform) from 2 MHz to 18 GHz to the EUT. A field probe at the EUT position verifies the field level. The test evaluates immunity of the UAV avionics to RF environments including radar, communications transmitters, and EW systems.</p>
+<h3 id="1476-hirf-high-intensity-radiated-fields"><span class="secnum">14.7.6</span> HIRF (High Intensity Radiated Fields)<a class="headerlink" href="#1476-hirf-high-intensity-radiated-fields" title="Permanent link">&para;</a></h3>
+<p>For civil-certified UAVs operating in controlled airspace, HIRF compliance per FAA AC 20-158A applies. HIRF Category B (commercial aircraft environment): continuous wave <span class="arithmatex">\(1000\,\mathrm{V/m}\)</span> from 100 MHz to 400 MHz. UAV avionics intended for BVLOS operations over populated areas must be HIRF-qualified at appropriate levels.</p>
+<h2 id="sec-flight_testing"><span class="secnum">14.8</span> Flight Testing<a class="headerlink" href="#sec-flight_testing" title="Permanent link">&para;</a></h2>
+<h3 id="1481-flight-test-instrumentation-fti"><span class="secnum">14.8.1</span> Flight Test Instrumentation (FTI)<a class="headerlink" href="#1481-flight-test-instrumentation-fti" title="Permanent link">&para;</a></h3>
+<p>FTI records all measurands needed to characterise aircraft performance, handling qualities, and system health. An FTI system for a medium UAV typically comprises:</p>
+<ul>
+<li>
+<p>PCMCIA or COTS DAQ: 64–512 channels at 1 kHz–10 kHz.</p>
+</li>
+<li>
+<p>Inertial Measurement Unit (IMU): 3-axis accelerometers, 3-axis gyroscopes; strapdown navigation solution at 200 Hz.</p>
+</li>
+<li>
+<p>Air data system: calibrated airspeed (Pitot-static), altitude, angle of attack.</p>
+</li>
+<li>
+<p>Strain gauge telemetry: transmit structural loads in real time for range safety.</p>
+</li>
+<li>
+<p>Downlink: PCM/FM telemetry at 1–10 Mbps to a ground station (IRIG-106 standard).</p>
+</li>
+</ul>
+<p>Time correlation of all channels uses IRIG-B timecode synchronised to GPS. Data gap analysis: <span class="arithmatex">\(&lt;0.1\%\)</span> of time in critical phases (takeoff, landing, manoeuvres).</p>
+<h3 id="1482-build-up-test-programme"><span class="secnum">14.8.2</span> Build-Up Test Programme<a class="headerlink" href="#1482-build-up-test-programme" title="Permanent link">&para;</a></h3>
+<p>The flight test envelope is expanded incrementally following a build-up approach:</p>
+<ol>
+<li>
+<p><strong>Taxi tests:</strong> directional control, braking, nosewheel steering.</p>
+</li>
+<li>
+<p><strong>Engine run-up and systems check:</strong> all systems verified with rotors spinning or engine at full power on ground.</p>
+</li>
+<li>
+<p><strong>Hover or low-speed taxi:</strong> for VTOL UAVs, confirm stability margins in ground effect.</p>
+</li>
+<li>
+<p><strong>First flight:</strong> low altitude (<span class="arithmatex">\(&lt;30\,\mathrm{m}\)</span>), low speed, limited duration; FTI data reviewed before next sortie.</p>
+</li>
+<li>
+<p><strong>Envelope expansion:</strong> altitude, speed, and manoeuvre load factor expanded in <span class="arithmatex">\(\leq 10\%\)</span> increments per sortie.</p>
+</li>
+<li>
+<p><strong>Performance flights:</strong> max speed, max endurance, ceiling, payload capacity, wind envelope.</p>
+</li>
+<li>
+<p><strong>Systems testing:</strong> payload integration, autopilot modes, lost-link behaviour, obstacle avoidance.</p>
+</li>
+</ol>
+<h3 id="1483-performance-testing-parameters"><span class="secnum">14.8.3</span> Performance Testing Parameters<a class="headerlink" href="#1483-performance-testing-parameters" title="Permanent link">&para;</a></h3>
+<p>Key UAV performance parameters measured in flight:</p>
+<div class="tbl" id="tab-flight_perf">
+<div class="tbl-caption"><strong>Table 14.2.</strong> Key UAV flight performance parameters and measurement methods</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Measurement Method</th>
+<th style="text-align: center;">Typical Accuracy</th>
+<th style="text-align: center;">Correction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Maximum speed <span class="math inline">\(V_{\max}\)</span></td>
+<td style="text-align: left;">GPS ground speed (3 runs)</td>
+<td style="text-align: center;"><span class="math inline">\(\pm 0.5\,\mathrm{m/s}\)</span></td>
+<td style="text-align: center;">Wind</td>
+</tr>
+<tr>
+<td style="text-align: left;">Stall speed <span class="math inline">\(V_s\)</span></td>
+<td style="text-align: left;">Calibrated Pitot</td>
+<td style="text-align: center;"><span class="math inline">\(\pm 1\,\mathrm{m/s}\)</span></td>
+<td style="text-align: center;">Density alt.</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rate of climb (ROC)</td>
+<td style="text-align: left;">Barometric + GPS</td>
+<td style="text-align: center;"><span class="math inline">\(\pm 0.2\,\mathrm{m/s}\)</span></td>
+<td style="text-align: center;">ISA correction</td>
+</tr>
+<tr>
+<td style="text-align: left;">Service ceiling</td>
+<td style="text-align: left;">GPS altitude at ROC = 0</td>
+<td style="text-align: center;"><span class="math inline">\(\pm 30\,\mathrm{m}\)</span></td>
+<td style="text-align: center;">Temperature</td>
+</tr>
+<tr>
+<td style="text-align: left;">Endurance at cruise</td>
+<td style="text-align: left;">Time + fuel/energy log</td>
+<td style="text-align: center;"><span class="math inline">\(\pm 2\%\)</span></td>
+<td style="text-align: center;">Wind, temp</td>
+</tr>
+<tr>
+<td style="text-align: left;">Payload capacity</td>
+<td style="text-align: left;">Load cells on GCS</td>
+<td style="text-align: center;"><span class="math inline">\(\pm 0.1\,\mathrm{kg}\)</span></td>
+<td style="text-align: center;">None</td>
+</tr>
+<tr>
+<td style="text-align: left;">Turn radius / bank angle</td>
+<td style="text-align: left;">GPS track + IMU bank</td>
+<td style="text-align: center;"><span class="math inline">\(\pm 5\%\)</span></td>
+<td style="text-align: center;">None</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Range and endurance estimates use the Breguet equations. For a propeller-driven UAV: <span id="eq-breguet_prop"></span></p>
+<div class="arithmatex">\[R = \frac{\eta_p}{c_p g}\frac{L}{D}\ln\frac{W_0}{W_1}\tag{14.21}\]</div>
+<div id="eq-breguet_endurance"></div>
+<div class="arithmatex">\[E = \frac{\eta_p}{c_p g}\frac{C_L^{3/2}}{C_D}\sqrt{2\rho S}\left(W_1^{-1/2} - W_0^{-1/2}\right)\tag{14.22}\]</div>
+<p>where <span class="arithmatex">\(c_p\)</span> is the brake specific fuel consumption, <span class="arithmatex">\(\eta_p\)</span> propulsive efficiency, <span class="arithmatex">\(L/D\)</span> lift-to-drag ratio, and <span class="arithmatex">\(W_0\)</span>, <span class="arithmatex">\(W_1\)</span> are initial and final weights.</p>
+<h3 id="1484-handling-qualities-assessment"><span class="secnum">14.8.4</span> Handling Qualities Assessment<a class="headerlink" href="#1484-handling-qualities-assessment" title="Permanent link">&para;</a></h3>
+<p>The Cooper-Harper rating scale (1–10) is used by human operators (via ground control station) to rate handling qualities:</p>
+<ul>
+<li>
+<p>1–3: Satisfactory without improvement.</p>
+</li>
+<li>
+<p>4–6: Deficiencies warrant improvement.</p>
+</li>
+<li>
+<p>7–9: Deficiencies require improvement; controllable with adequate pilot compensation.</p>
+</li>
+<li>
+<p>10: Control lost during required operation.</p>
+</li>
+</ul>
+<p>For UAVs with autonomous modes, handling quality ratings assess the ability of the operator to supervise and correct the autonomous behaviour. Bandwidth and phase delay metrics from ADS-33 are adapted for unmanned rotorcraft.</p>
+<h3 id="1485-emergency-procedure-verification"><span class="secnum">14.8.5</span> Emergency Procedure Verification<a class="headerlink" href="#1485-emergency-procedure-verification" title="Permanent link">&para;</a></h3>
+<p>Each emergency procedure defined in the flight manual is verified by flight test:</p>
+<ul>
+<li>
+<p>Engine-out / motor failure: single-motor failure at various flight phases; verify safe controlled descent or autorotation.</p>
+</li>
+<li>
+<p>Datalink loss: lost-link failsafe executes correctly (RTH or loiter); timing and altitude verified.</p>
+</li>
+<li>
+<p>GPS loss: INS/optical flow navigation activated; position hold degraded to acceptable level.</p>
+</li>
+<li>
+<p>Battery low: RTH triggered at correct threshold; landing completed successfully.</p>
+</li>
+<li>
+<p>Geofencing violation: vehicle commanded to stop and hold.</p>
+</li>
+</ul>
+<h2 id="sec-certification"><span class="secnum">14.9</span> Civil Certification Frameworks<a class="headerlink" href="#sec-certification" title="Permanent link">&para;</a></h2>
+<h3 id="1491-faa-regulatory-framework-usa"><span class="secnum">14.9.1</span> FAA Regulatory Framework (USA)<a class="headerlink" href="#1491-faa-regulatory-framework-usa" title="Permanent link">&para;</a></h3>
+<p>The FAA regulates civil UAVs through Title 14 CFR:</p>
+<dl>
+<dt>Part 107</dt>
+<dd>“Small UAS Rule”: commercial operation of aircraft <span class="arithmatex">\(\leq 55\,\mathrm{lb}\)</span> (25 kg) VLOS, below 400 ft AGL, in uncontrolled airspace. Registration, pilot certification (Part 107 knowledge test), and operational rules.</dd>
+<dt>Waivers</dt>
+<dd>Part 107.205 waivers allow deviation from specific rules (e.g. BVLOS operations, operations over moving vehicles, night operations) upon submission of a safety case.</dd>
+<dt>Type Certification</dt>
+<dd>Required for UAS <span class="arithmatex">\(&gt; 55\,\mathrm{lb}\)</span> in certain operations. Airworthiness standards under 14 CFR Part 21; Special Class aircraft (Section 21.17(b)) or applicable airworthiness standard.</dd>
+<dt>Remote ID</dt>
+<dd>From March 2024, all registered UAS must broadcast Remote ID (Standard Remote ID or Remote ID broadcast module).</dd>
+</dl>
+<h3 id="1492-easa-regulatory-framework-europe"><span class="secnum">14.9.2</span> EASA Regulatory Framework (Europe)<a class="headerlink" href="#1492-easa-regulatory-framework-europe" title="Permanent link">&para;</a></h3>
+<p>EASA Regulation (EU) 2019/947 divides UAS operations into three categories:</p>
+<dl>
+<dt>Open</dt>
+<dd>Low risk; no authorisation required. Sub-categories A1 (fly over people), A2 (fly close to people), A3 (fly away from people). Max MTOM: A1 <span class="arithmatex">\(\leq 250\,\mathrm{g}\)</span>; A2 <span class="arithmatex">\(\leq 4\,\mathrm{kg}\)</span>; A3 <span class="arithmatex">\(\leq 25\,\mathrm{kg}\)</span>.</dd>
+<dt>Specific</dt>
+<dd>Medium risk; operational authorisation from national authority. Uses SORA (Specific Operations Risk Assessment) methodology to determine SAIL (Specific Assurance and Integrity Level I–VI).</dd>
+<dt>Certified</dt>
+<dd>High risk (operations over people, BVLOS, large UAS). Full type certification to CS-UAS or equivalent; operator certification.</dd>
+</dl>
+<p>SORA methodology calculates the Ground Risk Class (GRC) and Air Risk Class (ARC) and determines required operational safety objectives (OSO): <span id="eq-sail"></span></p>
+<div class="arithmatex">\[\mathrm{SAIL} = f(\mathrm{GRC},\,\mathrm{ARC}_{\mathrm{residual}})\tag{14.23}\]</div>
+<p>Mitigation of ground risk by operational measures reduces the intrinsic GRC; strategic and tactical mitigation of air risk reduces ARC.</p>
+<h3 id="1493-icao-framework-and-annex-8"><span class="secnum">14.9.3</span> ICAO Framework and Annex 8<a class="headerlink" href="#1493-icao-framework-and-annex-8" title="Permanent link">&para;</a></h3>
+<p>ICAO Circular 328 (2011) and ICAO Doc 10019 (Manual on Remotely Piloted Aircraft Systems) provide the international framework for RPAS integration. ICAO Annex 8 (Airworthiness of Aircraft) applies to state aircraft and provides the basis for military airworthiness.</p>
+<p>ICAO Standards and Recommended Practices (SARPs) for RPAS address:</p>
+<ul>
+<li>
+<p>RPA type certification and airworthiness;</p>
+</li>
+<li>
+<p>RPAS pilot licensing and competency;</p>
+</li>
+<li>
+<p>Command and control (C2) link performance;</p>
+</li>
+<li>
+<p>Detect and avoid (DAA) requirements.</p>
+</li>
+</ul>
+<h3 id="1494-military-airworthiness-standards"><span class="secnum">14.9.4</span> Military Airworthiness Standards<a class="headerlink" href="#1494-military-airworthiness-standards" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>MIL-HDBK-516C (US)</dt>
+<dd>Military airworthiness assessment criteria for fixed-wing, rotary, and unmanned systems. Covers structures, propulsion, flight control, software, avionics, and human factors.</dd>
+<dt>DEF STAN 00-970 (UK)</dt>
+<dd>Design and airworthiness requirements for service aircraft including RPAS. Part 0 covers all vehicle types; Part 12 covers RPAS-specific requirements.</dd>
+<dt>NATO USAR</dt>
+<dd>The NATO Airworthiness Requirements for UAS developed within FINAS (Flight In Non-Segregated Airspace).</dd>
+<dt>STANAG 4671</dt>
+<dd>NATO UAS Airworthiness Requirements (USAR) for fixed-wing UAS with MTOM <span class="arithmatex">\(150\,\mathrm{kg}\)</span>–<span class="arithmatex">\(20,000\,\mathrm{kg}\)</span>.</dd>
+</dl>
+<h3 id="1495-do-178c-and-do-254-compliance"><span class="secnum">14.9.5</span> DO-178C and DO-254 Compliance<a class="headerlink" href="#1495-do-178c-and-do-254-compliance" title="Permanent link">&para;</a></h3>
+<p>Avionics software compliance with DO-178C is verified through a Plan for Software Aspects of Certification (PSAC), Software Development Plan (SDP), Software Verification Plan (SVP), and Software Configuration Management Plan (SCMP). The Certification Liaison Process ensures a DER (Designated Engineering Representative) or authority representative reviews compliance at key milestones.</p>
+<p>For civil UAS certification, the Software Verification Cases and Procedures (SVCP) must demonstrate:</p>
+<ul>
+<li>
+<p>Requirements completeness and unambiguity.</p>
+</li>
+<li>
+<p>Structural coverage to the applicable DAL (MC/DC for DAL-A).</p>
+</li>
+<li>
+<p>Absence of dead code (deactivated code requires justification).</p>
+</li>
+<li>
+<p>Correct behaviour for all identified failure modes.</p>
+</li>
+</ul>
+<h2 id="sec-operational_approval"><span class="secnum">14.10</span> Operational Approval<a class="headerlink" href="#sec-operational_approval" title="Permanent link">&para;</a></h2>
+<h3 id="14101-bvlos-operations"><span class="secnum">14.10.1</span> BVLOS Operations<a class="headerlink" href="#14101-bvlos-operations" title="Permanent link">&para;</a></h3>
+<p>Beyond-visual-line-of-sight (BVLOS) operations are the key enabler for commercial UAS use cases (infrastructure inspection, precision agriculture, package delivery). Approval requires a safety case addressing:</p>
+<ol>
+<li>
+<p><strong>Detect and Avoid (DAA):</strong> The UAV must detect and avoid other aircraft with a well-clear standard equivalent to see-and-avoid for a human pilot. ADS-B, TCAS, and active electronically scanned radar (AESA) are candidate DAA sensors.</p>
+</li>
+<li>
+<p><strong>Command and Control (C2) link:</strong> Availability, integrity, and latency requirements:</p>
+<ul>
+<li>
+<p>Availability <span class="arithmatex">\(\geq 99.9\%\)</span> (civil BVLOS);</p>
+</li>
+<li>
+<p>Latency <span class="arithmatex">\(\leq 500\,\mathrm{ms}\)</span> for standard command; <span class="arithmatex">\(\leq 100\,\mathrm{ms}\)</span> for emergency commands.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Lost-link procedures:</strong> Defined, tested, and verified failsafe procedure (RTH, loiter, predefined landing site).</p>
+</li>
+<li>
+<p><strong>Ground risk:</strong> Population density along the route; consequence analysis using the JARUS SORA impact model.</p>
+</li>
+<li>
+<p><strong>Air risk:</strong> Airspace encounter model; collision probability assessment.</p>
+</li>
+</ol>
+<p>The UAV ground impact kinetic energy at terminal velocity determines risk class: <span id="eq-kinetic_energy"></span></p>
+<div class="arithmatex">\[E_k = \frac{1}{2}m V_t^2, \quad V_t = \sqrt{\frac{2mg}{\rho_a C_D A}}\tag{14.24}\]</div>
+<p>JARUS defines iGRC (intrinsic Ground Risk Class) as a function of MTOM (as a proxy for <span class="arithmatex">\(E_k\)</span>) and population density.</p>
+<h3 id="14102-utm-u-space-integration"><span class="secnum">14.10.2</span> UTM / U-Space Integration<a class="headerlink" href="#14102-utm-u-space-integration" title="Permanent link">&para;</a></h3>
+<p>Unmanned Traffic Management (UTM) and U-Space (EU) provide digital airspace management for low-altitude UAS operations. Services include:</p>
+<ul>
+<li>
+<p>Network identification (Remote ID broadcast and registration);</p>
+</li>
+<li>
+<p>Geo-awareness: geofence data service informing operators of restricted areas;</p>
+</li>
+<li>
+<p>Flight authorisation: automated RPAS flight plan approval;</p>
+</li>
+<li>
+<p>Traffic information service (TIS-U): provides awareness of other traffic;</p>
+</li>
+<li>
+<p>Weather information.</p>
+</li>
+</ul>
+<p>UTM architecture follows NASA’s TCL (Technology Capability Level) development roadmap; EASA U-Space Regulation (EU) 2021/664 requires U-Space service providers to obtain certification.</p>
+<h3 id="14103-range-safety"><span class="secnum">14.10.3</span> Range Safety<a class="headerlink" href="#14103-range-safety" title="Permanent link">&para;</a></h3>
+<p>For military and experimental UAS flight testing:</p>
+<ul>
+<li>
+<p>Flight Termination System (FTS): arm/fire commands via independent encrypted link; destroys propulsion or deploys ballistic parachute.</p>
+</li>
+<li>
+<p>Telemetry monitoring: position, altitude, and health data monitored in real time by range safety officer (RSO).</p>
+</li>
+<li>
+<p>Safety fan: predefined airspace corridor; UAV confined by range boundaries and altitude limits.</p>
+</li>
+<li>
+<p>Abort criteria: pre-defined; RSO authorised to activate FTS if criteria exceeded.</p>
+</li>
+</ul>
+<p>The FTS must have probability of inadvertent activation <span class="arithmatex">\(&lt; 10^{-7}\)</span> per flight and probability of failing to activate on command <span class="arithmatex">\(&lt; 10^{-4}\)</span> (EWR TSTM 127-1).</p>
+<h2 id="sec-intl_regs"><span class="secnum">14.11</span> International Regulations Comparison<a class="headerlink" href="#sec-intl_regs" title="Permanent link">&para;</a></h2>
+<p><a href="#tab-intl_regs">Table 14.3</a> provides a cross-reference of key regulatory dimensions for seven jurisdictions.</p>
+<div class="tbl" id="tab-intl_regs">
+<div class="tbl-caption"><strong>Table 14.3.</strong> International UAS regulatory comparison (as of 2025)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Country</th>
+<th style="text-align: left;">Regulator &amp; Key Rule</th>
+<th style="text-align: left;">Weight Categories</th>
+<th style="text-align: left;">Registration Threshold</th>
+<th style="text-align: left;">Remote ID Required</th>
+<th style="text-align: left;">BVLOS Rule</th>
+<th style="text-align: left;">Max Altitude</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">FAA; 14 CFR Part 107</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;0.55\,\mathrm{lb}\)</span> (exempt); <span class="math inline">\(\leq 55\,\mathrm{lb}\)</span> (Pt.107); <span class="math inline">\(&gt;55\,\mathrm{lb}\)</span> (TC)</td>
+<td style="text-align: left;"><span class="math inline">\(\geq 0.55\,\mathrm{lb}\)</span> (<span class="math inline">\(250\,\mathrm{g}\)</span>)</td>
+<td style="text-align: left;">Yes, from March 2024</td>
+<td style="text-align: left;">Waiver (107.205); UAS Integration Pilot</td>
+<td style="text-align: left;">400 ft AGL</td>
+</tr>
+<tr>
+<td style="text-align: left;">EU</td>
+<td style="text-align: left;">EASA; (EU) 2019/947</td>
+<td style="text-align: left;">Open A1/A2/A3; Specific; Certified</td>
+<td style="text-align: left;"><span class="math inline">\(\geq 250\,\mathrm{g}\)</span> or capable of <span class="math inline">\(\geq 12\,\mathrm{m/s}\)</span> impact</td>
+<td style="text-align: left;">Yes (std or legacy)</td>
+<td style="text-align: left;">Specific category; SORA; OpCon mitigation</td>
+<td style="text-align: left;">120 m AGL</td>
+</tr>
+<tr>
+<td style="text-align: left;">UK</td>
+<td style="text-align: left;">CAA; Air Navigation Order 2016 + CAP 722</td>
+<td style="text-align: left;">Open A1/A2/A3; Specific; Certified</td>
+<td style="text-align: left;"><span class="math inline">\(\geq 250\,\mathrm{g}\)</span></td>
+<td style="text-align: left;">Yes (UAS.OPEN.060)</td>
+<td style="text-align: left;">Permission for aerial work; safety case</td>
+<td style="text-align: left;">120 m AGL</td>
+</tr>
+<tr>
+<td style="text-align: left;">China</td>
+<td style="text-align: left;">CAAC; UAS Flight Management Provisions 2023</td>
+<td style="text-align: left;">Micro (<span class="math inline">\(&lt;250\,\mathrm{g}\)</span>); Light (<span class="math inline">\(&lt;7\,\mathrm{kg}\)</span>); Small (<span class="math inline">\(&lt;25\,\mathrm{kg}\)</span>); Med/Large</td>
+<td style="text-align: left;"><span class="math inline">\(\geq 250\,\mathrm{g}\)</span></td>
+<td style="text-align: left;">Yes (UOMS platform)</td>
+<td style="text-align: left;">Approved flight plan via UOMS</td>
+<td style="text-align: left;">120 m AGL (visual zone)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Australia</td>
+<td style="text-align: left;">CASA; CASR Part 101 + Part 102</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;250\,\mathrm{g}\)</span> (excluded); <span class="math inline">\(\leq 2\,\mathrm{kg}\)</span> (std exemption); <span class="math inline">\(&gt;2\,\mathrm{kg}\)</span> (RPA operator cert.)</td>
+<td style="text-align: left;"><span class="math inline">\(\geq 250\,\mathrm{g}\)</span></td>
+<td style="text-align: left;">Yes (from January 2025)</td>
+<td style="text-align: left;">ReOC required (Part 101.238); safety case</td>
+<td style="text-align: left;">120 m AGL</td>
+</tr>
+<tr>
+<td style="text-align: left;">India</td>
+<td style="text-align: left;">DGCA; Drone Rules 2021</td>
+<td style="text-align: left;">Nano (<span class="math inline">\(&lt;250\,\mathrm{g}\)</span>); Micro (<span class="math inline">\(\leq 2\,\mathrm{kg}\)</span>); Small (<span class="math inline">\(\leq 25\,\mathrm{kg}\)</span>); Med; Large</td>
+<td style="text-align: left;"><span class="math inline">\(\geq 250\,\mathrm{g}\)</span> (Micro and above)</td>
+<td style="text-align: left;">Yes (Digital Sky platform)</td>
+<td style="text-align: left;">Conditional permission via Digital Sky</td>
+<td style="text-align: left;">60 m AGL (green zones)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Israel</td>
+<td style="text-align: left;">CAAI; Civil Aviation Regulations Part 93</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;500\,\mathrm{g}\)</span> (light); <span class="math inline">\(&gt;500\,\mathrm{g}\)</span> (permit)</td>
+<td style="text-align: left;"><span class="math inline">\(\geq 500\,\mathrm{g}\)</span></td>
+<td style="text-align: left;">Required for commercial ops</td>
+<td style="text-align: left;">Special permit; case-by-case</td>
+<td style="text-align: left;">50 m AGL (default)</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Key observations from <a href="#tab-intl_regs">Table 14.3</a>:</p>
+<ul>
+<li>
+<p>The 250 g threshold for registration has become a de-facto international standard, adopted by the USA, EU, UK, China, and Australia.</p>
+</li>
+<li>
+<p>Remote ID mandates are converging globally, driven by ICAO Circular 328 and bilateral regulatory alignment.</p>
+</li>
+<li>
+<p>BVLOS approval is universally treated as a special case requiring a safety case or waiver; no jurisdiction has established routine BVLOS as the norm yet.</p>
+</li>
+<li>
+<p>Maximum altitudes vary between 50 m (Israel default) and 400 ft/120 m; operations above ATC-controlled airspace floors require coordination.</p>
+</li>
+</ul>
+<h2 id="sec-special_cert"><span class="secnum">14.12</span> Special Certification Topics<a class="headerlink" href="#sec-special_cert" title="Permanent link">&para;</a></h2>
+<h3 id="14121-cs-uas-and-stanag-4671"><span class="secnum">14.12.1</span> CS-UAS and STANAG 4671<a class="headerlink" href="#14121-cs-uas-and-stanag-4671" title="Permanent link">&para;</a></h3>
+<p>EASA Certification Specifications CS-UAS (published 2023) provide the airworthiness standards for civil UAS in the Certified category. They are structured similarly to CS-23 (normal category aeroplanes) with adaptations for unmanned operation:</p>
+<ul>
+<li>
+<p>C2 link reliability requirements: probability of loss of command <span class="arithmatex">\(&lt; 10^{-5}\)</span> per flight hour for Category RPAS-1 (highest risk).</p>
+</li>
+<li>
+<p>DAA system performance standards tied to a well-clear definition.</p>
+</li>
+<li>
+<p>Human-machine interface (HMI) requirements for the remote pilot station.</p>
+</li>
+</ul>
+<p>NATO STANAG 4671 (USAR Ed.2) applies to fixed-wing UAS of MTOM 150 kg to 20,000 kg seeking to fly in non-segregated airspace. It references NATO STANAG 4703 for lightweight systems (<span class="arithmatex">\(&lt;150\,\mathrm{kg}\)</span>) and aligns with ICAO Annexes 2 and 8.</p>
+<h3 id="14122-airworthiness-evidence-methods"><span class="secnum">14.12.2</span> Airworthiness Evidence Methods<a class="headerlink" href="#14122-airworthiness-evidence-methods" title="Permanent link">&para;</a></h3>
+<p>For novel UAS configurations without established certification basis (e.g. eVTOL, large multi-rotor cargo drones), Issue Papers and Special Conditions are negotiated between the applicant and regulator. Key tools:</p>
+<dl>
+<dt>Means of Compliance (MoC)</dt>
+<dd>Acceptable methods to show compliance with a requirement (MoC 0 = design review, MoC 1 = analysis, MoC 2 = similarity, MoC 3 = test, MoC 4 = inspection, MoC 5 = equipment qualification).</dd>
+<dt>Equivalent Safety Finding</dt>
+<dd>Demonstrates that an alternative approach provides at least equivalent level of safety to the standard requirement.</dd>
+<dt>Special Conditions</dt>
+<dd>Additional or alternative requirements issued by the authority where existing standards are inadequate.</dd>
+</dl>
+<p>The Safety Assessment process follows ARP4754A (Guidelines for Development of Civil Aircraft and Systems), with fault tree analysis (FTA), FMEA/FMECA, and common cause analysis (CCA) providing the quantitative safety evidence.</p>
+<p>Failure condition classification:</p>
+<div class="tbl" id="tab-failure_class">
+<div class="tbl-caption"><strong>Table 14.4.</strong> Failure condition classification and target probability (ARP4754A)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Failure Condition</th>
+<th style="text-align: left;">Effect</th>
+<th style="text-align: center;">Target Probability (per FH)</th>
+<th style="text-align: center;">DAL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Catastrophic</td>
+<td style="text-align: left;">Loss of UAV + casualties</td>
+<td style="text-align: center;"><span class="math inline">\(&lt; 10^{-9}\)</span></td>
+<td style="text-align: center;">DAL-A</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hazardous</td>
+<td style="text-align: left;">Severe injuries, major damage</td>
+<td style="text-align: center;"><span class="math inline">\(&lt; 10^{-7}\)</span></td>
+<td style="text-align: center;">DAL-B</td>
+</tr>
+<tr>
+<td style="text-align: left;">Major</td>
+<td style="text-align: left;">Significant degradation</td>
+<td style="text-align: center;"><span class="math inline">\(&lt; 10^{-5}\)</span></td>
+<td style="text-align: center;">DAL-C</td>
+</tr>
+<tr>
+<td style="text-align: left;">Minor</td>
+<td style="text-align: left;">Slight degradation</td>
+<td style="text-align: center;"><span class="math inline">\(&lt; 10^{-3}\)</span></td>
+<td style="text-align: center;">DAL-D</td>
+</tr>
+<tr>
+<td style="text-align: left;">No Safety Effect</td>
+<td style="text-align: left;">No impact</td>
+<td style="text-align: center;">No requirement</td>
+<td style="text-align: center;">DAL-E</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="14123-security-considerations-in-certification"><span class="secnum">14.12.3</span> Security Considerations in Certification<a class="headerlink" href="#14123-security-considerations-in-certification" title="Permanent link">&para;</a></h3>
+<p>Cybersecurity of UAV command links and avionics is an emerging certification requirement. EASA AMC 20-42 addresses airworthiness security for airborne information security. Key requirements:</p>
+<ul>
+<li>
+<p>C2 link encrypted: AES-256 minimum; frequency hopping for anti-jam.</p>
+</li>
+<li>
+<p>Authenticated commands: MAVLink v2 signing; proprietary encrypted protocols.</p>
+</li>
+<li>
+<p>Secure boot: avionics software integrity verified at startup.</p>
+</li>
+<li>
+<p>Over-the-air (OTA) update security: signed firmware; rollback protection.</p>
+</li>
+<li>
+<p>Penetration testing: OWASP-based assessment; threat modelling (STRIDE).</p>
+</li>
+</ul>
+<h2 id="sec-integrated_TE"><span class="secnum">14.13</span> Integrated Test and Evaluation Strategy<a class="headerlink" href="#sec-integrated_TE" title="Permanent link">&para;</a></h2>
+<h3 id="14131-test-readiness-reviews"><span class="secnum">14.13.1</span> Test Readiness Reviews<a class="headerlink" href="#14131-test-readiness-reviews" title="Permanent link">&para;</a></h3>
+<p>Prior to each major test event, a Test Readiness Review (TRR) verifies:</p>
+<ol>
+<li>
+<p>Test article is in the correct configuration and has passed all prerequisite tests.</p>
+</li>
+<li>
+<p>Test procedures are reviewed and approved.</p>
+</li>
+<li>
+<p>Instrumentation is calibrated and all channels verified.</p>
+</li>
+<li>
+<p>Safety plan is approved; emergency procedures are briefed.</p>
+</li>
+<li>
+<p>Data processing tools are verified on representative data.</p>
+</li>
+</ol>
+<h3 id="14132-anomaly-management"><span class="secnum">14.13.2</span> Anomaly Management<a class="headerlink" href="#14132-anomaly-management" title="Permanent link">&para;</a></h3>
+<p>All anomalies (non-conformances, test failures, unexpected observations) are documented in an anomaly tracking system (e.g. JIRA, in-house tool). Each anomaly record contains: cause category (design, manufacturing, process, requirement), criticality rating, corrective action, verification of fix, and closure authority.</p>
+<p>Anomalies are classified by criticality:</p>
+<dl>
+<dt>Critical (S1)</dt>
+<dd>Safety of flight impact; work stoppage; requires engineering and programme management approval to continue.</dd>
+<dt>Major (S2)</dt>
+<dd>Performance impact; schedule risk; requires engineering approval.</dd>
+<dt>Minor (S3)</dt>
+<dd>No functional impact; tracked for improvement.</dd>
+</dl>
+<h3 id="14133-test-data-management"><span class="secnum">14.13.3</span> Test Data Management<a class="headerlink" href="#14133-test-data-management" title="Permanent link">&para;</a></h3>
+<p>All test data is archived with version control and traceable to:</p>
+<ul>
+<li>
+<p>Test article serial number and configuration.</p>
+</li>
+<li>
+<p>Test procedure revision.</p>
+</li>
+<li>
+<p>Instrumentation calibration records.</p>
+</li>
+<li>
+<p>Environmental conditions during the test.</p>
+</li>
+</ul>
+<p>Data formats: MTS/IRIG PCM streams for flight test; HDF5 or TDMS for ground test. Long-term archival: minimum 10 years post-certification for civil programmes; 20 years for military.</p>
+<h2 id="sec-safety_analysis"><span class="secnum">14.14</span> Safety Analysis and Risk Management<a class="headerlink" href="#sec-safety_analysis" title="Permanent link">&para;</a></h2>
+<h3 id="14141-failure-modes-and-effects-analysis-fmeafmeca"><span class="secnum">14.14.1</span> Failure Modes and Effects Analysis (FMEA/FMECA)<a class="headerlink" href="#14141-failure-modes-and-effects-analysis-fmeafmeca" title="Permanent link">&para;</a></h3>
+<p>FMEA systematically identifies failure modes of each component, their effects at system level, and detection methods. FMECA adds a criticality ranking: <span id="eq-fmeca_criticality"></span></p>
+<div class="arithmatex">\[C_m = \lambda_p \cdot \alpha \cdot \beta \cdot t\tag{14.25}\]</div>
+<p>where <span class="arithmatex">\(\lambda_p\)</span> is the part failure rate (failures/hour, from MIL-HDBK-217F or Telcordia SR-332), <span class="arithmatex">\(\alpha\)</span> is the failure mode ratio, <span class="arithmatex">\(\beta\)</span> is the conditional probability of mission loss, and <span class="arithmatex">\(t\)</span> is operating time.</p>
+<p>Risk Priority Number (RPN) for design improvement prioritisation: <span id="eq-rpn"></span></p>
+<div class="arithmatex">\[\mathrm{RPN} = S \times O \times D\tag{14.26}\]</div>
+<p>where <span class="arithmatex">\(S\)</span> is severity (1–10), <span class="arithmatex">\(O\)</span> is occurrence probability (1–10), and <span class="arithmatex">\(D\)</span> is detectability (1–10, where 10 = least detectable). Items with RPN <span class="arithmatex">\(&gt; 100\)</span> require corrective action.</p>
+<h3 id="14142-fault-tree-analysis-fta"><span class="secnum">14.14.2</span> Fault Tree Analysis (FTA)<a class="headerlink" href="#14142-fault-tree-analysis-fta" title="Permanent link">&para;</a></h3>
+<p>FTA is a top-down, deductive analysis that models how system-level failures (top events) can be caused by combinations of lower-level failures. Minimal cut sets are the smallest combinations of basic failures that can cause the top event. The top event probability: <span id="eq-fta_probability"></span></p>
+<div class="arithmatex">\[P_T = 1 - \prod_{j=1}^{M}\left(1 - \prod_{i \in C_j} q_i\right)\tag{14.27}\]</div>
+<p>where <span class="arithmatex">\(C_j\)</span> is the <span class="arithmatex">\(j\)</span>-th minimal cut set and <span class="arithmatex">\(q_i\)</span> is the probability of basic failure <span class="arithmatex">\(i\)</span>. This approximation is conservative for rare events (<span class="arithmatex">\(q_i \ll 1\)</span>).</p>
+<h2 id="sec-test_summary"><span class="secnum">14.15</span> Chapter Summary<a class="headerlink" href="#sec-test_summary" title="Permanent link">&para;</a></h2>
+<p>The testing, certification, and regulation of UAVs form a comprehensive discipline bridging structural mechanics, electronics, software engineering, flight dynamics, and law. The building-block test approach efficiently generates design confidence from inexpensive coupons to full-vehicle qualification. MIL-STD-810H and MIL-STD-461G provide the principal environmental and EMC test frameworks for military systems; civil programmes increasingly reference EN/IEC equivalents and bespoke UAS regulations.</p>
+<p>Flight testing remains the irreplaceable final verification step, expanding the envelope incrementally with FTI providing objective performance evidence. Certification pathways are maturing rapidly: FAA Part 107, EASA Open/Specific/Certified, and NATO STANAG 4671 now provide structured routes for systems of all sizes and risk categories, though BVLOS operations over populated areas remain a frontier that is being addressed through safety cases and UTM integration.</p>
+<p>The convergence of international regulations toward a common 250 g registration threshold, mandatory Remote ID, and risk-based authorisation of advanced operations signals a maturing regulatory environment that will enable larger-scale commercial UAS deployment in the late 2020s, provided that safety evidence from continuing operational experience justifies relaxation of current restrictions.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch13-drone-manufacturing-and-materials.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 13. Drone Manufacturing and Materials">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                13. Drone Manufacturing and Materials
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch15-special-drone-categories.html" class="md-footer__link md-footer__link--next" aria-label="Next: 15. Special Drone Categories">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                15. Special Drone Categories
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

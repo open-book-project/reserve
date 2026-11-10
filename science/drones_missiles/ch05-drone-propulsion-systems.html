@@ -1,0 +1,4721 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch05-drone-propulsion-systems.html">
+  
+  
+    <link rel="prev" href="ch04-drone-airframe-and-structures.html">
+  
+  
+    <link rel="next" href="ch06-drone-power-systems.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>5. Drone Propulsion Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#sec-elec_overview" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              5. Drone Propulsion Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-elec_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Electric Propulsion: Principles and Energy Conversion Chain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Electric Propulsion: Principles and Energy Conversion Chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-why-electric-dominates-small-and-medium-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.1 Why Electric Dominates Small and Medium UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-the-efficiency-chain-battery-to-propeller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.2 The Efficiency Chain: Battery to Propeller
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513-specific-power-at-each-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.3 Specific Power at Each Stage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#514-endurance-equation-for-electric-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.4 Endurance Equation for Electric UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-bldc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Brushless DC Motors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Brushless DC Motors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-operating-principle-and-electromagnetic-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.1 Operating Principle and Electromagnetic Fundamentals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-motor-constants-kv-kt-and-the-back-emf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.2 Motor Constants: KV, KT, and the Back-EMF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-power-equations-and-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.3 Power Equations and Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#524-motor-sizing-for-uav-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.4 Motor Sizing for UAV Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#525-stator-design-slot-pole-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.5 Stator Design: Slot-Pole Combinations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#526-winding-configuration-star-vs-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.6 Winding Configuration: Star vs Delta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#527-permanent-magnets-ndfeb-and-halbach-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.7 Permanent Magnets: NdFeB and Halbach Arrays
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#528-thermal-model-and-cooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.8 Thermal Model and Cooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#529-inrunner-vs-outrunner-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.9 Inrunner vs Outrunner Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5210-representative-motor-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.10 Representative Motor Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-esc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Electronic Speed Controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Electronic Speed Controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-six-step-commutation-trapezoidal-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.1 Six-Step Commutation (Trapezoidal Drive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#532-field-oriented-control-foc-sinusoidal-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.2 Field-Oriented Control (FOC) — Sinusoidal Drive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#533-pwm-switching-and-gate-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.3 PWM Switching and Gate Drive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534-digital-communication-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.4 Digital Communication Protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#535-esc-protection-features-and-regenerative-braking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.5 ESC Protection Features and Regenerative Braking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-propellers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Propellers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 Propellers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#541-propeller-geometry-and-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.1 Propeller Geometry and Notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#542-non-dimensional-coefficients-and-similarity-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.2 Non-Dimensional Coefficients and Similarity Laws
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#543-static-thrust-in-hover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.3 Static Thrust in Hover
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#544-the-pitch-speed-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.4 The Pitch-Speed Relationship
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#545-blade-element-momentum-theory-bemt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.5 Blade Element Momentum Theory (BEMT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#546-materials-and-manufacturing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.6 Materials and Manufacturing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#547-fixed-pitch-vs-variable-pitch-propellers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.7 Fixed Pitch vs Variable Pitch Propellers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#548-propeller-sizing-rules-of-thumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.8 Propeller Sizing Rules of Thumb
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Internal Combustion Engines for UAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Internal Combustion Engines for UAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#551-two-stroke-glow-and-petrol-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.1 Two-Stroke Glow and Petrol Engines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#552-four-stroke-petrol-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.2 Four-Stroke Petrol Engines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#553-fuel-consumption-and-specific-fuel-consumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.3 Fuel Consumption and Specific Fuel Consumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#554-ignition-and-fuel-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.4 Ignition and Fuel Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555-vibration-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.5 Vibration Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-turbine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 Gas Turbine and Jet Engines for UAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 Gas Turbine and Jet Engines for UAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#561-micro-turbojet-architecture-and-thermodynamic-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.1 Micro-Turbojet Architecture and Thermodynamic Cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#562-compressor-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.2 Compressor Stage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#563-combustor-and-turbine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.3 Combustor and Turbine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#564-turboprop-for-uavs-and-sfc-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.4 Turboprop for UAVs and SFC Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#565-fadec-full-authority-digital-engine-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.5 FADEC: Full Authority Digital Engine Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Hybrid Propulsion Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 Hybrid Propulsion Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#571-series-hybrid-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7.1 Series Hybrid Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#572-parallel-hybrid-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7.2 Parallel Hybrid Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#573-range-extension-potential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7.3 Range Extension Potential
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-alt_propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 Alternative and Emerging Propulsion Technologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 Alternative and Emerging Propulsion Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#581-hydrogen-fuel-cells" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.1 Hydrogen Fuel Cells
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#582-solar-photovoltaic-propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.2 Solar Photovoltaic Propulsion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#583-laser-power-beaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.3 Laser Power Beaming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#584-flapping-wing-ornithopter-propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.4 Flapping Wing (Ornithopter) Propulsion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#585-electrohydrodynamic-ehd-ionic-wind-thrusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.5 Electrohydrodynamic (EHD) / Ionic Wind Thrusters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Propulsion System Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.9 Propulsion System Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#591-motor-mounting-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.1 Motor Mounting Configurations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#592-vibration-isolation-and-emc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.2 Vibration Isolation and EMC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#593-thermal-management-of-esc-and-motor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.3 Thermal Management of ESC and Motor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#594-centre-of-gravity-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.4 Centre of Gravity Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-perf_analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 Propulsion Performance Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.10 Propulsion Performance Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5101-thrust-available-vs-drag-polar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.1 Thrust Available vs Drag Polar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5102-speed-for-maximum-endurance-electric-uav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.2 Speed for Maximum Endurance (Electric UAV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5103-speed-for-maximum-range-electric-uav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.3 Speed for Maximum Range (Electric UAV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5104-climb-rate-and-excess-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.4 Climb Rate and Excess Power
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5105-mission-profile-energy-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.5 Mission Profile Energy Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5106-propeller-efficiency-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.6 Propeller Efficiency Curve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5107-power-required-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.7 Power Required Curve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5108-bldc-motor-cross-section-schematic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.8 BLDC Motor Cross-Section Schematic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 Advanced Topics in Drone Propulsion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.11 Advanced Topics in Drone Propulsion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5111-ducted-fan-and-shrouded-rotor-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.1 Ducted Fan and Shrouded Rotor Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5112-coaxial-rotor-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.2 Coaxial Rotor Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5113-swarm-propulsion-coordination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.3 Swarm Propulsion Coordination
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5114-propulsion-for-vtol-transition-aircraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.4 Propulsion for VTOL Transition Aircraft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5115-battery-management-and-propulsion-derating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.5 Battery Management and Propulsion Derating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5116-motor-control-for-precision-altitude-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.6 Motor Control for Precision Altitude Hold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5117-future-propulsion-trends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.7 Future Propulsion Trends
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 Summary and Design Selection Guidelines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.12 Summary and Design Selection Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5121-propulsion-concept-selection-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12.1 Propulsion Concept Selection Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5122-key-design-equations-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12.2 Key Design Equations Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5123-concluding-remarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12.3 Concluding Remarks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#sec-elec_overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 Electric Propulsion: Principles and Energy Conversion Chain
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.1 Electric Propulsion: Principles and Energy Conversion Chain">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#511-why-electric-dominates-small-and-medium-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.1 Why Electric Dominates Small and Medium UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#512-the-efficiency-chain-battery-to-propeller" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.2 The Efficiency Chain: Battery to Propeller
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#513-specific-power-at-each-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.3 Specific Power at Each Stage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#514-endurance-equation-for-electric-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1.4 Endurance Equation for Electric UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-bldc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 Brushless DC Motors
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.2 Brushless DC Motors">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#521-operating-principle-and-electromagnetic-fundamentals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.1 Operating Principle and Electromagnetic Fundamentals
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#522-motor-constants-kv-kt-and-the-back-emf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.2 Motor Constants: KV, KT, and the Back-EMF
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#523-power-equations-and-efficiency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.3 Power Equations and Efficiency
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#524-motor-sizing-for-uav-applications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.4 Motor Sizing for UAV Applications
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#525-stator-design-slot-pole-combinations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.5 Stator Design: Slot-Pole Combinations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#526-winding-configuration-star-vs-delta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.6 Winding Configuration: Star vs Delta
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#527-permanent-magnets-ndfeb-and-halbach-arrays" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.7 Permanent Magnets: NdFeB and Halbach Arrays
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#528-thermal-model-and-cooling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.8 Thermal Model and Cooling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#529-inrunner-vs-outrunner-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.9 Inrunner vs Outrunner Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5210-representative-motor-specifications" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2.10 Representative Motor Specifications
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-esc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Electronic Speed Controllers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.3 Electronic Speed Controllers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#531-six-step-commutation-trapezoidal-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.1 Six-Step Commutation (Trapezoidal Drive)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#532-field-oriented-control-foc-sinusoidal-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.2 Field-Oriented Control (FOC) — Sinusoidal Drive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#533-pwm-switching-and-gate-drive" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.3 PWM Switching and Gate Drive
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#534-digital-communication-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.4 Digital Communication Protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#535-esc-protection-features-and-regenerative-braking" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3.5 ESC Protection Features and Regenerative Braking
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-propellers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Propellers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.4 Propellers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#541-propeller-geometry-and-notation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.1 Propeller Geometry and Notation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#542-non-dimensional-coefficients-and-similarity-laws" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.2 Non-Dimensional Coefficients and Similarity Laws
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#543-static-thrust-in-hover" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.3 Static Thrust in Hover
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#544-the-pitch-speed-relationship" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.4 The Pitch-Speed Relationship
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#545-blade-element-momentum-theory-bemt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.5 Blade Element Momentum Theory (BEMT)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#546-materials-and-manufacturing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.6 Materials and Manufacturing
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#547-fixed-pitch-vs-variable-pitch-propellers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.7 Fixed Pitch vs Variable Pitch Propellers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#548-propeller-sizing-rules-of-thumb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4.8 Propeller Sizing Rules of Thumb
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-ice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 Internal Combustion Engines for UAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.5 Internal Combustion Engines for UAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#551-two-stroke-glow-and-petrol-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.1 Two-Stroke Glow and Petrol Engines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#552-four-stroke-petrol-engines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.2 Four-Stroke Petrol Engines
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#553-fuel-consumption-and-specific-fuel-consumption" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.3 Fuel Consumption and Specific Fuel Consumption
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#554-ignition-and-fuel-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.4 Ignition and Fuel Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#555-vibration-isolation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5.5 Vibration Isolation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-turbine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6 Gas Turbine and Jet Engines for UAVs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.6 Gas Turbine and Jet Engines for UAVs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#561-micro-turbojet-architecture-and-thermodynamic-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.1 Micro-Turbojet Architecture and Thermodynamic Cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#562-compressor-stage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.2 Compressor Stage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#563-combustor-and-turbine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.3 Combustor and Turbine
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#564-turboprop-for-uavs-and-sfc-comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.4 Turboprop for UAVs and SFC Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#565-fadec-full-authority-digital-engine-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.6.5 FADEC: Full Authority Digital Engine Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7 Hybrid Propulsion Systems
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.7 Hybrid Propulsion Systems">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#571-series-hybrid-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7.1 Series Hybrid Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#572-parallel-hybrid-architecture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7.2 Parallel Hybrid Architecture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#573-range-extension-potential" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.7.3 Range Extension Potential
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-alt_propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8 Alternative and Emerging Propulsion Technologies
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.8 Alternative and Emerging Propulsion Technologies">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#581-hydrogen-fuel-cells" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.1 Hydrogen Fuel Cells
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#582-solar-photovoltaic-propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.2 Solar Photovoltaic Propulsion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#583-laser-power-beaming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.3 Laser Power Beaming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#584-flapping-wing-ornithopter-propulsion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.4 Flapping Wing (Ornithopter) Propulsion
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#585-electrohydrodynamic-ehd-ionic-wind-thrusters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.8.5 Electrohydrodynamic (EHD) / Ionic Wind Thrusters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9 Propulsion System Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.9 Propulsion System Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#591-motor-mounting-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.1 Motor Mounting Configurations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#592-vibration-isolation-and-emc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.2 Vibration Isolation and EMC
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#593-thermal-management-of-esc-and-motor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.3 Thermal Management of ESC and Motor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#594-centre-of-gravity-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.9.4 Centre of Gravity Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-perf_analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10 Propulsion Performance Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.10 Propulsion Performance Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5101-thrust-available-vs-drag-polar" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.1 Thrust Available vs Drag Polar
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5102-speed-for-maximum-endurance-electric-uav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.2 Speed for Maximum Endurance (Electric UAV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5103-speed-for-maximum-range-electric-uav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.3 Speed for Maximum Range (Electric UAV)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5104-climb-rate-and-excess-power" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.4 Climb Rate and Excess Power
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5105-mission-profile-energy-budget" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.5 Mission Profile Energy Budget
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5106-propeller-efficiency-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.6 Propeller Efficiency Curve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5107-power-required-curve" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.7 Power Required Curve
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5108-bldc-motor-cross-section-schematic" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.10.8 BLDC Motor Cross-Section Schematic
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-advanced" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11 Advanced Topics in Drone Propulsion
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.11 Advanced Topics in Drone Propulsion">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5111-ducted-fan-and-shrouded-rotor-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.1 Ducted Fan and Shrouded Rotor Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5112-coaxial-rotor-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.2 Coaxial Rotor Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5113-swarm-propulsion-coordination" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.3 Swarm Propulsion Coordination
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5114-propulsion-for-vtol-transition-aircraft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.4 Propulsion for VTOL Transition Aircraft
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5115-battery-management-and-propulsion-derating" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.5 Battery Management and Propulsion Derating
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5116-motor-control-for-precision-altitude-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.6 Motor Control for Precision Altitude Hold
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5117-future-propulsion-trends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.11.7 Future Propulsion Trends
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12 Summary and Design Selection Guidelines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5.12 Summary and Design Selection Guidelines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#5121-propulsion-concept-selection-matrix" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12.1 Propulsion Concept Selection Matrix
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5122-key-design-equations-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12.2 Key Design Equations Summary
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5123-concluding-remarks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.12.3 Concluding Remarks
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-propulsion_drone">Chapter 5: Drone Propulsion Systems<a class="headerlink" href="#ch-propulsion_drone" title="Permanent link">&para;</a></h1>
+<h2 id="sec-elec_overview"><span class="secnum">5.1</span> Electric Propulsion: Principles and Energy Conversion Chain<a class="headerlink" href="#sec-elec_overview" title="Permanent link">&para;</a></h2>
+<h3 id="511-why-electric-dominates-small-and-medium-uavs"><span class="secnum">5.1.1</span> Why Electric Dominates Small and Medium UAVs<a class="headerlink" href="#511-why-electric-dominates-small-and-medium-uavs" title="Permanent link">&para;</a></h3>
+<p>The ascendancy of electric propulsion in unmanned aerial vehicles (UAVs) below roughly 150 kg maximum take-off weight (MTOW) is not accidental. It stems from a confluence of thermodynamic, mechanical, and systems-engineering advantages that collectively outweigh the single principal disadvantage—energy density—in most tactical and commercial mission profiles.</p>
+<p>Internal combustion engines (ICEs) are fundamentally limited by the Carnot bound: even a textbook Otto-cycle engine operating between a peak cylinder temperature <span class="arithmatex">\(T_H \approx 2200\,\text{K}\)</span> and an exhaust temperature <span class="arithmatex">\(T_L \approx 800\,\text{K}\)</span> achieves a maximum thermal efficiency of <span id="eq-carnot_otto"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{Otto,max}} = 1 - \frac{T_L}{T_H} = 1 - \frac{800}{2200} \approx 0.636,\tag{5.1}\]</div>
+<p>and practical two-stroke glow engines achieve only 15–20 % brake thermal efficiency; even the best small four-stroke petrol engines rarely exceed 28 %. In contrast, a high-quality brushless DC (BLDC) motor operating near its design point converts electrical to mechanical energy at 92–97 % efficiency. The electric drivetrain therefore wastes far less energy as heat—a critical advantage when the entire thermal budget of a small airframe is constrained.</p>
+<p>Beyond efficiency, electric drivetrains offer:</p>
+<ul>
+<li>
+<p><strong>Silence</strong>: acoustic signature reduction of 20–30 dB versus equivalent-thrust ICE, important for ISR missions.</p>
+</li>
+<li>
+<p><strong>Torque linearity</strong>: nearly flat torque–speed curve allows precise, fast thrust response (&lt;50 ms step response for typical ESC–BLDC pairs versus 200–800 ms for ICEs).</p>
+</li>
+<li>
+<p><strong>Reliability</strong>: BLDC motors have two moving parts (rotor, shaft); no carburettor, no ignition timing, no valve train.</p>
+</li>
+<li>
+<p><strong>Scalability</strong>: the same physics applies from a 5 g micro UAV to a 100 kg VTOL cargo platform.</p>
+</li>
+<li>
+<p><strong>Integration</strong>: motor+ESC can be fully software-controlled via CAN bus or UART, enabling real-time fault monitoring and redundancy management.</p>
+</li>
+</ul>
+<h3 id="512-the-efficiency-chain-battery-to-propeller"><span class="secnum">5.1.2</span> The Efficiency Chain: Battery to Propeller<a class="headerlink" href="#512-the-efficiency-chain-battery-to-propeller" title="Permanent link">&para;</a></h3>
+<p>The complete electric propulsion energy-conversion chain consists of four serial stages, each with its own efficiency <span class="arithmatex">\(\eta_i\)</span>: <span id="eq-eta_chain"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{total}} = \eta_{\mathrm{bat}} \cdot \eta_{\mathrm{ESC}} \cdot
+  \eta_{\mathrm{motor}} \cdot \eta_{\mathrm{prop}},\tag{5.2}\]</div>
+<p>where each term is defined and bounded as follows.</p>
+<div class="parahead">
+<p>Battery discharge efficiency <span class="arithmatex">\(\eta_{\mathrm{bat}}\)</span>.</p>
+</div>
+<p>A lithium polymer (LiPo) cell has internal resistance <span class="arithmatex">\(R_{\mathrm{int}}\)</span> (typically 2–8 mΩ per cell at 25 °C). During discharge at current <span class="arithmatex">\(I\)</span>, the terminal voltage is <span id="eq-bat_terminal"></span></p>
+<div class="arithmatex">\[V_{\mathrm{term}} = V_{\mathrm{OCV}} - I \cdot R_{\mathrm{int}},\tag{5.3}\]</div>
+<p>and the battery efficiency is <span id="eq-eta_bat"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{bat}} = \frac{V_{\mathrm{term}}}{V_{\mathrm{OCV}}} =
+  1 - \frac{I \cdot R_{\mathrm{int}}}{V_{\mathrm{OCV}}}.\tag{5.4}\]</div>
+<p>At a C-rate of 20 C for a 10 A h pack (200 A), with <span class="arithmatex">\(R_{\mathrm{int}} = 5\,\text{mΩ}\)</span> per cell and 6S (6 cells in series, nominal <span class="arithmatex">\(V_{\mathrm{OCV}} = 22.2\,\text{V}\)</span>), the drop is <span class="arithmatex">\(200 \times 0.030 = 6\,\text{V}\)</span>, giving <span class="arithmatex">\(\eta_{\mathrm{bat}} \approx 0.73\)</span>. At moderate 5 C discharge the drop is only 1.5 V, giving <span class="arithmatex">\(\eta_{\mathrm{bat}} \approx 0.93\)</span>. Design practice therefore minimises C-rate by using the largest feasible battery for a given power requirement.</p>
+<div class="parahead">
+<p>ESC efficiency <span class="arithmatex">\(\eta_{\mathrm{ESC}}\)</span>.</p>
+</div>
+<p>Modern silicon-carbide (SiC) or gallium-nitride (GaN) MOSFET ESCs operating with sinusoidal field-oriented control (FOC) achieve 95–98 % efficiency at rated current. Legacy six-step commutation ESCs with silicon MOSFETs hover at 90–95 %.</p>
+<div class="parahead">
+<p>Motor efficiency <span class="arithmatex">\(\eta_{\mathrm{motor}}\)</span>.</p>
+</div>
+<p>Large-diameter outrunner BLDC motors (e.g., T-Motor U8, 100 mm stator diameter) achieve peak <span class="arithmatex">\(\eta_{\mathrm{motor}} = 92–96\,\text{\%}\)</span> near rated torque. Small, cheap motors (&lt;30 mm diameter) may only reach 70–80 % due to relatively higher copper and iron losses.</p>
+<div class="parahead">
+<p>Propeller efficiency <span class="arithmatex">\(\eta_{\mathrm{prop}}\)</span>.</p>
+</div>
+<p>A well-designed, geometrically optimised propeller operating near its design advance ratio achieves 75–85 % efficiency in forward flight. In static hover (advance ratio <span class="arithmatex">\(J = 0\)</span>), the actuator-disk limit gives maximum efficiency <span id="eq-hover_eta_limit"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{prop,hover}} = \sqrt{\frac{2\rho A T}{T^2 + …}} \to 1 \text{ as } A \to \infty,\tag{5.5}\]</div>
+<p>but practically hover figure of merit FM = 0.55–0.75 for commercial propellers.</p>
+<p><strong>Typical overall chain:</strong> <span class="arithmatex">\(0.92 \times 0.96 \times 0.94 \times 0.80 \approx 0.663\)</span>, meaning roughly one-third of stored battery energy is lost as heat and aerodynamic drag before producing useful thrust.</p>
+<h3 id="513-specific-power-at-each-stage"><span class="secnum">5.1.3</span> Specific Power at Each Stage<a class="headerlink" href="#513-specific-power-at-each-stage" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-specific_power">Table 5.1</a> summarises specific power (W/kg) at each conversion stage for a representative modern drone powertrain.</p>
+<div class="tbl" id="tab-specific_power">
+<div class="tbl-caption"><strong>Table 5.1.</strong> Specific power of electric propulsion components (2024 state of the art).</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: left;"><span>Typical Sp. Power (W/kg)</span></th>
+<th style="text-align: left;"><span>Best-in-Class (W/kg)</span></th>
+<th style="text-align: left;"><span>Notes</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">LiPo battery (6S, 22.2 V)</td>
+<td style="text-align: left;">250–350</td>
+<td style="text-align: left;">400</td>
+<td style="text-align: left;">Tattu 22000 mAh HV</td>
+</tr>
+<tr>
+<td style="text-align: left;">Li-Ion (18650 cell pack)</td>
+<td style="text-align: left;">150–200</td>
+<td style="text-align: left;">250</td>
+<td style="text-align: left;">Higher energy, lower power</td>
+</tr>
+<tr>
+<td style="text-align: left;">Silicon MOSFET ESC</td>
+<td style="text-align: left;">4 000–8 000</td>
+<td style="text-align: left;">12 000</td>
+<td style="text-align: left;">Hobbywing Platinum</td>
+</tr>
+<tr>
+<td style="text-align: left;">SiC MOSFET ESC</td>
+<td style="text-align: left;">8 000–15 000</td>
+<td style="text-align: left;">20 000</td>
+<td style="text-align: left;">Zubax Myxa, T-Motor Alpha</td>
+</tr>
+<tr>
+<td style="text-align: left;">BLDC outrunner motor</td>
+<td style="text-align: left;">3 000–6 000</td>
+<td style="text-align: left;">9 000</td>
+<td style="text-align: left;">T-Motor U8 Lite: 9 200 W/kg</td>
+</tr>
+<tr>
+<td style="text-align: left;">BLDC inrunner motor</td>
+<td style="text-align: left;">5 000–10 000</td>
+<td style="text-align: left;">14 000</td>
+<td style="text-align: left;">High RPM, requires gearbox</td>
+</tr>
+<tr>
+<td style="text-align: left;">Carbon-fibre propeller</td>
+<td colspan="2" style="text-align: center;">(thrust/weight <span class="math inline">\(&gt;\)</span> 50:1)</td>
+<td style="text-align: left;">Not a power-limited element</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="514-endurance-equation-for-electric-uavs"><span class="secnum">5.1.4</span> Endurance Equation for Electric UAVs<a class="headerlink" href="#514-endurance-equation-for-electric-uavs" title="Permanent link">&para;</a></h3>
+<p>For a UAV in steady, level flight the required thrust equals drag, and the required propulsive power is <span id="eq-P_req_basic"></span></p>
+<div class="arithmatex">\[P_{\mathrm{req}} = \frac{D \cdot V}{\eta_{\mathrm{prop}}} =
+  \frac{1}{2}\rho V^3 S C_D / \eta_{\mathrm{prop}},\tag{5.6}\]</div>
+<p>where <span class="arithmatex">\(\rho\)</span> is air density, <span class="arithmatex">\(V\)</span> is airspeed, <span class="arithmatex">\(S\)</span> is reference wing area, and <span class="arithmatex">\(C_D\)</span> is the total drag coefficient. The energy available from the battery (accounting for the minimum reserve voltage) is <span id="eq-E_bat"></span></p>
+<div class="arithmatex">\[E_{\mathrm{bat}} = Q_{\mathrm{bat}} \cdot \bar{V}_{\mathrm{bat}} \cdot \eta_{\mathrm{Peukert}},\tag{5.7}\]</div>
+<p>where <span class="arithmatex">\(Q_{\mathrm{bat}}\)</span> is the nominal capacity in ampere-hours, <span class="arithmatex">\(\bar{V}_{\mathrm{bat}}\)</span> is the mean discharge voltage, and <span class="arithmatex">\(\eta_{\mathrm{Peukert}}\)</span> accounts for capacity reduction at high discharge rates (Peukert exponent <span class="arithmatex">\(n_p \approx 1.03\)</span>–<span class="arithmatex">\(1.08\)</span> for LiPo).</p>
+<p>The theoretical maximum flight endurance is then: <span id="eq-endurance"></span></p>
+<div class="arithmatex">\[\boxed{t_{\mathrm{endurance}} = \frac{E_{\mathrm{bat}} \cdot \eta_{\mathrm{total}}}{P_{\mathrm{cruise}}}}
+  = \frac{E_{\mathrm{bat}} \cdot \eta_{\mathrm{ESC}} \cdot \eta_{\mathrm{motor}} \cdot \eta_{\mathrm{prop}}}{P_{\mathrm{cruise}}},\tag{5.8}\]</div>
+<p>where <span class="arithmatex">\(P_{\mathrm{cruise}}\)</span> is the shaft power required at the chosen cruise speed.</p>
+<p>For a quadrotor in hover, <span class="arithmatex">\(P_{\mathrm{cruise}}\)</span> must support all four rotors plus avionics; for a fixed-wing UAV, <span class="arithmatex">\(P_{\mathrm{cruise}}\)</span> is the single-propeller shaft power at the speed of minimum power consumption (<span class="arithmatex">\(V_{E}\)</span>, derived in <a href="#sec-perf_analysis">Section 5.10</a>). Electric fixed-wing UAVs optimised for endurance achieve 1–3 h on LiPo; with Li-S or solid-state cells, projections reach 3–8 h at similar MTOW.</p>
+<h2 id="sec-bldc"><span class="secnum">5.2</span> Brushless DC Motors<a class="headerlink" href="#sec-bldc" title="Permanent link">&para;</a></h2>
+<h3 id="521-operating-principle-and-electromagnetic-fundamentals"><span class="secnum">5.2.1</span> Operating Principle and Electromagnetic Fundamentals<a class="headerlink" href="#521-operating-principle-and-electromagnetic-fundamentals" title="Permanent link">&para;</a></h3>
+<p>A BLDC motor is a permanent-magnet synchronous machine (PMSM) in which the electronic commutation—formerly achieved by mechanical brushes—is performed by the ESC. The stator carries polyphase windings (usually three-phase); the rotor carries permanent magnets. The ESC energises stator phases in sequence, creating a rotating magnetic field that drags the rotor magnets along.</p>
+<p>The fundamental torque production law is the Lorentz force on a current-carrying conductor in a magnetic field: <span id="eq-lorentz"></span></p>
+<div class="arithmatex">\[\vec{F} = I \, \vec{L} \times \vec{B},\tag{5.9}\]</div>
+<p>where <span class="arithmatex">\(\vec{L}\)</span> is the conductor vector and <span class="arithmatex">\(\vec{B}\)</span> is the air-gap flux density. Summing over all active conductors yields the electromagnetic torque <span id="eq-torque_em"></span></p>
+<div class="arithmatex">\[T_{\mathrm{em}} = k_{\phi} \cdot \Phi \cdot I_q,\tag{5.10}\]</div>
+<p>where <span class="arithmatex">\(\Phi\)</span> is the total flux linkage per phase and <span class="arithmatex">\(I_q\)</span> is the quadrature-axis (torque-producing) current component.</p>
+<h3 id="522-motor-constants-kv-kt-and-the-back-emf"><span class="secnum">5.2.2</span> Motor Constants: KV, KT, and the Back-EMF<a class="headerlink" href="#522-motor-constants-kv-kt-and-the-back-emf" title="Permanent link">&para;</a></h3>
+<p>The <em>velocity constant</em> KV (RPM per volt, sometimes written <span class="arithmatex">\(K_V\)</span>) is the most commonly quoted BLDC parameter in the drone industry. It relates the unloaded shaft speed to the applied terminal voltage: <span id="eq-KV"></span></p>
+<div class="arithmatex">\[n = K_V \cdot V_{\mathrm{term}} \quad [\text{R P M}],\tag{5.11}\]</div>
+<p>where <span class="arithmatex">\(V_{\mathrm{term}}\)</span> is the line-to-line terminal voltage minus the back-EMF drop. The <em>torque constant</em> <span class="arithmatex">\(K_T\)</span> (N m/A) is the reciprocal of KV expressed in SI units: <span id="eq-KT"></span></p>
+<div class="arithmatex">\[K_T = \frac{60}{2\pi \cdot K_V} \quad [\text{N m/A}],\tag{5.12}\]</div>
+<p>so that the electromagnetic torque is simply: <span id="eq-torque_KT"></span></p>
+<div class="arithmatex">\[T = K_T \cdot I,\tag{5.13}\]</div>
+<p>where <span class="arithmatex">\(I\)</span> is the phase current. A motor with <span class="arithmatex">\(K_V = 400\,\text{R P M V}\)</span> has <span class="arithmatex">\(K_T = 60/(2\pi \times 400) \approx 23.9\,\text{mN m/A}\)</span>.</p>
+<p>The back-EMF (counter-electromotive force) generated by the spinning rotor is: <span id="eq-back_EMF"></span></p>
+<div class="arithmatex">\[\varepsilon = K_T \cdot \omega = K_T \cdot \frac{2\pi n}{60},\tag{5.14}\]</div>
+<p>and in steady state the voltage balance across one phase is <span id="eq-voltage_balance"></span></p>
+<div class="arithmatex">\[V_{\mathrm{phase}} = \varepsilon + I \cdot R_{\phi} + L_{\phi} \frac{dI}{dt},\tag{5.15}\]</div>
+<p>where <span class="arithmatex">\(R_{\phi}\)</span> is the phase winding resistance and <span class="arithmatex">\(L_{\phi}\)</span> is the phase inductance. In steady-state (<span class="arithmatex">\(dI/dt = 0\)</span>) the copper losses are simply <span class="arithmatex">\(I^2 R_{\phi}\)</span>.</p>
+<h3 id="523-power-equations-and-efficiency"><span class="secnum">5.2.3</span> Power Equations and Efficiency<a class="headerlink" href="#523-power-equations-and-efficiency" title="Permanent link">&para;</a></h3>
+<p>Electrical input power: <span id="eq-P_elec"></span></p>
+<div class="arithmatex">\[P_{\mathrm{elec}} = V \cdot I,\tag{5.16}\]</div>
+<p>Mechanical output power at the shaft: <span id="eq-P_mech"></span></p>
+<div class="arithmatex">\[P_{\mathrm{mech}} = T \cdot \omega = K_T \cdot I \cdot \omega,\tag{5.17}\]</div>
+<p>where <span class="arithmatex">\(\omega = 2\pi n / 60\)</span> is the angular velocity in r a d s. Motor efficiency: <span id="eq-motor_eta"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{motor}} = \frac{P_{\mathrm{mech}}}{P_{\mathrm{elec}}} =
+  \frac{T \cdot \omega}{V \cdot I} = 1 - \frac{I^2 R_{\phi} + P_{\mathrm{iron}} + P_{\mathrm{mech,loss}}}{V \cdot I},\tag{5.18}\]</div>
+<p>where <span class="arithmatex">\(P_{\mathrm{iron}}\)</span> are the stator core (hysteresis + eddy current) losses and <span class="arithmatex">\(P_{\mathrm{mech,loss}}\)</span> covers bearing friction and windage. Iron losses scale as <span id="eq-iron_losses"></span></p>
+<div class="arithmatex">\[P_{\mathrm{iron}} = k_h f B_{\mathrm{pk}}^2 + k_e f^2 B_{\mathrm{pk}}^2,\tag{5.19}\]</div>
+<p>where <span class="arithmatex">\(k_h\)</span> is the hysteresis coefficient, <span class="arithmatex">\(k_e\)</span> is the eddy-current coefficient, <span class="arithmatex">\(f\)</span> is the electrical frequency, and <span class="arithmatex">\(B_{\mathrm{pk}}\)</span> is the peak flux density. For high-pole-count outrunner motors spinning at 3000 R P M with 14 pole-pairs, the electrical frequency is <span class="arithmatex">\(f = 14 \times 3000/60 = 700\,\text{Hz}\)</span>—significantly increasing iron losses compared with a two-pole inrunner at the same RPM.</p>
+<h3 id="524-motor-sizing-for-uav-applications"><span class="secnum">5.2.4</span> Motor Sizing for UAV Applications<a class="headerlink" href="#524-motor-sizing-for-uav-applications" title="Permanent link">&para;</a></h3>
+<p>The primary sizing criterion for a multirotor motor is the thrust-to-weight ratio it delivers: <span id="eq-motor_TW"></span></p>
+<div class="arithmatex">\[\left(\frac{T}{W}\right)_{\mathrm{motor}} =
+  \frac{T_{\mathrm{static}}}{m_{\mathrm{motor}} \cdot g},\tag{5.20}\]</div>
+<p>where <span class="arithmatex">\(T_{\mathrm{static}}\)</span> is the static thrust (hover thrust) at rated current. Typical figures of merit for commercial-grade motors:</p>
+<ul>
+<li>
+<p>Entry-level motors: <span class="arithmatex">\(T/W = 5\)</span>–<span class="arithmatex">\(15\)</span> (thrust in grams per gram of motor mass)</p>
+</li>
+<li>
+<p>Mid-range motors (T-Motor MN series): <span class="arithmatex">\(T/W = 20\)</span>–<span class="arithmatex">\(30\)</span></p>
+</li>
+<li>
+<p>High-performance motors (T-Motor U8 Lite): <span class="arithmatex">\(T/W \approx 50\)</span>–<span class="arithmatex">\(70\)</span> with a matched propeller</p>
+</li>
+</ul>
+<p>For a quadrotor, the minimum thrust-to-weight ratio at each motor is dictated by the hover requirement plus a control authority margin: <span id="eq-motor_sizing"></span></p>
+<div class="arithmatex">\[T_{\mathrm{motor,min}} = \frac{W_{\mathrm{UAV}}}{N_{\mathrm{motors}}} \cdot f_{\mathrm{margin}},\tag{5.21}\]</div>
+<p>where <span class="arithmatex">\(N_{\mathrm{motors}} = 4\)</span> for a quadrotor and <span class="arithmatex">\(f_{\mathrm{margin}} \geq 2.0\)</span> to allow for attitude control authority and one-motor-out capability on a hexarotor.</p>
+<h3 id="525-stator-design-slot-pole-combinations"><span class="secnum">5.2.5</span> Stator Design: Slot-Pole Combinations<a class="headerlink" href="#525-stator-design-slot-pole-combinations" title="Permanent link">&para;</a></h3>
+<p>The stator is constructed from thin laminations (0.2–0.5 mm) of silicon steel (Fe-Si alloy, typically M270-35A or equivalent) to minimise eddy-current losses. The number of stator slots <span class="arithmatex">\(N_s\)</span> and rotor poles <span class="arithmatex">\(N_p\)</span> define the motor topology. Common combinations for UAV outrunners are:</p>
+<div class="tbl" id="tab-slot_pole">
+<div class="tbl-caption"><strong>Table 5.2.</strong> Common slot-pole combinations for UAV BLDC outrunner motors.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Slots (<span class="math inline">\(N_s\)</span>)</th>
+<th style="text-align: center;">Poles (<span class="math inline">\(N_p\)</span>)</th>
+<th style="text-align: center;">Notation</th>
+<th style="text-align: center;">GCD</th>
+<th style="text-align: left;">Key Properties</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">12N14P</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Low cogging, high pole count, smooth torque</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">12N10P</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">Very popular; good balance of torque ripple and winding factor</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">9N12P</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: left;">High winding factor 0.866; cogging issue</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">6N2P</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">High-speed inrunner; low pole count</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">18N20P</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: left;">High torque, low RPM; large propeller applications</td>
+</tr>
+<tr>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">24N28P</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: left;">Very large outrunners; heavy-lift UAVs</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The winding factor <span class="arithmatex">\(k_w = k_d \cdot k_p\)</span> (distribution factor <span class="arithmatex">\(\times\)</span> pitch factor) determines how effectively the winding links with the rotor flux. For a 12N14P motor, <span class="arithmatex">\(k_w \approx 0.933\)</span>.</p>
+<h3 id="526-winding-configuration-star-vs-delta"><span class="secnum">5.2.6</span> Winding Configuration: Star vs Delta<a class="headerlink" href="#526-winding-configuration-star-vs-delta" title="Permanent link">&para;</a></h3>
+<p>The three-phase windings may be connected in star (Y) or delta (<span class="arithmatex">\(\Delta\)</span>):</p>
+<ul>
+<li>
+<p><strong>Star:</strong> Line voltage = <span class="arithmatex">\(\sqrt{3} \times\)</span> phase voltage; line current = phase current. Results in higher KV for the same wire gauge. Lower circulating currents; preferred for most UAV motors.</p>
+</li>
+<li>
+<p><strong>Delta:</strong> Line voltage = phase voltage; line current = <span class="arithmatex">\(\sqrt{3} \times\)</span> phase current. Higher torque for same bus voltage; risk of circulating third-harmonic currents; preferred for very low KV (high torque) motors.</p>
+</li>
+</ul>
+<p>Wire gauge (AWG or SWG) is selected to achieve a copper fill factor of <span class="arithmatex">\(k_f = 0.35\)</span>–<span class="arithmatex">\(0.55\)</span> in the slots. Higher fill factor increases torque density but requires precision winding machines.</p>
+<h3 id="527-permanent-magnets-ndfeb-and-halbach-arrays"><span class="secnum">5.2.7</span> Permanent Magnets: NdFeB and Halbach Arrays<a class="headerlink" href="#527-permanent-magnets-ndfeb-and-halbach-arrays" title="Permanent link">&para;</a></h3>
+<p>All high-performance UAV BLDC motors use sintered neodymium-iron-boron (NdFeB) magnets, grade N42 to N52. Key magnetic parameters:</p>
+<ul>
+<li>
+<p>Remanence: <span class="arithmatex">\(B_r = 1.29\,\text{T}\)</span> (N42) to 1.45 T (N52)</p>
+</li>
+<li>
+<p>Coercivity: <span class="arithmatex">\(H_{cj} \geq 955\,\text{kA/m}\)</span></p>
+</li>
+<li>
+<p>Maximum energy product: <span class="arithmatex">\((BH)_{\max} = 318\)</span>–398 kJ/m³</p>
+</li>
+<li>
+<p>Temperature coefficient of <span class="arithmatex">\(B_r\)</span>: <span class="arithmatex">\(-0.11\)</span>%/°C (important for motors running hot)</p>
+</li>
+<li>
+<p>Curie temperature: <span class="arithmatex">\(\approx310\,\text{°C}\)</span> for standard NdFeB; motor magnets should not exceed 80 °C</p>
+</li>
+</ul>
+<p>A <em>Halbach array</em> arrangement of magnets on the rotor generates a near-sinusoidal flux distribution on the inside surface while nearly cancelling the external flux. This increases the air-gap flux density by <span class="arithmatex">\(\sim\)</span>40 % over a conventional radially magnetised arrangement, enabling higher torque density. The Halbach array requires additional magnet segments and precision assembly, increasing cost.</p>
+<h3 id="528-thermal-model-and-cooling"><span class="secnum">5.2.8</span> Thermal Model and Cooling<a class="headerlink" href="#528-thermal-model-and-cooling" title="Permanent link">&para;</a></h3>
+<p>Copper losses <span class="arithmatex">\(P_{Cu} = I^2 R_\phi \cdot N_{\mathrm{phases}}\)</span> are the dominant heat source at high current. The steady-state winding temperature rise above ambient is: <span id="eq-thermal_model"></span></p>
+<div class="arithmatex">\[\Delta T_{\mathrm{winding}} = P_{Cu} \cdot R_{\theta,\mathrm{winding-ambient}},\tag{5.22}\]</div>
+<p>where <span class="arithmatex">\(R_{\theta,\mathrm{winding-ambient}}\)</span> (°C/W) is the total thermal resistance from winding to ambient. This is decomposed as: <span id="eq-thermal_chain"></span></p>
+<div class="arithmatex">\[R_{\theta,\mathrm{total}} = R_{\theta,\mathrm{Cu-Fe}} + R_{\theta,\mathrm{Fe-shell}} +
+  R_{\theta,\mathrm{shell-air}},\tag{5.23}\]</div>
+<p>For a 100 mm outrunner motor with natural convection in airflow, <span class="arithmatex">\(R_{\theta,\mathrm{total}} \approx 0.5\,\text{°C/W}\)</span>, meaning <span class="arithmatex">\(P_{Cu} = 20\,\text{W}\)</span> produces a 10 °C temperature rise—well within the 150 °C limit of Class F winding insulation (polyamide-imide).</p>
+<p>Motors in enclosed ducts (ducted fans, fuselage-embedded motors) require forced-air cooling ducts sized for a minimum airflow of 5 L/s per 100 W of copper loss.</p>
+<h3 id="529-inrunner-vs-outrunner-comparison"><span class="secnum">5.2.9</span> Inrunner vs Outrunner Comparison<a class="headerlink" href="#529-inrunner-vs-outrunner-comparison" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-inrunner_outrunner">
+<div class="tbl-caption"><strong>Table 5.3.</strong> Inrunner vs outrunner BLDC motors for UAV applications.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Inrunner</th>
+<th style="text-align: left;">Outrunner</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Rotor position</td>
+<td style="text-align: left;">Inside stator</td>
+<td style="text-align: left;">Outside stator</td>
+</tr>
+<tr>
+<td style="text-align: left;">Typical KV</td>
+<td style="text-align: left;">1000–6000 R P M V</td>
+<td style="text-align: left;">100–1500 R P M V</td>
+</tr>
+<tr>
+<td style="text-align: left;">Torque density</td>
+<td style="text-align: left;">Lower (small radius)</td>
+<td style="text-align: left;">Higher (large radius moment arm)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Requires gearbox</td>
+<td style="text-align: left;">Often yes (for large propellers)</td>
+<td style="text-align: left;">Rarely</td>
+</tr>
+<tr>
+<td style="text-align: left;">Rotational inertia</td>
+<td style="text-align: left;">Low (fast response)</td>
+<td style="text-align: left;">Higher (smoother flight)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bearing load</td>
+<td style="text-align: left;">Simple, axial</td>
+<td style="text-align: left;">Complex; side-load on long prop shafts</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cooling</td>
+<td style="text-align: left;">Easier (airflow over shell)</td>
+<td style="text-align: left;">Stator cooling limited</td>
+</tr>
+<tr>
+<td style="text-align: left;">Typical application</td>
+<td style="text-align: left;">High-speed fixed-wing, jets</td>
+<td style="text-align: left;">Multirotor, large fixed-wing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Example</td>
+<td style="text-align: left;">Scorpion 4035-560KV</td>
+<td style="text-align: left;">T-Motor U8 Lite 100KV</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="5210-representative-motor-specifications"><span class="secnum">5.2.10</span> Representative Motor Specifications<a class="headerlink" href="#5210-representative-motor-specifications" title="Permanent link">&para;</a></h3>
+<p>The T-Motor U8 Lite (100 K V) represents the state of the art for heavy-lift multirotor applications. With a 28-inch propeller at full throttle it produces 9.5 kg static thrust at 920 W input—a static efficiency of 10.3 g/W. The motor mass is only 196 g, giving a specific power of <span class="arithmatex">\(920 / 0.196 \approx 4694\,\text{W/kg}\)</span>.</p>
+<p>The Scorpion 4035-560KV targets high-performance fixed-wing UAVs: 560 KV, stator diameter 40 mm, maximum power 2100 W, mass 272 g, specific power 7721 W/kg.</p>
+<h2 id="sec-esc"><span class="secnum">5.3</span> Electronic Speed Controllers<a class="headerlink" href="#sec-esc" title="Permanent link">&para;</a></h2>
+<h3 id="531-six-step-commutation-trapezoidal-drive"><span class="secnum">5.3.1</span> Six-Step Commutation (Trapezoidal Drive)<a class="headerlink" href="#531-six-step-commutation-trapezoidal-drive" title="Permanent link">&para;</a></h3>
+<p>The classical ESC architecture uses six power MOSFETs in a three-phase bridge. At any instant, two phases are energised (one high-side, one low-side MOSFET conducting) while the third phase floats. The sequence of energisation steps produces six discrete commutation intervals per electrical revolution. Detection of the zero crossing of the back-EMF on the floating phase provides the commutation timing without position sensors (sensorless control). The commutation timing is advanced by an angle <span class="arithmatex">\(\theta_{\mathrm{adv}}\)</span> ahead of the zero crossing to compensate for winding inductance: <span id="eq-timing_advance"></span></p>
+<div class="arithmatex">\[\theta_{\mathrm{adv}} = \arctan\!\left(\frac{\omega L_{\phi}}{R_{\phi}}\right),\tag{5.24}\]</div>
+<p>where <span class="arithmatex">\(\omega\)</span> is the electrical angular velocity. Under-advance causes the current to lag the torque axis, reducing effective torque; over-advance causes negative torque and heating. Most ESCs implement an auto-advance algorithm that sweeps the advance angle and maximises a throttle response metric.</p>
+<p>Six-step drive produces trapezoidal back-EMF and 30%–40% torque ripple, which translates to audible noise at the commutation frequency. For a 14-pole motor at 3000 R P M: commutation frequency <span class="arithmatex">\(= 14/2 \times 3000 \times 6 / 60 = 2100\,\text{Hz}\)</span>—within the 1–4 kHz acoustic sensitivity peak of the human ear, hence the characteristic whine of six-step-driven motors.</p>
+<h3 id="532-field-oriented-control-foc-sinusoidal-drive"><span class="secnum">5.3.2</span> Field-Oriented Control (FOC) — Sinusoidal Drive<a class="headerlink" href="#532-field-oriented-control-foc-sinusoidal-drive" title="Permanent link">&para;</a></h3>
+<p>FOC (also called vector control) decouples the motor current into flux-producing (<span class="arithmatex">\(d\)</span>-axis) and torque-producing (<span class="arithmatex">\(q\)</span>-axis) components using the Park and Clarke transforms:</p>
+<p><strong>Clarke transform</strong> (three-phase to two-phase stationary <span class="arithmatex">\(\alpha\beta\)</span>): <span id="eq-clarke"></span></p>
+<div class="arithmatex">\[\begin{pmatrix} I_\alpha \\ I_\beta \end{pmatrix} =
+  \frac{2}{3}
+  \begin{pmatrix} 1 &amp; -1/2 &amp; -1/2 \\ 0 &amp; \sqrt{3}/2 &amp; -\sqrt{3}/2 \end{pmatrix}
+  \begin{pmatrix} I_a \\ I_b \\ I_c \end{pmatrix},\tag{5.25}\]</div>
+<p><strong>Park transform</strong> (stationary <span class="arithmatex">\(\alpha\beta\)</span> to rotating <span class="arithmatex">\(dq\)</span>): <span id="eq-park"></span></p>
+<div class="arithmatex">\[\begin{pmatrix} I_d \\ I_q \end{pmatrix} =
+  \begin{pmatrix} \cos\theta_e &amp; \sin\theta_e \\ -\sin\theta_e &amp; \cos\theta_e \end{pmatrix}
+  \begin{pmatrix} I_\alpha \\ I_\beta \end{pmatrix},\tag{5.26}\]</div>
+<p>where <span class="arithmatex">\(\theta_e\)</span> is the electrical rotor angle. In steady-state operation of a surface-mounted PMSM (as used in most UAV motors, <span class="arithmatex">\(L_d \approx L_q\)</span>), maximum efficiency is achieved with <span class="arithmatex">\(I_d = 0\)</span> (maximum torque per ampere, MTPA), so all current is in the <span class="arithmatex">\(q\)</span>-axis. The torque is then simply <span class="arithmatex">\(T = \frac{3}{2} p K_T I_q\)</span>, where <span class="arithmatex">\(p\)</span> is the number of pole pairs.</p>
+<p>FOC reduces torque ripple to &lt;5 % and eliminates the commutation whine, replacing it with the much higher-frequency PWM carrier. FOC requires either an encoder/resolver for rotor angle <span class="arithmatex">\(\theta_e\)</span> or a motor model-based observer. The Zubax Myxa ESC and T-Motor Alpha series implement sensorless FOC with a flux-linkage observer that estimates <span class="arithmatex">\(\theta_e\)</span> from the phase voltages and currents.</p>
+<h3 id="533-pwm-switching-and-gate-drive"><span class="secnum">5.3.3</span> PWM Switching and Gate Drive<a class="headerlink" href="#533-pwm-switching-and-gate-drive" title="Permanent link">&para;</a></h3>
+<p>The power stage switches at a carrier frequency <span class="arithmatex">\(f_{\mathrm{sw}}\)</span> of 8–48 kHz. Higher <span class="arithmatex">\(f_{\mathrm{sw}}\)</span> reduces current ripple <span id="eq-current_ripple"></span></p>
+<div class="arithmatex">\[\Delta I = \frac{V_{\mathrm{DC}} \cdot d(1-d)}{L_{\phi} \cdot f_{\mathrm{sw}}},\tag{5.27}\]</div>
+<p>where <span class="arithmatex">\(d\)</span> is the duty cycle, but increases switching losses <span class="arithmatex">\(P_{\mathrm{sw}} \propto f_{\mathrm{sw}} \cdot (E_{\mathrm{on}} + E_{\mathrm{off}})\)</span>. Silicon MOSFETs have switching energies of 10–100 µJ per transition; SiC MOSFETs achieve 1–10 µJ, enabling 100 kHz switching with lower total losses. Dead-time between high-side and low-side MOSFET switching prevents shoot-through (cross-conduction) and is typically set to 100–500 ns.</p>
+<h3 id="534-digital-communication-protocols"><span class="secnum">5.3.4</span> Digital Communication Protocols<a class="headerlink" href="#534-digital-communication-protocols" title="Permanent link">&para;</a></h3>
+<p>Modern flight controllers communicate throttle commands to ESCs via digital protocols that eliminate the latency and noise sensitivity of analogue PWM:</p>
+<ul>
+<li>
+<p><strong>DSHOT 300/600/1200</strong>: one-wire digital protocol at 300/600/1200 kbit/s; 11-bit throttle value (0–2047), 1-bit telemetry request, 4-bit CRC. Latency &lt;200 µs.</p>
+</li>
+<li>
+<p><strong>UART/CAN telemetry</strong>: bidirectional; ESC reports RPM, current, voltage, temperature to FC at 50–200 Hz.</p>
+</li>
+<li>
+<p><strong>PWM (legacy)</strong>: 50 Hz–400 Hz; 1000–2000 µs pulse width; susceptible to noise; 20 ms latency at 50 Hz.</p>
+</li>
+</ul>
+<h3 id="535-esc-protection-features-and-regenerative-braking"><span class="secnum">5.3.5</span> ESC Protection Features and Regenerative Braking<a class="headerlink" href="#535-esc-protection-features-and-regenerative-braking" title="Permanent link">&para;</a></h3>
+<p>Production-quality ESCs implement multiple protection modes:</p>
+<ul>
+<li>
+<p><strong>Overcurrent</strong>: peak current sensing via shunt resistor or Hall sensor; hardware cutoff within 1–5 µs.</p>
+</li>
+<li>
+<p><strong>Over-temperature</strong>: NTC thermistor on power stage; derating above 80 °C; cutoff at 120 °C.</p>
+</li>
+<li>
+<p><strong>Over-voltage</strong>: monitors DC bus; protects against regenerative voltage spikes.</p>
+</li>
+<li>
+<p><strong>Under-voltage</strong>: low-voltage cutoff (LVC) at <span class="arithmatex">\(V_{\mathrm{min}} = 3.0\)</span>–<span class="arithmatex">\(3.3\)</span> V/cell to protect LiPo cells from deep discharge.</p>
+</li>
+<li>
+<p><strong>Regenerative braking</strong>: during rapid descent or rotor deceleration, the motor acts as a generator, returning energy to the battery. For a 10 kg UAV descending at 3 m/s, the recovered power is approximately <span class="arithmatex">\(P_{\mathrm{regen}} = mgv\eta \approx 10 \times 9.81 \times 3 \times 0.75 \approx 221\,\text{W}\)</span>, meaningful for medium-duration missions.</p>
+</li>
+</ul>
+<h2 id="sec-propellers"><span class="secnum">5.4</span> Propellers<a class="headerlink" href="#sec-propellers" title="Permanent link">&para;</a></h2>
+<h3 id="541-propeller-geometry-and-notation"><span class="secnum">5.4.1</span> Propeller Geometry and Notation<a class="headerlink" href="#541-propeller-geometry-and-notation" title="Permanent link">&para;</a></h3>
+<p>A propeller is defined by its diameter <span class="arithmatex">\(D\)</span> (m), pitch <span class="arithmatex">\(P\)</span> (m), and the chord <span class="arithmatex">\(c(r)\)</span> and twist <span class="arithmatex">\(\theta(r)\)</span> distributions along the non-dimensional radius <span class="arithmatex">\(\bar{r} = r/R\)</span> (where <span class="arithmatex">\(R = D/2\)</span>). The geometric pitch angle at any section is <span id="eq-pitch_angle"></span></p>
+<div class="arithmatex">\[\theta(r) = \arctan\!\left(\frac{P}{2\pi r}\right),\tag{5.28}\]</div>
+<p>and the local blade angle of attack is <span class="arithmatex">\(\alpha(r) = \theta(r) - \phi(r)\)</span>, where <span class="arithmatex">\(\phi(r)\)</span> is the inflow angle. A well-designed propeller has a nearly constant angle of attack across the span, requiring more twist at the root than the tip—this is the basis of <em>optimal twist distribution</em>.</p>
+<h3 id="542-non-dimensional-coefficients-and-similarity-laws"><span class="secnum">5.4.2</span> Non-Dimensional Coefficients and Similarity Laws<a class="headerlink" href="#542-non-dimensional-coefficients-and-similarity-laws" title="Permanent link">&para;</a></h3>
+<p>Using the propeller shaft speed <span class="arithmatex">\(n\)</span> (r e v s) and diameter <span class="arithmatex">\(D\)</span> as reference scales, the thrust and power are expressed as: <span id="eq-CT"></span></p>
+<div class="arithmatex">\[C_T = \frac{T}{\rho n^2 D^4},\tag{5.29}\]</div>
+<div id="eq-CP"></div>
+<div class="arithmatex">\[C_P = \frac{P}{\rho n^3 D^5},\tag{5.30}\]</div>
+<p>where <span class="arithmatex">\(\rho\)</span> is the air density. The advance ratio: <span id="eq-J"></span></p>
+<div class="arithmatex">\[J = \frac{V_\infty}{n D},\tag{5.31}\]</div>
+<p>characterises the flight condition. At <span class="arithmatex">\(J=0\)</span> (static/hover), <span class="arithmatex">\(C_T\)</span> and <span class="arithmatex">\(C_P\)</span> reach their maximum values; as <span class="arithmatex">\(J\)</span> increases toward the propeller’s <em>zero-thrust</em> advance ratio <span class="arithmatex">\(J_0\)</span>, both coefficients decrease. Propeller efficiency in forward flight is: <span id="eq-prop_eta"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{prop}} = \frac{T V_\infty}{P} = \frac{C_T}{C_P} \cdot J,\tag{5.32}\]</div>
+<p>which peaks at an intermediate <span class="arithmatex">\(J\)</span> value and is zero at both <span class="arithmatex">\(J=0\)</span> (static) and <span class="arithmatex">\(J=J_0\)</span> (zero thrust).</p>
+<h3 id="543-static-thrust-in-hover"><span class="secnum">5.4.3</span> Static Thrust in Hover<a class="headerlink" href="#543-static-thrust-in-hover" title="Permanent link">&para;</a></h3>
+<p>For a quadrotor in hover, each propeller operates at <span class="arithmatex">\(J = 0\)</span>. The static thrust produced by a rotor of diameter <span class="arithmatex">\(D\)</span> spinning at <span class="arithmatex">\(n\)</span> rev/s is: <span id="eq-static_thrust"></span></p>
+<div class="arithmatex">\[T_{\mathrm{static}} = C_{T,0} \cdot \rho \cdot n^2 \cdot D^4,\tag{5.33}\]</div>
+<p>where <span class="arithmatex">\(C_{T,0}\)</span> is the static thrust coefficient (typically 0.08–0.14 for well-designed UAV propellers). Using actuator disk theory, the minimum power required to generate thrust <span class="arithmatex">\(T\)</span> from a disk of area <span class="arithmatex">\(A = \pi D^2/4\)</span> is: <span id="eq-actuator_disk"></span></p>
+<div class="arithmatex">\[P_{\mathrm{ideal}} = \sqrt{\frac{T^3}{2\rho A}},\tag{5.34}\]</div>
+<p>and the figure of merit is defined as: <span id="eq-FM"></span></p>
+<div class="arithmatex">\[FM = \frac{P_{\mathrm{ideal}}}{P_{\mathrm{actual}}} = \frac{\sqrt{T^3 / (2\rho A)}}{P},\tag{5.35}\]</div>
+<p>with <span class="arithmatex">\(FM = 0.55\)</span>–<span class="arithmatex">\(0.75\)</span> for drone propellers and <span class="arithmatex">\(FM = 0.75\)</span>–<span class="arithmatex">\(0.85\)</span> for helicopter rotors (which benefit from higher design investment in chord and twist optimisation).</p>
+<h3 id="544-the-pitch-speed-relationship"><span class="secnum">5.4.4</span> The Pitch-Speed Relationship<a class="headerlink" href="#544-the-pitch-speed-relationship" title="Permanent link">&para;</a></h3>
+<p>The theoretical <em>pitch velocity</em> (speed at which a propeller with pitch <span class="arithmatex">\(P\)</span> would produce zero thrust in ideal conditions) is: <span id="eq-pitch_speed"></span></p>
+<div class="arithmatex">\[V_{\mathrm{pitch}} = P \cdot n,\tag{5.36}\]</div>
+<p>where <span class="arithmatex">\(P\)</span> is in metres and <span class="arithmatex">\(n\)</span> in rev/s. For a 10 in (<span class="arithmatex">\(= 0.254\,\text{m}\)</span>) pitch propeller spinning at 6000 RPM (<span class="arithmatex">\(n = 100\)</span> rev/s), <span class="arithmatex">\(V_{\mathrm{pitch}} = 0.254 \times 100 = 25.4\,\text{m/s}\)</span>. Actual zero-thrust speed is approximately <span class="arithmatex">\(0.85 V_{\mathrm{pitch}}\)</span> due to aerodynamic losses.</p>
+<h3 id="545-blade-element-momentum-theory-bemt"><span class="secnum">5.4.5</span> Blade Element Momentum Theory (BEMT)<a class="headerlink" href="#545-blade-element-momentum-theory-bemt" title="Permanent link">&para;</a></h3>
+<p>BEMT combines local blade-element aerodynamics with momentum theory. At a strip of width <span class="arithmatex">\(dr\)</span> at radius <span class="arithmatex">\(r\)</span>, the elemental thrust and torque are: <span id="eq-BEMT_thrust"></span><span id="eq-BEMT_torque"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  dT &amp;= \frac{1}{2} \rho W^2 c(r) \left(C_L \cos\phi - C_D \sin\phi\right) N_b \, dr,
+   \\
+  dQ &amp;= \frac{1}{2} \rho W^2 c(r) \left(C_L \sin\phi + C_D \cos\phi\right) N_b \, r \, dr,
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(W\)</span> is the local resultant velocity, <span class="arithmatex">\(\phi\)</span> is the inflow angle, <span class="arithmatex">\(N_b\)</span> is the number of blades, and <span class="arithmatex">\(C_L\)</span>, <span class="arithmatex">\(C_D\)</span> are section lift and drag coefficients. Equating momentum-theory thrust to blade-element thrust at each strip and solving iteratively gives the complete performance map <span class="arithmatex">\(C_T(J)\)</span> and <span class="arithmatex">\(C_P(J)\)</span>. BEMT is the foundation of all propeller design codes (XROTOR, QPROP, OpenProp).</p>
+<h3 id="546-materials-and-manufacturing"><span class="secnum">5.4.6</span> Materials and Manufacturing<a class="headerlink" href="#546-materials-and-manufacturing" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-prop_materials">
+<div class="tbl-caption"><strong>Table 5.4.</strong> Propeller material comparison for UAV applications.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Material</th>
+<th style="text-align: left;"><span>Density (g/cm<span class="math inline">\(^3\)</span>)</span></th>
+<th style="text-align: left;"><span>E (GPa)</span></th>
+<th style="text-align: left;"><span><span class="math inline">\(\eta_{\mathrm{prop}}\)</span> (rel.)</span></th>
+<th style="text-align: left;"><span>Cost (rel.)</span></th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Nylon (PA6-GF30)</td>
+<td style="text-align: left;">1.35</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">0.90</td>
+<td style="text-align: left;">1×</td>
+<td style="text-align: left;">Most common; flexible, cheap</td>
+</tr>
+<tr>
+<td style="text-align: left;">Polycarbonate</td>
+<td style="text-align: left;">1.20</td>
+<td style="text-align: left;">2.5</td>
+<td style="text-align: left;">0.85</td>
+<td style="text-align: left;">1.2×</td>
+<td style="text-align: left;">Impact-resistant; flexible</td>
+</tr>
+<tr>
+<td style="text-align: left;">Carbon fibre (UD pre-preg)</td>
+<td style="text-align: left;">1.55</td>
+<td style="text-align: left;">135</td>
+<td style="text-align: left;">1.00</td>
+<td style="text-align: left;">5–10×</td>
+<td style="text-align: left;">Maximum stiffness; brittle</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wood (beechwood)</td>
+<td style="text-align: left;">0.70</td>
+<td style="text-align: left;">14</td>
+<td style="text-align: left;">0.97</td>
+<td style="text-align: left;">2×</td>
+<td style="text-align: left;">Excellent damping; heavy; moisture-sensitive</td>
+</tr>
+<tr>
+<td style="text-align: left;">CFRP injection moulded</td>
+<td style="text-align: left;">1.40</td>
+<td style="text-align: left;">30</td>
+<td style="text-align: left;">0.95</td>
+<td style="text-align: left;">3–5×</td>
+<td style="text-align: left;">Production-scale; good stiffness</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Carbon-fibre propellers are stiffer, meaning they maintain their designed geometry under aerodynamic load, preserving the design <span class="arithmatex">\(C_T\)</span> and <span class="arithmatex">\(C_P\)</span> values. Flexible nylon propellers deflect under load, changing effective pitch and reducing efficiency by 5–10 % at high thrust levels.</p>
+<h3 id="547-fixed-pitch-vs-variable-pitch-propellers"><span class="secnum">5.4.7</span> Fixed Pitch vs Variable Pitch Propellers<a class="headerlink" href="#547-fixed-pitch-vs-variable-pitch-propellers" title="Permanent link">&para;</a></h3>
+<p>Fixed-pitch (FP) propellers dominate small UAVs due to simplicity and zero mechanical complexity. The efficiency penalty arises because an FP propeller is optimised for a single (<span class="arithmatex">\(J\)</span>, <span class="arithmatex">\(n\)</span>) operating point; performance degrades away from that point.</p>
+<p>Variable-pitch (VP) propellers, found on turboprop UAVs and some advanced electric UAVs (e.g., Quaternium HYBRiX), allow the pitch to be adjusted in flight. Benefits:</p>
+<ul>
+<li>
+<p>Maintain optimal <span class="arithmatex">\(C_T/C_P\)</span> ratio across a wide airspeed range.</p>
+</li>
+<li>
+<p>Enable propeller feathering (zero drag in glide).</p>
+</li>
+<li>
+<p>Allow reverse thrust for short landing roll.</p>
+</li>
+</ul>
+<p>The pitch actuator (servo or pneumatic) adds mass and mechanical complexity. Net benefit is 10–20 % efficiency gain over the mission envelope—worth it for long-endurance fixed-wing UAVs, not justified for short-mission multirotors.</p>
+<h3 id="548-propeller-sizing-rules-of-thumb"><span class="secnum">5.4.8</span> Propeller Sizing Rules of Thumb<a class="headerlink" href="#548-propeller-sizing-rules-of-thumb" title="Permanent link">&para;</a></h3>
+<p>For multirotors: diameter <span class="arithmatex">\(D \approx 0.7 \cdot L_{\mathrm{arm}}\)</span> where <span class="arithmatex">\(L_{\mathrm{arm}}\)</span> is the motor-to-motor centre distance. Larger, slower-turning propellers are always more efficient (lower disk loading = lower induced velocity = lower induced power). Disk loading <span class="arithmatex">\(DL = W_{\mathrm{UAV}} / (N_{\mathrm{rotors}} \cdot \pi D^2/4)\)</span>:</p>
+<ul>
+<li>
+<p>Small quadrotor: <span class="arithmatex">\(DL \approx 10\,\text{N/m²}\)</span> (high efficiency)</p>
+</li>
+<li>
+<p>Medium delivery drone: <span class="arithmatex">\(DL \approx 40\)</span>–<span class="arithmatex">\(80\,\text{N/m²}\)</span></p>
+</li>
+<li>
+<p>Helicopter: <span class="arithmatex">\(DL \approx 100\)</span>–<span class="arithmatex">\(200\,\text{N/m²}\)</span></p>
+</li>
+<li>
+<p>Jump jet: <span class="arithmatex">\(DL \approx 10000\,\text{N/m²}\)</span> (very poor hover efficiency)</p>
+</li>
+</ul>
+<h2 id="sec-ice"><span class="secnum">5.5</span> Internal Combustion Engines for UAVs<a class="headerlink" href="#sec-ice" title="Permanent link">&para;</a></h2>
+<h3 id="551-two-stroke-glow-and-petrol-engines"><span class="secnum">5.5.1</span> Two-Stroke Glow and Petrol Engines<a class="headerlink" href="#551-two-stroke-glow-and-petrol-engines" title="Permanent link">&para;</a></h3>
+<p>Two-stroke engines dominate the sub-10 cm³ displacement range for UAVs due to their unmatched power-to-weight ratio and mechanical simplicity. The thermodynamic cycle completes in one crankshaft revolution: intake/compression on the upstroke, ignition/expansion/exhaust on the downstroke. Brake mean effective pressure (BMEP): <span id="eq-BMEP"></span></p>
+<div class="arithmatex">\[\text{BMEP} = \frac{W_b}{V_d} = \frac{P_b \cdot \tau}{V_d \cdot n},\tag{5.39}\]</div>
+<p>where <span class="arithmatex">\(W_b\)</span> is the brake work per cycle, <span class="arithmatex">\(V_d\)</span> is the displacement volume, <span class="arithmatex">\(P_b\)</span> is the brake power, and <span class="arithmatex">\(\tau\)</span> is the number of crankshaft revolutions per cycle (<span class="arithmatex">\(\tau = 1\)</span> for 2-stroke, <span class="arithmatex">\(\tau = 2\)</span> for 4-stroke). Typical BMEP values:</p>
+<ul>
+<li>
+<p>Small 2-stroke glow (10–50 cm³): BMEP <span class="arithmatex">\(\approx\)</span> 5–7 bar</p>
+</li>
+<li>
+<p>2-stroke petrol with EFI: BMEP <span class="arithmatex">\(\approx\)</span> 7–9 bar</p>
+</li>
+<li>
+<p>4-stroke naturally aspirated: BMEP <span class="arithmatex">\(\approx\)</span> 8–10 bar</p>
+</li>
+</ul>
+<p>Power-to-weight ratios for UAV 2-stroke engines:</p>
+<ul>
+<li>
+<p>Glow/nitromethane (e.g., OS Engines .91 AX): 0.9 kW/kg</p>
+</li>
+<li>
+<p>Petrol (e.g., DLE-20): 1.2 kW/kg</p>
+</li>
+<li>
+<p>High-performance petrol (e.g., 3W-28i): 1.8 kW/kg</p>
+</li>
+</ul>
+<p>Brake thermal efficiency of 2-stroke glow engines is poor: 15–18 % due to short-circuit losses (fresh charge lost through exhaust port before it closes), pumping losses, and the inherent irreversibility of the Otto cycle at moderate compression ratios (<span class="arithmatex">\(r_c = 8\)</span>–<span class="arithmatex">\(12\)</span>:1 for glow; <span class="arithmatex">\(r_c = 10\)</span>–<span class="arithmatex">\(14\)</span>:1 for petrol).</p>
+<h3 id="552-four-stroke-petrol-engines"><span class="secnum">5.5.2</span> Four-Stroke Petrol Engines<a class="headerlink" href="#552-four-stroke-petrol-engines" title="Permanent link">&para;</a></h3>
+<p>Four-stroke engines gain efficiency through the scavenging stroke (pumping exhaust and inducting fresh charge on separate strokes), higher compression ratios (<span class="arithmatex">\(r_c = 10\)</span>–<span class="arithmatex">\(14\)</span>:1 for naturally aspirated), and better control over combustion phasing. Brake thermal efficiency of 25–30 % is typical for a well-tuned UAV 4-stroke. The price is higher mass per unit power due to the valve train, and lower power per displacement (half as many power strokes per revolution).</p>
+<p><strong>Rotax 912 ULS:</strong> widely used for MALE-class UAVs (Predator A, LUNA). Four-stroke, four-cylinder, horizontally opposed, 1352 cm³, 73.5 kW (98.6 hp) at 5800 RPM, mass 56.6 kg (without propeller and fluids). Specific power: <span class="arithmatex">\(73.5/56.6 \approx 1.30\,\text{kW/kg}\)</span>. SFC: <span class="arithmatex">\(\approx 260\,\text{g/(kW h)}\)</span>.</p>
+<h3 id="553-fuel-consumption-and-specific-fuel-consumption"><span class="secnum">5.5.3</span> Fuel Consumption and Specific Fuel Consumption<a class="headerlink" href="#553-fuel-consumption-and-specific-fuel-consumption" title="Permanent link">&para;</a></h3>
+<p>Brake-specific fuel consumption (BSFC) is the primary fuel efficiency metric for ICEs: <span id="eq-BSFC"></span></p>
+<div class="arithmatex">\[\text{BSFC} = \frac{\dot{m}_f}{P_b} \quad \left[\text{g/(kW h)}\right],\tag{5.40}\]</div>
+<p>where <span class="arithmatex">\(\dot{m}_f\)</span> is the fuel mass flow rate and <span class="arithmatex">\(P_b\)</span> is the brake power output. Typical BSFC values:</p>
+<ul>
+<li>
+<p>2-stroke glow engine: 600–900 g/(kW h)</p>
+</li>
+<li>
+<p>2-stroke petrol: 350–500 g/(kW h)</p>
+</li>
+<li>
+<p>4-stroke petrol: 250–320 g/(kW h)</p>
+</li>
+<li>
+<p>Diesel (heavy fuel, e.g., DeltaHawk): 210–270 g/(kW h)</p>
+</li>
+</ul>
+<p>The range of a fuel-powered fixed-wing UAV is given by the Breguet range equation: <span id="eq-breguet"></span></p>
+<div class="arithmatex">\[R = \frac{V \cdot \eta_{\mathrm{prop}}}{g \cdot \text{BSFC}} \cdot \frac{L}{D} \cdot
+  \ln\!\left(\frac{W_0}{W_1}\right),\tag{5.41}\]</div>
+<p>where <span class="arithmatex">\(L/D\)</span> is the lift-to-drag ratio, <span class="arithmatex">\(W_0\)</span> is the initial gross weight, and <span class="arithmatex">\(W_1\)</span> is the final (fuel-burned) weight. For a petrol UAV with BSFC <span class="arithmatex">\(= 400\,\text{g/(kW h)}\)</span>, <span class="arithmatex">\(L/D = 15\)</span>, <span class="arithmatex">\(\eta_{\mathrm{prop}} = 0.80\)</span>, and fuel fraction <span class="arithmatex">\(W_f/W_0 = 0.30\)</span>: <span class="arithmatex">\(R \approx 100 \times 0.80 / (9.81 \times 0.111 \times 10^{-3}) \times 15 \times \ln(1/0.70) \approx 1070\,\text{km}\)</span>.</p>
+<h3 id="554-ignition-and-fuel-systems"><span class="secnum">5.5.4</span> Ignition and Fuel Systems<a class="headerlink" href="#554-ignition-and-fuel-systems" title="Permanent link">&para;</a></h3>
+<p>UAV ICEs use either:</p>
+<ul>
+<li>
+<p><strong>CDI (capacitor discharge ignition)</strong>: simple, reliable, self-contained; ignition energy 30–100 mJ per spark; timing is fixed relative to TDC.</p>
+</li>
+<li>
+<p><strong>Electronic fuel injection (EFI)</strong>: solenoid injectors replace carburettor; stoichiometric <span class="arithmatex">\(\lambda = 1\)</span> control via lambda sensor; BSFC improvement 10–15 %; essential above 4000 m altitude where carburettor calibration drifts.</p>
+</li>
+</ul>
+<h3 id="555-vibration-isolation"><span class="secnum">5.5.5</span> Vibration Isolation<a class="headerlink" href="#555-vibration-isolation" title="Permanent link">&para;</a></h3>
+<p>A single-cylinder 2-stroke engine produces a primary unbalanced force at firing frequency <span class="arithmatex">\(f_{\mathrm{eng}} = n/60\)</span> Hz (for <span class="arithmatex">\(n\)</span> in RPM). This typically falls in the 50–150 Hz range—exactly where airframe structural resonances occur. Vibration is attenuated by elastomeric mounts (silicone or Lord mounts) designed so that the mount natural frequency <span class="arithmatex">\(f_n = f_{\mathrm{eng}} / \sqrt{2}\)</span> places the engine above the mount resonance peak (transmissibility <span class="arithmatex">\(&lt; 1\)</span> above <span class="arithmatex">\(\sqrt{2} f_n\)</span>). For a 2 kg engine on four 20 mm diameter silicone mounts with stiffness <span class="arithmatex">\(k = 5000\,\text{N/m}\)</span> each, the natural frequency is: <span id="eq-mount_freq"></span></p>
+<div class="arithmatex">\[f_n = \frac{1}{2\pi}\sqrt{\frac{4k}{m}} = \frac{1}{2\pi}\sqrt{\frac{20000}{2}} \approx
+  16\,\text{Hz},\tag{5.42}\]</div>
+<p>attenuating engine vibration above 22 Hz (i.e., engines above <span class="arithmatex">\(\sim\)</span>1320 RPM are effectively isolated).</p>
+<h2 id="sec-turbine"><span class="secnum">5.6</span> Gas Turbine and Jet Engines for UAVs<a class="headerlink" href="#sec-turbine" title="Permanent link">&para;</a></h2>
+<h3 id="561-micro-turbojet-architecture-and-thermodynamic-cycle"><span class="secnum">5.6.1</span> Micro-Turbojet Architecture and Thermodynamic Cycle<a class="headerlink" href="#561-micro-turbojet-architecture-and-thermodynamic-cycle" title="Permanent link">&para;</a></h3>
+<p>Micro-turbojets (50–500 N thrust class) for UAVs are single-shaft, single-stage centrifugal-compressor engines. The Brayton cycle efficiency is: <span id="eq-brayton"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{th}} = 1 - \frac{T_1}{T_3} = 1 - \frac{1}{\Pi_c^{(\gamma-1)/\gamma}},\tag{5.43}\]</div>
+<p>where <span class="arithmatex">\(T_1\)</span> is the inlet total temperature, <span class="arithmatex">\(T_3\)</span> is the turbine inlet total temperature, <span class="arithmatex">\(\Pi_c\)</span> is the compressor pressure ratio, and <span class="arithmatex">\(\gamma = 1.4\)</span> for air. For a typical micro-turbojet with <span class="arithmatex">\(\Pi_c = 4\)</span> and <span class="arithmatex">\(\gamma = 1.4\)</span>: <span id="eq-brayton_example"></span></p>
+<div class="arithmatex">\[\eta_{\mathrm{th}} = 1 - \frac{1}{4^{0.286}} \approx 1 - 0.672 = 0.328 = 32.8\,\text{\%}.\tag{5.44}\]</div>
+<p>In practice, compressor isentropic efficiency <span class="arithmatex">\(\eta_c \approx 0.72\)</span>–<span class="arithmatex">\(0.78\)</span> and turbine isentropic efficiency <span class="arithmatex">\(\eta_t \approx 0.82\)</span>–<span class="arithmatex">\(0.86\)</span> for uncooled micro-turbine stages, reducing overall thermal efficiency to 12–18 %.</p>
+<h3 id="562-compressor-stage"><span class="secnum">5.6.2</span> Compressor Stage<a class="headerlink" href="#562-compressor-stage" title="Permanent link">&para;</a></h3>
+<p>Centrifugal compressors are universally used in micro-turbojets because:</p>
+<ul>
+<li>
+<p>Single-stage compression ratios of 3:1–8:1 are achievable.</p>
+</li>
+<li>
+<p>Robust to foreign object ingestion.</p>
+</li>
+<li>
+<p>Simpler manufacturing (single-piece titanium or inconel impeller, CNC machined).</p>
+</li>
+<li>
+<p>Tip speeds of 400–550 m/s; stresses approach material limits.</p>
+</li>
+</ul>
+<p>The slip factor <span class="arithmatex">\(\sigma\)</span> (ratio of actual to ideal exit whirl velocity) is typically <span class="arithmatex">\(0.85\)</span>–<span class="arithmatex">\(0.92\)</span> for backward-swept impellers. The work input coefficient: <span id="eq-work_coeff"></span></p>
+<div class="arithmatex">\[\psi = \sigma \frac{U_2^2}{c_p T_1},\tag{5.45}\]</div>
+<p>where <span class="arithmatex">\(U_2\)</span> is the impeller tip speed and <span class="arithmatex">\(c_p = 1005\,\text{J/(kg K)}\)</span>. For <span class="arithmatex">\(\sigma = 0.90\)</span>, <span class="arithmatex">\(U_2 = 500\,\text{m/s}\)</span>, <span class="arithmatex">\(T_1 = 288\,\text{K}\)</span>: <span class="arithmatex">\(\psi = 0.90 \times 500^2 / (1005 \times 288) \approx 0.776\)</span>.</p>
+<h3 id="563-combustor-and-turbine"><span class="secnum">5.6.3</span> Combustor and Turbine<a class="headerlink" href="#563-combustor-and-turbine" title="Permanent link">&para;</a></h3>
+<p>Micro-turbojet combustors burn Jet-A or JP-8. The primary zone equivalence ratio <span class="arithmatex">\(\phi_{\mathrm{pz}} = 1.0\)</span>–<span class="arithmatex">\(1.4\)</span> (rich) for stability, with dilution air bringing the exit temperature down to the turbine inlet temperature (TIT). For micro-turbojets, uncooled single-stage axial turbines limit TIT to 800–950 °C (nickel superalloy, directionally solidified).</p>
+<p>The specific fuel consumption for turbojets: <span id="eq-TSFC"></span></p>
+<div class="arithmatex">\[\text{TSFC} = \frac{\dot{m}_f}{F} \quad [\text{g/(kN s)}]
+  = \frac{\dot{m}_f}{F} \times 10^6 \quad [\text{mg/N/s}],\tag{5.46}\]</div>
+<p>typical values: micro-turbojet 80–120 mg/N/s; small turbofan 20–35 mg/N/s.</p>
+<h3 id="564-turboprop-for-uavs-and-sfc-comparison"><span class="secnum">5.6.4</span> Turboprop for UAVs and SFC Comparison<a class="headerlink" href="#564-turboprop-for-uavs-and-sfc-comparison" title="Permanent link">&para;</a></h3>
+<p>Turboprop engines provide higher propulsive efficiency than turbojets at airspeeds below 600 km/h because the large propeller operates at much higher Froude efficiency. The equivalent specific fuel consumption in power terms (specific power consumption):</p>
+<div class="arithmatex">\[\text{BSFC}_{\mathrm{turbo}} \approx 280--360\,\text{g/(kW h)}
+  \text{ (turboprop)},\]</div>
+<p>compared with 420–600 g/(kW h) effective for a turbojet at 300 km/h.</p>
+<div class="tbl" id="tab-sfc_comparison">
+<div class="tbl-caption"><strong>Table 5.5.</strong> Specific fuel consumption comparison for UAV propulsion systems.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Engine Type</th>
+<th style="text-align: left;">Example</th>
+<th style="text-align: left;"><span>BSFC or TSFC</span></th>
+<th style="text-align: left;"><span>P/W (kW/kg)</span></th>
+<th style="text-align: left;">Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">2-stroke petrol</td>
+<td style="text-align: left;">DLE-170</td>
+<td style="text-align: left;">400 g/kWh</td>
+<td style="text-align: left;">1.5</td>
+<td style="text-align: left;">MALE fixed-wing</td>
+</tr>
+<tr>
+<td style="text-align: left;">4-stroke petrol</td>
+<td style="text-align: left;">Rotax 912</td>
+<td style="text-align: left;">260 g/kWh</td>
+<td style="text-align: left;">1.3</td>
+<td style="text-align: left;">MALE, HALE</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wankel rotary</td>
+<td style="text-align: left;">UAV Engines AR731</td>
+<td style="text-align: left;">310 g/kWh</td>
+<td style="text-align: left;">1.8</td>
+<td style="text-align: left;">Fixed-wing, medium UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">Diesel</td>
+<td style="text-align: left;">DeltaHawk DH180</td>
+<td style="text-align: left;">215 g/kWh</td>
+<td style="text-align: left;">0.9</td>
+<td style="text-align: left;">Long-endurance</td>
+</tr>
+<tr>
+<td style="text-align: left;">Micro-turbojet</td>
+<td style="text-align: left;">JetCat P300</td>
+<td style="text-align: left;">100 mg/Ns</td>
+<td style="text-align: left;">8.0</td>
+<td style="text-align: left;">Target drones, UCAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">Small turbofan</td>
+<td style="text-align: left;">Williams FJ44</td>
+<td style="text-align: left;">23 mg/Ns</td>
+<td style="text-align: left;">12.0</td>
+<td style="text-align: left;">MALE jet UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">Turboprop</td>
+<td style="text-align: left;">PBS TP100</td>
+<td style="text-align: left;">320 g/kWh</td>
+<td style="text-align: left;">5.5</td>
+<td style="text-align: left;">Medium UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">BLDC + LiPo</td>
+<td style="text-align: left;">T-Motor U8+6S</td>
+<td style="text-align: left;"><span>—</span></td>
+<td style="text-align: left;">4.7</td>
+<td style="text-align: left;">Multirotor, short mission</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="565-fadec-full-authority-digital-engine-control"><span class="secnum">5.6.5</span> FADEC: Full Authority Digital Engine Control<a class="headerlink" href="#565-fadec-full-authority-digital-engine-control" title="Permanent link">&para;</a></h3>
+<p>Modern UAV gas turbines incorporate a FADEC unit that:</p>
+<ul>
+<li>
+<p>Controls fuel flow via a servo-driven metering valve (closed-loop on <span class="arithmatex">\(N\)</span> RPM and TIT).</p>
+</li>
+<li>
+<p>Manages start sequence: ignition, light-off detection, warm-up acceleration ramp.</p>
+</li>
+<li>
+<p>Enforces acceleration and deceleration limiters to prevent compressor surge and rich blow-out.</p>
+</li>
+<li>
+<p>Monitors and logs engine health parameters: shaft speed, TIT, oil pressure, fuel flow.</p>
+</li>
+<li>
+<p>Interfaces with the airframe’s flight management system via ARINC 429 or CAN bus.</p>
+</li>
+</ul>
+<p>FADEC adds 0.5–2.0 kg to the engine system mass but delivers 3–7 % BSFC improvement through optimised fuel scheduling.</p>
+<h2 id="sec-hybrid"><span class="secnum">5.7</span> Hybrid Propulsion Systems<a class="headerlink" href="#sec-hybrid" title="Permanent link">&para;</a></h2>
+<h3 id="571-series-hybrid-architecture"><span class="secnum">5.7.1</span> Series Hybrid Architecture<a class="headerlink" href="#571-series-hybrid-architecture" title="Permanent link">&para;</a></h3>
+<p>In a series hybrid, the ICE drives an electrical generator; the generator output powers the motor(s) directly and/or charges the battery. The propeller is driven only by the electric motor(s). This architecture decouples the ICE operating point from the flight demand, allowing the ICE to run continuously at its best BSFC point: <span id="eq-optimal_ice_point"></span></p>
+<div class="arithmatex">\[P_{\mathrm{ICE,opt}} = \arg\min_P \text{BSFC}(P),\tag{5.48}\]</div>
+<p>which typically occurs at 70–85% of maximum rated power. The battery acts as a buffer, absorbing or supplying the difference between ICE output and motor demand: <span id="eq-battery_buffer"></span></p>
+<div class="arithmatex">\[P_{\mathrm{bat}} = P_{\mathrm{motor}} - \eta_{\mathrm{gen}} \cdot P_{\mathrm{ICE,opt}}.\tag{5.49}\]</div>
+<p>The battery State of Charge (SoC) is controlled by the power management algorithm to remain within <span class="arithmatex">\([\mathrm{SoC}_{\min}, \mathrm{SoC}_{\max}] = [0.20, 0.80]\)</span>, protecting cell life and maintaining available buffer capacity. In charge-sustaining mode, the time-average of <span class="arithmatex">\(P_{\mathrm{bat}} = 0\)</span>.</p>
+<h3 id="572-parallel-hybrid-architecture"><span class="secnum">5.7.2</span> Parallel Hybrid Architecture<a class="headerlink" href="#572-parallel-hybrid-architecture" title="Permanent link">&para;</a></h3>
+<p>The parallel hybrid connects both ICE and electric motor mechanically to the propeller shaft (or reduction gearbox). A clutch allows either or both to contribute thrust simultaneously. During climb (high power demand), both ICE and motor contribute; during cruise (low power), the ICE alone drives the propeller, while the motor can regenerate to recharge the battery (if the ICE output exceeds cruise power). Mathematical power split: <span id="eq-parallel_power"></span></p>
+<div class="arithmatex">\[P_{\mathrm{prop}} = P_{\mathrm{ICE}} + P_{\mathrm{motor}},\tag{5.50}\]</div>
+<p>with <span class="arithmatex">\(P_{\mathrm{motor}} &lt; 0\)</span> during regeneration.</p>
+<h3 id="573-range-extension-potential"><span class="secnum">5.7.3</span> Range Extension Potential<a class="headerlink" href="#573-range-extension-potential" title="Permanent link">&para;</a></h3>
+<p>The energy density of petrol (<span class="arithmatex">\(\approx 43\,\text{MJ/kg}\)</span>, or roughly 12 kW h/kg) is approximately 60× that of LiPo batteries (<span class="arithmatex">\(\approx 0.2\,\text{kW h/kg}\)</span>) at the cell level. Even accounting for the lower efficiency of the ICE (<span class="arithmatex">\(\eta_{\mathrm{ICE}} \approx 0.28\)</span>) versus the direct electrical chain (<span class="arithmatex">\(\eta_{\mathrm{elec}} \approx 0.90\)</span>), the effective energy available per kilogram of fuel is: <span id="eq-ice_eff_energy"></span></p>
+<div class="arithmatex">\[E_{\mathrm{eff,ICE}} = 12 \times 0.28 \approx 3.36\,\text{kW h/kg},\tag{5.51}\]</div>
+<p>compared with <span class="arithmatex">\(E_{\mathrm{eff,bat}} = 0.20 \times 0.90 \approx 0.18\,\text{kW h/kg}\)</span> for LiPo—a 19× advantage for fuel. A hybrid system therefore offers 2–4× endurance extension compared with a pure electric system of the same MTOW, depending on the power mix and battery fraction.</p>
+<div class="parahead">
+<p>Quaternium HYBRiX 2.1</p>
+</div>
+<p>is the leading commercial example: a hybrid-electric multirotor with a 36 cm³ Zenoah two-stroke engine driving a 1.8 kW generator, supplemented by a 6S LiPo battery pack. MTOW 25 kg, maximum endurance 4.5 h (with 1 kg payload), compared with <span class="arithmatex">\(\sim35\,\text{min}\)</span> for an equivalent pure-electric multirotor.</p>
+<h2 id="sec-alt_propulsion"><span class="secnum">5.8</span> Alternative and Emerging Propulsion Technologies<a class="headerlink" href="#sec-alt_propulsion" title="Permanent link">&para;</a></h2>
+<h3 id="581-hydrogen-fuel-cells"><span class="secnum">5.8.1</span> Hydrogen Fuel Cells<a class="headerlink" href="#581-hydrogen-fuel-cells" title="Permanent link">&para;</a></h3>
+<p>Proton exchange membrane (PEM) fuel cells oxidise hydrogen electrochemically: <span id="eq-fc_anode"></span><span id="eq-fc_cathode"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  \text{Anode: } &amp; \mathrm{H_2 \to 2H^+ + 2e^-}  \\
+  \text{Cathode: } &amp; \mathrm{\frac{1}{2}O_2 + 2H^+ + 2e^- \to H_2O}
+\end{align*}\]</div>
+<p>The theoretical open-circuit voltage of a single cell is 1.23 V (Nernst equation at standard conditions). Practical cell voltage at rated current density <span class="arithmatex">\(j \approx 0.5\)</span>–<span class="arithmatex">\(1.0\,\text{A/cm²}\)</span> is 0.6–0.8 V due to activation, ohmic, and concentration overpotentials. Stack efficiency (electrical output / hydrogen LHV) is typically 45–60 %.</p>
+<p>Hydrogen gravimetric energy density: 120 MJ/kg (LHV)—nearly 3<span class="arithmatex">\(\times\)</span> petrol—but compressed H<span class="arithmatex">\(_2\)</span> at 350 bar in a Type IV carbon-fibre tank stores 5.5 kW h/kg of <em>system</em> energy density (tank + hydrogen), versus <span class="arithmatex">\(\sim\)</span>12 kW h/kg for petrol in an aluminium tank. At 700 bar, system energy density reaches 7–8 kW h/kg—competitive with, and potentially superior to, diesel for long-endurance UAV missions.</p>
+<p>Specific power of PEM FC stacks: 800–2500 W/kg (stack only); 400–900 W/kg (complete system including BoP). The Intelligent Energy 800 W module (0.9 kg) achieves <span class="arithmatex">\(888\,\text{W/kg}\)</span> at stack level.</p>
+<h3 id="582-solar-photovoltaic-propulsion"><span class="secnum">5.8.2</span> Solar Photovoltaic Propulsion<a class="headerlink" href="#582-solar-photovoltaic-propulsion" title="Permanent link">&para;</a></h3>
+<p>Solar-powered UAVs (HALE class) harvest irradiance <span class="arithmatex">\(G_{\mathrm{s}} \approx 1361\,\text{W/m²}\)</span> (solar constant) reduced by atmospheric absorption to <span class="arithmatex">\(G \approx 800\)</span>–<span class="arithmatex">\(1000\,\text{W/m²}\)</span> at the surface. The available electrical power is: <span id="eq-solar_power"></span></p>
+<div class="arithmatex">\[P_{\mathrm{PV}} = G \cdot A_{\mathrm{PV}} \cdot \eta_{\mathrm{PV}} \cdot \cos\theta_z,\tag{5.54}\]</div>
+<p>where <span class="arithmatex">\(A_{\mathrm{PV}}\)</span> is the panel area, <span class="arithmatex">\(\eta_{\mathrm{PV}}\)</span> is the cell efficiency, and <span class="arithmatex">\(\theta_z\)</span> is the sun zenith angle. Multi-junction GaAs cells achieve <span class="arithmatex">\(\eta_{\mathrm{PV}} = 28–32\,\text{\%}\)</span> (IMM cells: 32.6% single-cell record). Si cells: <span class="arithmatex">\(\eta_{\mathrm{PV}} \approx 20–24\,\text{\%}\)</span>.</p>
+<p>The energy balance for a solar HALE UAV over 24 hours must satisfy: <span id="eq-solar_energy_balance"></span></p>
+<div class="arithmatex">\[\int_0^{24} P_{\mathrm{PV}}(t)\,dt \geq \int_0^{24} P_{\mathrm{req}}(t)\,dt,\tag{5.55}\]</div>
+<p>including battery-stored surplus from daytime to power the UAV through the night. The Airbus Zephyr S achieves perpetual flight (&gt;25 days demonstrated): wingspan 25 m, MTOW 75 kg, cruising power <span class="arithmatex">\(\sim1.6\,\text{kW}\)</span>, solar array area <span class="arithmatex">\(\sim22\,\text{m²}\)</span>, amorphous silicon cells.</p>
+<h3 id="583-laser-power-beaming"><span class="secnum">5.8.3</span> Laser Power Beaming<a class="headerlink" href="#583-laser-power-beaming" title="Permanent link">&para;</a></h3>
+<p>A ground- or satellite-based laser illuminates a photovoltaic or thermophotovoltaic (TPV) receiver on the drone. The receiving cell is optimised for the laser wavelength (e.g., GaAs at 808 nm or 1064 nm). Conversion efficiency 50–60 % at the laser wavelength is achievable with resonant cells. Key constraints:</p>
+<ul>
+<li>
+<p>Beam divergence limits range: a 1 m transmit aperture at 1 µm wavelength has diffraction-limited divergence <span class="arithmatex">\(\theta \approx \lambda/D = 10⁻⁶\,\text{rad}\)</span>, giving a 1 m spot at 1 km.</p>
+</li>
+<li>
+<p>Atmospheric absorption and turbulence degrade beam quality.</p>
+</li>
+<li>
+<p>Laser-to-electricity conversion: wall-plug efficiency of high-power diode lasers <span class="arithmatex">\(\approx\)</span>55–70%, reducing end-to-end efficiency to 25–40 %.</p>
+</li>
+<li>
+<p>Regulatory (eye safety), strategic (dependency on ground station), and cloud coverage limitations restrict operational scenarios.</p>
+</li>
+</ul>
+<h3 id="584-flapping-wing-ornithopter-propulsion"><span class="secnum">5.8.4</span> Flapping Wing (Ornithopter) Propulsion<a class="headerlink" href="#584-flapping-wing-ornithopter-propulsion" title="Permanent link">&para;</a></h3>
+<p>At very low Reynolds numbers (<span class="arithmatex">\(Re = \rho V c / \mu &lt; 10^4\)</span>), conventional fixed propellers lose efficiency dramatically. Flapping-wing propulsion exploits unsteady aerodynamics—leading-edge vortex (LEV) capture, wake capture, and rotational lift—that persist at <span class="arithmatex">\(Re = 10^2\)</span>–<span class="arithmatex">\(10^4\)</span>. The Harvard RoboBee (<span class="arithmatex">\(80\,\text{mg}\)</span>, wingspan 30 mm) uses piezoelectric actuators at 120 Hz, achieving a lift-to-power ratio of <span class="arithmatex">\(100\,\text{mN/W}\)</span> at <span class="arithmatex">\(Re \approx 10^4\)</span>. Scaling to larger platforms reduces the LEV advantage; above <span class="arithmatex">\(\sim500\,\text{g}\)</span>, conventional rotors become more efficient.</p>
+<h3 id="585-electrohydrodynamic-ehd-ionic-wind-thrusters"><span class="secnum">5.8.5</span> Electrohydrodynamic (EHD) / Ionic Wind Thrusters<a class="headerlink" href="#585-electrohydrodynamic-ehd-ionic-wind-thrusters" title="Permanent link">&para;</a></h3>
+<p>EHD propulsion uses corona discharge to ionise air and accelerate ions through an electric field, transferring momentum to neutral air molecules: <span id="eq-EHD_thrust"></span></p>
+<div class="arithmatex">\[F_{\mathrm{EHD}} = \frac{I \cdot d}{k_i},\tag{5.56}\]</div>
+<p>where <span class="arithmatex">\(I\)</span> is the corona current, <span class="arithmatex">\(d\)</span> is the emitter-to-collector distance, and <span class="arithmatex">\(k_i\)</span> is the ion mobility (1.5–2.5 cm²/(V s) in air). The MIT ionic wind demonstrator (2018, <em>Nature</em>) flew a 2.45 kg fixed-wing aircraft on EHD thrust alone. Thrust density is extremely low (<span class="arithmatex">\(\approx2\,\text{N/kW}\)</span> vs <span class="arithmatex">\(&gt;\)</span>100 N/kW for BLDC+prop), limiting EHD to stealth applications where acoustic silence is paramount. Power-to-thrust efficiency is less than 1%, orders of magnitude below conventional propulsion.</p>
+<h2 id="sec-integration"><span class="secnum">5.9</span> Propulsion System Integration<a class="headerlink" href="#sec-integration" title="Permanent link">&para;</a></h2>
+<h3 id="591-motor-mounting-configurations"><span class="secnum">5.9.1</span> Motor Mounting Configurations<a class="headerlink" href="#591-motor-mounting-configurations" title="Permanent link">&para;</a></h3>
+<div class="parahead">
+<p>Tractor (front-mounted, pulling)</p>
+</div>
+<p>is the standard configuration for fixed-wing UAVs. Advantages: cleaner propeller inflow (undisturbed freestream); propeller slipstream over wing improves lift at low speed; simple structural attachment to nose bulkhead. Disadvantages: propeller damage on belly landings; noise and vibration transmitted forward.</p>
+<div class="parahead">
+<p>Pusher (rear-mounted, pushing)</p>
+</div>
+<p>places the propeller behind the fuselage: forward fuselage is free for sensor payloads (EO/IR ball); propeller in shadow of fuselage (increased turbulence → noise); reduced propeller ground clearance risk. Used by Predator B (Rotax 900 pusher), MQ-9 Reaper (TPE331 turboprop pusher), RQ-7 Shadow (UAV Engines AR801).</p>
+<div class="parahead">
+<p>Multirotor configurations</p>
+</div>
+<dl>
+<dd>quadrotor (4 motors), hexarotor (6), octorotor (8), coaxial pairs (e.g., DJI S1000). Motor positions determine yaw authority and failure redundancy. Coaxial pairs sacrifice <span class="arithmatex">\(\sim\)</span>15% efficiency due to upper-rotor wake impacting the lower rotor but provide N+1 redundancy in a compact footprint.</dd>
+</dl>
+<h3 id="592-vibration-isolation-and-emc"><span class="secnum">5.9.2</span> Vibration Isolation and EMC<a class="headerlink" href="#592-vibration-isolation-and-emc" title="Permanent link">&para;</a></h3>
+<div class="parahead">
+<p>Mechanical isolation:</p>
+</div>
+<p>motors are mounted on anti-vibration mounts to reduce IMU vibration contamination. The IMU should experience <span class="arithmatex">\(&lt;0.05\,\text{g}\)</span> vibration at frequencies <span class="arithmatex">\(&gt;\)</span>50 Hz. Silicone O-ring mounts or Lord Corporation’s elastomeric isolators are standard. Damping ratio <span class="arithmatex">\(\zeta = 0.15\)</span>–<span class="arithmatex">\(0.25\)</span> is typical.</p>
+<div class="parahead">
+<p>Electromagnetic compatibility (EMC):</p>
+</div>
+<ul>
+<li>
+<p>ESC PWM switching generates conducted emissions up to 300 MHz.</p>
+</li>
+<li>
+<p>Twisted-pair battery lead (100 mm pitch) reduces differential-mode radiation.</p>
+</li>
+<li>
+<p>Ferrite cores on motor phase leads attenuate common-mode currents above 10 MHz.</p>
+</li>
+<li>
+<p>Separate power planes for propulsion (22 V) and avionics (5 V) with a pi-filter LC suppressor (<span class="arithmatex">\(L \approx 100\,\text{µH}\)</span>, <span class="arithmatex">\(C \approx 470\,\text{µF}\)</span>).</p>
+</li>
+<li>
+<p>Star grounding: all grounds meet at a single point on the main power distribution board to prevent ground loops.</p>
+</li>
+</ul>
+<h3 id="593-thermal-management-of-esc-and-motor"><span class="secnum">5.9.3</span> Thermal Management of ESC and Motor<a class="headerlink" href="#593-thermal-management-of-esc-and-motor" title="Permanent link">&para;</a></h3>
+<p>In a typical quadrotor, each ESC dissipates <span class="arithmatex">\(P_{\mathrm{ESC}} = (1-\eta_{\mathrm{ESC}}) \cdot P_{\mathrm{motor}}\)</span>. For an 800 W motor at <span class="arithmatex">\(\eta_{\mathrm{ESC}} = 0.95\)</span>: <span class="arithmatex">\(P_{\mathrm{ESC}} = 0.05 \times 800 = 40\,\text{W}\)</span> per ESC. With four ESCs, total heat rejection is 160 W. A forced-air duct delivering 5 L/s over each ESC provides: <span id="eq-esc_cooling"></span></p>
+<div class="arithmatex">\[\Delta T_{\mathrm{air}} = \frac{P_{\mathrm{ESC}}}{\dot{m}_{\mathrm{air}} \cdot c_p}
+  = \frac{40}{0.006 \times 1005} \approx 6.6\,\text{°C},\tag{5.57}\]</div>
+<p>which is acceptable provided the inlet air is not preheated by other components.</p>
+<p>Motors mounted on the arms of a multirotor benefit from the arm’s motion through air; at a forward speed of 15 m/s the convective cooling coefficient <span class="arithmatex">\(h \approx 50\)</span>–<span class="arithmatex">\(80\,\text{W/(m² K)}\)</span>, providing natural cooling of 5–15 W per motor with no power penalty.</p>
+<h3 id="594-centre-of-gravity-considerations"><span class="secnum">5.9.4</span> Centre of Gravity Considerations<a class="headerlink" href="#594-centre-of-gravity-considerations" title="Permanent link">&para;</a></h3>
+<p>The moment of inertia about the roll axis for a quadrotor with motors at arm radius <span class="arithmatex">\(l\)</span> is: <span id="eq-Ixx"></span></p>
+<div class="arithmatex">\[I_{xx} = I_{xx,\mathrm{body}} + N_{\mathrm{motors}} \cdot m_{\mathrm{motor}} \cdot l^2,\tag{5.58}\]</div>
+<p>where the <span class="arithmatex">\(m_{\mathrm{motor}} l^2\)</span> term dominates for large arm radii. A heavier motor at a given arm length increases roll inertia, reducing the angular acceleration <span class="arithmatex">\(\dot{p} = M_{xx}/I_{xx}\)</span> achievable per unit of differential thrust—effectively reducing agility. Motor placement should therefore minimise <span class="arithmatex">\(m_{\mathrm{motor}} l^2\)</span> while satisfying the thrust and efficiency requirements.</p>
+<p>For fixed-wing UAVs, the propulsion mass (engine + propeller + fuel in wing pods or nose) strongly affects CG. The CG must remain within the static margin range: <span id="eq-static_margin"></span></p>
+<div class="arithmatex">\[\bar{h}_n - \bar{h}_{\mathrm{CG}} = \text{static margin} \geq 0.05 \bar{c}
+  \quad \text{(minimum)}\tag{5.59}\]</div>
+<p>where <span class="arithmatex">\(\bar{h}_n\)</span> is the aerodynamic neutral point and <span class="arithmatex">\(\bar{h}_{\mathrm{CG}}\)</span> is the CG location, both as fractions of mean aerodynamic chord <span class="arithmatex">\(\bar{c}\)</span>.</p>
+<h2 id="sec-perf_analysis"><span class="secnum">5.10</span> Propulsion Performance Analysis<a class="headerlink" href="#sec-perf_analysis" title="Permanent link">&para;</a></h2>
+<h3 id="5101-thrust-available-vs-drag-polar"><span class="secnum">5.10.1</span> Thrust Available vs Drag Polar<a class="headerlink" href="#5101-thrust-available-vs-drag-polar" title="Permanent link">&para;</a></h3>
+<p>For a fixed-wing UAV in level flight, the total aerodynamic drag as a function of airspeed is: <span id="eq-drag_polar"></span></p>
+<div class="arithmatex">\[D(V) = q S C_{D0} + \frac{k W^2}{q S},\tag{5.60}\]</div>
+<p>where <span class="arithmatex">\(q = \frac{1}{2}\rho V^2\)</span> is the dynamic pressure, <span class="arithmatex">\(C_{D0}\)</span> is the zero-lift drag coefficient, <span class="arithmatex">\(k = 1/(\pi e AR)\)</span> is the induced drag factor (Oswald efficiency factor <span class="arithmatex">\(e\)</span>, aspect ratio <span class="arithmatex">\(AR\)</span>), and <span class="arithmatex">\(W\)</span> is the weight. This is the classic parabolic drag polar. The required power: <span id="eq-P_req_full"></span></p>
+<div class="arithmatex">\[P_{\mathrm{req}}(V) = D(V) \cdot V = \frac{1}{2}\rho V^3 S C_{D0} +
+  \frac{k W^2}{\frac{1}{2}\rho V S},\tag{5.61}\]</div>
+<p>which has a minimum at the speed of minimum power (maximum endurance speed for electric):</p>
+<h3 id="5102-speed-for-maximum-endurance-electric-uav"><span class="secnum">5.10.2</span> Speed for Maximum Endurance (Electric UAV)<a class="headerlink" href="#5102-speed-for-maximum-endurance-electric-uav" title="Permanent link">&para;</a></h3>
+<p>For an electric UAV, endurance is maximised at minimum power consumption. Setting <span class="arithmatex">\(dP_{\mathrm{req}}/dV = 0\)</span>: <span id="eq-V_endurance"></span></p>
+<div class="arithmatex">\[V_E = \left(\frac{2W}{\rho S}\right)^{1/2} \left(\frac{k}{3 C_{D0}}\right)^{1/4},\tag{5.62}\]</div>
+<p>At this speed, <span class="arithmatex">\(C_L^* = \sqrt{3 C_{D0}/k}\)</span> and the lift-to-drag ratio is: <span id="eq-LD_endurance"></span></p>
+<div class="arithmatex">\[\left(\frac{L}{D}\right)_{V_E} = \frac{1}{2}\sqrt{\frac{3C_{D0}}{k}} \cdot
+  \frac{1}{C_{D0}} = \frac{\sqrt{3}}{4\sqrt{k C_{D0}}},\tag{5.63}\]</div>
+<p>which is <span class="arithmatex">\(1/\sqrt[4]{3} \approx 0.76\)</span> times the maximum <span class="arithmatex">\(L/D\)</span>.</p>
+<h3 id="5103-speed-for-maximum-range-electric-uav"><span class="secnum">5.10.3</span> Speed for Maximum Range (Electric UAV)<a class="headerlink" href="#5103-speed-for-maximum-range-electric-uav" title="Permanent link">&para;</a></h3>
+<p>For an electric UAV (fixed energy storage), range is maximised at maximum <span class="arithmatex">\(L/D\)</span>, which occurs at: <span id="eq-V_range"></span></p>
+<div class="arithmatex">\[V_R = \left(\frac{2W}{\rho S}\right)^{1/2} \left(\frac{k}{C_{D0}}\right)^{1/4},\tag{5.64}\]</div>
+<p>where <span class="arithmatex">\(C_L^{**} = \sqrt{C_{D0}/k}\)</span> and <span class="arithmatex">\(\left(L/D\right)_{\max} = 1/(2\sqrt{k C_{D0}})\)</span>. Note <span class="arithmatex">\(V_R = 3^{1/4} V_E \approx 1.316\, V_E\)</span>: the range speed is always faster than the endurance speed for an electric fixed-wing UAV.</p>
+<p><strong>Numerical example:</strong> For a UAV with <span class="arithmatex">\(W = 50\,\text{N}\)</span>, <span class="arithmatex">\(\rho = 1.225\,\text{kg/m³}\)</span>, <span class="arithmatex">\(S = 0.6\,\text{m²}\)</span>, <span class="arithmatex">\(C_{D0} = 0.025\)</span>, <span class="arithmatex">\(k = 0.055\)</span> (AR <span class="arithmatex">\(= 8\)</span>, <span class="arithmatex">\(e = 0.85\)</span>): <span id="eq-numerical_example"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  V_E &amp;= \sqrt{\frac{2 \times 50}{1.225 \times 0.6}} \cdot \left(\frac{0.055}{3 \times 0.025}\right)^{0.25}
+       = \sqrt{136.05} \cdot 0.958 \approx 11.2\,\text{m/s}, \\
+  V_R &amp;= 1.316 \times 11.2 \approx 14.7\,\text{m/s}, \\
+  (L/D)_{\max} &amp;= \frac{1}{2\sqrt{0.055 \times 0.025}} = \frac{1}{2 \times 0.0371} \approx 13.5.
+\end{align*}\]</div>
+<h3 id="5104-climb-rate-and-excess-power"><span class="secnum">5.10.4</span> Climb Rate and Excess Power<a class="headerlink" href="#5104-climb-rate-and-excess-power" title="Permanent link">&para;</a></h3>
+<p>The rate of climb (ROC) in feet per minute or metres per second is: <span id="eq-ROC"></span></p>
+<div class="arithmatex">\[\text{ROC} = \frac{P_{\mathrm{avail}} - P_{\mathrm{req}}}{W},\tag{5.68}\]</div>
+<p>where <span class="arithmatex">\(P_{\mathrm{avail}} = T_{\mathrm{avail}} \cdot V\)</span> is the thrust power available. The best climb rate occurs at the speed that maximises excess power <span class="arithmatex">\((P_{\mathrm{avail}} - P_{\mathrm{req}})\)</span>.</p>
+<p>For a propeller-driven UAV, <span class="arithmatex">\(T_{\mathrm{avail}}\)</span> decreases with speed because propeller efficiency and engine output both vary. The service ceiling is conventionally defined as the altitude at which <span class="arithmatex">\(\text{ROC} = 0.5\,\text{m/s}\)</span> (military standard) or 0.3 m/s for civil aircraft. The absolute ceiling is where ROC <span class="arithmatex">\(= 0\)</span>.</p>
+<h3 id="5105-mission-profile-energy-budget"><span class="secnum">5.10.5</span> Mission Profile Energy Budget<a class="headerlink" href="#5105-mission-profile-energy-budget" title="Permanent link">&para;</a></h3>
+<p>A complete mission is decomposed into phases for energy accounting:</p>
+<div class="tbl" id="tab-energy_budget">
+<div class="tbl-caption"><strong>Table 5.6.</strong> Typical mission energy budget for a 5 kg fixed-wing electric UAV (15 Ah, 6S LiPo, <span class="math inline">\(E_{\mathrm{bat}} = 1995\,\text{W h}\)</span>).</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Phase</th>
+<th style="text-align: left;"><span>Duration (min)</span></th>
+<th style="text-align: left;"><span>Power (W)</span></th>
+<th style="text-align: left;"><span>Energy (Wh)</span></th>
+<th style="text-align: left;"><span>Fuel fraction (%)</span></th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Ground idle / arming</td>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">15</td>
+<td style="text-align: left;">1.25</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">Avionics only</td>
+</tr>
+<tr>
+<td style="text-align: left;">Take-off (CTOL roll)</td>
+<td style="text-align: left;">0.5</td>
+<td style="text-align: left;">450</td>
+<td style="text-align: left;">3.75</td>
+<td style="text-align: left;">0.2</td>
+<td style="text-align: left;">Full throttle</td>
+</tr>
+<tr>
+<td style="text-align: left;">Climb to 300 m</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">380</td>
+<td style="text-align: left;">25.3</td>
+<td style="text-align: left;">1.3</td>
+<td style="text-align: left;">Throttle 80%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cruise outbound</td>
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">120</td>
+<td style="text-align: left;">80</td>
+<td style="text-align: left;">4.0</td>
+<td style="text-align: left;"><span class="math inline">\(V_R\)</span> speed</td>
+</tr>
+<tr>
+<td style="text-align: left;">Loiter (ISR)</td>
+<td style="text-align: left;">60</td>
+<td style="text-align: left;">90</td>
+<td style="text-align: left;">90</td>
+<td style="text-align: left;">4.5</td>
+<td style="text-align: left;"><span class="math inline">\(V_E\)</span> speed</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cruise inbound</td>
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">120</td>
+<td style="text-align: left;">80</td>
+<td style="text-align: left;">4.0</td>
+<td style="text-align: left;"><span class="math inline">\(V_R\)</span> speed</td>
+</tr>
+<tr>
+<td style="text-align: left;">Descent</td>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">40</td>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">0.2</td>
+<td style="text-align: left;">Throttle 20%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Landing</td>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">80</td>
+<td style="text-align: left;">1.3</td>
+<td style="text-align: left;">0.1</td>
+<td style="text-align: left;">Flare/rollout</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reserve (30 min loiter)</td>
+<td style="text-align: left;">30</td>
+<td style="text-align: left;">90</td>
+<td style="text-align: left;">45</td>
+<td style="text-align: left;">2.3</td>
+<td style="text-align: left;">Regulatory</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: left;"><strong>186.5</strong></td>
+<td style="text-align: left;">—</td>
+<td style="text-align: left;"><strong>330.6</strong></td>
+<td style="text-align: left;"><strong>16.6</strong></td>
+<td style="text-align: left;">83% margin on 1995 Wh</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>This analysis reveals that the 5 kg UAV could fly for approximately <span class="arithmatex">\(1995 / (330.6/186.5) \approx 564\,\text{min} = 9.4\,\text{h}\)</span> on a pure-loiter mission—but this assumes the motor remains at the endurance speed continuously and does not account for battery internal resistance heating at extended discharge. Practically, <span class="arithmatex">\(\sim\)</span>3 h total endurance is achievable with this pack, including all mission phases.</p>
+<h3 id="5106-propeller-efficiency-curve"><span class="secnum">5.10.6</span> Propeller Efficiency Curve<a class="headerlink" href="#5106-propeller-efficiency-curve" title="Permanent link">&para;</a></h3>
+<figure class="fig fig-diagram" id="fig-prop_efficiency">
+<img class="tikz" src="img/tikz-8c08da296286.svg" alt="Propeller efficiency \eta_{\mathrm{prop}} as a function of advance ratio J for a carbon-fibre UAV propeller (peak \eta \approx 0.815 at J = 0.65) versus a standard nylon+GF propeller. Both curves go…" loading="lazy" width="415" height="224">
+<figcaption><strong>Figure 5.1.</strong> Propeller efficiency <span class="math inline">\(\eta_{\mathrm{prop}}\)</span> as a function of advance ratio <span class="math inline">\(J\)</span> for a carbon-fibre UAV propeller (peak <span class="math inline">\(\eta \approx 0.815\)</span> at <span class="math inline">\(J = 0.65\)</span>) versus a standard nylon+GF propeller. Both curves go to zero at <span class="math inline">\(J = 0\)</span> (hover/static) and at the zero-thrust advance ratio (<span class="math inline">\(J \approx 1.1\)</span>).</figcaption>
+</figure>
+
+<h3 id="5107-power-required-curve"><span class="secnum">5.10.7</span> Power Required Curve<a class="headerlink" href="#5107-power-required-curve" title="Permanent link">&para;</a></h3>
+<figure class="fig fig-diagram" id="fig-power_required">
+<img class="tikz" src="img/tikz-f3936c980fa8.svg" alt="Power-required curve for a 5 kg fixed-wing UAV (C_{D0}=0.025, k=0.055, S=0.6\,\text{m²}). The speed of minimum power V_E \approx 11.2\,\text{m/s} (maximum endurance) and maximum L/D speed V_R…" loading="lazy" width="388" height="251">
+<figcaption><strong>Figure 5.2.</strong> Power-required curve for a 5 kg fixed-wing UAV (<span class="math inline">\(C_{D0}=0.025\)</span>, <span class="math inline">\(k=0.055\)</span>, <span class="math inline">\(S=0.6\,\text{m²}\)</span>). The speed of minimum power <span class="math inline">\(V_E \approx 11.2\,\text{m/s}\)</span> (maximum endurance) and maximum <span class="math inline">\(L/D\)</span> speed <span class="math inline">\(V_R \approx 14.7\,\text{m/s}\)</span> (maximum range) are marked. Maximum level-flight speed ( m/s) occurs where <span class="math inline">\(P_{\mathrm{avail}} = P_{\mathrm{req}}\)</span>.</figcaption>
+</figure>
+
+<h3 id="5108-bldc-motor-cross-section-schematic"><span class="secnum">5.10.8</span> BLDC Motor Cross-Section Schematic<a class="headerlink" href="#5108-bldc-motor-cross-section-schematic" title="Permanent link">&para;</a></h3>
+<figure class="fig fig-diagram" id="fig-bldc_cross_section">
+<img class="tikz" src="img/tikz-2a02373aa43e.svg" alt="Schematic cross-section of a 12-slot, 14-pole (12N14P) outrunner BLDC motor. The rotor carries 14 NdFeB magnets (alternating N/S polarity) on the outer shell. The stator has 12 silicon-steel teeth…" loading="lazy" width="357" height="267">
+<figcaption><strong>Figure 5.3.</strong> Schematic cross-section of a 12-slot, 14-pole (12N14P) outrunner BLDC motor. The rotor carries 14 NdFeB magnets (alternating N/S polarity) on the outer shell. The stator has 12 silicon-steel teeth with three-phase copper windings (A, B, C) wound in the slots. The air gap is typically 0.2–0.5 mm.</figcaption>
+</figure>
+
+<h2 id="sec-advanced"><span class="secnum">5.11</span> Advanced Topics in Drone Propulsion<a class="headerlink" href="#sec-advanced" title="Permanent link">&para;</a></h2>
+<h3 id="5111-ducted-fan-and-shrouded-rotor-systems"><span class="secnum">5.11.1</span> Ducted Fan and Shrouded Rotor Systems<a class="headerlink" href="#5111-ducted-fan-and-shrouded-rotor-systems" title="Permanent link">&para;</a></h3>
+<p>A ducted fan encloses the rotor within a cylindrical shroud. The shroud acts as a ring-wing, generating additional lift from the lip suction at its leading edge. For a hover condition, the ideal thrust advantage of a duct over an open rotor of the same disk area is a factor of 2 in the momentum-theory limit: <span id="eq-duct_advantage"></span></p>
+<div class="arithmatex">\[T_{\mathrm{ducted}} = 2 T_{\mathrm{open}} \quad \text{(actuator-disk, ideal)},\tag{5.69}\]</div>
+<p>corresponding to a figure of merit improvement of <span class="arithmatex">\(\sqrt{2} \approx 1.41\)</span>. In practice, duct losses (inlet separation, exit diffuser losses) reduce the benefit to <span class="arithmatex">\(\sim\)</span>1.15–1.30<span class="arithmatex">\(\times\)</span> thrust for the same power. The duct also reduces tip losses, allowing a higher disk loading without the tip-vortex efficiency penalty of open rotors. Ducted fans are standard in urban air mobility (UAM) vehicles (Joby Aviation, Lilium) where the duct provides acoustic shielding, compactness, and safety (enclosed blades).</p>
+<h3 id="5112-coaxial-rotor-systems"><span class="secnum">5.11.2</span> Coaxial Rotor Systems<a class="headerlink" href="#5112-coaxial-rotor-systems" title="Permanent link">&para;</a></h3>
+<p>Coaxial rotors (two rotors on the same axis, counter-rotating) are used when a compact footprint is required (e.g., DJI Inspire 2, Volocopter VoloCity). The upper rotor operates in clean air; the lower rotor ingests the upper rotor’s contracted wake. The mutual interference efficiency loss is characterised by the interference factor <span class="arithmatex">\(\kappa_{\mathrm{int}} \approx 1.15\)</span>–<span class="arithmatex">\(1.25\)</span> (i.e., 15–25% more power required per rotor compared with an isolated rotor at the same total thrust). The total power of a coaxial pair at thrust <span class="arithmatex">\(T_{\mathrm{total}}\)</span>: <span id="eq-coaxial_power"></span></p>
+<div class="arithmatex">\[P_{\mathrm{coaxial}} = \kappa_{\mathrm{int}} \cdot \sqrt{\frac{T_{\mathrm{total}}^3}{2\rho \pi R^2}},\tag{5.70}\]</div>
+<p>compared with <span class="arithmatex">\(P_{\mathrm{open}} = \sqrt{T_{\mathrm{total}}^3/(2\rho \pi R^2)}\)</span> for two separate rotors of the same radius <span class="arithmatex">\(R\)</span> operating in isolation.</p>
+<h3 id="5113-swarm-propulsion-coordination"><span class="secnum">5.11.3</span> Swarm Propulsion Coordination<a class="headerlink" href="#5113-swarm-propulsion-coordination" title="Permanent link">&para;</a></h3>
+<p>For drone swarms (10–1000 agents), propulsion commands must be coordinated to:</p>
+<ul>
+<li>
+<p>Avoid aerodynamic interference (inter-drone wake effects when spacing <span class="arithmatex">\(&lt;3D\)</span>).</p>
+</li>
+<li>
+<p>Minimise total energy consumption across the swarm (Pareto-optimal speed selection given heterogeneous payloads and battery states).</p>
+</li>
+<li>
+<p>Enable formation flight for range extension (echelon formation reduces induced drag by 10–15 % per trailer UAV, analogous to bird flocking).</p>
+</li>
+</ul>
+<p>Aerodynamic interference in a tight quadrotor formation is modelled as a superposition of rotor-induced velocity fields, each treated as a pair of vortex rings (near-field) or a single vortex pair (far-field, Biot–Savart approximation).</p>
+<h3 id="5114-propulsion-for-vtol-transition-aircraft"><span class="secnum">5.11.4</span> Propulsion for VTOL Transition Aircraft<a class="headerlink" href="#5114-propulsion-for-vtol-transition-aircraft" title="Permanent link">&para;</a></h3>
+<p>Hybrid VTOL aircraft (e.g., Wing X tilt-rotor, Airbus Vahana, Joby S4) combine vertical-lift rotors with forward-flight propellers or tilting rotor systems. The transition phase (from hover to cruise) requires careful management of:</p>
+<ul>
+<li>
+<p>Rotor tilt angle schedule: typically <span class="arithmatex">\(0°\)</span> (vertical) to <span class="arithmatex">\(90°\)</span> (horizontal) over 30–60 s.</p>
+</li>
+<li>
+<p>Collective pitch control during tilt (VP propellers) to maintain thrust while the direction vector rotates.</p>
+</li>
+<li>
+<p>Wing lift build-up: as airspeed increases, wing lift unloads the rotors, allowing reduction in rotor RPM and power.</p>
+</li>
+<li>
+<p>Energy management: transition is the most power-intensive phase; motor temperatures must be monitored.</p>
+</li>
+</ul>
+<p>The transition corridor is defined as the (<span class="arithmatex">\(V\)</span>, <span class="arithmatex">\(\alpha\)</span>) envelope where simultaneous thrust from rotors and wing lift can support the UAV with adequate control authority. At the bottom of the transition, the minimum airspeed for wing-borne flight: <span id="eq-stall_speed"></span></p>
+<div class="arithmatex">\[V_{\mathrm{stall}} = \sqrt{\frac{2W}{\rho S C_{L,\max}}},\tag{5.71}\]</div>
+<p>and the transition must be completed above this speed to avoid the wing falling below stall angle during rotor unloading.</p>
+<h3 id="5115-battery-management-and-propulsion-derating"><span class="secnum">5.11.5</span> Battery Management and Propulsion Derating<a class="headerlink" href="#5115-battery-management-and-propulsion-derating" title="Permanent link">&para;</a></h3>
+<p>In multi-motor electric UAVs, the battery management system (BMS) protects the pack from overcurrent, over-temperature, and cell imbalance. During aggressive manoeuvres, instantaneous current demand can reach 50–100 C for small racing-drone packs. The resulting voltage sag (<a href="#eq-bat_terminal">Equation (5.3)</a>) may trigger the under-voltage cutoff on the ESC, causing an uncommanded motor shutdown—catastrophic in a quadrotor. Design practice:</p>
+<ul>
+<li>
+<p>Size the pack so peak current demand is <span class="arithmatex">\(&lt;15\)</span> C for endurance UAVs, <span class="arithmatex">\(&lt;30\)</span> C for tactical UAVs.</p>
+</li>
+<li>
+<p>Use parallel cell strings to reduce effective C-rate.</p>
+</li>
+<li>
+<p>Configure ESC LVC at <span class="arithmatex">\(3.0\)</span> V/cell (below storage voltage <span class="arithmatex">\(3.7\)</span> V/cell) with a soft-warning at <span class="arithmatex">\(3.3\)</span> V/cell that triggers a return-to-home command.</p>
+</li>
+<li>
+<p>Monitor individual cell voltages (cell-level telemetry via CAN-linked BMS); a cell deviation <span class="arithmatex">\(&gt;0.1\,\text{V}\)</span> at rest indicates degradation.</p>
+</li>
+</ul>
+<h3 id="5116-motor-control-for-precision-altitude-hold"><span class="secnum">5.11.6</span> Motor Control for Precision Altitude Hold<a class="headerlink" href="#5116-motor-control-for-precision-altitude-hold" title="Permanent link">&para;</a></h3>
+<p>In a quadrotor, altitude hold requires each motor to respond to an altitude error signal <span class="arithmatex">\(e_z = z_{\mathrm{cmd}} - z\)</span> through a PID control loop: <span id="eq-PID_altitude"></span></p>
+<div class="arithmatex">\[\delta T_i = K_p e_z + K_i \int e_z\,dt + K_d \dot{e}_z,\tag{5.72}\]</div>
+<p>where <span class="arithmatex">\(\delta T_i\)</span> is the thrust perturbation at each motor. The collective thrust is <span class="arithmatex">\(T_{\mathrm{total}} = \sum_i T_i\)</span>. The control bandwidth is limited by the motor-propeller response time (time constant <span class="arithmatex">\(\tau_m \approx 0.05\)</span>–<span class="arithmatex">\(0.15\,\text{s}\)</span>), the aerodynamic response delay (rotor inflow development <span class="arithmatex">\(\tau_a \approx 0.1 R/v_h\)</span>, where <span class="arithmatex">\(v_h\)</span> is the hover-induced velocity), and the ESC communication latency (<span class="arithmatex">\(\tau_{\mathrm{ESC}} \approx 1\)</span>–<span class="arithmatex">\(3\,\text{ms}\)</span> for DSHOT). Total loop delay: 100–200 ms for a well-tuned ESC+motor+flight controller.</p>
+<h3 id="5117-future-propulsion-trends"><span class="secnum">5.11.7</span> Future Propulsion Trends<a class="headerlink" href="#5117-future-propulsion-trends" title="Permanent link">&para;</a></h3>
+<ul>
+<li>
+<p><strong>Solid-state batteries (2027–2030):</strong> Energy density target 400–500 W h/kg at cell level (vs 250–300 Wh/kg for best Li-Ion today). Solid electrolyte eliminates thermal runaway risk. QuantumScape, Solid Power, and Toyota are in late prototype stage. Impact on UAV endurance: 2–2.5<span class="arithmatex">\(\times\)</span> improvement for the same battery mass.</p>
+</li>
+<li>
+<p><strong>Li-Sulfur cells:</strong> Theoretical energy density 2600 W h/kg; practical (2024 lab) 400–500 W h/kg; poor cycle life (100–200 cycles); polysulfide shuttle degrades cathode. OXIS Energy (UK) targeting 500 W h/kg at pack level for UAV primaries.</p>
+</li>
+<li>
+<p><strong>Wide-bandgap power electronics:</strong> GaN-on-Si transistors enable <span class="arithmatex">\(f_{\mathrm{sw}} &gt; 1\,\text{MHz}\)</span>, allowing motor drive inductors and filter capacitors to be reduced by <span class="arithmatex">\(100\times\)</span>, dramatically reducing ESC mass. GaN ESCs with <span class="arithmatex">\(P/W &gt; 30\,\text{kW/kg}\)</span> are approaching commercial availability.</p>
+</li>
+<li>
+<p><strong>Superconducting motors:</strong> HTS (high-temperature superconductor) BLDC motors using REBCO tapes cooled to 77 K (liquid nitrogen) achieve <span class="arithmatex">\(&gt;\)</span>20 kW/kg specific power. NASA X-57 electrified wing concept targets 13 kW/kg. Cryogenic cooling overhead reduces net benefit for UAV-scale systems.</p>
+</li>
+<li>
+<p><strong>Distributed electric propulsion (DEP):</strong> Many small motors + propellers spread across the wing improve high-lift performance (slipstream energises the boundary layer), reduce noise (propeller noise decorrelates), and provide graceful degradation (one motor failure is survivable). NASA X-57 Maxwell uses 12 leading-edge high-lift motors + 2 cruise propellers.</p>
+</li>
+<li>
+<p><strong>Hydrogen combustion engines:</strong> Direct-injection H₂ internal combustion engines adapted for UAV use. Zero <span class="arithmatex">\(\mathrm{CO_2}\)</span>; NOₓ management required; H₂ storage challenges identical to FC systems. Rolls-Royce demonstrated H₂-powered aircraft engine in 2023.</p>
+</li>
+</ul>
+<h2 id="sec-summary"><span class="secnum">5.12</span> Summary and Design Selection Guidelines<a class="headerlink" href="#sec-summary" title="Permanent link">&para;</a></h2>
+<h3 id="5121-propulsion-concept-selection-matrix"><span class="secnum">5.12.1</span> Propulsion Concept Selection Matrix<a class="headerlink" href="#5121-propulsion-concept-selection-matrix" title="Permanent link">&para;</a></h3>
+<p><a href="#tab-selection_matrix">Table 5.7</a> provides a quantitative comparison framework for selecting the propulsion concept appropriate to the mission requirements.</p>
+<div class="tbl" id="tab-selection_matrix">
+<div class="tbl-caption"><strong>Table 5.7.</strong> Propulsion system selection matrix for UAV designers (ratings 1–5, 5 = best).</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Criterion</th>
+<th style="text-align: center;">BLDC</th>
+<th style="text-align: center;">ICE 2-str</th>
+<th style="text-align: center;">ICE 4-str</th>
+<th style="text-align: center;">Micro-TJ</th>
+<th style="text-align: center;">Turboprop</th>
+<th style="text-align: center;">H<span class="math inline">\(_2\)</span> FC</th>
+<th style="text-align: center;">Hybrid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Endurance</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Specific power</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Efficiency</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reliability</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Acoustic signature</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Scalability (mass)</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Development risk</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fuel/energy cost</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong></td>
+<td style="text-align: center;"><strong>34</strong></td>
+<td style="text-align: center;"><strong>24</strong></td>
+<td style="text-align: center;"><strong>26</strong></td>
+<td style="text-align: center;"><strong>21</strong></td>
+<td style="text-align: center;"><strong>26</strong></td>
+<td style="text-align: center;"><strong>29</strong></td>
+<td style="text-align: center;"><strong>27</strong></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="5122-key-design-equations-summary"><span class="secnum">5.12.2</span> Key Design Equations Summary<a class="headerlink" href="#5122-key-design-equations-summary" title="Permanent link">&para;</a></h3>
+<p>For rapid preliminary design, the key propulsion equations are:</p>
+<ol>
+<li>
+<p><strong>Endurance (electric):</strong> <span class="arithmatex">\(t = E_{\mathrm{bat}} \eta_{\mathrm{total}} / P_{\mathrm{cruise}}\)</span></p>
+</li>
+<li>
+<p><strong>Motor torque:</strong> <span class="arithmatex">\(T = K_T I\)</span>, <span class="arithmatex">\(K_T = 60/(2\pi K_V)\)</span></p>
+</li>
+<li>
+<p><strong>Static thrust:</strong> <span class="arithmatex">\(T = C_{T,0} \rho n^2 D^4\)</span></p>
+</li>
+<li>
+<p><strong>Power required (fixed-wing):</strong> <span class="arithmatex">\(P_{\mathrm{req}} = \tfrac{1}{2}\rho V^3 S C_{D0} + kW^2/(\tfrac{1}{2}\rho VS)\)</span></p>
+</li>
+<li>
+<p><strong>Endurance speed:</strong> <span class="arithmatex">\(V_E = \sqrt{2W/(\rho S)} \cdot (k/3C_{D0})^{1/4}\)</span></p>
+</li>
+<li>
+<p><strong>Range speed:</strong> <span class="arithmatex">\(V_R = \sqrt{2W/(\rho S)} \cdot (k/C_{D0})^{1/4}\)</span></p>
+</li>
+<li>
+<p><strong>Rate of climb:</strong> <span class="arithmatex">\(\text{ROC} = (P_{\mathrm{avail}} - P_{\mathrm{req}}) / W\)</span></p>
+</li>
+<li>
+<p><strong>BSFC / Breguet range (ICE):</strong> <span class="arithmatex">\(R = \frac{V \eta_{\mathrm{prop}}}{g \cdot \text{BSFC}} \cdot \frac{L}{D} \cdot \ln(W_0/W_1)\)</span></p>
+</li>
+</ol>
+<h3 id="5123-concluding-remarks"><span class="secnum">5.12.3</span> Concluding Remarks<a class="headerlink" href="#5123-concluding-remarks" title="Permanent link">&para;</a></h3>
+<p>Drone propulsion is an engineering discipline at the intersection of electromagnetics, fluid mechanics, thermodynamics, and control theory. The choice of propulsion system is driven by the mission-endurance triangle: speed, endurance, and payload — it is not possible to maximise all three simultaneously with current technology. Electric BLDC propulsion dominates missions under two hours; beyond that, hybrid or fuel-burning systems offer compelling range and endurance advantages. Hydrogen fuel cells represent the most promising long-term alternative, offering the energy density of chemical fuels with the efficiency of electric drivetrains. The coming decade will be defined by solid-state batteries, wide-bandgap power electronics, and distributed electric propulsion—all of which will push the electric endurance frontier to match and eventually exceed conventional combustion propulsion for UAV missions.</p>
+<p>The designer must apply the equations and selection criteria presented in this chapter within the broader system-engineering context: aerodynamics (Chapter 3), airframe structural limits (Chapter 4), avionics power budgets (Chapter 7), and certification requirements (Chapter 11) all constrain and interact with the propulsion system design. Propulsion is never optimised in isolation—it is optimised for the mission.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="ch04-drone-airframe-and-structures.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 4. Drone Airframe and Structures">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                4. Drone Airframe and Structures
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch06-drone-power-systems.html" class="md-footer__link md-footer__link--next" aria-label="Next: 6. Drone Power Systems">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                6. Drone Power Systems
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,4148 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/ch01-introduction-to-unmanned-systems.html">
+  
+  
+    <link rel="prev" href="index.html">
+  
+  
+    <link rel="next" href="ch02-drone-classification-and-types.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>1. Introduction to Unmanned Systems - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#11-preamble" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Introduction to Unmanned Systems
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-preamble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Preamble
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-history_uav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 History of Unmanned Aerial Vehicles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 History of Unmanned Aerial Vehicles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-origins-aerial-torpedoes-and-the-first-world-war" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 Origins: Aerial Torpedoes and the First World War
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-the-inter-war-period-radio-control-and-target-drones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.2 The Inter-War Period: Radio Control and Target Drones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-world-war-ii-operational-unmanned-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 World War II: Operational Unmanned Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-the-cold-war-reconnaissance-and-target-drones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.4 The Cold War: Reconnaissance and Target Drones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#125-the-1980s-and-1990s-proliferation-and-the-pioneer-era" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.5 The 1980s and 1990s: Proliferation and the Pioneer Era
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#126-the-post-911-era-armed-uavs-and-mass-proliferation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.6 The Post-9/11 Era: Armed UAVs and Mass Proliferation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#127-the-2010s2020s-autonomy-swarming-and-loitering-munitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.7 The 2010s–2020s: Autonomy, Swarming, and Loitering Munitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-history_missile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 History of Guided Missiles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 History of Guided Missiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-precursors-rockets-and-aerial-bombs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.1 Precursors: Rockets and Aerial Bombs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-world-war-ii-the-v-weapons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.2 World War II: The V-Weapons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-post-war-development-and-the-jet-age" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.3 Post-War Development and the Jet Age
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-the-cold-war-icbm-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.4 The Cold War ICBM Race
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#135-the-precision-revolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.5 The Precision Revolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Terminology and Definitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Terminology and Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-uav-uas-rpas-and-drone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.1 UAV, UAS, RPAS, and Drone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-missile-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.2 Missile Terminology
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Classification Frameworks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Classification Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-uav-classification-by-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.1 UAV Classification by Size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-uav-classification-by-range-and-endurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.2 UAV Classification by Range and Endurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sec-autonomy_levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.3 Autonomy Levels: STANAG 4586
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-missile-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.4 Missile Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-revolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 The Unmanned Revolution: Statistics and Market Size
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 The Unmanned Revolution: Statistics and Market Size">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-market-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Market Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-proliferation-of-military-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.2 Proliferation of Military UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-doctrine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Military Doctrine and Operational Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Military Doctrine and Operational Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-multi-domain-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7.1 Multi-Domain Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-swarming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7.2 Swarming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#173-stand-off-strike-and-loitering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7.3 Stand-Off Strike and Loitering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-civil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Civil Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 Civil Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-agriculture-precision-agronomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.1 Agriculture: Precision Agronomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-survey-mapping-and-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.2 Survey, Mapping, and Inspection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#183-logistics-and-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.3 Logistics and Delivery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#184-emergency-response-and-public-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.4 Emergency Response and Public Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-physics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Physical Constraints on Unmanned System Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Physical Constraints on Unmanned System Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#191-the-square-cube-law-and-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9.1 The Square-Cube Law and Scaling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#192-energy-density-barriers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9.2 Energy Density Barriers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#193-thrust-to-weight-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9.3 Thrust-to-Weight Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-regulatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10 The Regulatory Landscape
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.10 The Regulatory Landscape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1101-icao-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10.1 ICAO Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1102-us-faa-regulatory-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10.2 US FAA Regulatory Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1103-easa-european-union-aviation-safety-agency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10.3 EASA (European Union Aviation Safety Agency)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11 Key Engineering Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.11 Key Engineering Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1111-specific-power-and-specific-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.1 Specific Power and Specific Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1112-breguet-range-and-endurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.2 Breguet Range and Endurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1113-thrust-to-weight-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.3 Thrust-to-Weight Ratio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1114-mass-fraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.4 Mass Fraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1115-radar-cross-section-and-stealth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.5 Radar Cross Section and Stealth
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-shared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12 Shared Technologies Between Drone and Missile Design Spaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 Shared Technologies Between Drone and Missile Design Spaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1121-inertial-navigation-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.1 Inertial Navigation Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1122-flight-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.2 Flight Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1123-composite-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.3 Composite Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1124-electro-optical-and-infrared-sensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.4 Electro-Optical and Infrared Sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-systems_table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13 Table of Key Historical and Modern Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-howtoread" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14 Reading This Book: Prerequisites and Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.14 Reading This Book: Prerequisites and Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1141-mathematical-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.1 Mathematical Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1142-recommended-background-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.2 Recommended Background Reading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1143-software-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.3 Software Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1144-chapter-dependency-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.4 Chapter Dependency Map
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.15 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-preamble" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 Preamble
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-history_uav" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 History of Unmanned Aerial Vehicles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.2 History of Unmanned Aerial Vehicles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#121-origins-aerial-torpedoes-and-the-first-world-war" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.1 Origins: Aerial Torpedoes and the First World War
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#122-the-inter-war-period-radio-control-and-target-drones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.2 The Inter-War Period: Radio Control and Target Drones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#123-world-war-ii-operational-unmanned-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.3 World War II: Operational Unmanned Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#124-the-cold-war-reconnaissance-and-target-drones" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.4 The Cold War: Reconnaissance and Target Drones
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#125-the-1980s-and-1990s-proliferation-and-the-pioneer-era" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.5 The 1980s and 1990s: Proliferation and the Pioneer Era
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#126-the-post-911-era-armed-uavs-and-mass-proliferation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.6 The Post-9/11 Era: Armed UAVs and Mass Proliferation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#127-the-2010s2020s-autonomy-swarming-and-loitering-munitions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2.7 The 2010s–2020s: Autonomy, Swarming, and Loitering Munitions
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-history_missile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 History of Guided Missiles
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 History of Guided Missiles">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#131-precursors-rockets-and-aerial-bombs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.1 Precursors: Rockets and Aerial Bombs
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#132-world-war-ii-the-v-weapons" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.2 World War II: The V-Weapons
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#133-post-war-development-and-the-jet-age" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.3 Post-War Development and the Jet Age
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#134-the-cold-war-icbm-race" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.4 The Cold War ICBM Race
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#135-the-precision-revolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3.5 The Precision Revolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Terminology and Definitions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Terminology and Definitions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#141-uav-uas-rpas-and-drone" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.1 UAV, UAS, RPAS, and Drone
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#142-missile-terminology" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4.2 Missile Terminology
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-taxonomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Classification Frameworks
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Classification Frameworks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#151-uav-classification-by-size" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.1 UAV Classification by Size
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#152-uav-classification-by-range-and-endurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.2 UAV Classification by Range and Endurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sec-autonomy_levels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.3 Autonomy Levels: STANAG 4586
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#154-missile-classification" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5.4 Missile Classification
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-revolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 The Unmanned Revolution: Statistics and Market Size
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 The Unmanned Revolution: Statistics and Market Size">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#161-market-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.1 Market Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#162-proliferation-of-military-uavs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6.2 Proliferation of Military UAVs
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-doctrine" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Military Doctrine and Operational Concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Military Doctrine and Operational Concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#171-multi-domain-operations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7.1 Multi-Domain Operations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#172-swarming" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7.2 Swarming
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#173-stand-off-strike-and-loitering" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7.3 Stand-Off Strike and Loitering
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-civil" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 Civil Applications
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 Civil Applications">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#181-agriculture-precision-agronomy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.1 Agriculture: Precision Agronomy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#182-survey-mapping-and-inspection" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.2 Survey, Mapping, and Inspection
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#183-logistics-and-delivery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.3 Logistics and Delivery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#184-emergency-response-and-public-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8.4 Emergency Response and Public Safety
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-physics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Physical Constraints on Unmanned System Design
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Physical Constraints on Unmanned System Design">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#191-the-square-cube-law-and-scaling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9.1 The Square-Cube Law and Scaling
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#192-energy-density-barriers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9.2 Energy Density Barriers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#193-thrust-to-weight-constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9.3 Thrust-to-Weight Constraints
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-regulatory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10 The Regulatory Landscape
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.10 The Regulatory Landscape">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1101-icao-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10.1 ICAO Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1102-us-faa-regulatory-framework" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10.2 US FAA Regulatory Framework
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1103-easa-european-union-aviation-safety-agency" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10.3 EASA (European Union Aviation Safety Agency)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-metrics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11 Key Engineering Metrics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.11 Key Engineering Metrics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1111-specific-power-and-specific-energy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.1 Specific Power and Specific Energy
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1112-breguet-range-and-endurance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.2 Breguet Range and Endurance
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1113-thrust-to-weight-ratio" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.3 Thrust-to-Weight Ratio
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1114-mass-fraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.4 Mass Fraction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1115-radar-cross-section-and-stealth" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11.5 Radar Cross Section and Stealth
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-shared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12 Shared Technologies Between Drone and Missile Design Spaces
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 Shared Technologies Between Drone and Missile Design Spaces">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1121-inertial-navigation-systems" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.1 Inertial Navigation Systems
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1122-flight-control" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.2 Flight Control
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1123-composite-structures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.3 Composite Structures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1124-electro-optical-and-infrared-sensors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12.4 Electro-Optical and Infrared Sensors
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-systems_table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13 Table of Key Historical and Modern Systems
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sec-howtoread" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14 Reading This Book: Prerequisites and Structure
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.14 Reading This Book: Prerequisites and Structure">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1141-mathematical-prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.1 Mathematical Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1142-recommended-background-reading" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.2 Recommended Background Reading
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1143-software-tools" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.3 Software Tools
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1144-chapter-dependency-map" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.14.4 Chapter Dependency Map
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#115-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.15 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ch-intro">Chapter 1: Introduction to Unmanned Systems<a class="headerlink" href="#ch-intro" title="Permanent link">&para;</a></h1>
+<h2 id="11-preamble"><span class="secnum">1.1</span> Preamble<a class="headerlink" href="#11-preamble" title="Permanent link">&para;</a></h2>
+<p>The word <em>drone</em> entered popular vocabulary in the second decade of the twenty-first century, yet the engineering concept it describes—an aircraft that carries no human crew and is guided by some combination of remote control and autonomous logic—predates the jet age. Similarly, the <em>guided missile</em> is often presented as a post-World War II invention, yet the conceptual and physical lineage extends to the steerable aerial torpedoes of 1916–1918. This chapter establishes the historical, definitional, and taxonomic foundations that underpin every subsequent chapter.</p>
+<p>The narrative proceeds in roughly chronological order through <a href="#sec-history_uav">Section 1.2</a> and <a href="#sec-history_missile">Section 1.3</a>, then shifts to the contemporary landscape: taxonomy and classification frameworks (<a href="#sec-taxonomy">Section 1.5</a>), market and strategic significance (<a href="#sec-revolution">Section 1.6</a>), military doctrine (<a href="#sec-doctrine">Section 1.7</a>), civil applications (<a href="#sec-civil">Section 1.8</a>), physical constraints (<a href="#sec-physics">Section 1.9</a>), the regulatory environment (<a href="#sec-regulatory">Section 1.10</a>), and key engineering metrics (<a href="#sec-metrics">Section 1.11</a>). The chapter closes with a survey of shared technologies between the drone and missile design spaces (<a href="#sec-shared">Section 1.12</a>) and guidance on reading this book (<a href="#sec-howtoread">Section 1.14</a>).</p>
+<h2 id="sec-history_uav"><span class="secnum">1.2</span> History of Unmanned Aerial Vehicles<a class="headerlink" href="#sec-history_uav" title="Permanent link">&para;</a></h2>
+<h3 id="121-origins-aerial-torpedoes-and-the-first-world-war"><span class="secnum">1.2.1</span> Origins: Aerial Torpedoes and the First World War<a class="headerlink" href="#121-origins-aerial-torpedoes-and-the-first-world-war" title="Permanent link">&para;</a></h3>
+<p>The concept of a pilotless, explosive-carrying aircraft emerged within the first decade of heavier-than-air flight. In 1916, the British inventor Archibald Low began development work for the Royal Flying Corps on what became known as the <em>AT</em> (Aerial Target)—a radio-controlled aircraft intended initially as an aerial target for anti-aircraft gunnery training. Low’s AT flew in March 1917 at Felthorpe, Norfolk, powered by a 35 hp ABC Gnat engine, making it arguably the world’s first powered, radio-controlled aircraft. The programme was quickly reoriented toward offensive use: if a pilotless aircraft could be guided toward an enemy Zeppelin or observation balloon, the pilot’s risk was eliminated entirely.</p>
+<p>Simultaneously and independently, the United States Army Signal Corps contracted with Charles Kettering to develop a gyroscopically stabilised aerial torpedo. The result, the <strong>Kettering Bug</strong> (formally the Kettering Aerial Torpedo), was a biplane of 4.3 m span, constructed of papier-mâché and cardboard to minimise cost, powered by a 40 hp four-cylinder DePalma engine, and armed with a 82 bursting charge. Navigation was purely pre-programmed: a pneumatic counter measured engine revolutions, and when the revolution count corresponding to the target range was reached, the engine and wing-locking mechanism cut out, the wings folded, and the vehicle dove to the target. Range was approximately 120 km (75 mi), speed was 190 km/h (120 m p h). The Bug never saw combat—the Armistice preceded planned deployment—but it proved the viability of the expendable, precision-less unmanned aerial vehicle.</p>
+<h3 id="122-the-inter-war-period-radio-control-and-target-drones"><span class="secnum">1.2.2</span> The Inter-War Period: Radio Control and Target Drones<a class="headerlink" href="#122-the-inter-war-period-radio-control-and-target-drones" title="Permanent link">&para;</a></h3>
+<p>The 1920s and 1930s saw unmanned aircraft develop along two tracks: radio-controlled target drones used to train anti-aircraft gunners, and experimental remotely piloted vehicles exploring the limits of wireless guidance.</p>
+<p>In the United Kingdom, the <strong>Fairey Queen</strong> (1931) and the <strong>de Havilland Queen Bee</strong> (1935) established the target drone as a standard military tool. The Queen Bee—from which the term <em>drone</em> is often said to derive—was a modified Tiger Moth biplane adapted for radio control; some 380 were built, and they were used extensively by the Royal Navy and Army for anti-aircraft training through World War II. The United States followed with the <strong>Radioplane OQ-2</strong> (1940), which became the most produced drone of the war at over 15,000 units, and which is notable in cultural history as the vehicle that first brought Norma Jeane Mortenson (later Marilyn Monroe) to the attention of photographer David Conover in 1945 at the Radioplane factory in Burbank, California.</p>
+<h3 id="123-world-war-ii-operational-unmanned-systems"><span class="secnum">1.2.3</span> World War II: Operational Unmanned Systems<a class="headerlink" href="#123-world-war-ii-operational-unmanned-systems" title="Permanent link">&para;</a></h3>
+<p>World War II saw the first operational deployment of unmanned aircraft in significant numbers. The German <strong>Fieseler Fi 103</strong> (the V-1), while classified as a flying bomb and discussed more fully in <a href="#sec-history_missile">Section 1.3</a>, was in effect a cruise missile and shares substantial design heritage with unmanned aircraft.</p>
+<p>More directly relevant to the UAV lineage, the United States Navy pursued <strong>Project Anvil</strong> (1944), which converted war-weary B-17 and PB4Y Liberator bombers into radio-controlled flying bombs packed with 9 t of Torpex explosive. The aircraft was taken off by a crew of two, who then parachuted out while a control aircraft assumed radio command. Lieutenant Joseph Kennedy Jr., elder brother of the future president, was killed on 12 August 1944 when his PB4Y prematurely detonated during one such mission. Project Anvil demonstrated both the promise and the hazard of converting crewed aircraft to unmanned operation.</p>
+<p>The German <strong>Henschel Hs 293</strong> anti-ship glide bomb (1943), while strictly a guided bomb rather than an autonomous aircraft, introduced television guidance and radio command links that became foundational to later UAV systems.</p>
+<h3 id="124-the-cold-war-reconnaissance-and-target-drones"><span class="secnum">1.2.4</span> The Cold War: Reconnaissance and Target Drones<a class="headerlink" href="#124-the-cold-war-reconnaissance-and-target-drones" title="Permanent link">&para;</a></h3>
+<p>The Cold War created powerful incentives for unmanned reconnaissance: overflying denied territory without risking the political consequences of a pilot’s capture. The shootdown of Francis Gary Powers’s U-2 over the Soviet Union on 1 May 1960 dramatically accelerated US investment in unmanned reconnaissance.</p>
+<p>The <strong>Ryan Aeronautical Model 147 Fire Fly</strong> (later Lightning Bug) family, derived from the Firebee target drone, flew over 3,400 operational sorties over China and North Vietnam between 1964 and 1975. The Model 147 series evolved through dozens of variants optimised for different altitude regimes, sensors (film cameras, SIGINT packages, ECM), and recovery methods (mid-air retrieval by helicopter or parachute ground recovery). These aircraft demonstrated that unmanned reconnaissance was operationally viable at scale, producing intelligence that crewed aircraft could not safely obtain.</p>
+<p>Israel’s experience in the 1973 Yom Kippur War, where the Egyptian and Syrian integrated air defence systems inflicted devastating losses on the Israeli Air Force, drove an independent Israeli UAV development programme that proved transformative. The <strong>IAI Scout</strong> (1979) and <strong>Tadiran Mastiff</strong> (1973) were small, real-time video reconnaissance drones that the IDF used to devastating effect in the 1982 Bekaa Valley air campaign to locate, decoy, and destroy Syrian SAM batteries. This campaign is widely studied as the first demonstration of the networked, multi-domain use of UAVs in combat operations, and it directly inspired the US military’s subsequent investment in unmanned systems.</p>
+<h3 id="125-the-1980s-and-1990s-proliferation-and-the-pioneer-era"><span class="secnum">1.2.5</span> The 1980s and 1990s: Proliferation and the Pioneer Era<a class="headerlink" href="#125-the-1980s-and-1990s-proliferation-and-the-pioneer-era" title="Permanent link">&para;</a></h3>
+<p>The success of Israeli UAVs prompted the United States to procure the <strong>RQ-2 Pioneer</strong> (joint development with IAI) in 1985. Pioneer was a 190 conventional-configuration pusher aircraft with a 5.2 m span, powered by a 26 hp two-stroke engine, carrying a gyro-stabilised TV camera. It operated from battleships (USS <em>Iowa</em>-class) and amphibious ships, providing over-the-horizon fire correction for naval gunfire. During the 1991 Gulf War, an episode famously occurred in which Iraqi soldiers on Faylaka Island attempted to surrender to a Pioneer conducting reconnaissance overhead—the first known instance of troops surrendering to an unmanned vehicle.</p>
+<p>The <strong>General Atomics GNAT-750</strong> (1989) and its derivative the <strong>RQ-1 Predator</strong> (1994) marked a step-change in persistence and sensor capability. The Predator was a 1 t MALE (Medium Altitude Long Endurance) aircraft with a 14.8 m span, powered by a 115 hp Rotax 914 turbocharged engine, capable of remaining airborne for 40 hours at altitudes to 7600 m (25000 f t). Its sensor suite—a multi-spectral targeting system combining EO, IR, and laser designator—made it the first UAV capable of persistent, day/night surveillance of a specific target.</p>
+<h3 id="126-the-post-911-era-armed-uavs-and-mass-proliferation"><span class="secnum">1.2.6</span> The Post-9/11 Era: Armed UAVs and Mass Proliferation<a class="headerlink" href="#126-the-post-911-era-armed-uavs-and-mass-proliferation" title="Permanent link">&para;</a></h3>
+<p>The terrorist attacks of 11 September 2001 and the subsequent US-led campaigns in Afghanistan and Iraq drove an explosive expansion of unmanned systems in every size class. The most consequential development was the weaponisation of the Predator. The first armed Predator strike occurred on 7 November 2001 near Kabul, Afghanistan, killing Mohammed Atef, al-Qaeda’s military commander. The subsequent evolution from the RQ-1 to the <strong>MQ-1 Predator</strong> and then the larger <strong>MQ-9 Reaper</strong> (Predator B) created the paradigm of the <em>hunter-killer MALE UAV</em>: a persistent platform capable of both Intelligence, Surveillance, and Reconnaissance (ISR) and precision strike.</p>
+<p>The <strong>RQ-4 Global Hawk</strong> (first flight 1998, IOC 2001) established the High-Altitude Long-Endurance (HALE) tier, with a 39.9 m span larger than a Boeing 737, capable of 34 h missions at altitudes above 18300 m (60000 f t).</p>
+<p>Meanwhile, the miniaturisation of electronics, MEMS inertial sensors, GPS receivers, and brushless electric motors enabled an entirely new class of small UAS. The <strong>AeroVironment RQ-11 Raven</strong> (2002) brought man-portable UAV capability to the squad level: a 1.9, hand-launched fixed-wing vehicle rechargeable from a standard battery pack. Over 19,000 Ravens were built, making it the most widely fielded military UAV in history.</p>
+<p>The <strong>AeroVironment Wasp</strong> (2005) and <strong>Nano Hummingbird</strong> (2011) pushed the boundary of miniaturisation further, while the development of commercial multi-rotor platforms—the DJI Phantom series (from 2013)—brought capable aerial platforms within reach of commercial and hobbyist users at price points below &#36;1,000, enabling a commercial drone revolution that has fundamentally changed agriculture, infrastructure inspection, photography, and logistics.</p>
+<h3 id="127-the-2010s2020s-autonomy-swarming-and-loitering-munitions"><span class="secnum">1.2.7</span> The 2010s–2020s: Autonomy, Swarming, and Loitering Munitions<a class="headerlink" href="#127-the-2010s2020s-autonomy-swarming-and-loitering-munitions" title="Permanent link">&para;</a></h3>
+<p>The most recent phase of UAV development is characterised by three converging trends: increasing autonomy (reducing the human role from direct teleoperation to mission-level supervision or full autonomy), swarming (coordinated operation of large numbers of low-cost platforms), and the fusion of the drone and missile design spaces in the <em>loitering munition</em> (sometimes called a kamikaze drone or suicide drone).</p>
+<p>The <strong>AeroVironment Switchblade</strong> (fielded 2012) is representative of the loitering munition concept: a small, tube-launched, electrically powered vehicle that loiters over a target area, acquires a target via its EO/IR sensor, and then dives to deliver a shaped charge. The Switchblade 300 weighs 2.7 and is man-portable; the Switchblade 600 weighs 23 and can engage armoured vehicles. The Israeli <strong>IAI Harop</strong> (derived from the Harpy anti-radiation drone) is a larger loitering munition capable of autonomous target identification against radar-emitting air defence systems.</p>
+<p>The <strong>DARPA OFFSET</strong> programme and its successors have demonstrated swarms of 50–250 heterogeneous UAVs operating with significant autonomy in complex urban environments. The Chinese <strong>CETC 200-drone swarm</strong> demonstration (2017) showcased fixed-wing micro-drones executing coordinated manoeuvres, establishing a public benchmark for swarm technology.</p>
+<h2 id="sec-history_missile"><span class="secnum">1.3</span> History of Guided Missiles<a class="headerlink" href="#sec-history_missile" title="Permanent link">&para;</a></h2>
+<h3 id="131-precursors-rockets-and-aerial-bombs"><span class="secnum">1.3.1</span> Precursors: Rockets and Aerial Bombs<a class="headerlink" href="#131-precursors-rockets-and-aerial-bombs" title="Permanent link">&para;</a></h3>
+<p>The rocket as a weapon is ancient—Chinese military rockets date to at least the thirteenth century, and the Congreve rocket was used by the British in the Napoleonic Wars (and referenced in the US national anthem). However, these were unguided ballistic weapons. The guided missile—one that adjusts its trajectory in response to sensor feedback to intercept a moving or precisely located target—is a twentieth-century invention born of the convergence of aviation, electronics, and control engineering.</p>
+<h3 id="132-world-war-ii-the-v-weapons"><span class="secnum">1.3.2</span> World War II: The V-Weapons<a class="headerlink" href="#132-world-war-ii-the-v-weapons" title="Permanent link">&para;</a></h3>
+<p>The most consequential missiles of World War II were the German <em>Vergeltungswaffen</em> (vengeance weapons): the V-1 and V-2.</p>
+<h4 id="the-v-1-flying-bomb-fi-103">The V-1 Flying Bomb (Fi 103)<a class="headerlink" href="#the-v-1-flying-bomb-fi-103" title="Permanent link">&para;</a></h4>
+<p>The Fieseler Fi 103, designated V-1 (<em>Vergeltungswaffe 1</em>) in propaganda use, was a pulse-jet-powered, gyroscopically guided flying bomb that entered operational use on 13 June 1944, one week after the D-Day landings. Approximately 10,000 were launched against England, and a further 2,500 against Antwerp and Liège.</p>
+<div class="tbl" id="tab-v1_specs">
+<div class="tbl-caption"><strong>Table 1.1.</strong> Fieseler Fi 103 (V-1) principal specifications</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Length</td>
+<td style="text-align: left;">8.32 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wingspan</td>
+<td style="text-align: left;">5.37 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Launch mass</td>
+<td style="text-align: left;">2150</td>
+</tr>
+<tr>
+<td style="text-align: left;">Warhead mass</td>
+<td style="text-align: left;">850 (Amatol)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Propulsion</td>
+<td style="text-align: left;">Argus As 014 pulsejet, 2.7 kN thrust</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cruise speed</td>
+<td style="text-align: left;">640 km/h (345 k t)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cruise altitude</td>
+<td style="text-align: left;">600 m–900 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Range</td>
+<td style="text-align: left;">250 km (155 m i)</td>
+</tr>
+<tr>
+<td style="text-align: left;">CEP (estimated)</td>
+<td style="text-align: left;">900 m–5000 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Guidance</td>
+<td style="text-align: left;">Gyrocompass, magnetic compass, aneroid altimeter, propeller-odometer</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The V-1’s guidance system was elegantly simple: a gyrocompass maintained heading, an aneroid capsule maintained altitude via control of the elevator, and a small propeller driven by airflow counted revolutions to measure distance flown; when the pre-set count was reached, the elevator was deflected to pitch the nose down and the fuel was cut off. The system had no provision for correcting course errors accumulated in flight; CEP values varied enormously with conditions but were generally measured in kilometres.</p>
+<h4 id="the-v-2-ballistic-missile-a-4">The V-2 Ballistic Missile (A-4)<a class="headerlink" href="#the-v-2-ballistic-missile-a-4" title="Permanent link">&para;</a></h4>
+<p>The A-4, designated V-2 operationally, was the world’s first operational ballistic missile and the first man-made object to reach space (during test flights). Developed under Wernher von Braun at Peenemünde, it entered operational use on 8 September 1944.</p>
+<div class="tbl" id="tab-v2_specs">
+<div class="tbl-caption"><strong>Table 1.2.</strong> A-4 (V-2) principal specifications</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Length</td>
+<td style="text-align: left;">14.0 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Diameter</td>
+<td style="text-align: left;">1.65 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Launch mass</td>
+<td style="text-align: left;">12490</td>
+</tr>
+<tr>
+<td style="text-align: left;">Propellant mass</td>
+<td style="text-align: left;">8880 (ethanol + liquid oxygen)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Warhead mass</td>
+<td style="text-align: left;">975 (Amatol)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Thrust (sea level)</td>
+<td style="text-align: left;">263 kN</td>
+</tr>
+<tr>
+<td style="text-align: left;">Specific impulse (<span class="math inline">\(I_\mathrm{sp}\)</span>)</td>
+<td style="text-align: left;">215 s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Burnout velocity</td>
+<td style="text-align: left;">1600 m/s</td>
+</tr>
+<tr>
+<td style="text-align: left;">Maximum range</td>
+<td style="text-align: left;">320 km (200 m i)</td>
+</tr>
+<tr>
+<td style="text-align: left;">Maximum altitude</td>
+<td style="text-align: left;">88 km (suborbital)</td>
+</tr>
+<tr>
+<td style="text-align: left;">CEP (estimated)</td>
+<td style="text-align: left;">2500 m–5000 m</td>
+</tr>
+<tr>
+<td style="text-align: left;">Guidance</td>
+<td style="text-align: left;">Inertial (gyroscope + accelerometer), radio beam cut-off</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The V-2’s guidance system used two gyroscopes to establish a reference direction and a pair of integrating accelerometers to measure velocity increment; radio Doppler measurement of the missile’s velocity along the beam direction was used to command engine cut-off at the precisely correct burnout velocity. This was the first operational use of inertial guidance, establishing the conceptual framework for every subsequent ballistic missile and inertial navigation system.</p>
+<h3 id="133-post-war-development-and-the-jet-age"><span class="secnum">1.3.3</span> Post-War Development and the Jet Age<a class="headerlink" href="#133-post-war-development-and-the-jet-age" title="Permanent link">&para;</a></h3>
+<p>The end of World War II dispersed German rocket engineers across the emerging superpower blocs. Wernher von Braun’s team surrendered to US forces and eventually formed the nucleus of NASA’s Marshall Space Flight Center; Soviet engineers and captured documentation enabled Sergei Korolev’s OKB-1 to reconstruct and then surpass A-4 technology.</p>
+<p>The immediate post-war decade saw rapid development of air-to-air missiles to replace the traditional fighter gun. The <strong>US AIM-9 Sidewinder</strong> (1956) introduced passive infrared homing—the seeker tracked the thermal emission of an aircraft’s engine exhaust—at a unit cost and weight that made air-to-air missiles tactically practical. The original AIM-9B had a 9.4 warhead, a 2.75 HgCdTe uncooled infrared seeker with a 25° gimbal angle, and a claimed <span class="arithmatex">\(P_k\)</span> (probability of kill per shot) of 0.10–0.15 against non-manoeuvring targets in tail-aspect engagements. Successive generations evolved through AIM-9L (all-aspect capability, 1977) to AIM-9X (high off-boresight, imaging seeker, thrust vector control, 2003).</p>
+<p>Surface-to-air missiles emerged from the legacy of World War II anti-aircraft research. The US <strong>Nike Ajax</strong> (1954) was the first operational SAM system, using two-point radio guidance (track-via-missile) to intercept subsonic bombers. The Soviet <strong>S-75 Dvina</strong> (SA-2 Guideline), which shot down Powers’s U-2 in 1960 and proved highly effective against USAF strikes in North Vietnam, became one of the most operationally significant SAMs in history.</p>
+<h3 id="134-the-cold-war-icbm-race"><span class="secnum">1.3.4</span> The Cold War ICBM Race<a class="headerlink" href="#134-the-cold-war-icbm-race" title="Permanent link">&para;</a></h3>
+<p>The geopolitical imperative of the Cold War drove the development of Intercontinental Ballistic Missiles (ICBMs) with global range, thermonuclear warheads, and the reliability required for nuclear deterrence. The engineering challenges were formidable: rocket engines of unprecedented thrust and specific impulse, re-entry vehicles capable of surviving aerodynamic heating at velocities exceeding 7 km/s, inertial guidance systems capable of delivering a warhead within a few hundred metres over ranges of 10000 km, and the basing and survivability requirements of the nuclear triad.</p>
+<div class="tbl" id="tab-icbm_comparison">
+<div class="tbl-caption"><strong>Table 1.3.</strong> Selected ICBM systems: key parameters</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">System</th>
+<th style="text-align: left;">Country</th>
+<th style="text-align: left;">IOC</th>
+<th style="text-align: left;">Range (km)</th>
+<th style="text-align: left;">CEP (m)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">R-7 Semyorka (SS-6)</td>
+<td style="text-align: left;">USSR</td>
+<td style="text-align: left;">1959</td>
+<td style="text-align: left;">8000</td>
+<td style="text-align: left;">5000</td>
+</tr>
+<tr>
+<td style="text-align: left;">SM-65 Atlas D</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1959</td>
+<td style="text-align: left;">14000</td>
+<td style="text-align: left;">3700</td>
+</tr>
+<tr>
+<td style="text-align: left;">LGM-30 Minuteman I</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1962</td>
+<td style="text-align: left;">10200</td>
+<td style="text-align: left;">2800</td>
+</tr>
+<tr>
+<td style="text-align: left;">R-16 (SS-7)</td>
+<td style="text-align: left;">USSR</td>
+<td style="text-align: left;">1961</td>
+<td style="text-align: left;">11000</td>
+<td style="text-align: left;">2800</td>
+</tr>
+<tr>
+<td style="text-align: left;">LGM-30F Minuteman II</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1966</td>
+<td style="text-align: left;">11300</td>
+<td style="text-align: left;">370</td>
+</tr>
+<tr>
+<td style="text-align: left;">R-36M (SS-18 Satan)</td>
+<td style="text-align: left;">USSR</td>
+<td style="text-align: left;">1974</td>
+<td style="text-align: left;">16000</td>
+<td style="text-align: left;">250</td>
+</tr>
+<tr>
+<td style="text-align: left;">LGM-118 Peacekeeper</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1986</td>
+<td style="text-align: left;">14000</td>
+<td style="text-align: left;">90</td>
+</tr>
+<tr>
+<td style="text-align: left;">RS-28 Sarmat</td>
+<td style="text-align: left;">Russia</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>18000</td>
+<td style="text-align: left;">10–50</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>The dramatic improvement in CEP visible in <a href="#tab-icbm_comparison">Table 1.3</a> from kilometres (1950s) to tens of metres (1980s–present) represents a thousand-fold improvement in guidance accuracy achieved through better inertial instruments (ring-laser gyroscopes replacing floated gyros, electrostatic accelerometers replacing pendulous integrating gyroscopic accelerometers), stellar-inertial updates, and ultimately GPS/GLONASS augmentation of terminal guidance.</p>
+<h3 id="135-the-precision-revolution"><span class="secnum">1.3.5</span> The Precision Revolution<a class="headerlink" href="#135-the-precision-revolution" title="Permanent link">&para;</a></h3>
+<p>The Gulf War of 1991 is generally regarded as the public demonstration of the precision-guided munition (PGM) revolution, though the technology had been available since the late 1960s. Laser-guided bombs (BOLT-117, GBU-10/12 Paveway series) were used in Vietnam from 1968, reducing the number of sorties required to destroy a bridge from hundreds (with unguided bombs) to single digits.</p>
+<p>The <strong>AGM-86 ALCM</strong> (Air-Launched Cruise Missile, IOC 1982) combined a turbofan engine (Williams F107, 3.1 kN), a TERCOM (Terrain Contour Matching) navigation system, and a nuclear or conventional warhead in a vehicle small enough for B-52 internal carriage. TERCOM compared a stored digital elevation map with radar altimeter measurements to correct accumulated inertial navigation errors, achieving CEP values below 30 m over transcontinental ranges. The subsequent <strong>AGM-158 JASSM</strong> (IOC 2009) improved stealth, range (370 km+ for JASSM, 926 km+ for JASSM-ER), and accuracy through GPS/INS with an IIR terminal seeker.</p>
+<h2 id="sec-terminology"><span class="secnum">1.4</span> Terminology and Definitions<a class="headerlink" href="#sec-terminology" title="Permanent link">&para;</a></h2>
+<p>The vocabulary of unmanned systems is neither fully standardised nor consistently applied in the literature, the military community, the regulatory domain, or popular usage. This section establishes the definitions used throughout this book and relates them to the principal standards and regulatory documents.</p>
+<h3 id="141-uav-uas-rpas-and-drone"><span class="secnum">1.4.1</span> UAV, UAS, RPAS, and Drone<a class="headerlink" href="#141-uav-uas-rpas-and-drone" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>UAV (Unmanned Aerial Vehicle)</dt>
+<dd>An aircraft that carries no human pilot onboard, is operated autonomously or by remote command, and is reusable (as distinct from a missile, which is single-use). The term is defined in STANAG 4671 and used in most military contexts. Some authorities extend UAV to include loitering munitions (which are single-use); this book treats loitering munitions as a hybrid class discussed explicitly.</dd>
+<dt>UAS (Unmanned Aircraft System)</dt>
+<dd>The complete system, including the UAV airframe, its payload(s), the communications links, the ground control station(s), any supporting ground equipment, and the human operators. ICAO uses UAS in its Standards and Recommended Practices (SARPs). The term acknowledges that the vehicle alone is not operationally meaningful without its supporting systems.</dd>
+<dt>RPAS (Remotely Piloted Aircraft System)</dt>
+<dd>ICAO’s preferred term for a UAS in which the aircraft is <em>continuously</em> supervised by a remote pilot who can intervene in the flight. ICAO Circular 328 (2011) drew a distinction between RPAS (human pilot in the loop) and fully autonomous UAS (no continuous human supervision required), reflecting a regulatory preference for maintaining the human-in-command principle. EASA uses RPAS in its regulatory framework.</dd>
+<dt>Drone</dt>
+<dd>A colloquial term, originally referring to target drones (see <a href="#sec-history_uav">Section 1.2</a>), now used loosely to refer to any UAV. The term carries no technical precision and is used in this book only informally. In some national regulations (e.g., UK CAA), “drone” is used as a plain-language synonym for small UAS operated in uncontrolled airspace.</dd>
+<dt>Autonomous System</dt>
+<dd>A system capable of performing its mission without real-time human input. The degree of autonomy is a spectrum, not a binary state, and is formalised in the autonomy level frameworks discussed in <a href="#sec-autonomy_levels">Section 1.5.3</a>.</dd>
+<dt>Loitering Munition</dt>
+<dd>A guided, expendable aerial weapon that combines the loitering capability of a UAV with the terminal attack function of a missile. Also termed <em>kamikaze drone</em>, <em>suicide drone</em>, or <em>lethal loitering weapon</em> (LLW). The defining characteristic is the ability to loiter for a significant period (minutes to hours) over a search area before committing to a terminal attack.</dd>
+</dl>
+<h3 id="142-missile-terminology"><span class="secnum">1.4.2</span> Missile Terminology<a class="headerlink" href="#142-missile-terminology" title="Permanent link">&para;</a></h3>
+<dl>
+<dt>Guided Missile</dt>
+<dd>An unmanned, self-propelled, expendable vehicle that delivers a warhead to a target by means of an on-board or externally provided guidance system. Distinguished from unguided rockets (which follow a fixed ballistic trajectory) and from bombs (which are unpowered).</dd>
+<dt>Ballistic Missile</dt>
+<dd>A missile that is powered during an initial boost phase and then follows a predominantly ballistic (unpowered, free-fall) trajectory to the target. May include a terminal guidance phase. Classified by range: Short-Range Ballistic Missile (SRBM, <span class="arithmatex">\(&lt;\)</span>1000 km), Medium-Range (MRBM, 1000–3000 km), Intermediate-Range (IRBM, 3000–5500 km), Intercontinental (ICBM, <span class="arithmatex">\(&gt;\)</span>5500 km).</dd>
+<dt>Cruise Missile</dt>
+<dd>A missile that sustains aerodynamic flight throughout its trajectory using wings and an air-breathing engine. Characterised by approximately constant altitude cruise, subsonic to supersonic speeds, and high accuracy.</dd>
+<dt>Hypersonic Missile</dt>
+<dd>A missile that sustains flight at Mach numbers <span class="arithmatex">\(M \geq 5\)</span> for a significant portion of its trajectory, either as a Hypersonic Glide Vehicle (HGV) boosted to high altitude before gliding at hypersonic speed, or as an air-breathing Hypersonic Cruise Missile (HCM) powered by a scramjet.</dd>
+<dt>CEP (Circular Error Probable)</dt>
+<dd>The radius of a circle centred on the intended aim point within which 50% of rounds or missiles will impact, assuming a bivariate normal distribution of impact points. For a circular normal distribution, <span class="arithmatex">\(\mathrm{CEP} \approx 1.1774\,\sigma\)</span>, where <span class="arithmatex">\(\sigma\)</span> is the standard deviation of the radial error.</dd>
+</dl>
+<h2 id="sec-taxonomy"><span class="secnum">1.5</span> Classification Frameworks<a class="headerlink" href="#sec-taxonomy" title="Permanent link">&para;</a></h2>
+<h3 id="151-uav-classification-by-size"><span class="secnum">1.5.1</span> UAV Classification by Size<a class="headerlink" href="#151-uav-classification-by-size" title="Permanent link">&para;</a></h3>
+<p>No single universally accepted size classification exists; different organisations use different breakpoints. <a href="#tab-uav_size_classes">Table 1.4</a> synthesises the most commonly used framework.</p>
+<div class="tbl" id="tab-uav_size_classes">
+<div class="tbl-caption"><strong>Table 1.4.</strong> UAV size classification</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Class</th>
+<th style="text-align: left;">Mass</th>
+<th style="text-align: left;">Wingspan</th>
+<th style="text-align: left;">Altitude</th>
+<th style="text-align: left;">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Nano/Micro</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>100 g</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>0.3 m</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>100 m</td>
+<td style="text-align: left;">Black Hornet PD-100</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mini</td>
+<td style="text-align: left;">0.1–2</td>
+<td style="text-align: left;">0.3–1 m</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>300 m</td>
+<td style="text-align: left;">AV RQ-11 Raven</td>
+</tr>
+<tr>
+<td style="text-align: left;">Small (SUAS)</td>
+<td style="text-align: left;">2–25</td>
+<td style="text-align: left;">1–3 m</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>1500 m</td>
+<td style="text-align: left;">DJI Matrice 300</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tactical</td>
+<td style="text-align: left;">25–600</td>
+<td style="text-align: left;">3–8 m</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>5500 m</td>
+<td style="text-align: left;">AV Shadow RQ-7</td>
+</tr>
+<tr>
+<td style="text-align: left;">MALE</td>
+<td style="text-align: left;">600–1500</td>
+<td style="text-align: left;">8–20 m</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>9100 m</td>
+<td style="text-align: left;">MQ-9 Reaper</td>
+</tr>
+<tr>
+<td style="text-align: left;">HALE</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>2500</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>20 m</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>15000 m</td>
+<td style="text-align: left;">RQ-4 Global Hawk</td>
+</tr>
+<tr>
+<td style="text-align: left;">Combat (UCAV)</td>
+<td style="text-align: left;">3000–20000</td>
+<td style="text-align: left;">10–20 m</td>
+<td style="text-align: left;"><span class="math inline">\(&lt;\)</span>15000 m</td>
+<td style="text-align: left;">X-47B, Neuron</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="152-uav-classification-by-range-and-endurance"><span class="secnum">1.5.2</span> UAV Classification by Range and Endurance<a class="headerlink" href="#152-uav-classification-by-range-and-endurance" title="Permanent link">&para;</a></h3>
+<p>Range and endurance classifications are particularly important for logistics and mission planning:</p>
+<ul>
+<li>
+<p><strong>Very Close Range (VCR):</strong> <span class="arithmatex">\(&lt;\)</span>5 km, endurance <span class="arithmatex">\(&lt;\)</span>1 h. Typical: squad-level micro-UAVs.</p>
+</li>
+<li>
+<p><strong>Close Range (CR):</strong> 5–50 km, endurance 1–6 h. Typical: battalion-level reconnaissance.</p>
+</li>
+<li>
+<p><strong>Short Range (SR):</strong> 50–150 km, endurance 6–12 h.</p>
+</li>
+<li>
+<p><strong>Medium Range (MR):</strong> 150–650 km, endurance 12–24 h. Typical: MALE class.</p>
+</li>
+<li>
+<p><strong>Long Range (LR):</strong> <span class="arithmatex">\(&gt;\)</span>650 km, endurance <span class="arithmatex">\(&gt;\)</span>24 h. Typical: HALE, strategic reconnaissance.</p>
+</li>
+</ul>
+<h3 id="sec-autonomy_levels"><span class="secnum">1.5.3</span> Autonomy Levels: STANAG 4586<a class="headerlink" href="#sec-autonomy_levels" title="Permanent link">&para;</a></h3>
+<p>NATO STANAG 4586 defines a 10-level Autonomous Control Level (ACL) framework that has become the de facto standard for describing the degree of autonomy of unmanned systems:</p>
+<dl>
+<dt>ACL 1 — Remotely Guided:</dt>
+<dd>Human operates all flight functions in real time; the vehicle has no autonomous capability.</dd>
+<dt>ACL 2 — Real-Time Health Diagnosis:</dt>
+<dd>On-board systems monitor vehicle health and provide alerts to the operator; no autonomous response.</dd>
+<dt>ACL 3 — Adaptable:</dt>
+<dd>Pre-planned flight path with ability to change waypoints in response to operator commands; automatic return-to-base on link loss.</dd>
+<dt>ACL 4 — Robust Response to Planned Events:</dt>
+<dd>On-board logic executes pre-programmed responses to defined contingencies (e.g., lost-link procedure, engine failure).</dd>
+<dt>ACL 5 — Real-Time Multi-Vehicle Cooperation:</dt>
+<dd>Vehicle can cooperate with other platforms to complete assigned tasks; human approves task reassignment.</dd>
+<dt>ACL 6 — Real-Time Multi-Vehicle Coordination:</dt>
+<dd>Vehicle can coordinate tasks across a group to optimise collective performance; human supervises at the group level.</dd>
+<dt>ACL 7 — Battle Management:</dt>
+<dd>Vehicle can manage groups of assets to complete mission-level objectives; human approves major decisions.</dd>
+<dt>ACL 8 — Fully Autonomous Mission:</dt>
+<dd>Vehicle completes assigned missions without real-time human involvement; human retains authority to abort.</dd>
+<dt>ACL 9 — Deep Learning:</dt>
+<dd>Vehicle learns from experience to improve performance on future missions; adapts tactics based on operational outcomes.</dd>
+<dt>ACL 10 — Full Cognitive Function:</dt>
+<dd>Vehicle can formulate intent, plan courses of action, and make fully autonomous decisions including use of force; human not required in the decision loop.</dd>
+</dl>
+<p>Most current operational UAS operate at ACL 3–5. Commercial autopilots (DJI, Pixhawk) implement ACL 3–4 functions. Contested-environment operations increasingly require ACL 5–6 to cope with GPS denial and communications jamming. The ethical and legal questions around ACL 8–10 (particularly regarding lethal autonomous weapons systems, LAWS) are the subject of ongoing international discussion at the UN Convention on Certain Conventional Weapons (CCW).</p>
+<h3 id="154-missile-classification"><span class="secnum">1.5.4</span> Missile Classification<a class="headerlink" href="#154-missile-classification" title="Permanent link">&para;</a></h3>
+<p>Missiles are most commonly classified by their launch environment and target environment:</p>
+<div class="tbl" id="tab-missile_class">
+<div class="tbl-caption"><strong>Table 1.5.</strong> Missile classification by launch and target environment</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Abbreviation</th>
+<th style="text-align: left;">Launch from</th>
+<th style="text-align: left;">Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ASM (Air-to-Surface)</td>
+<td style="text-align: left;">Air</td>
+<td style="text-align: left;">Ground/Sea</td>
+</tr>
+<tr>
+<td style="text-align: left;">AAM (Air-to-Air)</td>
+<td style="text-align: left;">Air</td>
+<td style="text-align: left;">Air</td>
+</tr>
+<tr>
+<td style="text-align: left;">SAM (Surface-to-Air)</td>
+<td style="text-align: left;">Ground/Sea</td>
+<td style="text-align: left;">Air</td>
+</tr>
+<tr>
+<td style="text-align: left;">SSM (Surface-to-Surface)</td>
+<td style="text-align: left;">Ground/Sea</td>
+<td style="text-align: left;">Ground/Sea</td>
+</tr>
+<tr>
+<td style="text-align: left;">ATGM (Anti-Tank Guided Missile)</td>
+<td style="text-align: left;">Ground/Air/Vehicle</td>
+<td style="text-align: left;">Armoured vehicle</td>
+</tr>
+<tr>
+<td style="text-align: left;">AShM (Anti-Ship Missile)</td>
+<td style="text-align: left;">Air/Ground/Sea/Sub</td>
+<td style="text-align: left;">Surface vessel</td>
+</tr>
+<tr>
+<td style="text-align: left;">SLBM (Sub-Launched Ballistic)</td>
+<td style="text-align: left;">Submarine</td>
+<td style="text-align: left;">Ground</td>
+</tr>
+<tr>
+<td style="text-align: left;">ASAT (Anti-Satellite)</td>
+<td style="text-align: left;">Air/Ground</td>
+<td style="text-align: left;">Satellite</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-revolution"><span class="secnum">1.6</span> The Unmanned Revolution: Statistics and Market Size<a class="headerlink" href="#sec-revolution" title="Permanent link">&para;</a></h2>
+<p>The growth of the unmanned systems sector from a niche military technology to a global commercial industry of significant economic scale occurred with remarkable speed in the period 2010–2026.</p>
+<h3 id="161-market-data"><span class="secnum">1.6.1</span> Market Data<a class="headerlink" href="#161-market-data" title="Permanent link">&para;</a></h3>
+<p>According to Drone Industry Insights and comparable market analysis firms, the global commercial drone market grew from approximately &#36;700 million in 2015 to an estimated &#36;58 billion in 2026, a compound annual growth rate (CAGR) of approximately 41%. The military UAS market, dominated by US, Chinese, Israeli, and European programmes, was estimated at &#36;14.5 billion in 2024, with projections of &#36;28 billion by 2030 (Teal Group, 2024).</p>
+<p>The number of registered civil UAS in the United States exceeded 900,000 by 2023 (FAA UAS data), while China’s CAAC reported over 1.4 million registered civil drones in the same period. DJI, the dominant commercial manufacturer, shipped an estimated 1.3 million consumer and prosumer drones per year by 2024, with market share exceeding 70% globally in the consumer segment.</p>
+<h3 id="162-proliferation-of-military-uavs"><span class="secnum">1.6.2</span> Proliferation of Military UAVs<a class="headerlink" href="#162-proliferation-of-military-uavs" title="Permanent link">&para;</a></h3>
+<p>In 2000, meaningful military UAV capability was concentrated in the United States and Israel. By 2026, over 100 nations operate military UAVs, and over 40 nations operate armed UAVs capable of conducting strike missions. The global diffusion of UAV technology has been driven by:</p>
+<ul>
+<li>
+<p>Commoditisation of key enabling technologies (brushless motors, LiPo batteries, MEMS inertial sensors, GPS receivers, miniaturised cameras) through commercial supply chains;</p>
+</li>
+<li>
+<p>Chinese export of armed UAVs (Wing Loong, CH-4, CH-5, TB-001) at price points far below US alternatives, driven by aggressive industrial subsidies;</p>
+</li>
+<li>
+<p>Proliferation of open-source autopilot software (ArduPilot, PX4) enabling rapid low-cost development;</p>
+</li>
+<li>
+<p>Operational demonstrations in the Syrian civil war (from 2015), Nagorno-Karabakh conflict (2020), and Ukraine (2022–present) that validated UAV effectiveness and stimulated demand.</p>
+</li>
+</ul>
+<p>The Nagorno-Karabakh conflict of 2020 is particularly significant: Azerbaijani use of Turkish-made Bayraktar TB2 armed UAVs and Israeli-supplied Harop loitering munitions against Armenian armour and air defence systems demonstrated that relatively low-cost unmanned systems could achieve decisive tactical effects against a conventionally armed opponent, at an apparent cost exchange ratio highly favourable to the attacker.</p>
+<h2 id="sec-doctrine"><span class="secnum">1.7</span> Military Doctrine and Operational Concepts<a class="headerlink" href="#sec-doctrine" title="Permanent link">&para;</a></h2>
+<h3 id="171-multi-domain-operations"><span class="secnum">1.7.1</span> Multi-Domain Operations<a class="headerlink" href="#171-multi-domain-operations" title="Permanent link">&para;</a></h3>
+<p>US Army doctrine (TRADOC Pamphlet 525-3-1, <em>The US Army in Multi-Domain Operations 2028</em>, 2018) frames future warfare as occurring simultaneously across the land, maritime, air, space, and cyberspace domains, with enemies employing Anti-Access/Area-Denial (A2/AD) strategies to prevent US forces from projecting power. Unmanned systems are central to multi-domain operations: they can penetrate A2/AD environments that are too dangerous for crewed aircraft, provide persistent ISR, and deliver precision fires without risking human pilots.</p>
+<p>The concept of the <strong>Mosaic Warfare</strong> (DARPA) takes this further, envisioning a force composed of large numbers of relatively simple, cheap, expendable nodes (many of them unmanned) that can be dynamically composed and recomposed into mission tailored “kill chains” faster than an adversary can adapt. The resilience of a mosaic force derives from its redundancy: the loss of individual nodes degrades but does not break the network.</p>
+<h3 id="172-swarming"><span class="secnum">1.7.2</span> Swarming<a class="headerlink" href="#172-swarming" title="Permanent link">&para;</a></h3>
+<p>Swarm tactics—coordinated attack by large numbers of low-cost vehicles—have attracted significant doctrinal attention. The mathematical basis was established by Craig Reynolds’s “Boids” simulation (1987), which demonstrated that complex collective behaviours emerge from simple local rules (separation, alignment, cohesion). Military swarm concepts require more purposeful coordination: distributed target assignment, resource allocation, and mutual support.</p>
+<p>A swarm of <span class="arithmatex">\(N\)</span> vehicles, each with single-shot kill probability <span class="arithmatex">\(P_k\)</span> against a defended target, achieves a collective probability of kill: <span id="eq-swarm_pk"></span></p>
+<div class="arithmatex">\[P_{k,\mathrm{swarm}} = 1 - (1 - P_k)^N\tag{1.1}\]</div>
+<p>assuming independent attacks and no saturation of the defence. For <span class="arithmatex">\(P_k = 0.05\)</span> (a single cheap vehicle against a modern SHORAD system) and <span class="arithmatex">\(N = 100\)</span>, <span class="arithmatex">\(P_{k,\mathrm{swarm}} = 1 - 0.95^{100} \approx 0.994\)</span>. The attacker thus achieves near-certain kill at a fraction of the defended target’s cost, provided the defence cannot engage all <span class="arithmatex">\(N\)</span> vehicles simultaneously.</p>
+<h3 id="173-stand-off-strike-and-loitering"><span class="secnum">1.7.3</span> Stand-Off Strike and Loitering<a class="headerlink" href="#173-stand-off-strike-and-loitering" title="Permanent link">&para;</a></h3>
+<p>Stand-off strike—engaging targets from outside the effective range of point defences—has driven the development of long-range cruise missiles and armed UAVs with extended loiter endurance. The combination of <em>persistence</em> (the ability to remain on station for hours, matching the slow operational tempo of many ground targets) and <em>precision</em> (CEP <span class="arithmatex">\(\leq 1\,\text{m}\)</span> with GPS/IIR guidance) fundamentally changes the calculus of strike operations: a single weapon can wait for a high-value fleeting target to appear, identify it, and engage it under rules of engagement that require visual confirmation.</p>
+<h2 id="sec-civil"><span class="secnum">1.8</span> Civil Applications<a class="headerlink" href="#sec-civil" title="Permanent link">&para;</a></h2>
+<h3 id="181-agriculture-precision-agronomy"><span class="secnum">1.8.1</span> Agriculture: Precision Agronomy<a class="headerlink" href="#181-agriculture-precision-agronomy" title="Permanent link">&para;</a></h3>
+<p>Agricultural UAS represent the largest single commercial application by flight hours. Applications include:</p>
+<ul>
+<li>
+<p><strong>Crop monitoring:</strong> Multispectral and hyperspectral cameras measure chlorophyll fluorescence (NDVI, Red Edge index) to detect plant stress, pest infestation, and water deficit at sub-metre resolution, enabling variable-rate treatment.</p>
+</li>
+<li>
+<p><strong>Precision spraying:</strong> Dedicated agricultural multi-rotors (DJI Agras T40: 40 payload, 24 nozzles, 6.4 m effective spray width) apply pesticide, herbicide, and fertiliser at variable rates with centimetre-level positioning. Coverage rates of 25 ha/h and reduction in chemical usage of 30–50% versus ground sprayers have been documented.</p>
+</li>
+<li>
+<p><strong>Seed and pellet sowing:</strong> Used in reforestation and remote rice paddy planting.</p>
+</li>
+</ul>
+<p>By 2025, China alone operated over 200,000 agricultural drones covering an estimated 1.4×10⁸ ha annually.</p>
+<h3 id="182-survey-mapping-and-inspection"><span class="secnum">1.8.2</span> Survey, Mapping, and Inspection<a class="headerlink" href="#182-survey-mapping-and-inspection" title="Permanent link">&para;</a></h3>
+<p>Photogrammetric and LiDAR surveys using UAS achieve ground sample distances (GSD) below 2 cm from altitudes of 100 m, enabling construction site monitoring, infrastructure inspection (bridges, power lines, wind turbines, pipelines), and topographic mapping at fractions of the cost and time of crewed aircraft or ground survey.</p>
+<p>The photogrammetric GSD from a camera of focal length <span class="arithmatex">\(f\)</span> and sensor pixel pitch <span class="arithmatex">\(p\)</span> flown at altitude <span class="arithmatex">\(h\)</span> above ground is: <span id="eq-gsd"></span></p>
+<div class="arithmatex">\[\mathrm{GSD} = \frac{p \cdot h}{f}\tag{1.2}\]</div>
+<p>A Sony <span class="arithmatex">\(\alpha\)</span>7R IV with <span class="arithmatex">\(p = 4.4\,\text{µm}\)</span>, <span class="arithmatex">\(f = 35\,\text{mm}\)</span>, flown at <span class="arithmatex">\(h = 100\,\text{m}\)</span> gives <span class="arithmatex">\(\mathrm{GSD} = 1.26\,\text{cm}\)</span>, sufficient to detect pavement cracks wider than 5 mm.</p>
+<h3 id="183-logistics-and-delivery"><span class="secnum">1.8.3</span> Logistics and Delivery<a class="headerlink" href="#183-logistics-and-delivery" title="Permanent link">&para;</a></h3>
+<p>Beyond Line-of-Sight (BVLOS) drone delivery has seen commercial deployments by Wing (Alphabet), Amazon Prime Air, Zipline (medical supply), and Manna Drone Delivery, among others. Zipline’s fixed-wing delivery drone, with a 1.75 payload and 160 km/h cruise speed, has completed over one million deliveries of blood products and pharmaceuticals in Rwanda, Ghana, Nigeria, and the USA as of 2024, demonstrating the viability of UAS logistics in infrastructure-limited environments.</p>
+<h3 id="184-emergency-response-and-public-safety"><span class="secnum">1.8.4</span> Emergency Response and Public Safety<a class="headerlink" href="#184-emergency-response-and-public-safety" title="Permanent link">&para;</a></h3>
+<p>UAS equipped with thermal cameras have been deployed for search-and-rescue operations, wildfire mapping and crew coordination, and post-disaster damage assessment. Response time advantages are significant: a UAS can be on-station within 2–3 minutes of a 999/911 call versus 7–10 minutes for a ground vehicle in dense urban environments, a difference that can be decisive in cardiac arrest events (AED delivery by drone) or drowning incidents (flotation device delivery).</p>
+<h2 id="sec-physics"><span class="secnum">1.9</span> Physical Constraints on Unmanned System Design<a class="headerlink" href="#sec-physics" title="Permanent link">&para;</a></h2>
+<h3 id="191-the-square-cube-law-and-scaling"><span class="secnum">1.9.1</span> The Square-Cube Law and Scaling<a class="headerlink" href="#191-the-square-cube-law-and-scaling" title="Permanent link">&para;</a></h3>
+<p>The square-cube law, applied to aircraft scaling, states that aerodynamic forces (lift, drag) scale with the square of linear dimension <span class="arithmatex">\(\ell\)</span> (i.e., with wing area <span class="arithmatex">\(S \propto \ell^2\)</span>), while structural mass scales with <span class="arithmatex">\(\ell^3\)</span>. Consequently, the <em>wing loading</em> <span class="arithmatex">\(W/S\)</span> (weight per unit wing area) increases with scale: <span id="eq-squarecube"></span></p>
+<div class="arithmatex">\[\frac{W}{S} \propto \frac{\rho_\mathrm{struct} \cdot g \cdot \ell^3}{\ell^2}
+  = \rho_\mathrm{struct} \cdot g \cdot \ell\tag{1.3}\]</div>
+<p>where <span class="arithmatex">\(\rho_\mathrm{struct}\)</span> is the mean structural density and <span class="arithmatex">\(g\)</span> is gravitational acceleration. For a geometrically similar family of aircraft, wing loading scales linearly with span. The practical implication is that small vehicles fly at lower speeds (to maintain the same lift coefficient) and at lower Reynolds numbers, where viscous effects increasingly dominate and the aerodynamic efficiency of thin aerofoils degrades.</p>
+<p>The chord Reynolds number is: <span id="eq-reynolds"></span></p>
+<div class="arithmatex">\[Re = \frac{\rho_\infty V_\infty c}{\mu_\infty}\tag{1.4}\]</div>
+<p>where <span class="arithmatex">\(\rho_\infty\)</span> is air density, <span class="arithmatex">\(V_\infty\)</span> is free-stream velocity, <span class="arithmatex">\(c\)</span> is chord length, and <span class="arithmatex">\(\mu_\infty\)</span> is dynamic viscosity. At <span class="arithmatex">\(Re &lt; 10^5\)</span> (typical of nano-UAVs), laminar separation bubbles, early transition, and high profile drag severely constrain achievable lift-to-drag ratios: <span class="arithmatex">\(L/D\)</span> values of 10–15 are typical at <span class="arithmatex">\(Re \sim 10^5\)</span>, compared to 25–35 for MALE-class aircraft at <span class="arithmatex">\(Re \sim 10^7\)</span>.</p>
+<h3 id="192-energy-density-barriers"><span class="secnum">1.9.2</span> Energy Density Barriers<a class="headerlink" href="#192-energy-density-barriers" title="Permanent link">&para;</a></h3>
+<p>The endurance of an electrically powered UAS is fundamentally limited by battery energy density. The Breguet-like endurance equation for an electric aircraft is: <span id="eq-electric_endurance"></span></p>
+<div class="arithmatex">\[t = \frac{\eta_\mathrm{sys} \cdot E_\mathrm{batt}}{P_\mathrm{req}}
+  = \frac{\eta_\mathrm{sys} \cdot e_\mathrm{sp} \cdot m_\mathrm{batt}}{P_\mathrm{req}}\tag{1.5}\]</div>
+<p>where <span class="arithmatex">\(\eta_\mathrm{sys}\)</span> is the overall system efficiency (motor-controller-propeller chain, typically 0.55–0.65 for well-optimised small systems), <span class="arithmatex">\(e_\mathrm{sp}\)</span> is the battery specific energy (J), <span class="arithmatex">\(m_\mathrm{batt}\)</span> is the battery mass, and <span class="arithmatex">\(P_\mathrm{req}\)</span> is the required shaft power.</p>
+<p>Current lithium polymer cells achieve <span class="arithmatex">\(e_\mathrm{sp} \approx 720\,\text{kJ}\)</span> (200 W h) at the cell level; system-level values after packaging and BMS are typically 540 kJ (150 W h). Lithium-sulphur cells (prototyping stage, 2025) promise 900–1440 kJ (250–400 W h), and solid-state lithium cells target 1800 kJ (500 W h) at commercialisation.</p>
+<p>For comparison, Jet-A fuel has a lower heating value of <span class="arithmatex">\(43.2\,\text{MJ}\)</span>—60 times the specific energy of current Li-Po batteries. Even accounting for the higher thermal efficiency of a gas turbine (<span class="arithmatex">\(\eta_\mathrm{th} \approx 0.35\)</span>) versus an electric drive (<span class="arithmatex">\(\eta_\mathrm{elec} \approx 0.92\)</span> end-to-end), the effective specific energy at the shaft is: <span id="eq-energy_comparison"></span></p>
+<div class="arithmatex">\[\begin{align*}
+  e_\mathrm{sp,fuel,eff} &amp;= \eta_\mathrm{th} \cdot \mathrm{LHV}
+    = 0.35 \times 43200 = 15120\,\text{kJ} \notag \\
+  e_\mathrm{sp,batt,eff} &amp;= \eta_\mathrm{elec} \cdot e_\mathrm{sp,batt}
+    = 0.92 \times 720 = 662\,\text{kJ}
+\end{align*}\]</div>
+<p>The effective specific energy of fuel at the shaft is thus approximately 23 times that of batteries. This fundamental thermodynamic constraint explains why long-endurance UAVs almost invariably use internal combustion or turbine engines, and why the Breguet range equation (<a href="#sec-metrics">Section 1.11</a>) predicts far greater range for fuel-powered versus battery-powered vehicles of the same structural mass.</p>
+<h3 id="193-thrust-to-weight-constraints"><span class="secnum">1.9.3</span> Thrust-to-Weight Constraints<a class="headerlink" href="#193-thrust-to-weight-constraints" title="Permanent link">&para;</a></h3>
+<p>For vertical take-off and landing (VTOL) vehicles—multi-rotors, tilt-rotors, and rocket-powered missiles—the thrust-to-weight ratio at take-off is a critical constraint. For a multi-rotor to be controllable, a minimum thrust margin of approximately 50% above hover (<span class="arithmatex">\(T/W \geq 1.5\)</span> in hover, allowing ample authority for attitude control and disturbance rejection) is typically required.</p>
+<p>The hover power of a multi-rotor with <span class="arithmatex">\(N\)</span> rotors, each of radius <span class="arithmatex">\(R\)</span>, operating in ideal hover (ignoring profile and induced losses beyond momentum theory) is derived from the actuator disk theory: <span id="eq-hover_power"></span></p>
+<div class="arithmatex">\[P_\mathrm{hover} = \frac{T^{3/2}}{\sqrt{2 N \rho_\infty \pi R^2}}\tag{1.7}\]</div>
+<p>where <span class="arithmatex">\(T\)</span> is total thrust (equal to gross weight <span class="arithmatex">\(W\)</span> in steady hover) and <span class="arithmatex">\(\rho_\infty\)</span> is air density. This shows that hover power scales as <span class="arithmatex">\(W^{3/2}\)</span> and improves (decreases) with rotor disk area <span class="arithmatex">\(N\pi R^2\)</span>. Multi-rotors achieve low disk loading (<span class="arithmatex">\(T/(N\pi R^2) \sim 100\,\text{N/m²}\)</span>) which gives relatively low hover power; tactical missiles with very small fin spans achieve disk loading three to four orders of magnitude higher, making rocket propulsion the only viable choice for initial energy.</p>
+<h2 id="sec-regulatory"><span class="secnum">1.10</span> The Regulatory Landscape<a class="headerlink" href="#sec-regulatory" title="Permanent link">&para;</a></h2>
+<h3 id="1101-icao-framework"><span class="secnum">1.10.1</span> ICAO Framework<a class="headerlink" href="#1101-icao-framework" title="Permanent link">&para;</a></h3>
+<p>The International Civil Aviation Organisation (ICAO) is the United Nations specialised agency responsible for establishing international Standards and Recommended Practices (SARPs) for civil aviation. ICAO Circular 328-AN/190 (2011) was the first formal ICAO treatment of UAS, establishing the principle that UAS operating in non-segregated airspace must do so in a manner equivalent to manned aircraft from an air traffic management perspective.</p>
+<p>ICAO Annex 2 to the Convention on International Civil Aviation requires that remotely piloted aircraft operating in international airspace have a licensed remote pilot, be registered and display markings, file a flight plan, and comply with separation standards. Annex 7 requires that aircraft certificates include UAS type-specific requirements. The ongoing work of the ICAO RPAS Panel continues to develop SARPs for UAS Traffic Management (UTM) and Urban Air Mobility (UAM).</p>
+<h3 id="1102-us-faa-regulatory-framework"><span class="secnum">1.10.2</span> US FAA Regulatory Framework<a class="headerlink" href="#1102-us-faa-regulatory-framework" title="Permanent link">&para;</a></h3>
+<p>The Federal Aviation Administration (FAA) is the US national civil aviation authority. Key regulatory instruments governing UAS in the United States include:</p>
+<ul>
+<li>
+<p><strong>14 CFR Part 107</strong> (Small UAS Rule, effective 2016, amended 2021): Governs commercial operation of sUAS (small UAS, <span class="arithmatex">\(&lt;\)</span> 25) in US national airspace. Requires Remote Pilot Certificate, registration of aircraft, daytime VLOS (or waivered BVLOS) operations below 122 m (400 ft) AGL in uncontrolled airspace.</p>
+</li>
+<li>
+<p><strong>14 CFR Part 89</strong> (Remote Identification, effective 2023): Requires Standard Remote ID modules (broadcast of position, velocity, altitude, and serial number via WiFi/Bluetooth) for UAS over 250 g.</p>
+</li>
+<li>
+<p><strong>FAA Reauthorization Act of 2024</strong>: Extended BVLOS rulemaking, authorised UTM development, established UAS Traffic Management pilot programme.</p>
+</li>
+</ul>
+<h3 id="1103-easa-european-union-aviation-safety-agency"><span class="secnum">1.10.3</span> EASA (European Union Aviation Safety Agency)<a class="headerlink" href="#1103-easa-european-union-aviation-safety-agency" title="Permanent link">&para;</a></h3>
+<p>EASA implemented its UAS regulatory framework in three categories:</p>
+<dl>
+<dt>Open Category:</dt>
+<dd>Low-risk operations, no prior authorisation required, UAS must bear CE class mark (C0–C4), maximum operating altitude 120 m AGL, VLOS only.</dd>
+<dt>Specific Category:</dt>
+<dd>Medium-risk operations requiring either a Specific Operations Risk Assessment (SORA) approval or an operational authorisation from the competent authority. BVLOS permitted under authorisation.</dd>
+<dt>Certified Category:</dt>
+<dd>High-risk operations (flight over assemblies of people, cargo transport of dangerous goods, operations in controlled airspace at altitude) requiring type certificate, organisation approval, and licensed remote pilot.</dd>
+</dl>
+<p>EASA’s SORA methodology uses a risk matrix combining Ground Risk Class (based on UAS kinetic energy and population density overflown) and Air Risk Class (based on airspace volume and traffic density) to derive a required Specific Assurance and Integrity Level (SAIL, I–VI), which in turn specifies the Operational Safety Objectives that must be met.</p>
+<h2 id="sec-metrics"><span class="secnum">1.11</span> Key Engineering Metrics<a class="headerlink" href="#sec-metrics" title="Permanent link">&para;</a></h2>
+<h3 id="1111-specific-power-and-specific-energy"><span class="secnum">1.11.1</span> Specific Power and Specific Energy<a class="headerlink" href="#1111-specific-power-and-specific-energy" title="Permanent link">&para;</a></h3>
+<p>Specific power (<span class="arithmatex">\(P_\mathrm{sp}\)</span>, W) and specific energy (<span class="arithmatex">\(e_\mathrm{sp}\)</span>, J) are the primary figures of merit for propulsion and energy storage systems:</p>
+<div class="tbl" id="tab-energy_comparison">
+<div class="tbl-caption"><strong>Table 1.6.</strong> Specific power and specific energy of propulsion and energy storage systems</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">System</th>
+<th style="text-align: left;"><span class="math inline">\(P_\mathrm{sp}\)</span> (kW)</th>
+<th style="text-align: left;"><span class="math inline">\(e_\mathrm{sp}\)</span> (kJ)</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Li-Po cell (2025)</td>
+<td style="text-align: left;">1.5–3.0</td>
+<td style="text-align: left;">648–792</td>
+<td style="text-align: left;">System level 150–180 Wh/kg</td>
+</tr>
+<tr>
+<td style="text-align: left;">Li-S cell (projected 2028)</td>
+<td style="text-align: left;">1.0–2.0</td>
+<td style="text-align: left;">1080–1440</td>
+<td style="text-align: left;">Cycle life limited</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hydrogen fuel cell</td>
+<td style="text-align: left;">0.4–1.2</td>
+<td style="text-align: left;">10800 (H<span class="math inline">\(_2\)</span> LHV)</td>
+<td style="text-align: left;">Stack only; incl. tank <span class="math inline">\(\sim\)</span>7200</td>
+</tr>
+<tr>
+<td style="text-align: left;">Gasoline (IC engine)</td>
+<td style="text-align: left;">0.8–5.0</td>
+<td style="text-align: left;">15500–16500</td>
+<td style="text-align: left;">At shaft</td>
+</tr>
+<tr>
+<td style="text-align: left;">Jet-A (turbofan)</td>
+<td style="text-align: left;">5–15</td>
+<td style="text-align: left;">14000–16000</td>
+<td style="text-align: left;">At shaft, high altitude</td>
+</tr>
+<tr>
+<td style="text-align: left;">Solid rocket motor</td>
+<td style="text-align: left;">500–2000</td>
+<td style="text-align: left;">3600–5000</td>
+<td style="text-align: left;">Total propellant <span class="math inline">\(I_{sp}\)</span> dependent</td>
+</tr>
+<tr>
+<td style="text-align: left;">Liquid rocket (LOX/RP-1)</td>
+<td style="text-align: left;">3000–8000</td>
+<td style="text-align: left;">5400–6480</td>
+<td style="text-align: left;">High <span class="math inline">\(T/W\)</span>, short burn</td>
+</tr>
+<tr>
+<td style="text-align: left;">Scramjet (hydrocarbon)</td>
+<td style="text-align: left;"><span class="math inline">\(&gt;\)</span>5000</td>
+<td style="text-align: left;">43000 (fuel LHV)</td>
+<td style="text-align: left;"><span class="math inline">\(M &gt; 5\)</span> only</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="1112-breguet-range-and-endurance"><span class="secnum">1.11.2</span> Breguet Range and Endurance<a class="headerlink" href="#1112-breguet-range-and-endurance" title="Permanent link">&para;</a></h3>
+<p>For a fixed-wing aircraft at constant altitude and speed, the Breguet range equation gives the distance flown as fuel is consumed: <span id="eq-breguet_range"></span></p>
+<div class="arithmatex">\[R = \frac{V}{g \cdot \mathrm{TSFC}} \cdot \frac{L}{D}
+    \cdot \ln \left( \frac{W_\mathrm{i}}{W_\mathrm{f}} \right)\tag{1.8}\]</div>
+<p>where <span class="arithmatex">\(V\)</span> is true airspeed, <span class="arithmatex">\(g\)</span> is gravitational acceleration, TSFC is thrust specific fuel consumption (1/(N s)), <span class="arithmatex">\(L/D\)</span> is the lift-to-drag ratio, and <span class="arithmatex">\(W_\mathrm{i}\)</span>, <span class="arithmatex">\(W_\mathrm{f}\)</span> are initial and final weights. The <em>fuel fraction</em> <span class="arithmatex">\(\zeta_f = (W_\mathrm{i} - W_\mathrm{f})/W_\mathrm{i}\)</span> determines how much of the gross weight is fuel. For maximum range, the aircraft should cruise at the speed and altitude that maximises <span class="arithmatex">\(V \cdot L/D\)</span> (the <em>range parameter</em>), which occurs at: <span id="eq-cl_opt_range"></span></p>
+<div class="arithmatex">\[C_{L,\mathrm{opt}} = \sqrt{\frac{C_{D,0}}{\pi e A}} \cdot \frac{1}{\sqrt{3}}
+  \quad \text{(for turbofan-powered aircraft with TSFC $\propto V$)}\tag{1.9}\]</div>
+<p>where <span class="arithmatex">\(C_{D,0}\)</span> is the zero-lift drag coefficient, <span class="arithmatex">\(e\)</span> is the Oswald span efficiency, and <span class="arithmatex">\(A\)</span> is the aspect ratio.</p>
+<p>For maximum <em>endurance</em> (time aloft), the aircraft minimises power required (<span class="arithmatex">\(P = DV\)</span>), which occurs at the minimum of <span class="arithmatex">\(C_D/C_L^{3/2}\)</span>, giving: <span id="eq-cl_opt_endurance"></span></p>
+<div class="arithmatex">\[C_{L,\mathrm{opt,endurance}} = \sqrt{3 \cdot \frac{C_{D,0}}{\pi e A}}\tag{1.10}\]</div>
+<p>The endurance for an electrically powered aircraft follows from <a href="#eq-electric_endurance">Equation (1.5)</a>; for a fuel-burning aircraft: <span id="eq-breguet_endurance"></span></p>
+<div class="arithmatex">\[E = \frac{1}{g \cdot \mathrm{TSFC}} \cdot \frac{L}{D} \cdot
+    \ln \left( \frac{W_\mathrm{i}}{W_\mathrm{f}} \right)\tag{1.11}\]</div>
+<h3 id="1113-thrust-to-weight-ratio"><span class="secnum">1.11.3</span> Thrust-to-Weight Ratio<a class="headerlink" href="#1113-thrust-to-weight-ratio" title="Permanent link">&para;</a></h3>
+<p>Thrust-to-weight ratio <span class="arithmatex">\(T/W\)</span> (dimensionless, evaluated at take-off gross weight) is the primary measure of propulsion system adequacy. Design values differ significantly by vehicle type:</p>
+<ul>
+<li>
+<p>Multi-rotor UAV (hover): <span class="arithmatex">\(T/W = 1.5\)</span>–<span class="arithmatex">\(2.5\)</span> (margin for control authority)</p>
+</li>
+<li>
+<p>Fixed-wing UAV (level cruise): <span class="arithmatex">\(T/W = 0.05\)</span>–<span class="arithmatex">\(0.15\)</span> (only drag need be overcome)</p>
+</li>
+<li>
+<p>Fighter aircraft: <span class="arithmatex">\(T/W = 0.8\)</span>–<span class="arithmatex">\(1.2\)</span> (supermanoeuvre, supersonic dash)</p>
+</li>
+<li>
+<p>SRBM at launch: <span class="arithmatex">\(T/W = 1.5\)</span>–<span class="arithmatex">\(3.0\)</span> (rapid initial acceleration)</p>
+</li>
+<li>
+<p>ICBM first stage: <span class="arithmatex">\(T/W = 1.2\)</span>–<span class="arithmatex">\(1.5\)</span> (gravity loss vs. structural mass)</p>
+</li>
+<li>
+<p>Interceptor SAM at launch: <span class="arithmatex">\(T/W = 20\)</span>–<span class="arithmatex">\(50\)</span> (extremely high acceleration for short time-of-flight intercept)</p>
+</li>
+</ul>
+<h3 id="1114-mass-fraction"><span class="secnum">1.11.4</span> Mass Fraction<a class="headerlink" href="#1114-mass-fraction" title="Permanent link">&para;</a></h3>
+<p>The <em>propellant mass fraction</em> <span class="arithmatex">\(\zeta_p\)</span> (for rockets) and <em>fuel fraction</em> <span class="arithmatex">\(\zeta_f\)</span> (for air-breathers) measure the fraction of gross take-off mass devoted to propellant: <span id="eq-mass_fraction"></span></p>
+<div class="arithmatex">\[\zeta_p = \frac{m_\mathrm{propellant}}{m_\mathrm{total}}\tag{1.12}\]</div>
+<p>The Tsiolkovsky rocket equation relates <span class="arithmatex">\(\zeta_p\)</span> to the velocity increment <span class="arithmatex">\(\Delta v\)</span> achievable in a vacuum: <span id="eq-tsiolkovsky"></span></p>
+<div class="arithmatex">\[\Delta v = I_\mathrm{sp} \cdot g_0 \cdot \ln\left(\frac{1}{1 - \zeta_p}\right)\tag{1.13}\]</div>
+<p>where <span class="arithmatex">\(I_\mathrm{sp}\)</span> is specific impulse in seconds and <span class="arithmatex">\(g_0 = 9.80665\,\text{m/s²}\)</span> is standard gravitational acceleration. For an ICBM requiring <span class="arithmatex">\(\Delta v \approx 7000\,\text{m/s}\)</span> (accounting for gravity and drag losses from a ground launch to ICBM burnout conditions) with <span class="arithmatex">\(I_\mathrm{sp} = 310\,\text{s}\)</span> (LOX/RP-1 first stage): <span id="eq-icbm_massfraction"></span></p>
+<div class="arithmatex">\[\zeta_p = 1 - e^{-\Delta v / (I_{sp} \cdot g_0)}
+  = 1 - e^{-7000/(310 \times 9.806)} = 1 - e^{-2.303} \approx 0.90\tag{1.14}\]</div>
+<p>That is, 90% of launch mass must be propellant. This tyranny of the rocket equation drives the multi-stage design of all ballistic missiles and launch vehicles.</p>
+<h3 id="1115-radar-cross-section-and-stealth"><span class="secnum">1.11.5</span> Radar Cross Section and Stealth<a class="headerlink" href="#1115-radar-cross-section-and-stealth" title="Permanent link">&para;</a></h3>
+<p>For penetrating drones and cruise missiles, radar cross section (RCS) is a critical vulnerability metric. The monostatic RCS <span class="arithmatex">\(\sigma\)</span> (m²) of a target determines the detection range <span class="arithmatex">\(R_\mathrm{det}\)</span> via the radar range equation: <span id="eq-radar_range"></span></p>
+<div class="arithmatex">\[R_\mathrm{det} = \left[ \frac{P_t G_t G_r \lambda^2 \sigma}{(4\pi)^3
+    S_\mathrm{min}} \right]^{1/4}\tag{1.15}\]</div>
+<p>where <span class="arithmatex">\(P_t\)</span> is transmit power, <span class="arithmatex">\(G_t\)</span>, <span class="arithmatex">\(G_r\)</span> are transmit and receive antenna gains, <span class="arithmatex">\(\lambda\)</span> is radar wavelength, and <span class="arithmatex">\(S_\mathrm{min}\)</span> is the minimum detectable signal. RCS values of interest:</p>
+<div class="tbl" id="tab-rcs">
+<div class="tbl-caption"><strong>Table 1.7.</strong> Approximate radar cross sections of selected objects</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Object</th>
+<th style="text-align: left;">RCS <span class="math inline">\(\sigma\)</span> (m²)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Large bomber (B-52)</td>
+<td style="text-align: left;">40–100</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fighter aircraft (F-16)</td>
+<td style="text-align: left;">1–5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Small UAV (DJI Phantom)</td>
+<td style="text-align: left;">0.001–0.01</td>
+</tr>
+<tr>
+<td style="text-align: left;">B-2 Spirit (stealth bomber)</td>
+<td style="text-align: left;"><span class="math inline">\(\sim 0.0001\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">F-22 Raptor (head-on)</td>
+<td style="text-align: left;"><span class="math inline">\(\sim 0.0001\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">AGM-158 JASSM (estimated)</td>
+<td style="text-align: left;"><span class="math inline">\(\sim 0.01\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">AGM-129 ACM (estimated)</td>
+<td style="text-align: left;"><span class="math inline">\(&lt; 0.001\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Cruise missile (non-stealthy)</td>
+<td style="text-align: left;">0.01–0.1</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-shared"><span class="secnum">1.12</span> Shared Technologies Between Drone and Missile Design Spaces<a class="headerlink" href="#sec-shared" title="Permanent link">&para;</a></h2>
+<p>The drone and guided missile represent different points on a continuous design space rather than categorically distinct systems. Several technologies and engineering disciplines apply equally to both:</p>
+<h3 id="1121-inertial-navigation-systems"><span class="secnum">1.12.1</span> Inertial Navigation Systems<a class="headerlink" href="#1121-inertial-navigation-systems" title="Permanent link">&para;</a></h3>
+<p>Inertial Navigation Systems (INS) integrate acceleration measurements to compute position, velocity, and attitude without external reference signals. The same ring-laser gyroscope (RLG) or fibre-optic gyroscope (FOG) technology that provides attitude reference for a MALE UAV autopilot is used, in higher-grade form, as the primary navigation system for a ballistic missile. The key performance parameter is <em>gyro drift rate</em> (<span class="arithmatex">\(^\circ\)</span>/hr): navigation-grade instruments achieve <span class="arithmatex">\(&lt;0.01\,^\circ/\text{hr}\)</span>; tactical-grade instruments achieve <span class="arithmatex">\(0.1\)</span>–<span class="arithmatex">\(10\,^\circ/\text{hr}\)</span>; automotive-grade MEMS gyros achieve <span class="arithmatex">\(10\)</span>–<span class="arithmatex">\(1000\,^\circ/\text{hr}\)</span>.</p>
+<p>Position error growth in a pure INS (Schuler-tuned, for near-Earth applications) is bounded by the Schuler oscillation period (<span class="arithmatex">\(\tau_S = 2\pi\sqrt{R_E/g} \approx 84.4\,\text{min}\)</span>) and the gyro drift rate: <span id="eq-ins_error"></span></p>
+<div class="arithmatex">\[\sigma_\mathrm{pos}(t) \approx \frac{1}{2} \dot{\varepsilon}_g \cdot g \cdot t^2
+  \quad \text{(short time, } t \ll \tau_S\text{)}\tag{1.16}\]</div>
+<p>where <span class="arithmatex">\(\dot{\varepsilon}_g\)</span> is gyro drift in rad/s. For a tactical-grade INS with <span class="arithmatex">\(\dot{\varepsilon}_g = 1\,^\circ/\text{hr} = 4.85×10⁻⁶\,\text{rad/s}\)</span> and flight time <span class="arithmatex">\(t = 600\,\text{s}\)</span>:</p>
+<div class="arithmatex">\[\sigma_\mathrm{pos} \approx \frac{1}{2} \times 4.85\times10^{-6} \times 9.81
+  \times 600^2 \approx 8560\,\text{m}\]</div>
+<p>This confirms the necessity of GPS or other aiding for tactical missiles requiring CEP <span class="arithmatex">\(\ll 1\,\text{km}\)</span>.</p>
+<h3 id="1122-flight-control"><span class="secnum">1.12.2</span> Flight Control<a class="headerlink" href="#1122-flight-control" title="Permanent link">&para;</a></h3>
+<p>Both UAVs and missiles require autopilots to close the stability loop. A cruciform missile operates in a quasi-symmetric environment and frequently uses a “skid-to-turn” or “bank-to-turn” autopilot architecture; UAVs use conventional aerodynamic control surfaces with three-axis autopilots. The underlying control architecture—Proportional- Integral-Derivative (PID) control, Linear Quadratic Regulator (LQR), or modern Model Predictive Control (MPC)—is shared.</p>
+<p>The lateral autopilot of a missile or UAV is frequently structured as a cascaded loop: an inner rate loop stabilises body angular rates, and an outer loop commands lateral acceleration. The design is constrained by the airframe’s short-period dynamics, characterised for a cruciform missile by the airframe transfer function: <span id="eq-missile_tf"></span></p>
+<div class="arithmatex">\[\frac{a_y}{\delta}(s) = \frac{K_a (s + 1/T_\alpha)}{s^2 + 2\zeta\omega_n s + \omega_n^2}\tag{1.17}\]</div>
+<p>where <span class="arithmatex">\(\delta\)</span> is fin deflection, <span class="arithmatex">\(a_y\)</span> is lateral acceleration, <span class="arithmatex">\(K_a\)</span> is the airframe gain, <span class="arithmatex">\(T_\alpha\)</span> is the angle-of-attack time constant, <span class="arithmatex">\(\zeta\)</span> is the damping ratio, and <span class="arithmatex">\(\omega_n\)</span> is the natural frequency. The same transfer function structure, with different parameters, describes the short-period dynamics of a fixed-wing UAV.</p>
+<h3 id="1123-composite-structures"><span class="secnum">1.12.3</span> Composite Structures<a class="headerlink" href="#1123-composite-structures" title="Permanent link">&para;</a></h3>
+<p>Carbon-fibre-reinforced polymer (CFRP) airframe structures are used across the full size range from nano-drones (<span class="arithmatex">\(&lt;100\,\text{g}\)</span>) to strategic missiles. Key material properties (T700 carbon fibre in epoxy matrix, unidirectional laminate):</p>
+<ul>
+<li>
+<p>Tensile modulus: 127 GPa (longitudinal)</p>
+</li>
+<li>
+<p>Tensile strength: 2200 MPa (longitudinal)</p>
+</li>
+<li>
+<p>Density: 1550 1/m³</p>
+</li>
+<li>
+<p>Specific stiffness: 82 MPa/(( m³ )) (vs. 26 MPa/(( m³ )) for 2024-T3 aluminium)</p>
+</li>
+</ul>
+<h3 id="1124-electro-optical-and-infrared-sensors"><span class="secnum">1.12.4</span> Electro-Optical and Infrared Sensors<a class="headerlink" href="#1124-electro-optical-and-infrared-sensors" title="Permanent link">&para;</a></h3>
+<p>The same HgCdTe or InSb infrared detector array that forms the heart of a missile seeker’s imaging infrared (IIR) terminal guidance system is used (in different form factor and with different processing) in a UAV’s EO/IR reconnaissance payload. The key performance metrics—noise-equivalent temperature difference (NETD), spatial resolution, spectral band—apply equally in both contexts.</p>
+<h2 id="sec-systems_table"><span class="secnum">1.13</span> Table of Key Historical and Modern Systems<a class="headerlink" href="#sec-systems_table" title="Permanent link">&para;</a></h2>
+<div class="tbl" id="tab-systems_overview">
+<div class="tbl-caption"><strong>Table 1.8.</strong> Selected historical and modern unmanned systems: key specifications</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">System</th>
+<th style="text-align: left;">Country</th>
+<th style="text-align: left;">Year</th>
+<th style="text-align: left;">Mass (kg)</th>
+<th style="text-align: left;">Range/Endurance</th>
+<th style="text-align: left;">Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Kettering Bug</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1918</td>
+<td style="text-align: left;">240</td>
+<td style="text-align: left;">120 km</td>
+<td style="text-align: left;">Aerial torpedo</td>
+</tr>
+<tr>
+<td style="text-align: left;">V-1 (Fi 103)</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">1944</td>
+<td style="text-align: left;">2150</td>
+<td style="text-align: left;">250 km</td>
+<td style="text-align: left;">Cruise bomb</td>
+</tr>
+<tr>
+<td style="text-align: left;">V-2 (A-4)</td>
+<td style="text-align: left;">Germany</td>
+<td style="text-align: left;">1944</td>
+<td style="text-align: left;">12490</td>
+<td style="text-align: left;">320 km</td>
+<td style="text-align: left;">Ballistic missile</td>
+</tr>
+<tr>
+<td style="text-align: left;">Ryan 147 Lightning Bug</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1964</td>
+<td style="text-align: left;">993</td>
+<td style="text-align: left;">1200 km</td>
+<td style="text-align: left;">Recce UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">BGM-71 TOW</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1970</td>
+<td style="text-align: left;">18.9</td>
+<td style="text-align: left;">3.75 km</td>
+<td style="text-align: left;">ATGM</td>
+</tr>
+<tr>
+<td style="text-align: left;">AIM-9L Sidewinder</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1977</td>
+<td style="text-align: left;">87</td>
+<td style="text-align: left;">18 km</td>
+<td style="text-align: left;">AAM</td>
+</tr>
+<tr>
+<td style="text-align: left;">BGM-109 Tomahawk</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1983</td>
+<td style="text-align: left;">1440</td>
+<td style="text-align: left;">2500 km</td>
+<td style="text-align: left;">Cruise missile</td>
+</tr>
+<tr>
+<td style="text-align: left;">RQ-2 Pioneer</td>
+<td style="text-align: left;">USA/Israel</td>
+<td style="text-align: left;">1986</td>
+<td style="text-align: left;">190</td>
+<td style="text-align: left;">185 km / 5 hr</td>
+<td style="text-align: left;">Tactical UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">AGM-86C ALCM</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1987</td>
+<td style="text-align: left;">1305</td>
+<td style="text-align: left;">1200 km</td>
+<td style="text-align: left;">Cruise missile</td>
+</tr>
+<tr>
+<td style="text-align: left;">RQ-1 Predator</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">1995</td>
+<td style="text-align: left;">1020</td>
+<td style="text-align: left;">1240 km / 40 hr</td>
+<td style="text-align: left;">MALE ISR</td>
+</tr>
+<tr>
+<td style="text-align: left;">RQ-11 Raven</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">2003</td>
+<td style="text-align: left;">1.9</td>
+<td style="text-align: left;">10 km / 1.5 hr</td>
+<td style="text-align: left;">Mini UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">MQ-9 Reaper</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">2007</td>
+<td style="text-align: left;">4760</td>
+<td style="text-align: left;">1900 km / 27 hr</td>
+<td style="text-align: left;">MALE strike</td>
+</tr>
+<tr>
+<td style="text-align: left;">RQ-4 Global Hawk</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">2001</td>
+<td style="text-align: left;">14628</td>
+<td style="text-align: left;">22000 km / 34 hr</td>
+<td style="text-align: left;">HALE ISR</td>
+</tr>
+<tr>
+<td style="text-align: left;">Bayraktar TB2</td>
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: left;">2014</td>
+<td style="text-align: left;">650</td>
+<td style="text-align: left;">150 km / 24 hr</td>
+<td style="text-align: left;">MALE strike</td>
+</tr>
+<tr>
+<td style="text-align: left;">AeroVironment Switchblade 300</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">2012</td>
+<td style="text-align: left;">2.7</td>
+<td style="text-align: left;">10 km / 15 min</td>
+<td style="text-align: left;">Loitering munition</td>
+</tr>
+<tr>
+<td style="text-align: left;">DJI Mavic 3</td>
+<td style="text-align: left;">China</td>
+<td style="text-align: left;">2021</td>
+<td style="text-align: left;">0.895</td>
+<td style="text-align: left;">30 km / 46 min</td>
+<td style="text-align: left;">Commercial UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">AGM-158B JASSM-ER</td>
+<td style="text-align: left;">USA</td>
+<td style="text-align: left;">2014</td>
+<td style="text-align: left;">1045</td>
+<td style="text-align: left;">926 km+</td>
+<td style="text-align: left;">Cruise missile</td>
+</tr>
+<tr>
+<td style="text-align: left;">PGM DF-17</td>
+<td style="text-align: left;">China</td>
+<td style="text-align: left;">2019</td>
+<td style="text-align: left;"><span class="math inline">\(\sim\)</span>13000</td>
+<td style="text-align: left;">2500 km</td>
+<td style="text-align: left;">HGV missile</td>
+</tr>
+<tr>
+<td style="text-align: left;">3M22 Zircon</td>
+<td style="text-align: left;">Russia</td>
+<td style="text-align: left;">2022</td>
+<td style="text-align: left;"><span class="math inline">\(\sim\)</span>3000</td>
+<td style="text-align: left;">1000 km</td>
+<td style="text-align: left;">Hypersonic cruise</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="sec-howtoread"><span class="secnum">1.14</span> Reading This Book: Prerequisites and Structure<a class="headerlink" href="#sec-howtoread" title="Permanent link">&para;</a></h2>
+<h3 id="1141-mathematical-prerequisites"><span class="secnum">1.14.1</span> Mathematical Prerequisites<a class="headerlink" href="#1141-mathematical-prerequisites" title="Permanent link">&para;</a></h3>
+<p>The derivations in this book require the following mathematical tools, all of which are reviewed where first needed:</p>
+<ul>
+<li>
+<p><strong>Vector calculus:</strong> Gradient, divergence, curl; coordinate transformations using direction cosine matrices and quaternions.</p>
+</li>
+<li>
+<p><strong>Ordinary differential equations:</strong> First- and second-order linear ODEs; Laplace transform methods; stability criteria (Routh-Hurwitz).</p>
+</li>
+<li>
+<p><strong>Linear algebra:</strong> Eigenvalues and eigenvectors; matrix inversion; state-space representations (<span class="arithmatex">\(\dot{\mathbf{x}} = \mathbf{Ax} + \mathbf{Bu}\)</span>).</p>
+</li>
+<li>
+<p><strong>Statistics and estimation:</strong> Normal distribution; covariance matrices; Kalman filter theory (Chapter 5).</p>
+</li>
+<li>
+<p><strong>Thermodynamics:</strong> First and second laws; isentropic flow relations; combustion stoichiometry (Chapter 3).</p>
+</li>
+<li>
+<p><strong>Fluid mechanics:</strong> Conservation equations; boundary layer theory; compressible flow (Chapter 2).</p>
+</li>
+</ul>
+<h3 id="1142-recommended-background-reading"><span class="secnum">1.14.2</span> Recommended Background Reading<a class="headerlink" href="#1142-recommended-background-reading" title="Permanent link">&para;</a></h3>
+<p>Readers who wish to supplement their background before engaging with specific chapters are directed to the following foundational texts:</p>
+<ul>
+<li>
+<p><em>Aerodynamics for Engineers</em>, Bertin &amp; Cummings (6th ed., 2014) — for Chapter 2.</p>
+</li>
+<li>
+<p><em>Rocket Propulsion Elements</em>, Sutton &amp; Biblarz (9th ed., 2017) — for Chapter 3 (rocket propulsion sections).</p>
+</li>
+<li>
+<p><em>Gas Turbine Theory</em>, Saravanamuttoo et al. (7th ed., 2017) — for Chapter 3 (turbine/ramjet sections).</p>
+</li>
+<li>
+<p><em>Modern Control Engineering</em>, Ogata (5th ed., 2010) — for Chapters 6–7.</p>
+</li>
+<li>
+<p><em>Fundamentals of Spacecraft Attitude Determination and Control</em>, Markley &amp; Crassidis (2014) — for Chapter 5 (inertial navigation).</p>
+</li>
+<li>
+<p><em>Tactical and Strategic Missile Guidance</em>, Zarchan (7th ed., 2019) — for Chapter 7 (guidance laws).</p>
+</li>
+<li>
+<p><em>Small Unmanned Aircraft</em>, Beard &amp; McLain (2012) — for Chapters 10–13 (small UAS autopilots).</p>
+</li>
+</ul>
+<h3 id="1143-software-tools"><span class="secnum">1.14.3</span> Software Tools<a class="headerlink" href="#1143-software-tools" title="Permanent link">&para;</a></h3>
+<p>Many chapters include worked examples that can be reproduced and extended using standard engineering software. The primary tools referenced are:</p>
+<ul>
+<li>
+<p><strong>MATLAB/Simulink</strong> (MathWorks): Used for control system design, simulation, and signal processing examples. All scripts are listed in Appendix F and available from the companion website.</p>
+</li>
+<li>
+<p><strong>Python</strong> (with NumPy, SciPy, matplotlib): Open-source alternative for all numerical examples. Python equivalents of MATLAB scripts are provided.</p>
+</li>
+<li>
+<p><strong>OpenFOAM</strong>: Open-source CFD for aerodynamic analysis examples (Chapter 2).</p>
+</li>
+<li>
+<p><strong>JSBSim</strong>: Open-source flight dynamics model, used in autopilot design and hardware-in-the-loop simulation examples (Chapters 6–7).</p>
+</li>
+</ul>
+<h3 id="1144-chapter-dependency-map"><span class="secnum">1.14.4</span> Chapter Dependency Map<a class="headerlink" href="#1144-chapter-dependency-map" title="Permanent link">&para;</a></h3>
+<p>Chapters are written to be as self-contained as possible, with forward references where essential material appears later. The recommended reading paths for different audiences are:</p>
+<ul>
+<li>
+<p><strong>Aerodynamicist:</strong> Chapters 1, 2, 8, 9, 15, 16, 23, 24</p>
+</li>
+<li>
+<p><strong>Propulsion engineer:</strong> Chapters 1, 2, 3, 15, 16, 17</p>
+</li>
+<li>
+<p><strong>GNC engineer:</strong> Chapters 1, 2, 4, 5, 6, 7, 20</p>
+</li>
+<li>
+<p><strong>Avionics/software engineer:</strong> Chapters 1, 4, 5, 11, 12, 27, 28, 29</p>
+</li>
+<li>
+<p><strong>System engineer / programme manager:</strong> Chapters 1, 2, 3, 8, 15, 23, 31, 32, 35, 36, 37, 38</p>
+</li>
+<li>
+<p><strong>First-time reader:</strong> Read all of Part I (Chapters 1–3) before selecting a specialisation path.</p>
+</li>
+</ul>
+<h2 id="115-summary"><span class="secnum">1.15</span> Summary<a class="headerlink" href="#115-summary" title="Permanent link">&para;</a></h2>
+<p>This chapter has established the context for the technical material that follows. The key points are:</p>
+<ul>
+<li>
+<p>Unmanned aerial systems trace their lineage to World War I aerial torpedoes and inter-war target drones. Guided missiles derive from the German V-weapons programme of World War II. Both technologies have undergone multiple paradigm shifts driven by advances in electronics, propulsion, and computation.</p>
+</li>
+<li>
+<p>The terminology landscape is imprecise; this book uses UAV for the vehicle, UAS for the complete system, RPAS for operator-supervised vehicles (per ICAO), and <em>drone</em> informally.</p>
+</li>
+<li>
+<p>Classification frameworks organise the design space by size, range, endurance, autonomy level (STANAG 4586 ACL 1–10), and target/launch environment.</p>
+</li>
+<li>
+<p>Physical constraints—the square-cube law, energy density limits, and the rocket equation—define the boundaries of the possible and explain the distribution of system configurations seen in practice.</p>
+</li>
+<li>
+<p>The commercial drone market has grown at compound rates exceeding 40% per annum, transforming agriculture, survey, inspection, and logistics. Military proliferation has been equally dramatic, with over 100 nations now operating military UAS.</p>
+</li>
+<li>
+<p>Drone and missile design spaces share core technologies: inertial navigation, flight control, composite structures, and electro-optical sensors. The loitering munition represents a deliberate fusion of the two design paradigms.</p>
+</li>
+<li>
+<p>Regulatory frameworks (ICAO, FAA Part 107, EASA Open/Specific/Certified categories) increasingly constrain commercial UAS operations and are evolving rapidly toward Beyond Visual Line-of-Sight (BVLOS) and Urban Air Mobility.</p>
+</li>
+</ul>
+<p>The quantitative design relationships introduced in this chapter—the Breguet range equation (<a href="#eq-breguet_range">(1.8)</a>), the Tsiolkovsky equation (<a href="app-a-mathematical-foundations.html#eq-tsiolkovsky">(A.101)</a>), the radar range equation (<a href="#eq-radar_range">(1.15)</a>), the swarm kill probability (<a href="ch17-missile-classification-and-types.html#eq-swarm_pk">(17.38)</a>), and the hover power equation (<a href="ch15-special-drone-categories.html#eq-hover_power">(15.30)</a>)—recur throughout the book and are the starting point for more detailed analyses in the chapters that follow.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="index.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Overview and preface">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Overview and preface
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="ch02-drone-classification-and-types.html" class="md-footer__link md-footer__link--next" aria-label="Next: 2. Drone Classification and Types">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                2. Drone Classification and Types
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

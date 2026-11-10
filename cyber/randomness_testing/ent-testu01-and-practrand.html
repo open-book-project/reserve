@@ -1,0 +1,1891 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/randomness_testing/ent-testu01-and-practrand.html">
+  
+  
+    <link rel="prev" href="fips-140-2-and-bsi-ais-31.html">
+  
+  
+    <link rel="next" href="comparing-the-batteries.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>8. ENT, TestU01 and PractRand - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#81-about-ent" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. ENT, TestU01 and PractRand
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Randomness Testing</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="random-numbers-and-the-coin-flip-model.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random Numbers and the Coin-Flip Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributions-corrections-and-entropy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distributions, Corrections and Entropy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-i-balance-runs-and-spectra.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. NIST SP 800-22 (I): Balance, Runs and Spectra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-ii-patterns-complexity-and-walks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. NIST SP 800-22 (II): Patterns, Complexity and Walks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="estimating-entropy-nist-sp-800-90b.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Estimating Entropy: NIST SP 800-90B
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diehard-and-dieharder.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Diehard and Dieharder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fips-140-2-and-bsi-ais-31.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. FIPS 140-2 and BSI AIS 31
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. ENT, TestU01 and PractRand
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="ent-testu01-and-practrand.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. ENT, TestU01 and PractRand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#81-about-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 About ENT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-entropy-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Entropy (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-chi-square-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Chi-square (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-arithmetic-mean-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Arithmetic mean (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-monte-carlo-value-for-pi-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Monte Carlo value for pi (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-serial-correlation-coefficient-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 Serial correlation coefficient (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-about-testu01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7 About TestU01
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#88-birthday-spacings-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8 Birthday spacings (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#89-collision-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.9 Collision (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#810-gap-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10 Gap (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#811-simple-poker-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.11 Simple poker (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#812-coupon-collector-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.12 Coupon collector (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#813-maxoft-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.13 MaxOft (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#814-weight-distribution-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.14 Weight distribution (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#815-matrix-rank-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.15 Matrix rank (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#816-hamming-independence-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.16 Hamming independence (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#817-random-walk-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.17 Random walk (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#818-about-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.18 About PractRand
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#819-bcfn-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.19 BCFN (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#820-dc6-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.20 DC6 (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#821-fpf-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.21 FPF (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#822-gap16-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.22 Gap16 (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#823-brank-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.23 BRank (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#824-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.24 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#825-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.25 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comparing-the-batteries.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Comparing the Batteries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-i-bias-entropy-correlation-and-compression.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Additional Tests (I): Bias, Entropy, Correlation and Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-ii-source-behaviour-and-health.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Additional Tests (II): Source Behaviour and Health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iii-spectral-ordinal-matrix-and-betting-tes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Additional Tests (III): Spectral, Ordinal, Matrix and Betting Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iv-collisions-memory-and-learning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Additional Tests (IV): Collisions, Memory and Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recognising-generators-and-classifying-sources.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Recognising Generators and Classifying Sources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#81-about-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.1 About ENT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#82-entropy-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.2 Entropy (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#83-chi-square-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.3 Chi-square (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#84-arithmetic-mean-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.4 Arithmetic mean (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#85-monte-carlo-value-for-pi-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.5 Monte Carlo value for pi (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#86-serial-correlation-coefficient-ent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.6 Serial correlation coefficient (ENT)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#87-about-testu01" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.7 About TestU01
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#88-birthday-spacings-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.8 Birthday spacings (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#89-collision-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.9 Collision (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#810-gap-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.10 Gap (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#811-simple-poker-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.11 Simple poker (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#812-coupon-collector-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.12 Coupon collector (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#813-maxoft-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.13 MaxOft (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#814-weight-distribution-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.14 Weight distribution (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#815-matrix-rank-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.15 Matrix rank (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#816-hamming-independence-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.16 Hamming independence (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#817-random-walk-smallcrush" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.17 Random walk (SmallCrush)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#818-about-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.18 About PractRand
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#819-bcfn-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.19 BCFN (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#820-dc6-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.20 DC6 (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#821-fpf-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.21 FPF (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#822-gap16-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.22 Gap16 (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#823-brank-practrand" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.23 BRank (PractRand)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#824-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.24 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#825-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8.25 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-8-ent-testu01-and-practrand">Chapter 8: ENT, TestU01 and PractRand<a class="headerlink" href="#chapter-8-ent-testu01-and-practrand" title="Permanent link">&para;</a></h1>
+<p>The last three tools in the survey sit at three different points on a scale. ENT is a small command-line program that prints five statistics on any file, with no verdict. TestU01 is a C library whose largest battery is among the most demanding available, and it comes in three levels, SmallCrush, Crush and BigCrush. PractRand does not fix the amount of data in advance: it tests as you feed it and tells you how much data it took for a flaw to appear. Together they show how test power depends on how much data you are willing to spend.</p>
+<h2 id="81-about-ent">8.1 About ENT<a class="headerlink" href="#81-about-ent" title="Permanent link">&para;</a></h2>
+<p>John Walker's ENT (the page we read is dated 28 January 2008, and the program is public domain) is a small command-line tool that reports five statistics on any file of bytes, a quick look that also hints at how well a file might compress. It needs no fixed amount of data, though some values, such as pi, converge slowly and benefit from large files. It gives no verdict. It prints numbers, and you read them with judgement.</p>
+<h2 id="82-entropy-ent">8.2 Entropy (ENT)<a class="headerlink" href="#82-entropy-ent" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> How many bits of information does each byte carry, if we look at bytes on their own? Full randomness gives 8. Text gives far less. It is like asking how evenly used the letters in a language are, ignoring what order they come in.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.2: Entropy (ENT)</p>
+<p>The bytes 1, 2, 3, 4, 1, 2, 3, 4 have four equally common values, so the entropy is <span class="arithmatex">\(-4 \cdot 0.25 \log_2 0.25 = 2.0\)</span> bits per byte. Walker's example of C source code scores about 4.9, implying roughly 38 percent could be saved by compression.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[H = -\sum_{i=0}^{255} p_i \log_2 p_i, \qquad p_i = \frac{c_i}{n}\]</div>
+<ul>
+<li><span class="arithmatex">\(c_i\)</span> is the count of byte value <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(n\)</span> is the total.</li>
+<li>ENT attaches no p-value to this figure.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches uneven byte use. It is blind to order, since a file holding all 256 values in a neat loop scores a perfect 8. Walker notes that compressors using longer frames may do better than this figure suggests. Note also that this is Shannon entropy, not min-entropy.</p>
+<h2 id="83-chi-square-ent">8.3 Chi-square (ENT)<a class="headerlink" href="#83-chi-square-ent" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Are all 256 byte values equally common, to within what chance allows? Walker calls it the most commonly used randomness test and a very sensitive one. He reads it as a percentage: how often truly random data would exceed this value. Near the middle is good, and very high or very low is bad.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.3: Chi-square (ENT)</p>
+<p>Walker's Park and Miller generator example gives 212.53, which random data would exceed 97.53 percent of the time. On 255 degrees of freedom, we get the same figure. His JPEG example gives 1542.26, exceeded less than 0.01 percent of the time, so a dense file is not necessarily a random one.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\chi^2 = \sum_{i=0}^{255} \frac{(c_i - n/256)^2}{n/256}, \qquad \text{percentage} = 100 \cdot P\!\left(\chi^2_{255} &gt; \chi^2\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(c_i\)</span> is the count of byte value <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(n\)</span> is the number of bytes.</li>
+<li>ENT's code sums over 256 cells, which implies 255 degrees of freedom.</li>
+</ul>
+<p>Walker's bands are as follows. Above 99 or below 1 percent is almost certainly not random. Between 95 and 99, or between 1 and 5, is suspect. Between 90 and 95, or between 5 and 10, is almost suspect.</p>
+<p><strong>What it catches and misses.</strong> It is sensitive to any uneven use of byte values. Counts that are too even also stand out, at the other end of Walker's scale: the chi-square falls, so the percentage climbs. A perfect loop of 0, 1, 2 ... 255 has chi-square 0, reads as 100 percent and lands in his almost certainly not random band. Like entropy, though, it knows nothing about order: sort a file with ordinary byte counts into ascending order, and the chi-square does not change at all.</p>
+<h2 id="84-arithmetic-mean-ent">8.4 Arithmetic mean (ENT)<a class="headerlink" href="#84-arithmetic-mean-ent" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Add up all the bytes and divide by how many there are. Random bytes average 127.5. A persistent shift up or down means the values are skewed. It is the simplest of all the checks.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.4: Arithmetic mean (ENT)</p>
+<p>The bytes 1, 2, 3, 4, 1, 2, 3, 4 have a mean of 2.5. Walker's JPEG example has 125.93. For a million uniform bytes, the standard deviation of the mean would be only 0.074, so 125.93 would be a long way out for a file that size.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\bar{x} = \frac{1}{n} \sum_{j=1}^{n} x_j\]</div>
+<ul>
+<li><span class="arithmatex">\(x_j\)</span> is byte <span class="arithmatex">\(j\)</span>.</li>
+<li>For uniform bytes, the mean is 127.5 and the variance of one byte is <span class="arithmatex">\((256^2 - 1)/12\)</span>. So <span class="arithmatex">\(\bar{x}\)</span> has variance <span class="arithmatex">\((256^2 - 1)/(12n)\)</span>.</li>
+<li>ENT prints the mean and gives no p-value.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches overall skew. A very skewed distribution that is balanced around 127.5 scores perfectly, as would half the bytes at 0 and half at 255.</p>
+<h2 id="85-monte-carlo-value-for-pi-ent">8.5 Monte Carlo value for pi (ENT)<a class="headerlink" href="#85-monte-carlo-value-for-pi-ent" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Throw darts at a square board with a circle drawn inside. The share landing in the circle should be <span class="arithmatex">\(\pi/4\)</span>. Using the file's bytes as dart positions, we get an estimate of <span class="arithmatex">\(\pi\)</span>. If the bytes are lopsided or correlated, the darts miss their mark. It is memorable, but this is a slowly converging test.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.5: Monte Carlo value for pi (ENT)</p>
+<p>The six bytes 40 10 05 20 80 20 (in hexadecimal) give <span class="arithmatex">\(x = 4198405\)</span> and <span class="arithmatex">\(y = 2129952\)</span>. Then <span class="arithmatex">\(x^2 + y^2 \le (256^3 - 1)^2\)</span>, so this is a hit. Walker's 500,000-byte radioactive sample gives 3.143580574, an error of 0.06 percent.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\hat{\pi} = 4 \cdot \frac{\text{hits}}{\text{points}}, \qquad \text{a hit if } x^2 + y^2 \le (256^3 - 1)^2\]</div>
+<ul>
+<li>Each point takes six bytes: three for <span class="arithmatex">\(x\)</span> and three for <span class="arithmatex">\(y\)</span>.</li>
+<li>ENT prints the estimate and the error percentage, with no p-value.</li>
+</ul>
+<p>Under independent uniform bytes, the hit count is close to binomial, with hit chance near <span class="arithmatex">\(\pi/4\)</span>. By our calculation, an estimate from 500,000 bytes has a standard deviation of about 0.0057.</p>
+<p><strong>What it catches and misses.</strong> It catches gross dependence between successive 3-byte values. It is not a sharp test: only a few of the top bits decide most points, and the error shrinks slowly with data.</p>
+<h2 id="86-serial-correlation-coefficient-ent">8.6 Serial correlation coefficient (ENT)<a class="headerlink" href="#86-serial-correlation-coefficient-ent" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> How much does each byte depend on the one before? For random data, the answer should be close to zero. Walker notes that a C program gives around 0.5, and uncompressed bitmaps approach 1. It is like asking whether today's temperature helps predict tomorrow's.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.6: Serial correlation coefficient (ENT)</p>
+<p>For bytes 1, 2, 3, 4 with wraparound, <span class="arithmatex">\(n = 4\)</span>, <span class="arithmatex">\(\sum x_i x_{i+1} = 24\)</span>, <span class="arithmatex">\(\sum x_i = 10\)</span>, <span class="arithmatex">\(\sum x_i^2 = 30\)</span>. So <span class="arithmatex">\(C = (4 \cdot 24 - 100)/(4 \cdot 30 - 100) = -0.2\)</span>. His JPEG example scores 0.004249.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[C = \frac{n\sum_{i} x_i x_{i+1} - \left(\sum_i x_i\right)^2}{n\sum_i x_i^2 - \left(\sum_i x_i\right)^2}\]</div>
+<ul>
+<li><span class="arithmatex">\(x_i\)</span> is byte <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(n\)</span> is the number of bytes.</li>
+<li>The last byte is paired with the first, a detail we took from ENT's source code.</li>
+<li>The page points to Knuth for theory and gives no test. In a quick simulation of ours on uniform bytes, the spread of <span class="arithmatex">\(C\)</span> was close to <span class="arithmatex">\(1/\sqrt{n}\)</span>, so a value several times that from zero is unusual.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches linear dependence between adjacent bytes. It misses lags other than 1, and relationships that are not linear, so a strong but nonlinear link may give a value near zero.</p>
+<h2 id="87-about-testu01">8.7 About TestU01<a class="headerlink" href="#87-about-testu01" title="Permanent link">&para;</a></h2>
+<p>Pierre L'Ecuyer and Richard Simard of the University of Montreal built TestU01 as a C library for testing generators of uniform numbers. Their paper appeared in ACM Transactions on Mathematical Software, and its largest battery is very demanding. It has three batteries for sequences of numbers in <span class="arithmatex">\((0, 1)\)</span>, shown below, and three more for bit sequences.</p>
+<table>
+<thead>
+<tr>
+<th>Battery</th>
+<th>Tests</th>
+<th>p-values computed</th>
+<th>Numbers used</th>
+<th>Time on the paper's 2.4 GHz machine, for MT19937</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SmallCrush</td>
+<td>10</td>
+<td>not stated as a total</td>
+<td>slightly under 51,320,000 when run on a file</td>
+<td>14 seconds</td>
+</tr>
+<tr>
+<td>Crush</td>
+<td>96</td>
+<td>144</td>
+<td>about <span class="arithmatex">\(2^{35}\)</span></td>
+<td>1 hour</td>
+</tr>
+<tr>
+<td>BigCrush</td>
+<td>106</td>
+<td>160</td>
+<td>about <span class="arithmatex">\(2^{38}\)</span></td>
+<td>5.5 hours</td>
+</tr>
+</tbody>
+</table>
+<p>The authors suggest starting with SmallCrush, then going on to Crush and BigCrush if everything is fine. Flagging is by reporting, not a fixed level. The batteries print a summary of any p-values outside <span class="arithmatex">\([0.001, 0.9990]\)</span>, marking values below <span class="arithmatex">\(10^{-300}\)</span> as eps and below <span class="arithmatex">\(10^{-15}\)</span> as eps1. Very small and very large p-values both count, since a large one can mean excessive uniformity. In their comparison tables, the authors treat a p-value outside <span class="arithmatex">\([10^{-10}, 1 - 10^{-10}]\)</span> as a clear failure and values in <span class="arithmatex">\((10^{-10}, 10^{-4}]\)</span> or <span class="arithmatex">\([1 - 10^{-4}, 1 - 10^{-10})\)</span> as suspect. For a borderline result, you run the test again on fresh numbers until the failure is obvious or the suspicion fades. Since these are large tests on real generators, the small examples below are only toys to show the mechanics. MT19937 is a telling case: the paper reports that it fails only two linear complexity tests, with p-values above <span class="arithmatex">\(1 - 10^{-15}\)</span>, and that all LFSR and GFSR-type generators fail those two.</p>
+<h2 id="88-birthday-spacings-smallcrush">8.8 Birthday spacings (SmallCrush)<a class="headerlink" href="#88-birthday-spacings-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This is Marsaglia's birthday spacings test at larger scale. Throw points into a huge number of cells, sort their cell numbers and look at the gaps. Generators with a lattice structure give far too many equal gaps. It catches linear congruential generators very fast.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.8: Birthday spacings (SmallCrush)</p>
+<p>Cell numbers 1, 4, 9, 16, 20, 25 in a space of 32 cells give gaps 3, 5, 7, 4, 5. The value 5 repeats, so <span class="arithmatex">\(Y = 1\)</span>, while <span class="arithmatex">\(\lambda = 6^3/(4 \cdot 32) = 1.6875\)</span>. The real SmallCrush settings give <span class="arithmatex">\(\lambda = (5 \times 10^6)^3/(4 \cdot 2^{60}) = 27.1\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[Y \sim \mathrm{Poisson}(\lambda) \text{ approximately}, \qquad \lambda = \frac{n^3}{4k}, \qquad k = d^t\]</div>
+<ul>
+<li><span class="arithmatex">\(n\)</span> is the number of points, and <span class="arithmatex">\(k\)</span> the number of cells.</li>
+<li><span class="arithmatex">\(Y\)</span> is the number of collisions among the gaps.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 5 \times 10^6\)</span>, <span class="arithmatex">\(r = 0\)</span>, <span class="arithmatex">\(d = 2^{30}\)</span> and <span class="arithmatex">\(t = 2\)</span>.</li>
+</ul>
+<p>The p-value comes from the Poisson tail. With repeats, the total of <span class="arithmatex">\(Y\)</span> is compared with Poisson of mean <span class="arithmatex">\(N\lambda\)</span>.</p>
+<p><strong>What it catches and misses.</strong> It catches lattice structure, and the paper shows linear congruential generators with modulus near <span class="arithmatex">\(k\)</span> failing at a sample size that grows only as <span class="arithmatex">\(k^{1/3}\)</span>. Here it reads just the top 30 bits of each number, so defects in the lowest bits can pass.</p>
+<h2 id="89-collision-smallcrush">8.9 Collision (SmallCrush)<a class="headerlink" href="#89-collision-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Throw <span class="arithmatex">\(n\)</span> balls into far more than <span class="arithmatex">\(n\)</span> boxes and count how often a ball lands in a box that is already occupied. Too few collisions means the points are too evenly spread, and too many means they are clumped. The authors find this one of the most powerful simple measures.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.9: Collision (SmallCrush)</p>
+<p>Eight balls in 16 boxes landing at 3, 7, 3, 1, 7, 9, 2, 3 occupy 5 boxes, so <span class="arithmatex">\(C = 3\)</span>, against a rough expectation of <span class="arithmatex">\(8^2/(2 \cdot 16) = 2\)</span>. In SmallCrush, the expected number is about <span class="arithmatex">\((5 \times 10^6)^2/(2 \cdot 2^{32}) = 2910\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[C = n - W_1, \qquad \mu_c \approx \frac{n^2}{2k}\]</div>
+<ul>
+<li><span class="arithmatex">\(n\)</span> is the number of balls, <span class="arithmatex">\(k\)</span> the number of boxes, and <span class="arithmatex">\(W_1\)</span> the number of occupied boxes.</li>
+<li><span class="arithmatex">\(C\)</span> is asymptotically Poisson with mean <span class="arithmatex">\(\mu_c\)</span> when <span class="arithmatex">\(\mu_c\)</span> stays moderate, and normal when <span class="arithmatex">\(n/k\)</span> tends to a positive constant.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 5 \times 10^6\)</span>, <span class="arithmatex">\(r = 0\)</span>, <span class="arithmatex">\(d = 2^{16}\)</span> and <span class="arithmatex">\(t = 2\)</span>, so <span class="arithmatex">\(k = 2^{32}\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches clumping and excess regularity, even when the deviation is concentrated in a small part of the space. It sees points two numbers at a time, using only 16 bits from each, so it misses defects outside that field.</p>
+<h2 id="810-gap-smallcrush">8.10 Gap (SmallCrush)<a class="headerlink" href="#810-gap-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Pick a small target zone in <span class="arithmatex">\([0, 1)\)</span> and count how many numbers go by between visits. The waits should follow a simple geometric pattern, like waiting for a particular number on a roulette wheel.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.10: Gap (SmallCrush)</p>
+<p>With target width <span class="arithmatex">\(p = 1/256\)</span>, the chance of a gap of 0 is <span class="arithmatex">\(1/256 = 0.0039\)</span>, and half of all waits run to at least 177 values, since <span class="arithmatex">\((255/256)^{177} = 0.500\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[P(\text{gap} = s) = p(1-p)^s, \qquad \chi^2 = \sum_{s} \frac{(\mathrm{obs}_s - \mathrm{exp}_s)^2}{\mathrm{exp}_s}\]</div>
+<ul>
+<li><span class="arithmatex">\(p = \beta - \alpha\)</span> is the width of the target interval <span class="arithmatex">\([\alpha, \beta)\)</span>.</li>
+<li><span class="arithmatex">\(s\)</span> is the gap length, with classes grouped as needed.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 2 \times 10^5\)</span>, <span class="arithmatex">\(r = 22\)</span>, <span class="arithmatex">\(\alpha = 0\)</span> and <span class="arithmatex">\(\beta = 1/256\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches a generator that revisits a region too regularly, using bits after dropping the first 22. It watches only one small region, so structure elsewhere goes unnoticed.</p>
+<h2 id="811-simple-poker-smallcrush">8.11 Simple poker (SmallCrush)<a class="headerlink" href="#811-simple-poker-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Deal hands of <span class="arithmatex">\(k\)</span> cards from a deck with <span class="arithmatex">\(d\)</span> kinds, and note how many distinct kinds each hand holds. Hands holding too few or too many kinds suggest trouble. It tells you whether values spread as they should within short stretches.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.11: Simple poker (SmallCrush)</p>
+<p>With <span class="arithmatex">\(d = k = 8\)</span>, the hand 1, 4, 4, 2, 7, 1, 4, 0 has 5 distinct values. In SmallCrush, with <span class="arithmatex">\(d = k = 64\)</span>, the average hand has <span class="arithmatex">\(64(1 - (63/64)^{64}) = 40.6\)</span> distinct values.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[P(s) = \frac{d(d-1)\cdots(d-s+1)}{d^k}\,S(k, s), \qquad \chi^2 = \sum_s \frac{(\mathrm{obs}_s - nP(s))^2}{nP(s)}\]</div>
+<ul>
+<li><span class="arithmatex">\(s\)</span> is the number of distinct values in a hand of <span class="arithmatex">\(k\)</span>, drawn from <span class="arithmatex">\(d\)</span> values.</li>
+<li><span class="arithmatex">\(S(k, s)\)</span> is the Stirling number of the second kind, the number of ways to split <span class="arithmatex">\(k\)</span> cards into <span class="arithmatex">\(s\)</span> groups.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 4 \times 10^5\)</span>, <span class="arithmatex">\(r = 24\)</span> and <span class="arithmatex">\(d = k = 64\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches local lack of variety in a small field of bits, here six bits after dropping the first 24. It only sees how many values occur, not which.</p>
+<h2 id="812-coupon-collector-smallcrush">8.12 Coupon collector (SmallCrush)<a class="headerlink" href="#812-coupon-collector-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Collect a set of <span class="arithmatex">\(d\)</span> different coupons, drawing one at a time, and note how many draws it takes to get them all. The waiting time has a known pattern. It is exactly like collecting football stickers: the last one or two take much longer than the rest.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.12: Coupon collector (SmallCrush)</p>
+<p>With <span class="arithmatex">\(d = 16\)</span>, the expected wait is <span class="arithmatex">\(16(1 + 1/2 + \cdots + 1/16) = 54.09\)</span> draws. With <span class="arithmatex">\(d = 4\)</span>, working through the states gives <span class="arithmatex">\(P(4) = 0.0938\)</span>, <span class="arithmatex">\(P(5) = 0.1406\)</span> and <span class="arithmatex">\(P(6) = 0.1465\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[P_{i \to i}(\text{next draw}) = \frac{i}{d}, \qquad P_{i \to i+1}(\text{next draw}) = \frac{d-i}{d}, \qquad \chi^2 = \sum_{s} \frac{(\mathrm{obs}_s - \mathrm{exp}_s)^2}{\mathrm{exp}_s}\]</div>
+<ul>
+<li><span class="arithmatex">\(i\)</span> is the number of distinct coupons seen so far, and <span class="arithmatex">\(s\)</span> is the total length.</li>
+<li>The probabilities for <span class="arithmatex">\(s\)</span> follow from this simple chain, with classes merged as usual.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 5 \times 10^5\)</span>, <span class="arithmatex">\(r = 26\)</span> and <span class="arithmatex">\(d = 16\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches a generator whose values do not all appear at the right pace, in a 4-bit field after dropping the first 26. It only looks at this small field.</p>
+<h2 id="813-maxoft-smallcrush">8.13 MaxOft (SmallCrush)<a class="headerlink" href="#813-maxoft-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Take <span class="arithmatex">\(t\)</span> numbers at a time and keep the largest. The largest of six uniforms has a known distribution, heavily weighted towards 1. Group after group, we check whether the maxima follow that shape. It is like checking that the tallest player on every six-person team has a typical height.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.13: MaxOft (SmallCrush)</p>
+<p>From 0.21, 0.84, 0.33, 0.67, 0.08, 0.52 the maximum is 0.84. Then <span class="arithmatex">\(F(0.84) = 0.84^6 = 0.351\)</span>. A maximum as low as 0.5 has probability only <span class="arithmatex">\(0.5^6 = 0.0156\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[F(x) = x^t, \qquad \text{chi-square on } d \text{ equal-probability cells, plus an Anderson-Darling test}\]</div>
+<ul>
+<li><span class="arithmatex">\(x\)</span> is a group's maximum, and <span class="arithmatex">\(t = 6\)</span> is the group size.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 2 \times 10^6\)</span>, <span class="arithmatex">\(r = 0\)</span> and <span class="arithmatex">\(d = 10^5\)</span>.</li>
+<li>The cells are chosen so that each expects exactly <span class="arithmatex">\(n/d\)</span> values.</li>
+<li>The Anderson-Darling test is a relative of the KS test that pays more attention to the tails.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches defects in the top of the range and dependence within short groups. Because only the largest value in each group counts, it is less sensitive to the rest.</p>
+<h2 id="814-weight-distribution-smallcrush">8.14 Weight distribution (SmallCrush)<a class="headerlink" href="#814-weight-distribution-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Take a block of 256 numbers and count how many land in a chosen interval. That count should have a binomial spread, and we compare many blocks with that shape. The test was proposed by Matsumoto and Kurita.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.14: Weight distribution (SmallCrush)</p>
+<p>With <span class="arithmatex">\(k = 256\)</span> and interval width <span class="arithmatex">\(p = 1/8\)</span>, the mean count is 32 with variance 28. A count of exactly 32 has probability 0.0752, and a count of 45 or more has probability 0.0116.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[W = \sum_{j=1}^{k} I[\alpha \le u_j &lt; \beta], \qquad W \sim \mathrm{Binomial}(k, \beta - \alpha)\]</div>
+<ul>
+<li><span class="arithmatex">\(u_j\)</span> are uniforms, and <span class="arithmatex">\(I\)</span> is 1 when the condition holds and 0 otherwise.</li>
+<li>A chi-square compares <span class="arithmatex">\(n\)</span> values of <span class="arithmatex">\(W\)</span> with that law, with classes regrouped so that expected counts are large enough.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 2 \times 10^5\)</span>, <span class="arithmatex">\(r = 27\)</span>, <span class="arithmatex">\(k = 256\)</span>, <span class="arithmatex">\(\alpha = 0\)</span> and <span class="arithmatex">\(\beta = 1/8\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches clumping across a stretch of 256 outputs, in low bits after dropping 27. It only considers one interval and a small field of bits.</p>
+<h2 id="815-matrix-rank-smallcrush">8.15 Matrix rank (SmallCrush)<a class="headerlink" href="#815-matrix-rank-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Our old friend, the rank test, this time with a 60 by 60 grid built from 10 bits per number. It is larger than Diehard's, so it can look further for linear links, though it is still short of the size of very long-period generators.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.15: Matrix rank (SmallCrush)</p>
+<p>For <span class="arithmatex">\(2 \times 2\)</span> grids, the probabilities of rank 0, 1 and 2 are 1/16, 9/16 and 6/16. For <span class="arithmatex">\(60 \times 60\)</span> grids, the chance of rank 60, 59, 58 and 57 are 0.2888, 0.5776, 0.1284 and 0.0052.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[P[R = x] = 2^{x(L+k-x)-Lk} \prod_{i=0}^{x-1} \frac{(1-2^{i-L})(1-2^{i-k})}{1-2^{i-x}}, \qquad P[R = 0] = 2^{-Lk}\]</div>
+<ul>
+<li><span class="arithmatex">\(R\)</span> is the rank of an <span class="arithmatex">\(L \times k\)</span> matrix, with <span class="arithmatex">\(1 \le x \le \min(L, k)\)</span>.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 20000\)</span>, <span class="arithmatex">\(r = 20\)</span>, <span class="arithmatex">\(s = 10\)</span> and <span class="arithmatex">\(L = k = 60\)</span>.</li>
+<li>A chi-square compares observed ranks with these, after merging rare classes.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches linear dependence over a span of 3600 bits, in a field of 10 bits from each number. A recurrence with a longer state, such as MT19937, passes at this size.</p>
+<h2 id="816-hamming-independence-smallcrush">8.16 Hamming independence (SmallCrush)<a class="headerlink" href="#816-hamming-independence-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Count the ones in a block, then in the next block. If blocks are independent, a heavy block says nothing about the next. We compare how often each pair of weights occurs with what independence predicts. It is like checking whether a good day on the stock market tells you anything about the next.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.16: Hamming independence (SmallCrush)</p>
+<p>The blocks 1011 and 0110 have weights 3 and 2, forming the pair <span class="arithmatex">\((3, 2)\)</span>. For the real block size of <span class="arithmatex">\(L = 300\)</span>, each weight has mean 150 and variance 75.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[P(X_i = a, X_{i+1} = b) = \binom{L}{a}\binom{L}{b} 2^{-2L}, \qquad \chi^2 = \sum_{a, b} \frac{(\mathrm{obs}_{ab} - \mathrm{exp}_{ab})^2}{\mathrm{exp}_{ab}}\]</div>
+<ul>
+<li><span class="arithmatex">\(X_j\)</span> is the Hamming weight of block <span class="arithmatex">\(j\)</span>, and <span class="arithmatex">\(L\)</span> is the block length in bits.</li>
+<li>Non-overlapping pairs are used, and classes with few expected counts are lumped together.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 5 \times 10^5\)</span>, <span class="arithmatex">\(r = 20\)</span>, <span class="arithmatex">\(s = 10\)</span>, <span class="arithmatex">\(L = 300\)</span> and <span class="arithmatex">\(d = 0\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches dependence between the weights of neighbouring blocks. It reads only weights, so patterns that keep weights independent go unseen.</p>
+<h2 id="817-random-walk-smallcrush">8.17 Random walk (SmallCrush)<a class="headerlink" href="#817-random-walk-smallcrush" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Each bit is a step left or right. We look at many walks of 150 steps and ask several questions. How many steps went right? How far did it reach? How much time did it spend on the right? How often did it come home, and how often did it cross over? Each has an exact answer.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 8.17: Random walk (SmallCrush)</p>
+<p>The steps <span class="arithmatex">\(+1, -1, +1, +1, -1, -1, +1, +1\)</span> give positions 1, 0, 1, 2, 1, 0, 1, 2. So <span class="arithmatex">\(H = 5\)</span> steps right, <span class="arithmatex">\(M = 2\)</span> for the maximum, <span class="arithmatex">\(R = 2\)</span> returns to zero, <span class="arithmatex">\(C = 0\)</span> sign changes, and <span class="arithmatex">\(J = 8\)</span>, since the walk is right of zero at all four odd positions.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[p_{k,y} = P[S_k = y] = 2^{-k}\binom{k}{(k+y)/2} \text{ when } k + y \text{ is even}, \qquad 0 \text{ otherwise}\]</div>
+<div class="arithmatex">\[P[H = k] = 2^{-\ell}\binom{\ell}{k}, \qquad P[M = y] = p_{\ell,y} + p_{\ell,y+1}, \qquad P[J = k] = p_{k,0}\,p_{\ell-k,0}\]</div>
+<div class="arithmatex">\[P[R = y] = p_{\ell-y,y}, \qquad P[C = y] = 2p_{\ell-1,2y+1}\]</div>
+<ul>
+<li><span class="arithmatex">\(S_k\)</span> is the position after <span class="arithmatex">\(k\)</span> steps, and <span class="arithmatex">\(\ell\)</span> is the walk length.</li>
+<li><span class="arithmatex">\(H\)</span> counts steps right, <span class="arithmatex">\(M\)</span> is the maximum, <span class="arithmatex">\(J\)</span> is the time on the right, <span class="arithmatex">\(R\)</span> counts returns to 0, and <span class="arithmatex">\(C\)</span> counts sign changes.</li>
+<li>TestU01's guide also lists first-passage times <span class="arithmatex">\(P_y\)</span>.</li>
+<li>SmallCrush uses <span class="arithmatex">\(N = 1\)</span>, <span class="arithmatex">\(n = 10^6\)</span>, <span class="arithmatex">\(r = 0\)</span>, <span class="arithmatex">\(s = 30\)</span> and <span class="arithmatex">\(L_0 = L_1 = 150\)</span>.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches short-range dependence in bits, including linear structure in weak generators. Walks of only 150 steps see nothing further away, so long-memory defects are left to the bigger batteries.</p>
+<h2 id="818-about-practrand">8.18 About PractRand<a class="headerlink" href="#818-about-practrand" title="Permanent link">&para;</a></h2>
+<p>PractRand is an open library and toolset for random number generators, with a command-line tester, RNG_test, that reads from standard input. The pages we read describe version 0.94 and do not name the author. Its approach differs from the other batteries in that it does not fix the amount of data in advance. It tests as you feed it, printing a summary at growing lengths, so you learn how much data was needed before a flaw showed. On the core tests other than BRank, the author reports that real failures usually build gradually, so a failure at <span class="arithmatex">\(2^{36}\)</span> bytes would typically be foreshadowed by a warning at <span class="arithmatex">\(2^{35}\)</span> bytes. Reading the output is simple: look for FAIL. Each line gives a test name, a raw value, a processed value (a p-value, or pass or fail) and an evaluation in words such as normal, unusual, suspicious, very suspicious or FAIL. The evaluation is a complex function, not a fixed cutoff, and both ends of the range count as bad. The target is about one false positive per 300 million result summaries on good generators. The recommended test set contains the five tests below, plus low-bit variants. Its results table lists MT19937 as failing the standard battery at 256 GB, with lengths rounded up to a power of 2. The author ties that failure to the binary rank test, added to the core set in version 0.91. The documentation gives ideas rather than formulas, so we describe only what it supports. For exact statistics, the source code is the reference.</p>
+<h2 id="819-bcfn-practrand">8.19 BCFN (PractRand)<a class="headerlink" href="#819-bcfn-practrand" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> BCFN looks for long-range correlations by counting bits. At each level, it adds up the ones across longer and longer overlapping stretches and checks whether those weights are distributed as they should be. The documentation notes it often catches Fibonacci-style generators that use large lags to pass other tests. It is like watching a river's level averaged over days, then weeks, then months, to see a slow pattern.</p>
+<p><strong>The mathematics.</strong> The documentation describes each level as a frequency test on overlapping sets of Hamming weights, and it does not publish the statistic. The basic fact underneath is that the weight of <span class="arithmatex">\(m\)</span> independent fair bits is binomial.</p>
+<div class="arithmatex">\[W = \sum_{j=1}^{m} b_j, \qquad W \sim \mathrm{Binomial}\!\left(m, \tfrac{1}{2}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(b_j\)</span> are the bits of a block, and <span class="arithmatex">\(W\)</span> is its Hamming weight.</li>
+<li>Written BCFN(X,Y), the test's first parameter is the lowest level checked, with 2 recommended. Higher values are faster but can miss shorter-range effects.</li>
+<li>The second parameter is the base-2 logarithm of its internal table size, typically 10 to 15, depending on the cache.</li>
+<li>All higher levels are checked as data allows.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches long-range linear correlations. BCFN tests with similar first parameters are correlated with each other. It is one test family, and it is not designed for the very short-range effects that FPF and DC6 target.</p>
+<h2 id="820-dc6-practrand">8.20 DC6 (PractRand)<a class="headerlink" href="#820-dc6-practrand" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> DC6 is the short-range partner of BCFN. It looks at a few neighbouring integers, takes some information from each, and checks the pattern of weights across them. So it looks for short-range linear correlations, the kind a small mixing step might leave behind.</p>
+<p><strong>The mathematics.</strong> Like BCFN, it is a frequency test on overlapping sets of Hamming weights, using the same binomial fact, and the documentation does not publish the statistic.</p>
+<ul>
+<li>Its parameters set the integer size it works on, how many adjacent integers it correlates, and what information it takes from each.</li>
+<li>The documentation names the form DC6-9x1Bytes-1 and points to the source functions for recommended values.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches short-range linear dependence. The documentation does not list what it misses. As a bit-counting test, it would not be expected to notice structure that keeps the counts balanced.</p>
+<h2 id="821-fpf-practrand">8.21 FPF (PractRand)<a class="headerlink" href="#821-fpf-practrand" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Despite the name, "floating point frequency", it uses integer maths. Roughly, it takes overlapping windows of the stream, treats each as a number, and looks at how that number would be written in floating-point format. It then runs a frequency test on those formats. That focuses on the rare cases with many zero bits up front.</p>
+<p><strong>The mathematics.</strong> The documentation describes the approach, with no parameters or formula in the overview we read.</p>
+<ul>
+<li>The input is overlapping windows of the stream, read as integers.</li>
+<li>The test is a frequency test on the binary form of their floating-point representations.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches very short-range correlations, shorter than DC6, especially those involving many 0 bits. It can be slow at some settings, and it is not aimed at long-range structure.</p>
+<h2 id="822-gap16-practrand">8.22 Gap16 (PractRand)<a class="headerlink" href="#822-gap16-practrand" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Gap16 is a variation on the classic gap test, which measures how long a value takes to come back. Clumped or too-regular returns are the warning sign, just as with waiting times between buses. The name suggests 16-bit values, although the documentation does not spell that out.</p>
+<p><strong>The mathematics.</strong> The documentation describes it as a variation on the classic gap test, with no parameters, and gives no further detail. The classic version's gap probability is shown in the TestU01 section above, but we cannot confirm Gap16's exact variant from the documentation. The output names Gap-16:A and Gap-16:B, and the author notes these two are strongly correlated.</p>
+<p><strong>What it catches and misses.</strong> It catches irregular returns of values. The documentation gives no more detail, so we leave it there.</p>
+<h2 id="823-brank-practrand">8.23 BRank (PractRand)<a class="headerlink" href="#823-brank-practrand" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This is a binary matrix rank test, as seen in Diehard and SP 800-22. What is original is the control logic, which decides when to pull data and what size of matrix to use. Larger matrices can reach longer linear links, at more cost per bit.</p>
+<p><strong>The mathematics.</strong> It is a fairly standard rank test, compared against the known rank probabilities given earlier for SP 800-22 and Diehard.</p>
+<div class="arithmatex">\[p_r = 2^{r(2M-r)-M^2} \prod_{i=0}^{r-1} \frac{(1-2^{i-M})^2}{1-2^{i-r}}\]</div>
+<ul>
+<li><span class="arithmatex">\(p_r\)</span> is the probability of rank <span class="arithmatex">\(r\)</span> for a square <span class="arithmatex">\(M \times M\)</span> grid.</li>
+<li>The test's one parameter sets how much time per gigabyte goes on rank calculations, on a log scale.</li>
+<li>Because results are coarse-grained, precise p-values are not possible for many subtests.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches linear dependence over large spans, given enough data. The documentation says this is the only PractRand test MT19937 fails, at 256 GB, and calls those failures oddly brittle, since slight variations can let MT19937 pass. Non-linear structure does not show up through rank.</p>
+<h2 id="824-summary">8.24 Summary<a class="headerlink" href="#824-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>ENT</strong> prints entropy, chi-square, arithmetic mean, a Monte Carlo value of <span class="arithmatex">\(\pi\)</span> and the serial correlation coefficient. It needs no fixed amount of data and gives no verdict.</li>
+<li>ENT's entropy and chi-square are blind to order: a file that cycles through 0 to 255 scores a perfect 8 bits and chi-square 0, though it is totally predictable.</li>
+<li><strong>TestU01</strong> has batteries for numbers in <span class="arithmatex">\((0,1)\)</span> (SmallCrush, Crush, BigCrush) and for bit strings; its power comes from enormous amounts of data, close to <span class="arithmatex">\(2^{38}\)</span> numbers for BigCrush.</li>
+<li><strong>PractRand</strong> grows its sample until a flaw shows, reports an evaluation (normal, unusual, suspicious, very suspicious, FAIL) and lists MT19937 as failing at 256 GB through its binary rank test.</li>
+<li>TestU01 and PractRand find flaws in algorithms. They say nothing about how much entropy a physical source produces.</li>
+</ul>
+<h2 id="825-exercises">8.25 Exercises<a class="headerlink" href="#825-exercises" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Compute the ENT entropy of the byte sequence 1, 2, 3, 4, 1, 2, 3, 4. What does the answer imply for compression?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Four values occur equally often, each with probability 0.25, so the entropy is <span class="arithmatex">\(-4\times0.25\log_20.25=2.0\)</span> bits per byte. Since 8 bits would be needed if bytes were uniform, a compressor could in principle save up to <span class="arithmatex">\(75\%\)</span> of the file.</p>
+</details>
+</li>
+<li>
+<p>A file contains each byte value 0 to 255 exactly once and then repeats that block many times. What do ENT's entropy and chi-square report, and why is the file not random?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Every value is equally common, so the entropy is a perfect 8.0 bits per byte, and the chi-square is 0, which ENT reads as 100 percent and "almost certainly not random" because the counts are too even. The file is completely predictable: both statistics look only at byte counts and ignore order.</p>
+</details>
+</li>
+<li>
+<p>For the byte sequence 1, 2, 3, 4 with wraparound, compute the serial correlation coefficient from <span class="arithmatex">\(C=(n\sum x_ix_{i+1}-(\sum x_i)^2)/(n\sum x_i^2-(\sum x_i)^2)\)</span>.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>With wraparound the products are <span class="arithmatex">\(1\cdot2+2\cdot3+3\cdot4+4\cdot1=24\)</span>, <span class="arithmatex">\(\sum x_i=10\)</span> and <span class="arithmatex">\(\sum x_i^2=30\)</span>. So <span class="arithmatex">\(C=(4\cdot24-100)/(4\cdot30-100)=-4/20=-0.2\)</span>.</p>
+</details>
+</li>
+<li>
+<p>Why does PractRand report results at growing lengths instead of one verdict?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>It does not fix the amount of data in advance. It tests as data is fed, so you learn how much data was needed before a flaw showed. Real failures usually build gradually, so a failure at <span class="arithmatex">\(2^{36}\)</span> bytes is typically foreshadowed by a warning at <span class="arithmatex">\(2^{35}\)</span> bytes.</p>
+</details>
+</li>
+<li>
+<p>Why can TestU01 and PractRand be a poor fit for a quantum random number generator device?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>They get their power from very large amounts of data, which a device may not be able to supply quickly, and a defect in a physical noise source may not need that much data to matter. They find flaws in algorithms; they do not estimate the entropy of a physical source.</p>
+</details>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="fips-140-2-and-bsi-ais-31.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. FIPS 140-2 and BSI AIS 31">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                7. FIPS 140-2 and BSI AIS 31
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="comparing-the-batteries.html" class="md-footer__link md-footer__link--next" aria-label="Next: 9. Comparing the Batteries">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                9. Comparing the Batteries
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

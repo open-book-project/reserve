@@ -1,0 +1,126 @@
+/* Pustakalaya: web edition. Animations and visualizations (assets/viz.js). Works on the pages and in the reader. */
+
+/* ---------- interactive figures ---------- */
+figure.fig-viz { margin: 1.8em 0; }
+.fig-viz .viz-box {
+  --viz-h: 420px;
+  position: relative;
+  width: 100%;
+  height: var(--viz-h);
+  border: 1px solid var(--md-default-fg-color--lightest, #e6e6e6);
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--md-default-bg-color, #fff);
+}
+.fig-viz .viz-frame { display: block; width: 100%; height: 100%; border: 0; background: var(--md-default-bg-color, #fff); }
+.fig-viz .viz-box.is-live .viz-card { display: none; }
+
+/* the card: the poster (or a plain panel), the name of the figure and the Play button */
+.fig-viz .viz-card {
+  position: absolute; inset: 0;
+  display: flex; align-items: flex-end; justify-content: flex-start;
+  background: linear-gradient(135deg, var(--md-default-fg-color--lightest, #eee), transparent 70%), var(--md-default-bg-color, #fff);
+  color: var(--md-default-fg-color, #1a1a1a);
+  text-align: left;
+}
+.fig-viz .viz-card[hidden] { display: none; }
+.fig-viz .viz-poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top center; margin: 0; border: 0; padding: 0; background: #fff; border-radius: 0; }
+.fig-viz .viz-card-body {
+  position: relative; z-index: 1; width: 100%;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem 0.9rem;
+  padding: 0.8rem 0.9rem;
+  background: var(--md-default-bg-color, #fff);
+  border-top: 1px solid var(--md-default-fg-color--lightest, #e6e6e6);
+}
+.fig-viz .viz-card:not(.has-poster) .viz-card-body { position: absolute; inset: 0; border: 0; flex-direction: column; flex-wrap: nowrap; justify-content: center; align-items: center; text-align: center; background: transparent; }
+.fig-viz .viz-card:not(.has-poster) .viz-meta { flex: 0 1 auto; align-items: center; }
+.fig-viz .viz-meta { flex: 1 1 12rem; min-width: 0; display: flex; flex-direction: column; gap: 0.1rem; }
+.fig-viz .viz-kind { font: 600 0.68rem/1.2 var(--rd-ui, system-ui, sans-serif); letter-spacing: 0.08em; text-transform: uppercase; color: var(--md-default-fg-color--light, #555); }
+.fig-viz .viz-name { font-weight: 600; font-size: 1.02em; line-height: 1.3; }
+.fig-viz .viz-note { margin: 0; font-size: 0.82em; color: var(--md-default-fg-color--light, #555); }
+.fig-viz .viz-play, .viz-tool, .steps-bar button {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+  min-height: 2.4rem; padding: 0 0.95rem;
+  border: 1px solid var(--bjp-maroon, #7a2222); border-radius: 999px;
+  background: transparent; color: var(--bjp-maroon, #7a2222);
+  font: 600 0.82rem/1 var(--rd-ui, system-ui, sans-serif);
+  cursor: pointer; touch-action: manipulation; text-decoration: none;
+}
+.fig-viz .viz-play { background: var(--bjp-maroon, #7a2222); color: var(--md-default-bg-color, #fff); padding: 0 1.2rem; }
+.fig-viz .viz-play:hover, .fig-viz .viz-play:focus-visible,
+.viz-tool:hover, .viz-tool:focus-visible, .steps-bar button:hover:not(:disabled), .steps-bar button:focus-visible { filter: brightness(1.12); outline: 2px solid var(--md-typeset-a-color, #1f4a85); outline-offset: 2px; }
+.fig-viz .viz-play svg, .viz-tool svg, .steps-bar svg, .viz-ovclose svg { width: 1.05rem; height: 1.05rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.fig-viz .viz-play svg { fill: currentColor; stroke: none; }
+.fig-viz .viz-box.is-loading .viz-play { opacity: 0.6; }
+
+.viz-tools { display: flex; gap: 0.5rem; margin: 0.55rem 0 0; justify-content: flex-end; }
+.viz-tool { min-height: 2rem; padding: 0 0.75rem; font-size: 0.75rem; border-color: var(--md-default-fg-color--lighter, #b8b8b8); color: var(--md-default-fg-color--light, #555); }
+figure.fig-viz figcaption, figure.fig-steps figcaption, figure.fig-video figcaption, figure.fig-mermaid figcaption { margin-top: 0.6em; }
+
+/* in the reader: a card of fixed height, so the pages are laid out once */
+.rd-flow figure.fig-viz { margin: 1.1em 0; break-inside: avoid; page-break-inside: avoid; }
+.rd-flow .fig-viz .viz-box { height: clamp(11rem, calc(var(--rd-h, 600px) * 0.4), 18rem); }
+.rd-flow .fig-viz .viz-card:not(.has-poster) .viz-card-body { gap: 0.6rem; }
+
+/* ---------- the full-screen view ---------- */
+.viz-overlay {
+  position: fixed; inset: 0; z-index: 10000;
+  display: flex; flex-direction: column;
+  background: var(--ov-bg, #fff); color: var(--ov-fg, #1a1a1a);
+  font-family: var(--rd-ui, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif);
+}
+.viz-ovbar {
+  flex: none; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem;
+  padding: calc(0.45rem + env(safe-area-inset-top)) calc(0.8rem + env(safe-area-inset-right)) 0.45rem calc(0.8rem + env(safe-area-inset-left));
+  border-bottom: 1px solid var(--ov-line, #ddd);
+  background: var(--ov-surface, #f6f6f6);
+}
+.viz-ovtitle { font-weight: 600; font-size: 0.92rem; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.viz-ovclose {
+  flex: none; display: inline-flex; align-items: center; gap: 0.4rem;
+  min-height: 2.4rem; padding: 0 0.95rem; border: 1px solid var(--ov-line, #ccc); border-radius: 999px;
+  background: var(--ov-bg, #fff); color: var(--ov-fg, #1a1a1a); font: 600 0.82rem/1 inherit; cursor: pointer;
+}
+.viz-ovclose:hover, .viz-ovclose:focus-visible { border-color: var(--ov-accent, #1f4a85); outline: 2px solid var(--ov-accent, #1f4a85); outline-offset: 2px; }
+.viz-ovbody { flex: 1 1 auto; min-height: 0; position: relative; }
+.viz-ovbody .viz-frame { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: var(--ov-bg, #fff); padding-bottom: env(safe-area-inset-bottom); }
+.viz-ovload { margin: 2rem; color: var(--ov-fg, #333); opacity: 0.7; }
+html.viz-open, html.viz-open body { overflow: hidden !important; }
+@media (max-width: 38em) { .viz-ovclose span { display: none; } .viz-ovclose { width: 2.4rem; padding: 0; justify-content: center; } }
+
+/* ---------- step-through figures ---------- */
+.fig-steps .steps-stage { display: grid; outline-offset: 3px; }
+.fig-steps .steps-frame { grid-area: 1 / 1; margin: 0; text-align: center; }
+.fig-steps .steps-frame img { display: block; margin: 0 auto; max-width: 100%; height: auto; }
+.fig-steps .steps-cap { margin: 0.5em 0 0; font-size: 0.9em; text-align: left; line-height: 1.45; }
+.fig-steps .steps-n {
+  display: inline-block; min-width: 1.5em; margin-right: 0.45em; padding: 0 0.3em; border-radius: 999px; text-align: center;
+  background: var(--bjp-maroon, #7a2222); color: var(--md-default-bg-color, #fff); font: 700 0.78em/1.6 var(--rd-ui, system-ui, sans-serif);
+}
+.fig-steps.steps-js .steps-frame { visibility: hidden; opacity: 0; }
+.fig-steps.steps-js .steps-frame.is-on { visibility: visible; opacity: 1; transition: opacity 0.18s ease; }
+.fig-steps .steps-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 0.7rem 0 0; justify-content: center; }
+.fig-steps .steps-bar button { min-width: 2.6rem; padding: 0 0.6rem; }
+.fig-steps .steps-bar button:disabled { opacity: 0.4; cursor: default; }
+.fig-steps .steps-count { min-width: 3.6rem; text-align: center; font: 600 0.82rem/1 var(--rd-ui, system-ui, sans-serif); font-variant-numeric: tabular-nums; color: var(--md-default-fg-color--light, #555); }
+.fig-steps .steps-range { flex: 1 1 6rem; max-width: 16rem; min-width: 5rem; accent-color: var(--bjp-maroon, #7a2222); }
+.fig-steps:not(.steps-js) .steps-frame + .steps-frame { margin-top: 1.2em; }
+.fig-steps:not(.steps-js) .steps-frame { grid-area: auto; }
+.rd-flow figure.fig-steps { margin: 1.1em 0; break-inside: avoid; page-break-inside: avoid; }
+.rd-flow .fig-steps .steps-frame img { max-height: calc(var(--rd-h, 600px) * 0.52); object-fit: contain; }
+
+/* ---------- video and animation ---------- */
+.md-typeset figure.fig-video, .md-typeset figure.fig-steps, .md-typeset figure.fig-viz, .md-typeset figure.fig-mermaid { width: 100%; }
+.fig-video video { display: block; width: 100%; height: auto; max-width: 100%; margin: 0 auto; background: #000; border-radius: 6px; aspect-ratio: 16 / 9; object-fit: contain; }
+.rd-flow figure.fig-video { margin: 1.1em 0; break-inside: avoid; page-break-inside: avoid; }
+.rd-flow .fig-video video { max-height: calc(var(--rd-h, 600px) * 0.62); }
+
+/* ---------- mermaid ---------- */
+.fig-mermaid pre.mermaid { margin: 0; padding: 0.8rem; background: transparent; text-align: center; overflow-x: auto; white-space: pre; }
+.fig-mermaid pre.mermaid.is-drawn { white-space: normal; }
+.fig-mermaid pre.mermaid svg { max-width: 100%; height: auto; }
+.rd-flow .fig-mermaid pre.mermaid.is-drawn svg { max-height: calc(var(--rd-h, 600px) * 0.66); }
+.rd-flow figure.fig-mermaid { margin: 1.1em 0; break-inside: avoid; page-break-inside: avoid; }
+
+@media print { .viz-tools, .steps-bar, .viz-play { display: none; } .fig-steps.steps-js .steps-frame { visibility: visible; opacity: 1; grid-area: auto; } }
+@media (prefers-reduced-motion: reduce) { .fig-steps.steps-js .steps-frame.is-on { transition: none; } }

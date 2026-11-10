@@ -1,0 +1,1402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/rtl_to_gdsii/routing-and-parasitic-extraction.html">
+  
+  
+    <link rel="prev" href="clock-tree-synthesis.html">
+  
+  
+    <link rel="next" href="static-timing-analysis.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>6. Routing and Parasitic Extraction - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#nets-to-metal" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              6. Routing and Parasitic Extraction
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">From RTL to GDSII</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-rtl-to-gdsii-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. The RTL-to-GDSII Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logic-synthesis-and-timing-basics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Logic Synthesis and Timing Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="floorplanning-and-power-planning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Floorplanning and Power Planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="placement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Placement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="clock-tree-synthesis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Clock-Tree Synthesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Routing and Parasitic Extraction
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="routing-and-parasitic-extraction.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Routing and Parasitic Extraction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nets-to-metal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 From nets to metal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metal-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 The metal stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Who is routed first
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Design rules the router obeys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#antenna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 The antenna effect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crosstalk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Crosstalk
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 Parasitic extraction: making timing real
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 Parasitic extraction: making timing real">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-long-wires-are-so-slow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why long wires are so slow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 The real commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="static-timing-analysis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Static Timing Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="physical-verification-and-tapeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Physical Verification and Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="running-the-flow-with-openlane.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Running the Flow with OpenLANE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nets-to-metal" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 From nets to metal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#metal-stack" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 The metal stack
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 Who is routed first
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rules" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 Design rules the router obeys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#antenna" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.5 The antenna effect
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crosstalk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.6 Crosstalk
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#extraction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.7 Parasitic extraction: making timing real
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6.7 Parasitic extraction: making timing real">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#why-long-wires-are-so-slow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why long wires are so slow
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commands" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.8 The real commands
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-6-routing-and-parasitic-extraction">Chapter 6: Routing and Parasitic Extraction<a class="headerlink" href="#chapter-6-routing-and-parasitic-extraction" title="Permanent link">&para;</a></h1>
+<p>Placement has fixed where every cell sits and clock-tree synthesis has tamed the skew. Until now a connection such as "the output of this NAND feeds three flip-flops" has been only a line in the netlist. Routing lays down the actual copper: for every net it finds wire segments on the routing layers, joined by vias, that tie all the net's pins together without touching any other net and without breaking a single geometric rule of the process. A modern block has millions of nets and needs billions of individual shapes.</p>
+<p>When the wires exist, they can be measured. Parasitic extraction records the resistance and capacitance of all that metal and writes it to a file, so that timing, until now an estimate, becomes real. This chapter covers the two passes of routing, the metal stack, the order in which things are routed, the design rules and two physical hazards (the antenna effect and crosstalk), and then extraction and the rule that explains why long wires are so slow.</p>
+<div class="admonition note">
+<p class="admonition-title">Learning outcomes</p>
+<p>After this chapter you can:</p>
+<ol>
+<li>Tell a net from a wire, and global routing from detailed routing.</li>
+<li>Describe the metal stack, vias, tracks, pitch and preferred directions.</li>
+<li>Explain the order power, clock, signals, and the main design rules a router obeys.</li>
+<li>Explain the antenna effect and crosstalk, and how routing avoids them.</li>
+<li>Explain parasitic extraction and SPEF, and use the rule that wire delay grows with the square of length.</li>
+</ol>
+</div>
+<h2 id="nets-to-metal">6.1 From nets to metal<a class="headerlink" href="#nets-to-metal" title="Permanent link">&para;</a></h2>
+<p>A <strong>net</strong> is a logical fact from the netlist: "these pins are connected". A <strong>wire</strong> (or interconnect) is the physical metal that makes it true: segments on several layers, joined by vias. One net becomes many wire segments. Routing turns every net into wires that connect all its pins, touch no other net and break no manufacturing rule.</p>
+<p>A <strong>track</strong> is a legal centre line for a wire on a given layer, like a lane on a motorway. The <strong>pitch</strong> is the centre-to-centre distance between neighbouring tracks, typically the minimum width plus the minimum spacing. The set of all horizontal and vertical tracks forms the <em>routing grid</em>. If wires are kept on tracks, the spacing rules are satisfied automatically.</p>
+<p>Solving the whole routing problem exactly in one step is computationally hopeless, so routing is done in two passes (like planning a road trip: first choose the motorways and the towns, then every turn and lane change).</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Global routing</th>
+<th>Detailed routing</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Granularity</td>
+<td>coarse g-cells, each many tracks wide</td>
+<td>individual tracks and wire shapes</td>
+</tr>
+<tr>
+<td>Produces</td>
+<td>a plan: which tiles and layers each net uses, plus a congestion map</td>
+<td>real metal: wires, vias, layers</td>
+</tr>
+<tr>
+<td>Design rules</td>
+<td>ignored; only capacity counts</td>
+<td>all enforced: width, spacing, via and area</td>
+</tr>
+<tr>
+<td>Main question</td>
+<td>can everything fit, and where is it tight?</td>
+<td>draw legal, rule-clean wires</td>
+</tr>
+<tr>
+<td>Speed</td>
+<td>fast: minutes</td>
+<td>slow: the runtime bottleneck</td>
+</tr>
+<tr>
+<td>Output metric</td>
+<td>overflow and congestion</td>
+<td>DRC violations, wirelength, via count</td>
+</tr>
+<tr>
+<td>OpenROAD tool</td>
+<td>FastRoute (<code>global_route</code>)</td>
+<td>TritonRoute (<code>detailed_route</code>)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 6.1 The two passes of routing.</em></p>
+<p>Global routing overlays a coarse grid of g-cells on the block. It assigns each net to a sequence of g-cells and to layers, treating the boundaries between g-cells as edges with limited capacity (the number of wires that can cross). If a region is over capacity the tool reports a congestion hot spot now, cheaply, before any real metal is committed; congestion is often the signal to loop back and change the placement or the floorplan.</p>
+<div class="admonition warning">
+<p class="admonition-title">Common misconception</p>
+<p>"Global routing draws thin wires, and detailed routing thickens them." No. Global routing draws <strong>no metal at all</strong>: it only assigns nets to regions and layers and predicts congestion. Every wire and via in the final layout is created by detailed routing.</p>
+</div>
+<h2 id="metal-stack">6.2 The metal stack<a class="headerlink" href="#metal-stack" title="Permanent link">&para;</a></h2>
+<p>Interconnect is built as a vertical stack of metal layers separated by insulating dielectric and joined by vias (Figure 6.1). The layers are not alike.</p>
+<ul>
+<li><strong>Lower layers</strong> (<code>met1</code>, <code>met2</code>) are thin and dense: narrow, tightly pitched and of high resistance per unit length. They suit short local hops between nearby cells.</li>
+<li><strong>Upper layers</strong> are thick and wide: low resistance and a coarse pitch. They suit long signals, clock spines and the power grid. A long net routed on a thick upper layer has far less resistance, and therefore far less delay, than the same net squeezed onto <code>met1</code>.</li>
+<li><strong>Preferred directions alternate</strong>: one layer runs mostly horizontally, the next mostly vertically, and so on. A signal travels horizontally on one layer, rises through a via, continues vertically on the next, like a multi-storey road network.</li>
+<li><strong>A via</strong> is a small metal plug joining a wire on layer <span class="arithmatex">\(N\)</span> to a wire on layer <span class="arithmatex">\(N+1\)</span>. Vias have their own rules (enclosure, a minimum count for wide wires) and add resistance and area, so routers avoid needless layer changes.</li>
+</ul>
+<figure class="fig fig-diagram">
+<img src="img/metal-stack.svg" alt="A five-layer metal stack, met1 at the bottom to met5 at the top, getting thicker upwards, with arrows showing alternating preferred directions and green vias between layers, above the transistor layer and substrate." loading="lazy" width="1060" height="470">
+<figcaption><strong>Figure 6.1 A metal stack: thin and dense below, thick and coarse above.</strong> A five-layer metal stack, met1 at the bottom to met5 at the top, getting thicker upwards, with arrows showing alternating preferred directions and green vias between layers, above the transistor layer and substrate.</figcaption>
+</figure>
+
+<p>The stack drawn is a simplified, Sky130-style five-metal stack. Process nodes with more layers extend the same pattern: the course's reference table lists, for a generic modern process, the top layers (<code>M9</code> and <code>M10</code>) for the power grid, clock and long global routes, the intermediate layers for global signal routing and wide straps, mid layers for medium-length signals, <code>M2</code> for short routing, <code>M1</code> for cell-level connections and pins, then the poly and diffusion of the devices on the substrate.</p>
+<h2 id="order">6.3 Who is routed first<a class="headerlink" href="#order" title="Permanent link">&para;</a></h2>
+<p>Not everything is routed at once, and not everything is routed the same way. Routing proceeds by priority.</p>
+<ol>
+<li><strong>Power and ground</strong> are routed first, as <em>special routing</em>. The grid of wide straps and rings is usually built on the thick upper layers during floorplanning; it is in place before signals because signal routing has to weave round it. The standard-cell rails on <code>met1</code> take their power from it.</li>
+<li><strong>The clock</strong> comes next. The clock nets from CTS are routed early and carefully, often on higher, lower-resistance layers and with extra spacing or shielding, so that their delay and skew stay under tight control.</li>
+<li><strong>Signals</strong> come last. The millions of ordinary data nets are routed into whatever tracks remain, honouring each layer's preferred direction.</li>
+</ol>
+<p>The least flexible and most valuable networks go first; the flexible many fill in around them. Letting a million data nets take the best tracks first would force power and clock onto poor resources.</p>
+<h2 id="rules">6.4 Design rules the router obeys<a class="headerlink" href="#rules" title="Permanent link">&para;</a></h2>
+<p>Every shape the detailed router draws must satisfy the foundry's design rules, the geometric constraints that guarantee the layout can be made.</p>
+<table>
+<thead>
+<tr>
+<th>Rule</th>
+<th>Why it exists</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Minimum width</td>
+<td>a thinner wire may not print, or may break (an open)</td>
+</tr>
+<tr>
+<td>Minimum spacing</td>
+<td>closer wires may print as one (a short), and couple strongly</td>
+</tr>
+<tr>
+<td>Via enclosure and via rules</td>
+<td>metal must overlap a via enough to connect reliably; legal via sizes, spacing and counts</td>
+</tr>
+<tr>
+<td>Minimum area</td>
+<td>tiny slivers of metal do not pattern well, so a shape sometimes needs a jog to add metal</td>
+</tr>
+<tr>
+<td>Density</td>
+<td>each region of each layer needs neither too little nor too much metal (fill is added later)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 6.2 Design rules that routing cares about most.</em></p>
+<p>The router aims to be clean by construction, and the pitch is chosen so that on-track wires already meet the spacing rule. The authoritative check is the design-rule check (DRC) at signoff, treated in Chapter 8. Routing's job is to hand DRC as few violations as possible.</p>
+<h2 id="antenna">6.5 The antenna effect<a class="headerlink" href="#antenna" title="Permanent link">&para;</a></h2>
+<p>The antenna effect is a manufacturing hazard, not a run-time one. Chips are built layer by layer, and each metal layer is etched with a plasma. While a given layer is being etched, a wire that is already connected to a transistor's thin gate oxide but not yet to any diffusion acts like an antenna: it collects charge from the plasma. If the connected metal area is large compared with the gate it feeds, the voltage can build up until it punches through the gate oxide, leaving a dead transistor discovered only after the wafer is finished.</p>
+<p>Foundries therefore limit the <strong>antenna ratio</strong>: the area of metal connected to a gate must not exceed a given multiple of the gate area, on every layer at every fabrication step. Two cures are standard (Figure 6.2).</p>
+<ul>
+<li><strong>Layer jumping.</strong> Hop up to a higher layer and back down, breaking a long run. Because each layer is etched separately, less metal is exposed during any one etch.</li>
+<li><strong>Antenna diode.</strong> A small diode attached to the net near the gate gives the charge a safe path to the substrate.</li>
+</ul>
+<figure class="fig fig-diagram">
+<img src="img/antenna-effect.svg" alt="Three panels: a long wire connected only to a thin gate collecting charge; a layer jump that breaks the run; a diode near the gate that bleeds the charge away." loading="lazy" width="990" height="330">
+<figcaption><strong>Figure 6.2 The antenna effect and its two cures.</strong> Three panels: a long wire connected only to a thin gate collecting charge; a layer jump that breaks the run; a diode near the gate that bleeds the charge away.</figcaption>
+</figure>
+
+<p>The name has nothing to do with radio. A floating metal area harvests charge during fabrication and dumps it into a fragile gate.</p>
+<h2 id="crosstalk">6.6 Crosstalk<a class="headerlink" href="#crosstalk" title="Permanent link">&para;</a></h2>
+<p>Two wires that run close and parallel form a small capacitor. When one, the <em>aggressor</em>, switches, it nudges the other, the <em>victim</em>. This is <strong>crosstalk</strong>, and its effects are two.</p>
+<ul>
+<li><strong>Glitch (noise).</strong> A bump of voltage on a quiet victim wire, which might be captured as a wrong value.</li>
+<li><strong>Delay change.</strong> If aggressor and victim switch together, the coupling can speed up or, worse, slow down the victim, pushing it out of its timing window.</li>
+</ul>
+<p>Coupling capacitance grows with how long and how close two wires run in parallel, so routing controls it directly. The router's remedies are more spacing on sensitive nets, a grounded shield wire beside a critical net, shorter parallel runs and a different layer. Crosstalk cannot even be computed before routing, because the wires and their neighbours did not exist: that is why signal-integrity analysis waits for post-route parasitics.</p>
+<h2 id="extraction">6.7 Parasitic extraction: making timing real<a class="headerlink" href="#extraction" title="Permanent link">&para;</a></h2>
+<p>A real wire is not an ideal connection. Metal has resistance <span class="arithmatex">\(R\)</span> that grows with its length and shrinks with its cross-section, and capacitance <span class="arithmatex">\(C\)</span> to the substrate and to neighbouring wires. Together they form a distributed RC network that delays and degrades every signal. These unwanted but unavoidable values are the wire's <strong>parasitics</strong>.</p>
+<p><strong>Parasitic extraction</strong> is the step that measures the <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(C\)</span> of every wire segment and via after routing and writes them out. Before routing, tools had only guesses: a <em>wire-load model</em> ("a net with three loads has roughly this much capacitance") or a rough estimate from the placement. That is why pre-route timing is only provisional. After extraction, timing uses the actual wires, and post-route analysis becomes the signoff-grade answer.</p>
+<p>The results are written to a <strong>SPEF</strong> file (Standard Parasitic Exchange Format): a text file that lists, per net, the resistors and the capacitors (to ground and coupling to other nets) that model the routed interconnect. In OpenROAD, OpenRCX performs the extraction and writes the <code>.spef</code>, which the timing engine reads to annotate every net.</p>
+<h3 id="why-long-wires-are-so-slow">Why long wires are so slow<a class="headerlink" href="#why-long-wires-are-so-slow" title="Permanent link">&para;</a></h3>
+<p>Model a wire of length <span class="arithmatex">\(L\)</span> as a distributed RC line. Both its resistance and its capacitance grow in proportion to its length, <span class="arithmatex">\(R = rL\)</span> and <span class="arithmatex">\(C = cL\)</span>, where <span class="arithmatex">\(r\)</span> and <span class="arithmatex">\(c\)</span> are values per unit length. A first-order (Elmore) estimate of the delay of a distributed RC line is proportional to <span class="arithmatex">\(RC\)</span>:</p>
+<div class="arithmatex">\[\text{delay} \propto R \cdot C = (rL)(cL) = r\,c\,L^{2}.\]</div>
+<p>Double the length and the delay roughly quadruples. This one rule explains three things at once.</p>
+<ol>
+<li>Long nets are routed on thick, low-resistance upper layers.</li>
+<li>Buffers chop a long wire into short pieces: several small <span class="arithmatex">\(L^2\)</span> terms instead of one large one.</li>
+<li>Placement that shortens critical nets pays off enormously.</li>
+</ol>
+<div class="admonition example">
+<p class="admonition-title">Example 6.1: Rescuing a long wire with buffers</p>
+<p>Use the course's model: an unbuffered wire of length <span class="arithmatex">\(L\)</span> mm has a delay of <span class="arithmatex">\(50\,L^2\)</span> ps; each buffer adds 30 ps; <span class="arithmatex">\(n\)</span> buffers cut the wire into <span class="arithmatex">\(n + 1\)</span> equal pieces, each of length <span class="arithmatex">\(L/(n+1)\)</span>. The delay is</p>
+<div class="arithmatex">\[d(n) = (n+1)\cdot 50\left(\frac{L}{n+1}\right)^{2} + 30\,n = \frac{50\,L^{2}}{n+1} + 30\,n .\]</div>
+<p><em>Unbuffered wires.</em> A 2 mm wire takes <span class="arithmatex">\(50 \times 4 = 200\)</span> ps; a 4 mm wire <span class="arithmatex">\(50 \times 16 = 800\)</span> ps; a 6 mm wire <span class="arithmatex">\(50 \times 36 = 1800\)</span> ps. Twice the length, four times the delay.</p>
+<p><em>A 4 mm wire with <span class="arithmatex">\(n = 0\)</span> to <span class="arithmatex">\(6\)</span> buffers.</em> With <span class="arithmatex">\(50\,L^2 = 800\)</span>:</p>
+<table>
+<thead>
+<tr>
+<th>Buffers <span class="arithmatex">\(n\)</span></th>
+<th><span class="arithmatex">\(800/(n+1)\)</span></th>
+<th><span class="arithmatex">\(+ 30\,n\)</span></th>
+<th>Delay (ps)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>800</td>
+<td>0</td>
+<td>800</td>
+</tr>
+<tr>
+<td>1</td>
+<td>400</td>
+<td>30</td>
+<td>430</td>
+</tr>
+<tr>
+<td>2</td>
+<td>266.7</td>
+<td>60</td>
+<td>326.7</td>
+</tr>
+<tr>
+<td>3</td>
+<td>200</td>
+<td>90</td>
+<td>290</td>
+</tr>
+<tr>
+<td>4</td>
+<td>160</td>
+<td>120</td>
+<td><strong>280</strong></td>
+</tr>
+<tr>
+<td>5</td>
+<td>133.3</td>
+<td>150</td>
+<td>283.3</td>
+</tr>
+<tr>
+<td>6</td>
+<td>114.3</td>
+<td>180</td>
+<td>294.3</td>
+</tr>
+</tbody>
+</table>
+<p>The best is <span class="arithmatex">\(n = 4\)</span> at 280 ps (Figure 6.3). Beyond that, each extra buffer saves less wire delay, because the <span class="arithmatex">\(L^2\)</span> terms are already small, while still costing its fixed 30 ps.</p>
+</div>
+<figure class="fig fig-diagram">
+<img src="img/wire-delay.svg" alt="Left: delay against length for an unbuffered wire, rising as a parabola to 1800 ps at 6 mm. Right: bars for the delay of a 4 mm wire with 0 to 6 buffers, lowest at 4 buffers (280 ps)." loading="lazy" width="1000" height="420">
+<figcaption><strong>Figure 6.3 Wire delay grows as L squared; buffers have an optimum.</strong> Left: delay against length for an unbuffered wire, rising as a parabola to 1800 ps at 6 mm. Right: bars for the delay of a 4 mm wire with 0 to 6 buffers, lowest at 4 buffers (280 ps).</figcaption>
+</figure>
+
+<h2 id="commands">6.8 The real commands<a class="headerlink" href="#commands" title="Permanent link">&para;</a></h2>
+<p>In the OpenROAD and OpenLANE flow, global routing is done by FastRoute, detailed routing by TritonRoute (the <code>drt</code> router) and extraction by OpenRCX. A representative Tcl sequence follows.</p>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># --- Global routing (FastRoute): plan regions, report congestion ---</span>
+<span class="nv">set_routing_layers</span><span class="w"> </span><span class="o">-</span>signal<span class="w"> </span>met1-met5<span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>met3-met5
+<span class="nv">set_global_routing_layer_adjustment</span><span class="w"> </span>met1-met5<span class="w"> </span><span class="mf">0.5</span>
+<span class="nv">global_route</span><span class="w"> </span><span class="o">-</span>guide_file<span class="w"> </span>route.guide<span class="w"> </span><span class="o">-</span>congestion_iterations<span class="w"> </span><span class="mi">30</span><span class="w"> </span><span class="o">-</span>verbose
+
+<span class="c"># --- Detailed routing (TritonRoute): real wires and vias, rule-clean ---</span>
+<span class="nv">detailed_route</span><span class="w"> </span><span class="o">-</span>output_drc<span class="w"> </span>route_drc.rpt<span class="w"> </span><span class="o">-</span>output_maze<span class="w"> </span>maze.log<span class="w"> </span><span class="err">\</span>
+<span class="w">               </span><span class="nv">-bottom_routing_layer</span><span class="w"> </span>met1<span class="w"> </span><span class="o">-</span>top_routing_layer<span class="w"> </span>met5<span class="w"> </span><span class="o">-</span>verbose<span class="w"> </span><span class="mi">1</span>
+
+<span class="c"># --- Antenna check and repair ---</span>
+<span class="nv">check_antennas</span>
+<span class="nv">repair_antennas</span><span class="w">                       </span><span class="k">;</span><span class="c"># inserts diodes or requests layer jumps</span>
+
+<span class="c"># --- Parasitic extraction (OpenRCX) -&gt; SPEF ---</span>
+<span class="nv">define_process_corner</span><span class="w"> </span><span class="o">-</span>ext_model_index<span class="w"> </span><span class="mi">0</span><span class="w"> </span>X
+<span class="nv">extract_parasitics</span><span class="w"> </span><span class="o">-</span>ext_model_file<span class="w"> </span>rcx_patterns.rules
+<span class="nv">write_spef</span><span class="w"> </span>routed.spef<span class="w">                </span><span class="k">;</span><span class="c"># the file timing and signoff will read</span>
+
+<span class="c"># --- Post-route timing now uses real parasitics ---</span>
+<span class="nv">read_spef</span><span class="w"> </span>routed.spef
+<span class="nv">report_checks</span><span class="w"> </span><span class="o">-</span>path_delay<span class="w"> </span>max<span class="w">         </span><span class="k">;</span><span class="c"># signoff-grade STA (Chapter 7)</span>
+</code></pre></div>
+<p>The resulting <code>routed.spef</code> is the file that Chapter 7 feeds to static timing analysis, and the routed layout is what Chapter 8 runs DRC and LVS on.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Routing turns nets into wires. Global routing (FastRoute) plans g-cells and layers and predicts congestion; detailed routing (TritonRoute) draws real, rule-clean wires and vias on legal tracks.</li>
+<li>The metal stack has thin, dense lower layers for local hops and thick, coarse upper layers for long nets, clock and power, joined by vias, with alternating preferred directions.</li>
+<li>Routing order is power, then clock, then signals. The antenna effect is cured by layer jumps or diodes; crosstalk by spacing, shields and shorter parallel runs.</li>
+<li>Extraction measures every wire's <span class="arithmatex">\(R\)</span> and <span class="arithmatex">\(C\)</span> into a SPEF file. Wire delay grows as <span class="arithmatex">\(L^2\)</span>, which is why buffers and good placement matter.</li>
+</ul>
+<h2 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h2>
+<div class="admonition example">
+<p class="admonition-title">Exercise 6.1: Scaling a wire</p>
+<p>A 2 mm wire has 200 ps of RC delay. Roughly how much does an unbuffered 6 mm wire have?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Three times the length gives about <span class="arithmatex">\(3^2 = 9\)</span> times the delay: roughly 1800 ps.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 6.2: Why clock first?</p>
+<p>Why is the clock routed before ordinary signals?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Its skew must stay tightly controlled, so it needs the best layers and the extra spacing before millions of signal nets take them.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 6.3: The buffer table</p>
+<p>Using <span class="arithmatex">\(d(n) = 50\,L^2/(n+1) + 30\,n\)</span>, compute the delay of a 2 mm wire with 0, 1, 2 and 3 buffers. Which is best?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>With <span class="arithmatex">\(50\,L^2 = 200\)</span>: <span class="arithmatex">\(n = 0\)</span>: 200 ps. <span class="arithmatex">\(n = 1\)</span>: <span class="arithmatex">\(100 + 30 = 130\)</span> ps. <span class="arithmatex">\(n = 2\)</span>: <span class="arithmatex">\(66.7 + 60 = 126.7\)</span> ps. <span class="arithmatex">\(n = 3\)</span>: <span class="arithmatex">\(50 + 90 = 140\)</span> ps. Two buffers is best (126.7 ps).</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 6.4: The optimum number of buffers</p>
+<p>Treating <span class="arithmatex">\(n\)</span> as a continuous variable, find the <span class="arithmatex">\(n\)</span> that minimises <span class="arithmatex">\(d(n)\)</span>, and compare with Example 6.1 for <span class="arithmatex">\(L = 4\)</span>. For <span class="arithmatex">\(L = 6\)</span>, find the best whole number of buffers.</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Set <span class="arithmatex">\(d'(n) = -50\,L^2/(n+1)^2 + 30 = 0\)</span>, so <span class="arithmatex">\(n + 1 = L\sqrt{50/30} \approx 1.29\,L\)</span>. For <span class="arithmatex">\(L = 4\)</span> this gives <span class="arithmatex">\(n + 1 \approx 5.16\)</span>, so <span class="arithmatex">\(n \approx 4.2\)</span>, consistent with the best whole number <span class="arithmatex">\(n = 4\)</span>. For <span class="arithmatex">\(L = 6\)</span>, <span class="arithmatex">\(n + 1 \approx 7.75\)</span>; comparing whole numbers: <span class="arithmatex">\(d(6) = 1800/7 + 180 = 437.1\)</span> ps, <span class="arithmatex">\(d(7) = 1800/8 + 210 = 435\)</span> ps, <span class="arithmatex">\(d(8) = 1800/9 + 240 = 440\)</span> ps. The best is <span class="arithmatex">\(n = 7\)</span> at 435 ps, down from 1800 ps unbuffered.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 6.5: Global or detailed?</p>
+<p>For each statement, say whether it describes global or detailed routing: (a) it reports a congestion map; (b) it snaps wires to tracks and drops vias; (c) it ignores spacing rules; (d) it is the slow part of the flow.</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>(a) Global. (b) Detailed. (c) Global: only capacity counts. (d) Detailed.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 6.6: Antenna or crosstalk?</p>
+<p>A long <code>met2</code> wire is connected only to one transistor gate and the foundry reports an antenna violation. Name the two cures. A different quiet wire shows a voltage bump whenever its neighbour switches. What is this and what are two cures?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Antenna cures: layer jumping (route part of the run up to a higher layer and back down) or inserting an antenna diode near the gate. The bump is crosstalk noise (a glitch) from an aggressor neighbour; cures include more spacing, a grounded shield wire alongside, a shorter parallel run or moving one of the nets to another layer.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="clock-tree-synthesis.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Clock-Tree Synthesis">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                5. Clock-Tree Synthesis
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="static-timing-analysis.html" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Static Timing Analysis">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                7. Static Timing Analysis
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

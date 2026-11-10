@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frequency and runs test playground</title>
+<style>
+  body { padding: .55rem .65rem .8rem; }
+  h3 { font-size: .76rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--viz-muted); margin: .75rem 0 .3rem; }
+  h3:first-child { margin-top: 0; }
+  .grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: .8rem; }
+  @media (min-width: 700px) { .grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; } }
+  textarea { height: 4.3rem; font-size: .85rem; resize: vertical; letter-spacing: .06em; }
+  .ctl { display: grid; grid-template-columns: 6.6rem 1fr 3.4rem; gap: .35rem .6rem; align-items: center; font-size: .86rem; }
+  .ctl output { text-align: right; font-variant-numeric: tabular-nums; }
+  .pre { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .5rem; }
+  .pre button, .row button { min-height: 2rem; font-size: .84rem; }
+  .row { display: flex; flex-wrap: wrap; gap: .4rem; align-items: center; margin-top: .5rem; }
+  .strip { width: 100%; border: 1px solid var(--viz-line); border-radius: .5rem; display: block; background: var(--viz-bg); }
+  .tests { display: grid; gap: .55rem; }
+  .test { border: 1px solid var(--viz-line); border-radius: .6rem; padding: .5rem .7rem; background: var(--viz-surface); }
+  .test h4 { margin: 0 0 .15rem; font-size: .95rem; display: flex; justify-content: space-between; gap: .5rem; align-items: baseline; }
+  .test .eq { font-size: .84rem; color: var(--viz-muted); font-variant-numeric: tabular-nums; line-height: 1.5; }
+  .test .eq b { color: var(--viz-fg); }
+  .v { font-size: .78rem; font-weight: 700; padding: .05rem .55rem; border-radius: 999px; white-space: nowrap; }
+  .v.pass { background: color-mix(in srgb, var(--viz-ok) 22%, transparent); color: var(--viz-ok); }
+  .v.fail { background: color-mix(in srgb, var(--viz-bad) 22%, transparent); color: var(--viz-bad); }
+  .v.na { background: var(--viz-line); color: var(--viz-muted); }
+  .pbar { position: relative; height: .9rem; margin: .45rem 0 .15rem; border-radius: .45rem; background: linear-gradient(90deg, color-mix(in srgb, var(--viz-bad) 35%, var(--viz-bg)) 0 1%, var(--viz-line) 1% 100%); }
+  .pbar i { position: absolute; top: -.2rem; bottom: -.2rem; width: .3rem; margin-left: -.15rem; border-radius: .15rem; background: var(--viz-accent); }
+  .pbar span { position: absolute; top: 1.05rem; font-size: .66rem; color: var(--viz-muted); transform: translateX(-50%); }
+  .walk { width: 100%; height: auto; display: block; }
+  .hint { font-size: .78rem; color: var(--viz-muted); margin: .3rem 0 0; }
+  .hists { display: grid; grid-template-columns: 1fr 1fr; gap: .6rem; margin-top: .4rem; }
+  .hists svg { width: 100%; height: auto; display: block; }
+  .fails { font-size: .82rem; color: var(--viz-muted); margin: .2rem 0 0; }
+</style>
+</head>
+<body>
+<div class="grid">
+  <div>
+    <h3 id="hb">The bits</h3>
+    <textarea id="bits" spellcheck="false" autocomplete="off" aria-labelledby="hb" aria-describedby="bhint"></textarea>
+    <p class="hint" id="bhint">Type or paste 0s and 1s (spaces are ignored), or generate a sequence below.</p>
+    <canvas id="strip" class="strip" role="img" aria-label="The bits as a strip of squares"></canvas>
+    <h3>Make a sequence</h3>
+    <div class="ctl">
+      <label for="n">Length</label><input type="range" id="n" min="50" max="1000" step="10" value="200"><output id="nv">200</output>
+      <label for="bias">Bias (P of a 1)</label><input type="range" id="bias" min="0.3" max="0.7" step="0.01" value="0.5"><output id="biasv">0.50</output>
+      <label for="stick">Stickiness</label><input type="range" id="stick" min="0" max="0.7" step="0.01" value="0"><output id="stickv">0.00</output>
+    </div>
+    <div class="row"><button type="button" id="gen">Generate</button><button type="button" id="many">200 trials, then show the p-values</button></div>
+    <div class="pre" id="pre" role="group" aria-label="Example sequences"></div>
+  </div>
+  <div class="tests">
+    <div class="test" id="t1" aria-live="polite"></div>
+    <div class="test" id="t2" aria-live="polite"></div>
+    <div class="test"><h4>The running total</h4>
+      <svg id="walk" class="walk" viewBox="0 0 320 110" role="img" aria-label="Running total of plus one for each 1 and minus one for each 0"></svg>
+      <p class="hint" style="margin:0">Each 1 steps up and each 0 steps down. A fair source stays inside the band of two standard deviations about 95 % of the time.</p></div>
+  </div>
+</div>
+<div id="trials" hidden>
+  <h3>200 sequences from the current settings</h3>
+  <div class="hists" id="hists"></div>
+  <p class="fails" id="fails"></p>
+</div>
+<script src="viz-kit.js"></script>
+<script>
+(function () {
+  var K = VizKit, el = K.el;
+  var bitsEl = document.getElementById('bits');
+
+  // ---- erfc (series for small x, continued fraction for large x)
+  function erfc(x) {
+    var s = x < 0 ? -1 : 1, a = Math.abs(x);
+    if (a < 2.8) {
+      var sum = a, term = a, k = 0;
+      do { k++; term *= -a * a / k; var add = term / (2 * k + 1); sum += add; } while (Math.abs(add) > 1e-17 * Math.abs(sum) && k < 200);
+      var erf = 2 / Math.sqrt(Math.PI) * sum;
+      return s > 0 ? 1 - erf : 1 + erf;
+    }
+    var f = 0;
+    for (var i = 60; i >= 1; i--) f = i / 2 / (a + f);
+    var c = Math.exp(-a * a) / Math.sqrt(Math.PI) / (a + f);
+    return s > 0 ? c : 2 - c;
+  }
+
+  function analyse(b) {
+    var n = b.length, ones = 0, i;
+    for (i = 0; i < n; i++) ones += b[i];
+    var S = 2 * ones - n, r = {};
+    r.n = n; r.ones = ones; r.S = S;
+    r.sobs = Math.abs(S) / Math.sqrt(n);
+    r.p1 = erfc(r.sobs / Math.SQRT2);
+    var pi = ones / n, V = 1;
+    for (i = 0; i < n - 1; i++) if (b[i] !== b[i + 1]) V++;
+    r.pi = pi; r.V = V; r.expV = 2 * n * pi * (1 - pi);
+    r.tau = 2 / Math.sqrt(n);
+    r.applies = Math.abs(pi - .5) < r.tau;
+    r.p2 = r.applies ? erfc(Math.abs(V - r.expV) / (2 * Math.sqrt(2 * n) * pi * (1 - pi))) : 0;
+    return r;
+  }
+
+  function parse() {
+    var t = bitsEl.value.replace(/[\s,]+/g, ''), out = [];
+    for (var i = 0; i < t.length; i++) { if (t[i] !== '0' && t[i] !== '1') return { err: 'Only 0 and 1 are allowed (found “' + t[i] + '”).' }; out.push(+t[i]); }
+    return { bits: out };
+  }
+  function fmt(p) { return p < 0.0001 && p > 0 ? p.toExponential(2) : p.toFixed(6); }
+  function esc(s) { return s.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
+
+  var cur = null;
+  function refresh() {
+    var p = parse(), hb = document.getElementById('bhint');
+    if (p.err) { hb.textContent = p.err; hb.style.color = 'var(--viz-bad)'; return; }
+    hb.style.color = ''; hb.textContent = p.bits.length + ' bits. Type or paste 0s and 1s (spaces are ignored), or generate a sequence below.';
+    if (p.bits.length < 2) { hb.textContent = 'Enter at least two bits.'; return; }
+    cur = p.bits;
+    var r = analyse(cur);
+    panel('t1', 'Frequency (monobit) test', r.p1, true,
+      'ones <b>' + r.ones + '</b>, zeros <b>' + (r.n - r.ones) + '</b><br>S<sub>n</sub> = ones − zeros = <b>' + r.S + '</b><br>s<sub>obs</sub> = |S<sub>n</sub>| / √n = <b>' + r.sobs.toFixed(4) + '</b>' + (r.n < 100 ? '<br><i>Fewer than 100 bits: the test is not meaningful.</i>' : ''));
+    panel('t2', 'Runs test', r.p2, r.applies,
+      'π = <b>' + r.pi.toFixed(4) + '</b>' + (r.applies ? ' (inside 1/2 ± ' + r.tau.toFixed(3) + ', so the test applies)' : ' is outside 1/2 ± ' + r.tau.toFixed(3) + ': the test is <b>not applicable</b> and p is set to 0 (the bias alone fails the source)') +
+      '<br>runs V<sub>n</sub> = <b>' + r.V + '</b>, expected 2nπ(1−π) = <b>' + r.expV.toFixed(1) + '</b>' +
+      (r.applies ? '<br>' + (r.p2 >= 0.1 ? 'The number of runs is close to what chance gives.' : (r.V < r.expV ? 'Too few runs: the bits stick together.' : 'Too many runs: the bits flip too often.')) : ''));
+    strip(cur); walk(cur);
+  }
+  function panel(id, name, p, applies, body) {
+    var pass = applies && p >= 0.01, cls = !applies ? 'fail' : (pass ? 'pass' : 'fail');
+    var host = document.getElementById(id);
+    host.innerHTML = '<h4>' + name + ' <span class="v ' + cls + '">' + (pass ? 'PASS' : 'FAIL') + '</span></h4>' +
+      '<div class="eq">' + body + '<br>p-value = <b>' + (applies || p ? fmt(p) : '0') + '</b></div>' +
+      '<div class="pbar" aria-hidden="true"><i style="left:' + (Math.min(1, p) * 100) + '%"></i><span style="left:1%">0.01</span><span style="left:50%">0.5</span><span style="left:99%">1</span></div><div style="height:.9rem"></div>';
+  }
+
+  // ---- the strip of bits
+  var cvs = document.getElementById('strip'), cx = cvs.getContext('2d');
+  function strip(b) {
+    var P = K.palette, w = Math.max(220, Math.round(cvs.getBoundingClientRect().width)), dpr = window.devicePixelRatio || 1;
+    var cell = b.length <= 120 ? 14 : (b.length <= 300 ? 10 : 7), per = Math.max(1, Math.floor((w - 8) / cell)), rows = Math.ceil(b.length / per), h = rows * cell + 8;
+    cvs.style.height = h + 'px'; cvs.width = w * dpr; cvs.height = h * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    cx.clearRect(0, 0, w, h);
+    for (var i = 0; i < b.length; i++) {
+      var x = 4 + (i % per) * cell, y = 4 + Math.floor(i / per) * cell, newRun = i === 0 || b[i] !== b[i - 1];
+      cx.fillStyle = b[i] ? P.accent : P.surface; cx.fillRect(x + .5, y + .5, cell - 1.5, cell - 1.5);
+      if (!b[i]) { cx.strokeStyle = P.line; cx.strokeRect(x + .5, y + .5, cell - 1.5, cell - 1.5); }
+      if (newRun && (i % per)) { cx.fillStyle = P.accent2; cx.fillRect(x - 1, y, 2, cell - 1); }
+    }
+    cvs.setAttribute('aria-label', b.length + ' bits drawn as squares: filled for 1, empty for 0; a red tick marks the start of each run after the first in a row.');
+  }
+
+  // ---- the walk
+  function walk(b) {
+    var P = K.palette, W = 320, H = 110, n = b.length, s = 0, pts = [], mx = 3 * Math.sqrt(n);
+    var lim = Math.max(mx, 1);
+    b.forEach(function (x, i) { s += x ? 1 : -1; var mm = Math.abs(s); if (mm > lim) lim = mm; });
+    lim = Math.ceil(lim * 1.1); s = 0;
+    function X(i) { return 6 + i / n * (W - 12); }
+    function Y(v) { return H / 2 - v / lim * (H / 2 - 6); }
+    var path = 'M' + X(0) + ',' + Y(0);
+    b.forEach(function (x, i) { s += x ? 1 : -1; path += ' L' + X(i + 1).toFixed(1) + ',' + Y(s).toFixed(1); });
+    var band = '';
+    for (var i = 0; i <= 40; i++) band += (i ? ' L' : 'M') + X(i / 40 * n).toFixed(1) + ',' + Y(2 * Math.sqrt(i / 40 * n)).toFixed(1);
+    for (i = 40; i >= 0; i--) band += ' L' + X(i / 40 * n).toFixed(1) + ',' + Y(-2 * Math.sqrt(i / 40 * n)).toFixed(1);
+    document.getElementById('walk').innerHTML =
+      '<path d="' + band + 'Z" fill="' + P.accent + '" fill-opacity=".12" stroke="' + P.accent + '" stroke-opacity=".35" stroke-dasharray="3 3"/>' +
+      '<line x1="6" y1="' + Y(0) + '" x2="' + (W - 6) + '" y2="' + Y(0) + '" stroke="' + P.line + '"/>' +
+      '<path d="' + path + '" fill="none" stroke="' + P.accent2 + '" stroke-width="1.6" stroke-linejoin="round"/>' +
+      '<text x="8" y="12" font-size="9" fill="' + P.muted + '">+' + lim + '</text><text x="8" y="' + (H - 4) + '" font-size="9" fill="' + P.muted + '">−' + lim + '</text>';
+  }
+
+  // ---- making sequences
+  function make(n, bias, stick) {
+    var out = [], prev = Math.random() < bias ? 1 : 0;
+    for (var i = 0; i < n; i++) {
+      var x = (i && Math.random() < stick) ? prev : (Math.random() < bias ? 1 : 0);
+      out.push(x); prev = x;
+    }
+    return out;
+  }
+  function slider(id, outId, f) {
+    var s = document.getElementById(id), o = document.getElementById(outId);
+    function sync() { o.textContent = f(+s.value); }
+    s.addEventListener('input', sync); sync();
+  }
+  slider('n', 'nv', function (v) { return String(v); });
+  slider('bias', 'biasv', function (v) { return v.toFixed(2); });
+  slider('stick', 'stickv', function (v) { return v.toFixed(2); });
+  function gen() {
+    var b = make(+document.getElementById('n').value, +document.getElementById('bias').value, +document.getElementById('stick').value);
+    bitsEl.value = b.join('').replace(/(.{10})/g, '$1 ').trim();
+    refresh();
+  }
+  document.getElementById('gen').addEventListener('click', gen);
+  bitsEl.addEventListener('input', refresh);
+  bitsEl.addEventListener('keydown', function (e) { e.stopPropagation(); });
+
+  var NIST = '1100100100001111110110101010001000100001011010001100001000110100110001001100011001100010100010111000';
+  var PRE = [
+    ['Fair coin', function () { return make(200, .5, 0).join(''); }],
+    ['NIST 100-bit example', function () { return NIST; }],
+    ['Too many ones (70 %)', function () { return make(200, .7, 0).join(''); }],
+    ['Alternating 0101…', function () { var s = ''; for (var i = 0; i < 200; i++) s += i % 2; return s; }],
+    ['Long slabs', function () { var s = ''; for (var i = 0; i < 200; i++) s += Math.floor(i / 20) % 2; return s; }],
+    ['100 ones, 73 zeros, 127 ones', function () { return new Array(101).join('1') + new Array(74).join('0') + new Array(128).join('1'); }]
+  ];
+  var ph = document.getElementById('pre');
+  PRE.forEach(function (p) {
+    ph.appendChild(el('button', { type: 'button', text: p[0], onclick: function () { bitsEl.value = p[1]().replace(/(.{10})/g, '$1 ').trim(); refresh(); } }));
+  });
+
+  // ---- 200 trials
+  document.getElementById('many').addEventListener('click', function () {
+    var n = +document.getElementById('n').value, bias = +document.getElementById('bias').value, st = +document.getElementById('stick').value;
+    var h1 = new Array(10).fill(0), h2 = new Array(10).fill(0), f1 = 0, f2 = 0, T = 200;
+    for (var t = 0; t < T; t++) {
+      var r = analyse(make(n, bias, st));
+      h1[Math.min(9, Math.floor(r.p1 * 10))]++; h2[Math.min(9, Math.floor(r.p2 * 10))]++;
+      if (r.p1 < .01) f1++;
+      if (!r.applies || r.p2 < .01) f2++;
+    }
+    document.getElementById('trials').hidden = false;
+    var P = K.palette;
+    function hist(h, title) {
+      var mx = Math.max.apply(null, h), W = 150, H = 80, bw = W / 10, s = '<svg viewBox="0 0 ' + (W + 10) + ' ' + (H + 30) + '" role="img" aria-label="' + title + ': ' + h.join(', ') + '"><text x="0" y="9" font-size="9" fill="' + P.fg + '">' + title + '</text>';
+      h.forEach(function (c, i) { var bh = mx ? c / mx * (H - 12) : 0; s += '<rect x="' + (5 + i * bw + 1) + '" y="' + (H + 14 - bh) + '" width="' + (bw - 2) + '" height="' + bh + '" fill="' + (i === 0 ? P.bad : P.accent) + '" fill-opacity=".8"/>'; });
+      s += '<line x1="5" y1="' + (H + 14) + '" x2="' + (W + 5) + '" y2="' + (H + 14) + '" stroke="' + P.line + '"/><text x="5" y="' + (H + 26) + '" font-size="8" fill="' + P.muted + '">0</text><text x="' + (W + 5) + '" y="' + (H + 26) + '" font-size="8" fill="' + P.muted + '" text-anchor="end">p = 1</text></svg>';
+      return s;
+    }
+    document.getElementById('hists').innerHTML = hist(h1, 'Frequency test p-values') + hist(h2, 'Runs test p-values');
+    document.getElementById('fails').textContent = 'Failed at the 1 % level: frequency ' + f1 + ' of ' + T + ' (' + (f1 / T * 100).toFixed(1) + ' %), runs ' + f2 + ' of ' + T + ' (' + (f2 / T * 100).toFixed(1) + ' %). A fair source fails about 1 % of the time by chance alone, and its p-values spread evenly from 0 to 1.';
+  });
+
+  K.onTheme(function () { if (cur) { strip(cur); walk(cur); } });
+  window.addEventListener('resize', function () { if (cur) strip(cur); });
+  bitsEl.value = PRE[0][1]().replace(/(.{10})/g, '$1 ').trim();
+  refresh();
+  K.autoHeight();
+})();
+</script>
+</body>
+</html>

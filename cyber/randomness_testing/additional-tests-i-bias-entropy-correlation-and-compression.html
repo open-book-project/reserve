@@ -1,0 +1,1459 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/randomness_testing/additional-tests-i-bias-entropy-correlation-and-compression.html">
+  
+  
+    <link rel="prev" href="comparing-the-batteries.html">
+  
+  
+    <link rel="next" href="additional-tests-ii-source-behaviour-and-health.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>10. Additional Tests (I): Bias, Entropy, Correlation and Compression - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#101-the-additional-tests-and-how-to-read-their-results" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              10. Additional Tests (I): Bias, Entropy, Correlation and Compression
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Randomness Testing</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="random-numbers-and-the-coin-flip-model.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random Numbers and the Coin-Flip Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributions-corrections-and-entropy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distributions, Corrections and Entropy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-i-balance-runs-and-spectra.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. NIST SP 800-22 (I): Balance, Runs and Spectra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-ii-patterns-complexity-and-walks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. NIST SP 800-22 (II): Patterns, Complexity and Walks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="estimating-entropy-nist-sp-800-90b.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Estimating Entropy: NIST SP 800-90B
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diehard-and-dieharder.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Diehard and Dieharder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fips-140-2-and-bsi-ais-31.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. FIPS 140-2 and BSI AIS 31
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ent-testu01-and-practrand.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. ENT, TestU01 and PractRand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comparing-the-batteries.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Comparing the Batteries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Additional Tests (I): Bias, Entropy, Correlation and Compression
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="additional-tests-i-bias-entropy-correlation-and-compression.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Additional Tests (I): Bias, Entropy, Correlation and Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101-the-additional-tests-and-how-to-read-their-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 The additional tests and how to read their results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-bias-test-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Bias (test 1)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-multi-scale-entropy-test-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Multi-scale entropy (test 2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-correlation-analysis-test-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Correlation analysis (test 3)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-entropy-stability-across-windows-test-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 Entropy stability across windows (test 4)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#106-periodicity-and-predictability-test-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 Periodicity and predictability (test 5)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#107-shannon-entropy-test-test-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7 Shannon entropy test (test 9)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#108-compression-test-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8 Compression (test 10)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#109-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1010-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-ii-source-behaviour-and-health.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Additional Tests (II): Source Behaviour and Health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iii-spectral-ordinal-matrix-and-betting-tes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Additional Tests (III): Spectral, Ordinal, Matrix and Betting Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iv-collisions-memory-and-learning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Additional Tests (IV): Collisions, Memory and Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recognising-generators-and-classifying-sources.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Recognising Generators and Classifying Sources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#101-the-additional-tests-and-how-to-read-their-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.1 The additional tests and how to read their results
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#102-bias-test-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.2 Bias (test 1)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#103-multi-scale-entropy-test-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.3 Multi-scale entropy (test 2)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#104-correlation-analysis-test-3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.4 Correlation analysis (test 3)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#105-entropy-stability-across-windows-test-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.5 Entropy stability across windows (test 4)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#106-periodicity-and-predictability-test-5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.6 Periodicity and predictability (test 5)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#107-shannon-entropy-test-test-9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.7 Shannon entropy test (test 9)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#108-compression-test-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.8 Compression (test 10)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#109-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.9 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1010-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        10.10 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-10-additional-tests-i-bias-entropy-correlation-and-compression">Chapter 10: Additional Tests (I): Bias, Entropy, Correlation and Compression<a class="headerlink" href="#chapter-10-additional-tests-i-bias-entropy-correlation-and-compression" title="Permanent link">&para;</a></h1>
+<p>The next five chapters describe twenty-one further tests, grouped by what they look for. They come from a reference implementation written by the author, and they are included for two reasons: each is a compact lesson in how to design a test with an exact or well-understood null distribution, and the suite as a whole shows how to calibrate tests on known-good data and combine their results into an honest verdict. This first chapter covers the core statistical tests: bias, multi-scale entropy, correlation, entropy stability across windows, periodicity and predictability, the Shannon entropy test and compression.</p>
+<h2 id="101-the-additional-tests-and-how-to-read-their-results">10.1 The additional tests and how to read their results<a class="headerlink" href="#101-the-additional-tests-and-how-to-read-their-results" title="Permanent link">&para;</a></h2>
+<p>The tests of Chapters 10 to 14 are 21 numbered tests: 18 statistical tests that each give a p-value, 2 generator tests that either find a matching rule or do not, and test 8, which reads all the others and gives a verdict. They come from a reference implementation written by the author, and they were built so that every result can be explained and defended. In these chapters "we" and "our" mean that implementation and its measurements.</p>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Tests</th>
+<th>What the group asks</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core statistical tests</td>
+<td>1, 2, 3, 4, 5, 9, 10</td>
+<td>Is the data even, independent and incompressible?</td>
+</tr>
+<tr>
+<td>TRNG/QRNG source tests</td>
+<td>11, 12, 13</td>
+<td>Does it behave like raw physical noise, or stall?</td>
+</tr>
+<tr>
+<td>Advanced mathematical tests</td>
+<td>U1, U2, U3, U4, U5, U6</td>
+<td>Is there structure that needs heavier mathematics to see?</td>
+</tr>
+<tr>
+<td>Research-grade tests</td>
+<td>H1, H2</td>
+<td>Can a trained predictor win? Do Hamming weights depend on each other?</td>
+</tr>
+<tr>
+<td>Generator proofs</td>
+<td>6, 7</td>
+<td>Does the data follow a simple generator's rule?</td>
+</tr>
+<tr>
+<td>Source classification</td>
+<td>8</td>
+<td>Given all of the above, what can we honestly say?</td>
+</tr>
+</tbody>
+</table>
+<p>Each statistical test passes when <span class="arithmatex">\(p \ge 0.01\)</span>. Where a test combines several sub-tests, it reports a Bonferroni or Sidak value, so its single p-value already accounts for the combining.</p>
+<p><strong>How to read the measured results.</strong> Each test below reports two measurements.</p>
+<p>False alarms come from calibration: 120 samples of good data, each 1 MiB, half from os.urandom and half from SHA-256 counter mode. We count how many fail at <span class="arithmatex">\(p &lt; 0.01\)</span>. With only 120 samples the count is rough. Even "0 of 120" is consistent with a true rate of up to 3.0% (95% interval), so read it as "no sign of trouble", not as "never". The counts are from the full rerun on the final code, and they move with chance: test 5 went from 4 of 120 in an earlier run to 1 of 120 here.</p>
+<p>Detections come from a power run: 59 samples, 58 of them with an expected verdict (parity has none). Most are 2 MiB, and 50 of them come from two runs of the author's own corpus (a different seed each time, with the jitter sources re-measured), so counts are samples, not distinct generators. In these chapters:</p>
+<ul>
+<li>"Raw physical" means the 10 unconditioned physical samples. Four are real CPU timing jitter, and six are simulations of physics, driven by a PRNG.</li>
+<li>"Weak generators" means the 30 samples labelled as weak PRNGs.</li>
+<li>"Defective" means one sample: SHA-256 used as a stateless conditioner with repeating input.</li>
+<li>"Parity" means one public Zenodo dataset: real quantum data from entangled photons, but its authors repeated an 8,000-byte string to fill the file. So it is not a fair test of a QRNG, and most of its flags below come from the repetition.</li>
+<li>"Flagged" means <span class="arithmatex">\(p &lt; 0.01\)</span>. The count at the stricter verdict line is added only where it differs.</li>
+</ul>
+<p>Two more samples are real-world PRNG files from Zenodo (GFSR4 and MT19937), and the other 15 are the clean samples listed at the end of Chapter 2. A sample can be flagged by a test without changing its verdict.</p>
+<h2 id="102-bias-test-1">10.2 Bias (test 1)<a class="headerlink" href="#102-bias-test-1" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Imagine a slightly bent coin. A few tosses will not show it, but thousands will. We also treat a byte as eight separate seats, each with its own coin, because one bent coin in seat 3 can be hidden when you only look at the overall total.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 10.2: Bias</p>
+<p>Take 100 bits with 62 ones. The exact two-sided binomial p-value is 0.0210. (The normal shortcut gives 0.0164, a fair approximation.) On its own that would pass at 0.01 anyway, and because the test checks 9 things, it would be reported as <span class="arithmatex">\(9 \times 0.0210 = 0.189\)</span> if it were the smallest. For the side measurement, suppose the most common byte appears 12 times in 1000 bytes. Then <span class="arithmatex">\(\hat{p} = 0.012\)</span>, the upper bound is <span class="arithmatex">\(p_u = 0.0209\)</span>, and the min-entropy estimate is 5.58 bits per byte.</p>
+</div>
+<p><strong>The mathematics.</strong> The whole-file test counts ones among <span class="arithmatex">\(n\)</span> bits, and each position test counts ones in one seat across <span class="arithmatex">\(N\)</span> bytes:</p>
+<div class="arithmatex">\[ S \sim \mathrm{Binomial}(n, \tfrac{1}{2}), \qquad p_{\text{all}} = \min\bigl(1,\ 2\, P(X \ge \max(S, n-S))\bigr) \]</div>
+<div class="arithmatex">\[ z_b = \frac{S_b - N/2}{\sqrt{N/4}}, \qquad p_b = \mathrm{erfc}\!\left(\frac{|z_b|}{\sqrt{2}}\right), \quad b = 0, \dots, 7 \]</div>
+<div class="arithmatex">\[ p = \min\bigl(1,\ 9 \min(p_{\text{all}}, p_0, \dots, p_7)\bigr) \]</div>
+<ul>
+<li><span class="arithmatex">\(n\)</span>: the number of bits, equal to <span class="arithmatex">\(8N\)</span>.</li>
+<li><span class="arithmatex">\(S\)</span>: the number of 1 bits in the whole sample.</li>
+<li><span class="arithmatex">\(X\)</span>: a binomial variable with the same <span class="arithmatex">\(n\)</span> and probability one half.</li>
+<li><span class="arithmatex">\(S_b\)</span>: the number of 1 bits at position <span class="arithmatex">\(b\)</span> of each byte.</li>
+<li><span class="arithmatex">\(z_b\)</span>: how many standard deviations <span class="arithmatex">\(S_b\)</span> sits from <span class="arithmatex">\(N/2\)</span>.</li>
+</ul>
+<p>The factor 9 is Bonferroni over the 9 sub-tests. The binomial test is exact below <span class="arithmatex">\(10^7\)</span> bits. Above that the code uses the normal approximation, <span class="arithmatex">\(\mathrm{erfc}\)</span> of the z-score, which at this size is accurate.</p>
+<p>The test also reports, without using it for pass or fail, the SP 800-90B most-common-value min-entropy: <span class="arithmatex">\(H = -\log_2 p_u\)</span>, with <span class="arithmatex">\(p_u = \min(1,\ \hat{p} + 2.576 \sqrt{\hat{p}(1-\hat{p})/(N-1)})\)</span>, where <span class="arithmatex">\(\hat{p}\)</span> is the share of the most common byte. This reproduces the standard's worked example (<span class="arithmatex">\(p_u = 0.6895\)</span> gives 0.5363 bits).</p>
+<p><strong>What it catches and misses.</strong> False alarms: 1 of 120. It flagged 15 of 59: all 10 raw physical, 4 weak generators (MINSTD and RANDU) and parity. At the verdict line that falls to 13, because the sim-drifting-bits sample only reached <span class="arithmatex">\(p = 0.0035\)</span> and <span class="arithmatex">\(p = 0.0094\)</span>. At 1 MiB, the overall ones fraction has to reach about 0.50056 to fail. It sees balance and nothing else. A file running 0, 1, 2, ..., 255 over and over passes with <span class="arithmatex">\(p = 1\)</span>, because every seat is balanced, although it is totally predictable. MT19937 and java.util.Random passed too. (A repeating 0101 pattern does fail, because each seat is constant.)</p>
+<h2 id="103-multi-scale-entropy-test-2">10.3 Multi-scale entropy (test 2)<a class="headerlink" href="#103-multi-scale-entropy-test-2" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Read a sentence one letter at a time and it may look fine. Read it in pairs and you notice that "qu" always travels together. This test looks at the bit stream with sixteen different lenses: 1 bit at a time, 2 bits at a time, and so on up to 16.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 10.3: Multi-scale entropy</p>
+<p>Take 80 bits of 01010101... (ten bytes of value 0x55). At 1 bit, there are 40 zeros and 40 ones, so <span class="arithmatex">\(X^2 = 0\)</span> and <span class="arithmatex">\(p = 1\)</span>. It looks perfect. At 2 bits, there are 40 symbols and each of the 4 cells expects 10, but every symbol is "01". The counts are 0, 40, 0, 0, so <span class="arithmatex">\(X^2 = (100 + 900 + 100 + 100)/10 = 120\)</span> with 3 degrees of freedom, and <span class="arithmatex">\(p = 7.7 \times 10^{-26}\)</span>. At 3 bits only 3.25 symbols per cell would be expected, below our minimum of 5, so we stop. Bonferroni over the 2 scales gives <span class="arithmatex">\(p = 1.5 \times 10^{-25}\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong> Cut the <span class="arithmatex">\(n\)</span> bits into <span class="arithmatex">\(m_k = \lfloor n/k \rfloor\)</span> non-overlapping <span class="arithmatex">\(k\)</span>-bit symbols, and compare the counts with their expected value:</p>
+<div class="arithmatex">\[ X_k^2 = \sum_{j=0}^{2^k - 1} \frac{(O_{k,j} - m_k/2^k)^2}{m_k/2^k} \sim \chi^2(2^k - 1) \]</div>
+<div class="arithmatex">\[ p = \min\bigl(1,\ L \min_k p_k\bigr) \]</div>
+<ul>
+<li><span class="arithmatex">\(k\)</span>: the symbol size in bits, from 1 to 16, while at least 5 symbols per cell are expected.</li>
+<li><span class="arithmatex">\(O_{k,j}\)</span>: the number of times the <span class="arithmatex">\(k\)</span>-bit symbol <span class="arithmatex">\(j\)</span> occurred.</li>
+<li><span class="arithmatex">\(p_k\)</span>: the chi-square tail probability of <span class="arithmatex">\(X_k^2\)</span>.</li>
+<li><span class="arithmatex">\(L\)</span>: the number of scales used, which is 16 at 1 MiB.</li>
+</ul>
+<p>The test also reports an entropy per bit at each scale, with the Miller-Madow correction (a small top-up, because counting from a finite sample underestimates entropy), but the pass or fail decision uses only the p-value above.</p>
+<p><strong>What it catches and misses.</strong> False alarms: 0 of 120. It flagged 15 of 59 (14 at the verdict line): 9 raw physical, 4 weak generators (MINSTD and RANDU), the defective conditioner and parity. It misses order that shows up only beyond 16 bits, and since symbols do not overlap, it looks at only one alignment of the stream at each size.</p>
+<p>We found and fixed a defect here. Our first version used the G-statistic, and it failed 89% of good samples. At <span class="arithmatex">\(k = 16\)</span>, with about 8 expected counts per cell, G overshoots its chi-square reference by a factor of about 1.02, which is a lot at that scale. Pearson's <span class="arithmatex">\(X^2\)</span> has a mean of exactly <span class="arithmatex">\(2^k - 1\)</span> under the null, and false alarms dropped to 0 of 120.</p>
+<h2 id="104-correlation-analysis-test-3">10.4 Correlation analysis (test 3)<a class="headerlink" href="#104-correlation-analysis-test-3" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> If today's weather tells you something about tomorrow's, the days are not independent. We ask the same of bytes and bits: does a value say anything about the one that came 1, 2 or 32 steps before it? We also check whether two seats inside a byte tend to move together, like two friends who always vote the same way.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 10.4: Correlation analysis</p>
+<p>Take the ten values 10, 20, 30, ..., 100, a plain upward trend. The sample autocorrelations are <span class="arithmatex">\(r_1 = 0.700\)</span> and <span class="arithmatex">\(r_2 = 0.412\)</span>. With <span class="arithmatex">\(n = 10\)</span> and <span class="arithmatex">\(h = 2\)</span> lags:</p>
+<div class="arithmatex">\[ Q = 10 \times 12 \times \left(\frac{0.700^2}{9} + \frac{0.412^2}{8}\right) = 9.08 \]</div>
+<p>Against <span class="arithmatex">\(\chi^2(2)\)</span> this gives <span class="arithmatex">\(p = 0.0107\)</span>. Ten values is far too few for the chi-square reference to be reliable, so treat this as a picture of the arithmetic only.</p>
+</div>
+<p><strong>The mathematics.</strong> The serial part is the Ljung-Box statistic, and the cross-bit part is Pearson correlation:</p>
+<div class="arithmatex">\[ r_k = \frac{\sum_{i} (x_i - \bar{x})(x_{i+k} - \bar{x})}{\sum_{i} (x_i - \bar{x})^2}, \qquad Q = n(n+2) \sum_{k=1}^{h} \frac{r_k^2}{n-k} \sim \chi^2(h) \]</div>
+<div class="arithmatex">\[ z_{ab} = r_{ab} \sqrt{N}, \qquad p_{ab} = \mathrm{erfc}\!\left(\frac{|z_{ab}|}{\sqrt{2}}\right) \]</div>
+<ul>
+<li><span class="arithmatex">\(x_i\)</span>: the series, either bytes (first <span class="arithmatex">\(2^{21}\)</span> bytes, <span class="arithmatex">\(h = 32\)</span>) or bits (from the first <span class="arithmatex">\(2^{18}\)</span> bytes, <span class="arithmatex">\(h = 64\)</span>).</li>
+<li><span class="arithmatex">\(r_k\)</span>: the correlation between the series and itself shifted by <span class="arithmatex">\(k\)</span>.</li>
+<li><span class="arithmatex">\(n\)</span>: the length of that series.</li>
+<li><span class="arithmatex">\(r_{ab}\)</span>: the correlation between bit positions <span class="arithmatex">\(a\)</span> and <span class="arithmatex">\(b\)</span> of each byte.</li>
+<li><span class="arithmatex">\(N\)</span>: the number of bytes used for this, up to <span class="arithmatex">\(2^{20}\)</span>.</li>
+</ul>
+<p>Bonferroni runs over the 28 position pairs to give <span class="arithmatex">\(p_{\text{cross}}\)</span>, then the final value is</p>
+<div class="arithmatex">\[p = \min(1,\ 3\min(p_{\text{byte}}, p_{\text{bit}}, p_{\text{cross}})).\]</div>
+<p>This is conservative.</p>
+<p><strong>What it catches and misses.</strong> False alarms: 1 of 120. It flagged 18 of 59 (17 at the verdict line): all 10 raw physical, 7 weak generators and parity. Six of the weak flags are LCG word streams (the Numerical Recipes LCG, MINSTD and RANDU). The seventh is xorshift128+ at <span class="arithmatex">\(p = 0.0072\)</span> on one seed only, and it did not repeat on the other seed, so we would not read much into it. The test sees only straight-line dependence at short lags. Relationships that do not show as a straight line in byte values, such as those in MT19937 or java.util.Random, pass untouched.</p>
+<h2 id="105-entropy-stability-across-windows-test-4">10.5 Entropy stability across windows (test 4)<a class="headerlink" href="#105-entropy-stability-across-windows-test-4" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> A school's yearly average can look fine while one class had a terrible week. So we mark each 4 KiB page of the data separately, then ask two questions. Do the page marks spread the way chance says they should? And are too many pages terrible?</p>
+<div class="admonition example">
+<p class="admonition-title">Example 10.5: Entropy stability across windows</p>
+<p>A 1 MiB file has 256 windows. Suppose one window gives <span class="arithmatex">\(X^2 = 340\)</span>. Against <span class="arithmatex">\(\chi^2(255)\)</span>, <span class="arithmatex">\(p = 0.00029\)</span>, so it counts as a bad window. By chance we expect <span class="arithmatex">\(256 \times 0.001 = 0.256\)</span> bad windows. Seeing 2 bad windows has tail probability 0.0276, which after doubling (for the 2 parts of the test) is 0.0552, a pass. Seeing 3 has tail probability 0.00229, or 0.00458 after doubling, a fail.</p>
+</div>
+<p><strong>The mathematics.</strong> For each window <span class="arithmatex">\(w\)</span> of 4096 bytes, with 16 expected per byte value:</p>
+<div class="arithmatex">\[ X_w^2 = \sum_{v=0}^{255} \frac{(c_{w,v} - 16)^2}{16}, \qquad p_w = P\bigl(\chi^2(255) \ge X_w^2\bigr) \]</div>
+<div class="arithmatex">\[ B = \#\{w : p_w &lt; 10^{-3}\} \sim \mathrm{Binomial}(W, 10^{-3}), \qquad p_{\text{tail}} = P(B' \ge B) \]</div>
+<div class="arithmatex">\[ p = \min\bigl(1,\ 2\min(p_{\text{KS}}, p_{\text{tail}})\bigr) \]</div>
+<ul>
+<li><span class="arithmatex">\(c_{w,v}\)</span>: how many times byte value <span class="arithmatex">\(v\)</span> occurs in window <span class="arithmatex">\(w\)</span>.</li>
+<li><span class="arithmatex">\(p_w\)</span>: the window's p-value. Under the null these are independent and uniform between 0 and 1.</li>
+<li><span class="arithmatex">\(p_{\text{KS}}\)</span>: the Kolmogorov-Smirnov test that the <span class="arithmatex">\(p_w\)</span> really are uniform.</li>
+<li><span class="arithmatex">\(W\)</span>: the number of windows.</li>
+<li><span class="arithmatex">\(B\)</span>: the number of bad windows, and <span class="arithmatex">\(B'\)</span> a fresh binomial variable with the same law.</li>
+</ul>
+<p>Despite the test's name, its p-value uses only these chi-square results. The code also reports each window's entropy as side information, and that plays no part in pass or fail.</p>
+<p><strong>What it catches and misses.</strong> False alarms: 1 of 120. It flagged 17 of 59: all 10 raw physical, 6 weak generators (the Numerical Recipes LCG words, MINSTD and RANDU) and parity. It suits local faults, such as a stuck run, a dropout or a burst, and the code tells a local fault from a whole-sample problem by checking whether most windows fail. It checks only byte counts inside each window, so it is blind to the order of bytes. Generators with even byte counts, such as MT19937, pass.</p>
+<h2 id="106-periodicity-and-predictability-test-5">10.6 Periodicity and predictability (test 5)<a class="headerlink" href="#106-periodicity-and-predictability-test-5" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> This test has two parts. The first listens for a hum: if a single note in the data is far louder than all the others, something periodic is going on. The second is a fortune teller who has to write down each guess before seeing the answer, and we simply keep score. Fair bytes give her 1 chance in 256, however clever she is.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 10.6: Periodicity and predictability</p>
+<p>Take 16 values that repeat a period-4 shape with small wobbles: 200, 128, 50, 128, 205, 131, 47, 126, 198, 125, 52, 130, 203, 127, 49, 129. A transform splits the values into frequencies, and each frequency's entry is called an ordinate. With <span class="arithmatex">\(m = 7\)</span> ordinates, one holds almost everything: <span class="arithmatex">\(g = 0.9985\)</span>, and the bound is <span class="arithmatex">\(7(1-g)^6 = 8.0 \times 10^{-17}\)</span>. A jumbled 16 values we tried gave <span class="arithmatex">\(g = 0.493\)</span> and a bound of 0.118. For the fortune teller, take 7, 42, 99 repeated to 60 bytes. The lag predictor gets 56 of 59 guesses right, where chance would give about 0.23, and <span class="arithmatex">\(p = 4.4 \times 10^{-131}\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong> The hum part is Fisher's g over the periodogram (the table of how much power each frequency holds) of the mean-removed bytes:</p>
+<div class="arithmatex">\[ I_j = \left| \sum_{t=0}^{L-1} (x_t - \bar{x})\, e^{-2\pi i j t / L} \right|^2, \qquad g = \frac{\max_j I_j}{\sum_j I_j}, \qquad P(g &gt; x) \le m (1-x)^{m-1} \]</div>
+<p>The predictor part compares hits with a binomial law:</p>
+<div class="arithmatex">\[ H \sim \mathrm{Binomial}(n, 1/256), \qquad p_{\text{pred}} = P(B \ge H) \]</div>
+<div class="arithmatex">\[ p = \min\bigl(1,\ 3\min(p_{\text{Fisher}}, p_{\text{lag}}, p_{\text{Markov}})\bigr) \]</div>
+<ul>
+<li><span class="arithmatex">\(L\)</span>: the number of bytes in the transform, up to <span class="arithmatex">\(2^{20}\)</span>.</li>
+<li><span class="arithmatex">\(x_t\)</span>, <span class="arithmatex">\(\bar{x}\)</span>: the byte at position <span class="arithmatex">\(t\)</span> and the mean of those bytes.</li>
+<li><span class="arithmatex">\(i\)</span>: the imaginary unit, the square root of minus one.</li>
+<li><span class="arithmatex">\(I_j\)</span>: the power at frequency index <span class="arithmatex">\(j\)</span>, leaving out both zero frequency and the very top one.</li>
+<li><span class="arithmatex">\(m\)</span>: the number of ordinates, <span class="arithmatex">\(L/2 - 1\)</span>. Under the null they are asymptotically i.i.d. exponential.</li>
+<li><span class="arithmatex">\(g\)</span>: the share of all the power in the loudest ordinate. The bound is the first term of Fisher's exact series.</li>
+<li><span class="arithmatex">\(H\)</span>: the hits over <span class="arithmatex">\(n\)</span> guesses, using up to <span class="arithmatex">\(2^{19}\)</span> bytes.</li>
+<li><span class="arithmatex">\(B\)</span>: a binomial variable with the same law as <span class="arithmatex">\(H\)</span>.</li>
+</ul>
+<p>The lag predictor copies the byte from whichever of 32 lags has scored best so far (SP 800-90B section 6.3.8). The Markov predictor guesses the most common successor seen so far of the previous byte. Each guess uses only the past, so if the bytes are fair, every guess is right with probability <span class="arithmatex">\(1/256\)</span> regardless. That is a martingale argument (a fair-game argument: whatever has happened so far, the next step is fair on average), and it is why the binomial law holds. Steps with no prediction yet count as misses, which can only make the test more cautious.</p>
+<p><strong>What it catches and misses.</strong> False alarms: 1 of 120, at <span class="arithmatex">\(p = 0.0082\)</span>, well above the verdict line. An earlier run of the same size gave 4 of 120, the most of any test then, and 500 further samples gave 4 failures, 0.8%, so that high count looks like chance. It flagged 16 of 59: 8 raw physical, 6 weak generators (the Numerical Recipes LCG words, MINSTD and RANDU), the defective conditioner and parity. It missed the simulated photon time-bin source on both seeds. A plain period of 2 falls on the very top frequency, which <span class="arithmatex">\(g\)</span> leaves out, so that case relies on the predictors. Strong non-linear generators beat both parts.</p>
+<h2 id="107-shannon-entropy-test-test-9">10.7 Shannon entropy test (test 9)<a class="headerlink" href="#107-shannon-entropy-test-test-9" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Think of a lottery with 256 numbers. Your average surprise is highest when all numbers are equally likely, and any favouritism lowers it. So a small entropy shortfall means uneven byte counts. This is the point people often miss: an entropy test and an evenness test are the same test in different clothes.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 10.7: Shannon entropy test</p>
+<p>Use a toy alphabet of 4 symbols, where the maximum entropy is 2 bits, with counts 30, 20, 25, 25 out of <span class="arithmatex">\(n = 100\)</span>. The entropy is <span class="arithmatex">\(\hat{H} = 1.98548\)</span> bits. Then <span class="arithmatex">\(2n \ln 2\, (2 - \hat{H}) = 2.0136\)</span>, and computing <span class="arithmatex">\(G\)</span> directly from the counts gives the same 2.0136, as the identity promises. With 3 degrees of freedom, <span class="arithmatex">\(p = 0.570\)</span>.</p>
+<p>Now at full size. Good data of 1 MiB does not reach 8.0 bits. It averages about 7.999825, and that is normal. A value of <span class="arithmatex">\(\hat{H} = 7.99982\)</span> gives <span class="arithmatex">\(G = 261.7\)</span> and <span class="arithmatex">\(p = 0.374\)</span>. A value of <span class="arithmatex">\(\hat{H} = 7.9997\)</span> sounds equally perfect, but gives <span class="arithmatex">\(G = 436.1\)</span> and <span class="arithmatex">\(p = 1.2 \times 10^{-11}\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong> For byte counts <span class="arithmatex">\(c_v\)</span> adding up to <span class="arithmatex">\(n\)</span>:</p>
+<div class="arithmatex">\[ \hat{H} = -\sum_v \frac{c_v}{n} \log_2 \frac{c_v}{n}, \qquad G = 2n \ln 2\, (8 - \hat{H}) = 2 \sum_v c_v \ln \frac{c_v}{n/256} \sim \chi^2(255) \]</div>
+<ul>
+<li><span class="arithmatex">\(c_v\)</span>: the number of times byte value <span class="arithmatex">\(v\)</span> occurs.</li>
+<li><span class="arithmatex">\(n\)</span>: the number of bytes.</li>
+<li><span class="arithmatex">\(\hat{H}\)</span>: the measured Shannon entropy, in bits per byte.</li>
+<li><span class="arithmatex">\(G\)</span>: the likelihood-ratio statistic against the uniform distribution (Wilks' theorem, which says such statistics follow chi-square in large samples, gives its reference).</li>
+</ul>
+<p>The p-value is the upper tail of <span class="arithmatex">\(\chi^2(255)\)</span>. With 4096 expected per cell, the Williams correction, a multiplier that adjusts <span class="arithmatex">\(G\)</span> when counts are small, is 1.00004, which is negligible.</p>
+<p><strong>What it catches and misses.</strong> False alarms: 0 of 120, and the p-values look uniform. It flagged 13 of 59: 8 raw physical, 4 weak generators (MINSTD and RANDU) and parity. It looks at byte counts only. A file running 0, 1, 2, ..., 255 over and over has perfect counts, so <span class="arithmatex">\(G = 0\)</span> and <span class="arithmatex">\(p = 1\)</span>, despite being totally predictable. So reading "7.9999 bits per byte" on a datasheet tells you very little on its own.</p>
+<h2 id="108-compression-test-10">10.8 Compression (test 10)<a class="headerlink" href="#108-compression-test-10" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Try to give everyone in a big town a short nickname. There simply are not enough short names to go round, so most people must keep long ones. Compression works the same way: very few strings can have a short description. So if a real compressor shrinks a file noticeably, the file was almost certainly not random. We do not need any statistics to say this, only counting.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 10.8: Compression</p>
+<p>Counting first. Take strings of <span class="arithmatex">\(N = 4\)</span> bits (16 of them), and a compressor whose output tells the decoder where to stop. Then no description is the start of another, a property called prefix-free. Compressing by <span class="arithmatex">\(s = 2\)</span> bits means a description of at most 2 bits, and a prefix-free set can hold at most 4 of those (for example 00, 01, 10, 11). So at most 4 of the 16 strings can compress that far, which is exactly the bound of <span class="arithmatex">\(2^{-2} = 1/4\)</span>. Drop the prefix-free rule and there are 7 descriptions of at most 2 bits, counting the empty one, so the rule matters.</p>
+<p>Now real compressors, on 1000 bytes. "ABCD" repeated 250 times compresses to 20 bytes with zlib. Then <span class="arithmatex">\(s = 8(1000 - 20 - 64) = 7328\)</span> bits, and the bound is so small it rounds to 0. For 1000 random bytes, zlib gives 1011 bytes and lzma 1060, so no saving, and <span class="arithmatex">\(p = 1\)</span>. A saving of just 1 byte beyond the allowance gives <span class="arithmatex">\(s = 8\)</span> and <span class="arithmatex">\(p = 0.0078\)</span>, which fails at 0.01.</p>
+</div>
+<p><strong>The mathematics.</strong> Fix a decompressor whose files are self-delimiting, so that its descriptions are prefix-free. Both of ours qualify: we checked that the zlib and lzma decoders stop at their own end marker and leave any trailing bytes unread. Kraft's inequality says the lengths of a prefix-free set satisfy <span class="arithmatex">\(\sum_d 2^{-|d|} \le 1\)</span>, so at most <span class="arithmatex">\(2^{N-s}\)</span> descriptions can have <span class="arithmatex">\(N - s\)</span> bits or fewer. There are <span class="arithmatex">\(2^N\)</span> strings of <span class="arithmatex">\(N\)</span> bits, so:</p>
+<div class="arithmatex">\[ P(\text{random data compresses by at least } s \text{ bits}) \le 2^{-s} \]</div>
+<div class="arithmatex">\[ s = 8(n - c - 64), \qquad p = \begin{cases} 1 &amp; s \le 0 \\ \min(1,\ 2 \cdot 2^{-s}) &amp; s &gt; 0 \end{cases} \]</div>
+<ul>
+<li><span class="arithmatex">\(n\)</span>: the bytes tested, up to the first <span class="arithmatex">\(2^{21}\)</span>.</li>
+<li><span class="arithmatex">\(c\)</span>: the smallest compressed size, from lzma (preset 6) and zlib (level 9).</li>
+<li>64: the bytes we allow for container overhead before counting any saving.</li>
+<li><span class="arithmatex">\(s\)</span>: the saving in bits.</li>
+<li>The factor 2: Bonferroni, because we tried two compressors.</li>
+</ul>
+<p>This is an exact counting argument, not an approximation.</p>
+<p><strong>What it catches and misses.</strong> False alarms: 0 of 120 (every good sample gets <span class="arithmatex">\(p = 1\)</span>). It flagged 12 of 59: 6 raw physical, 4 weak generators (the Numerical Recipes LCG words and RANDU), the defective conditioner and parity. Its strength is that a failure is close to unarguable. Its weakness is that general compressors are not looking for arithmetic structure. MT19937, java.util.Random and most weak generators pass, as do several raw physical samples, such as the simulated photon source.</p>
+<p>During verification we found the bound was being applied once, although two compressors were tried. It never caused a false alarm, but it was unjustified, so we added the Bonferroni factor of 2.</p>
+<h2 id="109-summary">10.9 Summary<a class="headerlink" href="#109-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>The <strong>bias</strong> test checks the whole-file balance and each of the eight bit positions; <strong>multi-scale entropy</strong> applies a chi-square at 1 to 16 bits at a time; <strong>correlation</strong> combines Ljung-Box on bytes and bits with cross-bit correlations.</li>
+<li><strong>Entropy stability</strong> checks each 4 KiB window; <strong>periodicity</strong> combines Fisher's <span class="arithmatex">\(g\)</span> with predictors whose hits are exactly binomial.</li>
+<li>The <strong>Shannon entropy test</strong> is the same test as the evenness test in different clothes: <span class="arithmatex">\(G=2n\ln2\,(8-\hat H)\sim\chi^2(255)\)</span>. A reading of "7.9999 bits per byte" on a datasheet tells you very little on its own.</li>
+<li><strong>Compression</strong> is a counting argument: at most <span class="arithmatex">\(2^{N-s}\)</span> of the <span class="arithmatex">\(2^N\)</span> strings can be compressed by <span class="arithmatex">\(s\)</span> bits, so a real compressor that shrinks a file noticeably proves it is not random.</li>
+<li>Three defects were found and fixed in this suite (the G statistic at 16-bit symbols, the handling of ties in the runs formula, and a missing Bonferroni factor for two compressors). Each is a lesson in why calibration on known-good data is essential.</li>
+</ul>
+<h2 id="1010-exercises">10.10 Exercises<a class="headerlink" href="#1010-exercises" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Take 100 bits with 62 ones. Find the exact two-sided binomial p-value, and say whether it fails at <span class="arithmatex">\(\alpha=0.01\)</span>. What would the bias test report if this were the smallest of its 9 sub-tests?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The exact two-sided value is <span class="arithmatex">\(2P(X\ge62)=0.0210\)</span>, which does not fail at 0.01. Because the bias test checks 9 things (the whole file and eight positions), a smallest sub-test p-value of 0.0210 is reported as <span class="arithmatex">\(9\times0.0210=0.189\)</span>.</p>
+</details>
+</li>
+<li>
+<p>A source has byte counts 30, 20, 25, 25 over a toy alphabet of four symbols (<span class="arithmatex">\(n=100\)</span>). Compute <span class="arithmatex">\(\hat H\)</span>, then <span class="arithmatex">\(G=2n\ln2(2-\hat H)\)</span> and the p-value on 3 degrees of freedom.</p>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(\hat H=1.9855\)</span> bits. Then <span class="arithmatex">\(G=2\times100\times0.6931\times(2-1.9855)=2.0136\)</span>, which equals <span class="arithmatex">\(2\sum c_v\ln(c_v/25)\)</span>, as the identity promises. On <span class="arithmatex">\(\chi^2(3)\)</span>, <span class="arithmatex">\(p=0.570\)</span>.</p>
+</details>
+</li>
+<li>
+<p>A 1000-byte file compresses to 930 bytes with its best compressor. Using <span class="arithmatex">\(s=8(n-c-64)\)</span> and <span class="arithmatex">\(p=\min(1,2\cdot2^{-s})\)</span> for <span class="arithmatex">\(s&gt;0\)</span>, find <span class="arithmatex">\(s\)</span> and <span class="arithmatex">\(p\)</span>. What if it compresses to 20 bytes?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>For <span class="arithmatex">\(c=930\)</span>: <span class="arithmatex">\(s=8(1000-930-64)=48\)</span> bits, so <span class="arithmatex">\(p=2\times2^{-48}=7.1\times10^{-15}\)</span>, a clear failure. For <span class="arithmatex">\(c=20\)</span>: <span class="arithmatex">\(s=8(1000-20-64)=7328\)</span>, and the bound is so small that it rounds to 0. If <span class="arithmatex">\(c\ge936\)</span> then <span class="arithmatex">\(s\le0\)</span> and <span class="arithmatex">\(p=1\)</span>.</p>
+</details>
+</li>
+<li>
+<p>Why does a datasheet figure of "7.9999 bits per byte of entropy" tell you very little about a generator?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>It is a Shannon entropy computed from byte counts only. A file running 0, 1, 2, ..., 255 over and over has perfect counts and scores 8.0, yet is totally predictable. Also, good 1 MiB data does not reach 8.0 (it averages about 7.999825), and 7.9997 gives <span class="arithmatex">\(p=1.2\times10^{-11}\)</span> even though it sounds equally perfect.</p>
+</details>
+</li>
+<li>
+<p>What was wrong with the first version of the multi-scale entropy test, and what did the fix teach?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>It used the G-statistic, which failed 89% of good samples at 16-bit symbols, where only about 8 counts per cell are expected and G overshoots its chi-square reference by about 2%. Pearson's <span class="arithmatex">\(X^2\)</span> has mean exactly <span class="arithmatex">\(2^k-1\)</span> under the null, and using it brought false alarms to 0 of 120. The lesson is to measure false alarms on known-good data before trusting a test.</p>
+</details>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="comparing-the-batteries.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 9. Comparing the Batteries">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                9. Comparing the Batteries
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="additional-tests-ii-source-behaviour-and-health.html" class="md-footer__link md-footer__link--next" aria-label="Next: 11. Additional Tests (II): Source Behaviour and Health">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                11. Additional Tests (II): Source Behaviour and Health
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

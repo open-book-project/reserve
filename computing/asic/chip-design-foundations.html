@@ -1,0 +1,3291 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/asic/chip-design-foundations.html">
+  
+  
+    <link rel="prev" href="how-to-read-this-guide.html">
+  
+  
+    <link rel="next" href="specification-architecture-rtl-design.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>1. Chip Design Foundations - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#11-what-is-an-asic-vs-fpga-cpu-gpu-and-soc" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              1. Chip Design Foundations
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">ASIC Design: A Field Guide</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="how-to-read-this-guide.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    How to read this guide
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Chip Design Foundations
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="chip-design-foundations.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Chip Design Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-an-asic-vs-fpga-cpu-gpu-and-soc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 What Is an ASIC? (vs FPGA, CPU, GPU and SoC)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-semiconductor-basics-silicon-doping-and-the-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Semiconductor Basics: Silicon, Doping and the MOSFET
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-cmos-logic-inverters-nand-and-nor-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 CMOS Logic: Inverters, NAND and NOR Gates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 CMOS Logic: Inverters, NAND and NOR Gates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-a-cmos-inverter-as-a-spice-netlist-ngspice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: A CMOS inverter as a SPICE netlist (ngspice)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-digital-logic-refresher-gates-flip-flops-and-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Digital Logic Refresher: Gates, Flip-Flops and State Machines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Digital Logic Refresher: Gates, Flip-Flops and State Machines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-a-d-flip-flop-with-synchronous-reset-in-verilog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: A D flip-flop with synchronous reset in Verilog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-binary-numbers-and-arithmetic-for-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Binary Numbers and Arithmetic for Hardware
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Binary Numbers and Arithmetic for Hardware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-signed-vs-unsigned-surprises-in-systemverilog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Signed vs unsigned surprises in SystemVerilog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-timing-basics-clocks-delay-setup-and-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Timing Basics: Clocks, Delay, Setup and Hold
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Timing Basics: Clocks, Delay, Setup and Hold">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-telling-tools-about-a-1-ghz-clock-sdc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Telling tools about a 1 GHz clock (SDC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-power-basics-dynamic-leakage-and-p-cv2f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Power Basics: Dynamic, Leakage and P = αCV²f
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Power Basics: Dynamic, Leakage and P = αCV²f">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-dynamic-power-p-cv2f-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Dynamic power P = αCV²f in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-the-rtl-to-gdsii-flow-the-whole-journey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 The RTL-to-GDSII Flow: The Whole Journey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 The RTL-to-GDSII Flow: The Whole Journey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-synthesise-the-pwm-example-with-yosys-synthys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Synthesise the PWM example with Yosys (synth.ys)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-levels-of-abstraction-and-design-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Levels of Abstraction and Design Trade-offs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Levels of Abstraction and Design Trade-offs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-one-1-bit-add-slice-at-three-levels-alternatives-not-one-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: One 1-bit add slice at three levels (alternatives, not one file)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-who-does-what-fabless-foundry-idm-eda-ip-and-osat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10 Who Does What: Fabless, Foundry, IDM, EDA, IP and OSAT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-worked-example-a-tiny-chip-through-the-whole-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11 Worked Example: A Tiny Chip Through the Whole Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.11 Worked Example: A Tiny Chip Through the Whole Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-minimal-pwm-module-in-verilog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Minimal PWM module in Verilog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-cost-nre-and-time-to-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12 Cost, NRE and Time-to-Market
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 Cost, NRE and Time-to-Market">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-break-even-volume-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Break-even volume in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-scaling-nodes-and-why-chips-keep-getting-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13 Scaling, Nodes and Why Chips Keep Getting Better
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="specification-architecture-rtl-design.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Specification, Architecture & RTL Design
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="functional-verification.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Functional Verification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="logic-synthesis-design-for-test.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Logic Synthesis & Design for Test
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="physical-design-floorplan-to-route.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Physical Design: Floorplan to Route
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="signoff-tapeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Signoff & Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fabrication-packaging-test-bring-up.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Fabrication, Packaging, Test & Bring-up
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="eda-industry-open-source-silicon-analog-ai-in-eda-careers.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. EDA Industry, Open-Source Silicon, Analog, AI-in-EDA & Careers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ten-things-every-asic-student-should-master.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Ten Things Every ASIC Student Should Master
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-of-terms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary of Terms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#11-what-is-an-asic-vs-fpga-cpu-gpu-and-soc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.1 What Is an ASIC? (vs FPGA, CPU, GPU and SoC)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#12-semiconductor-basics-silicon-doping-and-the-mosfet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.2 Semiconductor Basics: Silicon, Doping and the MOSFET
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#13-cmos-logic-inverters-nand-and-nor-gates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.3 CMOS Logic: Inverters, NAND and NOR Gates
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.3 CMOS Logic: Inverters, NAND and NOR Gates">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-a-cmos-inverter-as-a-spice-netlist-ngspice" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: A CMOS inverter as a SPICE netlist (ngspice)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#14-digital-logic-refresher-gates-flip-flops-and-state-machines" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.4 Digital Logic Refresher: Gates, Flip-Flops and State Machines
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.4 Digital Logic Refresher: Gates, Flip-Flops and State Machines">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-a-d-flip-flop-with-synchronous-reset-in-verilog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: A D flip-flop with synchronous reset in Verilog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#15-binary-numbers-and-arithmetic-for-hardware" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.5 Binary Numbers and Arithmetic for Hardware
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.5 Binary Numbers and Arithmetic for Hardware">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-signed-vs-unsigned-surprises-in-systemverilog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Signed vs unsigned surprises in SystemVerilog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#16-timing-basics-clocks-delay-setup-and-hold" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.6 Timing Basics: Clocks, Delay, Setup and Hold
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.6 Timing Basics: Clocks, Delay, Setup and Hold">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-telling-tools-about-a-1-ghz-clock-sdc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Telling tools about a 1 GHz clock (SDC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#17-power-basics-dynamic-leakage-and-p-cv2f" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.7 Power Basics: Dynamic, Leakage and P = αCV²f
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.7 Power Basics: Dynamic, Leakage and P = αCV²f">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-dynamic-power-p-cv2f-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Dynamic power P = αCV²f in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#18-the-rtl-to-gdsii-flow-the-whole-journey" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.8 The RTL-to-GDSII Flow: The Whole Journey
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.8 The RTL-to-GDSII Flow: The Whole Journey">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-synthesise-the-pwm-example-with-yosys-synthys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Synthesise the PWM example with Yosys (synth.ys)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#19-levels-of-abstraction-and-design-trade-offs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.9 Levels of Abstraction and Design Trade-offs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.9 Levels of Abstraction and Design Trade-offs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-one-1-bit-add-slice-at-three-levels-alternatives-not-one-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: One 1-bit add slice at three levels (alternatives, not one file)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#110-who-does-what-fabless-foundry-idm-eda-ip-and-osat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.10 Who Does What: Fabless, Foundry, IDM, EDA, IP and OSAT
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#111-worked-example-a-tiny-chip-through-the-whole-flow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.11 Worked Example: A Tiny Chip Through the Whole Flow
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.11 Worked Example: A Tiny Chip Through the Whole Flow">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-minimal-pwm-module-in-verilog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Minimal PWM module in Verilog
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#112-cost-nre-and-time-to-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.12 Cost, NRE and Time-to-Market
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1.12 Cost, NRE and Time-to-Market">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#try-it-break-even-volume-in-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Try it: Break-even volume in Python
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#113-scaling-nodes-and-why-chips-keep-getting-better" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1.13 Scaling, Nodes and Why Chips Keep Getting Better
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-1-chip-design-foundations">Chapter 1: Chip Design Foundations<a class="headerlink" href="#chapter-1-chip-design-foundations" title="Permanent link">&para;</a></h1>
+<p>Before you write a line of Verilog or open a layout tool, you need the big picture: what a custom chip is, how a transistor works, how logic gates become flip-flops and state machines, and why timing and power rule every decision. This chapter builds that foundation from zero and then walks through the whole journey from an idea on a whiteboard to a packaged chip on a circuit board. It ends with the business side: who does what in the industry, and why a chip can cost millions before the first one is sold.</p>
+<h2 id="11-what-is-an-asic-vs-fpga-cpu-gpu-and-soc">1.1 What Is an ASIC? (vs FPGA, CPU, GPU and SoC)<a class="headerlink" href="#11-what-is-an-asic-vs-fpga-cpu-gpu-and-soc" title="Permanent link">&para;</a></h2>
+<p>An ASIC (Application-Specific Integrated Circuit) is a chip designed to do one particular job extremely well, such as decoding video, mining a cryptocurrency or running a phone. Once it is manufactured its circuits are fixed forever. Other chips trade that efficiency for flexibility: a CPU runs any software, a GPU runs many parallel calculations, and an FPGA is a chip whose wiring you can reprogram after manufacture.</p>
+<p><strong>CPU vs FPGA vs ASIC</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>CPU / MCU</th>
+<th>FPGA</th>
+<th>ASIC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Flexibility</strong></td>
+<td>Any software</td>
+<td>Reprogrammable logic</td>
+<td>Fixed at manufacture</td>
+</tr>
+<tr>
+<td><strong>Perf per watt</strong></td>
+<td>Lowest</td>
+<td>Medium</td>
+<td>Highest</td>
+</tr>
+<tr>
+<td><strong>Unit cost at volume</strong></td>
+<td>Medium</td>
+<td>High</td>
+<td>Lowest</td>
+</tr>
+<tr>
+<td><strong>Up-front NRE</strong></td>
+<td>Almost none</td>
+<td>Low</td>
+<td>Millions of dollars</td>
+</tr>
+<tr>
+<td><strong>Time to product</strong></td>
+<td>Weeks</td>
+<td>Weeks to months</td>
+<td>1-2+ years</td>
+</tr>
+<tr>
+<td><strong>Fixing a bug</strong></td>
+<td>Software update</td>
+<td>New bitstream</td>
+<td>Respin or workaround</td>
+</tr>
+</tbody>
+</table>
+<p><em>Moving right buys efficiency and low unit cost at the price of NRE, time and flexibility.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A CPU is a Swiss Army knife, an FPGA is a box of LEGO you can rebuild any time, and an ASIC is a custom-forged chef's knife: it does one job, but faster and cheaper per cut than anything else.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Northwind Audio sells wireless earbuds. Their first prototype used a small FPGA to run the noise-cancelling filter, but it drained the battery in two hours. Once the design was proven, they turned it into an ASIC: the same filter now uses one-tenth of the power and costs 40 cents per chip instead of 9 dollars. The catch was a 3 million dollar up-front cost and 14 months of work.</p>
+</div>
+<h4 id="how-it-works">How it works<a class="headerlink" href="#how-it-works" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Decide what the chip must do and how fast, how cheap and how low-power it must be.</li>
+<li>If volumes are small or the design will change, an FPGA or off-the-shelf processor is usually better.</li>
+<li>If volumes are high or power/performance requirements are extreme, an ASIC pays off.</li>
+<li>Modern ASICs are usually SoCs: CPU cores, memory, accelerators and interfaces on one die.</li>
+<li>Some products start on FPGA for prototyping and move to ASIC for mass production.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Chip companies like Apple, NVIDIA, Qualcomm, Broadcom and Google, plus thousands of start-ups and automotive, medical and IoT companies, design ASICs.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Interviewers love the question 'ASIC or FPGA?': answer with volume, unit cost, power, performance, NRE and time-to-market.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Implementing the same logic in an FPGA instead of standard cells typically costs tens of times more area, several times more delay and roughly an order of magnitude more dynamic power, because LUTs and routing switches replace fixed gates.</li>
+<li>Most modern ASICs are SoCs whose die area is dominated by licensed or reused IP and SRAM; the company's own differentiating logic is often a minority of the gates.</li>
+<li>The ASIC decision weighs volume, unit cost, power, performance, NRE, schedule, risk and IP protection; a fixed chip is also much harder to copy than an FPGA bitstream.</li>
+<li>Hybrid options exist: FPGA prototypes before tapeout, embedded FPGA (eFPGA) fabric inside an ASIC from vendors such as Achronix, and structured ASICs that customise only a few layers.</li>
+<li>Digital ASICs today are almost entirely standard-cell designs; full-custom layout survives for SRAM bit cells, analog and I/O circuits, and a few of the fastest CPU datapaths.</li>
+<li>Each market adds its own rules: automotive ASICs need AEC-Q100 qualification and ISO 26262 safety work, medical implants need extreme reliability, and data-centre chips chase performance per watt.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming an ASIC always beats an FPGA: at low volume or with changing requirements, NRE and schedule risk make FPGAs or standard chips the better business choice.</li>
+<li>Confusing SoC with ASIC: SoC describes what is integrated, ASIC describes how and for whom the chip is built — a phone SoC is both.</li>
+<li>Expecting an FPGA design to port straight to ASIC: vendor primitives, clocking, initial values and memories must be reworked, and DFT must be added.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ASIC (Application-Specific Integrated Circuit)</strong><br><em>General industry term · Concept · Whole flow</em></td>
+<td>A chip custom-designed for one application, with fixed circuits that give the best power, performance and unit cost.</td>
+<td>Bitcoin mining chips, Google's TPU and the image processor inside a phone camera are ASICs.</td>
+</tr>
+<tr>
+<td><strong>FPGA (Field-Programmable Gate Array)</strong><br><em>AMD (Xilinx), Altera, Lattice, Microchip · Device</em></td>
+<td>A chip full of configurable logic blocks and wiring that can be reprogrammed with a new design in seconds.</td>
+<td>An engineer loads a new image-filter design onto an AMD Artix board to test it before committing to silicon.</td>
+</tr>
+<tr>
+<td><strong>CPU (Central Processing Unit)</strong><br><em>Intel, AMD, Arm-based designs, RISC-V · Device</em></td>
+<td>A general-purpose processor that runs any software by executing instructions one after another, very flexibly.</td>
+<td>A laptop's CPU runs a browser, a spreadsheet and a game, all from software instructions.</td>
+</tr>
+<tr>
+<td><strong>GPU (Graphics Processing Unit)</strong><br><em>NVIDIA, AMD, Intel, Arm, Imagination · Device</em></td>
+<td>A processor with thousands of simple cores that perform the same calculation on lots of data at once.</td>
+<td>GPUs render 3D games and train AI models because both need millions of parallel multiplications.</td>
+</tr>
+<tr>
+<td><strong>SoC (System on Chip)</strong><br><em>General industry term · Concept · Spec/Architecture</em></td>
+<td>A single chip that integrates CPUs, GPU, memory controllers, accelerators and I/O interfaces: a whole computer on one die.</td>
+<td>A smartphone application processor is an SoC with CPU cores, GPU, modem, camera ISP and AI engine.</td>
+</tr>
+<tr>
+<td><strong>Structured ASIC / eASIC</strong><br><em>Intel (eASIC, discontinued), various · Concept</em></td>
+<td>A halfway house where most layers are pre-made and only a few metal layers are customised, lowering NRE.</td>
+<td>A company once used a structured ASIC to move an FPGA design into cheaper silicon with lower mask cost.</td>
+</tr>
+<tr>
+<td><strong>Full-custom vs semi-custom (standard-cell) design</strong><br><em>General industry term · Methodology · Whole flow</em></td>
+<td>Full-custom draws every transistor by hand; standard-cell design builds digital logic from a pre-made library of gates.</td>
+<td>Analog blocks and SRAM bit cells are full-custom; a 50-million-gate digital controller is built from standard cells.</td>
+</tr>
+<tr>
+<td><strong>ASSP (Application-Specific Standard Product)</strong><br><em>General industry term · Concept</em></td>
+<td>A chip built for one application but sold to many customers, unlike an ASIC built for one company.</td>
+<td>A USB-to-Ethernet bridge chip sold by a catalogue vendor to hundreds of product makers is an ASSP.</td>
+</tr>
+<tr>
+<td><strong>Accelerator / NPU</strong><br><em>General industry term · Concept · Spec/Architecture</em></td>
+<td>A specialised hardware block or chip that speeds up one class of work, such as neural networks, far beyond a CPU.</td>
+<td>The NPU in a laptop chip runs background-blur in video calls using a fraction of CPU power.</td>
+</tr>
+<tr>
+<td><strong>Die, wafer and chip</strong><br><em>General industry term · Concept · Fabrication</em></td>
+<td>A wafer is a round silicon disc; it is cut into many rectangular dies; a packaged die is what people call a chip.</td>
+<td>One 300 mm wafer might hold about 600 dies of 100 square millimetres each.</td>
+</tr>
+<tr>
+<td><strong>Microcontroller (MCU)</strong><br><em>STMicroelectronics, NXP, Microchip, Renesas, Raspberry Pi · Device</em></td>
+<td>A small, cheap chip combining a CPU core, flash, SRAM and peripherals for embedded control.</td>
+<td>An STM32 or RP2040 in a thermostat reads a temperature sensor and switches a relay.</td>
+</tr>
+<tr>
+<td><strong>DSP (Digital Signal Processor)</strong><br><em>Texas Instruments, Cadence Tensilica, CEVA · Device</em></td>
+<td>A processor optimised for fast multiply-accumulate on streams of samples, used for audio, radio and sensor processing.</td>
+<td>A hearing aid's DSP filters and amplifies sound thousands of times per second using very little power.</td>
+</tr>
+<tr>
+<td><strong>Digital, analog and mixed-signal ICs</strong><br><em>General industry term · Concept · Whole flow</em></td>
+<td>Digital chips process 0s and 1s; analog chips handle continuous signals; mixed-signal chips combine both on one die.</td>
+<td>A sensor-interface chip combines an analog amplifier, an ADC and a digital filter with an SPI interface.</td>
+</tr>
+<tr>
+<td><strong>Performance per watt</strong><br><em>Industry metric · Concept</em></td>
+<td>Useful work delivered per unit of power; fixed-function ASICs often beat general processors by an order of magnitude or more.</td>
+<td>A video-encoder ASIC compresses 4K video at a few watts where a CPU would need tens of watts.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="12-semiconductor-basics-silicon-doping-and-the-mosfet">1.2 Semiconductor Basics: Silicon, Doping and the MOSFET<a class="headerlink" href="#12-semiconductor-basics-silicon-doping-and-the-mosfet" title="Permanent link">&para;</a></h2>
+<p>Silicon is a semiconductor: it conducts electricity better than glass but worse than copper, and we can control exactly how well. Adding tiny amounts of other elements (doping) creates N-type silicon with spare electrons or P-type silicon with 'holes' (missing electrons). A MOSFET transistor uses a voltage on its gate to turn a channel of current on or off, acting as an electrically controlled switch.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-02-semiconductor-basics-silicon-doping-and.svg" alt="Transistors sit at the bottom; a dozen or more copper wiring layers above connect them." loading="lazy" width="1000" height="507">
+<figcaption><strong>A chip in cross-section.</strong> Transistors sit at the bottom; a dozen or more copper wiring layers above connect them.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A MOSFET is like a garden hose with a tap: the gate voltage is your hand on the tap, and the current is the water flowing from source to drain.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>In a 1.0 V chip, when Priya's design puts 1.0 V on the gate of an NMOS transistor, a thin channel of electrons forms under the gate and current flows from drain to source: the switch is ON. When the gate is at 0 V, the channel disappears and the switch is OFF. Billions of these switches flipping billions of times a second are what make a processor compute.</p>
+</div>
+<h4 id="how-it-works_1">How it works<a class="headerlink" href="#how-it-works_1" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Start with very pure crystalline silicon.</li>
+<li>Dope regions with phosphorus or arsenic (N-type) or boron (P-type) to control conductivity.</li>
+<li>Build a gate electrode separated from the silicon by a thin insulating layer (the gate oxide or high-k dielectric).</li>
+<li>Apply voltage to the gate: above the threshold voltage (Vt) a conducting channel forms between source and drain.</li>
+<li>NMOS turns on with a high gate voltage; PMOS turns on with a low gate voltage.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Device physicists, process engineers and analog designers work at this level daily; digital designers need the basics for power, timing and interview questions.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Remember: NMOS passes a strong 0, PMOS passes a strong 1, which is why CMOS uses PMOS to pull up and NMOS to pull down.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Operating regions: below Vt a transistor is in subthreshold (small, exponential leakage current); above Vt it conducts in the linear region at low drain voltage and saturates at higher drain voltage.</li>
+<li>Subthreshold swing is ideally about 60 mV per decade of current at room temperature, so every ~60-100 mV cut in Vt raises off-state leakage roughly tenfold.</li>
+<li>Leakage rises steeply with temperature, so a chip at 105 °C leaks many times more than at 25 °C; leakage power is therefore signed off at hot corners.</li>
+<li>Short-channel effects such as drain-induced barrier lowering weaken gate control as channels shrink; FinFET and gate-all-around structures wrap the gate around the channel to restore it.</li>
+<li>300 mm wafers are standard for advanced logic, 200 mm remains common for analog, power and MEMS, and the industry abandoned a 450 mm transition in the mid-2010s.</li>
+<li>Core supply voltages fell from 5 V in the 1980s to roughly 0.7-0.9 V at leading-edge nodes; they cannot drop much further because Vt cannot shrink without leakage exploding.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Believing '3 nm' describes a 3 nm feature: node names are marketing labels, so compare density, speed and power data instead.</li>
+<li>Assuming an off transistor draws no current: leakage across billions of devices can dominate standby power.</li>
+<li>Mixing up carrier types: NMOS conducts with electrons and turns on with a high gate; PMOS conducts with holes and turns on with a low gate.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_1">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_1" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Semiconductor</strong><br><em>Physics / materials science · Concept · Fabrication</em></td>
+<td>A material whose conductivity sits between a conductor and an insulator and can be precisely controlled.</td>
+<td>Silicon is the dominant semiconductor; gallium nitride and silicon carbide are used in power chips.</td>
+</tr>
+<tr>
+<td><strong>Doping (N-type and P-type)</strong><br><em>Semiconductor fabrication · Process · Fabrication</em></td>
+<td>Adding impurity atoms to silicon: phosphorus or arsenic gives extra electrons (N), boron gives holes (P).</td>
+<td>The source and drain of an NMOS transistor are heavily N-doped regions in a P-type well.</td>
+</tr>
+<tr>
+<td><strong>MOSFET</strong><br><em>Metal-Oxide-Semiconductor Field-Effect Transistor · Concept · Fabrication</em></td>
+<td>A transistor with gate, source, drain and body terminals, where gate voltage controls current between source and drain.</td>
+<td>A modern CPU contains tens of billions of MOSFETs acting as tiny switches.</td>
+</tr>
+<tr>
+<td><strong>NMOS and PMOS</strong><br><em>MOSFET types · Concept</em></td>
+<td>NMOS conducts when its gate is high using electrons; PMOS conducts when its gate is low using holes.</td>
+<td>In an inverter, the PMOS connects the output to VDD and the NMOS connects it to ground.</td>
+</tr>
+<tr>
+<td><strong>Threshold voltage (Vt)</strong><br><em>Device physics · Concept</em></td>
+<td>The gate voltage at which a transistor starts to conduct strongly; lower Vt is faster but leaks more.</td>
+<td>Libraries offer low-Vt (fast, leaky) and high-Vt (slow, low-leakage) versions of each cell.</td>
+</tr>
+<tr>
+<td><strong>Gate oxide / high-k metal gate (HKMG)</strong><br><em>Introduced in volume by Intel at 45 nm (2007) · Concept · Fabrication</em></td>
+<td>The insulator under the gate; high-k materials like hafnium oxide replaced silicon dioxide to reduce gate leakage.</td>
+<td>Every node since about 45 nm uses a high-k dielectric with a metal gate electrode.</td>
+</tr>
+<tr>
+<td><strong>Channel length and 'process node'</strong><br><em>Industry naming · Concept · Fabrication</em></td>
+<td>Node names like '3 nm' were once gate lengths; today they are marketing labels for a technology generation.</td>
+<td>A TSMC N3 transistor has no feature that actually measures 3 nanometres.</td>
+</tr>
+<tr>
+<td><strong>Leakage current</strong><br><em>Device physics · Concept</em></td>
+<td>Small current that flows through a transistor even when it is switched off, wasting power.</td>
+<td>A phone chip in standby still drains the battery slowly because of leakage in billions of transistors.</td>
+</tr>
+<tr>
+<td><strong>Silicon wafer</strong><br><em>Wafer makers: Shin-Etsu, SUMCO, GlobalWafers, Siltronic, SK Siltron · Concept · Fabrication</em></td>
+<td>A thin, polished disc sliced from a single-crystal silicon ingot; leading fabs use 300 mm diameter wafers.</td>
+<td>A 300 mm wafer is about 0.775 mm thick and becomes hundreds of chips.</td>
+</tr>
+<tr>
+<td><strong>Moore's Law</strong><br><em>Gordon Moore (1965, revised 1975) · Concept</em></td>
+<td>The observation that transistor counts on a chip double roughly every two years.</td>
+<td>Chips grew from 2,300 transistors (Intel 4004, 1971) to over 100 billion in today's largest GPUs.</td>
+</tr>
+<tr>
+<td><strong>Carrier mobility (electrons vs holes)</strong><br><em>Device physics · Concept</em></td>
+<td>How easily charge carriers move; in silicon, electrons are roughly two to three times more mobile than holes.</td>
+<td>Library inverters make the PMOS wider than the NMOS so rising and falling outputs switch at similar speeds.</td>
+</tr>
+<tr>
+<td><strong>On-current and Ion/Ioff ratio</strong><br><em>Device physics · Concept</em></td>
+<td>Ion sets how fast a transistor charges loads; the Ion/Ioff ratio measures how good a switch it is.</td>
+<td>Engineers comparing two nodes check both how much faster Ion is and how much worse Ioff leakage became.</td>
+</tr>
+<tr>
+<td><strong>Wells and substrate</strong><br><em>CMOS process structure · Concept · Fabrication</em></td>
+<td>Doped regions hosting transistors: NMOS sit in P-type substrate or P-well, PMOS in an N-well, each tied to a supply.</td>
+<td>Tap cells in every standard-cell row connect wells to VDD and ground, preventing latch-up.</td>
+</tr>
+<tr>
+<td><strong>Interconnect (metal wires and vias)</strong><br><em>BEOL wiring · Concept · Fabrication</em></td>
+<td>Copper wiring layers above the transistors that connect them; at advanced nodes wire delay rivals gate delay.</td>
+<td>A modern SoC may have more than a dozen metal layers, thin at the bottom and thick near the top.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="13-cmos-logic-inverters-nand-and-nor-gates">1.3 CMOS Logic: Inverters, NAND and NOR Gates<a class="headerlink" href="#13-cmos-logic-inverters-nand-and-nor-gates" title="Permanent link">&para;</a></h2>
+<p>CMOS (Complementary MOS) logic pairs PMOS and NMOS transistors so that, in a steady state, one network is on and the other is off. That means almost no current flows except while switching, which is why CMOS dominates. The simplest gate is the inverter (NOT); NAND and NOR are built from series and parallel transistors and can make any logic function.</p>
+<p><strong>Three basic CMOS gates</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Inverter</th>
+<th>NAND2</th>
+<th>NOR2</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Transistors</strong></td>
+<td>2</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr>
+<td><strong>PMOS pull-up</strong></td>
+<td>1</td>
+<td>2 in parallel</td>
+<td>2 in series</td>
+</tr>
+<tr>
+<td><strong>NMOS pull-down</strong></td>
+<td>1</td>
+<td>2 in series</td>
+<td>2 in parallel</td>
+</tr>
+<tr>
+<td><strong>Output is 0 when</strong></td>
+<td>A = 1</td>
+<td>A = 1 and B = 1</td>
+<td>A = 1 or B = 1</td>
+</tr>
+<tr>
+<td><strong>Universal gate?</strong></td>
+<td>No</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><strong>Relative speed</strong></td>
+<td>Fastest</td>
+<td>Good</td>
+<td>Slower (series PMOS)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Series and parallel transistor networks are mirror images in the pull-up and pull-down.</em></p>
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A CMOS gate is like two doors at either end of a corridor: one leads to VDD (logic 1) and one to ground (logic 0), and they are wired so exactly one is open at a time.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A two-input NAND gate has two PMOS in parallel to VDD and two NMOS in series to ground. The output only goes low when both inputs are 1, because then both NMOS are on and both PMOS are off. With any input at 0, at least one PMOS pulls the output high. Draw this on paper: it is a classic interview question.</p>
+</div>
+<h4 id="how-it-works_2">How it works<a class="headerlink" href="#how-it-works_2" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Inverter: one PMOS from VDD to output, one NMOS from output to ground, gates tied together.</li>
+<li>NAND: PMOS in parallel (pull-up), NMOS in series (pull-down).</li>
+<li>NOR: PMOS in series (pull-up), NMOS in parallel (pull-down).</li>
+<li>Complex gates (AOI, OAI) combine series/parallel networks in one cell for efficiency.</li>
+<li>Standard-cell libraries package hundreds of these gates in different sizes (drive strengths).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Standard-cell library designers, circuit designers and every VLSI student meet CMOS gates; digital designers use them through the library.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>NAND is usually preferred over NOR in CMOS because series NMOS (fast electrons) hurt less than series PMOS (slower holes).</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Static CMOS gates are naturally inverting: one stage can only build NAND, NOR or AOI-style functions, so an AND gate is a NAND plus an inverter and is slower.</li>
+<li>Series stacks slow gates down, so libraries rarely offer gates wider than four inputs; synthesis builds wide functions as trees of two- and three-input cells.</li>
+<li>Gate delay is roughly on-resistance times load capacitance; doubling a cell's drive strength halves its resistance but doubles the input capacitance seen by the previous stage.</li>
+<li>The fan-out-of-4 (FO4) inverter delay is a technology-neutral yardstick; designers describe clock periods in FO4 units, for example roughly 15-25 FO4 per high-performance pipeline stage.</li>
+<li>Standard-cell libraries hold hundreds to over a thousand cells: logic in several sizes and Vt flavours, flip-flops, clock buffers, clock-gating cells, plus filler, tie and tap cells.</li>
+<li>Short-circuit current flows while both networks conduct during a slow input transition, which is one reason tools enforce maximum transition (slew) limits.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming NAND and NOR are equally good: NOR's series PMOS use slower holes, so NAND-based logic is usually preferred in CMOS.</li>
+<li>Forgetting AND and OR need an extra inverter stage in CMOS, making them larger and slower than NAND and NOR.</li>
+<li>Thinking bigger cells are always faster: upsizing a gate loads the gate driving it and can slow the whole path.</li>
+</ul>
+</div>
+<h3 id="try-it-a-cmos-inverter-as-a-spice-netlist-ngspice">Try it: A CMOS inverter as a SPICE netlist (ngspice)<a class="headerlink" href="#try-it-a-cmos-inverter-as-a-spice-netlist-ngspice" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code>* CMOS inverter
+VDD vdd 0 1.8
+VIN in 0 PULSE(0 1.8 0 100p 100p 1n 2n)
+MP out in vdd vdd pmos W=2u L=0.18u
+MN out in 0 0 nmos W=1u L=0.18u
+.model nmos nmos level=1
+.model pmos pmos level=1
+.tran 10p 6n
+.end
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_2">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_2" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>CMOS (Complementary MOS)</strong><br><em>Invented by Frank Wanlass, Fairchild (1963) · Concept</em></td>
+<td>Logic style using complementary PMOS pull-up and NMOS pull-down networks, drawing almost no static current.</td>
+<td>Nearly every digital chip made today, from watches to supercomputers, is CMOS.</td>
+</tr>
+<tr>
+<td><strong>Inverter (NOT gate)</strong><br><em>Basic CMOS cell · Concept</em></td>
+<td>The simplest CMOS gate, using one PMOS and one NMOS to output the opposite of its input.</td>
+<td>Chains of inverters are used as buffers to drive long wires and as ring oscillators to measure speed.</td>
+</tr>
+<tr>
+<td><strong>NAND gate</strong><br><em>Basic CMOS cell · Concept</em></td>
+<td>Outputs 0 only when all inputs are 1; universal, so any logic can be built from NANDs alone.</td>
+<td>A NAND2 cell is often the unit used to count design size in 'gate equivalents'.</td>
+</tr>
+<tr>
+<td><strong>NOR gate</strong><br><em>Basic CMOS cell · Concept</em></td>
+<td>Outputs 1 only when all inputs are 0; also universal but slower in CMOS due to series PMOS.</td>
+<td>The Apollo Guidance Computer was built entirely from NOR gates.</td>
+</tr>
+<tr>
+<td><strong>AOI / OAI complex gates</strong><br><em>Standard-cell libraries · Concept</em></td>
+<td>AND-OR-INVERT and OR-AND-INVERT cells combine several functions in one compact, fast gate.</td>
+<td>Synthesis maps the expression NOT((A AND B) OR C) to a single AOI21 cell.</td>
+</tr>
+<tr>
+<td><strong>Transmission gate</strong><br><em>CMOS circuit technique · Concept</em></td>
+<td>A PMOS and NMOS in parallel acting as a switch that passes both 0 and 1 cleanly.</td>
+<td>Multiplexers and flip-flops inside standard-cell libraries often use transmission gates.</td>
+</tr>
+<tr>
+<td><strong>Gate equivalent (GE)</strong><br><em>Industry metric · Concept</em></td>
+<td>Design size measured as the area of an equivalent number of NAND2 gates, independent of technology.</td>
+<td>A small RISC-V core might be about 20,000 gate equivalents.</td>
+</tr>
+<tr>
+<td><strong>Drive strength (X1, X2, X4...)</strong><br><em>Standard-cell libraries · Concept · Synthesis</em></td>
+<td>Larger transistor versions of a cell that can charge bigger loads faster, at the cost of area and power.</td>
+<td>A BUF_X8 drives a long net to 40 flip-flops that a BUF_X1 would drive too slowly.</td>
+</tr>
+<tr>
+<td><strong>Fan-in and fan-out</strong><br><em>Digital design terms · Concept</em></td>
+<td>Fan-in is the number of inputs to a gate; fan-out is how many gate inputs one output drives.</td>
+<td>A signal with fan-out of 200 needs a buffer tree, or it will switch very slowly.</td>
+</tr>
+<tr>
+<td><strong>SPICE</strong><br><em>UC Berkeley (1973); commercial and open versions · Tool · Open source</em></td>
+<td>Circuit simulator that computes voltages and currents in transistor netlists; the basis of analog and cell characterisation.</td>
+<td>Students simulate an inverter in ngspice to see its switching threshold and delay.</td>
+</tr>
+<tr>
+<td><strong>XOR / XNOR gate</strong><br><em>Basic CMOS cell · Concept</em></td>
+<td>XOR outputs 1 when inputs differ, XNOR when they match; essential for adders, parity and comparators, but larger than NAND.</td>
+<td>A 32-bit parity generator is a tree of 31 two-input XOR gates.</td>
+</tr>
+<tr>
+<td><strong>Static vs dynamic (domino) logic</strong><br><em>CMOS circuit styles · Concept</em></td>
+<td>Static CMOS always drives its output; dynamic logic precharges then evaluates, faster but harder to design and verify.</td>
+<td>Some older high-speed CPUs used domino logic in ALUs; standard-cell ASICs use static CMOS.</td>
+</tr>
+<tr>
+<td><strong>Logical effort</strong><br><em>Sutherland, Sproull and Harris (1999 book) · Methodology</em></td>
+<td>A pencil-and-paper method for estimating path delay and choosing gate sizes to minimise it.</td>
+<td>Logical effort shows a large load is best driven through a chain of inverters each growing about four times.</td>
+</tr>
+<tr>
+<td><strong>Noise margin and transfer curve</strong><br><em>CMOS circuit analysis · Concept</em></td>
+<td>An inverter's output-vs-input voltage curve; noise margins show how much interference a gate tolerates before misreading.</td>
+<td>Students plot the transfer curve in ngspice and read the switching threshold near VDD/2.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="14-digital-logic-refresher-gates-flip-flops-and-state-machines">1.4 Digital Logic Refresher: Gates, Flip-Flops and State Machines<a class="headerlink" href="#14-digital-logic-refresher-gates-flip-flops-and-state-machines" title="Permanent link">&para;</a></h2>
+<p>Digital circuits come in two kinds. Combinational logic (adders, multiplexers, decoders) produces outputs that depend only on current inputs. Sequential logic (latches and flip-flops) remembers values, so outputs depend on history; a clock tells flip-flops when to capture new values. Combine both and you get finite state machines (FSMs), the brains of every controller.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-04-digital-logic-refresher-gates-flip.svg" alt="A 2-bit state register steps round the four states each time the timer expires." loading="lazy" width="1000" height="560">
+<figcaption><strong>Traffic-light FSM.</strong> A 2-bit state register steps round the four states each time the timer expires.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Combinational logic is a calculator that answers instantly; a flip-flop is a notepad that only updates when the teacher rings the bell (the clock edge).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A traffic-light controller at Elm Street has four states: NS-green, NS-yellow, EW-green, EW-yellow. A 2-bit register holds the current state, combinational logic decides the next state based on a timer, and on each clock edge the register updates. The light outputs are decoded from the state. This tiny FSM is a classic first Verilog exercise.</p>
+</div>
+<h4 id="how-it-works_3">How it works<a class="headerlink" href="#how-it-works_3" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Combinational logic computes outputs from inputs through gates (no memory).</li>
+<li>A latch is level-sensitive: it is transparent while enable is high and holds when low.</li>
+<li>A D flip-flop is edge-triggered: it captures D only at the rising (or falling) clock edge.</li>
+<li>Registers are groups of flip-flops; pipelines put registers between stages of logic.</li>
+<li>An FSM = state register + next-state logic + output logic (Moore or Mealy style).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Every RTL designer and verification engineer works with these building blocks every day.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Know the difference between a latch and a flip-flop cold, and be able to draw a Moore vs Mealy FSM.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>A flip-flop is usually two latches in master-slave arrangement: the master is transparent while the clock is low and the slave while it is high, giving edge-triggered behaviour.</li>
+<li>Library flip-flops are characterised for clock-to-Q delay, setup time and hold time at every corner; these numbers live in Liberty files used by synthesis and STA.</li>
+<li>FSM design flow: draw the state diagram, list transitions, choose an encoding, code the state register, next-state logic and output logic, and add a safe default for unused states.</li>
+<li>Pipelining raises throughput but adds latency: a five-stage pipeline delivers one result per cycle once full, yet each instruction still takes five cycles to complete.</li>
+<li>Synthesis minimises logic automatically with algorithms far beyond K-maps (for example ABC's and-inverter-graph rewriting), so K-maps matter for understanding and interviews rather than daily work.</li>
+<li>The synchronous design rule — every flop on a clean clock edge, only combinational logic between flops, no combinational loops — is what makes static timing analysis possible.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Creating combinational loops (an output feeding its own input without a flop); they oscillate or latch unpredictably and break timing analysis.</li>
+<li>Inferring latches by accident through incomplete combinational code; use flip-flops unless a latch is truly intended.</li>
+<li>Using a combinational or glitchy signal as a clock or asynchronous reset; a glitch can create a false edge.</li>
+</ul>
+</div>
+<h3 id="try-it-a-d-flip-flop-with-synchronous-reset-in-verilog">Try it: A D flip-flop with synchronous reset in Verilog<a class="headerlink" href="#try-it-a-d-flip-flop-with-synchronous-reset-in-verilog" title="Permanent link">&para;</a></h3>
+<div class="language-verilog highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">dff</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="n">rst</span><span class="p">,</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">reg</span><span class="w"> </span><span class="n">q</span><span class="p">);</span>
+<span class="w">  </span><span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">rst</span><span class="p">)</span><span class="w"> </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">1</span><span class="mb">'b0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span><span class="w">     </span><span class="n">q</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">d</span><span class="p">;</span>
+<span class="k">endmodule</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_3">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_3" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Combinational logic</strong><br><em>Digital design fundamentals · Concept · RTL Design</em></td>
+<td>Logic whose outputs depend only on present inputs, with no memory or clock.</td>
+<td>A 32-bit adder that outputs A+B as soon as A and B settle is combinational.</td>
+</tr>
+<tr>
+<td><strong>Sequential logic</strong><br><em>Digital design fundamentals · Concept · RTL Design</em></td>
+<td>Logic containing memory elements, so outputs depend on stored state as well as inputs.</td>
+<td>A counter that increments every clock cycle is sequential.</td>
+</tr>
+<tr>
+<td><strong>D flip-flop</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>Edge-triggered storage element that copies its D input to Q at each active clock edge.</td>
+<td>A pipeline register in a CPU is a row of D flip-flops capturing results each cycle.</td>
+</tr>
+<tr>
+<td><strong>Latch</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>Level-sensitive storage element: transparent while enabled, holding its value while disabled.</td>
+<td>Clock-gating cells use a latch internally to prevent glitches on the gated clock.</td>
+</tr>
+<tr>
+<td><strong>Finite state machine (FSM)</strong><br><em>Digital design fundamentals · Concept · RTL Design</em></td>
+<td>A circuit with a fixed set of states that moves between them based on inputs, one step per clock.</td>
+<td>A UART receiver FSM moves through IDLE, START, DATA and STOP states.</td>
+</tr>
+<tr>
+<td><strong>Moore vs Mealy machine</strong><br><em>Edward Moore (1956), George Mealy (1955) · Concept</em></td>
+<td>Moore outputs depend only on state; Mealy outputs depend on state and current inputs, reacting a cycle sooner.</td>
+<td>A Moore traffic light shows colours per state; a Mealy detector flags a pattern in the same cycle it arrives.</td>
+</tr>
+<tr>
+<td><strong>Multiplexer (MUX)</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>A selector that passes one of several inputs to its output based on control bits.</td>
+<td>A 4:1 MUX chooses which of four registers feeds the ALU.</td>
+</tr>
+<tr>
+<td><strong>Adder (ripple-carry, carry-lookahead)</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>Circuits that add binary numbers; faster designs compute carries in parallel at the cost of area.</td>
+<td>Synthesis tools pick a fast parallel-prefix adder on a critical path and a small ripple adder elsewhere.</td>
+</tr>
+<tr>
+<td><strong>Pipelining</strong><br><em>Computer architecture technique · Methodology · Spec/Architecture</em></td>
+<td>Splitting long logic into stages separated by registers so a higher clock frequency is possible.</td>
+<td>A 5-stage RISC-V pipeline fetches, decodes, executes, accesses memory and writes back in parallel.</td>
+</tr>
+<tr>
+<td><strong>Boolean algebra and Karnaugh maps</strong><br><em>George Boole (1847), Maurice Karnaugh (1953) · Concept</em></td>
+<td>Mathematics of true/false logic and a visual method to simplify small logic expressions.</td>
+<td>Students reduce a 4-variable truth table to a minimal sum-of-products with a K-map.</td>
+</tr>
+<tr>
+<td><strong>Decoder and encoder</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>A decoder activates one of 2^n outputs from an n-bit code; an encoder does the reverse.</td>
+<td>An address decoder uses four address bits to select one of 16 peripheral registers.</td>
+</tr>
+<tr>
+<td><strong>Shift register</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>A chain of flip-flops that moves bits one position per clock, used for serial I/O and delays.</td>
+<td>A UART transmitter shifts out its eight data bits one at a time on each baud tick.</td>
+</tr>
+<tr>
+<td><strong>Counter</strong><br><em>Digital design fundamentals · Concept · RTL Design</em></td>
+<td>A register plus incrementer that counts clock cycles or events; the basis of timers, PWM and baud-rate generators.</td>
+<td>A 16-bit counter divides a 50 MHz clock to produce a 1 kHz timer tick.</td>
+</tr>
+<tr>
+<td><strong>Glitch (hazard)</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>A brief unwanted pulse on a combinational output while inputs change at slightly different times.</td>
+<td>Glitches are harmless when sampled by flops but dangerous on clocks, resets or asynchronous outputs.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="15-binary-numbers-and-arithmetic-for-hardware">1.5 Binary Numbers and Arithmetic for Hardware<a class="headerlink" href="#15-binary-numbers-and-arithmetic-for-hardware" title="Permanent link">&para;</a></h2>
+<p>Hardware stores every value in a fixed number of bits. You need to read binary and hexadecimal, represent negative numbers with two's complement, know what happens when a result overflows its width, and use fixed-point or floating-point formats for fractions. Getting widths and signs right is a daily part of RTL design.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-05-binary-numbers-and-arithmetic-for.svg" alt="Invert and add one; adding the result to +5 overflows to exactly zero." loading="lazy" width="1000" height="146">
+<figcaption><strong>Making −5 in 8-bit two&#x27;s complement.</strong> Invert and add one; adding the result to +5 overflows to exactly zero.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>A fixed-width register is like a car's odometer: it has a set number of digits, and after 99999 it rolls over to 00000.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Wen designs an audio volume block. Samples are 16-bit signed two's complement, from -32,768 to +32,767. Multiplying by a signed 8-bit gain gives a 24-bit product, so she keeps all 24 bits, rounds, and saturates back to 16 bits. Without saturation, loud samples would wrap to large negative values and the speaker would crackle.</p>
+</div>
+<h4 id="how-it-works_4">How it works<a class="headerlink" href="#how-it-works_4" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Binary: each bit is a power of two; hexadecimal groups four bits per digit (8'hA5 = 1010_0101).</li>
+<li>Unsigned n bits hold 0 to 2^n − 1; two's complement holds −2^(n−1) to 2^(n−1) − 1.</li>
+<li>Negate in two's complement by inverting every bit and adding 1.</li>
+<li>An n-bit plus n-bit sum needs n+1 bits; an n-bit by m-bit product needs n+m bits.</li>
+<li>For fractions use fixed-point (Q format) or floating-point (IEEE 754, bfloat16, FP8).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>RTL designers, DSP and AI-accelerator engineers, and verification engineers writing reference models use these skills every day.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>In Verilog and SystemVerilog, mixing signed and unsigned operands makes the whole expression unsigned — a classic interview trap and a common silicon bug.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Two's complement is universal because one adder handles both signs: A − B is computed as A + ~B + 1, with the +1 entering through the carry-in.</li>
+<li>Overflow rules: unsigned addition overflows when there is a carry-out; signed addition overflows when both operands share a sign and the result's sign differs.</li>
+<li>DSP datapaths track Q formats: multiplying Q1.15 by Q1.15 gives Q2.30, which is then rounded and saturated back to Q1.15 for storage.</li>
+<li>AI accelerators favour narrow formats such as INT8, FP8 and block-scaled FP4 because multiplier area grows roughly with the square of the operand or mantissa width.</li>
+<li>IEEE 754 defines subnormals, ±infinity, NaN and several rounding modes; many hardware units flush subnormals to zero to save area, which must be documented and verified.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Mixing signed and unsigned operands in Verilog: the whole expression becomes unsigned, so negative values compare as huge positives.</li>
+<li>Dropping the carry by assigning an n-bit sum to an n-bit signal; size results using width-growth rules.</li>
+<li>Truncating instead of rounding in DSP chains, which adds a systematic negative bias that accumulates and degrades signal quality.</li>
+</ul>
+</div>
+<h3 id="try-it-signed-vs-unsigned-surprises-in-systemverilog">Try it: Signed vs unsigned surprises in SystemVerilog<a class="headerlink" href="#try-it-signed-vs-unsigned-surprises-in-systemverilog" title="Permanent link">&para;</a></h3>
+<div class="language-systemverilog highlight"><pre><span></span><code><span class="kt">logic</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mi">8'sd3</span><span class="p">;</span><span class="w">   </span><span class="c1">// stored as 8'hFD</span>
+<span class="kt">logic</span><span class="w">        </span><span class="p">[</span><span class="mi">7</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w">  </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">8'd2</span><span class="p">;</span>
+<span class="kt">logic</span><span class="w"> </span><span class="kt">signed</span><span class="w"> </span><span class="p">[</span><span class="mi">15</span><span class="o">:</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="n">w</span><span class="p">;</span>
+
+<span class="k">initial</span><span class="w"> </span><span class="k">begin</span>
+<span class="w">  </span><span class="n">w</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="p">;</span><span class="w">                            </span><span class="c1">// sign-extends to 16'hFFFD (-3)</span>
+<span class="w">  </span><span class="p">$</span><span class="n">display</span><span class="p">(</span><span class="s">"%0d"</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">b</span><span class="p">);</span><span class="w">           </span><span class="c1">// 0: unsigned compare, 253 &lt; 2 is false</span>
+<span class="w">  </span><span class="p">$</span><span class="n">display</span><span class="p">(</span><span class="s">"%0d"</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="p">$</span><span class="kt">signed</span><span class="p">(</span><span class="n">b</span><span class="p">));</span><span class="w">  </span><span class="c1">// 1: signed compare, -3 &lt; 2</span>
+<span class="k">end</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_4">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_4" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Binary and hexadecimal</strong><br><em>Number systems · Concept · RTL Design</em></td>
+<td>Base-2 numbers use bits worth powers of two; hexadecimal writes four bits as one digit 0-F.</td>
+<td>The register value 0x3C is binary 0011_1100, which is decimal 60.</td>
+</tr>
+<tr>
+<td><strong>Verilog number literals</strong><br><em>IEEE 1800 SystemVerilog · Concept · RTL Design</em></td>
+<td>Sized literals such as 8'hFF, 4'b1010 and 16'd500 state width and base; unsized literals default to 32 bits.</td>
+<td>Writing 8'hFF rather than 255 documents the width and avoids lint truncation warnings.</td>
+</tr>
+<tr>
+<td><strong>Two's complement</strong><br><em>Number representation · Concept · RTL Design</em></td>
+<td>The standard way to store signed integers: the top bit carries negative weight, so one adder serves both signs.</td>
+<td>In 8 bits, −1 is 8'hFF and −128 is 8'h80.</td>
+</tr>
+<tr>
+<td><strong>Overflow and wrap-around</strong><br><em>Fixed-width arithmetic · Concept · RTL Design</em></td>
+<td>When a result needs more bits than its destination, the high bits are lost and the value wraps around.</td>
+<td>In an 8-bit register, 250 + 10 gives 4, not 260.</td>
+</tr>
+<tr>
+<td><strong>Sign extension</strong><br><em>Fixed-width arithmetic · Concept · RTL Design</em></td>
+<td>Copying the sign bit into new upper bits when widening a signed value, so its value is preserved.</td>
+<td>−3 in 4 bits (1101) becomes 1111_1101 when widened to 8 bits.</td>
+</tr>
+<tr>
+<td><strong>Bit-width growth rules</strong><br><em>Datapath design practice · Concept · RTL Design</em></td>
+<td>A sum needs one extra bit, a product needs the sum of both widths, and accumulating N values needs log2(N) extra bits.</td>
+<td>Summing 256 sixteen-bit samples safely needs a 24-bit accumulator.</td>
+</tr>
+<tr>
+<td><strong>Saturation arithmetic</strong><br><em>DSP practice · Concept · RTL Design</em></td>
+<td>Clamping a result to the largest or smallest representable value instead of letting it wrap round.</td>
+<td>An image pipeline saturates so a very bright pixel stays white instead of turning black.</td>
+</tr>
+<tr>
+<td><strong>Fixed-point (Q format)</strong><br><em>DSP practice · Concept · RTL Design</em></td>
+<td>Integers with an implied binary point; Q1.15 has one sign/integer bit and fifteen fraction bits.</td>
+<td>The value 0.5 in Q1.15 is stored as 16'h4000.</td>
+</tr>
+<tr>
+<td><strong>Rounding and truncation</strong><br><em>DSP practice · Concept · RTL Design</em></td>
+<td>Ways to drop low bits: truncation floors toward minus infinity in two's complement, rounding adds half an LSB first.</td>
+<td>After a multiply, adding 1 &lt;&lt; 7 before dropping 8 fraction bits rounds to nearest instead of always rounding down.</td>
+</tr>
+<tr>
+<td><strong>Signed vs unsigned in Verilog</strong><br><em>IEEE 1800 SystemVerilog semantics · Concept · RTL Design</em></td>
+<td>Values are unsigned unless declared signed; if any operand is unsigned, the expression is evaluated as unsigned.</td>
+<td>Comparing a signed −3 with an unsigned 2 returns false, because −3 is treated as 253.</td>
+</tr>
+<tr>
+<td><strong>IEEE 754 floating point</strong><br><em>IEEE 754-2019 · Standard · RTL Design</em></td>
+<td>Floating-point formats (FP16, FP32, FP64) with sign, exponent and mantissa, plus rules for rounding, infinity and NaN.</td>
+<td>A GPU's FP32 units follow IEEE 754 so results match the same calculation run on a CPU.</td>
+</tr>
+<tr>
+<td><strong>bfloat16, FP8 and MX formats</strong><br><em>Google (bfloat16); OCP Microscaling Formats specification (2023) · Standard · Spec/Architecture</em></td>
+<td>Reduced-precision number formats used in AI hardware to cut area, memory traffic and energy per operation.</td>
+<td>An AI accelerator stores weights in FP8 and accumulates dot products in FP32 for accuracy.</td>
+</tr>
+<tr>
+<td><strong>Endianness</strong><br><em>Computer architecture · Concept</em></td>
+<td>The byte order of multi-byte values in memory; little-endian stores the least significant byte first.</td>
+<td>RISC-V and most Arm systems run little-endian, while network protocols send big-endian byte order.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="16-timing-basics-clocks-delay-setup-and-hold">1.6 Timing Basics: Clocks, Delay, Setup and Hold<a class="headerlink" href="#16-timing-basics-clocks-delay-setup-and-hold" title="Permanent link">&para;</a></h2>
+<p>Every synchronous chip runs to the beat of a clock. Between two flip-flops, a signal must travel through logic and arrive before the next clock edge (setup time) and stay stable for a short time after it (hold time). If logic is too slow, the chip fails at that frequency; if it is too fast, data can race through and corrupt the next stage.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-06-timing-basics-clocks-delay-setup-and.svg" alt="Clock-to-Q, logic and setup must fit inside the 1,000 ps period; what is left over is slack." loading="lazy" width="1000" height="210">
+<figcaption><strong>Tomás&#x27;s 1 GHz timing budget.</strong> Clock-to-Q, logic and setup must fit inside the 1,000 ps period; what is left over is slack.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a relay race: the runner (data) must reach the next runner before the whistle (clock edge), and the next runner must not leave before taking the baton properly (hold).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Tomás designs a block for 1 GHz, so the clock period is 1,000 picoseconds. The worst path has 50 ps clock-to-Q delay, 870 ps of logic and 40 ps setup time: 960 ps total, leaving 40 ps of positive slack. When a colleague adds a multiplier to that path, the delay grows to 1,150 ps and slack becomes negative 150 ps, so Tomás must pipeline the multiplier.</p>
+</div>
+<h4 id="how-it-works_5">How it works<a class="headerlink" href="#how-it-works_5" title="Permanent link">&para;</a></h4>
+<ol>
+<li>The clock period T = 1 / frequency (1 GHz gives 1 ns).</li>
+<li>Setup check: clock-to-Q + logic delay + setup time must be no more than T (adjusted for skew).</li>
+<li>Hold check: clock-to-Q + minimum logic delay must be at least the hold time.</li>
+<li>Slack = required time minus arrival time; negative slack means a violation.</li>
+<li>Clock skew (different arrival times at flops) and jitter eat into the timing budget.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>RTL designers, synthesis, physical design and STA engineers all speak in terms of slack and critical paths.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Setup violations can be fixed by slowing the clock; hold violations cannot, so they must be fixed in the design.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Setup check: Tclk-q + Tlogic,max + Tsetup ≤ Tperiod + Tskew − Tuncertainty, where skew is the capture clock's arrival minus the launch clock's arrival.</li>
+<li>Hold check: Tclk-q + Tlogic,min ≥ Thold + Tskew. The clock period does not appear, so hold violations fail at any frequency and must be fixed in the design.</li>
+<li>Positive skew (capture clock arriving later) helps setup but hurts hold; physical designers exploit this deliberately as 'useful skew' during clock tree synthesis.</li>
+<li>Timing is checked at many process-voltage-temperature corners: slow corners (low voltage, slow transistors) for setup and fast corners for hold.</li>
+<li>Daily timing metrics are WNS (worst negative slack), TNS (total negative slack) and the count of failing endpoints; teams track them across every implementation run.</li>
+<li>Wire delay grows with each node because thin wires are resistive, so early estimates without wires are optimistic and long nets need repeaters.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Trying to fix hold violations by lowering the clock frequency; hold does not depend on the period, so add delay to the short path instead.</li>
+<li>Trusting synthesis timing alone: paths that pass before placement can fail once real wires, clock skew and crosstalk are included.</li>
+<li>Treating metastability as an STA problem: asynchronous inputs need synchronisers, not tighter constraints.</li>
+</ul>
+</div>
+<h3 id="try-it-telling-tools-about-a-1-ghz-clock-sdc">Try it: Telling tools about a 1 GHz clock (SDC)<a class="headerlink" href="#try-it-telling-tools-about-a-1-ghz-clock-sdc" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># 1 GHz clock on port clk (units: ns)</span>
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>clk<span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mf">1.0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>clk<span class="k">]</span>
+<span class="c"># Reserve 50 ps for jitter and estimated skew</span>
+<span class="nv">set_clock_uncertainty</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">[</span><span class="nv">get_clocks</span><span class="w"> </span>clk<span class="k">]</span>
+<span class="c"># Outside logic uses 300 ps of the cycle on each side</span>
+<span class="nv">set_input_delay</span><span class="w">  </span><span class="mf">0.3</span><span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>clk<span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>data_in<span class="o">*</span><span class="k">]</span>
+<span class="nv">set_output_delay</span><span class="w"> </span><span class="mf">0.3</span><span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>clk<span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>data_out<span class="o">*</span><span class="k">]</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_5">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_5" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Clock and clock period</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>A regular square wave that synchronises flip-flops; period is the time of one cycle.</td>
+<td>A 2 GHz clock has a period of 500 picoseconds.</td>
+</tr>
+<tr>
+<td><strong>Propagation delay</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>The time for a change at a gate's input to appear at its output.</td>
+<td>A NAND2 in an advanced node might switch in about 5-15 picoseconds depending on load.</td>
+</tr>
+<tr>
+<td><strong>Setup time</strong><br><em>Flip-flop timing parameter · Concept · Signoff</em></td>
+<td>How long data must be stable before the clock edge for a flip-flop to capture it reliably.</td>
+<td>A flop with 30 ps setup time needs data settled 30 ps before the rising edge.</td>
+</tr>
+<tr>
+<td><strong>Hold time</strong><br><em>Flip-flop timing parameter · Concept · Signoff</em></td>
+<td>How long data must stay stable after the clock edge so the flop does not capture the next value.</td>
+<td>Tools insert delay buffers on very short paths to fix hold violations.</td>
+</tr>
+<tr>
+<td><strong>Slack</strong><br><em>Static timing analysis · Concept · Signoff</em></td>
+<td>Required time minus arrival time on a path; positive means it meets timing, negative means it fails.</td>
+<td>A report showing WNS of -0.05 ns means the worst path is 50 ps too slow.</td>
+</tr>
+<tr>
+<td><strong>Critical path</strong><br><em>Static timing analysis · Concept</em></td>
+<td>The slowest register-to-register path, which limits the maximum clock frequency.</td>
+<td>In many CPUs the critical path runs through the ALU bypass and cache tag compare.</td>
+</tr>
+<tr>
+<td><strong>Clock skew</strong><br><em>Clock distribution · Concept · Physical Design</em></td>
+<td>Difference in clock arrival time between two flip-flops, caused by unequal wire and buffer delays.</td>
+<td>CTS aims to keep skew between related flops below a few tens of picoseconds.</td>
+</tr>
+<tr>
+<td><strong>Clock jitter</strong><br><em>Clock generation · Concept</em></td>
+<td>Random cycle-to-cycle variation in clock edge timing, usually from the PLL and noise.</td>
+<td>STA subtracts jitter as 'clock uncertainty' from the available period.</td>
+</tr>
+<tr>
+<td><strong>Metastability</strong><br><em>Digital design fundamentals · Concept · RTL Design</em></td>
+<td>An unstable in-between state when a flop samples changing data, which may resolve late or randomly.</td>
+<td>Signals from another clock domain pass through a two-flop synchroniser to make metastability failures vanishingly rare.</td>
+</tr>
+<tr>
+<td><strong>Fmax (maximum frequency)</strong><br><em>Digital design fundamentals · Concept</em></td>
+<td>The highest clock frequency at which all paths still meet setup timing.</td>
+<td>If the critical path needs 1.25 ns, Fmax is 800 MHz.</td>
+</tr>
+<tr>
+<td><strong>Clock-to-Q delay</strong><br><em>Flip-flop timing parameter · Concept</em></td>
+<td>The time from the active clock edge until a flip-flop's output actually changes.</td>
+<td>With 45 ps clock-to-Q, new data leaves the launching flop 45 ps after each rising edge.</td>
+</tr>
+<tr>
+<td><strong>Launch and capture flip-flops</strong><br><em>Static timing analysis · Concept · Signoff</em></td>
+<td>Every register-to-register path starts at a launching flop's clock edge and ends at a capturing flop on the next edge.</td>
+<td>A path from the ALU result register to the write-back register launches at edge 1 and is captured at edge 2.</td>
+</tr>
+<tr>
+<td><strong>Setup and hold equations</strong><br><em>Static timing analysis · Concept</em></td>
+<td>Setup: clock-to-Q + max logic + setup ≤ period + skew − uncertainty. Hold: clock-to-Q + min logic ≥ hold + skew.</td>
+<td>With 1,000 ps period, 50 ps clock-to-Q, 40 ps setup and no skew, logic may take at most 910 ps.</td>
+</tr>
+<tr>
+<td><strong>STA vs timing simulation</strong><br><em>Verification practice · Concept · Signoff</em></td>
+<td>Static timing analysis checks every path mathematically without test vectors; timing simulation only checks paths a test exercises.</td>
+<td>Signoff relies on STA because no simulation could toggle all billions of paths in a large SoC.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="17-power-basics-dynamic-leakage-and-p-cv2f">1.7 Power Basics: Dynamic, Leakage and P = αCV²f<a class="headerlink" href="#17-power-basics-dynamic-leakage-and-p-cv2f" title="Permanent link">&para;</a></h2>
+<p>Chips consume power in two main ways. Dynamic power is used each time a wire switches between 0 and 1, charging and discharging tiny capacitances. Leakage (static) power trickles through transistors even when nothing switches. Because heat and battery life limit almost every chip, power is as important as speed.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-07-power-basics-dynamic-leakage-and-p-cv2f.svg" alt="Approximate figures from Horowitz (ISSCC 2014): fetching data from DRAM costs far more than computing on it." loading="lazy" width="1000" height="328">
+<figcaption><strong>Energy per operation (45 nm).</strong> Approximate figures from Horowitz (ISSCC 2014): fetching data from DRAM costs far more than computing on it.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>Dynamic power is like the fuel a car burns while driving; leakage is like a slow fuel leak that drains the tank even when parked.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Ana's IoT sensor chip runs at 0.9 V and 100 MHz. Using P = αCV²f with activity α = 0.1 and switched capacitance C = 1 nF, dynamic power = 0.1 × 1e-9 × 0.81 × 1e8 ≈ 8 mW. Dropping the voltage to 0.7 V cuts it to about 4.9 mW, almost 40 % saved, because voltage is squared. She also uses high-Vt cells to cut leakage while the sensor sleeps.</p>
+</div>
+<h4 id="how-it-works_6">How it works<a class="headerlink" href="#how-it-works_6" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Dynamic power = α × C × V² × f (activity × capacitance × voltage squared × frequency).</li>
+<li>Short-circuit power flows briefly when both PMOS and NMOS are partly on during a transition.</li>
+<li>Leakage power depends on threshold voltage, temperature and transistor count; it grows sharply when hot.</li>
+<li>Lowering voltage is the most powerful lever; lowering frequency and activity also help.</li>
+<li>Techniques: clock gating, power gating, multi-Vt cells, DVFS (covered later).</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Low-power architects, RTL designers, power-analysis and physical design engineers, especially in mobile, wearables and data-centre AI chips.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Memorise P = αCV²f and explain why halving voltage gives roughly a 4x dynamic power saving.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Dynamic power has three parts: capacitive switching (αCV²f), short-circuit current during transitions and wasted glitching; in well-designed logic, capacitive switching dominates.</li>
+<li>Leakage comes mainly from subthreshold conduction, plus gate-oxide tunnelling (reduced by high-k dielectrics) and junction leakage; all of them increase with temperature.</li>
+<li>Halving frequency halves power but not energy per task; lowering voltage cuts energy per operation, which is why DVFS lowers voltage together with frequency.</li>
+<li>The clock network often burns a third or more of dynamic power because it toggles every cycle and reaches every flop, making clock gating the first optimisation.</li>
+<li>Power drives package and cooling cost, IR drop in the power grid, electromigration limits and, for data centres, electricity bills — not just battery life.</li>
+<li>Power is estimated at every level: spreadsheets during architecture, RTL power tools using simulation activity, then gate-level and signoff analysis including wire parasitics.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming halving frequency halves energy: the task just takes twice as long; only lowering voltage greatly cuts energy per operation.</li>
+<li>Ignoring leakage in mostly idle chips: an always-on device that rarely switches can be dominated by leakage, especially when hot.</li>
+<li>Estimating power with default toggle rates; realistic activity from real workloads (SAIF or FSDB files) can change results dramatically.</li>
+</ul>
+</div>
+<h3 id="try-it-dynamic-power-p-cv2f-in-python">Try it: Dynamic power P = αCV²f in Python<a class="headerlink" href="#try-it-dynamic-power-p-cv2f-in-python" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">alpha</span><span class="p">,</span> <span class="n">C</span><span class="p">,</span> <span class="n">f</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">1e-9</span><span class="p">,</span> <span class="mf">100e6</span>   <span class="c1"># activity, farads, hertz</span>
+<span class="k">for</span> <span class="n">V</span> <span class="ow">in</span> <span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">):</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">alpha</span> <span class="o">*</span> <span class="n">C</span> <span class="o">*</span> <span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="n">f</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">V</span><span class="si">}</span><span class="s2"> V -&gt; </span><span class="si">{</span><span class="n">P</span><span class="o">*</span><span class="mf">1e3</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> mW"</span><span class="p">)</span>
+<span class="c1"># 0.9 V -&gt; 8.1 mW</span>
+<span class="c1"># 0.7 V -&gt; 4.9 mW</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_6">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_6" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dynamic (switching) power</strong><br><em>CMOS power fundamentals · Concept</em></td>
+<td>Power used to charge and discharge capacitance when signals toggle; proportional to αCV²f.</td>
+<td>A GPU running a game burns most of its 300 W as dynamic power.</td>
+</tr>
+<tr>
+<td><strong>Leakage (static) power</strong><br><em>CMOS power fundamentals · Concept</em></td>
+<td>Power lost through transistors that are off, from subthreshold, gate and junction leakage.</td>
+<td>A smartwatch chip's standby battery life is dominated by leakage.</td>
+</tr>
+<tr>
+<td><strong>Activity factor (α)</strong><br><em>CMOS power fundamentals · Concept</em></td>
+<td>The fraction of clock cycles in which a node switches; clocks have α = 1, most data much less.</td>
+<td>Power tools read simulation waveforms (SAIF/FSDB) to get realistic activity per net.</td>
+</tr>
+<tr>
+<td><strong>Supply voltage (VDD)</strong><br><em>CMOS power fundamentals · Concept</em></td>
+<td>The chip's power rail; dynamic power scales with its square, so small cuts save a lot.</td>
+<td>Lowering a core from 0.9 V to 0.75 V cuts dynamic power by about 30 %.</td>
+</tr>
+<tr>
+<td><strong>Thermal design power (TDP)</strong><br><em>Industry metric · Concept</em></td>
+<td>The sustained heat a chip and its cooler are designed to remove.</td>
+<td>A data-centre AI accelerator may have a TDP of 700-1,000 W and need liquid cooling.</td>
+</tr>
+<tr>
+<td><strong>Dennard scaling</strong><br><em>Robert Dennard et al. (1974) · Concept</em></td>
+<td>Old rule that shrinking transistors kept power density constant; it broke down around 2005-2007.</td>
+<td>The end of Dennard scaling is why CPU clock speeds stalled near 4-5 GHz and cores multiplied.</td>
+</tr>
+<tr>
+<td><strong>Dark silicon</strong><br><em>Computer architecture research term · Concept</em></td>
+<td>Parts of a chip that must stay off at any moment because powering everything would overheat it.</td>
+<td>Phone SoCs include many specialised blocks, only a few of which run at once.</td>
+</tr>
+<tr>
+<td><strong>Energy per operation</strong><br><em>Industry metric · Concept</em></td>
+<td>Energy used to perform one task, such as picojoules per instruction or per multiply-accumulate.</td>
+<td>AI chip makers advertise TOPS per watt to compare energy efficiency.</td>
+</tr>
+<tr>
+<td><strong>PPA (Power, Performance, Area)</strong><br><em>Industry term · Concept · Whole flow</em></td>
+<td>The three competing metrics every chip design is judged and optimised on.</td>
+<td>A team trades 5 % more area for a 15 % frequency gain to win a PPA target.</td>
+</tr>
+<tr>
+<td><strong>Short-circuit power</strong><br><em>CMOS power fundamentals · Concept</em></td>
+<td>Brief current flowing straight from supply to ground while both transistor networks conduct during a slow input transition.</td>
+<td>Keeping signal transitions sharp limits short-circuit power to a small share of the total.</td>
+</tr>
+<tr>
+<td><strong>Clock power</strong><br><em>CMOS power fundamentals · Concept</em></td>
+<td>Power consumed by the clock tree and flop clock pins, which toggle every cycle.</td>
+<td>Clock gating idle register banks can cut a block's clock power dramatically when it waits for work.</td>
+</tr>
+<tr>
+<td><strong>Glitch power</strong><br><em>CMOS power fundamentals · Concept</em></td>
+<td>Wasted energy from spurious transitions while combinational logic settles to its final value.</td>
+<td>Deep multiplier arrays glitch heavily; balancing paths or adding pipeline registers reduces it.</td>
+</tr>
+<tr>
+<td><strong>Power density and hotspots</strong><br><em>Thermal design · Concept</em></td>
+<td>Power per square millimetre; local hotspots can force throttling even when average chip power looks acceptable.</td>
+<td>A CPU throttles one busy core when its local junction temperature approaches its limit.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="18-the-rtl-to-gdsii-flow-the-whole-journey">1.8 The RTL-to-GDSII Flow: The Whole Journey<a class="headerlink" href="#18-the-rtl-to-gdsii-flow-the-whole-journey" title="Permanent link">&para;</a></h2>
+<p>Designing a chip follows a long assembly line. You write a specification, design an architecture, describe it in a hardware description language (RTL), prove it works (verification), turn it into gates (synthesis), add test logic (DFT), arrange and wire the gates (physical design), check everything (signoff) and send the final layout file (GDSII/OASIS) to the factory: that hand-off is tapeout. Then come fabrication, packaging, testing and bring-up in the lab.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-08-the-rtl-to-gdsii-flow-the-whole-journey.svg" alt="Each stage hands specific files to the next; problems found late often loop back to earlier stages." loading="lazy" width="1000" height="428">
+<figcaption><strong>RTL-to-GDSII at a glance.</strong> Each stage hands specific files to the next; problems found late often loop back to earlier stages.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like building a skyscraper: requirements, architect's drawings, detailed blueprints, structural checks, construction plans, inspections, then construction, fit-out and move-in day.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Bluewave Labs builds a Wi-Fi chip. Product managers write the spec in January; architects finish the block diagram in March; 40 RTL designers and 80 verification engineers work until November; the physical design team floorplans from August and closes timing by February; signoff and tapeout happen in March. Wafers return in June, packaged parts in July, and the first board boots Linux in August.</p>
+</div>
+<h4 id="how-it-works_7">How it works<a class="headerlink" href="#how-it-works_7" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Front end: specification, architecture, RTL design, functional verification.</li>
+<li>Logic synthesis turns RTL into a gate-level netlist using a standard-cell library; DFT inserts scan and BIST.</li>
+<li>Back end: floorplan, power plan, placement, clock tree synthesis, routing, optimisation.</li>
+<li>Signoff: STA, power/IR, physical verification (DRC/LVS), equivalence checks, then tapeout of GDSII/OASIS.</li>
+<li>Fab makes masks and wafers; OSAT packages and tests; the team does post-silicon validation and bring-up.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Each stage has its own specialist roles (RTL, DV, synthesis, DFT, PD, STA, CAD), coordinated by project leads and program managers.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Be able to recite the flow in order in an interview, and name one tool and one file format for each step.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Hand-offs are concrete files: RTL plus SDC and UPF into synthesis; netlist, Liberty and LEF into place-and-route; DEF and SPEF into signoff; GDSII or OASIS to the foundry.</li>
+<li>The flow is iterative, not linear: timing, congestion or power problems found during layout frequently send teams back to RTL changes or even architecture decisions.</li>
+<li>Verification usually outweighs design effort; industry studies such as the Wilson Research Group survey report as many or more verification engineers as designers on ASIC projects.</li>
+<li>Key milestones are spec freeze, RTL freeze, netlist freeze, timing closure, tapeout, first silicon and production release, each gated by a sign-off checklist.</li>
+<li>A mid-size SoC typically takes one to two years from specification to tapeout, followed by roughly two to four months of fabrication before first silicon returns.</li>
+<li>Commercial flows rely mainly on Synopsys and Cadence tools, with Siemens EDA strong in verification and physical verification; open flows like LibreLane cover the same steps for mature nodes.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Thinking tapeout ends the work: bring-up, validation, characterisation, qualification and production test continue for months afterwards.</li>
+<li>Treating stages as isolated: RTL that ignores timing, power or testability causes painful late iterations in physical design.</li>
+<li>Confusing ASIC 'front end' with web front-end development; here it means specification, RTL design and verification.</li>
+</ul>
+</div>
+<h3 id="try-it-synthesise-the-pwm-example-with-yosys-synthys">Try it: Synthesise the PWM example with Yosys (synth.ys)<a class="headerlink" href="#try-it-synthesise-the-pwm-example-with-yosys-synthys" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># run with:  yosys synth.ys</span>
+read_verilog<span class="w"> </span>pwm.v
+synth<span class="w"> </span>-top<span class="w"> </span>pwm<span class="w">          </span><span class="c1"># generic gate-level netlist</span>
+stat<span class="w">                    </span><span class="c1"># print cell counts</span>
+write_verilog<span class="w"> </span>-noattr<span class="w"> </span>pwm_netlist.v
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_7">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_7" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Specification</strong><br><em>Product / architecture teams · Concept · Spec/Architecture</em></td>
+<td>The document defining what the chip must do: features, interfaces, performance, power and cost targets.</td>
+<td>The spec says: four Arm cores, 2 GHz, LPDDR5X, under 3 W and 25 square millimetres.</td>
+</tr>
+<tr>
+<td><strong>RTL (Register-Transfer Level)</strong><br><em>Design abstraction · Concept · RTL Design</em></td>
+<td>Hardware described as registers and the logic that moves data between them, written in Verilog, SystemVerilog or VHDL.</td>
+<td>An RTL file says 'on every clock, count &lt;= count + 1' rather than listing gates.</td>
+</tr>
+<tr>
+<td><strong>Gate-level netlist</strong><br><em>Output of synthesis (structural Verilog) · File format · Synthesis</em></td>
+<td>A list of standard cells and the wires connecting them, produced by synthesis.</td>
+<td>A netlist line instantiates NAND2_X1 u123 with pins connected to nets n45 and n46.</td>
+</tr>
+<tr>
+<td><strong>Front end vs back end</strong><br><em>Industry terms · Concept · Whole flow</em></td>
+<td>Front end covers spec to verified RTL; back end covers synthesis/physical design to tapeout.</td>
+<td>Job adverts say 'front-end DV engineer' or 'back-end PD engineer'.</td>
+</tr>
+<tr>
+<td><strong>Tapeout</strong><br><em>Industry term (from old magnetic-tape delivery) · Concept · Signoff</em></td>
+<td>The milestone where final layout data is sent to the foundry to make masks.</td>
+<td>Teams celebrate tapeout with cake, then wait about three months for silicon.</td>
+</tr>
+<tr>
+<td><strong>GDSII / OASIS</strong><br><em>Calma (GDSII, 1970s); SEMI P39 (OASIS) · File format · Signoff</em></td>
+<td>Binary files describing every polygon on every layer of the chip layout, sent to the foundry.</td>
+<td>A 5 nm SoC's final OASIS file can be tens of gigabytes.</td>
+</tr>
+<tr>
+<td><strong>First silicon</strong><br><em>Industry term · Concept · Packaging &amp; Test</em></td>
+<td>The first chips back from the fab, used to check that the design actually works.</td>
+<td>Engineers power up first silicon in the lab with current limits set low, watching for shorts.</td>
+</tr>
+<tr>
+<td><strong>Respin</strong><br><em>Industry term · Concept · Signoff</em></td>
+<td>A second (or later) tapeout to fix bugs found in silicon, costing time and money.</td>
+<td>A metal-only respin fixed a USB bug in six weeks instead of a full three-month cycle.</td>
+</tr>
+<tr>
+<td><strong>EDA (Electronic Design Automation)</strong><br><em>Industry segment · Concept · Whole flow</em></td>
+<td>The software tools used to design, verify and implement chips.</td>
+<td>Synopsys, Cadence and Siemens EDA supply most commercial EDA tools.</td>
+</tr>
+<tr>
+<td><strong>PDK (Process Design Kit)</strong><br><em>Foundries · Concept · Whole flow</em></td>
+<td>In the flow, the foundry kit every back-end step depends on: rules, device models, cell libraries and tech files; chosen before synthesis.</td>
+<td>Choosing the open SKY130 PDK fixes which standard cells Yosys can use and which rules DRC checks.</td>
+</tr>
+<tr>
+<td><strong>Functional verification</strong><br><em>Design practice · Concept · Verification</em></td>
+<td>Showing with simulation, formal proofs and emulation that the RTL behaves exactly as the specification says.</td>
+<td>A DV team runs thousands of random tests nightly and tracks coverage until every feature is exercised.</td>
+</tr>
+<tr>
+<td><strong>Constraints (SDC and UPF)</strong><br><em>Synopsys SDC format; IEEE 1801 UPF · Concept · Whole flow</em></td>
+<td>Side files that travel with the design, giving target clocks and I/O timing (SDC) and power intent (UPF).</td>
+<td>The same SDC clock definition is read by synthesis, placement, routing and signoff timing.</td>
+</tr>
+<tr>
+<td><strong>Test logic insertion (scan, BIST)</strong><br><em>DFT practice · Concept · DFT</em></td>
+<td>Adding scan chains, test compression, memory BIST and JTAG so every manufactured chip can be tested.</td>
+<td>After synthesis, the DFT engineer stitches 200,000 flops into scan chains for the tester.</td>
+</tr>
+<tr>
+<td><strong>Physical design (place and route)</strong><br><em>Back-end implementation · Concept · Physical Design</em></td>
+<td>Turning the netlist into layout: floorplan, power grid, placement, clock tree synthesis and routing.</td>
+<td>The PD team iterates placement and routing for weeks until timing, power and congestion targets are met.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="19-levels-of-abstraction-and-design-trade-offs">1.9 Levels of Abstraction and Design Trade-offs<a class="headerlink" href="#19-levels-of-abstraction-and-design-trade-offs" title="Permanent link">&para;</a></h2>
+<p>Chips are far too complex to design transistor by transistor, so engineers work at levels of abstraction: system, architecture, RTL, gates, transistors and layout. Each level hides detail from the one above. Tools translate downward automatically, and at every level designers trade power, performance and area against each other.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-09-levels-of-abstraction-and-design-trade.svg" alt="Tools translate each level into the one below; detail and accuracy rise as you go down, speed falls." loading="lazy" width="1000" height="424">
+<figcaption><strong>Levels of abstraction.</strong> Tools translate each level into the one below; detail and accuracy rise as you go down, speed falls.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like a map app: you plan the trip on the country map, then zoom into city streets and finally the exact lane, and each zoom level hides what you do not need yet.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>An architect at Kestrel Semi models a new AI accelerator in Python to decide it needs 256 multiply units. RTL designers code those units in SystemVerilog. Synthesis turns the RTL into 40 million gates; place-and-route turns gates into polygons. When power came in 20 % over budget at layout, the team went back up to architecture and cut the multiplier count to 192.</p>
+</div>
+<h4 id="how-it-works_8">How it works<a class="headerlink" href="#how-it-works_8" title="Permanent link">&para;</a></h4>
+<ol>
+<li>System/algorithm level: C++, Python, MATLAB or SystemC models of what the chip computes.</li>
+<li>Architecture level: block diagrams, pipelines, memories and buses.</li>
+<li>RTL: cycle-accurate description in an HDL.</li>
+<li>Gate level: netlist of standard cells.</li>
+<li>Transistor and layout level: actual devices and polygons on mask layers.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Architects work high; RTL and verification engineers in the middle; physical design, circuit and layout engineers low; all must understand the levels around them.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>The earlier a problem is found (higher abstraction), the cheaper it is to fix: a bug costs dollars in RTL and millions in silicon.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Simulation speed falls by orders of magnitude at each step down: TLM models can boot an OS, RTL simulation of a big SoC crawls, and SPICE handles only small circuits.</li>
+<li>Formal checks link the levels: equivalence checking proves the netlist matches the RTL, and LVS proves the layout matches the netlist, so every translation can be trusted.</li>
+<li>PPA trade-offs: more pipeline stages raise frequency but add area, power and latency; more parallel units raise throughput but cost area; lower voltage saves power but slows logic.</li>
+<li>Leverage is highest at the top: architecture choices can change power or performance several-fold, while back-end optimisation typically yields tens of percent.</li>
+<li>SystemC TLM-2.0 models in loosely-timed or approximately-timed styles let software and architecture work start many months before RTL is ready.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Micro-optimising gates before the architecture is settled; low-level tuning cannot rescue a poor architecture.</li>
+<li>Trusting high-level estimates blindly: models ignore wires and physical effects, so keep margin and run early synthesis.</li>
+<li>Letting the golden model and RTL diverge after spec changes, so tests compare the design against wrong answers.</li>
+</ul>
+</div>
+<h3 id="try-it-one-1-bit-add-slice-at-three-levels-alternatives-not-one-file">Try it: One 1-bit add slice at three levels (alternatives, not one file)<a class="headerlink" href="#try-it-one-1-bit-add-slice-at-three-levels-alternatives-not-one-file" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><pre><span></span><code>// 1) Behavioural RTL
+assign {c1, s0} = a[0] + b[0];
+
+// 2) Structural: wire up a full-adder module
+full_adder fa0 (.a(a[0]), .b(b[0]), .cin(1'b0), .s(s0), .cout(c1));
+
+// 3) Gate level, as synthesis would emit it
+XOR2_X1 u1 (.A(a[0]), .B(b[0]), .Z(s0));
+AND2_X1 u2 (.A(a[0]), .B(b[0]), .Z(c1));
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_8">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_8" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Transaction-level modelling (TLM)</strong><br><em>Accellera SystemC TLM-2.0 (IEEE 1666) · Methodology · Spec/Architecture</em></td>
+<td>Modelling blocks as function calls exchanging transactions instead of cycle-by-cycle signals, for fast simulation.</td>
+<td>Software teams boot Android on a TLM virtual platform a year before RTL is ready.</td>
+</tr>
+<tr>
+<td><strong>SystemC</strong><br><em>Accellera; IEEE 1666 · Language · Spec/Architecture</em></td>
+<td>A C++ class library for modelling hardware and systems at high abstraction levels.</td>
+<td>An architect builds a SystemC model of a memory controller to test scheduling policies.</td>
+</tr>
+<tr>
+<td><strong>Virtual prototype</strong><br><em>Synopsys Virtualizer, Cadence Helium, Siemens; QEMU · Concept · Spec/Architecture</em></td>
+<td>A software model of the whole chip that runs real software before hardware exists.</td>
+<td>Firmware engineers debug drivers on a virtual prototype while RTL is still being written.</td>
+</tr>
+<tr>
+<td><strong>Behavioural vs structural description</strong><br><em>HDL design styles · Concept · RTL Design</em></td>
+<td>Behavioural code describes what a block does; structural code connects instances of other blocks.</td>
+<td>'assign y = a + b;' is behavioural; instantiating an adder module and wiring it is structural.</td>
+</tr>
+<tr>
+<td><strong>Area (mm² and gate count)</strong><br><em>Industry metric · Concept</em></td>
+<td>The silicon area a design occupies, directly driving cost per chip.</td>
+<td>Doubling die area roughly more than doubles cost because yield also falls.</td>
+</tr>
+<tr>
+<td><strong>Performance (frequency, throughput, latency)</strong><br><em>Industry metric · Concept</em></td>
+<td>How fast the chip works: clock rate, operations per second and delay for one result.</td>
+<td>A network chip is judged by 51.2 Tb/s throughput and nanoseconds of port-to-port latency.</td>
+</tr>
+<tr>
+<td><strong>Shift-left</strong><br><em>Industry term · Methodology · Whole flow</em></td>
+<td>Moving checks earlier in the flow so problems are found while they are still cheap to fix.</td>
+<td>Running power estimates on RTL instead of waiting for the final layout is a shift-left.</td>
+</tr>
+<tr>
+<td><strong>Hardware/software co-design</strong><br><em>Industry practice · Methodology · Spec/Architecture</em></td>
+<td>Deciding together which functions run in hardware and which in software to meet goals.</td>
+<td>A team moves video encoding into hardware but keeps the bitrate controller in firmware.</td>
+</tr>
+<tr>
+<td><strong>Golden reference model</strong><br><em>Verification practice · Concept · Verification</em></td>
+<td>A trusted high-level model (often C/C++ or Python) whose outputs the RTL must match.</td>
+<td>Every RTL test of a crypto engine compares its output with a C reference implementation.</td>
+</tr>
+<tr>
+<td><strong>Algorithmic model (Python, MATLAB, C++)</strong><br><em>Architecture practice · Methodology · Spec/Architecture</em></td>
+<td>An untimed model proving the maths works before any hardware decisions are made.</td>
+<td>A DSP team tunes filter coefficients in MATLAB, then freezes them as the reference for RTL.</td>
+</tr>
+<tr>
+<td><strong>Cycle-accurate model</strong><br><em>Architecture practice · Concept · Spec/Architecture</em></td>
+<td>A model matching the hardware clock-by-clock but running faster than RTL, used to measure exact stalls and latencies.</td>
+<td>Architects use a cycle-accurate model to count pipeline stalls on real benchmark traces.</td>
+</tr>
+<tr>
+<td><strong>Design-space exploration</strong><br><em>Architecture practice · Methodology · Spec/Architecture</em></td>
+<td>Systematically trying many architecture or implementation options to find the best power, performance and area trade-off.</td>
+<td>A team sweeps cache size, bus width and core count in a model before choosing the final configuration.</td>
+</tr>
+<tr>
+<td><strong>Cost of a bug by stage</strong><br><em>Engineering rule of thumb · Concept</em></td>
+<td>Fixing a bug costs roughly ten times more at each later stage, from minutes in RTL to a respin in silicon.</td>
+<td>A wrong FIFO depth caught in review costs an hour; found in silicon it costs months and a new mask set.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="110-who-does-what-fabless-foundry-idm-eda-ip-and-osat">1.10 Who Does What: Fabless, Foundry, IDM, EDA, IP and OSAT<a class="headerlink" href="#110-who-does-what-fabless-foundry-idm-eda-ip-and-osat" title="Permanent link">&para;</a></h2>
+<p>Very few companies do everything themselves. Fabless companies design chips but own no factories; foundries manufacture chips for others; IDMs (integrated device manufacturers) design and build their own. EDA vendors sell the design software, IP vendors license ready-made blocks, and OSATs package and test the finished dies.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-10-who-does-what-fabless-foundry-idm-eda.svg" alt="A fabless company owns the design; everyone else supplies tools, blocks, factories or services." loading="lazy" width="1000" height="520">
+<figcaption><strong>The semiconductor value chain.</strong> A fabless company owns the design; everyone else supplies tools, blocks, factories or services.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like the book industry: authors (fabless) write, printers (foundries) print, some publishers own their own presses (IDMs), and others sell the word-processing software (EDA) or license famous characters (IP).</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>When a fabless start-up called Lumen AI builds an inference chip, it licenses an Arm CPU and Synopsys PCIe IP, designs with Cadence and Synopsys tools, sends the layout to TSMC for wafers, has ASE package the dies with HBM memory, and tests them on Advantest testers. Lumen owns none of the factories but owns the design and the brand.</p>
+</div>
+<h4 id="how-it-works_9">How it works<a class="headerlink" href="#how-it-works_9" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Fabless design house creates the chip using EDA tools and licensed IP.</li>
+<li>Foundry manufactures wafers using its process and PDK.</li>
+<li>OSAT (or the foundry's advanced packaging line) dices, packages and tests.</li>
+<li>Distributors or direct sales deliver chips to system makers (OEMs).</li>
+<li>IDMs like Intel, Samsung, TI and Infineon do several of these steps in-house.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Students should know this map because job titles, salaries and locations follow it: design jobs at fabless firms, process jobs at foundries, test jobs at OSATs.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>TSMC is the world's largest foundry by far; NVIDIA, AMD, Qualcomm, Broadcom and MediaTek are famous fabless companies.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Business models blur: Intel runs Intel Foundry for outside customers, Samsung designs Exynos chips while manufacturing for others, and hyperscalers design chips without selling them.</li>
+<li>Margins differ sharply: fabless, IP and EDA firms are asset-light, while leading foundries spend tens of billions of dollars a year on new fabs and equipment.</li>
+<li>Design teams cluster in the US, Europe, Israel, India, Taiwan and China; leading-edge logic fabs in Taiwan, South Korea and the US; OSAT capacity in Taiwan, China and South-East Asia.</li>
+<li>EDA is concentrated: Synopsys and Cadence hold the majority of the market with Siemens EDA third, while Arm and Synopsys lead semiconductor IP licensing.</li>
+<li>One chip programme involves many contracts: EDA licences, IP licences and royalties, a foundry wafer agreement, OSAT services, test-equipment time and distribution.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Assuming fabless companies ignore manufacturing: they still own yield, test, qualification and supply-chain relationships.</li>
+<li>Thinking IDMs make everything in-house: many use foundries for some products and OSATs for packaging.</li>
+<li>Confusing foundry with fab: a fab is a factory building, a foundry is a business that manufactures chips for customers.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_9">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_9" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Fabless company</strong><br><em>Industry business model · Concept · Whole flow</em></td>
+<td>A chip company that designs and sells chips but outsources manufacturing to foundries.</td>
+<td>NVIDIA, AMD, Qualcomm, Broadcom, MediaTek and Marvell are fabless.</td>
+</tr>
+<tr>
+<td><strong>Foundry (pure-play)</strong><br><em>Industry business model · Concept · Fabrication</em></td>
+<td>A company that manufactures chips designed by its customers, without competing chip products.</td>
+<td>TSMC, GlobalFoundries and UMC are pure-play foundries.</td>
+</tr>
+<tr>
+<td><strong>IDM (Integrated Device Manufacturer)</strong><br><em>Industry business model · Concept</em></td>
+<td>A company that both designs and manufactures its own chips; some also offer foundry services.</td>
+<td>Intel, Samsung, Texas Instruments, Infineon and STMicroelectronics are IDMs.</td>
+</tr>
+<tr>
+<td><strong>TSMC</strong><br><em>Taiwan Semiconductor Manufacturing Company (founded 1987) · Company · Fabrication</em></td>
+<td>The model pure-play foundry and the largest by far, holding roughly two-thirds or more of global foundry revenue.</td>
+<td>Apple, NVIDIA, AMD and Qualcomm flagship chips come from TSMC fabs, which is why it anchors the fabless business model.</td>
+</tr>
+<tr>
+<td><strong>EDA vendor</strong><br><em>Synopsys, Cadence, Siemens EDA, others · Concept · Whole flow</em></td>
+<td>Company selling chip design software, typically through multi-year licence agreements.</td>
+<td>A start-up negotiates a three-year bundle of synthesis, P&amp;R and simulation licences.</td>
+</tr>
+<tr>
+<td><strong>Semiconductor IP vendor</strong><br><em>Arm, Synopsys, Cadence, Rambus, Alphawave Semi, SiFive · Concept · RTL Design</em></td>
+<td>Company licensing pre-designed, pre-verified blocks such as CPUs, interfaces and memories.</td>
+<td>Rather than design PCIe from scratch, a team licenses a PCIe controller and PHY.</td>
+</tr>
+<tr>
+<td><strong>OSAT (Outsourced Semiconductor Assembly and Test)</strong><br><em>ASE, Amkor, JCET and others · Concept · Packaging &amp; Test</em></td>
+<td>Companies that package dies and test finished chips for fabless and IDM customers.</td>
+<td>Amkor bumps, dices, flip-chip packages and final-tests a customer's networking chip.</td>
+</tr>
+<tr>
+<td><strong>Design services / ASIC house</strong><br><em>Broadcom, Marvell, Alchip, GUC, Socionext, others · Concept · Whole flow</em></td>
+<td>Firms that take a customer's spec or RTL and deliver finished chips, handling back end and supply chain.</td>
+<td>A cloud company designs the AI logic and pays an ASIC partner to implement and manufacture it.</td>
+</tr>
+<tr>
+<td><strong>Hyperscaler custom silicon</strong><br><em>Google, Amazon, Microsoft, Meta · Concept</em></td>
+<td>Cloud companies designing their own chips for their data centres.</td>
+<td>Google TPU, AWS Trainium and Graviton, and Microsoft Maia are in-house ASICs.</td>
+</tr>
+<tr>
+<td><strong>Semiconductor equipment makers</strong><br><em>ASML, Applied Materials, Lam Research, Tokyo Electron, KLA · Concept · Fabrication</em></td>
+<td>Companies building the machines that fabs use for lithography, deposition, etching and inspection.</td>
+<td>Only ASML makes EUV lithography scanners.</td>
+</tr>
+<tr>
+<td><strong>OEM (system company)</strong><br><em>Industry business model · Concept</em></td>
+<td>The company building the final product — phone, car, server — that buys or commissions chips.</td>
+<td>A car maker sources chips through Tier-1 suppliers such as Bosch and Continental, who build the electronic modules.</td>
+</tr>
+<tr>
+<td><strong>Fab-lite company</strong><br><em>Industry business model · Concept</em></td>
+<td>A chipmaker that keeps some fabs, often for analog or specialty processes, but outsources advanced logic to foundries.</td>
+<td>NXP and Renesas make some products in their own fabs and buy advanced-node wafers from TSMC.</td>
+</tr>
+<tr>
+<td><strong>Materials and chemicals suppliers</strong><br><em>Shin-Etsu, SUMCO, JSR, Tokyo Ohka Kogyo, others · Concept · Fabrication</em></td>
+<td>Firms supplying silicon wafers, photoresists, specialty gases and chemicals that fabs consume.</td>
+<td>A shortage of one photoresist or specialty gas can slow production at fabs worldwide.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="111-worked-example-a-tiny-chip-through-the-whole-flow">1.11 Worked Example: A Tiny Chip Through the Whole Flow<a class="headerlink" href="#111-worked-example-a-tiny-chip-through-the-whole-flow" title="Permanent link">&para;</a></h2>
+<p>Seeing one small design go end to end makes every later chapter easier. Here we follow a simple 8-bit PWM (pulse-width modulation) LED controller from idea to a working chip using open-source tools and an open PDK, the same steps a big SoC uses, just smaller.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-11-worked-example-a-tiny-chip-through-the.svg" alt="The same stages as a commercial SoC, run with free tools on an open PDK." loading="lazy" width="1000" height="389">
+<figcaption><strong>Leila&#x27;s PWM chip, step by step.</strong> The same stages as a commercial SoC, run with free tools on an open PDK.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like learning cooking by making one simple omelette from shopping to plating before attempting a banquet.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Student Leila writes a 60-line Verilog PWM module, simulates it in Icarus Verilog and views the waveform in GTKWave. She runs Verilator lint, synthesises with Yosys to about 150 SKY130 cells, then uses LibreLane to floorplan, place, build a clock tree and route. KLayout shows her layout, Magic and Netgen pass DRC and LVS, and she submits the GDS to a Tiny Tapeout shuttle. Months later she plugs the demo board into USB and her LED fades smoothly.</p>
+</div>
+<h4 id="how-it-works_10">How it works<a class="headerlink" href="#how-it-works_10" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Spec: 8-bit duty cycle register, 10 MHz clock, one PWM output pin.</li>
+<li>RTL + testbench: write Verilog and simulate; check waveforms and assertions.</li>
+<li>Synthesis: Yosys maps RTL to standard cells using an SDC clock constraint.</li>
+<li>Place and route: floorplan, place cells, CTS, route; OpenSTA checks timing.</li>
+<li>Signoff and tapeout: DRC, LVS, final GDS; then fab, package, test on a board.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Universities, hobbyists and new graduates use exactly this flow to get hands-on experience before industry.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Putting a real taped-out design (even a Tiny Tapeout tile) on your CV is a strong differentiator for entry-level jobs.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Tiny Tapeout designs follow a fixed template: a top module named tt_um_&lt;name&gt; with dedicated input, output and bidirectional pin buses plus clock, reset and enable, so every tile fits one shared harness.</li>
+<li>A single Tiny Tapeout tile holds roughly a thousand digital gates in SKY130 — plenty for a PWM, UART, small state machine or tiny CPU experiment.</li>
+<li>Every step writes reports: Yosys cell counts, OpenROAD utilisation and congestion, OpenSTA worst slack, and DRC/LVS summaries; learning to read them is the real skill.</li>
+<li>The steps map directly to commercial tools: Icarus becomes VCS or Xcelium, Yosys becomes Design Compiler or Genus, OpenROAD becomes Innovus or Fusion Compiler, Magic and KLayout become Calibre.</li>
+<li>Open PDKs available for practice include SkyWater SKY130 (130 nm), GlobalFoundries GF180MCU (180 nm) and IHP SG13G2 (130 nm SiGe BiCMOS); Tiny Tapeout runs shuttles on all three.</li>
+<li>Silicon takes months to come back from a shuttle, so simulate thoroughly and, if possible, test the design on an FPGA board before submitting.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Skipping simulation because the design is tiny: a bug found after tapeout costs a whole shuttle cycle of months.</li>
+<li>Ignoring flow warnings: an unconstrained clock or hidden DRC error can ruin the chip even when the flow 'completes'.</li>
+<li>Forgetting reset: without one the counter powers up unknown; simulation shows X while silicon behaves randomly.</li>
+</ul>
+</div>
+<h3 id="try-it-minimal-pwm-module-in-verilog">Try it: Minimal PWM module in Verilog<a class="headerlink" href="#try-it-minimal-pwm-module-in-verilog" title="Permanent link">&para;</a></h3>
+<div class="language-verilog highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">pwm</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="n">rst_n</span><span class="p">,</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">duty</span><span class="p">,</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="n">pwm_out</span><span class="p">);</span>
+<span class="w">  </span><span class="kt">reg</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">cnt</span><span class="p">;</span>
+<span class="w">  </span><span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="w"> </span><span class="k">or</span><span class="w"> </span><span class="k">negedge</span><span class="w"> </span><span class="n">rst_n</span><span class="p">)</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">rst_n</span><span class="p">)</span><span class="w"> </span><span class="n">cnt</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mh">8</span><span class="mi">'d0</span><span class="p">;</span>
+<span class="w">    </span><span class="k">else</span><span class="w">        </span><span class="n">cnt</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">cnt</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mh">8</span><span class="mi">'d1</span><span class="p">;</span>
+<span class="w">  </span><span class="k">assign</span><span class="w"> </span><span class="n">pwm_out</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">cnt</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">duty</span><span class="p">);</span>
+<span class="k">endmodule</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_10">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_10" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Icarus Verilog</strong><br><em>Stephen Williams (open source) · Tool · Verification · Open source</em></td>
+<td>The first tool Leila runs: it compiles her Verilog RTL and testbench and simulates them, writing a waveform file.</td>
+<td>iverilog -o sim pwm.v tb.v &amp;&amp; vvp sim runs her PWM test in under a second.</td>
+</tr>
+<tr>
+<td><strong>GTKWave</strong><br><em>Open-source project · Tool · Verification · Open source</em></td>
+<td>Waveform viewer for VCD/FST files produced by simulators.</td>
+<td>Leila zooms into the PWM output to check it is high for 64 of 256 cycles.</td>
+</tr>
+<tr>
+<td><strong>Yosys</strong><br><em>YosysHQ (Claire Xenia Wolf) · Tool · Synthesis · Open source</em></td>
+<td>In this flow, Yosys reads the PWM RTL and maps it onto SKY130 standard cells, reporting the cell count.</td>
+<td>Yosys turns the 8-bit counter and comparator into about 150 cells, mostly flops, adders and gates.</td>
+</tr>
+<tr>
+<td><strong>LibreLane</strong><br><em>FOSSi Foundation (successor to OpenLane 2) · Tool · Physical Design · Open source</em></td>
+<td>The push-button flow script that drives every step here, from synthesis to signed-off GDS, from one config file.</td>
+<td>Running librelane config.json takes Leila's design from Verilog to a final GDS in minutes.</td>
+</tr>
+<tr>
+<td><strong>OpenROAD</strong><br><em>OpenROAD project (UC San Diego-led) · Tool · Physical Design · Open source</em></td>
+<td>The engine LibreLane calls for floorplanning, placement, clock tree, routing and timing in this example.</td>
+<td>OpenROAD places Leila's 150 cells, builds a small clock tree and routes them on SKY130 metal layers.</td>
+</tr>
+<tr>
+<td><strong>KLayout</strong><br><em>Matthias Köfferlein (open source) · Tool · Signoff · Open source</em></td>
+<td>Leila's window into the result: she opens the final GDS to inspect layers and runs a DRC check.</td>
+<td>She toggles metal layers in KLayout to see how the clock net was routed across her tile.</td>
+</tr>
+<tr>
+<td><strong>SKY130 PDK</strong><br><em>SkyWater Technology and Google (2020) · Standard · Fabrication · Open source</em></td>
+<td>The open 130 nm process kit used in this example, supplying the cells, rules and models for every step.</td>
+<td>Because SKY130 is open, Leila can inspect every cell and rule file her layout depends on.</td>
+</tr>
+<tr>
+<td><strong>Tiny Tapeout</strong><br><em>Tiny Tapeout (Matt Venn and team) · Resource · Whole flow</em></td>
+<td>The low-cost shuttle that turns Leila's small tile into real silicon by sharing one chip among many designs.</td>
+<td>She buys one tile on a SKY130 shuttle and months later receives a demo board containing her design.</td>
+</tr>
+<tr>
+<td><strong>Demo/evaluation board</strong><br><em>Industry practice · Concept · Packaging &amp; Test</em></td>
+<td>A circuit board that holds the new chip with power, clocks and connectors for testing.</td>
+<td>The Tiny Tapeout board uses a microcontroller to select which user design is active.</td>
+</tr>
+<tr>
+<td><strong>Testbench</strong><br><em>Verification practice · Concept · Verification</em></td>
+<td>A non-synthesisable module that drives clock, reset and inputs into the design and checks its outputs.</td>
+<td>Leila's testbench sets duty to 64, counts high cycles over 256 clocks and prints PASS or FAIL.</td>
+</tr>
+<tr>
+<td><strong>Clock constraint (CLOCK_PERIOD)</strong><br><em>LibreLane configuration · Concept · Synthesis</em></td>
+<td>The target clock period given to the flow; synthesis, placement and timing analysis all optimise against it.</td>
+<td>Leila sets CLOCK_PERIOD to 100 ns for 10 MHz, and the timing report shows plenty of slack.</td>
+</tr>
+<tr>
+<td><strong>DRC and LVS checks</strong><br><em>Signoff practice · Concept · Signoff</em></td>
+<td>Final checks that layout obeys the foundry's rules (DRC) and matches the netlist (LVS); here run by Magic, Netgen and KLayout.</td>
+<td>One DRC error for metal spacing appears; Leila reruns routing with a lower density and it clears.</td>
+</tr>
+<tr>
+<td><strong>GitHub Actions build (Tiny Tapeout template)</strong><br><em>Tiny Tapeout project template · Methodology · Whole flow</em></td>
+<td>Tiny Tapeout's template repository runs the hardening flow automatically on every push, producing GDS and reports.</td>
+<td>Each time Leila pushes Verilog, a green tick confirms her tile still hardens and passes checks.</td>
+</tr>
+<tr>
+<td><strong>Flow reports (area, timing, power)</strong><br><em>EDA practice · Concept · Whole flow</em></td>
+<td>Summary files from each step: cell count, core utilisation, worst slack and estimated power.</td>
+<td>Leila's final report shows about 150 cells, 40 % utilisation and positive slack at 10 MHz.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="112-cost-nre-and-time-to-market">1.12 Cost, NRE and Time-to-Market<a class="headerlink" href="#112-cost-nre-and-time-to-market" title="Permanent link">&para;</a></h2>
+<p>A chip has two kinds of cost. NRE (non-recurring engineering) is the one-time cost to design it: engineers, EDA licences, IP licences and mask sets. Unit cost is what each manufactured chip costs: silicon, packaging and test. ASICs only make sense when the volume is high enough to spread the NRE thin, or when no off-the-shelf chip can do the job.</p>
+<figure class="fig fig-diagram">
+<img src="img/01-12-cost-nre-and-time-to-market.svg" alt="At 100k units the FPGA is cheaper; at 1M units the ASIC&#x27;s 4 million dollar NRE pays back many times over." loading="lazy" width="1000" height="210">
+<figcaption><strong>Fernhill: FPGA vs ASIC yearly cost.</strong> At 100k units the FPGA is cheaper; at 1M units the ASIC&#x27;s 4 million dollar NRE pays back many times over.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>It is like opening a restaurant: kitchen fit-out and permits are one-time costs (NRE), while ingredients for each meal are the per-unit cost.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>Fernhill Robotics compares options for a motor controller. An FPGA costs 25 dollars per unit with almost no NRE. A 28 nm ASIC would cost 2 dollars per unit but 4 million dollars NRE. At 100,000 units a year, the FPGA costs 2.5 million versus the ASIC's 4.2 million, so the FPGA wins. At 1 million units a year, the ASIC saves about 19 million dollars.</p>
+</div>
+<h4 id="how-it-works_11">How it works<a class="headerlink" href="#how-it-works_11" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Estimate NRE: engineering salaries, EDA/IP licences, masks, prototypes and qualification.</li>
+<li>Estimate unit cost: wafer price / good dies per wafer + packaging + test.</li>
+<li>Find the break-even volume where ASIC total cost beats the alternative.</li>
+<li>Add time-to-market risk: a respin can cost months and lost sales.</li>
+<li>Consider MPW shuttles and older nodes to cut prototype cost.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Product managers, executives, ASIC programme managers and start-up founders make these calculations; engineers should understand them.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Mask sets for leading-edge nodes cost many millions of dollars, which is why first-time-right design and thorough verification matter so much.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>NRE usually comprises engineering salaries (often the largest part), EDA licences, IP licence fees, mask sets, prototype wafers, package design, test-program development and qualification.</li>
+<li>Unit cost = wafer cost ÷ good dies per wafer, plus package, test and royalties; because yield falls as dies grow, cost per good die rises faster than area.</li>
+<li>Mask costs climb with each node because more layers need masks and EUV or multi-patterning masks are complex; leading-edge mask sets cost many millions of dollars.</li>
+<li>Cost levers: MPW shuttles for prototypes, mature nodes for analog and I/O, reuse of silicon-proven IP, chiplets that mix nodes, and metal-only ECOs instead of full respins.</li>
+<li>Automotive and industrial chips spread NRE over 10-15 years of supply but pay extra for AEC-Q100 qualification and ISO 26262 functional-safety work.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Comparing unit prices alone; ignoring NRE, schedule risk and respin probability makes an ASIC look far cheaper than it is.</li>
+<li>Assuming cost scales linearly with die area; yield losses make large dies disproportionately expensive.</li>
+<li>Forgetting royalties and test time: a few cents per chip becomes millions of dollars at high volume.</li>
+</ul>
+</div>
+<h3 id="try-it-break-even-volume-in-python">Try it: Break-even volume in Python<a class="headerlink" href="#try-it-break-even-volume-in-python" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><pre><span></span><code><span class="n">nre</span> <span class="o">=</span> <span class="mi">4_000_000</span>            <span class="c1"># ASIC one-time cost ($)</span>
+<span class="n">asic_unit</span><span class="p">,</span> <span class="n">fpga_unit</span> <span class="o">=</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">25.0</span>
+<span class="n">break_even</span> <span class="o">=</span> <span class="n">nre</span> <span class="o">/</span> <span class="p">(</span><span class="n">fpga_unit</span> <span class="o">-</span> <span class="n">asic_unit</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"ASIC pays off above </span><span class="si">{</span><span class="n">break_even</span><span class="si">:</span><span class="s2">,.0f</span><span class="si">}</span><span class="s2"> units"</span><span class="p">)</span>
+<span class="c1"># ASIC pays off above 173,913 units</span>
+</code></pre></div>
+<h4 id="key-concepts-tools-formats-standards-companies_11">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_11" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NRE (Non-Recurring Engineering)</strong><br><em>Industry term · Concept · Whole flow</em></td>
+<td>One-time costs to design and prepare a chip for production, independent of how many are made.</td>
+<td>Industry estimates put advanced-node SoC development in the hundreds of millions of dollars.</td>
+</tr>
+<tr>
+<td><strong>Mask set cost</strong><br><em>Foundries / mask shops · Concept · Fabrication</em></td>
+<td>Cost of the photomasks needed for every layer; rises steeply at advanced nodes with more layers.</td>
+<td>A mature 180 nm mask set may cost tens of thousands of dollars; a leading-edge set costs millions.</td>
+</tr>
+<tr>
+<td><strong>Unit cost</strong><br><em>Industry term · Concept</em></td>
+<td>Cost to produce one good, packaged, tested chip.</td>
+<td>Wafer cost 6,000 dollars / 500 good dies = 12 dollars, plus 3 dollars package and test.</td>
+</tr>
+<tr>
+<td><strong>Break-even volume</strong><br><em>Business analysis · Concept</em></td>
+<td>The production quantity at which an ASIC's total cost equals the alternative's.</td>
+<td>If NRE is 2 million and each chip saves 10 dollars, break-even is 200,000 units.</td>
+</tr>
+<tr>
+<td><strong>Time-to-market</strong><br><em>Business term · Concept</em></td>
+<td>Time from project start to product shipping; missing a market window can kill a chip.</td>
+<td>A phone chip that misses the autumn launch season may lose a whole year of sales.</td>
+</tr>
+<tr>
+<td><strong>MPW (Multi-Project Wafer)</strong><br><em>Foundries, Europractice, MOSIS, ChipFoundry, others · Concept · Fabrication</em></td>
+<td>Several designs share one mask set and wafer run, splitting cost for prototypes.</td>
+<td>A university pays a few thousand euros for a small slot on a 65 nm MPW run.</td>
+</tr>
+<tr>
+<td><strong>Die cost and yield</strong><br><em>Manufacturing economics · Concept · Fabrication</em></td>
+<td>Die cost depends on how many good dies come from each wafer; larger dies yield worse.</td>
+<td>Splitting one huge die into four chiplets can raise good-die yield dramatically.</td>
+</tr>
+<tr>
+<td><strong>First-time-right</strong><br><em>Industry goal · Concept · Whole flow</em></td>
+<td>Achieving production-ready silicon on the first tapeout, avoiding costly respins.</td>
+<td>Teams spend more on verification than design partly to be first-time-right.</td>
+</tr>
+<tr>
+<td><strong>Product lifecycle and EOL</strong><br><em>Industry term · Concept</em></td>
+<td>Chips are supported for years, then given an end-of-life notice with last-time-buy dates.</td>
+<td>Automotive customers demand 10-15 years of supply for an ASIC.</td>
+</tr>
+<tr>
+<td><strong>Engineering labour</strong><br><em>Project economics · Concept</em></td>
+<td>Salaries of architects, designers, verification and physical design engineers; usually the largest share of NRE for complex chips.</td>
+<td>A 100-person team for two years costs far more than the mask set for a mid-range node.</td>
+</tr>
+<tr>
+<td><strong>EDA and IP licence costs</strong><br><em>Project economics · Concept · Whole flow</em></td>
+<td>Fees for design software seats and licensed blocks, often multi-year subscriptions plus per-chip IP royalties.</td>
+<td>A start-up budgets for simulator, synthesis and P&amp;R licences plus PCIe and CPU IP fees.</td>
+</tr>
+<tr>
+<td><strong>Gross dies per wafer</strong><br><em>Manufacturing economics · Concept · Fabrication</em></td>
+<td>Approximation: π(d/2)²/A − πd/√(2A) for wafer diameter d and die area A, accounting for edge loss.</td>
+<td>A 300 mm wafer with 100 mm² dies gives about 707 − 67 ≈ 640 gross dies before yield.</td>
+</tr>
+<tr>
+<td><strong>Packaging and test cost</strong><br><em>Manufacturing economics · Concept · Packaging &amp; Test</em></td>
+<td>Per-unit cost of assembly, tester time and burn-in; for advanced multi-die packages it can exceed the silicon cost.</td>
+<td>A simple QFN costs cents per unit, while a large AI package with HBM costs far more.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="113-scaling-nodes-and-why-chips-keep-getting-better">1.13 Scaling, Nodes and Why Chips Keep Getting Better<a class="headerlink" href="#113-scaling-nodes-and-why-chips-keep-getting-better" title="Permanent link">&para;</a></h2>
+<p>For decades, each new manufacturing generation (node) made transistors smaller, faster and cheaper. Today scaling is harder and more expensive, so progress also comes from new transistor shapes (FinFET, gate-all-around), new ways of delivering power (backside power), and stacking or combining many smaller chips (chiplets and 3D packaging).</p>
+<figure class="fig fig-diagram">
+<img src="img/01-13-scaling-nodes-and-why-chips-keep.svg" alt="Progress now comes from new transistor shapes, lithography and power delivery, not just shrinking." loading="lazy" width="1000" height="200">
+<figcaption><strong>Milestones in transistor scaling.</strong> Progress now comes from new transistor shapes, lithography and power delivery, not just shrinking.</figcaption>
+</figure>
+
+<div class="admonition note">
+<p class="admonition-title">Think of it like…</p>
+<p>When you cannot fit more houses on a street by making them smaller, you start building upwards and putting the plumbing underground.</p>
+</div>
+<div class="admonition example">
+<p class="admonition-title">Real-world example</p>
+<p>A smartphone SoC moved from 7 nm to 5 nm to 3 nm over five years. Each step gave roughly 10-20 % more speed or 20-30 % less power, plus more transistors per square millimetre. But each step also raised wafer cost, so the company kept its Wi-Fi and power-management chips on cheaper 12-28 nm processes.</p>
+</div>
+<h4 id="how-it-works_12">How it works<a class="headerlink" href="#how-it-works_12" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Planar transistors scaled until about 28-20 nm.</li>
+<li>FinFETs (3D fin-shaped channels) dominated from about 22/16 nm to 3 nm.</li>
+<li>Gate-all-around nanosheets arrived with Samsung's 3 nm and at 2 nm-class nodes (TSMC N2, Intel 18A, Samsung SF2).</li>
+<li>Backside power delivery (Intel PowerVia, TSMC Super Power Rail in A16) moves power wires under the transistors.</li>
+<li>Chiplets and 3D stacking add capability without one giant die.</li>
+</ol>
+<div class="admonition info">
+<p class="admonition-title">Who uses it</p>
+<p>Architects choose nodes; foundry, process and packaging engineers drive scaling; every designer feels its effects on rules and tools.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Key takeaway</p>
+<p>Leading-edge isn't always best: most chips by volume are made on mature nodes (28 nm and above) because they are cheaper and good enough.</p>
+</div>
+<div class="admonition abstract">
+<p class="admonition-title">Going deeper</p>
+<ul>
+<li>Dennard scaling ended around 2005: supply voltage stopped falling, so clock frequency stalled and gains came from parallelism, specialisation and better transistors instead.</li>
+<li>A new node now typically brings roughly 10-15 % more speed at equal power or 20-30 % less power at equal speed, plus a density gain — far less than the near doubling of earlier eras.</li>
+<li>Lithography drives scaling: 193 nm immersion DUV with multi-patterning reached 7 nm, EUV at 13.5 nm entered volume production in 2019, and High-NA EUV targets nodes beyond 2 nm.</li>
+<li>Logic, SRAM, analog and I/O scale at different rates, so chiplet designs put compute on the newest node and I/O, analog or extra cache on cheaper processes.</li>
+<li>Node choice is an economic decision: design cost, mask cost, wafer price and IP availability all rise steeply at each leading-edge node.</li>
+</ul>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Common mistakes &amp; misconceptions</p>
+<ul>
+<li>Comparing node names across foundries directly: Intel 18A, TSMC N2 and Samsung SF2 differ in real density and performance.</li>
+<li>Assuming the newest node suits every chip: analog, high-voltage and cost-sensitive designs often do better on 28-180 nm.</li>
+<li>Thinking scaling is only about transistors: wires, SRAM, power delivery and packaging now limit gains as much as devices.</li>
+</ul>
+</div>
+<h4 id="key-concepts-tools-formats-standards-companies_12">Key concepts, tools, formats, standards &amp; companies<a class="headerlink" href="#key-concepts-tools-formats-standards-companies_12" title="Permanent link">&para;</a></h4>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it does</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Process node</strong><br><em>Foundry naming · Concept · Fabrication</em></td>
+<td>A named generation of manufacturing technology with its own rules, devices and performance.</td>
+<td>TSMC N3, Samsung SF2, Intel 18A and GF 22FDX are process nodes.</td>
+</tr>
+<tr>
+<td><strong>Planar transistor</strong><br><em>Classic MOSFET structure · Concept · Fabrication</em></td>
+<td>A flat transistor where the gate sits on top of the channel; used until about 20-28 nm.</td>
+<td>Most 28 nm and older chips, including many microcontrollers, use planar transistors.</td>
+</tr>
+<tr>
+<td><strong>FinFET</strong><br><em>First in volume: Intel 22 nm (2011) · Concept · Fabrication</em></td>
+<td>A transistor whose channel is a raised fin wrapped by the gate on three sides for better control.</td>
+<td>Phone chips from about 2015 to 2024 used FinFETs at 16 nm down to 3 nm.</td>
+</tr>
+<tr>
+<td><strong>Gate-all-around (GAA) / nanosheet</strong><br><em>Samsung MBCFET (3 nm, 2022), TSMC N2, Intel RibbonFET (18A) · Concept · Fabrication</em></td>
+<td>Transistors with stacked horizontal sheets fully surrounded by the gate, reducing leakage further.</td>
+<td>TSMC N2 entered volume production in late 2025 using nanosheet transistors.</td>
+</tr>
+<tr>
+<td><strong>Backside power delivery</strong><br><em>Intel PowerVia (18A); TSMC Super Power Rail (A16) · Concept · Fabrication</em></td>
+<td>Routing power wires on the back of the wafer, freeing front metal for signals and cutting IR drop.</td>
+<td>Intel's 18A Panther Lake processors are the first high-volume products with backside power.</td>
+</tr>
+<tr>
+<td><strong>FD-SOI</strong><br><em>STMicroelectronics, GlobalFoundries (22FDX), Samsung · Concept · Fabrication</em></td>
+<td>Planar transistors on a thin insulating layer, offering low leakage and body-bias tuning at lower cost.</td>
+<td>IoT and automotive radar chips use 22 nm FD-SOI for low power.</td>
+</tr>
+<tr>
+<td><strong>Transistor density (MTr/mm²)</strong><br><em>Industry metric · Concept</em></td>
+<td>Millions of transistors per square millimetre, a rough way to compare nodes.</td>
+<td>Leading 3 nm-class logic exceeds 200 million transistors per square millimetre in dense blocks.</td>
+</tr>
+<tr>
+<td><strong>Mature node</strong><br><em>Industry term · Concept</em></td>
+<td>An older, cheaper and well-characterised process, typically 28 nm and above.</td>
+<td>Power-management chips, sensors and car microcontrollers often use 40-180 nm.</td>
+</tr>
+<tr>
+<td><strong>More than Moore</strong><br><em>ITRS/IRDS roadmap term · Concept</em></td>
+<td>Adding value through integration of sensors, RF, power and packaging rather than shrinking transistors.</td>
+<td>An MEMS microphone with on-package signal processing is a More-than-Moore product.</td>
+</tr>
+<tr>
+<td><strong>IRDS (International Roadmap for Devices and Systems)</strong><br><em>IEEE (successor to ITRS) · Resource</em></td>
+<td>Industry roadmap forecasting devices, lithography and packaging needs for the next 15 years.</td>
+<td>Students read IRDS chapters to understand when new transistor types are expected.</td>
+</tr>
+<tr>
+<td><strong>Interconnect scaling problem</strong><br><em>Device and BEOL scaling · Concept</em></td>
+<td>Thinner wires grow more resistive each node, so wire delay and IR drop increasingly limit performance.</td>
+<td>Designers promote critical nets to thicker upper metal layers because lower layers are too resistive.</td>
+</tr>
+<tr>
+<td><strong>SRAM scaling slowdown</strong><br><em>Industry trend · Concept · Fabrication</em></td>
+<td>SRAM bit cells have shrunk far less than logic at recent nodes, so caches take a growing share of die area.</td>
+<td>TSMC's N3E high-density SRAM cell is about the same 0.021 µm² as N5's.</td>
+</tr>
+<tr>
+<td><strong>Cost per transistor</strong><br><em>Manufacturing economics · Concept</em></td>
+<td>For decades each node cut cost per transistor; since roughly 28 nm the savings have shrunk and are debated.</td>
+<td>A company keeps its IoT chip on 22 nm because moving to 5 nm would raise cost per useful function.</td>
+</tr>
+<tr>
+<td><strong>Ångström-era node names</strong><br><em>Foundry naming · Concept · Fabrication</em></td>
+<td>Below 2 nm, foundries label nodes in ångströms (0.1 nm), such as Intel 18A, Intel 14A and TSMC A16.</td>
+<td>Intel 18A is marketed as an 18-ångström (1.8 nm-class) node, though no feature measures 1.8 nm.</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="how-to-read-this-guide.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: How to read this guide">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                How to read this guide
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="specification-architecture-rtl-design.html" class="md-footer__link md-footer__link--next" aria-label="Next: 2. Specification, Architecture &amp; RTL Design">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                2. Specification, Architecture & RTL Design
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

@@ -1,0 +1,1384 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/cyber/randomness_testing/nist-sp-800-22-i-balance-runs-and-spectra.html">
+  
+  
+    <link rel="prev" href="distributions-corrections-and-entropy.html">
+  
+  
+    <link rel="next" href="nist-sp-800-22-ii-patterns-complexity-and-walks.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>3. NIST SP 800-22 (I): Balance, Runs and Spectra - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#31-the-nist-sp-800-22-battery" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              3. NIST SP 800-22 (I): Balance, Runs and Spectra
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Randomness Testing</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="random-numbers-and-the-coin-flip-model.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Random Numbers and the Coin-Flip Model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="distributions-corrections-and-entropy.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Distributions, Corrections and Entropy
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. NIST SP 800-22 (I): Balance, Runs and Spectra
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="nist-sp-800-22-i-balance-runs-and-spectra.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. NIST SP 800-22 (I): Balance, Runs and Spectra
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#31-the-nist-sp-800-22-battery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 The NIST SP 800-22 battery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-frequency-monobit-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Frequency (monobit) test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-frequency-test-within-a-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Frequency test within a block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-runs-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Runs test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-longest-run-of-ones-in-a-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Longest run of ones in a block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-binary-matrix-rank-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Binary matrix rank test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#37-discrete-fourier-transform-spectral-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Discrete Fourier transform (spectral) test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#38-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#39-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="nist-sp-800-22-ii-patterns-complexity-and-walks.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. NIST SP 800-22 (II): Patterns, Complexity and Walks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="estimating-entropy-nist-sp-800-90b.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Estimating Entropy: NIST SP 800-90B
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="diehard-and-dieharder.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Diehard and Dieharder
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="fips-140-2-and-bsi-ais-31.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. FIPS 140-2 and BSI AIS 31
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ent-testu01-and-practrand.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. ENT, TestU01 and PractRand
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="comparing-the-batteries.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Comparing the Batteries
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-i-bias-entropy-correlation-and-compression.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Additional Tests (I): Bias, Entropy, Correlation and Compression
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-ii-source-behaviour-and-health.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Additional Tests (II): Source Behaviour and Health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iii-spectral-ordinal-matrix-and-betting-tes.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Additional Tests (III): Spectral, Ordinal, Matrix and Betting Tests
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="additional-tests-iv-collisions-memory-and-learning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Additional Tests (IV): Collisions, Memory and Learning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="recognising-generators-and-classifying-sources.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Recognising Generators and Classifying Sources
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#31-the-nist-sp-800-22-battery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 The NIST SP 800-22 battery
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#32-frequency-monobit-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 Frequency (monobit) test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#33-frequency-test-within-a-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 Frequency test within a block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#34-runs-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 Runs test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#35-longest-run-of-ones-in-a-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 Longest run of ones in a block
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#36-binary-matrix-rank-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 Binary matrix rank test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#37-discrete-fourier-transform-spectral-test" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.7 Discrete Fourier transform (spectral) test
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#38-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.8 Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#39-exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.9 Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-3-nist-sp-800-22-i-balance-runs-and-spectra">Chapter 3: NIST SP 800-22 (I): Balance, Runs and Spectra<a class="headerlink" href="#chapter-3-nist-sp-800-22-i-balance-runs-and-spectra" title="Permanent link">&para;</a></h1>
+<p>NIST SP 800-22 is the best-known set of statistical tests for random and pseudo-random bit generators. It has fifteen tests, each of which turns a bit string into a p-value. This chapter covers the first six: the three counting tests (frequency, block frequency and runs), the longest-run test, the binary matrix rank test and the discrete Fourier transform test. They look at balance, local drift, oscillation, clustering, linear dependence between rows and hidden periodicity. The chapter after this one completes the suite.</p>
+<h2 id="31-the-nist-sp-800-22-battery">3.1 The NIST SP 800-22 battery<a class="headerlink" href="#31-the-nist-sp-800-22-battery" title="Permanent link">&para;</a></h2>
+<p>Before we trust a random number generator, we want to know it has no obvious flaw. That is what the batteries in Chapters 3 to 8 are for: each one is a collection of experiments that good random data should survive, each tuned to catch a different kind of flaw. Keep one sentence in mind throughout. Passing means "no defect found", never "quantum". A well-built pseudorandom generator passes most of these batteries, so a pass cannot tell you where the numbers came from. We lean on Chapters 1 and 2 for p-values, the chi-square and normal distributions, and the functions erfc and igamc, and we will not explain those again.</p>
+<p>This suite comes from the US National Institute of Standards and Technology (Rukhin and colleagues, revised by Bassham, April 2010). It was written to test random and pseudorandom bit generators for cryptographic use, and it has 15 tests. Most need sequences of about <span class="arithmatex">\(10^6\)</span> bits: the document says its reference distributions assume lengths of order <span class="arithmatex">\(10^3\)</span> to <span class="arithmatex">\(10^7\)</span> bits. You run many sequences, with the sample size on the order of <span class="arithmatex">\(1/\alpha\)</span>, so at least 1000 sequences at <span class="arithmatex">\(\alpha = 0.001\)</span>. Each test gives a p-value per sequence, compared with a significance level <span class="arithmatex">\(\alpha\)</span> that NIST recommends keeping between 0.001 and 0.01. The results are then read at a second level across all sequences, which has its own section at the end. The document itself warns that no finite set of tests can be called complete. The worked examples below use the document's own strings, and they are deliberately too short for the real tests.</p>
+<h2 id="32-frequency-monobit-test">3.2 Frequency (monobit) test<a class="headerlink" href="#32-frequency-monobit-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Toss a fair coin many times and you expect about half heads. This test counts ones and zeros and asks whether the gap between them is bigger than chance allows. NIST recommends running it first, because almost nothing else matters if it fails.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 3.2: Frequency (monobit) test</p>
+<p>Take the string 1011010101. Turning ones into <span class="arithmatex">\(+1\)</span> and zeros into <span class="arithmatex">\(-1\)</span> and adding gives <span class="arithmatex">\(S_{10} = 2\)</span>, so <span class="arithmatex">\(s_{obs} = 2/\sqrt{10} = 0.632456\)</span> and the p-value is 0.527089. The standard's 100-bit example gives <span class="arithmatex">\(S_{100} = -16\)</span>, <span class="arithmatex">\(s_{obs} = 1.6\)</span> and p-value 0.109599.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[S_n = \sum_{i=1}^{n} (2\varepsilon_i - 1), \qquad s_{obs} = \frac{\lvert S_n \rvert}{\sqrt{n}}, \qquad p = \mathrm{erfc}\!\left(\frac{s_{obs}}{\sqrt{2}}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(\varepsilon_i\)</span> is bit <span class="arithmatex">\(i\)</span>, and <span class="arithmatex">\(n\)</span> is the number of bits (at least 100 is recommended).</li>
+<li><span class="arithmatex">\(S_n\)</span> is the running total of the <span class="arithmatex">\(\pm 1\)</span> values.</li>
+<li>For large <span class="arithmatex">\(n\)</span>, <span class="arithmatex">\(s_{obs}\)</span> follows a half normal distribution (a normal value with its sign dropped), which gives the erfc form.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches plain bias, such as a stuck or lopsided source. It knows nothing about order: 0101 0101 repeated forever has <span class="arithmatex">\(S_n = 0\)</span> and scores a perfect p-value of 1.</p>
+<h2 id="33-frequency-test-within-a-block">3.3 Frequency test within a block<a class="headerlink" href="#33-frequency-test-within-a-block" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> A coin could be fair overall yet run hot for a while and then cold. So we cut the sequence into blocks and check the share of ones in each, the way a teacher might check each class rather than just the school average.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 3.3: Frequency test within a block</p>
+<p>With 0110011010 and block size <span class="arithmatex">\(M = 3\)</span> we get blocks 011, 001, 101 and drop the final bit. The shares of ones are <span class="arithmatex">\(2/3\)</span>, <span class="arithmatex">\(1/3\)</span>, <span class="arithmatex">\(2/3\)</span>, so <span class="arithmatex">\(\chi^2 = 4 \cdot 3 \cdot (1/36 + 1/36 + 1/36) = 1\)</span> and <span class="arithmatex">\(p = \mathrm{igamc}(3/2, 1/2) = 0.801252\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\pi_i = \frac{1}{M} \sum_{j=1}^{M} \varepsilon_{(i-1)M+j}, \qquad \chi^2 = 4M \sum_{i=1}^{N} \left(\pi_i - \tfrac{1}{2}\right)^2, \qquad p = \mathrm{igamc}\!\left(\frac{N}{2}, \frac{\chi^2}{2}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(M\)</span> is the block length and <span class="arithmatex">\(N = \lfloor n/M \rfloor\)</span> is the number of blocks.</li>
+<li><span class="arithmatex">\(\pi_i\)</span> is the share of ones in block <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(\chi^2\)</span> follows a chi-square distribution with <span class="arithmatex">\(N\)</span> degrees of freedom.</li>
+</ul>
+<p>The document asks for <span class="arithmatex">\(M \ge 20\)</span>, <span class="arithmatex">\(M &gt; 0.01n\)</span> and <span class="arithmatex">\(N &lt; 100\)</span>.</p>
+<p><strong>What it catches and misses.</strong> It catches local drift that cancels out overall, such as a long stretch of ones followed by a long stretch of zeros, which monobit would pass. It ignores the order inside each block.</p>
+<h2 id="34-runs-test">3.4 Runs test<a class="headerlink" href="#34-runs-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> A run is an unbroken stretch of the same bit. A sequence can have the right number of ones yet flip too often (0101...) or too rarely (long slabs). Think of a walker's zigzag: this test counts the turns.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 3.4: Runs test</p>
+<p>The string 1001101011 has <span class="arithmatex">\(\pi = 3/5\)</span> and splits into 1, 00, 11, 0, 1, 0, 11, so <span class="arithmatex">\(V_{10} = 7\)</span>. The formula gives <span class="arithmatex">\(p = 0.147232\)</span>. The 100-bit example has <span class="arithmatex">\(\pi = 0.42\)</span>, <span class="arithmatex">\(V = 52\)</span> and <span class="arithmatex">\(p = 0.500798\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[V_n = 1 + \sum_{k=1}^{n-1} r(k), \qquad p = \mathrm{erfc}\!\left(\frac{\lvert V_n - 2n\pi(1-\pi) \rvert}{2\sqrt{2n}\,\pi(1-\pi)}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(r(k) = 0\)</span> if <span class="arithmatex">\(\varepsilon_k = \varepsilon_{k+1}\)</span>, and <span class="arithmatex">\(1\)</span> otherwise.</li>
+<li><span class="arithmatex">\(\pi\)</span> is the proportion of ones.</li>
+<li>As a prerequisite, if <span class="arithmatex">\(\lvert \pi - 1/2 \rvert \ge 2/\sqrt{n}\)</span> the test is not applicable and the p-value is set to 0.</li>
+</ul>
+<p><strong>What it catches and misses.</strong> It catches oscillation that is too fast or too slow. The standard's example is 100 ones, 73 zeros, 127 ones: only 3 runs where about 150 are expected. It looks only at the total number of runs, not at how they are arranged or how long each one is.</p>
+<p>Try both tests on sequences of your own. Type bits, pick an example, or generate a sequence with a bias or a tendency to repeat the last bit, and read off the statistics and p-values. The last button repeats the experiment 200 times and draws the histogram of p-values.</p>
+<figure class="fig fig-viz" data-viz-title="Frequency and runs test playground" data-viz-height="680">
+<div class="viz-box" style="--viz-h:680px">
+<a class="viz-src" href="viz/runs/index.html" hidden tabindex="-1" aria-hidden="true">Frequency and runs test playground</a>
+<div class="viz-card"><div class="viz-card-body"><span class="viz-meta"><span class="viz-kind">Interactive figure</span><span class="viz-name">Frequency and runs test playground</span><span class="viz-note" aria-live="polite"></span></span><button type="button" class="viz-play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z"/></svg><span>Play</span></button></div></div>
+</div>
+<figcaption><strong>Try it.</strong> The frequency test reacts to bias, the runs test to bits that stick together or flip too often. A fair source fails each test about one time in a hundred.</figcaption>
+</figure>
+
+<h2 id="35-longest-run-of-ones-in-a-block">3.5 Longest run of ones in a block<a class="headerlink" href="#35-longest-run-of-ones-in-a-block" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> In a long string of coin tosses, the longest streak of heads has a predictable size. A generator that clusters its ones will produce streaks that are too long. We check the longest streak in each block, so one lucky streak cannot decide the result.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 3.5: Longest run of ones in a block</p>
+<p>The 128-bit example with <span class="arithmatex">\(M = 8\)</span> gives 16 blocks. Their longest runs are 2, 1, 2, 2, 3, 1, 2, 1, 2, 2, 1, 3, 2, 3, 2, 2, so the class counts are <span class="arithmatex">\(v = (4, 9, 3, 0)\)</span>. That gives <span class="arithmatex">\(\chi^2 = 4.882605\)</span> and <span class="arithmatex">\(p = \mathrm{igamc}(3/2, 2.441303) = 0.180598\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\chi^2 = \sum_{i=0}^{K} \frac{(v_i - N\pi_i)^2}{N\pi_i}, \qquad p = \mathrm{igamc}\!\left(\frac{K}{2}, \frac{\chi^2}{2}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(v_i\)</span> counts the blocks whose longest run falls in class <span class="arithmatex">\(i\)</span>.</li>
+<li><span class="arithmatex">\(N\)</span> is the number of blocks and <span class="arithmatex">\(\pi_i\)</span> is the class probability from the table.</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Minimum <span class="arithmatex">\(n\)</span></th>
+<th><span class="arithmatex">\(M\)</span></th>
+<th><span class="arithmatex">\(K\)</span></th>
+<th><span class="arithmatex">\(N\)</span></th>
+<th>Longest-run classes</th>
+<th><span class="arithmatex">\(\pi_i\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>128</td>
+<td>8</td>
+<td>3</td>
+<td>16</td>
+<td>at most 1; 2; 3; at least 4</td>
+<td>0.2148, 0.3672, 0.2305, 0.1875</td>
+</tr>
+<tr>
+<td>6272</td>
+<td>128</td>
+<td>5</td>
+<td>49</td>
+<td>at most 4; 5; 6; 7; 8; at least 9</td>
+<td>0.1174, 0.2430, 0.2493, 0.1752, 0.1027, 0.1124</td>
+</tr>
+<tr>
+<td>750,000</td>
+<td><span class="arithmatex">\(10^4\)</span></td>
+<td>6</td>
+<td>75</td>
+<td>at most 10; 11; 12; 13; 14; 15; at least 16</td>
+<td>0.0882, 0.2092, 0.2483, 0.1933, 0.1208, 0.0675, 0.0727</td>
+</tr>
+</tbody>
+</table>
+<p><strong>What it catches and misses.</strong> It catches clusters of ones, and the document argues that testing ones is enough because an irregular run of ones implies irregular runs of zeros. It says little about structure that keeps streak lengths normal, such as a well-mixed linear generator.</p>
+<h2 id="36-binary-matrix-rank-test">3.6 Binary matrix rank test<a class="headerlink" href="#36-binary-matrix-rank-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> Write the bits into a square grid. If some rows can be built by adding other rows together (with 1 + 1 = 0), the grid has low rank. Random grids almost never fall far below full rank, while some generators do so again and again. It is like checking whether a team's answers are genuinely independent or just copied combinations.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 3.6: Binary matrix rank test</p>
+<p>The string 01011001001010101101 with <span class="arithmatex">\(M = Q = 3\)</span> gives two grids, 010/110/010 with rank 2 and 010/101/011 with rank 3, and the last two bits are dropped. Using the standard's probabilities, <span class="arithmatex">\(\chi^2 = 0.596953\)</span> and <span class="arithmatex">\(p = e^{-0.596953/2} = 0.741948\)</span>.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[\chi^2 = \frac{(F_M - 0.2888N)^2}{0.2888N} + \frac{(F_{M-1} - 0.5776N)^2}{0.5776N} + \frac{(N - F_M - F_{M-1} - 0.1336N)^2}{0.1336N}, \qquad p = e^{-\chi^2/2}\]</div>
+<div class="arithmatex">\[p_r = 2^{r(Q+M-r)-MQ} \prod_{i=0}^{r-1} \frac{(1-2^{i-Q})(1-2^{i-M})}{1-2^{i-r}}\]</div>
+<ul>
+<li><span class="arithmatex">\(M\)</span> and <span class="arithmatex">\(Q\)</span> are rows and columns, both 32 in the suite, and <span class="arithmatex">\(N = \lfloor n/(MQ) \rfloor\)</span> is the number of grids.</li>
+<li><span class="arithmatex">\(F_M\)</span> and <span class="arithmatex">\(F_{M-1}\)</span> count the grids with full rank and with one less than full rank.</li>
+<li><span class="arithmatex">\(p_r\)</span> is the probability of rank <span class="arithmatex">\(r\)</span>, and rank is taken over <span class="arithmatex">\(GF(2)\)</span>, the two-element field: arithmetic on bits where 1 + 1 = 0.</li>
+</ul>
+<p>The sequence needs at least <span class="arithmatex">\(38MQ\)</span> bits, which is 38,912 bits at <span class="arithmatex">\(M = Q = 32\)</span>.</p>
+<p><strong>What it catches and misses.</strong> It catches linear dependence between successive words, as the document notes for shift-register generators built from fewer vectors than the matrix size. It cannot see linear structure spread over more than the grid holds: a recurrence with a state of many thousands of bits looks fine in 32 by 32 grids.</p>
+<h2 id="37-discrete-fourier-transform-spectral-test">3.7 Discrete Fourier transform (spectral) test<a class="headerlink" href="#37-discrete-fourier-transform-spectral-test" title="Permanent link">&para;</a></h2>
+<p><strong>The idea in plain words.</strong> A hidden rhythm in the data shows up as a tall spike in its frequency spectrum, just as a repeating note stands out when you analyse a sound. Under randomness, about 95 percent of the spectral peaks should stay below a known height. We count how many do.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 3.7: Discrete Fourier transform (spectral) test</p>
+<p>Take 1001010011, so <span class="arithmatex">\(n = 10\)</span>. The threshold is <span class="arithmatex">\(T = \sqrt{10\ln 20} = 5.473\)</span>, and <span class="arithmatex">\(N_0 = 4.75\)</span>. The first five magnitudes are 0, 2, 4.472, 2, 4.472, all below <span class="arithmatex">\(T\)</span>, so <span class="arithmatex">\(N_1 = 5\)</span>. That gives <span class="arithmatex">\(d = 0.725476\)</span> and <span class="arithmatex">\(p = 0.468160\)</span>. The document prints <span class="arithmatex">\(N_1 = 4\)</span> and <span class="arithmatex">\(p = 0.029523\)</span> for this example, and we could not reproduce that count from its own steps.</p>
+</div>
+<p><strong>The mathematics.</strong></p>
+<div class="arithmatex">\[T = \sqrt{n \ln \frac{1}{0.05}}, \qquad N_0 = \frac{0.95\,n}{2}, \qquad d = \frac{N_1 - N_0}{\sqrt{n(0.95)(0.05)/4}}, \qquad p = \mathrm{erfc}\!\left(\frac{\lvert d \rvert}{\sqrt{2}}\right)\]</div>
+<ul>
+<li><span class="arithmatex">\(x_i = 2\varepsilon_i - 1\)</span>, and <span class="arithmatex">\(S\)</span> is the discrete Fourier transform of <span class="arithmatex">\(x\)</span>.</li>
+<li><span class="arithmatex">\(N_1\)</span> is the number of the first <span class="arithmatex">\(n/2\)</span> values of <span class="arithmatex">\(\lvert S \rvert\)</span> that fall below <span class="arithmatex">\(T\)</span>.</li>
+<li><span class="arithmatex">\(N_0\)</span> is the number expected, and <span class="arithmatex">\(d\)</span> is compared with a normal distribution.</li>
+</ul>
+<p>At least 1000 bits are recommended.</p>
+<p><strong>What it catches and misses.</strong> It catches repeating patterns placed close together. It reads only one count (how many peaks clear a line), so a single huge peak barely moves the result, and structure that is not periodic goes unnoticed.</p>
+<figure class="fig fig-diagram">
+<img src="img/fig_3_1_spectral_test.png" alt="Spectra of 1024 bits. Random bits keep about 95 percent of the peaks below the threshold T; bits with a hidden period of 4 show a tall spike far above it." loading="lazy" width="1388" height="602">
+<figcaption><strong>Figure 3.1.</strong> Spectra of 1024 bits. Random bits keep about 95 percent of the peaks below the threshold T; bits with a hidden period of 4 show a tall spike far above it.</figcaption>
+</figure>
+
+<h2 id="38-summary">3.8 Summary<a class="headerlink" href="#38-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>SP 800-22 works on bit strings of about <span class="arithmatex">\(10^6\)</span> bits, run over many sequences, with each p-value compared against <span class="arithmatex">\(\alpha\)</span> between 0.001 and 0.01 and the results read again at a second level.</li>
+<li><strong>Frequency</strong> catches plain bias and knows nothing about order. <strong>Block frequency</strong> catches local drift that cancels overall. <strong>Runs</strong> catches oscillation that is too fast or too slow.</li>
+<li><strong>Longest run of ones in a block</strong> catches clustering. <strong>Binary matrix rank</strong> catches linear dependence between successive words, but only within the size of its grid. The <strong>spectral test</strong> catches hidden periodicity close to the sampling interval.</li>
+<li>Every test has a blind spot: the monobit test passes 0101..., the rank test cannot see a long recurrence, and the spectral test reads only one count of peaks.</li>
+</ul>
+<h2 id="39-exercises">3.9 Exercises<a class="headerlink" href="#39-exercises" title="Permanent link">&para;</a></h2>
+<ol>
+<li>
+<p>Apply the frequency (monobit) test to the 12-bit string 110111011010. Give <span class="arithmatex">\(S_n\)</span>, <span class="arithmatex">\(s_{obs}\)</span> and the p-value.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>There are 8 ones and 4 zeros, so <span class="arithmatex">\(S_{12}=8-4=4\)</span> and <span class="arithmatex">\(s_{obs}=4/\sqrt{12}=1.1547\)</span>. Then <span class="arithmatex">\(p=\mathrm{erfc}(1.1547/\sqrt2)=0.248\)</span>. The string passes (as with all the worked examples, it is far too short for the test to be meaningful).</p>
+</details>
+</li>
+<li>
+<p>Apply the runs test to 1100011101. First check the prerequisite, then find <span class="arithmatex">\(V_n\)</span> and the p-value.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The proportion of ones is <span class="arithmatex">\(\pi=6/10=0.6\)</span>. The prerequisite needs <span class="arithmatex">\(|\pi-1/2|&lt;2/\sqrt n=0.632\)</span>, and <span class="arithmatex">\(0.1&lt;0.632\)</span>, so the test applies. The runs are 11, 000, 111, 0, 1, so <span class="arithmatex">\(V_{10}=5\)</span>. Then <span class="arithmatex">\(p=\mathrm{erfc}\big(|5-2\cdot10\cdot0.6\cdot0.4|/(2\sqrt{20}\cdot0.6\cdot0.4)\big)=\mathrm{erfc}(0.0932)=0.895\)</span>.</p>
+</details>
+</li>
+<li>
+<p>Apply the frequency test within a block to 011010110010 with block size <span class="arithmatex">\(M=4\)</span>. Find <span class="arithmatex">\(\chi^2\)</span> and <span class="arithmatex">\(p\)</span>.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The blocks are 0110, 1011 and 0010, with shares of ones 0.5, 0.75 and 0.25. So <span class="arithmatex">\(\chi^2=4M\sum(\pi_i-\tfrac12)^2=16\times(0+0.0625+0.0625)=2.0\)</span>, with <span class="arithmatex">\(N=3\)</span> blocks. Then <span class="arithmatex">\(p=\mathrm{igamc}(3/2,1)=0.572\)</span>.</p>
+</details>
+</li>
+<li>
+<p>Why does the sequence 0101 repeated forever score a perfect p-value of 1 on the monobit test but fail the runs test?</p>
+<details class="note">
+<summary>Answer</summary>
+<p>Half of its bits are ones, so <span class="arithmatex">\(S_n=0\)</span> and the monobit p-value is 1. But it alternates at every position, so it has the maximum possible number of runs, far more than the roughly <span class="arithmatex">\(n/2\)</span> that a fair source gives. The runs test measures oscillation, so it fails the sequence.</p>
+</details>
+</li>
+<li>
+<p>A generator is a shift register whose state is many thousands of bits long. Explain why the binary matrix rank test with 32 by 32 grids is unlikely to catch it.</p>
+<details class="note">
+<summary>Answer</summary>
+<p>The rank test looks for linear dependence among at most 32 rows of 32 bits, which is a structure of up to 1024 bits. A recurrence whose state is many thousands of bits long spreads its dependence over far more bits than any grid holds, so every 32 by 32 grid looks like a random grid. Linear structure larger than the grid is invisible to this test.</p>
+</details>
+</li>
+</ol>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="distributions-corrections-and-entropy.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 2. Distributions, Corrections and Entropy">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                2. Distributions, Corrections and Entropy
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="nist-sp-800-22-ii-patterns-complexity-and-walks.html" class="md-footer__link md-footer__link--next" aria-label="Next: 4. NIST SP 800-22 (II): Patterns, Complexity and Walks">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                4. NIST SP 800-22 (II): Patterns, Complexity and Walks
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

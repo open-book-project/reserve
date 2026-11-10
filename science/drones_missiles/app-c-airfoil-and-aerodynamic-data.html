@@ -1,0 +1,3903 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/science/drones_missiles/app-c-airfoil-and-aerodynamic-data.html">
+  
+  
+    <link rel="prev" href="app-b-propellant-properties-database.html">
+  
+  
+    <link rel="next" href="app-d-glossary-of-terms-and-acronyms.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>Appendix C. Airfoil and Aerodynamic Data - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#app-aero" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Appendix C. Airfoil and Aerodynamic Data
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">Drones and Missiles</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch01-introduction-to-unmanned-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. Introduction to Unmanned Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch02-drone-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Drone Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch03-aerodynamics-for-uavs.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Aerodynamics for UAVs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch04-drone-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Drone Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch05-drone-propulsion-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Drone Propulsion Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch06-drone-power-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Drone Power Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch07-avionics-and-flight-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Avionics and Flight Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch08-communication-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Communication Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch09-payloads-and-sensors.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Payloads and Sensors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch10-software-autonomy-and-artificial-intelligence.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Software, Autonomy and Artificial Intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch11-swarm-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. Swarm Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch12-ground-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Ground Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch13-drone-manufacturing-and-materials.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. Drone Manufacturing and Materials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch14-testing-certification-and-regulation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Testing, Certification and Regulation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch15-special-drone-categories.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Special Drone Categories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch16-introduction-to-missiles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Introduction to Missiles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch17-missile-classification-and-types.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Missile Classification and Types
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch18-missile-aerodynamics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Missile Aerodynamics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch19-missile-propulsion.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Missile Propulsion
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch20-guidance-navigation-and-control.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Guidance, Navigation and Control
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch21-seeker-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Seeker Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch22-warheads-and-effects.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Warheads and Effects
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch23-fuzing-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Fuzing Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch24-missile-airframe-and-structures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Missile Airframe and Structures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch25-flight-control-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Flight Control Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch26-missile-electronics-and-power.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Missile Electronics and Power
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch27-launch-systems-and-integration.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Launch Systems and Integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch28-missile-manufacturing.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Missile Manufacturing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch29-missile-testing-and-evaluation.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Missile Testing and Evaluation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch30-hypersonic-vehicles.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. Hypersonic Vehicles
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch31-electronic-warfare-and-countermeasures.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Electronic Warfare and Countermeasures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch32-directed-energy-weapons.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Directed Energy Weapons
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch33-counter-uas-and-counter-drone-systems.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. Counter-UAS and Counter-Drone Systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch34-autonomous-lethal-systems-and-ethics.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. Autonomous Lethal Systems and Ethics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="ch35-future-technologies.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. Future Technologies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-a-mathematical-foundations.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix A. Mathematical Foundations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-b-propellant-properties-database.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix B. Propellant Properties Database
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="app-c-airfoil-and-aerodynamic-data.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix C. Airfoil and Aerodynamic Data
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.1 Airfoil and Aerodynamic Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-naca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2 NACA Airfoil Geometry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.2 NACA Airfoil Geometry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c21-naca-4-digit-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.1 NACA 4-Digit Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c22-naca-5-digit-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.2 NACA 5-Digit Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c23-naca-6-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.3 NACA 6-Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c24-profile-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.4 Profile Summary Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-perf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.3 Airfoil Performance Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.3 Airfoil Performance Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c31-performance-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.3.1 Performance Summary Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4 Wing Aerodynamic Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.4 Wing Aerodynamic Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c41-aspect-ratio-effect-on-lift-curve-slope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.1 Aspect Ratio Effect on Lift Curve Slope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c42-oswald-efficiency-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.2 Oswald Efficiency Factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c43-wing-tip-shapes-and-induced-drag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.3 Wing Tip Shapes and Induced Drag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c44-delta-wing-aerodynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.4 Delta Wing Aerodynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c45-common-uav-wing-configuration-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.5 Common UAV Wing Configuration Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5 International Standard Atmosphere
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.5 International Standard Atmosphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c51-isa-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.1 ISA Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c52-isa-table-080-km" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.2 ISA Table: 0–80 km
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c53-density-altitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.3 Density Altitude
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c54-non-standard-atmospheres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.4 Non-Standard Atmospheres
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-drag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6 Drag Coefficient Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.6 Drag Coefficient Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c61-basic-shape-drag-coefficients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.1 Basic Shape Drag Coefficients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c62-skin-friction-coefficients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.2 Skin Friction Coefficients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c63-interference-drag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.3 Interference Drag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c64-uav-component-drag-buildup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.4 UAV Component Drag Buildup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-derivs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.7 Aerodynamic Derivative Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.7 Aerodynamic Derivative Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c71-stability-derivatives-missiledrone-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.7.1 Stability Derivatives (Missile/Drone Body)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix D. Glossary of Terms and Acronyms
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="app-e-international-standards-and-specifications.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Appendix E. International Standards and Specifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="bibliography.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.1 Airfoil and Aerodynamic Data
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-naca" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2 NACA Airfoil Geometry
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.2 NACA Airfoil Geometry">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c21-naca-4-digit-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.1 NACA 4-Digit Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c22-naca-5-digit-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.2 NACA 5-Digit Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c23-naca-6-series" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.3 NACA 6-Series
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c24-profile-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.2.4 Profile Summary Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-perf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.3 Airfoil Performance Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.3 Airfoil Performance Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c31-performance-summary-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.3.1 Performance Summary Table
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-wing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4 Wing Aerodynamic Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.4 Wing Aerodynamic Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c41-aspect-ratio-effect-on-lift-curve-slope" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.1 Aspect Ratio Effect on Lift Curve Slope
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c42-oswald-efficiency-factor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.2 Oswald Efficiency Factor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c43-wing-tip-shapes-and-induced-drag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.3 Wing Tip Shapes and Induced Drag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c44-delta-wing-aerodynamics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.4 Delta Wing Aerodynamics
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c45-common-uav-wing-configuration-data" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.4.5 Common UAV Wing Configuration Data
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-isa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5 International Standard Atmosphere
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.5 International Standard Atmosphere">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c51-isa-equations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.1 ISA Equations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c52-isa-table-080-km" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.2 ISA Table: 0–80 km
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c53-density-altitude" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.3 Density Altitude
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c54-non-standard-atmospheres" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.5.4 Non-Standard Atmospheres
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-drag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6 Drag Coefficient Data
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.6 Drag Coefficient Data">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c61-basic-shape-drag-coefficients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.1 Basic Shape Drag Coefficients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c62-skin-friction-coefficients" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.2 Skin Friction Coefficients
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c63-interference-drag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.3 Interference Drag
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#c64-uav-component-drag-buildup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.6.4 UAV Component Drag Buildup
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#app-aero-derivs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.7 Aerodynamic Derivative Reference
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="C.7 Aerodynamic Derivative Reference">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#c71-stability-derivatives-missiledrone-body" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        C.7.1 Stability Derivatives (Missile/Drone Body)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="ap-airfoil">Appendix C: Airfoil and Aerodynamic Data<a class="headerlink" href="#ap-airfoil" title="Permanent link">&para;</a></h1>
+<h2 id="app-aero"><span class="secnum">C.1</span> Airfoil and Aerodynamic Data<a class="headerlink" href="#app-aero" title="Permanent link">&para;</a></h2>
+<p>This appendix provides geometric definitions, performance tables, and atmospheric reference data essential for the aerodynamic design of drone airframes, missile fins, and control surfaces. Airfoil data are taken from the UIUC Airfoil Database, NACA Technical Reports 824 (Abbott &amp; Von Doenhoff), NASA TM-4741, and Xfoil/MSES computational results where experimental data are unavailable at the Reynolds numbers of interest.</p>
+<h2 id="app-aero-naca"><span class="secnum">C.2</span> NACA Airfoil Geometry<a class="headerlink" href="#app-aero-naca" title="Permanent link">&para;</a></h2>
+<h3 id="c21-naca-4-digit-series"><span class="secnum">C.2.1</span> NACA 4-Digit Series<a class="headerlink" href="#c21-naca-4-digit-series" title="Permanent link">&para;</a></h3>
+<p>A NACA 4-digit designation <em>MPXX</em> encodes: <span class="arithmatex">\(M\)</span> = maximum camber (tenths of chord), <span class="arithmatex">\(P\)</span> = position of maximum camber (tenths of chord), <span class="arithmatex">\(XX\)</span> = maximum thickness (percent of chord). Examples: NACA 2412 (<span class="arithmatex">\(m=0.02\)</span>, <span class="arithmatex">\(p=0.4\)</span>, <span class="arithmatex">\(t=0.12\)</span>), NACA 0012 (symmetric), NACA 4415.</p>
+<p><strong>Mean camber line:</strong> <span id="eq-camber_front"></span><span id="eq-camber_rear"></span></p>
+<div class="arithmatex">\[\begin{align*}
+\frac{y_c}{c} &amp;= \frac{m}{p^2}\left(2p\,\frac{x}{c} - \left(\frac{x}{c}\right)^2\right)
+\quad 0 \leq x \leq pc \\
+\frac{y_c}{c} &amp;= \frac{m}{(1-p)^2}\left[(1-2p) + 2p\,\frac{x}{c} - \left(\frac{x}{c}\right)^2\right]
+\quad pc \leq x \leq c
+\end{align*}\]</div>
+<p><strong>Thickness distribution</strong> (NACA 4- and 5-digit): <span id="eq-thickness"></span></p>
+<div class="arithmatex">\[\frac{y_t}{c} = \frac{t}{0.2}\left[0.2969\sqrt{\frac{x}{c}}
+- 0.1260\frac{x}{c}
+- 0.3516\left(\frac{x}{c}\right)^2
++ 0.2843\left(\frac{x}{c}\right)^3
+- 0.1015\left(\frac{x}{c}\right)^4\right]\tag{C.3}\]</div>
+<p>This gives an open trailing edge (<span class="arithmatex">\(y_t \neq 0\)</span> at <span class="arithmatex">\(x/c = 1\)</span>). For a closed trailing edge, replace the last coefficient <span class="arithmatex">\(-0.1015\)</span> with <span class="arithmatex">\(-0.1036\)</span>.</p>
+<p>Upper and lower surface coordinates:</p>
+<div class="arithmatex">\[\begin{align*}
+X_U &amp;= \frac{x}{c} - \frac{y_t}{c}\sin\theta, &amp;
+Y_U &amp;= \frac{y_c}{c} + \frac{y_t}{c}\cos\theta \\
+X_L &amp;= \frac{x}{c} + \frac{y_t}{c}\sin\theta, &amp;
+Y_L &amp;= \frac{y_c}{c} - \frac{y_t}{c}\cos\theta
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(\theta = \arctan(dy_c/dx)\)</span>.</p>
+<h3 id="c22-naca-5-digit-series"><span class="secnum">C.2.2</span> NACA 5-Digit Series<a class="headerlink" href="#c22-naca-5-digit-series" title="Permanent link">&para;</a></h3>
+<p>The 5-digit series uses a modified camber line to shift the position of maximum camber forward (improving <span class="arithmatex">\(C_{L,\text{max}}\)</span>). Designation <em>LCPXX</em>: <span class="arithmatex">\(L = 3C_{L,\text{design}}/2\)</span>, <span class="arithmatex">\(P\)</span> = position of max camber (<span class="arithmatex">\(\times\)</span>20), <span class="arithmatex">\(XX\)</span> = thickness. The reflexed variants (digit 2 in second position, e.g. 23112) give near-zero <span class="arithmatex">\(C_{m,\text{ac}}\)</span>.</p>
+<p>Camber line (<span class="arithmatex">\(0 \leq x \leq pc\)</span>):</p>
+<div class="arithmatex">\[\frac{y_c}{c} = \frac{k_1}{6}\left[\left(\frac{x}{c}\right)^3 - 3p\left(\frac{x}{c}\right)^2 + p^2(3-p)\frac{x}{c}\right]\]</div>
+<p>(<span class="arithmatex">\(x \geq pc\)</span>): <span class="arithmatex">\(\frac{y_c}{c} = \frac{k_1 p^3}{6}\left(1 - \frac{x}{c}\right)\)</span></p>
+<p>Values of <span class="arithmatex">\(k_1\)</span> and <span class="arithmatex">\(p\)</span> for standard 5-digit profiles are tabulated in NACA TR-537.</p>
+<h3 id="c23-naca-6-series"><span class="secnum">C.2.3</span> NACA 6-Series<a class="headerlink" href="#c23-naca-6-series" title="Permanent link">&para;</a></h3>
+<p>The 6-series (e.g. NACA 63<span class="arithmatex">\(_2\)</span>-215) was designed for minimum drag over a specific <span class="arithmatex">\(C_L\)</span> range (the “bucket”). The mean line is defined through a loading parameter <span class="arithmatex">\(a\)</span> (fraction of chord over which the design load is uniform). For <span class="arithmatex">\(a = 1.0\)</span> (uniform loading):</p>
+<div class="arithmatex">\[\frac{y_c}{c}\bigg|_{a=1} = -\frac{C_{L,i}}{2\pi}\left[\left(1-\frac{x}{c}\right)\ln\left(1-\frac{x}{c}\right) + \frac{x}{c}\ln\frac{x}{c}\right]\]</div>
+<p>For <span class="arithmatex">\(a &lt; 1\)</span> (loading concentrated forward):</p>
+<div class="arithmatex">\[\frac{y_c}{c} = \frac{C_{L,i}}{2\pi(1+a)}\left[(x/c - a)\ln|x/c - a| - (x/c)\ln(x/c) + \tfrac{1}{4}(1+2a-2x/c)\ln(1-x/c) + g + h\,x/c\right]\]</div>
+<p>where <span class="arithmatex">\(g\)</span> and <span class="arithmatex">\(h\)</span> are constants ensuring <span class="arithmatex">\(y_c(0) = y_c(1) = 0\)</span>. The thickness form of the 6-series is a separate tabulated distribution (NACA TR-824, Appendix II).</p>
+<h3 id="c24-profile-summary-table"><span class="secnum">C.2.4</span> Profile Summary Table<a class="headerlink" href="#c24-profile-summary-table" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-naca_profiles">
+<div class="tbl-caption"><strong>Table C.1.</strong> NACA profile geometry summary. <span class="math inline">\(t/c\)</span> = max thickness ratio; <span class="math inline">\(m/c\)</span> = max camber ratio; <span class="math inline">\(x_m/c\)</span> = chordwise position of max camber; <span class="math inline">\(C_{L,d}\)</span> = design lift coefficient.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Profile</th>
+<th style="text-align: center;"><span class="math inline">\(t/c\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(m/c\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_m/c\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(C_{L,d}\)</span></th>
+<th style="text-align: center;">TE angle (°)</th>
+<th style="text-align: left;">Typical application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NACA 0006</td>
+<td style="text-align: center;">0.06</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">2.7</td>
+<td style="text-align: left;">Fin, knife-edge control surface</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 0009</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">3.0</td>
+<td style="text-align: left;">Symmetric, low-drag fin</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 0012</td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">4.2</td>
+<td style="text-align: left;">Symmetric, helicopter tail rotor</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 0015</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">5.1</td>
+<td style="text-align: left;">Symmetric, thick rudder</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 2412</td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">0.02</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">0.24</td>
+<td style="text-align: center;">4.2</td>
+<td style="text-align: left;">Light GA; drone main wing</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 4412</td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">4.2</td>
+<td style="text-align: left;">Moderate camber; LSA</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 6412</td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">0.06</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">0.60</td>
+<td style="text-align: center;">4.2</td>
+<td style="text-align: left;">High camber; low-speed drone</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 23012</td>
+<td style="text-align: center;">0.12</td>
+<td style="text-align: center;">0.021</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.30</td>
+<td style="text-align: center;">4.2</td>
+<td style="text-align: left;">High <span class="math inline">\(C_{L,\max}\)</span>; Cessna heritage</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 23015</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.021</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.30</td>
+<td style="text-align: center;">5.1</td>
+<td style="text-align: left;">Thicker variant</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 4415</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.4</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">5.1</td>
+<td style="text-align: left;">Trainer wings; tractor UAV</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 63-215</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.02</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Low-speed laminar; sailplane</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 63<span class="math inline">\(_2\)</span>-215</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.022</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">0.20</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Extended laminar bucket</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 63-415</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">NREL wind turbine; drone wing</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 64-415</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Good at <span class="math inline">\(Re&gt;10^6\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 65-415</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.45</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Broad laminar bucket</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 66-415</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Most forward bucket</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 747A315</td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.03</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0.30</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Boeing 747 wing root</td>
+</tr>
+<tr>
+<td style="text-align: left;">E387</td>
+<td style="text-align: center;">0.092</td>
+<td style="text-align: center;">0.034</td>
+<td style="text-align: center;">0.39</td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Model aircraft; Re 100k–500k</td>
+</tr>
+<tr>
+<td style="text-align: left;">S1223</td>
+<td style="text-align: center;">0.122</td>
+<td style="text-align: center;">0.086</td>
+<td style="text-align: center;">0.48</td>
+<td style="text-align: center;">1.88</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">High-lift low-Re UAV flap wing</td>
+</tr>
+<tr>
+<td style="text-align: left;">SD7037</td>
+<td style="text-align: center;">0.092</td>
+<td style="text-align: center;">0.022</td>
+<td style="text-align: center;">0.35</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: left;">Sailplane, clean laminar UAV</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="app-aero-perf"><span class="secnum">C.3</span> Airfoil Performance Data<a class="headerlink" href="#app-aero-perf" title="Permanent link">&para;</a></h2>
+<h3 id="c31-performance-summary-table"><span class="secnum">C.3.1</span> Performance Summary Table<a class="headerlink" href="#c31-performance-summary-table" title="Permanent link">&para;</a></h3>
+<p>Data below are at Reynolds numbers noted. For NACA profiles at <span class="arithmatex">\(Re = 3 \times 10^6\)</span> (unless noted) from Abbott &amp; Von Doenhoff (1959). UAV-range data (<span class="arithmatex">\(Re &lt; 5\times10^5\)</span>) from UIUC measurements and Xfoil computations (<span class="arithmatex">\(N_{\text{crit}} = 9\)</span>). <span class="arithmatex">\(\alpha_{\text{stall}}\)</span> is the angle of attack for maximum lift; <span class="arithmatex">\((L/D)_{\text{max}}\)</span> is the maximum lift-to-drag ratio; <span class="arithmatex">\(C_{m,\text{ac}}\)</span> is the pitching moment coefficient about the aerodynamic centre; <span class="arithmatex">\(x_{\text{ac}}\)</span> is the aerodynamic centre as fraction of chord.</p>
+<div class="tbl" id="tab-airfoil_perf">
+<div class="tbl-caption"><strong>Table C.2.</strong> Airfoil aerodynamic performance database</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Profile</th>
+<th style="text-align: center;"><span class="math inline">\(Re\)</span> (<span class="math inline">\(\times10^3\)</span>)</th>
+<th style="text-align: center;"><span class="math inline">\(C_{L,\max}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\alpha_{\text{stall}}\)</span> (°)</th>
+<th style="text-align: center;"><span class="math inline">\((L/D)_{\max}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(C_{m,\text{ac}}\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(x_{\text{ac}}/c\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NACA 0006</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: center;">9.0</td>
+<td style="text-align: center;">88</td>
+<td style="text-align: center;"><span class="math inline">\(0.000\)</span></td>
+<td style="text-align: center;">0.250</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 0009</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: center;">11.5</td>
+<td style="text-align: center;">68</td>
+<td style="text-align: center;"><span class="math inline">\(0.000\)</span></td>
+<td style="text-align: center;">0.250</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 0012</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.52</td>
+<td style="text-align: center;">16.2</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;"><span class="math inline">\(0.000\)</span></td>
+<td style="text-align: center;">0.251</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 0012</td>
+<td style="text-align: center;">200</td>
+<td style="text-align: center;">1.05</td>
+<td style="text-align: center;">12.5</td>
+<td style="text-align: center;">35</td>
+<td style="text-align: center;"><span class="math inline">\(0.000\)</span></td>
+<td style="text-align: center;">0.252</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 2412</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.67</td>
+<td style="text-align: center;">16.0</td>
+<td style="text-align: center;">57</td>
+<td style="text-align: center;"><span class="math inline">\(-0.047\)</span></td>
+<td style="text-align: center;">0.247</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 4412</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.82</td>
+<td style="text-align: center;">16.5</td>
+<td style="text-align: center;">59</td>
+<td style="text-align: center;"><span class="math inline">\(-0.093\)</span></td>
+<td style="text-align: center;">0.244</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 6412</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.90</td>
+<td style="text-align: center;">15.5</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;"><span class="math inline">\(-0.140\)</span></td>
+<td style="text-align: center;">0.243</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 4412</td>
+<td style="text-align: center;">300</td>
+<td style="text-align: center;">1.50</td>
+<td style="text-align: center;">14.0</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;"><span class="math inline">\(-0.091\)</span></td>
+<td style="text-align: center;">0.243</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 23012</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.80</td>
+<td style="text-align: center;">18.0</td>
+<td style="text-align: center;">57</td>
+<td style="text-align: center;"><span class="math inline">\(-0.013\)</span></td>
+<td style="text-align: center;">0.241</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 23012</td>
+<td style="text-align: center;">500</td>
+<td style="text-align: center;">1.65</td>
+<td style="text-align: center;">16.5</td>
+<td style="text-align: center;">46</td>
+<td style="text-align: center;"><span class="math inline">\(-0.012\)</span></td>
+<td style="text-align: center;">0.241</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 63-415</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.62</td>
+<td style="text-align: center;">14.5</td>
+<td style="text-align: center;">82</td>
+<td style="text-align: center;"><span class="math inline">\(-0.075\)</span></td>
+<td style="text-align: center;">0.255</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 64-415</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.58</td>
+<td style="text-align: center;">14.0</td>
+<td style="text-align: center;">88</td>
+<td style="text-align: center;"><span class="math inline">\(-0.073\)</span></td>
+<td style="text-align: center;">0.255</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 65-415</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.60</td>
+<td style="text-align: center;">15.0</td>
+<td style="text-align: center;">90</td>
+<td style="text-align: center;"><span class="math inline">\(-0.070\)</span></td>
+<td style="text-align: center;">0.255</td>
+</tr>
+<tr>
+<td style="text-align: left;">NACA 66-415</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.55</td>
+<td style="text-align: center;">14.5</td>
+<td style="text-align: center;">87</td>
+<td style="text-align: center;"><span class="math inline">\(-0.069\)</span></td>
+<td style="text-align: center;">0.255</td>
+</tr>
+<tr>
+<td style="text-align: left;">E387</td>
+<td style="text-align: center;">300</td>
+<td style="text-align: center;">1.21</td>
+<td style="text-align: center;">13.5</td>
+<td style="text-align: center;">52</td>
+<td style="text-align: center;"><span class="math inline">\(-0.076\)</span></td>
+<td style="text-align: center;">0.272</td>
+</tr>
+<tr>
+<td style="text-align: left;">E387</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">0.97</td>
+<td style="text-align: center;">10.0</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;"><span class="math inline">\(-0.075\)</span></td>
+<td style="text-align: center;">0.270</td>
+</tr>
+<tr>
+<td style="text-align: left;">S1223</td>
+<td style="text-align: center;">200</td>
+<td style="text-align: center;">2.20</td>
+<td style="text-align: center;">11.5</td>
+<td style="text-align: center;">65</td>
+<td style="text-align: center;"><span class="math inline">\(-0.290\)</span></td>
+<td style="text-align: center;">0.260</td>
+</tr>
+<tr>
+<td style="text-align: left;">S1223</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">1.88</td>
+<td style="text-align: center;">9.0</td>
+<td style="text-align: center;">48</td>
+<td style="text-align: center;"><span class="math inline">\(-0.285\)</span></td>
+<td style="text-align: center;">0.258</td>
+</tr>
+<tr>
+<td style="text-align: left;">SD7037</td>
+<td style="text-align: center;">200</td>
+<td style="text-align: center;">1.20</td>
+<td style="text-align: center;">13.0</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;"><span class="math inline">\(-0.048\)</span></td>
+<td style="text-align: center;">0.253</td>
+</tr>
+<tr>
+<td style="text-align: left;">SD7037</td>
+<td style="text-align: center;">100</td>
+<td style="text-align: center;">0.98</td>
+<td style="text-align: center;">10.5</td>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;"><span class="math inline">\(-0.047\)</span></td>
+<td style="text-align: center;">0.252</td>
+</tr>
+<tr>
+<td style="text-align: left;">FX63-137</td>
+<td style="text-align: center;">300</td>
+<td style="text-align: center;">1.85</td>
+<td style="text-align: center;">15.0</td>
+<td style="text-align: center;">68</td>
+<td style="text-align: center;"><span class="math inline">\(-0.192\)</span></td>
+<td style="text-align: center;">0.265</td>
+</tr>
+<tr>
+<td style="text-align: left;">MH60</td>
+<td style="text-align: center;">150</td>
+<td style="text-align: center;">1.43</td>
+<td style="text-align: center;">12.0</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;"><span class="math inline">\(-0.090\)</span></td>
+<td style="text-align: center;">0.258</td>
+</tr>
+<tr>
+<td style="text-align: left;">RG15</td>
+<td style="text-align: center;">200</td>
+<td style="text-align: center;">1.18</td>
+<td style="text-align: center;">12.5</td>
+<td style="text-align: center;">62</td>
+<td style="text-align: center;"><span class="math inline">\(-0.058\)</span></td>
+<td style="text-align: center;">0.249</td>
+</tr>
+<tr>
+<td style="text-align: left;">HS522</td>
+<td style="text-align: center;">500</td>
+<td style="text-align: center;">1.68</td>
+<td style="text-align: center;">14.5</td>
+<td style="text-align: center;">72</td>
+<td style="text-align: center;"><span class="math inline">\(-0.115\)</span></td>
+<td style="text-align: center;">0.250</td>
+</tr>
+<tr>
+<td style="text-align: left;">Clark Y</td>
+<td style="text-align: center;">3000</td>
+<td style="text-align: center;">1.55</td>
+<td style="text-align: center;">14.5</td>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;"><span class="math inline">\(-0.083\)</span></td>
+<td style="text-align: center;">0.255</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p><strong>Notes on Reynolds number effects.</strong> The UAV design range <span class="arithmatex">\(Re = 5\times10^4\)</span>–<span class="arithmatex">\(5\times10^5\)</span> is characterised by:</p>
+<ul>
+<li>
+<p>Laminar separation bubbles (LSB) that increase effective drag and reduce <span class="arithmatex">\(C_{L,\max}\)</span>; hysteresis in stall behaviour.</p>
+</li>
+<li>
+<p><span class="arithmatex">\((L/D)_{\max}\)</span> may be 20–40% lower than the <span class="arithmatex">\(Re = 3\times10^6\)</span> value.</p>
+</li>
+<li>
+<p>Thinner profiles (<span class="arithmatex">\(t/c = 8\)</span>–<span class="arithmatex">\(10\)</span>%) and moderate camber (<span class="arithmatex">\(m/c = 3\)</span>–<span class="arithmatex">\(5\)</span>%) often outperform thick cambered sections at low <span class="arithmatex">\(Re\)</span>.</p>
+</li>
+<li>
+<p>Tripping the boundary layer with a zigzag strip at <span class="arithmatex">\(x/c \approx 0.1\)</span>–<span class="arithmatex">\(0.2\)</span> can eliminate LSB hysteresis and stabilise <span class="arithmatex">\(C_{L,\max}\)</span>.</p>
+</li>
+</ul>
+<h2 id="app-aero-wing"><span class="secnum">C.4</span> Wing Aerodynamic Data<a class="headerlink" href="#app-aero-wing" title="Permanent link">&para;</a></h2>
+<h3 id="c41-aspect-ratio-effect-on-lift-curve-slope"><span class="secnum">C.4.1</span> Aspect Ratio Effect on Lift Curve Slope<a class="headerlink" href="#c41-aspect-ratio-effect-on-lift-curve-slope" title="Permanent link">&para;</a></h3>
+<p><strong>Prandtl lifting-line theory</strong> (large AR straight wing): <span id="eq-prandtl_cla"></span></p>
+<div class="arithmatex">\[C_{L\alpha} = \frac{a_0}{1 + a_0/(\pi\,AR)}\tag{C.9}\]</div>
+<p>where <span class="arithmatex">\(a_0 = 2\pi\)</span> per radian (thin airfoil) or the section value (from experiment).</p>
+<p><strong>Helmbold formula</strong> (moderate to low AR, incompressible): <span id="eq-helmbold"></span></p>
+<div class="arithmatex">\[C_{L\alpha} = \frac{2\pi\,AR}{\sqrt{AR^2 + 4} + 2}\tag{C.10}\]</div>
+<p>Valid for <span class="arithmatex">\(AR &lt; 4\)</span>; more accurate than Prandtl for AR <span class="arithmatex">\(\leq 6\)</span>.</p>
+<p><strong>Diederich formula</strong> (includes sweep and compressibility, <span class="arithmatex">\(M &lt; 0.8\)</span>): <span id="eq-diederich"></span></p>
+<div class="arithmatex">\[C_{L\alpha} = \frac{2\pi AR}{2 + \sqrt{4 + AR^2\beta^2(1 + \tan^2\Lambda_{c/2}/\beta^2)}}\tag{C.11}\]</div>
+<p>where <span class="arithmatex">\(\beta = \sqrt{1-M^2}\)</span>, <span class="arithmatex">\(\Lambda_{c/2}\)</span> = sweep of half-chord line.</p>
+<p><strong>DATCOM method</strong> (full subsonic wing):</p>
+<div class="arithmatex">\[C_{L\alpha} = \frac{2\pi AR}{2 + \sqrt{4 + AR^2/\eta^2(1+\tan^2\Lambda_{t})} }
+\quad \cdot \frac{S_{\text{exposed}}}{S_{\text{ref}}} \cdot \frac{F}{0.9}\]</div>
+<p>where <span class="arithmatex">\(\eta = a_0/(2\pi)\)</span>, <span class="arithmatex">\(F\)</span> = body correction factor.</p>
+<h3 id="c42-oswald-efficiency-factor"><span class="secnum">C.4.2</span> Oswald Efficiency Factor<a class="headerlink" href="#c42-oswald-efficiency-factor" title="Permanent link">&para;</a></h3>
+<p>Induced drag: <span class="arithmatex">\(C_{D,i} = C_L^2/(\pi\,AR\,e)\)</span>. <span class="arithmatex">\(e \leq 1\)</span> for any real wing; <span class="arithmatex">\(e = 1\)</span> for elliptic planform (minimum induced drag).</p>
+<div class="tbl" id="tab-oswald">
+<div class="tbl-caption"><strong>Table C.3.</strong> Approximate Oswald efficiency factor <span class="math inline">\(e\)</span> vs. taper ratio <span class="math inline">\(\lambda\)</span> and quarter-chord sweep <span class="math inline">\(\Lambda_{c/4}\)</span>. AR = 8. From DATCOM and ESDU 76003.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><span class="math inline">\(\Lambda_{c/4}\)</span> (°)</th>
+<th style="text-align: center;"><span class="math inline">\(\lambda=0.3\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\lambda=0.4\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\lambda=0.5\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\lambda=0.6\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\lambda=0.8\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\lambda=1.0\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">0</td>
+<td style="text-align: center;">0.91</td>
+<td style="text-align: center;">0.94</td>
+<td style="text-align: center;">0.95</td>
+<td style="text-align: center;">0.94</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: center;">0.85</td>
+</tr>
+<tr>
+<td style="text-align: left;">10</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: center;">0.93</td>
+<td style="text-align: center;">0.94</td>
+<td style="text-align: center;">0.93</td>
+<td style="text-align: center;">0.88</td>
+<td style="text-align: center;">0.83</td>
+</tr>
+<tr>
+<td style="text-align: left;">20</td>
+<td style="text-align: center;">0.87</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: center;">0.91</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: center;">0.85</td>
+<td style="text-align: center;">0.80</td>
+</tr>
+<tr>
+<td style="text-align: left;">30</td>
+<td style="text-align: center;">0.83</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.87</td>
+<td style="text-align: center;">0.86</td>
+<td style="text-align: center;">0.81</td>
+<td style="text-align: center;">0.76</td>
+</tr>
+<tr>
+<td style="text-align: left;">40</td>
+<td style="text-align: center;">0.77</td>
+<td style="text-align: center;">0.80</td>
+<td style="text-align: center;">0.81</td>
+<td style="text-align: center;">0.80</td>
+<td style="text-align: center;">0.75</td>
+<td style="text-align: center;">0.70</td>
+</tr>
+<tr>
+<td style="text-align: left;">50</td>
+<td style="text-align: center;">0.68</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.72</td>
+<td style="text-align: center;">0.71</td>
+<td style="text-align: center;">0.66</td>
+<td style="text-align: center;">0.62</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="c43-wing-tip-shapes-and-induced-drag"><span class="secnum">C.4.3</span> Wing Tip Shapes and Induced Drag<a class="headerlink" href="#c43-wing-tip-shapes-and-induced-drag" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-tips">
+<div class="tbl-caption"><strong>Table C.4.</strong> Relative induced drag factor for various tip shapes (AR = 8, <span class="math inline">\(\lambda = 0.5\)</span>). <span class="math inline">\(k = 1/e\)</span>; values relative to round (reference) tip.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Tip shape</th>
+<th style="text-align: center;"><span class="math inline">\(e\)</span> (approx)</th>
+<th style="text-align: center;"><span class="math inline">\(\Delta C_{D,i}\)</span> change (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Square (blunt)</td>
+<td style="text-align: center;">0.88</td>
+<td style="text-align: center;"><span class="math inline">\(+8\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Round</td>
+<td style="text-align: center;">0.91</td>
+<td style="text-align: center;">Reference</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tapered (Hoerner)</td>
+<td style="text-align: center;">0.93</td>
+<td style="text-align: center;"><span class="math inline">\(-2\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Raked (<span class="math inline">\(15°\)</span> aft)</td>
+<td style="text-align: center;">0.94</td>
+<td style="text-align: center;"><span class="math inline">\(-3\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Winglet (cant <span class="math inline">\(75°\)</span>)</td>
+<td style="text-align: center;">0.97</td>
+<td style="text-align: center;"><span class="math inline">\(-6\)</span> to <span class="math inline">\(-8\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Spiroid/closed-loop</td>
+<td style="text-align: center;">0.99</td>
+<td style="text-align: center;"><span class="math inline">\(-8\)</span> to <span class="math inline">\(-12\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="c44-delta-wing-aerodynamics"><span class="secnum">C.4.4</span> Delta Wing Aerodynamics<a class="headerlink" href="#c44-delta-wing-aerodynamics" title="Permanent link">&para;</a></h3>
+<p>For a delta wing with leading-edge sweep <span class="arithmatex">\(\Lambda_{LE}\)</span>:</p>
+<p><strong>Attached flow</strong> (linearised theory, Polhamus leading-edge suction analogy): <span id="eq-polhamus"></span></p>
+<div class="arithmatex">\[C_L = K_P \sin\alpha\cos^2\alpha + K_V\cos\alpha\sin^2\alpha\tag{C.13}\]</div>
+<p>where <span class="arithmatex">\(K_P\)</span> (potential) and <span class="arithmatex">\(K_V\)</span> (vortex) are functions of AR and <span class="arithmatex">\(\Lambda_{LE}\)</span> (tabulated in NASA TN-D-3767).</p>
+<p>For slender delta (<span class="arithmatex">\(AR &lt; 2\)</span>) at moderate <span class="arithmatex">\(\alpha\)</span>: <span id="eq-delta_cl"></span></p>
+<div class="arithmatex">\[C_L \approx \frac{\pi\,AR}{2}\alpha + 2\pi\sin^2\alpha\cos\frac{\alpha}{2}\tag{C.14}\]</div>
+<p>Leading-edge vortex lifts off at <span class="arithmatex">\(\alpha &gt; 5°\)</span>–<span class="arithmatex">\(10°\)</span> and provides highly non-linear lift augmentation. Vortex breakdown at <span class="arithmatex">\(x_{\text{break}} / L_\Delta\)</span> limits usable <span class="arithmatex">\(\alpha\)</span>.</p>
+<h3 id="c45-common-uav-wing-configuration-data"><span class="secnum">C.4.5</span> Common UAV Wing Configuration Data<a class="headerlink" href="#c45-common-uav-wing-configuration-data" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-uav_wings">
+<div class="tbl-caption"><strong>Table C.5.</strong> Representative UAV and drone wing configurations. <span class="math inline">\(b\)</span> = span; <span class="math inline">\(\bar{c}\)</span> = mean chord; <span class="math inline">\(\lambda\)</span> = taper ratio; <span class="math inline">\(\Lambda_{c/4}\)</span> = quarter-chord sweep; <span class="math inline">\(e\)</span> = Oswald efficiency.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">UAV type/example</th>
+<th style="text-align: left;"><span class="math inline">\(b\)</span> (m)</th>
+<th style="text-align: center;">AR</th>
+<th style="text-align: center;"><span class="math inline">\(\lambda\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\Lambda_{c/4}\)</span> (°)</th>
+<th style="text-align: center;"><span class="math inline">\(e\)</span></th>
+<th style="text-align: center;">Airfoil</th>
+<th style="text-align: left;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fixed-wing micro (100 g)</td>
+<td style="text-align: left;">0.35</td>
+<td style="text-align: center;">5.5</td>
+<td style="text-align: center;">0.60</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.87</td>
+<td style="text-align: center;">MH60 / SD7037</td>
+<td style="text-align: left;">Re <span class="math inline">\(\approx\)</span> 40k</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hand-launched (1.5 kg)</td>
+<td style="text-align: left;">1.80</td>
+<td style="text-align: center;">8.2</td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.92</td>
+<td style="text-align: center;">E387 / RG15</td>
+<td style="text-align: left;">Re <span class="math inline">\(\approx\)</span> 150k</td>
+</tr>
+<tr>
+<td style="text-align: left;">MALE HALE-class (200 kg)</td>
+<td style="text-align: left;">15.0</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">0.40</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.94</td>
+<td style="text-align: center;">NACA 23012</td>
+<td style="text-align: left;">High AR glider</td>
+</tr>
+<tr>
+<td style="text-align: left;">High-altitude (5 kg)</td>
+<td style="text-align: left;">4.50</td>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">0.45</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">0.93</td>
+<td style="text-align: center;">S1223 / E387</td>
+<td style="text-align: left;">High-lift low-Re</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fixed-wing VTOL (3 kg)</td>
+<td style="text-align: left;">2.00</td>
+<td style="text-align: center;">7.5</td>
+<td style="text-align: center;">0.55</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: center;">NACA 4415</td>
+<td style="text-align: left;">Tractor</td>
+</tr>
+<tr>
+<td style="text-align: left;">Loitering munition (10 kg)</td>
+<td style="text-align: left;">2.80</td>
+<td style="text-align: center;">9.0</td>
+<td style="text-align: center;">0.48</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">0.89</td>
+<td style="text-align: center;">NACA 63-415</td>
+<td style="text-align: left;">Folded wing</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tactical cruise (200 kg)</td>
+<td style="text-align: left;">3.00</td>
+<td style="text-align: center;">4.5</td>
+<td style="text-align: center;">0.60</td>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">0.82</td>
+<td style="text-align: center;">64A-series</td>
+<td style="text-align: left;">Transonic</td>
+</tr>
+<tr>
+<td style="text-align: left;">Combat UCAV (large)</td>
+<td style="text-align: left;">14.0</td>
+<td style="text-align: center;">5.0</td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">0.74</td>
+<td style="text-align: center;">NACA 65-series</td>
+<td style="text-align: left;">Delta/cranked</td>
+</tr>
+<tr>
+<td style="text-align: left;">Blended-wing-body</td>
+<td style="text-align: left;">10.0</td>
+<td style="text-align: center;">6.8</td>
+<td style="text-align: center;">0.20</td>
+<td style="text-align: center;">35</td>
+<td style="text-align: center;">0.80</td>
+<td style="text-align: center;">Custom thick</td>
+<td style="text-align: left;">No separate tail</td>
+</tr>
+<tr>
+<td style="text-align: left;">Sailplane-class EW</td>
+<td style="text-align: left;">22.0</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">0.42</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0.95</td>
+<td style="text-align: center;">Wortmann FX</td>
+<td style="text-align: left;">Ultra-low drag</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="app-aero-isa"><span class="secnum">C.5</span> International Standard Atmosphere<a class="headerlink" href="#app-aero-isa" title="Permanent link">&para;</a></h2>
+<h3 id="c51-isa-equations"><span class="secnum">C.5.1</span> ISA Equations<a class="headerlink" href="#c51-isa-equations" title="Permanent link">&para;</a></h3>
+<p>The ISA (ICAO Doc 7488 / ISO 2533:1975) defines: <span id="eq-isa_trop"></span><span id="eq-isa_strat1"></span><span id="eq-isa_strat2"></span></p>
+<div class="arithmatex">\[\begin{align*}
+\text{Troposphere } (0\text{--}11\,\text{km}):&amp;\quad T = 288.15 - 6.5\,h \quad [\text{K}; h \text{ in km}] \\
+\text{Stratosphere I } (11\text{--}20\,\text{km}):&amp;\quad T = 216.65 \quad [\text{isothermal}] \\
+\text{Stratosphere II } (20\text{--}32\,\text{km}):&amp;\quad T = 216.65 + (h-20) \\
+\text{Mesosphere I } (32\text{--}47\,\text{km}):&amp;\quad T = 228.65 + 2.8(h-32)\\
+\text{Mesosphere II } (47\text{--}51\,\text{km}):&amp;\quad T = 270.65 \quad [\text{isothermal}]\\
+\text{Mesosphere III } (51\text{--}71\,\text{km}):&amp;\quad T = 270.65 - 2.8(h-51)\\
+\text{Thermosphere } (71\text{--}86\,\text{km}):&amp;\quad T = 214.65 - 2.0(h-71)
+\end{align*}\]</div>
+<p>Pressure (gradient layers): <span class="arithmatex">\(P = P_b\left(\frac{T}{T_b}\right)^{g_0 M_a/(R^* L)}\)</span>; isothermal layers: <span class="arithmatex">\(P = P_b\exp\!\left[\frac{-g_0 M_a}{R^*T}(h-h_b)\right]\)</span>.</p>
+<p>Density: <span class="arithmatex">\(\rho = P M_a / (R^* T)\)</span> where <span class="arithmatex">\(R^* = 8.31432\)</span> J/(mol·K), <span class="arithmatex">\(M_a = 0.0289644\)</span> kg/mol.</p>
+<p>Speed of sound: <span class="arithmatex">\(a = \sqrt{\gamma R T / M_a} = \sqrt{1.4 \times 287.05 \times T}\)</span>.</p>
+<p>Dynamic viscosity (Sutherland):</p>
+<div class="arithmatex">\[\mu = \mu_{\text{ref}}\left(\frac{T}{T_{\text{ref}}}\right)^{3/2}\frac{T_{\text{ref}} + S}{T + S}\]</div>
+<p><span class="arithmatex">\(\mu_{\text{ref}} = 1.716\times10^{-5}\)</span> Pa<span class="arithmatex">\(\cdot\)</span>s; <span class="arithmatex">\(T_{\text{ref}} = 273.15\)</span> K; <span class="arithmatex">\(S = 110.4\)</span> K.</p>
+<h3 id="c52-isa-table-080-km"><span class="secnum">C.5.2</span> ISA Table: 0–80 km<a class="headerlink" href="#c52-isa-table-080-km" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-isa">
+<div class="tbl-caption"><strong>Table C.6.</strong> International Standard Atmosphere. <span class="math inline">\(T\)</span> = temperature (K); <span class="math inline">\(P\)</span> = pressure (Pa); <span class="math inline">\(\rho\)</span> = density (kg/m<span class="math inline">\(^3\)</span>); <span class="math inline">\(a\)</span> = speed of sound (m/s); <span class="math inline">\(\mu\)</span> = dynamic viscosity (<span class="math inline">\(\times10^{-5}\)</span> Pa<span class="math inline">\(\cdot\)</span>s); <span class="math inline">\(\nu\)</span> = kinematic viscosity (<span class="math inline">\(\times10^{-5}\)</span> m<span class="math inline">\(^2\)</span>/s).</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: center;"><span class="math inline">\(h\)</span> (km)</th>
+<th style="text-align: center;"><span class="math inline">\(T\)</span> (K)</th>
+<th style="text-align: center;"><span class="math inline">\(P\)</span> (Pa)</th>
+<th style="text-align: center;"><span class="math inline">\(\rho\)</span> (kg/m<span class="math inline">\(^3\)</span>)</th>
+<th style="text-align: center;"><span class="math inline">\(a\)</span> (m/s)</th>
+<th style="text-align: center;"><span class="math inline">\(\mu\)</span> (<span class="math inline">\(\times10^{-5}\)</span>)</th>
+<th style="text-align: center;"><span class="math inline">\(\nu\)</span> (<span class="math inline">\(\times10^{-5}\)</span>)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">288.15</td>
+<td style="text-align: center;">101325</td>
+<td style="text-align: center;">1.2250</td>
+<td style="text-align: center;">340.29</td>
+<td style="text-align: center;">1.7894</td>
+<td style="text-align: center;">1.4607</td>
+</tr>
+<tr>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">281.65</td>
+<td style="text-align: center;">89876</td>
+<td style="text-align: center;">1.1117</td>
+<td style="text-align: center;">336.43</td>
+<td style="text-align: center;">1.7579</td>
+<td style="text-align: center;">1.5813</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">275.15</td>
+<td style="text-align: center;">79501</td>
+<td style="text-align: center;">1.0066</td>
+<td style="text-align: center;">332.53</td>
+<td style="text-align: center;">1.7260</td>
+<td style="text-align: center;">1.7147</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">268.66</td>
+<td style="text-align: center;">70121</td>
+<td style="text-align: center;">0.9093</td>
+<td style="text-align: center;">328.58</td>
+<td style="text-align: center;">1.6938</td>
+<td style="text-align: center;">1.8628</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td style="text-align: center;">262.17</td>
+<td style="text-align: center;">61660</td>
+<td style="text-align: center;">0.8194</td>
+<td style="text-align: center;">324.59</td>
+<td style="text-align: center;">1.6612</td>
+<td style="text-align: center;">2.0271</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">255.68</td>
+<td style="text-align: center;">54048</td>
+<td style="text-align: center;">0.7364</td>
+<td style="text-align: center;">320.55</td>
+<td style="text-align: center;">1.6282</td>
+<td style="text-align: center;">2.2110</td>
+</tr>
+<tr>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">249.19</td>
+<td style="text-align: center;">47217</td>
+<td style="text-align: center;">0.6601</td>
+<td style="text-align: center;">316.45</td>
+<td style="text-align: center;">1.5949</td>
+<td style="text-align: center;">2.4163</td>
+</tr>
+<tr>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">242.70</td>
+<td style="text-align: center;">41110</td>
+<td style="text-align: center;">0.5900</td>
+<td style="text-align: center;">312.31</td>
+<td style="text-align: center;">1.5612</td>
+<td style="text-align: center;">2.6462</td>
+</tr>
+<tr>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">236.22</td>
+<td style="text-align: center;">35652</td>
+<td style="text-align: center;">0.5258</td>
+<td style="text-align: center;">308.11</td>
+<td style="text-align: center;">1.5271</td>
+<td style="text-align: center;">2.9044</td>
+</tr>
+<tr>
+<td style="text-align: center;">9</td>
+<td style="text-align: center;">229.73</td>
+<td style="text-align: center;">30801</td>
+<td style="text-align: center;">0.4671</td>
+<td style="text-align: center;">303.85</td>
+<td style="text-align: center;">1.4926</td>
+<td style="text-align: center;">3.1957</td>
+</tr>
+<tr>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">223.25</td>
+<td style="text-align: center;">26500</td>
+<td style="text-align: center;">0.4135</td>
+<td style="text-align: center;">299.53</td>
+<td style="text-align: center;">1.4577</td>
+<td style="text-align: center;">3.5253</td>
+</tr>
+<tr>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">22632</td>
+<td style="text-align: center;">0.3639</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">3.9064</td>
+</tr>
+<tr>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">19330</td>
+<td style="text-align: center;">0.3108</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">4.5735</td>
+</tr>
+<tr>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">16510</td>
+<td style="text-align: center;">0.2655</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">5.3513</td>
+</tr>
+<tr>
+<td style="text-align: center;">14</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">14102</td>
+<td style="text-align: center;">0.2268</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">6.2680</td>
+</tr>
+<tr>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">12045</td>
+<td style="text-align: center;">0.1937</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">7.3376</td>
+</tr>
+<tr>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">10287</td>
+<td style="text-align: center;">0.1655</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">8.5906</td>
+</tr>
+<tr>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">8787</td>
+<td style="text-align: center;">0.1413</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">10.059</td>
+</tr>
+<tr>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">7505</td>
+<td style="text-align: center;">0.1207</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">11.777</td>
+</tr>
+<tr>
+<td style="text-align: center;">19</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">6410</td>
+<td style="text-align: center;">0.1032</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">13.782</td>
+</tr>
+<tr>
+<td style="text-align: center;">20</td>
+<td style="text-align: center;">216.65</td>
+<td style="text-align: center;">5475</td>
+<td style="text-align: center;">0.0882</td>
+<td style="text-align: center;">295.07</td>
+<td style="text-align: center;">1.4216</td>
+<td style="text-align: center;">16.121</td>
+</tr>
+<tr>
+<td style="text-align: center;">22</td>
+<td style="text-align: center;">218.57</td>
+<td style="text-align: center;">3996</td>
+<td style="text-align: center;">0.0637</td>
+<td style="text-align: center;">296.38</td>
+<td style="text-align: center;">1.4322</td>
+<td style="text-align: center;">22.484</td>
+</tr>
+<tr>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">220.56</td>
+<td style="text-align: center;">2972</td>
+<td style="text-align: center;">0.0469</td>
+<td style="text-align: center;">297.72</td>
+<td style="text-align: center;">1.4430</td>
+<td style="text-align: center;">30.768</td>
+</tr>
+<tr>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;">222.54</td>
+<td style="text-align: center;">2188</td>
+<td style="text-align: center;">0.0343</td>
+<td style="text-align: center;">299.06</td>
+<td style="text-align: center;">1.4538</td>
+<td style="text-align: center;">42.385</td>
+</tr>
+<tr>
+<td style="text-align: center;">28</td>
+<td style="text-align: center;">224.53</td>
+<td style="text-align: center;">1616</td>
+<td style="text-align: center;">0.0251</td>
+<td style="text-align: center;">300.39</td>
+<td style="text-align: center;">1.4645</td>
+<td style="text-align: center;">58.346</td>
+</tr>
+<tr>
+<td style="text-align: center;">30</td>
+<td style="text-align: center;">226.51</td>
+<td style="text-align: center;">1197</td>
+<td style="text-align: center;">0.0184</td>
+<td style="text-align: center;">301.71</td>
+<td style="text-align: center;">1.4753</td>
+<td style="text-align: center;">80.174</td>
+</tr>
+<tr>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">228.49</td>
+<td style="text-align: center;">889</td>
+<td style="text-align: center;">0.0136</td>
+<td style="text-align: center;">303.02</td>
+<td style="text-align: center;">1.4860</td>
+<td style="text-align: center;">109.27</td>
+</tr>
+<tr>
+<td style="text-align: center;">34</td>
+<td style="text-align: center;">233.74</td>
+<td style="text-align: center;">663</td>
+<td style="text-align: center;">0.00989</td>
+<td style="text-align: center;">306.49</td>
+<td style="text-align: center;">1.5200</td>
+<td style="text-align: center;">153.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">36</td>
+<td style="text-align: center;">239.28</td>
+<td style="text-align: center;">499</td>
+<td style="text-align: center;">0.00727</td>
+<td style="text-align: center;">310.10</td>
+<td style="text-align: center;">1.5554</td>
+<td style="text-align: center;">213.9</td>
+</tr>
+<tr>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">244.82</td>
+<td style="text-align: center;">377</td>
+<td style="text-align: center;">0.00536</td>
+<td style="text-align: center;">313.67</td>
+<td style="text-align: center;">1.5904</td>
+<td style="text-align: center;">296.7</td>
+</tr>
+<tr>
+<td style="text-align: center;">40</td>
+<td style="text-align: center;">250.35</td>
+<td style="text-align: center;">287</td>
+<td style="text-align: center;">0.00400</td>
+<td style="text-align: center;">317.19</td>
+<td style="text-align: center;">1.6247</td>
+<td style="text-align: center;">406.6</td>
+</tr>
+<tr>
+<td style="text-align: center;">45</td>
+<td style="text-align: center;">264.16</td>
+<td style="text-align: center;">149.1</td>
+<td style="text-align: center;">0.00196</td>
+<td style="text-align: center;">325.82</td>
+<td style="text-align: center;">1.7038</td>
+<td style="text-align: center;">868.4</td>
+</tr>
+<tr>
+<td style="text-align: center;">50</td>
+<td style="text-align: center;">270.65</td>
+<td style="text-align: center;">79.78</td>
+<td style="text-align: center;">0.00103</td>
+<td style="text-align: center;">329.80</td>
+<td style="text-align: center;">1.7457</td>
+<td style="text-align: center;">1696.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">55</td>
+<td style="text-align: center;">260.77</td>
+<td style="text-align: center;">42.52</td>
+<td style="text-align: center;">0.000568</td>
+<td style="text-align: center;">323.69</td>
+<td style="text-align: center;">1.6844</td>
+<td style="text-align: center;">2965.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">247.02</td>
+<td style="text-align: center;">21.96</td>
+<td style="text-align: center;">0.000310</td>
+<td style="text-align: center;">315.07</td>
+<td style="text-align: center;">1.5842</td>
+<td style="text-align: center;">5110.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">65</td>
+<td style="text-align: center;">233.29</td>
+<td style="text-align: center;">10.90</td>
+<td style="text-align: center;">0.000163</td>
+<td style="text-align: center;">306.20</td>
+<td style="text-align: center;">1.4823</td>
+<td style="text-align: center;">9093.0</td>
+</tr>
+<tr>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;">219.59</td>
+<td style="text-align: center;">5.221</td>
+<td style="text-align: center;">0.0000828</td>
+<td style="text-align: center;">297.06</td>
+<td style="text-align: center;">1.3786</td>
+<td style="text-align: center;">16650</td>
+</tr>
+<tr>
+<td style="text-align: center;">75</td>
+<td style="text-align: center;">208.40</td>
+<td style="text-align: center;">2.388</td>
+<td style="text-align: center;">0.0000399</td>
+<td style="text-align: center;">289.40</td>
+<td style="text-align: center;">1.2978</td>
+<td style="text-align: center;">32530</td>
+</tr>
+<tr>
+<td style="text-align: center;">80</td>
+<td style="text-align: center;">198.64</td>
+<td style="text-align: center;">1.052</td>
+<td style="text-align: center;">0.0000184</td>
+<td style="text-align: center;">282.54</td>
+<td style="text-align: center;">1.2218</td>
+<td style="text-align: center;">66430</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="c53-density-altitude"><span class="secnum">C.5.3</span> Density Altitude<a class="headerlink" href="#c53-density-altitude" title="Permanent link">&para;</a></h3>
+<p><strong>Definition:</strong> Density altitude <span class="arithmatex">\(h_d\)</span> is the altitude in the ISA at which the actual air density <span class="arithmatex">\(\rho\)</span> would exist. It accounts for non-standard temperature and humidity.</p>
+<p><strong>Calculation (ICAO):</strong> <span id="eq-density_alt"></span></p>
+<div class="arithmatex">\[h_d = \frac{T_0}{L}\left[1 - \left(\frac{\rho}{\rho_0}\right)^{R^* L / (g_0 M_a - R^* L)}\right]
+\approx h_{\text{pressure}} + \frac{T - T_{\text{ISA}}(h)}{L}\tag{C.23}\]</div>
+<p>where <span class="arithmatex">\(L = 0.0065\)</span> K/m (lapse rate), <span class="arithmatex">\(T_0 = 288.15\)</span> K, <span class="arithmatex">\(\rho_0 = 1.225\)</span> kg/m<span class="arithmatex">\(^3\)</span>.</p>
+<p><strong>Worked example:</strong> At an airfield at <span class="arithmatex">\(h = 1500\)</span> m ISA + 20°C: <span class="arithmatex">\(T_{\text{ISA}}(1500) = 288.15 - 6.5\times1.5 = 278.4\)</span> K. Actual <span class="arithmatex">\(T = 278.4 + 20 = 298.4\)</span> K. <span class="arithmatex">\(\rho = \frac{84559}{287.05 \times 298.4} = 0.987\)</span> kg/m<span class="arithmatex">\(^3\)</span>. Density altitude <span class="arithmatex">\(\approx 1500 + 20/0.0065 \approx 4577\)</span> m. This significantly reduces propeller thrust and lift, affecting takeoff distance.</p>
+<h3 id="c54-non-standard-atmospheres"><span class="secnum">C.5.4</span> Non-Standard Atmospheres<a class="headerlink" href="#c54-non-standard-atmospheres" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-nonstandard">
+<div class="tbl-caption"><strong>Table C.7.</strong> Non-standard atmosphere reference conditions at sea level. Source: MIL-STD-210C; NATO STANAG 2895.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Atmosphere</th>
+<th style="text-align: center;"><span class="math inline">\(T_{SL}\)</span> (°C)</th>
+<th style="text-align: center;"><span class="math inline">\(P_{SL}\)</span> (kPa)</th>
+<th style="text-align: center;"><span class="math inline">\(\rho_{SL}\)</span> (kg/m<span class="math inline">\(^3\)</span>)</th>
+<th style="text-align: center;">Application</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">ISA standard</td>
+<td style="text-align: center;"><span class="math inline">\(+15.0\)</span></td>
+<td style="text-align: center;">101.325</td>
+<td style="text-align: center;">1.2250</td>
+<td style="text-align: center;">Reference</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hot-high (desert)</td>
+<td style="text-align: center;"><span class="math inline">\(+49.0\)</span></td>
+<td style="text-align: center;">89.875</td>
+<td style="text-align: center;">1.034</td>
+<td style="text-align: center;">MIL-STD hot day</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cold arctic</td>
+<td style="text-align: center;"><span class="math inline">\(-57.0\)</span></td>
+<td style="text-align: center;">101.325</td>
+<td style="text-align: center;">1.484</td>
+<td style="text-align: center;">MIL-STD cold day</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tropical, humid</td>
+<td style="text-align: center;"><span class="math inline">\(+38.0\)</span></td>
+<td style="text-align: center;">101.325</td>
+<td style="text-align: center;">1.148</td>
+<td style="text-align: center;">Maritime / jungle</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tropic (MIL-STD)</td>
+<td style="text-align: center;"><span class="math inline">\(+35.0\)</span></td>
+<td style="text-align: center;">101.325</td>
+<td style="text-align: center;">1.156</td>
+<td style="text-align: center;">Carrier ops</td>
+</tr>
+<tr>
+<td style="text-align: left;">Antarctic</td>
+<td style="text-align: center;"><span class="math inline">\(-70.0\)</span></td>
+<td style="text-align: center;">101.325</td>
+<td style="text-align: center;">1.547</td>
+<td style="text-align: center;">Extreme cold</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h2 id="app-aero-drag"><span class="secnum">C.6</span> Drag Coefficient Data<a class="headerlink" href="#app-aero-drag" title="Permanent link">&para;</a></h2>
+<h3 id="c61-basic-shape-drag-coefficients"><span class="secnum">C.6.1</span> Basic Shape Drag Coefficients<a class="headerlink" href="#c61-basic-shape-drag-coefficients" title="Permanent link">&para;</a></h3>
+<div class="tbl" id="tab-basic_drag">
+<div class="tbl-caption"><strong>Table C.8.</strong> Zero-lift drag coefficients <span class="math inline">\(C_{D0}\)</span> for basic shapes (based on frontal area unless noted). <span class="math inline">\(C_{D0}\)</span> varies with Reynolds number and Mach number. <span class="math inline">\(Re_D\)</span> based on diameter for bluff bodies; <span class="math inline">\(Re_L\)</span> based on length for streamlined.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Body</th>
+<th style="text-align: center;">Reference area</th>
+<th style="text-align: center;"><span class="math inline">\(C_{D0}\)</span> (subsonic)</th>
+<th style="text-align: center;"><span class="math inline">\(C_{D0}\)</span> (<span class="math inline">\(M = 1.5\)</span>)</th>
+<th style="text-align: center;">Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Sphere (<span class="math inline">\(Re = 10^5\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.47</td>
+<td style="text-align: center;">0.90</td>
+<td style="text-align: center;">Drag crisis at <span class="math inline">\(Re \approx 5\times10^5\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">Sphere (<span class="math inline">\(Re = 5\times10^5\)</span>)</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.20</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">Post-crisis</td>
+</tr>
+<tr>
+<td style="text-align: left;">Long circular cylinder</td>
+<td style="text-align: center;"><span class="math inline">\(D \times L\)</span></td>
+<td style="text-align: center;">1.20</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">Per unit length</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flat plate (normal)</td>
+<td style="text-align: center;">plate area</td>
+<td style="text-align: center;">1.28</td>
+<td style="text-align: center;">1.80</td>
+<td style="text-align: center;">Fully separated</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flat plate (parallel)</td>
+<td style="text-align: center;">wetted area</td>
+<td style="text-align: center;">0.004</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">Skin friction; turbulent</td>
+</tr>
+<tr>
+<td style="text-align: left;">Disk (normal flow)</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">1.17</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Cube (face on)</td>
+<td style="text-align: center;"><span class="math inline">\(L^2\)</span></td>
+<td style="text-align: center;">1.05</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Cube (vertex on)</td>
+<td style="text-align: center;"><span class="math inline">\(L^2\)</span></td>
+<td style="text-align: center;">0.80</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr>
+<td style="text-align: left;">Hemisphere (open face)</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">1.42</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">Blunt end forward</td>
+</tr>
+<tr>
+<td style="text-align: left;">Hemisphere (closed face)</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.38</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">Dome forward</td>
+</tr>
+<tr>
+<td style="text-align: left;">Cone (<span class="math inline">\(20°\)</span> half-angle)</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.50</td>
+<td style="text-align: center;">0.30</td>
+<td style="text-align: center;">Ogive nose</td>
+</tr>
+<tr>
+<td style="text-align: left;">3/4-power nose (tangent ogive)</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.25</td>
+<td style="text-align: center;">0.20</td>
+<td style="text-align: center;">Ballistic nose</td>
+</tr>
+<tr>
+<td style="text-align: left;">4-calibre ogive</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.16</td>
+<td style="text-align: center;">Missile nose</td>
+</tr>
+<tr>
+<td style="text-align: left;">Von Kármán ogive</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.15</td>
+<td style="text-align: center;">0.13</td>
+<td style="text-align: center;">Minimum wave drag</td>
+</tr>
+<tr>
+<td style="text-align: left;">Parabolic-arc body</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.22</td>
+<td style="text-align: center;">0.17</td>
+<td style="text-align: center;">Sears-Haack</td>
+</tr>
+<tr>
+<td style="text-align: left;">Blunted cylinder</td>
+<td style="text-align: center;"><span class="math inline">\(\pi D^2/4\)</span></td>
+<td style="text-align: center;">0.82</td>
+<td style="text-align: center;">1.60</td>
+<td style="text-align: center;">Boattail helps</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="c62-skin-friction-coefficients"><span class="secnum">C.6.2</span> Skin Friction Coefficients<a class="headerlink" href="#c62-skin-friction-coefficients" title="Permanent link">&para;</a></h3>
+<p><strong>Laminar boundary layer (Blasius, flat plate):</strong> <span id="eq-blasius"></span></p>
+<div class="arithmatex">\[C_f = \frac{1.328}{\sqrt{Re_L}}\tag{C.24}\]</div>
+<p><strong>Turbulent boundary layer (Prandtl–Schlichting):</strong> <span id="eq-prandtl_schlichting"></span></p>
+<div class="arithmatex">\[C_f = \frac{0.455}{(\log_{10} Re_L)^{2.58}}\tag{C.25}\]</div>
+<p>Valid for <span class="arithmatex">\(Re_L = 10^6\)</span>–<span class="arithmatex">\(10^9\)</span>.</p>
+<p><strong>Combined (transition at <span class="arithmatex">\(Re_x = Re_{x,\text{tr}}\)</span>):</strong></p>
+<div class="arithmatex">\[C_f = \frac{0.455}{(\log_{10} Re_L)^{2.58}} - \frac{A}{Re_L}\]</div>
+<p>where <span class="arithmatex">\(A = 1700\)</span> for natural transition at <span class="arithmatex">\(Re_{x,\text{tr}} \approx 5\times10^5\)</span>; <span class="arithmatex">\(A = 3300\)</span> for <span class="arithmatex">\(Re_{x,\text{tr}} = 3\times10^6\)</span> (clean laminar flow).</p>
+<p><strong>Compressibility correction</strong> (adiabatic wall, Van Driest):</p>
+<div class="arithmatex">\[C_{f,\text{comp}} = \frac{C_{f,\text{incomp}}}{\left[1 + 0.1305 M^2\right]^{0.62}}\]</div>
+<h3 id="c63-interference-drag"><span class="secnum">C.6.3</span> Interference Drag<a class="headerlink" href="#c63-interference-drag" title="Permanent link">&para;</a></h3>
+<p>Interference drag arises at junctions between aerodynamic surfaces. Wing-body junction is the dominant source.</p>
+<div class="tbl" id="tab-interference">
+<div class="tbl-caption"><strong>Table C.9.</strong> Interference drag penalties. <span class="math inline">\(\Delta C_{D,\text{int}}\)</span> as fraction of surface <span class="math inline">\(C_{D0}\)</span> of smaller element. From ESDU 80020 and Roskam Vol VI.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Junction type</th>
+<th style="text-align: center;"><span class="math inline">\(\Delta C_{D,\text{int}}\)</span> (%)</th>
+<th style="text-align: center;">Reduction by filleting (%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Wing-body (unfaired)</td>
+<td style="text-align: center;">3–5</td>
+<td style="text-align: center;">50–80</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wing-body (faired <span class="math inline">\(R &gt; 0.05t\)</span>)</td>
+<td style="text-align: center;">0.5–1.5</td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr>
+<td style="text-align: left;">Tail-fuselage (H-tail)</td>
+<td style="text-align: center;">4–6</td>
+<td style="text-align: center;">40–70</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fin-fuselage (V-tail)</td>
+<td style="text-align: center;">3–4</td>
+<td style="text-align: center;">40–60</td>
+</tr>
+<tr>
+<td style="text-align: left;">Strut-wing junction</td>
+<td style="text-align: center;">5–8</td>
+<td style="text-align: center;">30–50</td>
+</tr>
+<tr>
+<td style="text-align: left;">Motor nacelle on wing</td>
+<td style="text-align: center;">6–10</td>
+<td style="text-align: center;">20–40</td>
+</tr>
+<tr>
+<td style="text-align: left;">Canard-fuselage</td>
+<td style="text-align: center;">2–4</td>
+<td style="text-align: center;">50–70</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wing-winglet junction</td>
+<td style="text-align: center;">1–3</td>
+<td style="text-align: center;">60–80</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<h3 id="c64-uav-component-drag-buildup"><span class="secnum">C.6.4</span> UAV Component Drag Buildup<a class="headerlink" href="#c64-uav-component-drag-buildup" title="Permanent link">&para;</a></h3>
+<p>The total zero-lift drag is the sum of component wetted area contributions: <span id="eq-drag_buildup"></span></p>
+<div class="arithmatex">\[C_{D0,\text{total}} = \frac{1}{S_{\text{ref}}}\sum_i C_{f,i}\,FF_i\,Q_i\,S_{wet,i} + C_{D,\text{misc}} + C_{D,\text{L\&amp;P}}\tag{C.28}\]</div>
+<p>where <span class="arithmatex">\(FF_i\)</span> = form factor, <span class="arithmatex">\(Q_i\)</span> = interference factor, <span class="arithmatex">\(S_{wet,i}\)</span> = wetted area of component <span class="arithmatex">\(i\)</span>, <span class="arithmatex">\(C_{D,\text{misc}}\)</span> = miscellaneous drag, and <span class="arithmatex">\(C_{D,\text{L\&amp;P}}\)</span> = leakage and protuberance drag.</p>
+<p>Form factors (Torenbeek / DATCOM): <span id="eq-ff_wing"></span><span id="eq-ff_fuse"></span></p>
+<div class="arithmatex">\[\begin{align*}
+FF_{\text{wing}} &amp;= \left[1 + \frac{0.6}{(x/c)_m}\frac{t}{c} + 100\left(\frac{t}{c}\right)^4\right]\left[1.34M^{0.18}\cos^{0.28}\Lambda_m\right] \\
+FF_{\text{fuse}} &amp;= 1 + \frac{60}{f^3} + \frac{f}{400}, \quad f = \frac{l_f}{d_f} \quad \text{(fineness ratio)}
+\end{align*}\]</div>
+<div class="tbl" id="tab-drag_buildup">
+<div class="tbl-caption"><strong>Table C.10.</strong> Typical drag buildup for a <span class="math inline">\(3\)</span>-kg fixed-wing pusher UAV. <span class="math inline">\(S_{\text{ref}} = 0.45\)</span> m<span class="math inline">\(^2\)</span>; cruise <span class="math inline">\(V = 22\)</span> m/s; <span class="math inline">\(Re_{\text{wing}} \approx 200\,000\)</span>.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Component</th>
+<th style="text-align: center;"><span class="math inline">\(S_{wet}\)</span> (m<span class="math inline">\(^2\)</span>)</th>
+<th style="text-align: center;"><span class="math inline">\(C_f\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(FF\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(Q\)</span></th>
+<th style="text-align: center;"><span class="math inline">\(\Delta C_{D0}\)</span></th>
+<th style="text-align: center;">% total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Wing (upper+lower)</td>
+<td style="text-align: center;">0.92</td>
+<td style="text-align: center;">0.0082</td>
+<td style="text-align: center;">1.34</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: center;">0.0225</td>
+<td style="text-align: center;">41.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Fuselage pod</td>
+<td style="text-align: center;">0.38</td>
+<td style="text-align: center;">0.0075</td>
+<td style="text-align: center;">1.20</td>
+<td style="text-align: center;">1.00</td>
+<td style="text-align: center;">0.0076</td>
+<td style="text-align: center;">14.0</td>
+</tr>
+<tr>
+<td style="text-align: left;">Horizontal tail</td>
+<td style="text-align: center;">0.18</td>
+<td style="text-align: center;">0.0090</td>
+<td style="text-align: center;">1.28</td>
+<td style="text-align: center;">1.05</td>
+<td style="text-align: center;">0.0048</td>
+<td style="text-align: center;">8.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">Vertical tail</td>
+<td style="text-align: center;">0.09</td>
+<td style="text-align: center;">0.0090</td>
+<td style="text-align: center;">1.28</td>
+<td style="text-align: center;">1.05</td>
+<td style="text-align: center;">0.0024</td>
+<td style="text-align: center;">4.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Motor nacelle (pusher)</td>
+<td style="text-align: center;">0.04</td>
+<td style="text-align: center;">0.0075</td>
+<td style="text-align: center;">1.50</td>
+<td style="text-align: center;">1.30</td>
+<td style="text-align: center;">0.0013</td>
+<td style="text-align: center;">2.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Landing gear (fixed)</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0.0040</td>
+<td style="text-align: center;">7.4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Antenna/protuberances</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0.0015</td>
+<td style="text-align: center;">2.8</td>
+</tr>
+<tr>
+<td style="text-align: left;">Interference drag</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0.0030</td>
+<td style="text-align: center;">5.5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Wing-body junction</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0.0012</td>
+<td style="text-align: center;">2.2</td>
+</tr>
+<tr>
+<td style="text-align: left;">Leakage &amp; gaps</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">–</td>
+<td style="text-align: center;">0.0060</td>
+<td style="text-align: center;">11.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total</strong> <span class="math inline">\(C_{D0}\)</span></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"><strong>0.0543</strong></td>
+<td style="text-align: center;">100</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+<p>Corresponding lift-to-drag ratio at <span class="arithmatex">\(C_L = 0.8\)</span>, <span class="arithmatex">\(AR = 8\)</span>, <span class="arithmatex">\(e = 0.90\)</span>:</p>
+<div class="arithmatex">\[C_{D,i} = \frac{0.8^2}{\pi \times 8 \times 0.90} = 0.0284;\quad
+(L/D) = \frac{0.8}{0.0543 + 0.0284} = \frac{0.8}{0.0827} \approx 9.7\]</div>
+<h2 id="app-aero-derivs"><span class="secnum">C.7</span> Aerodynamic Derivative Reference<a class="headerlink" href="#app-aero-derivs" title="Permanent link">&para;</a></h2>
+<h3 id="c71-stability-derivatives-missiledrone-body"><span class="secnum">C.7.1</span> Stability Derivatives (Missile/Drone Body)<a class="headerlink" href="#c71-stability-derivatives-missiledrone-body" title="Permanent link">&para;</a></h3>
+<p>For a slender body plus fin configuration (cruciform symmetry), the key derivatives:</p>
+<div class="arithmatex">\[\begin{align*}
+C_{N\alpha} &amp;= C_{N\alpha,\text{body}} + C_{N\alpha,\text{fins}}\left(1 + \frac{d\sigma}{d\alpha}\right)_{\text{fins}} \\
+C_{m\alpha} &amp;= C_{N\alpha}\left(x_{\text{ref}} - x_{cp}\right)/D \quad \text{(negative = stable)}
+\end{align*}\]</div>
+<p>where <span class="arithmatex">\(d\sigma/d\alpha\)</span> is the upwash correction at the fin station (fin efficiency factor, typically <span class="arithmatex">\(\eta = 0.85\)</span>–<span class="arithmatex">\(0.95\)</span>).</p>
+<p><strong>Magnus derivative</strong> (rotating body at angle of attack): <span class="arithmatex">\(C_{Y_{p\alpha}}\)</span> — cross-force due to spin in the presence of <span class="arithmatex">\(\alpha\)</span>. Significant for spin-stabilised artillery rounds; small for finned missiles.</p>
+<p><strong>Roll damping:</strong></p>
+<div class="arithmatex">\[C_{lp} = -\frac{1}{2V_\infty}\frac{\partial(L')}{\partial p} \approx -C_{L\alpha,\text{fin}}\frac{\bar{y}_f^2}{S_{\text{ref}}(b/2)}\]</div>
+<p>Used to compute roll rate convergence for spin-stabilised drones.</p>
+<div class="tbl" id="tab-missile_derivs">
+<div class="tbl-caption"><strong>Table C.11.</strong> Typical aerodynamic derivative magnitudes for a <span class="math inline">\(100\)</span> mm diameter tactical missile with cruciform fins. Data at <span class="math inline">\(M = 0.8\)</span>, <span class="math inline">\(\alpha &lt; 5°\)</span>.</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Derivative</th>
+<th style="text-align: left;">Definition</th>
+<th style="text-align: center;">Typical value</th>
+<th style="text-align: center;">Units</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{N\alpha}\)</span></td>
+<td style="text-align: left;">Normal force slope</td>
+<td style="text-align: center;"><span class="math inline">\(12\)</span>–<span class="math inline">\(18\)</span></td>
+<td style="text-align: center;">per rad</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{A0}\)</span></td>
+<td style="text-align: left;">Axial force (zero-lift)</td>
+<td style="text-align: center;"><span class="math inline">\(0.3\)</span>–<span class="math inline">\(0.5\)</span></td>
+<td style="text-align: center;">–</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{m\alpha}\)</span></td>
+<td style="text-align: left;">Pitching moment slope</td>
+<td style="text-align: center;"><span class="math inline">\(-2\)</span> to <span class="math inline">\(-8\)</span></td>
+<td style="text-align: center;">per rad (stable <span class="math inline">\(&lt; 0\)</span>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{mq}\)</span></td>
+<td style="text-align: left;">Pitch damping</td>
+<td style="text-align: center;"><span class="math inline">\(-50\)</span> to <span class="math inline">\(-200\)</span></td>
+<td style="text-align: center;">per rad</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{lp}\)</span></td>
+<td style="text-align: left;">Roll damping</td>
+<td style="text-align: center;"><span class="math inline">\(-0.5\)</span> to <span class="math inline">\(-2.0\)</span></td>
+<td style="text-align: center;">per rad</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{l\delta_a}\)</span></td>
+<td style="text-align: left;">Roll control effectiveness</td>
+<td style="text-align: center;"><span class="math inline">\(0.05\)</span>–<span class="math inline">\(0.20\)</span></td>
+<td style="text-align: center;">per rad</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{n\beta}\)</span></td>
+<td style="text-align: left;">Yaw weathercock</td>
+<td style="text-align: center;"><span class="math inline">\(1\)</span>–<span class="math inline">\(4\)</span></td>
+<td style="text-align: center;">per rad</td>
+</tr>
+<tr>
+<td style="text-align: left;"><span class="math inline">\(C_{y\beta}\)</span></td>
+<td style="text-align: left;">Side force gradient</td>
+<td style="text-align: center;"><span class="math inline">\(-8\)</span> to <span class="math inline">\(-12\)</span></td>
+<td style="text-align: center;">per rad</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="app-b-propellant-properties-database.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: Appendix B. Propellant Properties Database">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Appendix B. Propellant Properties Database
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="app-d-glossary-of-terms-and-acronyms.html" class="md-footer__link md-footer__link--next" aria-label="Next: Appendix D. Glossary of Terms and Acronyms">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Appendix D. Glossary of Terms and Acronyms
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>

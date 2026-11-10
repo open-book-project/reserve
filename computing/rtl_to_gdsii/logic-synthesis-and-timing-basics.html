@@ -1,0 +1,1699 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#ffffff">
+  
+    <meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+  
+  
+    <meta name="author" content="The Open Book Project">
+  
+  
+    <meta name="robots" content="noindex,nofollow">
+  
+  
+    <link rel="canonical" href="https://open-book-project.github.io/reserve/computing/rtl_to_gdsii/logic-synthesis-and-timing-basics.html">
+  
+  
+    <link rel="prev" href="the-rtl-to-gdsii-flow.html">
+  
+  
+    <link rel="next" href="floorplanning-and-power-planning.html">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap" media="print" onload="this.media='all'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Noto+Serif+Devanagari:wght@400;600;700&display=swap"></noscript>
+  <link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+  <link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="../../manifest.webmanifest">
+  <link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="application-name" content="Reserve Shelf"><script id="bjp-books" type="application/json">[{"id": "drones_missiles", "lang": "en", "path": "science/drones_missiles"}, {"id": "asic", "lang": "en", "path": "computing/asic"}, {"id": "rtl_to_gdsii", "lang": "en", "path": "computing/rtl_to_gdsii"}, {"id": "ram_ddr5", "lang": "en", "path": "computing/ram_ddr5"}, {"id": "trust", "lang": "en", "path": "cyber/trust"}, {"id": "datacentre_security_ip", "lang": "en", "path": "cyber/datacentre_security_ip"}, {"id": "randomness_testing", "lang": "en", "path": "cyber/randomness_testing"}, {"id": "web_programming", "lang": "en", "path": "courses/web_programming"}]</script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+  <script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+
+    
+      
+        <title>2. Logic Synthesis and Timing Basics - The Open Book Project: Reserve Shelf</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+      <link rel="stylesheet" href="../../assets/reader.css">
+    
+      <link rel="stylesheet" href="../../assets/viz.css">
+    
+      <link rel="stylesheet" href="../../assets/app.css">
+    
+      <link rel="stylesheet" href="../../assets/theme.css">
+    
+      <link rel="stylesheet" href="../../assets/slides.css">
+    
+      <link rel="stylesheet" href="../../assets/remote.css">
+    
+      <link rel="stylesheet" href="../../assets/scans.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#what-synthesis-does" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            The Open Book Project: Reserve Shelf
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Logic Synthesis and Timing Basics
+            
+          </span>
+        </div>
+      </div>
+    </div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+    </a>
+    <a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+    </a>
+    <script type="application/json" id="pk-cats">{"n":8,"c":[{"id":"computer-science","t":"Computers & Technology","n":7,"d":"How computers and software work, and the technologies built on them: programs, chips, networks, data, intelligent machines and security.","h":212,"i":"<path d=\"M8.5 7 3.5 12l5 5M15.5 7l5 5-5 5M13.5 4.5l-3 15\"/>","s":[["programming","Programming",1],["web-development","Web Development",1],["computer-architecture","Computer Architecture & Chips",3],["cloud-data-centres","Cloud & Data Centres",1],["databases","Databases",1],["cyber-security","Cyber Security",3]]},{"id":"engineering","t":"Engineering","n":3,"d":"Designing and building machines, structures, devices and systems.","h":16,"i":"<circle cx=\"12\" cy=\"12\" r=\"3\"/><circle cx=\"12\" cy=\"12\" r=\"6.3\"/><path d=\"M12 2.8v3M12 18.2v3M2.8 12h3M18.2 12h3M5.5 5.5l2.1 2.1M16.4 16.4l2.1 2.1M5.5 18.5l2.1-2.1M16.4 7.6l2.1-2.1\"/>","s":[["electronics","Electronics & Electrical",3],["aerospace-defence","Aerospace & Defence",1]]},{"id":"mathematics","t":"Mathematics","n":1,"d":"Number, shape, structure and proof, and the mathematics used in every field.","h":330,"i":"<path d=\"M17 5H7l5.5 7L7 19h10\"/>","s":[["statistics","Statistics & Data Science",1]]}]}</script>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+      
+  <img src="../../assets/icons/logo.svg" alt="logo">
+
+    </a>
+    The Open Book Project: Reserve Shelf
+  </label>
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      <li class="md-nav__item bjp-nav-all">
+        <a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+          <span class="md-ellipsis">All books</span>
+        </a>
+      </li>
+      <li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">From RTL to GDSII</span></li>
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="index.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Overview and preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="preface.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Preface
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="the-rtl-to-gdsii-flow.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. The RTL-to-GDSII Flow
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Logic Synthesis and Timing Basics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="logic-synthesis-and-timing-basics.html" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Logic Synthesis and Timing Basics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-synthesis-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 What synthesis does
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 What synthesis does">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-and-after" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before and after
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inputs-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Inputs and outputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cell-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Inside the cell library
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Inside the cell library">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drive-strength" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drive strength
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timing-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Timing basics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Timing basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-path-from-one-flip-flop-to-the-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A path from one flip-flop to the next
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#three-numbers-from-every-flip-flop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three numbers from every flip-flop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-setup-check-is-it-too-slow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The setup check: is it too slow?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hold-check-is-it-too-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The hold check: is it too fast?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-critical-path-and-the-maximum-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The critical path and the maximum clock
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Constraints: telling the tool the goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Optimisation: moving along the PPA curve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yosys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 A synthesis script in Yosys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Making chips testable: scan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-prove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.9 What synthesis does not prove
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="floorplanning-and-power-planning.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Floorplanning and Power Planning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="placement.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Placement
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="clock-tree-synthesis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Clock-Tree Synthesis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="routing-and-parasitic-extraction.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Routing and Parasitic Extraction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="static-timing-analysis.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Static Timing Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="physical-verification-and-tapeout.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. Physical Verification and Tapeout
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="running-the-flow-with-openlane.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Running the Flow with OpenLANE
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="glossary-and-further-reading.html" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary and Further Reading
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+      
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-synthesis-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 What synthesis does
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.1 What synthesis does">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#before-and-after" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Before and after
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#inputs-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 Inputs and outputs
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cell-library" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 Inside the cell library
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.3 Inside the cell library">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#drive-strength" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Drive strength
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#timing-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 Timing basics
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2.4 Timing basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#a-path-from-one-flip-flop-to-the-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        A path from one flip-flop to the next
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#three-numbers-from-every-flip-flop" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three numbers from every flip-flop
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-setup-check-is-it-too-slow" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The setup check: is it too slow?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-hold-check-is-it-too-fast" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The hold check: is it too fast?
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-critical-path-and-the-maximum-clock" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The critical path and the maximum clock
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#constraints" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 Constraints: telling the tool the goal
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#optimisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 Optimisation: moving along the PPA curve
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#yosys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 A synthesis script in Yosys
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#scan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.8 Making chips testable: scan
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#not-prove" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.9 What synthesis does not prove
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#exercises" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Exercises
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="chapter-2-logic-synthesis-and-timing-basics">Chapter 2: Logic Synthesis and Timing Basics<a class="headerlink" href="#chapter-2-logic-synthesis-and-timing-basics" title="Permanent link">&para;</a></h1>
+<p>Synthesis is the first stage at which an abstract piece of Verilog stops being an idea and starts becoming hardware. The tool reads the RTL, works out the Boolean logic and the registers that it describes, and maps that logic onto real building blocks, the standard cells of one manufacturing process, while squeezing timing, area and power to meet the constraints it has been given. The output is a gate-level netlist: the same design, now written entirely in NANDs, AOIs, flip-flops and buffers that a foundry can actually make.</p>
+<p>Synthesis is also where timing first matters. A gate-level netlist is useful only if its gates are fast enough, so this chapter introduces, alongside the tool flow, the arithmetic of setup and hold slack that the rest of the book builds on.</p>
+<div class="admonition note">
+<p class="admonition-title">Learning outcomes</p>
+<p>After this chapter you can:</p>
+<ol>
+<li>Describe the three phases of synthesis and read a small gate-level netlist.</li>
+<li>Explain timing arcs and drive strengths in a cell library.</li>
+<li>Compute setup and hold slack for a register-to-register path, and find the critical path and the maximum clock frequency.</li>
+<li>Write basic SDC constraints and read a Yosys synthesis script.</li>
+<li>Explain scan chains and say what synthesis does and does not prove.</li>
+</ol>
+</div>
+<h2 id="what-synthesis-does">2.1 What synthesis does<a class="headerlink" href="#what-synthesis-does" title="Permanent link">&para;</a></h2>
+<p>RTL describes behaviour: "on the rising clock edge, <code>sum</code> becomes <code>a + b</code>". <strong>Logic synthesis</strong> turns that behaviour into a structural netlist, an interconnection of standard cells, that is logically equivalent to the RTL but can be built in silicon. Three conceptual phases happen inside the tool.</p>
+<p><strong>Elaboration.</strong> The RTL is parsed, parameters are resolved, <code>generate</code> loops are unrolled and the hierarchy is built. Behavioural constructs (<code>+</code>, <code>*</code>, <code>if</code>, <code>case</code>, <code>always</code> blocks) become a generic, technology-independent netlist of abstract gates and inferred registers. This representation is often called GTECH or, in Yosys, RTLIL. No real cell has been chosen yet.</p>
+<p><strong>Technology mapping.</strong> Each generic gate and register is replaced by a real cell from the target <code>.lib</code>: a <code>sky130_fd_sc_hd__nand2_1</code>, a <code>__dfrtp_2</code> flip-flop and so on. This is where an abstract AND becomes "this exact NAND followed by this inverter, with these delays".</p>
+<p><strong>Optimisation.</strong> The tool restructures the logic, resizes cells, inserts buffers and shares common sub-expressions until timing is met with as little area and power as possible. Optimisation is interleaved with mapping; modern engines such as ABC map and optimise together.</p>
+<h3 id="before-and-after">Before and after<a class="headerlink" href="#before-and-after" title="Permanent link">&para;</a></h3>
+<p>Consider a registered 4-bit adder.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">add_reg</span><span class="w"> </span><span class="p">(</span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="k">output</span><span class="w"> </span><span class="kt">reg</span><span class="w"> </span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">sum</span><span class="p">);</span>
+<span class="w">  </span><span class="k">always</span><span class="w"> </span><span class="p">@(</span><span class="k">posedge</span><span class="w"> </span><span class="n">clk</span><span class="p">)</span>
+<span class="w">    </span><span class="n">sum</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">      </span><span class="c1">// 4-bit + 4-bit -&gt; 5-bit, registered</span>
+<span class="k">endmodule</span>
+</code></pre></div>
+<p>After synthesis the <code>+</code> is gone. In its place are XOR, AND and AOI-style cells forming the carry logic, and each bit of <code>sum</code> has a D flip-flop. The fragment below is a <em>schematic</em> of that result, simplified and with the carry chain elided, to show its character; a real run produces a longer netlist with different cell choices.</p>
+<div class="language-verilog highlight"><pre><span></span><code><span class="k">module</span><span class="w"> </span><span class="n">add_reg</span><span class="w"> </span><span class="p">(</span><span class="n">clk</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="n">sum</span><span class="p">);</span>
+<span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="n">clk</span><span class="p">;</span><span class="w">  </span><span class="k">input</span><span class="w"> </span><span class="p">[</span><span class="mh">3</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="p">;</span><span class="w">  </span><span class="k">output</span><span class="w"> </span><span class="p">[</span><span class="mh">4</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">sum</span><span class="p">;</span>
+<span class="w">  </span><span class="kt">wire</span><span class="w"> </span><span class="n">n1</span><span class="p">,</span><span class="w"> </span><span class="n">n2</span><span class="p">,</span><span class="w"> </span><span class="n">n3</span><span class="p">,</span><span class="w"> </span><span class="n">c0</span><span class="p">,</span><span class="w"> </span><span class="n">c1</span><span class="p">,</span><span class="w"> </span><span class="n">c2</span><span class="p">,</span><span class="w"> </span><span class="n">c3</span><span class="p">;</span>
+
+<span class="w">  </span><span class="c1">// the lowest bit of the adder, mapped to real cells</span>
+<span class="w">  </span><span class="n">sky130_fd_sc_hd__xor2_1</span><span class="w">   </span><span class="n">U1</span><span class="w"> </span><span class="p">(.</span><span class="n">A</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span><span class="w"> </span><span class="p">.</span><span class="n">B</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span><span class="w"> </span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">n1</span><span class="p">));</span>
+<span class="w">  </span><span class="n">sky130_fd_sc_hd__and2_1</span><span class="w">   </span><span class="n">U2</span><span class="w"> </span><span class="p">(.</span><span class="n">A</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span><span class="w"> </span><span class="p">.</span><span class="n">B</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span><span class="w"> </span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">c0</span><span class="p">));</span>
+<span class="w">  </span><span class="n">sky130_fd_sc_hd__o21ai_1</span><span class="w">  </span><span class="n">U3</span><span class="w"> </span><span class="p">(.</span><span class="n">A1</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span><span class="w"> </span><span class="p">.</span><span class="n">A2</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span><span class="w"> </span><span class="p">.</span><span class="n">B1</span><span class="p">(</span><span class="n">c0</span><span class="p">),</span><span class="w"> </span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">n2</span><span class="p">));</span>
+<span class="w">  </span><span class="c1">// ... the carry chain continues for bits 1 to 3 ...</span>
+
+<span class="w">  </span><span class="c1">// registers: one D flip-flop per sum bit</span>
+<span class="w">  </span><span class="n">sky130_fd_sc_hd__dfrtp_1</span><span class="w">  </span><span class="n">Q0</span><span class="w"> </span><span class="p">(.</span><span class="n">CLK</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span><span class="w"> </span><span class="p">.</span><span class="n">D</span><span class="p">(</span><span class="n">n1</span><span class="p">),</span><span class="w"> </span><span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">sum</span><span class="p">[</span><span class="mh">0</span><span class="p">]));</span>
+<span class="w">  </span><span class="n">sky130_fd_sc_hd__dfrtp_1</span><span class="w">  </span><span class="n">Q1</span><span class="w"> </span><span class="p">(.</span><span class="n">CLK</span><span class="p">(</span><span class="n">clk</span><span class="p">),</span><span class="w"> </span><span class="p">.</span><span class="n">D</span><span class="p">(</span><span class="n">n2</span><span class="p">),</span><span class="w"> </span><span class="p">.</span><span class="n">Q</span><span class="p">(</span><span class="n">sum</span><span class="p">[</span><span class="mh">1</span><span class="p">]));</span>
+<span class="w">  </span><span class="c1">// ... Q2, Q3, Q4 ...</span>
+<span class="k">endmodule</span>
+</code></pre></div>
+<p>Notice what changed. The arithmetic operator vanished, replaced by explicit cells; the <code>reg</code> became five concrete <code>dfrtp</code> (rising-edge D flip-flop with reset) cells; and every wire is now a named net that will become a physical wire.</p>
+<p>The lowest bit of <code>a + b</code> is a half adder: the sum bit is <code>a XOR b</code> and the carry is <code>a AND b</code>. Each of those two gates is one standard cell, <code>xor2_1</code> and <code>and2_1</code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Definition: standard cell</p>
+<p>A <strong>standard cell</strong> is a pre-designed, pre-characterised, fixed-height logic primitive (inverter, NAND, AOI, flip-flop, buffer) that the foundry guarantees it can manufacture. Synthesis's whole job is to express the design using only cells from the chosen library.</p>
+</div>
+<h2 id="inputs-outputs">2.2 Inputs and outputs<a class="headerlink" href="#inputs-outputs" title="Permanent link">&para;</a></h2>
+<p>Synthesis is a function of three inputs and produces one primary output together with some reports.</p>
+<table>
+<thead>
+<tr>
+<th>Role</th>
+<th>File</th>
+<th>What it provides</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Input: design</td>
+<td>RTL <code>.v</code>, <code>.sv</code>, <code>.vhd</code></td>
+<td>the behaviour: modules, always blocks, arithmetic</td>
+</tr>
+<tr>
+<td>Input: library</td>
+<td><code>.lib</code> (Liberty)</td>
+<td>the cells available, with timing, power and area characterised for the process</td>
+</tr>
+<tr>
+<td>Input: constraints</td>
+<td><code>.sdc</code></td>
+<td>clock period, input and output delays, false paths: the goals the netlist must meet</td>
+</tr>
+<tr>
+<td>Output: netlist</td>
+<td>gate-level <code>.v</code></td>
+<td>structural Verilog instantiating library cells and nets</td>
+</tr>
+<tr>
+<td>Output: reports</td>
+<td>timing, area and power logs</td>
+<td>worst slack, cell count, total area, estimated power</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 2.1 What synthesis reads and writes.</em></p>
+<h2 id="cell-library">2.3 Inside the cell library<a class="headerlink" href="#cell-library" title="Permanent link">&para;</a></h2>
+<p>The <code>.lib</code> file is the tool's model of reality. For every cell it stores the logic function, the area, the power and, above all for synthesis, the <strong>timing arcs</strong>.</p>
+<p>A <strong>timing arc</strong> is a measured delay from one input pin to one output pin of a cell, for example from <code>A</code> to <code>Y</code> of a NAND2. The delay is not a single number. It depends on two things, and the library stores it as a two-dimensional look-up table (a non-linear delay model, NLDM):</p>
+<ul>
+<li><em>How fast the input changes.</em> A slowly rising input, one with a large <strong>slew</strong>, makes the cell respond later.</li>
+<li><em>How much the cell has to drive.</em> Every input that the output feeds adds capacitance, and more load means a slower output.</li>
+</ul>
+<p>(An analogy: how long it takes to fill buckets depends on how quickly the tap opens and how many buckets are waiting.)</p>
+<p>For flip-flops the library also stores <strong>setup</strong> and <strong>hold</strong> constraint arcs: the data must be stable before the clock edge (setup) and for a while after it (hold). Violating either corrupts the captured value. The <strong>input capacitance</strong> of each pin is the load that the pin presents to whatever drives it, so a net's fan-out slows its driver by the sum of the pins it feeds.</p>
+<h3 id="drive-strength">Drive strength<a class="headerlink" href="#drive-strength" title="Permanent link">&para;</a></h3>
+<p>The same logic function is offered in several strengths. The suffix <code>_1</code>, <code>_2</code>, <code>_4</code> (or <code>X1</code>, <code>X2</code>, <code>X4</code>) denotes the size of the transistors.</p>
+<table>
+<thead>
+<tr>
+<th>Cell</th>
+<th>Drive</th>
+<th>Delay into a big load</th>
+<th>Area</th>
+<th>Load it puts on its driver</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>nand2_1</code></td>
+<td>×1</td>
+<td>slow</td>
+<td>small</td>
+<td>small</td>
+</tr>
+<tr>
+<td><code>nand2_2</code></td>
+<td>×2</td>
+<td>faster</td>
+<td>bigger</td>
+<td>bigger</td>
+</tr>
+<tr>
+<td><code>nand2_4</code></td>
+<td>×4</td>
+<td>fastest</td>
+<td>biggest</td>
+<td>biggest</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 2.2 Drive strength trades speed against area, power and input load.</em></p>
+<p>Cell selection and sizing is a core synthesis decision. A lightly loaded net gets a ×1 cell; a net that feeds many gates or a long wire gets a ×2 or ×4 cell or a buffer chain. Up-sizing cuts delay but costs area and power.</p>
+<div class="admonition tip">
+<p class="admonition-title">Think about it</p>
+<p>If ×4 is always faster, why not make every cell ×4?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>A bigger cell has bigger inputs, which slow down whatever drives it, and it leaks more power. Up-sizing one gate therefore slows the gate before it, and doing it everywhere burns leakage everywhere. Sizing is a balance, not a maximisation.</p>
+</details>
+<h2 id="timing-basics">2.4 Timing basics<a class="headerlink" href="#timing-basics" title="Permanent link">&para;</a></h2>
+<p>Synthesis optimises for speed, so we first need to say exactly what "fast enough" means.</p>
+<h3 id="a-path-from-one-flip-flop-to-the-next">A path from one flip-flop to the next<a class="headerlink" href="#a-path-from-one-flip-flop-to-the-next" title="Permanent link">&para;</a></h3>
+<p>A synchronous design is made of registers separated by clouds of combinational logic. Figure 2.1 shows one such <strong>path</strong>. On a clock edge the <em>launch</em> flip-flop sends out a new value. The value must cross the logic and settle at the <em>capture</em> flip-flop before the next edge, but it must not disturb what the capture flip-flop is taking in on the current edge.</p>
+<figure class="fig fig-diagram">
+<img src="img/reg-to-reg-path.svg" alt="A launch flip-flop, a cloud of combinational logic and a capture flip-flop, all clocked by the same clock." loading="lazy" width="860" height="260">
+<figcaption><strong>Figure 2.1 A register-to-register path.</strong> A launch flip-flop, a cloud of combinational logic and a capture flip-flop, all clocked by the same clock.</figcaption>
+</figure>
+
+<h3 id="three-numbers-from-every-flip-flop">Three numbers from every flip-flop<a class="headerlink" href="#three-numbers-from-every-flip-flop" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Clock-to-Q</strong> (<span class="arithmatex">\(t_{cq}\)</span>): after the clock edge, how long until the new value appears at output Q.</li>
+<li><strong>Setup time</strong> (<span class="arithmatex">\(t_{su}\)</span>): how long the input must be steady <em>before</em> the clock edge to be captured reliably.</li>
+<li><strong>Hold time</strong> (<span class="arithmatex">\(t_{h}\)</span>): how long the input must stay steady <em>after</em> the clock edge.</li>
+</ul>
+<p>(A photographer's flash is a good picture: you must be in position a moment before it fires, which is setup, and keep still a moment after, which is hold, or the picture blurs.)</p>
+<h3 id="the-setup-check-is-it-too-slow">The setup check: is it too slow?<a class="headerlink" href="#the-setup-check-is-it-too-slow" title="Permanent link">&para;</a></h3>
+<p>Data launched at the clock edge arrives at the capture flip-flop after clock-to-Q plus the delay of the <em>slowest</em> route through the logic. It is required there by the next edge, one clock period <span class="arithmatex">\(T\)</span> later, less the setup time. The difference is the <strong>slack</strong>:</p>
+<div class="arithmatex">\[\text{setup slack} = (T - t_{su}) - (t_{cq} + t_{logic,max})\]</div>
+<p>Positive slack means time to spare; negative slack is a violation, and the chip fails at this clock rate. Figure 2.2 shows the numbers of the next example on a time line.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 2.1: Setup slack at two clock periods</p>
+<p>A path has <span class="arithmatex">\(t_{cq} = 0.40\)</span> ns, slowest logic <span class="arithmatex">\(3.20\)</span> ns and <span class="arithmatex">\(t_{su} = 0.30\)</span> ns.</p>
+<ol>
+<li>At <span class="arithmatex">\(T = 5.0\)</span> ns: the data arrives at <span class="arithmatex">\(0.40 + 3.20 = 3.60\)</span> ns. It is required by <span class="arithmatex">\(5.0 - 0.30 = 4.70\)</span> ns.
+   Slack <span class="arithmatex">\(= 4.70 - 3.60 = +1.10\)</span> ns. The check is met, with 1.1 ns to spare.</li>
+<li>At <span class="arithmatex">\(T = 3.5\)</span> ns: the requirement is <span class="arithmatex">\(3.5 - 0.30 = 3.20\)</span> ns, so
+   slack <span class="arithmatex">\(= 3.20 - 3.60 = -0.40\)</span> ns. The check fails: the clock has outrun the logic.</li>
+</ol>
+</div>
+<figure class="fig fig-diagram">
+<img src="img/setup-timeline.svg" alt="A time line for the example: clock-to-Q and slowest logic bring the data to 3.60 ns; the data is required by 4.70 ns, which is the next edge at 5.0 ns less the 0.30 ns setup time; the slack is 1.10 ns." loading="lazy" width="900" height="310">
+<figcaption><strong>Figure 2.2 Setup slack on a time line.</strong> A time line for the example: clock-to-Q and slowest logic bring the data to 3.60 ns; the data is required by 4.70 ns, which is the next edge at 5.0 ns less the 0.30 ns setup time; the slack is 1.10 ns.</figcaption>
+</figure>
+
+<h3 id="the-hold-check-is-it-too-fast">The hold check: is it too fast?<a class="headerlink" href="#the-hold-check-is-it-too-fast" title="Permanent link">&para;</a></h3>
+<p>The same clock edge that launches a new value also captures the old one at the downstream flip-flop. If the new value races through a very short path it can arrive while the capture flip-flop is still holding on to the old one. So hold uses the <em>fastest</em> route through the logic:</p>
+<div class="arithmatex">\[\text{hold slack} = (t_{cq} + t_{logic,min}) - t_{h}\]</div>
+<p>The clock period <span class="arithmatex">\(T\)</span> does not appear in this formula. Slowing the clock therefore does <strong>not</strong> fix a hold problem.</p>
+<div class="admonition example">
+<p class="admonition-title">Example 2.2: Hold slack</p>
+<p>With <span class="arithmatex">\(t_{cq} = 0.40\)</span>, fastest logic <span class="arithmatex">\(0.30\)</span> and <span class="arithmatex">\(t_h = 0.15\)</span> ns:</p>
+<div class="arithmatex">\[0.40 + 0.30 - 0.15 = +0.55 \text{ ns}\]</div>
+<p>The check is met. Now connect the two flip-flops almost directly, with a fast flip-flop having <span class="arithmatex">\(t_{cq} = 0.10\)</span> ns and no logic at all:</p>
+<div class="arithmatex">\[0.10 + 0 - 0.15 = -0.05 \text{ ns}\]</div>
+<p>The check fails. This is the classic hold-critical topology: a flip-flop feeding another flip-flop with nothing in between.</p>
+</div>
+<h3 id="the-critical-path-and-the-maximum-clock">The critical path and the maximum clock<a class="headerlink" href="#the-critical-path-and-the-maximum-clock" title="Permanent link">&para;</a></h3>
+<p>A design has thousands or millions of such paths. The one with the least slack is the <strong>critical path</strong>. It alone fixes the fastest possible clock:</p>
+<div class="arithmatex">\[f_{max} = \frac{1}{t_{cq} + t_{logic,max} + t_{su}}\]</div>
+<p>For the numbers of Example 2.1, <span class="arithmatex">\(f_{max} = 1 / (0.40 + 3.20 + 0.30\ \text{ns}) = 1 / 3.9\ \text{ns} \approx 256\)</span> MHz. Synthesis spends its effort here: restructuring and up-sizing cells on the critical path, and saving area and power everywhere else.</p>
+<div class="admonition note">
+<p class="admonition-title">Experiment: break setup, then hold</p>
+<p>In the course's interactive calculator you could shrink <span class="arithmatex">\(T\)</span> until setup fails, and then shrink the fastest logic towards zero and watch hold fail while noting that changing <span class="arithmatex">\(T\)</span> does nothing for it. You can do the same on paper with Examples 2.1 and 2.2: re-evaluate setup for <span class="arithmatex">\(T = 4.0, 3.9, 3.8\)</span> ns and hold for fastest-logic delays of <span class="arithmatex">\(0.30, 0.20, 0.10, 0\)</span> ns.</p>
+</div>
+<h2 id="constraints">2.5 Constraints: telling the tool the goal<a class="headerlink" href="#constraints" title="Permanent link">&para;</a></h2>
+<p>Without a clock period, "make it fast" means nothing: the tool has no idea how fast the clock runs or when signals arrive. <strong>SDC</strong> (Synopsys Design Constraints) is a dialect of Tcl, understood by every tool in the flow, that says it. Synthesis, layout and timing analysis all read the same file.</p>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># --- the clock: 10 ns period = 100 MHz, 50 % duty ---</span>
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>clk<span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mf">10.0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>clk<span class="k">]</span>
+
+<span class="c"># --- inputs arrive 2 ns after the edge; outputs are needed 3 ns before the next one ---</span>
+<span class="nv">set_input_delay</span><span class="w">  </span><span class="o">-</span>clock<span class="w"> </span>clk<span class="w"> </span><span class="mf">2.0</span><span class="w"> </span><span class="k">[</span><span class="nv">all_inputs</span><span class="k">]</span>
+<span class="nv">set_output_delay</span><span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>clk<span class="w"> </span><span class="mf">3.0</span><span class="w"> </span><span class="k">[</span><span class="nv">all_outputs</span><span class="k">]</span>
+
+<span class="c"># --- a hard cap on one path, independent of any clock ---</span>
+<span class="nv">set_max_delay</span><span class="w"> </span><span class="mf">4.0</span><span class="w"> </span><span class="o">-</span>from<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>U1<span class="o">/</span>A<span class="k">]</span><span class="w"> </span><span class="o">-</span>to<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>U9<span class="o">/</span>Y<span class="k">]</span>
+
+<span class="c"># --- a configuration pin that never changes in operation: do not time it ---</span>
+<span class="nv">set_false_path</span><span class="w"> </span><span class="o">-</span>from<span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>test_mode<span class="k">]</span>
+
+<span class="c"># --- a slow multiplier is allowed two cycles ---</span>
+<span class="nv">set_multicycle_path</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="o">-</span>setup<span class="w"> </span><span class="o">-</span>from<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>mul<span class="o">/*</span><span class="k">]</span><span class="w"> </span><span class="o">-</span>to<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>acc_reg<span class="o">/</span>D<span class="k">]</span>
+<span class="nv">set_multicycle_path</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="o">-</span>hold<span class="w">  </span><span class="o">-</span>from<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>mul<span class="o">/*</span><span class="k">]</span><span class="w"> </span><span class="o">-</span>to<span class="w"> </span><span class="k">[</span><span class="nv">get_pins</span><span class="w"> </span>acc_reg<span class="o">/</span>D<span class="k">]</span>
+
+<span class="c"># --- the world outside: what drives our inputs, what our outputs drive ---</span>
+<span class="nv">set_driving_cell</span><span class="w"> </span><span class="o">-</span>lib_cell<span class="w"> </span>sky130_fd_sc_hd__inv_2<span class="w"> </span><span class="k">[</span><span class="nv">all_inputs</span><span class="k">]</span>
+<span class="nv">set_load</span><span class="w"> </span><span class="mf">0.05</span><span class="w"> </span><span class="k">[</span><span class="nv">all_outputs</span><span class="k">]</span><span class="w">            </span><span class="k">;</span><span class="c"># 50 fF on each output</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create_clock</code></td>
+<td>defines a clock's period (hence frequency), waveform and source port; the metronome every setup and hold check is measured against</td>
+</tr>
+<tr>
+<td><code>set_input_delay</code></td>
+<td>models how late data arrives at an input, relative to the clock: how much of the period is already used before the signal reaches the block</td>
+</tr>
+<tr>
+<td><code>set_output_delay</code></td>
+<td>models how early an output must be valid so the next block can capture it: how much of the period the next block needs after ours</td>
+</tr>
+<tr>
+<td><code>set_max_delay</code></td>
+<td>an explicit upper bound on one path's delay, independent of any clock; useful for combinational or asynchronous interfaces</td>
+</tr>
+<tr>
+<td><code>set_false_path</code></td>
+<td>marks a path that exists in the wiring but is never exercised (for example a static configuration pin); the tool stops optimising and reporting it</td>
+</tr>
+<tr>
+<td><code>set_multicycle_path</code></td>
+<td>relaxes a path that legitimately takes more than one clock cycle to settle, so that it is not flagged as a violation</td>
+</tr>
+<tr>
+<td><code>set_driving_cell</code>, <code>set_load</code></td>
+<td>model the real neighbours, so delays at the edges of the block are realistic rather than ideal</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 2.3 The essential SDC commands.</em></p>
+<div class="admonition warning">
+<p class="admonition-title">Constraints are part of the design</p>
+<p>A false path that you declare wrongly is never checked, and can fail on silicon. Constraints must be reviewed with the same care as code.</p>
+</div>
+<h2 id="optimisation">2.6 Optimisation: moving along the PPA curve<a class="headerlink" href="#optimisation" title="Permanent link">&para;</a></h2>
+<p>Synthesis is a constrained optimisation over the three axes of PPA (Section 1.6). The constraints pin down "meet 100 MHz", and the tool then minimises area and power subject to that. Its main levers are:</p>
+<ul>
+<li><strong>Restructuring</strong>: re-factoring the Boolean network, for instance turning a deep chain of gates into a balanced tree, to cut logic depth on the critical path.</li>
+<li><strong>Sizing</strong>: swapping a cell for a stronger (×4) or weaker (×1) variant, trading delay against area and power. Cells with spare slack are down-sized.</li>
+<li><strong>Buffering and cloning</strong>: inserting buffers on long or high-fan-out nets, or duplicating a driver, so that a single overloaded cell does not dominate a path.</li>
+<li><strong>Multi-threshold libraries</strong>: when a library offers cells of several threshold voltages, low-leakage (high-threshold) cells can be used off the critical path and fast (low-threshold) cells only where they are needed.</li>
+</ul>
+<div class="admonition example">
+<p class="admonition-title">Example 2.3: The same adder at opposite ends of the curve</p>
+<p>A 32-bit adder built as a <strong>ripple-carry</strong> chain has about 32 gate delays and a tiny area. It is too slow for a 500 MHz clock. A <strong>carry-lookahead</strong> (prefix) adder has about 6 gate delays and meets timing, but costs roughly twice the area and more power. The function is identical; the constraints decide which structure the tool builds.</p>
+<p>Tighten the clock of a block from 10 ns to 8 ns and re-synthesise. Timing now passes, but the area report may jump by 20 % and power rises too. Nothing about the function changed: the tool up-sized cells, added buffers and restructured logic to buy 2 ns, and paid for it in silicon and switching energy. You moved along the PPA curve; nothing came free.</p>
+</div>
+<h2 id="yosys">2.7 A synthesis script in Yosys<a class="headerlink" href="#yosys" title="Permanent link">&para;</a></h2>
+<p><strong>Yosys</strong> is the open-source synthesis engine at the heart of OpenLANE. A minimal, explicit script (what the one-line <code>synth</code> macro expands to, in outline) shows each step.</p>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># run with:  yosys -s synth.ys</span>
+<span class="nv">read_verilog</span><span class="w"> </span>add_reg.v<span class="w">                  </span><span class="err">#</span><span class="w"> </span><span class="mi">1</span>.<span class="w"> </span>parse<span class="w"> </span>the<span class="w"> </span>RTL<span class="w"> </span>into<span class="w"> </span>RTLIL
+<span class="nv">hierarchy</span><span class="w"> </span><span class="o">-</span>check<span class="w"> </span><span class="o">-</span>top<span class="w"> </span>add_reg<span class="w">           </span><span class="err">#</span><span class="w"> </span><span class="mi">2</span>.<span class="w"> </span>choose<span class="w"> </span>the<span class="w"> </span>top<span class="w"> </span>module,<span class="w"> </span>elaborate<span class="w"> </span>the<span class="w"> </span>hierarchy
+<span class="k">proc</span><span class="w">                                    </span><span class="err">#</span><span class="w"> </span><span class="mi">3</span>.<span class="w"> </span>always<span class="w"> </span>blocks,<span class="w"> </span>if<span class="w"> </span>and<span class="w"> </span>case<span class="w"> </span><span class="o">-&gt;</span><span class="w"> </span>logic<span class="w"> </span><span class="o">+</span><span class="w"> </span>flip-flops
+<span class="nv">opt</span><span class="w">                                     </span><span class="err">#</span><span class="w"> </span><span class="mi">4</span>.<span class="w"> </span>constant-fold,<span class="w"> </span>remove<span class="w"> </span>dead<span class="w"> </span>logic,<span class="w"> </span>simplify
+<span class="nv">fsm</span><span class="k">;</span><span class="w"> </span><span class="nv">opt</span><span class="w">                                </span><span class="err">#</span><span class="w">    </span><span class="k">(</span><span class="nv">optional</span><span class="k">)</span><span class="w"> </span>extract<span class="w"> </span>and<span class="w"> </span>optimise<span class="w"> </span>state<span class="w"> </span>machines
+<span class="nb">memory</span><span class="k">;</span><span class="w"> </span><span class="nv">opt</span><span class="w">                             </span><span class="err">#</span><span class="w">    </span><span class="k">(</span><span class="nv">optional</span><span class="k">)</span><span class="w"> </span>map<span class="w"> </span>memories<span class="w"> </span>to<span class="w"> </span>logic<span class="w"> </span>or<span class="w"> </span>block<span class="w"> </span>RAM
+<span class="nv">techmap</span><span class="k">;</span><span class="w"> </span><span class="nv">opt</span><span class="w">                            </span><span class="err">#</span><span class="w"> </span><span class="mi">5</span>.<span class="w"> </span>map<span class="w"> </span>generic<span class="w"> </span>operators<span class="w"> </span>to<span class="w"> </span>gate-level<span class="w"> </span>primitives
+<span class="nv">dfflibmap</span><span class="w"> </span><span class="o">-</span>liberty<span class="w"> </span>sky130_fd_sc_hd.lib<span class="w">  </span><span class="err">#</span><span class="w"> </span><span class="mi">6</span>.<span class="w"> </span>map<span class="w"> </span>generic<span class="w"> </span>flip-flops<span class="w"> </span>to<span class="w"> </span>library<span class="w"> </span>flip-flops
+<span class="nv">abc</span><span class="w"> </span><span class="o">-</span>liberty<span class="w"> </span>sky130_fd_sc_hd.lib<span class="w">        </span><span class="err">#</span><span class="w"> </span><span class="mi">7</span>.<span class="w"> </span>map<span class="w"> </span>and<span class="w"> </span>optimise<span class="w"> </span>combinational<span class="w"> </span>logic<span class="w"> </span>to<span class="w"> </span>cells
+<span class="nv">clean</span><span class="w">                                   </span><span class="err">#</span><span class="w">    </span>drop<span class="w"> </span>unused<span class="w"> </span>wires<span class="w"> </span>and<span class="w"> </span>cells
+<span class="nv">write_verilog</span><span class="w"> </span><span class="o">-</span>noattr<span class="w"> </span>add_reg_netlist.v<span class="w"> </span><span class="err">#</span><span class="w"> </span><span class="mi">8</span>.<span class="w"> </span>write<span class="w"> </span>the<span class="w"> </span>gate-level<span class="w"> </span>netlist
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Role in the flow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>read_verilog</code></td>
+<td>parses the RTL into Yosys's internal representation, RTLIL</td>
+</tr>
+<tr>
+<td><code>hierarchy -top</code></td>
+<td>names the top module and elaborates the module tree; <code>-check</code> reports missing modules</td>
+</tr>
+<tr>
+<td><code>proc</code></td>
+<td>converts behavioural <code>always</code> blocks (if, case, assignments) into multiplexer logic and inferred flip-flops</td>
+</tr>
+<tr>
+<td><code>opt</code></td>
+<td>generic clean-up: constant propagation, dead-code removal, trivial simplification; run repeatedly between other passes</td>
+</tr>
+<tr>
+<td><code>techmap</code></td>
+<td>maps coarse operators (adders, muxes, shifts) down to a generic gate-level library</td>
+</tr>
+<tr>
+<td><code>dfflibmap</code></td>
+<td>maps the generic flip-flops onto real sequential cells of the given <code>.lib</code>, matching their set, reset and enable flavours</td>
+</tr>
+<tr>
+<td><code>abc -liberty</code></td>
+<td>hands the combinational logic to ABC, which maps and optimises it for timing and area against the Liberty cells</td>
+</tr>
+<tr>
+<td><code>write_verilog</code></td>
+<td>writes the structural netlist; <code>-noattr</code> strips internal attributes for a clean file</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 2.4 The steps of a minimal Yosys script.</em></p>
+<div class="admonition tip">
+<p class="admonition-title">Think about it</p>
+<p>Why are <code>dfflibmap</code> (sequential) and <code>abc</code> (combinational) separate steps?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Flip-flops must map to specific library cells with matching reset and enable pins, which ABC's combinational optimiser does not reason about. Yosys therefore pins the flip-flops down first, and then lets ABC reshape freely only the cloud of logic between them.</p>
+</details>
+<h2 id="scan">2.8 Making chips testable: scan<a class="headerlink" href="#scan" title="Permanent link">&para;</a></h2>
+<p>Factories make defects. Every manufactured chip must be tested, but a register buried deep inside the design cannot be reached from the pins. <strong>Design for test</strong> (DFT) makes the netlist controllable and observable, and its workhorse is <strong>scan</strong>.</p>
+<ul>
+<li><strong>Scan flip-flops.</strong> Each ordinary D flip-flop is replaced by a scan flip-flop with an extra multiplexer on its D input. In functional mode it behaves normally; in scan mode it takes its data from the previous flip-flop's output.</li>
+<li><strong>Scan chains.</strong> The scan flip-flops are linked into long shift registers (Figure 2.3). In test mode the tester shifts in any state it likes, runs one functional clock, and shifts the result out.</li>
+<li><strong>ATPG</strong> (automatic test-pattern generation) computes the input vectors that expose defects, typically under the stuck-at fault model in which each node is stuck at 0 or at 1.</li>
+<li><strong>Fault coverage</strong> is the fraction of modelled faults that the patterns detect. Production chips aim well above 95 to 99 %; a low figure lets defective parts reach customers.</li>
+</ul>
+<figure class="fig fig-diagram">
+<img src="img/scan-chain.svg" alt="Three scan flip-flops joined into a shift register: each takes D from its own logic in functional mode and SI from its neighbour in test mode." loading="lazy" width="900" height="250">
+<figcaption><strong>Figure 2.3 A scan chain.</strong> Three scan flip-flops joined into a shift register: each takes D from its own logic in functional mode and SI from its neighbour in test mode.</figcaption>
+</figure>
+
+<p>Scan insertion happens during or after synthesis. The extra multiplexer costs a little area and a little timing, which is why DFT is budgeted into the flow from the start and not bolted on later.</p>
+<h2 id="not-prove">2.9 What synthesis does not prove<a class="headerlink" href="#not-prove" title="Permanent link">&para;</a></h2>
+<div class="admonition warning">
+<p class="admonition-title">Common misconception</p>
+<p>"Synthesis ran without errors, so my design is correct." Synthesis only guarantees that the netlist does the same as the RTL you gave it, bugs included. If the RTL is wrong, the gates will be faithfully and efficiently wrong.</p>
+</div>
+<p>Three different activities must not be confused. <strong>Verification</strong> (simulation, formal proofs) checks that the RTL does what you intended. <strong>Equivalence checking</strong> (LEC) proves that the netlist still matches the RTL after optimisation. Synthesis is neither of these.</p>
+<h2 id="summary">Summary<a class="headerlink" href="#summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Synthesis elaborates the RTL, maps it onto real library cells and optimises for PPA: RTL plus <code>.lib</code> plus <code>.sdc</code> gives a gate-level netlist.</li>
+<li>The <code>.lib</code> gives timing arcs (tables of delay against input slew and output load), setup and hold requirements and drive strengths; sizing is a balance, not a maximum.</li>
+<li>Setup slack is <span class="arithmatex">\((T - t_{su}) - (t_{cq} + t_{logic,max})\)</span>. Hold slack is <span class="arithmatex">\((t_{cq} + t_{logic,min}) - t_h\)</span> and does not depend on <span class="arithmatex">\(T\)</span>. The critical path sets <span class="arithmatex">\(f_{max}\)</span>.</li>
+<li>SDC states the goals (<code>create_clock</code>, input and output delays, false and multicycle paths); a Yosys script runs <code>proc</code>, <code>opt</code>, <code>techmap</code>, <code>dfflibmap</code>, <code>abc</code> and <code>write_verilog</code>.</li>
+<li>Scan chains make the manufactured chip testable. Synthesis preserves the logic; it does not check that the logic is right.</li>
+</ul>
+<h2 id="exercises">Exercises<a class="headerlink" href="#exercises" title="Permanent link">&para;</a></h2>
+<div class="admonition example">
+<p class="admonition-title">Exercise 2.1: Slack by hand</p>
+<p>A path has <span class="arithmatex">\(t_{cq} = 0.3\)</span> ns, slowest logic <span class="arithmatex">\(6.2\)</span> ns, fastest logic <span class="arithmatex">\(0.1\)</span> ns, <span class="arithmatex">\(t_{su} = 0.2\)</span> ns, <span class="arithmatex">\(t_h = 0.25\)</span> ns, and the clock is 7 ns. (a) What is the setup slack? (b) What is the hold slack? (c) Would a 10 ns clock fix either problem?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>(a) <span class="arithmatex">\((7 - 0.2) - (0.3 + 6.2) = 6.8 - 6.5 = +0.3\)</span> ns, met.
+(b) <span class="arithmatex">\((0.3 + 0.1) - 0.25 = +0.15\)</span> ns, met.
+(c) Neither fails. But note that a longer clock could only ever help setup; hold does not depend on the period.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 2.2: Maximum frequency</p>
+<p>For the path of Exercise 2.1, what is the maximum clock frequency?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p><span class="arithmatex">\(f_{max} = 1 / (0.3 + 6.2 + 0.2\ \text{ns}) = 1 / 6.7\ \text{ns} \approx 149\)</span> MHz. At 7 ns (143 MHz) the path has 0.3 ns of slack, which is exactly <span class="arithmatex">\(7 - 6.7\)</span>.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 2.3: Reading an SDC file</p>
+<p>Explain in words what each of these lines does.</p>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>name<span class="w"> </span>clk<span class="w"> </span><span class="o">-</span>period<span class="w"> </span><span class="mf">8.0</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>clk<span class="k">]</span>
+<span class="nv">set_input_delay</span><span class="w"> </span><span class="o">-</span>clock<span class="w"> </span>clk<span class="w"> </span><span class="mf">1.5</span><span class="w"> </span><span class="k">[</span><span class="nv">all_inputs</span><span class="k">]</span>
+<span class="nv">set_false_path</span><span class="w"> </span><span class="o">-</span>from<span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span>scan_en<span class="k">]</span>
+</code></pre></div>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>The first defines a clock named <code>clk</code> on port <code>clk</code> with an 8 ns period (125 MHz). The second says that every input arrives 1.5 ns after the clock edge, so only <span class="arithmatex">\(8 - 1.5 = 6.5\)</span> ns of the period remains for logic between an input and its capture register (less setup). The third tells the tool to ignore all timing paths starting at <code>scan_en</code>, so they are neither optimised nor reported. It is safe only if that signal really never matters to timing in operation.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 2.4: Which half of the check fails?</p>
+<p>A register-to-register path has <span class="arithmatex">\(t_{cq} = 0.35\)</span> ns, slowest logic 4.10 ns, fastest logic 0.20 ns, <span class="arithmatex">\(t_{su} = 0.25\)</span> ns and <span class="arithmatex">\(t_h = 0.10\)</span> ns. At <span class="arithmatex">\(T = 5.0\)</span> ns, compute the setup slack, the hold slack and <span class="arithmatex">\(f_{max}\)</span>.</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Setup: <span class="arithmatex">\((5.0 - 0.25) - (0.35 + 4.10) = 4.75 - 4.45 = +0.30\)</span> ns. Hold: <span class="arithmatex">\((0.35 + 0.20) - 0.10 = +0.45\)</span> ns. <span class="arithmatex">\(f_{max} = 1 / (0.35 + 4.10 + 0.25\ \text{ns}) = 1 / 4.70\ \text{ns} \approx 213\)</span> MHz.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 2.5: Why scan costs timing</p>
+<p>Why does replacing every flip-flop by a scan flip-flop add a little delay to the design, and why is that accepted?</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>Each scan flip-flop has a multiplexer in front of D, which adds a small delay (and area) to every register-to-register path that ends there. It is accepted because without scan a manufactured chip cannot be tested thoroughly, so defective parts would reach customers; the cost is planned for in the timing budget.</p>
+</details>
+<div class="admonition example">
+<p class="admonition-title">Exercise 2.6: The 10 ns to 8 ns experiment</p>
+<p>You tighten the clock from 10 ns to 8 ns and re-synthesise. Timing passes, but area is up 20 % and power is up too. The RTL is unchanged. Explain.</p>
+</div>
+<details class="note">
+<summary>Answer</summary>
+<p>To save 2 ns on the critical path the tool up-sized cells, added buffers and restructured logic. All of these cost area and switching energy. You moved along the PPA curve rather than getting something for free.</p>
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="the-rtl-to-gdsii-flow.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. The RTL-to-GDSII Flow">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1. The RTL-to-GDSII Flow
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="floorplanning-and-power-planning.html" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Floorplanning and Power Planning">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                3. Floorplanning and Power Planning
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      The Open Book Project: Reserve Shelf &middot;
+      <a href="../../about.html">About this library</a> &middot;
+      <a href="../../publish.html">Publish your book</a> &middot;
+      © The authors of the books
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+  
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+        <script src="../../assets/mathjax.js"></script>
+      
+        <script src="../../assets/viz.js"></script>
+      
+        <script src="../../assets/remote.js"></script>
+      
+        <script src="../../assets/scans.js"></script>
+      
+        <script src="../../assets/reader.js"></script>
+      
+        <script src="../../assets/app.js"></script>
+      
+        <script src="../../assets/slides.js"></script>
+      
+    
+  <script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+
+  </body>
+</html>
