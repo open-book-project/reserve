@@ -422,8 +422,16 @@
   }
 
   /* where a tap on a cover (or on a "Continue reading" card) takes the reader: the page last read, else the start */
-  function resumeTarget(vid) {
-    var v = findVol(vid), rec = booksRec()[vid];
+  function resumeTarget(vid, item) {
+    var v = findVol(vid), rec = booksRec()[vid], home = null;
+    if (!v && item) {
+      // a book of another shelf of the library (tools/shelves.py): resumed only inside its folder there
+      var a = item.querySelector && (item.matches && item.matches("a.vol-card") ? item : item.querySelector("a.vol-card"));
+      try { if (a) home = new URL(a.href, location.href); } catch (x) { home = null; }
+      if (!home || home.origin !== location.origin) return null;
+      var dir = home.pathname.replace(/[^\/]*$/, "");
+      return rec && rec.path && rec.path.indexOf(dir) === 0 ? { url: location.origin + rec.path, rec: rec } : null;
+    }
     if (rec && rec.path && rec.path.indexOf(ROOT_PATH) === 0 && (!v || v.pages.indexOf(rec.path.slice(ROOT_PATH.length)) >= 0)) {
       return { url: location.origin + rec.path, rec: rec };
     }
@@ -440,7 +448,7 @@
   function openBook(vid, item) {
     var look = coverLook(item || document.querySelector('.vol-item[data-vol="' + vid + '"], .pk-book[data-vol="' + vid + '"]'));
     return library().then(function () {
-      var t = resumeTarget(vid);
+      var t = resumeTarget(vid, item || document.querySelector('.vol-item[data-vol="' + vid + '"]'));
       if (!t) return false;
       sdel("sessionStorage", KEY_SUP);
       sset("sessionStorage", KEY_OPEN, "1");
@@ -492,6 +500,7 @@
       var r = all[vid], item = document.querySelector('.vol-item[data-vol="' + vid + '"]');
       if (!r || !r.path || !r.t || !item) return;
       var v = findVol(vid);
+      if (!v && !resumeTarget(vid, item)) return;              // a book of another shelf, read at an address it has left
       if (st.lib && v && r.path.indexOf(ROOT_PATH) === 0 && v.pages.indexOf(r.path.slice(ROOT_PATH.length)) < 0) return;
       list.push({ vid: vid, r: r, item: item });
     });
