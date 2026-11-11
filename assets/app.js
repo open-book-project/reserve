@@ -730,7 +730,16 @@
 
   /* ---------------------------------------------------------------- updates: "Updated - reload" */
   var wantReload = false;
+  // the shelves (front page, All books, categories, reading lists) take a new edition at once: there is nothing to lose
+  // there, and a reader should not keep seeing an old list of books; a page being read only shows the notice
+  function onShelfPage() { return !!document.querySelector(".pk-home, .vol-grid") && !document.querySelector(".pk-book[data-vol]"); }
   function showUpdate(reg) {
+    if (onShelfPage() && reg && reg.waiting) {
+      wantReload = true;
+      reg.waiting.postMessage({ type: "skip-waiting" });
+      setTimeout(function () { location.reload(); }, 3000);
+      return;
+    }
     if (document.querySelector(".bjp-toast")) return;
     var t = el("div", "bjp-toast",
       '<span class="bt-text">Updated — a new edition is ready.</span>' +
