@@ -19,7 +19,7 @@
  */
 "use strict";
 
-var VERSION = "794f2919fa35";
+var VERSION = "001804670648";
 var SHELL = ["index.html", "books.html", "about.html", "install.html", "publish.html", "offline.html", "manifest.webmanifest", "library.json", "subjects/aerospace-defence.html", "subjects/cloud-data-centres.html", "subjects/computer-architecture.html", "subjects/computer-science.html", "subjects/cyber-security.html", "subjects/databases.html", "subjects/electronics.html", "subjects/engineering.html", "subjects/index.html", "subjects/mathematics.html", "subjects/programming.html", "subjects/statistics.html", "subjects/web-development.html", "assets/app.css", "assets/app.js", "assets/extra.css", "assets/icons/apple-touch-icon.png", "assets/icons/favicon-32.png", "assets/icons/favicon.svg", "assets/icons/icon-192.png", "assets/icons/icon-512.png", "assets/icons/logo.svg", "assets/icons/maskable-512.png", "assets/images/favicon.png", "assets/javascripts/bundle.d7400e89.min.js", "assets/javascripts/workers/search.2c215733.min.js", "assets/library-data.js", "assets/mathjax.js", "assets/quiz.css", "assets/quiz.js", "assets/reader.css", "assets/reader.js", "assets/remote.css", "assets/remote.js", "assets/scans.css", "assets/scans.js", "assets/slides-deck.js", "assets/slides.css", "assets/slides.js", "assets/speak.css", "assets/speak.js", "assets/stylesheets/main.ec1eaa64.min.css", "assets/stylesheets/palette.ab4e12ef.min.css", "assets/theme.css", "assets/vendor/fonts/noto-serif-devanagari-400.woff2", "assets/vendor/fonts/noto-serif-devanagari-700.woff2", "assets/vendor/fonts/noto-serif-devanagari.OFL.txt", "assets/viz-kit.js", "assets/viz.css", "assets/viz.js"];
 var BOOKS = ["cyber/datacentre_security_ip", "science/fpga_asic_tutorial", "cyber/randomness_testing", "science/drones_missiles", "courses/web_programming", "computing/rtl_to_gdsii", "computing/ram_ddr5", "computing/asic", "cyber/trust"];                           // the books' folders, longest first
 var OTHER_SHELVES = [];                 // the folders of the library's other shelves inside this scope (their own workers)
@@ -151,7 +151,10 @@ function fallback(req, url) {
 }
 
 function cacheFirst(event, req, store, max) {
-  return matchIn(req, [SHELL_CACHE, STATIC_CACHE, KEEP_CACHE, EXT_CACHE]).then(function (hit) {
+  // the site's own style sheets and scripts are linked as assets/x.css?v=<content mark>: the copy of this edition is
+  // kept under the plain name (the caches are those of this edition only)
+  var own = new URL(req.url).origin === self.location.origin;
+  return matchIn(req, [SHELL_CACHE, STATIC_CACHE, KEEP_CACHE, EXT_CACHE], own ? { ignoreSearch: true } : undefined).then(function (hit) {
     if (hit) return hit;
     return fetch(req).then(function (res) {
       if (usable(res)) {

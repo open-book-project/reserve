@@ -271,8 +271,8 @@
 
 /* the footer of the front page */
 .pk-home-foot { margin: 2.6rem 0 0.6rem; padding: 1.2rem 0 0; border-top: 1px solid var(--pk-line); font: 0.82rem/1.5 var(--pk-ui); color: var(--pk-muted); }
-.md-typeset .pk-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem 1.6rem; margin: 0; }
-.md-typeset .pk-links a { color: var(--md-default-fg-color); font-weight: 600; }
+.md-typeset .pk-links { display: flex; flex-wrap: wrap; align-items: center; gap: 0 1.6rem; margin: 0; }
+.md-typeset .pk-links a { color: var(--md-default-fg-color); font-weight: 600; display: inline-flex; align-items: center; min-height: 44px; }   /* a comfortable target for a finger */
 .md-typeset .rd-auto-setting { display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer; margin: 0; font-size: inherit; color: inherit; }
 .md-typeset .rd-auto-setting input { width: 1.05rem; height: 1.05rem; margin: 0; accent-color: var(--pk-accent); }
 .md-typeset .bjp-lib-status { margin: 0.6rem 0 0; font-size: 0.78rem; }
@@ -372,6 +372,10 @@
 .bjp-toast .bt-close { background: transparent; color: inherit; width: 2rem; height: 2rem; display: inline-flex; align-items: center; justify-content: center; }
 .bjp-toast .bt-close svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 html.bjp-reading .bjp-toast { display: none; }
+/* where the floating Read button is shown (a chapter page on a phone), the notice sits above it instead of over it */
+@media screen and (max-width: 38em) {
+  .rd-has-reader .bjp-toast { bottom: calc(14px + 3rem + 12px + env(safe-area-inset-bottom)); }
+}
 @keyframes bjp-toast-in { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
 /* ---------- header: Back button (installed app), the offline mark, the Library button ---------- */

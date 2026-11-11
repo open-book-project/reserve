@@ -22,7 +22,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Reserve Shelf">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="application-name" content="Reserve Shelf"><script src="../../assets/library-data.js"></script><script>
+<meta name="application-name" content="Reserve Shelf"><script src="../../assets/library-data.js?v=73ed93723c"></script><script>
     (function () {
       var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
       if (!X) return;
@@ -72,16 +72,16 @@
 <title>11. The Automation Pipeline - The Open Book Project: Reserve Shelf</title>
 <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
 <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
-<link rel="stylesheet" href="../../assets/extra.css">
-<link rel="stylesheet" href="../../assets/reader.css">
-<link rel="stylesheet" href="../../assets/viz.css">
-<link rel="stylesheet" href="../../assets/app.css">
-<link rel="stylesheet" href="../../assets/theme.css">
-<link rel="stylesheet" href="../../assets/slides.css">
-<link rel="stylesheet" href="../../assets/remote.css">
-<link rel="stylesheet" href="../../assets/scans.css">
-<link rel="stylesheet" href="../../assets/speak.css">
-<link rel="stylesheet" href="../../assets/quiz.css">
+<link rel="stylesheet" href="../../assets/extra.css?v=0a7d6e933a">
+<link rel="stylesheet" href="../../assets/reader.css?v=79d652d5a1">
+<link rel="stylesheet" href="../../assets/viz.css?v=742576ed2d">
+<link rel="stylesheet" href="../../assets/app.css?v=fd7628add8">
+<link rel="stylesheet" href="../../assets/theme.css?v=8cb7797594">
+<link rel="stylesheet" href="../../assets/slides.css?v=f4839c7344">
+<link rel="stylesheet" href="../../assets/remote.css?v=23e01d7108">
+<link rel="stylesheet" href="../../assets/scans.css?v=5d48dd94b1">
+<link rel="stylesheet" href="../../assets/speak.css?v=821c3b787a">
+<link rel="stylesheet" href="../../assets/quiz.css?v=a6581401cc">
 <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
 </head>
 <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
@@ -376,9 +376,9 @@ Table of contents
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#1110-the-agent-system" class="md-nav__link">
+<a href="#1110-tools-at-each-stage" class="md-nav__link">
 <span class="md-ellipsis">
-11.10 The Agent System
+11.10 Tools at Each Stage
 </span>
 </a>
 </li>
@@ -520,9 +520,9 @@ Table of contents
 </a>
 </li>
 <li class="md-nav__item">
-<a href="#1110-the-agent-system" class="md-nav__link">
+<a href="#1110-tools-at-each-stage" class="md-nav__link">
 <span class="md-ellipsis">
-11.10 The Agent System
+11.10 Tools at Each Stage
 </span>
 </a>
 </li>
@@ -944,62 +944,48 @@ fusesoc<span class="w"> </span>list-cores<span class="w">  </span><span class="c
 <span class="p">|</span><span class="w">   </span><span class="p">|</span>--<span class="w"> </span>tcl/
 <span class="p">|</span><span class="w">       </span>+--<span class="w"> </span>common_utils.tcl<span class="w">     </span><span class="c1"># Shared Tcl procs</span>
 <span class="p">|</span><span class="w">       </span><span class="p">|</span>--<span class="w"> </span>run_sta.tcl<span class="w">          </span><span class="c1"># OpenSTA timing script</span>
-+--<span class="w"> </span>agents/<span class="w">                      </span><span class="c1"># 9 AI agent prompts</span>
-<span class="p">|</span>--<span class="w"> </span>skills/<span class="w">                      </span><span class="c1"># 30+ skill markdown files</span>
 </code></pre></div>
-<h2 id="1110-the-agent-system"><span class="secnum">11.10</span> The Agent System<a class="headerlink" href="#1110-the-agent-system" title="Permanent link">&para;</a></h2>
-<p>In addition to the scripted automation, this project includes a set of <strong>AI agents</strong> — specialised AI assistants, each with deep knowledge of one stage of the design flow:</p>
+<h2 id="1110-tools-at-each-stage"><span class="secnum">11.10</span> Tools at Each Stage<a class="headerlink" href="#1110-tools-at-each-stage" title="Permanent link">&para;</a></h2>
+<p>Each stage of the flow is wrapped in a script or a Makefile target, so the whole design can be rebuilt with one command and only the affected stages are re-run when a file changes. The table lists the kind of tool used at each stage:</p>
 <div class="tbl">
-<div class="tbl-caption"><strong>Table 11.1.</strong> AI agents in the pipeline</div>
+<div class="tbl-caption"><strong>Table 11.1.</strong> Automated tools at each stage of the flow</div>
 <div class="tbl-scroll">
 <table>
 <thead>
 <tr>
-<th style="text-align: left;"><strong>Agent</strong></th>
-<th style="text-align: left;"><strong>Responsibilities</strong></th>
+<th style="text-align: left;"><strong>Stage</strong></th>
+<th style="text-align: left;"><strong>Typical tools and automation</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>core-selector</code></td>
-<td style="text-align: left;">Recommend the right processor core given requirements</td>
+<td style="text-align: left;">Lint and simulation</td>
+<td style="text-align: left;">Verilator lint wrapper; Icarus Verilog or cocotb regression</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>rtl-design</code></td>
-<td style="text-align: left;">Write and review SystemVerilog RTL</td>
+<td style="text-align: left;">Synthesis</td>
+<td style="text-align: left;">Yosys script that writes a gate-level netlist</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>verification</code></td>
-<td style="text-align: left;">Create testbenches, cocotb tests, SVA properties</td>
+<td style="text-align: left;">Place and route</td>
+<td style="text-align: left;">OpenROAD or OpenLane, driven by a configuration file</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>fpga-proto</code></td>
-<td style="text-align: left;">Configure Vivado/Quartus, generate XDC/SDC constraints</td>
+<td style="text-align: left;">Timing analysis</td>
+<td style="text-align: left;">OpenSTA script run over the routed design</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>synthesis</code></td>
-<td style="text-align: left;">Run Yosys/Vivado synthesis, interpret area reports</td>
+<td style="text-align: left;">Signoff</td>
+<td style="text-align: left;">Magic and Netgen for DRC and LVS; KLayout for viewing GDSII</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>physical-design</code></td>
-<td style="text-align: left;">Drive OpenROAD floorplan through routing</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>signoff</code></td>
-<td style="text-align: left;">Run DRC/LVS/STA, interpret violations</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>fabrication</code></td>
-<td style="text-align: left;">Prepare tapeout package, Efabless submission</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>ip-generation</code></td>
-<td style="text-align: left;">Generate full IP blocks from YAML specification</td>
+<td style="text-align: left;">FPGA build</td>
+<td style="text-align: left;">Vivado or Quartus Tcl scripts that generate a bitstream</td>
 </tr>
 </tbody>
 </table>
 </div></div>
-<p>Each agent is invoked with a <strong>skill</strong> — a markdown file containing the agent’s prompt and tool invocations. Skills are listed in <code>SKILLS.md</code> and invoked with <code>/skill-name</code>.</p>
+<p>Because every stage is scripted, the same flow runs unchanged on a developer’s laptop and in a continuous-integration service, which is what makes the results reproducible.</p>
 <h2 id="1111-summary"><span class="secnum">11.11</span> Summary<a class="headerlink" href="#1111-summary" title="Permanent link">&para;</a></h2>
 <ul>
 <li>
@@ -1018,7 +1004,7 @@ fusesoc<span class="w"> </span>list-cores<span class="w">  </span><span class="c
 <p>FuseSoC manages IP dependencies; GitHub Actions runs the full pipeline on every commit.</p>
 </li>
 <li>
-<p>Nine specialised AI agents cover every stage of the flow, invoked via skill files.</p>
+<p>Every stage of the flow is wrapped in a script, so one command can run the whole flow.</p>
 </li>
 </ul>
 <div class="admonition tip box-bxtip kind-teaching">
@@ -1047,7 +1033,7 @@ fusesoc<span class="w"> </span>list-cores<span class="w">  </span><span class="c
 <p>Check DRC/LVS with Magic + Netgen</p>
 </li>
 <li>
-<p>Package as GDSII and submit to Efabless MPW</p>
+<p>Package as GDSII and submit to a shuttle service (Efabless MPW, historical)</p>
 </li>
 </ol>
 <p>The entire flow runs with a single <code>make ip IP=myip TARGET=asic PDK=sky130</code>.</p>
@@ -1113,15 +1099,15 @@ Material for MkDocs
 </div>
 <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
 <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
-<script src="../../assets/mathjax.js"></script>
-<script src="../../assets/viz.js"></script>
-<script src="../../assets/remote.js"></script>
-<script src="../../assets/scans.js"></script>
-<script src="../../assets/reader.js"></script>
-<script src="../../assets/app.js"></script>
-<script src="../../assets/slides.js"></script>
-<script src="../../assets/speak.js"></script>
-<script src="../../assets/quiz.js"></script>
+<script src="../../assets/mathjax.js?v=773adb7420"></script>
+<script src="../../assets/viz.js?v=97faa5745a"></script>
+<script src="../../assets/remote.js?v=cf7f07b4ba"></script>
+<script src="../../assets/scans.js?v=dbf1b7d239"></script>
+<script src="../../assets/reader.js?v=96514a4aef"></script>
+<script src="../../assets/app.js?v=29ce824190"></script>
+<script src="../../assets/slides.js?v=dca590e2bf"></script>
+<script src="../../assets/speak.js?v=c93b47b712"></script>
+<script src="../../assets/quiz.js?v=6eeef75b6d"></script>
 <script>
     /* offline reading: the service worker at the site root (its scope is the whole site) */
     if ("serviceWorker" in navigator && window.isSecureContext) {
