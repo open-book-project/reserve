@@ -1,0 +1,805 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+<meta name="author" content="The Open Book Project">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://open-book-project.github.io/reserve/science/fpga_asic_tutorial/ch08-synthesis.html">
+<link rel="prev" href="ch07-verification.html">
+<link rel="next" href="ch09-physical-design.html">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap"></noscript>
+<link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="../../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="Reserve Shelf"><script src="../../assets/library-data.js"></script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+<script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+<title>8. Synthesis - The Open Book Project: Reserve Shelf</title>
+<link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+<link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+<link rel="stylesheet" href="../../assets/extra.css">
+<link rel="stylesheet" href="../../assets/reader.css">
+<link rel="stylesheet" href="../../assets/viz.css">
+<link rel="stylesheet" href="../../assets/app.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/slides.css">
+<link rel="stylesheet" href="../../assets/remote.css">
+<link rel="stylesheet" href="../../assets/scans.css">
+<link rel="stylesheet" href="../../assets/speak.css">
+<link rel="stylesheet" href="../../assets/quiz.css">
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a href="#81-what-happens-during-synthesis" class="md-skip">
+Skip to content
+</a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav class="md-header__inner md-grid" aria-label="Header">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+The Open Book Project: Reserve Shelf
+</span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+8. Synthesis
+</span>
+</div>
+</div>
+</div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+</a>
+<a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+</a>
+<form class="md-header__option" data-md-component="palette">
+<input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+<label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+</label>
+<input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+<label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+<label class="md-search__icon md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</label>
+<nav class="md-search__options" aria-label="Search">
+<button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+Initializing search
+</div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+The Open Book Project: Reserve Shelf
+</label>
+<ul class="md-nav__list" data-md-scrollfix>
+<li class="md-nav__item bjp-nav-all">
+<a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+<span class="md-ellipsis">All books</span>
+</a>
+</li>
+<li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">FPGA and ASIC Design</span></li>
+<li class="md-nav__item">
+<a href="index.html" class="md-nav__link">
+<span class="md-ellipsis">
+Overview and preface
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch01-introduction.html" class="md-nav__link">
+<span class="md-ellipsis">
+1. Introduction
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch02-digital-design-fundamentals.html" class="md-nav__link">
+<span class="md-ellipsis">
+2. Digital Design Fundamentals
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch03-hardware-description-languages.html" class="md-nav__link">
+<span class="md-ellipsis">
+3. Hardware Description Languages
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch04-processor-cores.html" class="md-nav__link">
+<span class="md-ellipsis">
+4. Processor Cores
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch05-bus-protocols-and-interconnects.html" class="md-nav__link">
+<span class="md-ellipsis">
+5. Bus Protocols and Interconnects
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch06-fpga-prototyping.html" class="md-nav__link">
+<span class="md-ellipsis">
+6. FPGA Prototyping
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch07-verification.html" class="md-nav__link">
+<span class="md-ellipsis">
+7. Verification
+</span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+8. Synthesis
+</span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a href="ch08-synthesis.html" class="md-nav__link md-nav__link--active">
+<span class="md-ellipsis">
+8. Synthesis
+</span>
+</a>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#81-what-happens-during-synthesis" class="md-nav__link">
+<span class="md-ellipsis">
+8.1 What Happens During Synthesis
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#82-yosys-open-source-synthesis" class="md-nav__link">
+<span class="md-ellipsis">
+8.2 Yosys — Open-Source Synthesis
+</span>
+</a>
+<nav class="md-nav" aria-label="8.2 Yosys — Open-Source Synthesis">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#821-sky130-synthesis-script" class="md-nav__link">
+<span class="md-ellipsis">
+8.2.1 Sky130 Synthesis Script
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#822-running-yosys" class="md-nav__link">
+<span class="md-ellipsis">
+8.2.2 Running Yosys
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#823-reading-the-statistics-output" class="md-nav__link">
+<span class="md-ellipsis">
+8.2.3 Reading the Statistics Output
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#83-vivado-synthesis-fpga" class="md-nav__link">
+<span class="md-ellipsis">
+8.3 Vivado Synthesis (FPGA)
+</span>
+</a>
+<nav class="md-nav" aria-label="8.3 Vivado Synthesis (FPGA)">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#831-synthesis-directives" class="md-nav__link">
+<span class="md-ellipsis">
+8.3.1 Synthesis Directives
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#84-understanding-the-netlist" class="md-nav__link">
+<span class="md-ellipsis">
+8.4 Understanding the Netlist
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#85-liberty-files-describing-standard-cells" class="md-nav__link">
+<span class="md-ellipsis">
+8.5 Liberty Files — Describing Standard Cells
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#86-abc-the-logic-optimiser" class="md-nav__link">
+<span class="md-ellipsis">
+8.6 ABC — The Logic Optimiser
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#87-summary" class="md-nav__link">
+<span class="md-ellipsis">
+8.7 Summary
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="ch09-physical-design.html" class="md-nav__link">
+<span class="md-ellipsis">
+9. Physical Design
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch10-pdks-and-fabrication.html" class="md-nav__link">
+<span class="md-ellipsis">
+10. PDKs and Fabrication
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch11-the-automation-pipeline.html" class="md-nav__link">
+<span class="md-ellipsis">
+11. The Automation Pipeline
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-a-quick-reference-commands.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix A: Quick Reference Commands
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-b-glossary.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix B: Glossary
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-c-further-reading.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix C: Further Reading
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#81-what-happens-during-synthesis" class="md-nav__link">
+<span class="md-ellipsis">
+8.1 What Happens During Synthesis
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#82-yosys-open-source-synthesis" class="md-nav__link">
+<span class="md-ellipsis">
+8.2 Yosys — Open-Source Synthesis
+</span>
+</a>
+<nav class="md-nav" aria-label="8.2 Yosys — Open-Source Synthesis">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#821-sky130-synthesis-script" class="md-nav__link">
+<span class="md-ellipsis">
+8.2.1 Sky130 Synthesis Script
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#822-running-yosys" class="md-nav__link">
+<span class="md-ellipsis">
+8.2.2 Running Yosys
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#823-reading-the-statistics-output" class="md-nav__link">
+<span class="md-ellipsis">
+8.2.3 Reading the Statistics Output
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#83-vivado-synthesis-fpga" class="md-nav__link">
+<span class="md-ellipsis">
+8.3 Vivado Synthesis (FPGA)
+</span>
+</a>
+<nav class="md-nav" aria-label="8.3 Vivado Synthesis (FPGA)">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#831-synthesis-directives" class="md-nav__link">
+<span class="md-ellipsis">
+8.3.1 Synthesis Directives
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#84-understanding-the-netlist" class="md-nav__link">
+<span class="md-ellipsis">
+8.4 Understanding the Netlist
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#85-liberty-files-describing-standard-cells" class="md-nav__link">
+<span class="md-ellipsis">
+8.5 Liberty Files — Describing Standard Cells
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#86-abc-the-logic-optimiser" class="md-nav__link">
+<span class="md-ellipsis">
+8.6 ABC — The Logic Optimiser
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#87-summary" class="md-nav__link">
+<span class="md-ellipsis">
+8.7 Summary
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="ch-synthesis">Chapter 8: Synthesis<a class="headerlink" href="#ch-synthesis" title="Permanent link">&para;</a></h1>
+<p><strong>Synthesis</strong> is the translation of your RTL (register-transfer level) description into a <strong>gate-level netlist</strong> — a list of primitive logic gates, flip-flops, and multiplexers connected by wires, taken from a technology library.</p>
+<div class="admonition success box-bxinsight kind-insight">
+<p class="admonition-title">Analogy: Synthesis is Like a Compiler</p>
+<p>Just as a C compiler turns your source code into machine instructions for a specific CPU, a synthesis tool turns your SystemVerilog into logic gates for a specific technology (FPGA LUTs or ASIC standard cells). The <strong>synthesis tool is smarter than a compiler</strong>: it re-arranges, shares, and optimises logic to meet your timing and area targets.</p>
+</div>
+<h2 id="81-what-happens-during-synthesis"><span class="secnum">8.1</span> What Happens During Synthesis<a class="headerlink" href="#81-what-happens-during-synthesis" title="Permanent link">&para;</a></h2>
+<p>Synthesis consists of three main steps:</p>
+<figure class="fig fig-diagram">
+<img class="tikz" src="img/tikz-b47105691480.svg" alt="Three steps of RTL synthesis" loading="lazy" width="299" height="210">
+<figcaption><strong>Figure 8.1.</strong> Three steps of RTL synthesis</figcaption>
+</figure>
+<dl>
+<dt>Elaboration</dt>
+<dd>The tool reads your SystemVerilog, resolves parameters, expands <code>generate</code> blocks, and builds an internal representation (a network of boolean functions).</dd>
+<dt>Technology Mapping</dt>
+<dd>The tool maps each boolean function to available primitives: LUTs for FPGAs, or standard cells (NAND2, DFF, MUX) for ASICs. This step reads the <strong>liberty file</strong> (.lib) which describes every cell’s function, timing, and power.</dd>
+<dt>Optimisation</dt>
+<dd>The tool applies algebraic transformations, logic sharing, retiming (moving registers to shorten critical paths), and constant propagation to meet timing targets while minimising area and power.</dd>
+</dl>
+<h2 id="82-yosys-open-source-synthesis"><span class="secnum">8.2</span> Yosys — Open-Source Synthesis<a class="headerlink" href="#82-yosys-open-source-synthesis" title="Permanent link">&para;</a></h2>
+<p><strong>Yosys</strong> is the primary open-source synthesis tool, used for both FPGA and ASIC flows. It supports SystemVerilog (via the <code>read_verilog -sv</code> command) and has backends for Sky130, GF180, and generic gates.</p>
+<h3 id="821-sky130-synthesis-script"><span class="secnum">8.2.1</span> Sky130 Synthesis Script<a class="headerlink" href="#821-sky130-synthesis-script" title="Permanent link">&para;</a></h3>
+<p>The file <code>eda/yosys/synth_sky130.ys</code> synthesises a design for Sky130A:</p>
+<div class="language-text highlight"><pre><span></span><code># Read the design
+read_verilog -sv rtl-templates/peripherals/uart_16550.sv
+
+# Set the top-level module
+hierarchy -check -top uart_16550
+
+# Generic synthesis passes
+proc        # Convert always blocks to logic
+flatten     # Inline all module hierarchy
+tribuf      # Handle tri-state buffers
+opt_clean   # Remove unused cells and signals
+opt         # Boolean optimisation
+fsm         # FSM optimisation (encode states better)
+opt         # Optimise again after FSM changes
+memory      # Infer memories (SRAMs, FIFOs)
+opt_clean
+
+# Technology mapping
+# Step 1: Map flip-flops to Sky130 DFF cells
+dfflibmap -liberty $PDK_ROOT/sky130A/libs.ref/sky130_fd_sc_hd/lib/\
+    sky130_fd_sc_hd__tt_025C_1v80.lib
+
+# Step 2: Map logic to Sky130 standard cells via ABC
+abc -liberty $PDK_ROOT/sky130A/libs.ref/sky130_fd_sc_hd/lib/\
+    sky130_fd_sc_hd__tt_025C_1v80.lib \
+    -constr eda/yosys/sky130_abc.constr
+
+# Final cleanup
+opt_clean
+clean
+
+# Write outputs
+write_verilog -noattr gdsii/outputs/uart_16550_netlist.v
+stat            # Print area statistics
+</code></pre></div>
+<h3 id="822-running-yosys"><span class="secnum">8.2.2</span> Running Yosys<a class="headerlink" href="#822-running-yosys" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Generic synthesis (technology-independent, good for quick checks)</span>
+bash<span class="w"> </span>scripts/bash/synth_yosys.sh<span class="w"> </span>uart_16550<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>rtl-templates/peripherals/uart_16550.sv<span class="w"> </span>generic
+
+<span class="c1"># Sky130 ASIC synthesis</span>
+bash<span class="w"> </span>scripts/bash/synth_yosys.sh<span class="w"> </span>uart_16550<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>rtl-templates/peripherals/uart_16550.sv<span class="w"> </span>sky130
+
+<span class="c1"># Direct Yosys invocation</span>
+yosys<span class="w"> </span>-s<span class="w"> </span>eda/yosys/synth_sky130.ys
+</code></pre></div>
+<h3 id="823-reading-the-statistics-output"><span class="secnum">8.2.3</span> Reading the Statistics Output<a class="headerlink" href="#823-reading-the-statistics-output" title="Permanent link">&para;</a></h3>
+<p>After synthesis, Yosys prints a statistics summary:</p>
+<div class="language-text highlight"><pre><span></span><code>=== uart_16550 ===
+
+   Number of wires:               1234
+   Number of wire bits:           5678
+   Number of public wires:          45
+   Number of cells:               812
+     sky130_fd_sc_hd__a21oi_2      48    &lt;- AND-OR-INVERT gate
+     sky130_fd_sc_hd__dfxtp_2     216    &lt;- D flip-flop
+     sky130_fd_sc_hd__inv_2        89    &lt;- Inverter
+     sky130_fd_sc_hd__mux2_4       34    &lt;- 2-input mux
+     sky130_fd_sc_hd__nand2_4      78    -- and more...
+
+   Chip area for module 'uart_16550': 47,832 um^2
+   (approx. 0.048 mm^2 in Sky130A)
+</code></pre></div>
+<p><strong>Interpreting the numbers:</strong></p>
+<ul>
+<li>
+<p>The 216 DFF cells correspond to the flip-flops in the UART’s TX/RX FIFOs, state machines, and registers.</p>
+</li>
+<li>
+<p>The 48 mm<span class="arithmatex">\(^2\)</span> area is about 6.9 mm <span class="arithmatex">\(\times\)</span> 6.9 mm — tiny compared to the full Caravel user project area of 2.65 mm <span class="arithmatex">\(\times\)</span> 2.92 mm.</p>
+</li>
+<li>
+<p>The cell count (812) is a measure of <strong>design complexity</strong>. A simple processor like PicoRV32 is <span class="arithmatex">\(\sim\)</span>2500 cells; a CVA6 is <span class="arithmatex">\(\sim\)</span>100,000 cells.</p>
+</li>
+</ul>
+<h2 id="83-vivado-synthesis-fpga"><span class="secnum">8.3</span> Vivado Synthesis (FPGA)<a class="headerlink" href="#83-vivado-synthesis-fpga" title="Permanent link">&para;</a></h2>
+<p>For Xilinx FPGAs, Vivado’s synthesis maps to LUTs instead of standard cells. The relevant commands are inside <code>fpga/xilinx-artix7/build_arty_a7.tcl</code>:</p>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nv">synth_design</span><span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-top</span><span class="w"> </span>uart_16550<span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-part</span><span class="w"> </span>xc7a35ticsg324-1L<span class="w"> </span><span class="err">\</span><span class="w">      </span><span class="err">#</span><span class="w"> </span>Target<span class="w"> </span>device
+<span class="w">    </span><span class="nv">-flatten_hierarchy</span><span class="w"> </span>rebuilt<span class="w"> </span><span class="err">\</span><span class="w">   </span><span class="err">#</span><span class="w"> </span>Flatten<span class="w"> </span>for<span class="w"> </span>optimisation
+<span class="w">    </span><span class="nv">-fsm_extraction</span><span class="w"> </span>one_hot<span class="w"> </span><span class="err">\</span><span class="w">      </span><span class="err">#</span><span class="w"> </span>One-hot<span class="w"> </span>FSM<span class="w"> </span>encoding
+<span class="w">    </span><span class="nv">-directive</span><span class="w"> </span>PerformanceOptimized<span class="w"> </span><span class="err">#</span><span class="w"> </span>Prioritise<span class="w"> </span>speed<span class="w"> </span>over<span class="w"> </span>area
+</code></pre></div>
+<h3 id="831-synthesis-directives"><span class="secnum">8.3.1</span> Synthesis Directives<a class="headerlink" href="#831-synthesis-directives" title="Permanent link">&para;</a></h3>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 8.1.</strong> Vivado synth_design directives</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Directive</strong></th>
+<th style="text-align: left;"><strong>Effect</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>Default</code></td>
+<td style="text-align: left;">Balanced speed and area</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>PerformanceOptimized</code></td>
+<td style="text-align: left;">Maximum timing performance, ignores area</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>AreaOptimized_medium</code></td>
+<td style="text-align: left;">Reduce LUT count at the cost of timing</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>RuntimeOptimized</code></td>
+<td style="text-align: left;">Fast synthesis for quick checks (less optimal result)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>AlternateRoutability</code></td>
+<td style="text-align: left;">Change netlist to improve place-and-route</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<h2 id="84-understanding-the-netlist"><span class="secnum">8.4</span> Understanding the Netlist<a class="headerlink" href="#84-understanding-the-netlist" title="Permanent link">&para;</a></h2>
+<p>After synthesis, you have a gate-level netlist. Here is a tiny fragment of what the UART FSM looks like after mapping to Sky130A cells:</p>
+<div class="language-verilog highlight"><pre><span></span><code><span class="c1">// Auto-generated by Yosys --- do not edit!</span>
+<span class="c1">// This is what the synthesis tool produces from your FSM code.</span>
+
+<span class="c1">// Flip-flop for state bit [0]</span>
+<span class="n">sky130_fd_sc_hd__dfxtp_2</span><span class="w"> </span><span class="n">\tx_state_reg[0]</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">.</span><span class="n">D</span><span class="w">  </span><span class="p">(</span><span class="n">\tx_state[0]$next</span><span class="w"> </span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Q</span><span class="w">  </span><span class="p">(</span><span class="n">tx_state</span><span class="p">[</span><span class="mh">0</span><span class="p">]),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">CLK</span><span class="p">(</span><span class="n">clk</span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// NAND gate for next-state logic</span>
+<span class="n">sky130_fd_sc_hd__nand2_4</span><span class="w"> </span><span class="n">\tx_nxt[0]</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">.</span><span class="n">A</span><span class="p">(</span><span class="n">tx_state</span><span class="p">[</span><span class="mh">1</span><span class="p">]),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">B</span><span class="p">(</span><span class="n">\baud_tick</span><span class="w"> </span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">Y</span><span class="p">(</span><span class="n">\tx_state[0]$next_n</span><span class="w"> </span><span class="p">)</span>
+<span class="p">);</span>
+
+<span class="c1">// Inverter</span>
+<span class="n">sky130_fd_sc_hd__inv_2</span><span class="w"> </span><span class="n">\tx_inv[0]</span><span class="w"> </span><span class="p">(</span>
+<span class="w">    </span><span class="p">.</span><span class="n">A</span><span class="p">(</span><span class="n">\tx_state[0]$next_n</span><span class="w"> </span><span class="p">),</span>
+<span class="w">    </span><span class="p">.</span><span class="n">X</span><span class="p">(</span><span class="n">\tx_state[0]$next</span><span class="w"> </span><span class="p">)</span>
+<span class="p">);</span>
+</code></pre></div>
+<p>This is not intended to be human-readable — it is the input to the physical design tools.</p>
+<h2 id="85-liberty-files-describing-standard-cells"><span class="secnum">8.5</span> Liberty Files — Describing Standard Cells<a class="headerlink" href="#85-liberty-files-describing-standard-cells" title="Permanent link">&para;</a></h2>
+<p>The <strong>liberty file</strong> (.lib) is the synthesis tool’s bible for a given technology. It describes every cell:</p>
+<div class="language-text highlight"><pre><span></span><code>cell (sky130_fd_sc_hd__nand2_4) {
+    area : 3.745;              /* Cell area in um^2 */
+    cell_leakage_power : 0.012; /* Static power in uW */
+
+    pin (A) { direction : input; }
+    pin (B) { direction : input; }
+    pin (Y) {
+        direction    : output;
+        function     : "!(A B)";   /* Y = NOT(A AND B) */
+        timing () {
+            related_pin       : "A";
+            cell_rise (template_7x7) { /* Lookup table for
+                values("0.0128, 0.0322, ..."); /* rise delay */
+            }
+            cell_fall (template_7x7) { ... }
+        }
+    }
+}
+</code></pre></div>
+<p>The timing tables allow the synthesis (and later the STA) tool to calculate the exact propagation delay through any combination of cells.</p>
+<h2 id="86-abc-the-logic-optimiser"><span class="secnum">8.6</span> ABC — The Logic Optimiser<a class="headerlink" href="#86-abc-the-logic-optimiser" title="Permanent link">&para;</a></h2>
+<p><strong>ABC</strong> (A System for Sequential Synthesis and Verification) is the optimisation engine inside Yosys. It applies hundreds of Boolean optimisation passes to minimise the number of cells while meeting timing constraints:</p>
+<div class="language-text highlight"><pre><span></span><code># Tells ABC that the target clock period is 10 ns (100 MHz)
+# so it knows which paths are critical
+set_driving_cell sky130_fd_sc_hd__buf_4
+
+# Maximum output load
+set_load 0.5
+
+# Target clock period for timing-driven optimisation
+clock 10.0
+</code></pre></div>
+<h2 id="87-summary"><span class="secnum">8.7</span> Summary<a class="headerlink" href="#87-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>Synthesis translates RTL (SystemVerilog) into a gate netlist.</p>
+</li>
+<li>
+<p><strong>Yosys</strong> is the open-source synthesis tool used for Sky130/GF180 ASIC flows.</p>
+</li>
+<li>
+<p><strong>Vivado synthesis</strong> maps to Xilinx LUTs for FPGA targets.</p>
+</li>
+<li>
+<p>The <strong>liberty file</strong> (.lib) describes cell timing, area, and power.</p>
+</li>
+<li>
+<p><strong>ABC</strong> is the core logic optimiser — it minimises cells while meeting the target clock period.</p>
+</li>
+<li>
+<p>After synthesis you have a <strong>gate netlist</strong> — the input to physical design (<a href="ch09-physical-design.html#ch-pnr">Chapter 9</a>).</p>
+</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button type="button" class="md-top md-icon" data-md-component="top" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+Back to top
+</button>
+</main>
+<footer class="md-footer">
+<nav class="md-footer__inner md-grid" aria-label="Footer" >
+<a href="ch07-verification.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. Verification">
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Previous
+</span>
+<div class="md-ellipsis">
+7. Verification
+</div>
+</div>
+</a>
+<a href="ch09-physical-design.html" class="md-footer__link md-footer__link--next" aria-label="Next: 9. Physical Design">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Next
+</span>
+<div class="md-ellipsis">
+9. Physical Design
+</div>
+</div>
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+The Open Book Project: Reserve Shelf &middot;
+<a href="../../about.html">About this library</a> &middot;
+<a href="../../publish.html">Publish your book</a> &middot;
+© The authors of the books
+</div>
+Made with
+<a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+Material for MkDocs
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+<script src="../../assets/mathjax.js"></script>
+<script src="../../assets/viz.js"></script>
+<script src="../../assets/remote.js"></script>
+<script src="../../assets/scans.js"></script>
+<script src="../../assets/reader.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/slides.js"></script>
+<script src="../../assets/speak.js"></script>
+<script src="../../assets/quiz.js"></script>
+<script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>

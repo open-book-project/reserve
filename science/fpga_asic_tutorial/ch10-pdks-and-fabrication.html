@@ -1,0 +1,1254 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+<meta name="author" content="The Open Book Project">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://open-book-project.github.io/reserve/science/fpga_asic_tutorial/ch10-pdks-and-fabrication.html">
+<link rel="prev" href="ch09-physical-design.html">
+<link rel="next" href="ch11-the-automation-pipeline.html">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap"></noscript>
+<link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="../../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="Reserve Shelf"><script src="../../assets/library-data.js"></script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+<script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+<title>10. PDKs and Fabrication - The Open Book Project: Reserve Shelf</title>
+<link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+<link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+<link rel="stylesheet" href="../../assets/extra.css">
+<link rel="stylesheet" href="../../assets/reader.css">
+<link rel="stylesheet" href="../../assets/viz.css">
+<link rel="stylesheet" href="../../assets/app.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/slides.css">
+<link rel="stylesheet" href="../../assets/remote.css">
+<link rel="stylesheet" href="../../assets/scans.css">
+<link rel="stylesheet" href="../../assets/speak.css">
+<link rel="stylesheet" href="../../assets/quiz.css">
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a href="#101-the-three-pdks-used-in-this-project" class="md-skip">
+Skip to content
+</a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav class="md-header__inner md-grid" aria-label="Header">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+The Open Book Project: Reserve Shelf
+</span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+10. PDKs and Fabrication
+</span>
+</div>
+</div>
+</div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+</a>
+<a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+</a>
+<form class="md-header__option" data-md-component="palette">
+<input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+<label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+</label>
+<input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+<label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+<label class="md-search__icon md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</label>
+<nav class="md-search__options" aria-label="Search">
+<button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+Initializing search
+</div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+The Open Book Project: Reserve Shelf
+</label>
+<ul class="md-nav__list" data-md-scrollfix>
+<li class="md-nav__item bjp-nav-all">
+<a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+<span class="md-ellipsis">All books</span>
+</a>
+</li>
+<li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">FPGA and ASIC Design</span></li>
+<li class="md-nav__item">
+<a href="index.html" class="md-nav__link">
+<span class="md-ellipsis">
+Overview and preface
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch01-introduction.html" class="md-nav__link">
+<span class="md-ellipsis">
+1. Introduction
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch02-digital-design-fundamentals.html" class="md-nav__link">
+<span class="md-ellipsis">
+2. Digital Design Fundamentals
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch03-hardware-description-languages.html" class="md-nav__link">
+<span class="md-ellipsis">
+3. Hardware Description Languages
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch04-processor-cores.html" class="md-nav__link">
+<span class="md-ellipsis">
+4. Processor Cores
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch05-bus-protocols-and-interconnects.html" class="md-nav__link">
+<span class="md-ellipsis">
+5. Bus Protocols and Interconnects
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch06-fpga-prototyping.html" class="md-nav__link">
+<span class="md-ellipsis">
+6. FPGA Prototyping
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch07-verification.html" class="md-nav__link">
+<span class="md-ellipsis">
+7. Verification
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch08-synthesis.html" class="md-nav__link">
+<span class="md-ellipsis">
+8. Synthesis
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch09-physical-design.html" class="md-nav__link">
+<span class="md-ellipsis">
+9. Physical Design
+</span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+10. PDKs and Fabrication
+</span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a href="ch10-pdks-and-fabrication.html" class="md-nav__link md-nav__link--active">
+<span class="md-ellipsis">
+10. PDKs and Fabrication
+</span>
+</a>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#101-the-three-pdks-used-in-this-project" class="md-nav__link">
+<span class="md-ellipsis">
+10.1 The Three PDKs Used in This Project
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#102-what-is-inside-a-pdk" class="md-nav__link">
+<span class="md-ellipsis">
+10.2 What Is Inside a PDK?
+</span>
+</a>
+<nav class="md-nav" aria-label="10.2 What Is Inside a PDK?">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1021-standard-cell-library" class="md-nav__link">
+<span class="md-ellipsis">
+10.2.1 Standard Cell Library
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1022-design-rule-check-drc-rules" class="md-nav__link">
+<span class="md-ellipsis">
+10.2.2 Design Rule Check (DRC) Rules
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1023-layout-vs-schematic-lvs" class="md-nav__link">
+<span class="md-ellipsis">
+10.2.3 Layout vs. Schematic (LVS)
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#sec-sky130" class="md-nav__link">
+<span class="md-ellipsis">
+10.3 Sky130A — The Free 130nm PDK
+</span>
+</a>
+<nav class="md-nav" aria-label="10.3 Sky130A — The Free 130nm PDK">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1031-layer-stack" class="md-nav__link">
+<span class="md-ellipsis">
+10.3.1 Layer Stack
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1032-setting-up-the-pdk" class="md-nav__link">
+<span class="md-ellipsis">
+10.3.2 Setting Up the PDK
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#104-gf180mcu-globalfoundries-180nm" class="md-nav__link">
+<span class="md-ellipsis">
+10.4 GF180MCU — GlobalFoundries 180nm
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#sec-asap7" class="md-nav__link">
+<span class="md-ellipsis">
+10.5 ASAP7 — Academic 7nm PDK
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#sec-tapeout" class="md-nav__link">
+<span class="md-ellipsis">
+10.6 The Tapeout Process
+</span>
+</a>
+<nav class="md-nav" aria-label="10.6 The Tapeout Process">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1061-steps-to-tapeout" class="md-nav__link">
+<span class="md-ellipsis">
+10.6.1 Steps to Tapeout
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1062-corner-analysis" class="md-nav__link">
+<span class="md-ellipsis">
+10.6.2 Corner Analysis
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#sec-efabless" class="md-nav__link">
+<span class="md-ellipsis">
+10.7 Efabless and the MPW Shuttle
+</span>
+</a>
+<nav class="md-nav" aria-label="10.7 Efabless and the MPW Shuttle">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1071-the-caravel-harness" class="md-nav__link">
+<span class="md-ellipsis">
+10.7.1 The Caravel Harness
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1072-submitting-to-mpw" class="md-nav__link">
+<span class="md-ellipsis">
+10.7.2 Submitting to MPW
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#108-reading-a-gdsii-file" class="md-nav__link">
+<span class="md-ellipsis">
+10.8 Reading a GDSII File
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#109-metal-fill-and-density-rules" class="md-nav__link">
+<span class="md-ellipsis">
+10.9 Metal Fill and Density Rules
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1010-the-signoff-checklist" class="md-nav__link">
+<span class="md-ellipsis">
+10.10 The Signoff Checklist
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1011-summary" class="md-nav__link">
+<span class="md-ellipsis">
+10.11 Summary
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="ch11-the-automation-pipeline.html" class="md-nav__link">
+<span class="md-ellipsis">
+11. The Automation Pipeline
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-a-quick-reference-commands.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix A: Quick Reference Commands
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-b-glossary.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix B: Glossary
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-c-further-reading.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix C: Further Reading
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#101-the-three-pdks-used-in-this-project" class="md-nav__link">
+<span class="md-ellipsis">
+10.1 The Three PDKs Used in This Project
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#102-what-is-inside-a-pdk" class="md-nav__link">
+<span class="md-ellipsis">
+10.2 What Is Inside a PDK?
+</span>
+</a>
+<nav class="md-nav" aria-label="10.2 What Is Inside a PDK?">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1021-standard-cell-library" class="md-nav__link">
+<span class="md-ellipsis">
+10.2.1 Standard Cell Library
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1022-design-rule-check-drc-rules" class="md-nav__link">
+<span class="md-ellipsis">
+10.2.2 Design Rule Check (DRC) Rules
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1023-layout-vs-schematic-lvs" class="md-nav__link">
+<span class="md-ellipsis">
+10.2.3 Layout vs. Schematic (LVS)
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#sec-sky130" class="md-nav__link">
+<span class="md-ellipsis">
+10.3 Sky130A — The Free 130nm PDK
+</span>
+</a>
+<nav class="md-nav" aria-label="10.3 Sky130A — The Free 130nm PDK">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1031-layer-stack" class="md-nav__link">
+<span class="md-ellipsis">
+10.3.1 Layer Stack
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1032-setting-up-the-pdk" class="md-nav__link">
+<span class="md-ellipsis">
+10.3.2 Setting Up the PDK
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#104-gf180mcu-globalfoundries-180nm" class="md-nav__link">
+<span class="md-ellipsis">
+10.4 GF180MCU — GlobalFoundries 180nm
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#sec-asap7" class="md-nav__link">
+<span class="md-ellipsis">
+10.5 ASAP7 — Academic 7nm PDK
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#sec-tapeout" class="md-nav__link">
+<span class="md-ellipsis">
+10.6 The Tapeout Process
+</span>
+</a>
+<nav class="md-nav" aria-label="10.6 The Tapeout Process">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1061-steps-to-tapeout" class="md-nav__link">
+<span class="md-ellipsis">
+10.6.1 Steps to Tapeout
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1062-corner-analysis" class="md-nav__link">
+<span class="md-ellipsis">
+10.6.2 Corner Analysis
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#sec-efabless" class="md-nav__link">
+<span class="md-ellipsis">
+10.7 Efabless and the MPW Shuttle
+</span>
+</a>
+<nav class="md-nav" aria-label="10.7 Efabless and the MPW Shuttle">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#1071-the-caravel-harness" class="md-nav__link">
+<span class="md-ellipsis">
+10.7.1 The Caravel Harness
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1072-submitting-to-mpw" class="md-nav__link">
+<span class="md-ellipsis">
+10.7.2 Submitting to MPW
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#108-reading-a-gdsii-file" class="md-nav__link">
+<span class="md-ellipsis">
+10.8 Reading a GDSII File
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#109-metal-fill-and-density-rules" class="md-nav__link">
+<span class="md-ellipsis">
+10.9 Metal Fill and Density Rules
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1010-the-signoff-checklist" class="md-nav__link">
+<span class="md-ellipsis">
+10.10 The Signoff Checklist
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#1011-summary" class="md-nav__link">
+<span class="md-ellipsis">
+10.11 Summary
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="ch-pdk">Chapter 10: PDKs and Fabrication<a class="headerlink" href="#ch-pdk" title="Permanent link">&para;</a></h1>
+<p>Every time a chip designer runs synthesis or place-and-route, the tools need detailed information about the manufacturing process: <em>How thick are the metal layers? How fast is a NAND gate? How much leakage current does a flip-flop have?</em> This information is packaged into a <strong>Process Design Kit (PDK)</strong>.</p>
+<div class="admonition success box-bxinsight kind-insight">
+<p class="admonition-title">Analogy: PDK as a Builder’s Catalogue</p>
+<p>When an architect designs a building, they choose materials from a supplier’s catalogue: “Steel beam grade A36, yield strength 250 MPa, cost &#36;X per tonne.” A PDK is exactly that catalogue for transistors and metal wires. It tells the design tools exactly what the foundry can make, how fast each cell switches, how much power it draws, and what design rules must not be violated.</p>
+</div>
+<h2 id="101-the-three-pdks-used-in-this-project"><span class="secnum">10.1</span> The Three PDKs Used in This Project<a class="headerlink" href="#101-the-three-pdks-used-in-this-project" title="Permanent link">&para;</a></h2>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 10.1.</strong> PDKs supported by this project</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>PDK</strong></th>
+<th style="text-align: left;"><strong>Foundry</strong></th>
+<th style="text-align: left;"><strong>Node</strong></th>
+<th style="text-align: left;"><strong>Cost</strong></th>
+<th style="text-align: right;"><strong>Min gate (nm)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">sky130A</td>
+<td style="text-align: left;">SkyWater / Google</td>
+<td style="text-align: left;">130nm</td>
+<td style="text-align: left;">Free (MPW shuttle)</td>
+<td style="text-align: right;">150</td>
+</tr>
+<tr>
+<td style="text-align: left;">gf180mcuD</td>
+<td style="text-align: left;">GlobalFoundries</td>
+<td style="text-align: left;">180nm</td>
+<td style="text-align: left;">Free (MPW shuttle)</td>
+<td style="text-align: right;">180</td>
+</tr>
+<tr>
+<td style="text-align: left;">asap7</td>
+<td style="text-align: left;">Academic (ASU)</td>
+<td style="text-align: left;">7nm</td>
+<td style="text-align: left;">Free (simulation only)</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<p><strong>Sky130A</strong> is the recommended PDK for beginners. It is fully open source, well documented, and backed by a free tapeout programme (see <a href="#sec-efabless">Section 10.7</a>).</p>
+<h2 id="102-what-is-inside-a-pdk"><span class="secnum">10.2</span> What Is Inside a PDK?<a class="headerlink" href="#102-what-is-inside-a-pdk" title="Permanent link">&para;</a></h2>
+<p>A PDK contains several categories of files:</p>
+<h3 id="1021-standard-cell-library"><span class="secnum">10.2.1</span> Standard Cell Library<a class="headerlink" href="#1021-standard-cell-library" title="Permanent link">&para;</a></h3>
+<p>The standard cell library is the collection of basic logic gates and flip-flops that the synthesis tool uses. For Sky130A, the library is called <code>sky130_fd_sc_hd</code> (High Density).</p>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 10.2.</strong> Files in a standard cell library</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>File type</strong></th>
+<th style="text-align: left;"><strong>Extension</strong></th>
+<th style="text-align: left;"><strong>Used for</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Liberty timing file</td>
+<td style="text-align: left;"><code>.lib</code> / <code>.db</code></td>
+<td style="text-align: left;">Synthesis timing constraints, STA</td>
+</tr>
+<tr>
+<td style="text-align: left;">LEF abstract view</td>
+<td style="text-align: left;"><code>.lef</code></td>
+<td style="text-align: left;">Cell bounding box and pin locations</td>
+</tr>
+<tr>
+<td style="text-align: left;">GDS layout view</td>
+<td style="text-align: left;"><code>.gds</code></td>
+<td style="text-align: left;">Final physical shape for each cell</td>
+</tr>
+<tr>
+<td style="text-align: left;">Verilog model</td>
+<td style="text-align: left;"><code>.v</code></td>
+<td style="text-align: left;">Functional simulation after synthesis</td>
+</tr>
+<tr>
+<td style="text-align: left;">SPICE netlist</td>
+<td style="text-align: left;"><code>.sp</code></td>
+<td style="text-align: left;">Transistor-level simulation</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<p>A Liberty file entry for a 2-input NAND gate looks like:</p>
+<div class="language-bash highlight"><pre><span></span><code>cell<span class="w"> </span><span class="o">(</span>sky130_fd_sc_hd__nand2_1<span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">    </span>area<span class="w"> </span>:<span class="w"> </span><span class="m">3</span>.75<span class="p">;</span><span class="w">              </span>/*<span class="w"> </span>area<span class="w"> </span><span class="k">in</span><span class="w"> </span>um^2<span class="w"> </span>*/
+<span class="w">    </span>cell_leakage_power<span class="w"> </span>:<span class="w"> </span><span class="m">0</span>.0031<span class="p">;</span>
+<span class="w">    </span>pin<span class="o">(</span>A<span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>direction<span class="w"> </span>:<span class="w"> </span>input<span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">    </span>pin<span class="o">(</span>B<span class="o">)</span><span class="w"> </span><span class="o">{</span><span class="w"> </span>direction<span class="w"> </span>:<span class="w"> </span>input<span class="p">;</span><span class="w"> </span><span class="o">}</span>
+<span class="w">    </span>pin<span class="o">(</span>Y<span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">        </span>direction<span class="w"> </span>:<span class="w"> </span>output<span class="p">;</span>
+<span class="w">        </span><span class="k">function</span><span class="w"> </span>:<span class="w"> </span><span class="s2">"!(A&amp;B)"</span><span class="p">;</span>
+<span class="w">        </span>timing<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">            </span>related_pin<span class="w"> </span>:<span class="w"> </span><span class="s2">"A"</span><span class="p">;</span>
+<span class="w">            </span>cell_rise<span class="o">(</span>delay_template_7x7<span class="o">)</span><span class="w"> </span><span class="o">{</span>
+<span class="w">                </span>/*<span class="w"> </span>7x7<span class="w"> </span>table:<span class="w"> </span>input<span class="w"> </span>slew<span class="w"> </span>vs.<span class="w"> </span>output<span class="w"> </span>load<span class="w"> </span>*/
+<span class="w">                </span>values<span class="w"> </span><span class="o">(</span><span class="s2">"0.028, 0.053, ..."</span>,<span class="w"> </span>...<span class="o">)</span><span class="p">;</span>
+<span class="w">            </span><span class="o">}</span>
+<span class="w">        </span><span class="o">}</span>
+<span class="w">    </span><span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div>
+<h3 id="1022-design-rule-check-drc-rules"><span class="secnum">10.2.2</span> Design Rule Check (DRC) Rules<a class="headerlink" href="#1022-design-rule-check-drc-rules" title="Permanent link">&para;</a></h3>
+<p>DRC rules define the geometric constraints that the foundry’s photolithography process imposes. Violating them means the chip cannot be manufactured correctly.</p>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 10.3.</strong> Common DRC rule categories</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Rule type</strong></th>
+<th style="text-align: left;"><strong>What it checks</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Minimum width</td>
+<td style="text-align: left;">Metal/poly wires must be at least <span class="math inline">\(N\)</span> nm wide</td>
+</tr>
+<tr>
+<td style="text-align: left;">Minimum spacing</td>
+<td style="text-align: left;">Adjacent wires must have at least <span class="math inline">\(N\)</span> nm gap</td>
+</tr>
+<tr>
+<td style="text-align: left;">Minimum enclosure</td>
+<td style="text-align: left;">Via must be enclosed by at least <span class="math inline">\(N\)</span> nm of metal</td>
+</tr>
+<tr>
+<td style="text-align: left;">Minimum area</td>
+<td style="text-align: left;">Metal regions below a minimum area must not exist</td>
+</tr>
+<tr>
+<td style="text-align: left;">Density</td>
+<td style="text-align: left;">Metal fill must cover between X% and Y% of each tile</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<p>For Sky130A, the DRC rules are checked with Magic VLSI or KLayout:</p>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Using Magic VLSI</span>
+magic<span class="w"> </span>-rcfile<span class="w"> </span><span class="nv">$PDK_ROOT</span>/sky130A/libs.tech/magic/sky130A.magicrc<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-noconsole<span class="w"> </span>-dnull<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">gds read /path/to/design.gds</span>
+<span class="s">load design</span>
+<span class="s">drc check</span>
+<span class="s">drc catchup</span>
+<span class="s">quit</span>
+<span class="s">EOF</span>
+
+<span class="c1"># Using KLayout (faster for large designs)</span>
+klayout<span class="w"> </span>-b<span class="w"> </span>-r<span class="w"> </span><span class="nv">$PDK_ROOT</span>/sky130A/libs.tech/klayout/drc/sky130A.lydrc<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-rd<span class="w"> </span><span class="nv">input</span><span class="o">=</span>/path/to/design.gds<span class="w"> </span><span class="se">\</span>
+<span class="w">        </span>-rd<span class="w"> </span><span class="nv">report</span><span class="o">=</span>/path/to/drc_report.xml
+</code></pre></div>
+<h3 id="1023-layout-vs-schematic-lvs"><span class="secnum">10.2.3</span> Layout vs. Schematic (LVS)<a class="headerlink" href="#1023-layout-vs-schematic-lvs" title="Permanent link">&para;</a></h3>
+<p>LVS compares the physical layout (extracted from GDS) against the logical netlist to make sure they describe the same circuit. This catches situations where a wire was accidentally deleted or a via was missing.</p>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Extract SPICE netlist from layout</span>
+magic<span class="w"> </span>-rcfile<span class="w"> </span><span class="nv">$PDK_ROOT</span>/sky130A/libs.tech/magic/sky130A.magicrc<span class="w"> </span><span class="se">\</span>
+<span class="w">      </span>-noconsole<span class="w"> </span>-dnull<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">gds read /path/to/design.gds</span>
+<span class="s">load design</span>
+<span class="s">extract all</span>
+<span class="s">ext2spice lvs</span>
+<span class="s">ext2spice</span>
+<span class="s">quit</span>
+<span class="s">EOF</span>
+
+<span class="c1"># Compare extracted netlist to schematic netlist with Netgen</span>
+netgen<span class="w"> </span>-batch<span class="w"> </span>lvs<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s2">"/path/to/design.ext.spice design"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="s2">"/path/to/synthesis.spice design"</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nv">$PDK_ROOT</span>/sky130A/libs.tech/netgen/sky130A_setup.tcl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>/path/to/lvs_report.txt
+</code></pre></div>
+<p><strong>Passing DRC + LVS</strong> is the minimum requirement before any chip is submitted for fabrication. They are collectively called <strong>signoff checks</strong>.</p>
+<h2 id="sec-sky130"><span class="secnum">10.3</span> Sky130A — The Free 130nm PDK<a class="headerlink" href="#sec-sky130" title="Permanent link">&para;</a></h2>
+<p>Sky130A was released as open source in 2020 through a partnership between SkyWater Technology (a US foundry) and Google. It is the first commercial PDK released without an NDA.</p>
+<h3 id="1031-layer-stack"><span class="secnum">10.3.1</span> Layer Stack<a class="headerlink" href="#1031-layer-stack" title="Permanent link">&para;</a></h3>
+<p>Sky130A uses 5 metal layers plus local interconnect:</p>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 10.4.</strong> Sky130A metal layer stack</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Layer</strong></th>
+<th style="text-align: left;"><strong>Name in PDK</strong></th>
+<th style="text-align: left;"><strong>Purpose</strong></th>
+<th style="text-align: right;"><strong>Min width (nm)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Local Interconnect</td>
+<td style="text-align: left;"><code>li1</code></td>
+<td style="text-align: left;">Cell-level wiring</td>
+<td style="text-align: right;">170</td>
+</tr>
+<tr>
+<td style="text-align: left;">Metal 1</td>
+<td style="text-align: left;"><code>met1</code></td>
+<td style="text-align: left;">Primary signal routing</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr>
+<td style="text-align: left;">Metal 2</td>
+<td style="text-align: left;"><code>met2</code></td>
+<td style="text-align: left;">Secondary signal routing</td>
+<td style="text-align: right;">140</td>
+</tr>
+<tr>
+<td style="text-align: left;">Metal 3</td>
+<td style="text-align: left;"><code>met3</code></td>
+<td style="text-align: left;">Regional routing</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr>
+<td style="text-align: left;">Metal 4</td>
+<td style="text-align: left;"><code>met4</code></td>
+<td style="text-align: left;">Long horizontal wires</td>
+<td style="text-align: right;">300</td>
+</tr>
+<tr>
+<td style="text-align: left;">Metal 5</td>
+<td style="text-align: left;"><code>met5</code></td>
+<td style="text-align: left;">Power rails</td>
+<td style="text-align: right;">1600</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<h3 id="1032-setting-up-the-pdk"><span class="secnum">10.3.2</span> Setting Up the PDK<a class="headerlink" href="#1032-setting-up-the-pdk" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Install volare (PDK version manager)</span>
+pip<span class="w"> </span>install<span class="w"> </span>volare
+
+<span class="c1"># Fetch the Sky130A PDK</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PDK_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/pdks
+volare<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--pdk<span class="w"> </span>sky130<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--pdk-root<span class="w"> </span><span class="nv">$PDK_ROOT</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>bdc9412b3e468c102d01b7cf6337be06ec6e9c9a
+
+<span class="c1"># Verify installation</span>
+ls<span class="w"> </span><span class="nv">$PDK_ROOT</span>/sky130A/libs.ref/sky130_fd_sc_hd/
+<span class="c1"># Should show: lib/  lef/  gds/  verilog/  spice/</span>
+</code></pre></div>
+<h2 id="104-gf180mcu-globalfoundries-180nm"><span class="secnum">10.4</span> GF180MCU — GlobalFoundries 180nm<a class="headerlink" href="#104-gf180mcu-globalfoundries-180nm" title="Permanent link">&para;</a></h2>
+<p>The GF180MCU PDK supports GlobalFoundries’ 180nm CMOS process, which is optimised for microcontroller and mixed-signal designs. It provides:</p>
+<ul>
+<li>
+<p>5V and 3.3V I/O cells</p>
+</li>
+<li>
+<p>Precision resistors and MIM capacitors</p>
+</li>
+<li>
+<p>EEPROM-compatible process options</p>
+</li>
+<li>
+<p>Four standard-cell libraries (HD, HS, HV, LV)</p>
+</li>
+</ul>
+<div class="language-bash highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">PDK_ROOT</span><span class="o">=</span><span class="nv">$HOME</span>/pdks
+volare<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>--pdk<span class="w"> </span>gf180mcu<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--pdk-root<span class="w"> </span><span class="nv">$PDK_ROOT</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>e0f692f46654d6c7c99fc70a0c94a080dab53571
+</code></pre></div>
+<h2 id="sec-asap7"><span class="secnum">10.5</span> ASAP7 — Academic 7nm PDK<a class="headerlink" href="#sec-asap7" title="Permanent link">&para;</a></h2>
+<p>ASAP7 is an academic PDK developed by Arizona State University (ASU) and ARM Research. It models a realistic 7nm FinFET process but is intended for <em>research and education only</em> — not for actual fabrication. It is useful for studying how area, power, and timing scale from 130nm to 7nm.</p>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 10.5.</strong> 130nm vs 7nm key metrics (same NAND2 gate)</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Metric</strong></th>
+<th style="text-align: right;"><strong>Sky130A (130nm)</strong></th>
+<th style="text-align: right;"><strong>ASAP7 (7nm)</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">NAND2 cell area</td>
+<td style="text-align: right;">3.75 m<span class="math inline">\(^2\)</span></td>
+<td style="text-align: right;">0.038 m<span class="math inline">\(^2\)</span></td>
+</tr>
+<tr>
+<td style="text-align: left;">NAND2 cell delay</td>
+<td style="text-align: right;"><span class="math inline">\(\sim\)</span>100 ps</td>
+<td style="text-align: right;"><span class="math inline">\(\sim\)</span>5 ps</td>
+</tr>
+<tr>
+<td style="text-align: left;">VDD</td>
+<td style="text-align: right;">1.8 V</td>
+<td style="text-align: right;">0.7 V</td>
+</tr>
+<tr>
+<td style="text-align: left;">Max frequency</td>
+<td style="text-align: right;"><span class="math inline">\(\sim\)</span>250 MHz</td>
+<td style="text-align: right;"><span class="math inline">\(\sim\)</span>3 GHz</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># OpenROAD config for ASAP7 (from pdk/asap7/asap7_openroad_config.mk)</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PDK</span><span class="o">=</span>asap7
+<span class="nb">export</span><span class="w"> </span><span class="nv">PLATFORM</span><span class="o">=</span>asap7
+<span class="nb">export</span><span class="w"> </span><span class="nv">TECH_LEF</span><span class="o">=</span><span class="nv">$PDK_ROOT</span>/asap7/tech/asap7_tech_1x_201209.lef
+<span class="nb">export</span><span class="w"> </span><span class="nv">SC_LEF</span><span class="o">=</span><span class="nv">$PDK_ROOT</span>/asap7/lib/asap7sc7p5t_28_R_1x_220121a.lef
+<span class="nb">export</span><span class="w"> </span><span class="nv">LIB_FILES</span><span class="o">=</span><span class="nv">$PDK_ROOT</span>/asap7/lib/asap7sc7p5t_SEQ_RVT_TT_nldm_220123.lib
+</code></pre></div>
+<h2 id="sec-tapeout"><span class="secnum">10.6</span> The Tapeout Process<a class="headerlink" href="#sec-tapeout" title="Permanent link">&para;</a></h2>
+<p>A <strong>tapeout</strong> is the point at which a design is submitted to the foundry for manufacturing. The term dates from the era when chip data was literally written onto magnetic tape for delivery to the fab.</p>
+<h3 id="1061-steps-to-tapeout"><span class="secnum">10.6.1</span> Steps to Tapeout<a class="headerlink" href="#1061-steps-to-tapeout" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Design Freeze</strong>: All features locked, no more RTL changes.</p>
+</li>
+<li>
+<p><strong>Full LVS + DRC Clean</strong>: Zero violations on the complete chip.</p>
+</li>
+<li>
+<p><strong>Antenna Check Clean</strong>: All antenna violations resolved.</p>
+</li>
+<li>
+<p><strong>Density Fill</strong>: Metal fill added to reach required density.</p>
+</li>
+<li>
+<p><strong>Final STA</strong>: Setup and hold checks pass at all corners.</p>
+</li>
+<li>
+<p><strong>GDS Merge</strong>: All IP blocks merged into single top-level GDS.</p>
+</li>
+<li>
+<p><strong>Final DRC on Merged GDS</strong>: Full-chip DRC one last time.</p>
+</li>
+<li>
+<p><strong>Submit</strong>: GDS + LEF + Netlist sent to foundry.</p>
+</li>
+</ol>
+<div class="admonition warning box-bxwarn kind-safety">
+<p class="admonition-title">Tapeout Is Irreversible — Check Everything Twice</p>
+<p>Once a chip is submitted, it takes 8–16 weeks to come back from the foundry. Any bug in the design is “baked in” permanently. There is no patch, no firmware update. This is why verification (<a href="ch07-verification.html#ch-verification">Chapter 7</a>) and signoff checks are taken so seriously. Professional teams run DRC/LVS dozens of times before tapeout.</p>
+</div>
+<h3 id="1062-corner-analysis"><span class="secnum">10.6.2</span> Corner Analysis<a class="headerlink" href="#1062-corner-analysis" title="Permanent link">&para;</a></h3>
+<p>Chips must work across a range of process, voltage, and temperature variations. This is called <strong>PVT corner analysis</strong>.</p>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 10.6.</strong> Standard PVT corners for 1.8V Sky130A designs</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Corner</strong></th>
+<th style="text-align: left;"><strong>Process</strong></th>
+<th style="text-align: left;"><strong>Voltage</strong></th>
+<th style="text-align: left;"><strong>Temperature</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">TT (Typical-Typical)</td>
+<td style="text-align: left;">Nominal</td>
+<td style="text-align: left;">Nominal</td>
+<td style="text-align: left;"><span class="math inline">\(25^{\circ}\)</span>C</td>
+</tr>
+<tr>
+<td style="text-align: left;">FF (Fast-Fast)</td>
+<td style="text-align: left;">Fastest</td>
+<td style="text-align: left;">1.98V</td>
+<td style="text-align: left;"><span class="math inline">\(-40^{\circ}\)</span>C</td>
+</tr>
+<tr>
+<td style="text-align: left;">SS (Slow-Slow)</td>
+<td style="text-align: left;">Slowest</td>
+<td style="text-align: left;">1.62V</td>
+<td style="text-align: left;"><span class="math inline">\(125^{\circ}\)</span>C</td>
+</tr>
+<tr>
+<td style="text-align: left;">FS (Fast-Slow)</td>
+<td style="text-align: left;">Fast-N / Slow-P</td>
+<td style="text-align: left;">Nominal</td>
+<td style="text-align: left;"><span class="math inline">\(25^{\circ}\)</span>C</td>
+</tr>
+<tr>
+<td style="text-align: left;">SF (Slow-Fast)</td>
+<td style="text-align: left;">Slow-N / Fast-P</td>
+<td style="text-align: left;">Nominal</td>
+<td style="text-align: left;"><span class="math inline">\(25^{\circ}\)</span>C</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<p>The <strong>SS corner at <span class="arithmatex">\(125^{\circ}\)</span>C</strong> is used for setup time checks (slowest logic). The <strong>FF corner at <span class="arithmatex">\(-40^{\circ}\)</span>C</strong> is used for hold time checks (fastest logic, clock arrives early, data may overtake it).</p>
+<h2 id="sec-efabless"><span class="secnum">10.7</span> Efabless and the MPW Shuttle<a class="headerlink" href="#sec-efabless" title="Permanent link">&para;</a></h2>
+<p><strong>Efabless</strong> runs a programme called the <strong>Multi-Project Wafer (MPW) shuttle</strong> that allows individual designers to tapeout a chip for free (or at very low cost). Multiple designers share a single wafer run.</p>
+<h3 id="1071-the-caravel-harness"><span class="secnum">10.7.1</span> The Caravel Harness<a class="headerlink" href="#1071-the-caravel-harness" title="Permanent link">&para;</a></h3>
+<p>Every design submitted to the Efabless MPW must be wrapped inside a standard template called the <strong>Caravel harness</strong>. Caravel provides:</p>
+<ul>
+<li>
+<p>A RISC-V (PicoRV32) management core for chip configuration.</p>
+</li>
+<li>
+<p>38 general-purpose I/O (GPIO) pins with configurable direction.</p>
+</li>
+<li>
+<p>A 2.4 mm <span class="arithmatex">\(\times\)</span> 2.4 mm user project area for your design.</p>
+</li>
+<li>
+<p>A Wishbone bus and Logic Analyser (LA) connection to the management core.</p>
+</li>
+</ul>
+<figure class="fig fig-diagram">
+<img class="tikz" src="img/tikz-45234b4d756b.svg" alt="Efabless Caravel harness structure" loading="lazy" width="253" height="163">
+<figcaption><strong>Figure 10.1.</strong> Efabless Caravel harness structure</figcaption>
+</figure>
+<h3 id="1072-submitting-to-mpw"><span class="secnum">10.7.2</span> Submitting to MPW<a class="headerlink" href="#1072-submitting-to-mpw" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># 1. Clone the Caravel user project template</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/efabless/caravel_user_project
+
+<span class="c1"># 2. Copy your design into user_project_wrapper</span>
+<span class="c1">#    (your GDS must fit inside the 2.4mm x 2.4mm area)</span>
+cp<span class="w"> </span>my_design.gds<span class="w"> </span>caravel_user_project/gds/
+
+<span class="c1"># 3. Run the full OpenLane hardening flow</span>
+<span class="nb">cd</span><span class="w"> </span>caravel_user_project
+make<span class="w"> </span>user_project_wrapper
+
+<span class="c1"># 4. Run the Efabless pre-check (mandatory before submission)</span>
+make<span class="w"> </span>precheck
+
+<span class="c1"># 5. If precheck passes, submit via the Efabless platform</span>
+<span class="c1"># (web dashboard at efabless.com)</span>
+</code></pre></div>
+<h2 id="108-reading-a-gdsii-file"><span class="secnum">10.8</span> Reading a GDSII File<a class="headerlink" href="#108-reading-a-gdsii-file" title="Permanent link">&para;</a></h2>
+<p>GDSII (Graphic Design System II) is the standard file format for chip layouts. It contains polygons, paths, and cell instances organised into a hierarchical structure.</p>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Open GDS in KLayout GUI</span>
+klayout<span class="w"> </span>/path/to/design.gds
+
+<span class="c1"># In KLayout: Layer panel shows all layers (met1, met2, poly, ndiff...)</span>
+<span class="c1"># Use Ctrl+F to search for cell names</span>
+<span class="c1"># Ruler tool (R) to measure distances</span>
+
+<span class="c1"># Extract area statistics from command line</span>
+klayout<span class="w"> </span>-b<span class="w"> </span>-r<span class="w"> </span>-<span class="w"> </span><span class="s">&lt;&lt; 'EOF'</span>
+<span class="s">layout = RBA::Layout.new</span>
+<span class="s">layout.read("/path/to/design.gds")</span>
+<span class="s">layout.each_cell { |cell|</span>
+<span class="s">  puts "#{cell.name}: #{cell.bbox}"</span>
+<span class="s">}</span>
+<span class="s">EOF</span>
+
+<span class="c1"># Merge multiple GDS files (from gdsii/scripts/gds_merge.py)</span>
+python<span class="w"> </span>gdsii/scripts/gds_merge.py<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--top<span class="w">  </span>top_level.gds<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--subs<span class="w"> </span>my_design.gds<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>--out<span class="w">  </span>merged.gds
+</code></pre></div>
+<h2 id="109-metal-fill-and-density-rules"><span class="secnum">10.9</span> Metal Fill and Density Rules<a class="headerlink" href="#109-metal-fill-and-density-rules" title="Permanent link">&para;</a></h2>
+<p>Most foundries require the metal density in every 100m <span class="arithmatex">\(\times\)</span> 100m tile to fall between a minimum (typically 20%) and maximum (typically 80%). If your design is sparse, the tools insert <strong>floating metal fill</strong> — small, electrically isolated metal squares — to meet the density requirement.</p>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Run density fill for all metal layers</span>
+detailed_placement
+check_placement<span class="w"> </span>-verbose
+density_fill<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-rules<span class="w"> </span><span class="nv">$PDK_ROOT</span>/sky130A/libs.tech/openlane/rules.fill.tcl
+write_def<span class="w"> </span>design_with_fill.def
+</code></pre></div>
+<div class="admonition warning box-bxwarn kind-safety">
+<p class="admonition-title">Fill Affects Capacitance</p>
+<p>Metal fill is electrically floating but adds parasitic capacitance to nearby signal wires. For high-speed designs, extract parasitics <em>after</em> fill insertion and re-run STA to verify timing is not degraded.</p>
+</div>
+<h2 id="1010-the-signoff-checklist"><span class="secnum">10.10</span> The Signoff Checklist<a class="headerlink" href="#1010-the-signoff-checklist" title="Permanent link">&para;</a></h2>
+<p>The file <code>gdsii/drc-lvs/drc_checklist.md</code> in this project contains the full tapeout checklist. The key items are:</p>
+<ol>
+<li>
+<p><strong>DRC</strong>: Zero errors in Magic and KLayout.</p>
+</li>
+<li>
+<p><strong>LVS</strong>: Netlist matches layout, zero mismatches.</p>
+</li>
+<li>
+<p><strong>Antenna</strong>: Zero antenna violations (or approved waives).</p>
+</li>
+<li>
+<p><strong>ERC</strong>: No floating gates, no latch-up paths.</p>
+</li>
+<li>
+<p><strong>STA — Setup</strong>: WNS <span class="arithmatex">\(\geq 0\)</span> at SS/<span class="arithmatex">\(125^{\circ}\)</span>C corner.</p>
+</li>
+<li>
+<p><strong>STA — Hold</strong>: WNS <span class="arithmatex">\(\geq 0\)</span> at FF/<span class="arithmatex">\(-40^{\circ}\)</span>C corner.</p>
+</li>
+<li>
+<p><strong>Density</strong>: All tile densities between 20% and 80%.</p>
+</li>
+<li>
+<p><strong>IR Drop</strong>: Maximum rail drop <span class="arithmatex">\(&lt; 5\%\)</span> VDD.</p>
+</li>
+<li>
+<p><strong>GDS</strong>: File opens cleanly in KLayout, all layers present.</p>
+</li>
+<li>
+<p><strong>Functional</strong>: Simulation passes on extracted (post-layout) netlist.</p>
+</li>
+</ol>
+<h2 id="1011-summary"><span class="secnum">10.11</span> Summary<a class="headerlink" href="#1011-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>A PDK packages everything the tools need to know about a manufacturing process: timing, area, rules, layer stacks.</p>
+</li>
+<li>
+<p><strong>Sky130A</strong> is free and open-source — the recommended starting point for anyone new to ASIC design.</p>
+</li>
+<li>
+<p>DRC and LVS checks are mandatory before tapeout; failing either means the chip cannot be manufactured.</p>
+</li>
+<li>
+<p>PVT corner analysis ensures the design works in the worst-case combination of process variation, voltage, and temperature.</p>
+</li>
+<li>
+<p>The Efabless MPW shuttle lets individuals tapeout real chips at no cost using the Caravel harness wrapper.</p>
+</li>
+<li>
+<p>GDSII is the final output format; tools like KLayout and Magic are used to view and verify it.</p>
+</li>
+</ul>
+<p>The next and final chapter covers how all these steps are automated together into a single, reproducible pipeline.</p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button type="button" class="md-top md-icon" data-md-component="top" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+Back to top
+</button>
+</main>
+<footer class="md-footer">
+<nav class="md-footer__inner md-grid" aria-label="Footer" >
+<a href="ch09-physical-design.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 9. Physical Design">
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Previous
+</span>
+<div class="md-ellipsis">
+9. Physical Design
+</div>
+</div>
+</a>
+<a href="ch11-the-automation-pipeline.html" class="md-footer__link md-footer__link--next" aria-label="Next: 11. The Automation Pipeline">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Next
+</span>
+<div class="md-ellipsis">
+11. The Automation Pipeline
+</div>
+</div>
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+The Open Book Project: Reserve Shelf &middot;
+<a href="../../about.html">About this library</a> &middot;
+<a href="../../publish.html">Publish your book</a> &middot;
+© The authors of the books
+</div>
+Made with
+<a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+Material for MkDocs
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+<script src="../../assets/mathjax.js"></script>
+<script src="../../assets/viz.js"></script>
+<script src="../../assets/remote.js"></script>
+<script src="../../assets/scans.js"></script>
+<script src="../../assets/reader.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/slides.js"></script>
+<script src="../../assets/speak.js"></script>
+<script src="../../assets/quiz.js"></script>
+<script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>

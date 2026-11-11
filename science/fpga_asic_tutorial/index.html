@@ -1,0 +1,582 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+<meta name="author" content="The Open Book Project">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://open-book-project.github.io/reserve/science/fpga_asic_tutorial/index.html">
+<link rel="prev" href="../drones_missiles/bibliography.html">
+<link rel="next" href="ch01-introduction.html">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap"></noscript>
+<link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="../../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="Reserve Shelf"><script src="../../assets/library-data.js"></script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+<script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+<title>Overview and preface - The Open Book Project: Reserve Shelf</title>
+<link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+<link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+<link rel="stylesheet" href="../../assets/extra.css">
+<link rel="stylesheet" href="../../assets/reader.css">
+<link rel="stylesheet" href="../../assets/viz.css">
+<link rel="stylesheet" href="../../assets/app.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/slides.css">
+<link rel="stylesheet" href="../../assets/remote.css">
+<link rel="stylesheet" href="../../assets/scans.css">
+<link rel="stylesheet" href="../../assets/speak.css">
+<link rel="stylesheet" href="../../assets/quiz.css">
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a href="#contents" class="md-skip">
+Skip to content
+</a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav class="md-header__inner md-grid" aria-label="Header">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+The Open Book Project: Reserve Shelf
+</span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+Overview and preface
+</span>
+</div>
+</div>
+</div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+</a>
+<a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+</a>
+<form class="md-header__option" data-md-component="palette">
+<input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+<label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+</label>
+<input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+<label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+<label class="md-search__icon md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</label>
+<nav class="md-search__options" aria-label="Search">
+<button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+Initializing search
+</div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+The Open Book Project: Reserve Shelf
+</label>
+<ul class="md-nav__list" data-md-scrollfix>
+<li class="md-nav__item bjp-nav-all">
+<a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+<span class="md-ellipsis">All books</span>
+</a>
+</li>
+<li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">FPGA and ASIC Design</span></li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+Overview and preface
+</span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a href="index.html" class="md-nav__link md-nav__link--active">
+<span class="md-ellipsis">
+Overview and preface
+</span>
+</a>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#contents" class="md-nav__link">
+<span class="md-ellipsis">
+Contents
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#preface" class="md-nav__link">
+<span class="md-ellipsis">
+Preface
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="ch01-introduction.html" class="md-nav__link">
+<span class="md-ellipsis">
+1. Introduction
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch02-digital-design-fundamentals.html" class="md-nav__link">
+<span class="md-ellipsis">
+2. Digital Design Fundamentals
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch03-hardware-description-languages.html" class="md-nav__link">
+<span class="md-ellipsis">
+3. Hardware Description Languages
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch04-processor-cores.html" class="md-nav__link">
+<span class="md-ellipsis">
+4. Processor Cores
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch05-bus-protocols-and-interconnects.html" class="md-nav__link">
+<span class="md-ellipsis">
+5. Bus Protocols and Interconnects
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch06-fpga-prototyping.html" class="md-nav__link">
+<span class="md-ellipsis">
+6. FPGA Prototyping
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch07-verification.html" class="md-nav__link">
+<span class="md-ellipsis">
+7. Verification
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch08-synthesis.html" class="md-nav__link">
+<span class="md-ellipsis">
+8. Synthesis
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch09-physical-design.html" class="md-nav__link">
+<span class="md-ellipsis">
+9. Physical Design
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch10-pdks-and-fabrication.html" class="md-nav__link">
+<span class="md-ellipsis">
+10. PDKs and Fabrication
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch11-the-automation-pipeline.html" class="md-nav__link">
+<span class="md-ellipsis">
+11. The Automation Pipeline
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-a-quick-reference-commands.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix A: Quick Reference Commands
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-b-glossary.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix B: Glossary
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-c-further-reading.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix C: Further Reading
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" hidden>
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#contents" class="md-nav__link">
+<span class="md-ellipsis">
+Contents
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#preface" class="md-nav__link">
+<span class="md-ellipsis">
+Preface
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<div class="pk-book" data-vol="fpga_asic_tutorial" markdown="0">
+<div class="pk-book-cover"><a class="vol-card pk-book-open" href="#preface" style="--cv-bg:#14365a;--cv-accent:#e8a33d;--cv-fg:#f3f7fb;--cv-n:20;--cv-rot:53deg;--cv-x:88%;--cv-y:65%" aria-label="Start reading FPGA and ASIC Design"><span class="book-cover cv-modern"><span class="cv-art" aria-hidden="true"></span><span class="cv-series">Science and Technology</span><span class="cv-rule"></span><span class="vol-title">FPGA and ASIC Design</span><span class="vol-sub">A Complete Pipeline Tutorial</span><span class="cv-author">AI generated</span></span></a></div>
+<div class="pk-book-info">
+<p class="pk-book-kicker"><span>Science and Technology</span></p>
+<h1 class="pk-book-title"><span class="bjp-sr"></span>FPGA and ASIC Design</h1>
+<p class="pk-book-sub">A Complete Pipeline Tutorial</p>
+<p class="pk-book-by">AI generated by Nikhil Kumar Rajput</p>
+<p class="pk-book-desc">From RTL to GDSII for absolute beginners: SystemVerilog, RISC-V, AXI4, cocotb, Yosys, OpenROAD, OpenLane and the Sky130A open-source toolchain</p>
+<p class="pk-book-tags"><span class="pk-badge lv-beginner">Beginner</span><span class="pk-badge">Textbook</span><a class="pk-chip" href="../../subjects/computer-architecture.html"><svg class="pk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6.5" y="6.5" width="11" height="11" rx="1.6"/><rect x="9.6" y="9.6" width="4.8" height="4.8" rx=".6"/><path d="M9.5 3.5v3M14.5 3.5v3M9.5 17.5v3M14.5 17.5v3M3.5 9.5h3M3.5 14.5h3M17.5 9.5h3M17.5 14.5h3"/></svg><span class="pk-chip-cat">Computers &amp; Technology &rsaquo;</span> Computer Architecture &amp; Chips</a><a class="pk-chip" href="../../subjects/electronics.html"><svg class="pk-ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M13.2 3 5.5 13.5h6L10.8 21l7.7-10.5h-6z"/></svg><span class="pk-chip-cat">Engineering &rsaquo;</span> Electronics &amp; Electrical</a></p><div class="pk-book-actions"><a class="pk-btn pk-btn-primary pk-read" href="#preface"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 7c-1.6-1.3-3.9-2-8-2v13c4.1 0 6.4.7 8 2 1.6-1.3 3.9-2 8-2V5c-4.1 0-6.4.7-8 2zM12 7v13"/></svg><span>Start reading</span></a>
+<div class="bjp-offline" data-vol="fpga_asic_tutorial"></div></div>
+<p class="pk-book-facts"><span>11 chapters</span></p>
+</div>
+</div>
+<h2 id="contents">Contents<a class="headerlink" href="#contents" title="Permanent link">&para;</a></h2>
+<nav class="vol-contents" data-vol="fpga_asic_tutorial" aria-label="Contents of this book" markdown="0">
+<p class="toc-group">Front matter</p>
+<ul class="vol-toc vol-toc-full">
+<li class="vc-ch vc-leaf"><a href="index.html#preface">Preface</a></li>
+</ul>
+<p class="toc-group">Chapters</p>
+<ul class="vol-toc vol-toc-full">
+<li class="vc-ch"><details><summary><a href="ch01-introduction.html">Chapter 1: Introduction</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch01-introduction.html#11-what-is-this-tutorial-about"><span class="vc-n">1.1</span> What Is This Tutorial About?</a></li>
+<li class="vc-l2"><a href="ch01-introduction.html#12-the-two-worlds-fpga-and-asic"><span class="vc-n">1.2</span> The Two Worlds: FPGA and ASIC</a><ul class="vc-subs"><li class="vc-l3"><a href="ch01-introduction.html#121-fpgas-reconfigurable-hardware"><span class="vc-n">1.2.1</span> FPGAs — Reconfigurable Hardware</a></li><li class="vc-l3"><a href="ch01-introduction.html#122-asics-custom-silicon"><span class="vc-n">1.2.2</span> ASICs — Custom Silicon</a></li></ul></li>
+<li class="vc-l2"><a href="ch01-introduction.html#13-the-complete-pipeline-a-30000-foot-view"><span class="vc-n">1.3</span> The Complete Pipeline — A 30,000-Foot View</a></li>
+<li class="vc-l2"><a href="ch01-introduction.html#14-how-this-tutorial-is-organised"><span class="vc-n">1.4</span> How This Tutorial Is Organised</a></li>
+<li class="vc-l2"><a href="ch01-introduction.html#15-prerequisites-and-environment-setup"><span class="vc-n">1.5</span> Prerequisites and Environment Setup</a><ul class="vc-subs"><li class="vc-l3"><a href="ch01-introduction.html#151-software-you-need"><span class="vc-n">1.5.1</span> Software You Need</a></li><li class="vc-l3"><a href="ch01-introduction.html#152-quick-start-five-minute-smoke-test"><span class="vc-n">1.5.2</span> Quick Start — Five Minute Smoke Test</a></li></ul></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch02-digital-design-fundamentals.html">Chapter 2: Digital Design Fundamentals</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch02-digital-design-fundamentals.html#21-binary-numbers-everything-is-0-or-1"><span class="vc-n">2.1</span> Binary Numbers — Everything Is 0 or 1</a></li>
+<li class="vc-l2"><a href="ch02-digital-design-fundamentals.html#22-logic-gates-the-building-blocks"><span class="vc-n">2.2</span> Logic Gates — The Building Blocks</a></li>
+<li class="vc-l2"><a href="ch02-digital-design-fundamentals.html#23-combinational-vs-sequential-logic"><span class="vc-n">2.3</span> Combinational vs. Sequential Logic</a><ul class="vc-subs"><li class="vc-l3"><a href="ch02-digital-design-fundamentals.html#231-combinational-logic"><span class="vc-n">2.3.1</span> Combinational Logic</a></li><li class="vc-l3"><a href="ch02-digital-design-fundamentals.html#232-sequential-logic-the-flip-flop"><span class="vc-n">2.3.2</span> Sequential Logic — The Flip-Flop</a></li></ul></li>
+<li class="vc-l2"><a href="ch02-digital-design-fundamentals.html#24-registers-and-shift-registers"><span class="vc-n">2.4</span> Registers and Shift Registers</a></li>
+<li class="vc-l2"><a href="ch02-digital-design-fundamentals.html#25-finite-state-machines"><span class="vc-n">2.5</span> Finite State Machines</a><ul class="vc-subs"><li class="vc-l3"><a href="ch02-digital-design-fundamentals.html#251-moore-vs-mealy"><span class="vc-n">2.5.1</span> Moore vs. Mealy</a></li><li class="vc-l3"><a href="ch02-digital-design-fundamentals.html#252-example-axi-lite-write-transaction-fsm"><span class="vc-n">2.5.2</span> Example: AXI-Lite Write Transaction FSM</a></li></ul></li>
+<li class="vc-l2"><a href="ch02-digital-design-fundamentals.html#26-timing-the-clock-domain"><span class="vc-n">2.6</span> Timing — The Clock Domain</a><ul class="vc-subs"><li class="vc-l3"><a href="ch02-digital-design-fundamentals.html#261-clock-and-timing-budget"><span class="vc-n">2.6.1</span> Clock and Timing Budget</a></li><li class="vc-l3"><a href="ch02-digital-design-fundamentals.html#262-clock-domain-crossing"><span class="vc-n">2.6.2</span> Clock Domain Crossing</a></li></ul></li>
+<li class="vc-l2"><a href="ch02-digital-design-fundamentals.html#27-summary"><span class="vc-n">2.7</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch03-hardware-description-languages.html">Chapter 3: Hardware Description Languages</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#31-which-hdl-does-this-project-use"><span class="vc-n">3.1</span> Which HDL Does This Project Use?</a></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#32-the-module-systemverilogs-basic-unit"><span class="vc-n">3.2</span> The Module — SystemVerilog’s Basic Unit</a><ul class="vc-subs"><li class="vc-l3"><a href="ch03-hardware-description-languages.html#321-key-concepts-in-the-example"><span class="vc-n">3.2.1</span> Key Concepts in the Example</a></li></ul></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#33-real-example-the-uart-16550-transmitter"><span class="vc-n">3.3</span> Real Example: The UART 16550 Transmitter</a><ul class="vc-subs"><li class="vc-l3"><a href="ch03-hardware-description-languages.html#331-baud-rate-generator"><span class="vc-n">3.3.1</span> Baud Rate Generator</a></li><li class="vc-l3"><a href="ch03-hardware-description-languages.html#332-tx-shift-register"><span class="vc-n">3.3.2</span> TX Shift Register</a></li></ul></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#34-the-axi4-lite-slave-register-file"><span class="vc-n">3.4</span> The AXI4-Lite Slave Register File</a></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#35-systemverilog-data-types-quick-reference"><span class="vc-n">3.5</span> SystemVerilog Data Types Quick Reference</a></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#36-generate-blocks-hardware-for-loops"><span class="vc-n">3.6</span> Generate Blocks — Hardware for Loops</a></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#37-common-mistakes-and-how-to-avoid-them"><span class="vc-n">3.7</span> Common Mistakes (and How to Avoid Them)</a></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#38-linting-your-first-quality-gate"><span class="vc-n">3.8</span> Linting — Your First Quality Gate</a></li>
+<li class="vc-l2"><a href="ch03-hardware-description-languages.html#39-summary"><span class="vc-n">3.9</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch04-processor-cores.html">Chapter 4: Processor Cores</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch04-processor-cores.html#41-how-a-processor-works-the-fetch-decode-execute-cycle"><span class="vc-n">4.1</span> How a Processor Works — The Fetch-Decode-Execute Cycle</a></li>
+<li class="vc-l2"><a href="ch04-processor-cores.html#42-risc-v-the-open-instruction-set"><span class="vc-n">4.2</span> RISC-V — The Open Instruction Set</a><ul class="vc-subs"><li class="vc-l3"><a href="ch04-processor-cores.html#421-isa-extensions"><span class="vc-n">4.2.1</span> ISA Extensions</a></li><li class="vc-l3"><a href="ch04-processor-cores.html#422-register-file"><span class="vc-n">4.2.2</span> Register File</a></li><li class="vc-l3"><a href="ch04-processor-cores.html#423-instruction-encoding"><span class="vc-n">4.2.3</span> Instruction Encoding</a></li></ul></li>
+<li class="vc-l2"><a href="ch04-processor-cores.html#43-the-hand-written-rv32i-core"><span class="vc-n">4.3</span> The Hand-Written RV32I Core</a><ul class="vc-subs"><li class="vc-l3"><a href="ch04-processor-cores.html#431-fetch-stage"><span class="vc-n">4.3.1</span> Fetch Stage</a></li><li class="vc-l3"><a href="ch04-processor-cores.html#432-decode-stage"><span class="vc-n">4.3.2</span> Decode Stage</a></li><li class="vc-l3"><a href="ch04-processor-cores.html#433-alu"><span class="vc-n">4.3.3</span> ALU</a></li></ul></li>
+<li class="vc-l2"><a href="ch04-processor-cores.html#44-open-source-cores-available-in-this-project"><span class="vc-n">4.4</span> Open-Source Cores Available in This Project</a><ul class="vc-subs"><li class="vc-l3"><a href="ch04-processor-cores.html#441-choosing-the-right-core"><span class="vc-n">4.4.1</span> Choosing the Right Core</a></li></ul></li>
+<li class="vc-l2"><a href="ch04-processor-cores.html#45-picorv32-the-arty-a7-workhorse"><span class="vc-n">4.5</span> PicoRV32 — The Arty A7 Workhorse</a></li>
+<li class="vc-l2"><a href="ch04-processor-cores.html#46-arm-cortex-m0-designstart"><span class="vc-n">4.6</span> ARM Cortex-M0 DesignStart</a></li>
+<li class="vc-l2"><a href="ch04-processor-cores.html#47-building-a-minimal-rv32i-soc"><span class="vc-n">4.7</span> Building a Minimal RV32I SoC</a></li>
+<li class="vc-l2"><a href="ch04-processor-cores.html#48-summary"><span class="vc-n">4.8</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch05-bus-protocols-and-interconnects.html">Chapter 5: Bus Protocols and Interconnects</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#51-overview-of-bus-protocols-used-in-this-project"><span class="vc-n">5.1</span> Overview of Bus Protocols Used in This Project</a></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#52-axi4-lite-the-register-access-bus"><span class="vc-n">5.2</span> AXI4-Lite — The Register Access Bus</a><ul class="vc-subs"><li class="vc-l3"><a href="ch05-bus-protocols-and-interconnects.html#521-the-five-channels"><span class="vc-n">5.2.1</span> The Five Channels</a></li><li class="vc-l3"><a href="ch05-bus-protocols-and-interconnects.html#522-the-validready-handshake"><span class="vc-n">5.2.2</span> The Valid/Ready Handshake</a></li><li class="vc-l3"><a href="ch05-bus-protocols-and-interconnects.html#523-a-complete-axi4-lite-write-transaction"><span class="vc-n">5.2.3</span> A Complete AXI4-Lite Write Transaction</a></li><li class="vc-l3"><a href="ch05-bus-protocols-and-interconnects.html#524-bresp-and-rresp-response-codes"><span class="vc-n">5.2.4</span> BRESP and RRESP — Response Codes</a></li></ul></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#53-axi4-stream-the-data-pipeline-bus"><span class="vc-n">5.3</span> AXI4-Stream — The Data Pipeline Bus</a></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#54-wishbone-b4-the-open-source-classic"><span class="vc-n">5.4</span> Wishbone B4 — The Open-Source Classic</a></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#55-apb-advanced-peripheral-bus"><span class="vc-n">5.5</span> APB — Advanced Peripheral Bus</a></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#56-the-crossbar-interconnect"><span class="vc-n">5.6</span> The Crossbar Interconnect</a></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#57-register-maps-how-software-talks-to-hardware"><span class="vc-n">5.7</span> Register Maps — How Software Talks to Hardware</a></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#58-formal-properties-for-bus-protocols"><span class="vc-n">5.8</span> Formal Properties for Bus Protocols</a></li>
+<li class="vc-l2"><a href="ch05-bus-protocols-and-interconnects.html#59-summary"><span class="vc-n">5.9</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch06-fpga-prototyping.html">Chapter 6: FPGA Prototyping</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#61-how-an-fpga-works-internally"><span class="vc-n">6.1</span> How an FPGA Works Internally</a></li>
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#62-the-xilinx-vivado-flow"><span class="vc-n">6.2</span> The Xilinx Vivado Flow</a><ul class="vc-subs"><li class="vc-l3"><a href="ch06-fpga-prototyping.html#621-build-flow-overview"><span class="vc-n">6.2.1</span> Build Flow Overview</a></li><li class="vc-l3"><a href="ch06-fpga-prototyping.html#622-running-the-arty-a7-build"><span class="vc-n">6.2.2</span> Running the Arty A7 Build</a></li><li class="vc-l3"><a href="ch06-fpga-prototyping.html#623-reading-timing-reports"><span class="vc-n">6.2.3</span> Reading Timing Reports</a></li></ul></li>
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#63-constraint-files-xdc"><span class="vc-n">6.3</span> Constraint Files (XDC)</a><ul class="vc-subs"><li class="vc-l3"><a href="ch06-fpga-prototyping.html#631-clock-constraint"><span class="vc-n">6.3.1</span> Clock Constraint</a></li><li class="vc-l3"><a href="ch06-fpga-prototyping.html#632-io-pin-constraint"><span class="vc-n">6.3.2</span> I/O Pin Constraint</a></li></ul></li>
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#64-resource-utilisation-what-fits-where"><span class="vc-n">6.4</span> Resource Utilisation — What Fits Where</a></li>
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#65-intel-quartus-flow-de10-nano"><span class="vc-n">6.5</span> Intel Quartus Flow (DE10-Nano)</a></li>
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#66-ila-in-circuit-debugging"><span class="vc-n">6.6</span> ILA — In-Circuit Debugging</a></li>
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#67-fpga-in-the-loop-testing"><span class="vc-n">6.7</span> FPGA-in-the-Loop Testing</a></li>
+<li class="vc-l2"><a href="ch06-fpga-prototyping.html#68-summary"><span class="vc-n">6.8</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch07-verification.html">Chapter 7: Verification</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch07-verification.html#71-three-verification-approaches"><span class="vc-n">7.1</span> Three Verification Approaches</a></li>
+<li class="vc-l2"><a href="ch07-verification.html#72-simulation-running-your-rtl-like-a-program"><span class="vc-n">7.2</span> Simulation — Running Your RTL Like a Program</a><ul class="vc-subs"><li class="vc-l3"><a href="ch07-verification.html#721-quick-simulation-with-icarus-verilog"><span class="vc-n">7.2.1</span> Quick Simulation with Icarus Verilog</a></li><li class="vc-l3"><a href="ch07-verification.html#722-anatomy-of-the-uart-testbench"><span class="vc-n">7.2.2</span> Anatomy of the UART Testbench</a></li><li class="vc-l3"><a href="ch07-verification.html#723-verilator-fast-c-simulation"><span class="vc-n">7.2.3</span> Verilator — Fast C++ Simulation</a></li></ul></li>
+<li class="vc-l2"><a href="ch07-verification.html#73-cocotb-python-driven-verification"><span class="vc-n">7.3</span> cocotb — Python-Driven Verification</a><ul class="vc-subs"><li class="vc-l3"><a href="ch07-verification.html#731-how-cocotb-works"><span class="vc-n">7.3.1</span> How cocotb Works</a></li><li class="vc-l3"><a href="ch07-verification.html#732-cocotb-uart-test"><span class="vc-n">7.3.2</span> cocotb UART Test</a></li></ul></li>
+<li class="vc-l2"><a href="ch07-verification.html#74-formal-verification-mathematical-proof"><span class="vc-n">7.4</span> Formal Verification — Mathematical Proof</a><ul class="vc-subs"><li class="vc-l3"><a href="ch07-verification.html#741-how-formal-verification-works"><span class="vc-n">7.4.1</span> How Formal Verification Works</a></li><li class="vc-l3"><a href="ch07-verification.html#742-sva-systemverilog-assertions"><span class="vc-n">7.4.2</span> SVA — SystemVerilog Assertions</a></li><li class="vc-l3"><a href="ch07-verification.html#743-symbiyosys-configuration-file"><span class="vc-n">7.4.3</span> SymbiYosys Configuration File</a></li></ul></li>
+<li class="vc-l2"><a href="ch07-verification.html#75-uvm-universal-verification-methodology"><span class="vc-n">7.5</span> UVM — Universal Verification Methodology</a></li>
+<li class="vc-l2"><a href="ch07-verification.html#76-functional-coverage"><span class="vc-n">7.6</span> Functional Coverage</a></li>
+<li class="vc-l2"><a href="ch07-verification.html#77-summary"><span class="vc-n">7.7</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch08-synthesis.html">Chapter 8: Synthesis</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch08-synthesis.html#81-what-happens-during-synthesis"><span class="vc-n">8.1</span> What Happens During Synthesis</a></li>
+<li class="vc-l2"><a href="ch08-synthesis.html#82-yosys-open-source-synthesis"><span class="vc-n">8.2</span> Yosys — Open-Source Synthesis</a><ul class="vc-subs"><li class="vc-l3"><a href="ch08-synthesis.html#821-sky130-synthesis-script"><span class="vc-n">8.2.1</span> Sky130 Synthesis Script</a></li><li class="vc-l3"><a href="ch08-synthesis.html#822-running-yosys"><span class="vc-n">8.2.2</span> Running Yosys</a></li><li class="vc-l3"><a href="ch08-synthesis.html#823-reading-the-statistics-output"><span class="vc-n">8.2.3</span> Reading the Statistics Output</a></li></ul></li>
+<li class="vc-l2"><a href="ch08-synthesis.html#83-vivado-synthesis-fpga"><span class="vc-n">8.3</span> Vivado Synthesis (FPGA)</a><ul class="vc-subs"><li class="vc-l3"><a href="ch08-synthesis.html#831-synthesis-directives"><span class="vc-n">8.3.1</span> Synthesis Directives</a></li></ul></li>
+<li class="vc-l2"><a href="ch08-synthesis.html#84-understanding-the-netlist"><span class="vc-n">8.4</span> Understanding the Netlist</a></li>
+<li class="vc-l2"><a href="ch08-synthesis.html#85-liberty-files-describing-standard-cells"><span class="vc-n">8.5</span> Liberty Files — Describing Standard Cells</a></li>
+<li class="vc-l2"><a href="ch08-synthesis.html#86-abc-the-logic-optimiser"><span class="vc-n">8.6</span> ABC — The Logic Optimiser</a></li>
+<li class="vc-l2"><a href="ch08-synthesis.html#87-summary"><span class="vc-n">8.7</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch09-physical-design.html">Chapter 9: Physical Design</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch09-physical-design.html#91-the-physical-design-flow"><span class="vc-n">9.1</span> The Physical Design Flow</a></li>
+<li class="vc-l2"><a href="ch09-physical-design.html#92-openroad-the-open-source-physical-design-suite"><span class="vc-n">9.2</span> OpenROAD — The Open-Source Physical Design Suite</a><ul class="vc-subs"><li class="vc-l3"><a href="ch09-physical-design.html#921-step-1-floorplan"><span class="vc-n">9.2.1</span> Step 1: Floorplan</a></li><li class="vc-l3"><a href="ch09-physical-design.html#922-step-2-power-distribution-network-pdn"><span class="vc-n">9.2.2</span> Step 2: Power Distribution Network (PDN)</a></li><li class="vc-l3"><a href="ch09-physical-design.html#923-step-3-placement"><span class="vc-n">9.2.3</span> Step 3: Placement</a></li><li class="vc-l3"><a href="ch09-physical-design.html#924-step-4-clock-tree-synthesis-cts"><span class="vc-n">9.2.4</span> Step 4: Clock Tree Synthesis (CTS)</a></li><li class="vc-l3"><a href="ch09-physical-design.html#925-step-5-routing"><span class="vc-n">9.2.5</span> Step 5: Routing</a></li></ul></li>
+<li class="vc-l2"><a href="ch09-physical-design.html#93-parasitic-extraction-and-final-sta"><span class="vc-n">9.3</span> Parasitic Extraction and Final STA</a><ul class="vc-subs"><li class="vc-l3"><a href="ch09-physical-design.html#931-reading-timing-paths"><span class="vc-n">9.3.1</span> Reading Timing Paths</a></li></ul></li>
+<li class="vc-l2"><a href="ch09-physical-design.html#94-gdsii-the-final-output"><span class="vc-n">9.4</span> GDSII — The Final Output</a></li>
+<li class="vc-l2"><a href="ch09-physical-design.html#95-openlane-fully-automated-rtl-to-gds"><span class="vc-n">9.5</span> OpenLane — Fully Automated RTL-to-GDS</a></li>
+<li class="vc-l2"><a href="ch09-physical-design.html#96-summary"><span class="vc-n">9.6</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch10-pdks-and-fabrication.html">Chapter 10: PDKs and Fabrication</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#101-the-three-pdks-used-in-this-project"><span class="vc-n">10.1</span> The Three PDKs Used in This Project</a></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#102-what-is-inside-a-pdk"><span class="vc-n">10.2</span> What Is Inside a PDK?</a><ul class="vc-subs"><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1021-standard-cell-library"><span class="vc-n">10.2.1</span> Standard Cell Library</a></li><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1022-design-rule-check-drc-rules"><span class="vc-n">10.2.2</span> Design Rule Check (DRC) Rules</a></li><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1023-layout-vs-schematic-lvs"><span class="vc-n">10.2.3</span> Layout vs. Schematic (LVS)</a></li></ul></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#sec-sky130"><span class="vc-n">10.3</span> Sky130A — The Free 130nm PDK</a><ul class="vc-subs"><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1031-layer-stack"><span class="vc-n">10.3.1</span> Layer Stack</a></li><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1032-setting-up-the-pdk"><span class="vc-n">10.3.2</span> Setting Up the PDK</a></li></ul></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#104-gf180mcu-globalfoundries-180nm"><span class="vc-n">10.4</span> GF180MCU — GlobalFoundries 180nm</a></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#sec-asap7"><span class="vc-n">10.5</span> ASAP7 — Academic 7nm PDK</a></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#sec-tapeout"><span class="vc-n">10.6</span> The Tapeout Process</a><ul class="vc-subs"><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1061-steps-to-tapeout"><span class="vc-n">10.6.1</span> Steps to Tapeout</a></li><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1062-corner-analysis"><span class="vc-n">10.6.2</span> Corner Analysis</a></li></ul></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#sec-efabless"><span class="vc-n">10.7</span> Efabless and the MPW Shuttle</a><ul class="vc-subs"><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1071-the-caravel-harness"><span class="vc-n">10.7.1</span> The Caravel Harness</a></li><li class="vc-l3"><a href="ch10-pdks-and-fabrication.html#1072-submitting-to-mpw"><span class="vc-n">10.7.2</span> Submitting to MPW</a></li></ul></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#108-reading-a-gdsii-file"><span class="vc-n">10.8</span> Reading a GDSII File</a></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#109-metal-fill-and-density-rules"><span class="vc-n">10.9</span> Metal Fill and Density Rules</a></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#1010-the-signoff-checklist"><span class="vc-n">10.10</span> The Signoff Checklist</a></li>
+<li class="vc-l2"><a href="ch10-pdks-and-fabrication.html#1011-summary"><span class="vc-n">10.11</span> Summary</a></li>
+</ul></details></li>
+<li class="vc-ch"><details><summary><a href="ch11-the-automation-pipeline.html">Chapter 11: The Automation Pipeline</a></summary><ul class="vc-secs">
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#111-the-big-picture"><span class="vc-n">11.1</span> The Big Picture</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#112-the-makefile-entry-point"><span class="vc-n">11.2</span> The Makefile Entry Point</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#113-the-python-orchestrator"><span class="vc-n">11.3</span> The Python Orchestrator</a><ul class="vc-subs"><li class="vc-l3"><a href="ch11-the-automation-pipeline.html#1131-how-the-orchestrator-works"><span class="vc-n">11.3.1</span> How the Orchestrator Works</a></li></ul></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#114-ip-generation-from-yaml-specification"><span class="vc-n">11.4</span> IP Generation from YAML Specification</a><ul class="vc-subs"><li class="vc-l3"><a href="ch11-the-automation-pipeline.html#1141-the-ip-specification-format"><span class="vc-n">11.4.1</span> The IP Specification Format</a></li><li class="vc-l3"><a href="ch11-the-automation-pipeline.html#1142-what-the-generator-produces"><span class="vc-n">11.4.2</span> What the Generator Produces</a></li></ul></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#115-register-map-generator"><span class="vc-n">11.5</span> Register Map Generator</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#116-fusesoc-ip-package-manager"><span class="vc-n">11.6</span> FuseSoC — IP Package Manager</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#117-the-complete-ci-flow"><span class="vc-n">11.7</span> The Complete CI Flow</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#118-adding-a-new-ip-block-end-to-end-walkthrough"><span class="vc-n">11.8</span> Adding a New IP Block — End-to-End Walkthrough</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#119-directory-structure-reference"><span class="vc-n">11.9</span> Directory Structure Reference</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#1110-the-agent-system"><span class="vc-n">11.10</span> The Agent System</a></li>
+<li class="vc-l2"><a href="ch11-the-automation-pipeline.html#1111-summary"><span class="vc-n">11.11</span> Summary</a></li>
+</ul></details></li>
+</ul>
+<p class="toc-group">Back matter</p>
+<ul class="vol-toc vol-toc-full">
+<li class="vc-ch vc-leaf"><a href="appendix-a-quick-reference-commands.html">Appendix A: Quick Reference Commands</a></li>
+<li class="vc-ch vc-leaf"><a href="appendix-b-glossary.html">Appendix B: Glossary</a></li>
+<li class="vc-ch vc-leaf"><a href="appendix-c-further-reading.html">Appendix C: Further Reading</a></li>
+</ul>
+</nav>
+<h2 id="preface">Preface<a class="headerlink" href="#preface" title="Permanent link">&para;</a></h2>
+<p>This tutorial was written to accompany the <strong>FPGA and ASIC Agents and Skills</strong> project — a complete, open-source design pipeline that takes a hardware idea from a text specification all the way to a fabrication-ready GDSII file.</p>
+<p>The project exists because chip design has historically been locked behind expensive proprietary tools and non-disclosure agreements. Thanks to efforts from Google, SkyWater Technology, Efabless, and the open-source EDA community, it is now possible for any engineer with a laptop to design and even fabricate a real silicon chip at no cost.</p>
+<p>This tutorial assumes you can write code in <em>some</em> programming language and understand binary numbers. No prior hardware or electronics knowledge is assumed. Every concept is introduced with an analogy before any mathematics, and every code listing is taken directly from a real file in the project so you can run it yourself.</p>
+<p><em>Good luck, and happy taping out!</em></p>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button type="button" class="md-top md-icon" data-md-component="top" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+Back to top
+</button>
+</main>
+<footer class="md-footer">
+<nav class="md-footer__inner md-grid" aria-label="Footer" >
+<a href="../drones_missiles/bibliography.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: References">
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Previous
+</span>
+<div class="md-ellipsis">
+References
+</div>
+</div>
+</a>
+<a href="ch01-introduction.html" class="md-footer__link md-footer__link--next" aria-label="Next: 1. Introduction">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Next
+</span>
+<div class="md-ellipsis">
+1. Introduction
+</div>
+</div>
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+The Open Book Project: Reserve Shelf &middot;
+<a href="../../about.html">About this library</a> &middot;
+<a href="../../publish.html">Publish your book</a> &middot;
+© The authors of the books
+</div>
+Made with
+<a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+Material for MkDocs
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+<script src="../../assets/mathjax.js"></script>
+<script src="../../assets/viz.js"></script>
+<script src="../../assets/remote.js"></script>
+<script src="../../assets/scans.js"></script>
+<script src="../../assets/reader.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/slides.js"></script>
+<script src="../../assets/speak.js"></script>
+<script src="../../assets/quiz.js"></script>
+<script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>

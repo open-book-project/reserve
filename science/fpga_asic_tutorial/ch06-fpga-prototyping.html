@@ -1,0 +1,865 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="The Reserve Shelf of The Open Book Project: eight reference books and course books on chip design, memory, roots of trust, security IP, randomness testing, drones and missiles, and web programming, read page by page like an e-book, online or offline.">
+<meta name="author" content="The Open Book Project">
+<meta name="robots" content="noindex,nofollow">
+<link rel="canonical" href="https://open-book-project.github.io/reserve/science/fpga_asic_tutorial/ch06-fpga-prototyping.html">
+<link rel="prev" href="ch05-bus-protocols-and-interconnects.html">
+<link rel="next" href="ch07-verification.html">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&display=swap"></noscript>
+<link rel="icon" href="../../assets/icons/favicon-32.png" sizes="32x32">
+<link rel="icon" href="../../assets/icons/favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="../../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../../assets/icons/apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Reserve Shelf">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="application-name" content="Reserve Shelf"><script src="../../assets/library-data.js"></script><script>
+    (function () {
+      var X = window.XMLHttpRequest, open, gate = new Promise(function (r) { open = r; });
+      if (!X) return;
+      var open0 = X.prototype.open, send0 = X.prototype.send;
+      X.prototype.open = function (method, url) {
+        this.__pkIndex = /\/search\/search_index\.json(\?|#|$)/.test(String(url));
+        return open0.apply(this, arguments);
+      };
+      X.prototype.send = function () {
+        if (!this.__pkIndex) return send0.apply(this, arguments);
+        var xhr = this, args = arguments;
+        gate.then(function () { send0.apply(xhr, args); });
+      };
+      function wake() { open(); }
+      document.addEventListener("focusin", function (e) { if (e.target && e.target.closest && e.target.closest(".md-search")) wake(); });
+      document.addEventListener("click", function (e) { if (e.target && e.target.closest && e.target.closest('label[for="__search"], .md-search')) wake(); }, true);
+      document.addEventListener("keydown", function (e) {
+        var k = e.key;
+        if ((k === "/" || k === "s" || k === "f" || k === "S" || k === "F") && !(e.target && e.target.closest && e.target.closest("input, textarea, [contenteditable]"))) wake();
+      }, true);
+      if (/[?&]q=/.test(location.search)) wake();
+    })();
+  </script><script>
+    try {
+      if ((window.matchMedia && (matchMedia("(display-mode: standalone)").matches || matchMedia("(display-mode: fullscreen)").matches)) || navigator.standalone === true) {
+        document.documentElement.className += " bjp-standalone";
+      }
+    } catch (e) { /* not an installed app */ }
+    /* the books of a subject or of the whole library as covers or as a list (assets/app.js): the reader's choice */
+    try {
+      var bv = localStorage.getItem("bjp.view");
+      if (bv === "list" || (bv !== "grid" && /\/books\.html$/.test(location.pathname))) document.documentElement.className += " bjp-view-list";
+    } catch (e) { /* no storage: covers */ }
+  </script>
+<script>
+    /* a book opened from its cover on the shelf: the page stays blank, in the cover's colour, until the reader is up */
+    try {
+      var cv = sessionStorage.getItem("bjp.reader.cover");
+      if (cv && sessionStorage.getItem("bjp.reader.open") === "1") {
+        var c = JSON.parse(cv), de = document.documentElement;
+        de.className += " bjp-booting";
+        if (c && /^#[0-9a-f]{3,8}$/i.test(c.bg || "")) de.style.background = c.bg;
+        setTimeout(function () { de.classList.remove("bjp-booting"); de.style.background = ""; }, 3000);
+      }
+    } catch (e) { /* no session storage: the page simply opens as usual */ }
+  </script>
+<title>6. FPGA Prototyping - The Open Book Project: Reserve Shelf</title>
+<link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+<link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+<link rel="stylesheet" href="../../assets/extra.css">
+<link rel="stylesheet" href="../../assets/reader.css">
+<link rel="stylesheet" href="../../assets/viz.css">
+<link rel="stylesheet" href="../../assets/app.css">
+<link rel="stylesheet" href="../../assets/theme.css">
+<link rel="stylesheet" href="../../assets/slides.css">
+<link rel="stylesheet" href="../../assets/remote.css">
+<link rel="stylesheet" href="../../assets/scans.css">
+<link rel="stylesheet" href="../../assets/speak.css">
+<link rel="stylesheet" href="../../assets/quiz.css">
+<script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+</head>
+<body dir="ltr" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom">
+<input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+<input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+<label class="md-overlay" for="__drawer"></label>
+<div data-md-component="skip">
+<a href="#61-how-an-fpga-works-internally" class="md-skip">
+Skip to content
+</a>
+</div>
+<div data-md-component="announce">
+</div>
+<header class="md-header md-header--shadow" data-md-component="header">
+<nav class="md-header__inner md-grid" aria-label="Header">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-header__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+<label class="md-header__button md-icon" for="__drawer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+</label>
+<div class="md-header__title" data-md-component="header-title">
+<div class="md-header__ellipsis">
+<div class="md-header__topic">
+<span class="md-ellipsis">
+The Open Book Project: Reserve Shelf
+</span>
+</div>
+<div class="md-header__topic" data-md-component="header-topic">
+<span class="md-ellipsis">
+6. FPGA Prototyping
+</span>
+</div>
+</div>
+</div><a href="../../index.html" class="bjp-libbtn" aria-label="Library: all books" title="Library: all books">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V5h4v15M8 20V9h4v11M14 20L12.6 6l3.8-.8 3 14.2M3 20h18"/></svg><span>Library</span>
+</a>
+<a href="../../subjects/index.html" class="pk-catbtn" aria-haspopup="true" aria-expanded="false" title="Browse the books by category">
+<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><circle cx="17" cy="7" r="3.6"/><path d="M7 13.4l3.9 6.8H3.1z"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg><span>Categories</span>
+</a>
+<form class="md-header__option" data-md-component="palette">
+<input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+<label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+</label>
+<input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="custom" data-md-color-accent="custom"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+<label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+</label>
+</form>
+<script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+<label class="md-header__button md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+</label>
+<div class="md-search" data-md-component="search" role="dialog">
+<label class="md-search__overlay" for="__search"></label>
+<div class="md-search__inner" role="search">
+<form class="md-search__form" name="search">
+<input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+<label class="md-search__icon md-icon" for="__search">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</label>
+<nav class="md-search__options" aria-label="Search">
+<button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+</nav>
+<div class="md-search__suggest" data-md-component="search-suggest"></div>
+</form>
+<div class="md-search__output">
+<div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+<div class="md-search-result" data-md-component="search-result">
+<div class="md-search-result__meta">
+Initializing search
+</div>
+<ol class="md-search-result__list" role="presentation"></ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+</nav>
+</header>
+<div class="md-container" data-md-component="container">
+<main class="md-main" data-md-component="main">
+<div class="md-main__inner md-grid">
+<div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--primary bjp-nav bjp-nav--book" aria-label="Navigation" data-md-level="0">
+<label class="md-nav__title" for="__drawer">
+<a href="../../index.html" title="The Open Book Project: Reserve Shelf" class="md-nav__button md-logo" aria-label="The Open Book Project: Reserve Shelf" data-md-component="logo">
+<img src="../../assets/icons/logo.svg" alt="logo">
+</a>
+The Open Book Project: Reserve Shelf
+</label>
+<ul class="md-nav__list" data-md-scrollfix>
+<li class="md-nav__item bjp-nav-all">
+<a href="../../index.html" class="md-nav__link" aria-label="All books: back to the library">
+<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+<span class="md-ellipsis">All books</span>
+</a>
+</li>
+<li class="md-nav__item bjp-nav-book" role="presentation"><span class="bjp-nav-head">FPGA and ASIC Design</span></li>
+<li class="md-nav__item">
+<a href="index.html" class="md-nav__link">
+<span class="md-ellipsis">
+Overview and preface
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch01-introduction.html" class="md-nav__link">
+<span class="md-ellipsis">
+1. Introduction
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch02-digital-design-fundamentals.html" class="md-nav__link">
+<span class="md-ellipsis">
+2. Digital Design Fundamentals
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch03-hardware-description-languages.html" class="md-nav__link">
+<span class="md-ellipsis">
+3. Hardware Description Languages
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch04-processor-cores.html" class="md-nav__link">
+<span class="md-ellipsis">
+4. Processor Cores
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch05-bus-protocols-and-interconnects.html" class="md-nav__link">
+<span class="md-ellipsis">
+5. Bus Protocols and Interconnects
+</span>
+</a>
+</li>
+<li class="md-nav__item md-nav__item--active">
+<input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+<label class="md-nav__link md-nav__link--active" for="__toc">
+<span class="md-ellipsis">
+6. FPGA Prototyping
+</span>
+<span class="md-nav__icon md-icon"></span>
+</label>
+<a href="ch06-fpga-prototyping.html" class="md-nav__link md-nav__link--active">
+<span class="md-ellipsis">
+6. FPGA Prototyping
+</span>
+</a>
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#61-how-an-fpga-works-internally" class="md-nav__link">
+<span class="md-ellipsis">
+6.1 How an FPGA Works Internally
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#62-the-xilinx-vivado-flow" class="md-nav__link">
+<span class="md-ellipsis">
+6.2 The Xilinx Vivado Flow
+</span>
+</a>
+<nav class="md-nav" aria-label="6.2 The Xilinx Vivado Flow">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#621-build-flow-overview" class="md-nav__link">
+<span class="md-ellipsis">
+6.2.1 Build Flow Overview
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#622-running-the-arty-a7-build" class="md-nav__link">
+<span class="md-ellipsis">
+6.2.2 Running the Arty A7 Build
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#623-reading-timing-reports" class="md-nav__link">
+<span class="md-ellipsis">
+6.2.3 Reading Timing Reports
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#63-constraint-files-xdc" class="md-nav__link">
+<span class="md-ellipsis">
+6.3 Constraint Files (XDC)
+</span>
+</a>
+<nav class="md-nav" aria-label="6.3 Constraint Files (XDC)">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#631-clock-constraint" class="md-nav__link">
+<span class="md-ellipsis">
+6.3.1 Clock Constraint
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#632-io-pin-constraint" class="md-nav__link">
+<span class="md-ellipsis">
+6.3.2 I/O Pin Constraint
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#64-resource-utilisation-what-fits-where" class="md-nav__link">
+<span class="md-ellipsis">
+6.4 Resource Utilisation — What Fits Where
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#65-intel-quartus-flow-de10-nano" class="md-nav__link">
+<span class="md-ellipsis">
+6.5 Intel Quartus Flow (DE10-Nano)
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#66-ila-in-circuit-debugging" class="md-nav__link">
+<span class="md-ellipsis">
+6.6 ILA — In-Circuit Debugging
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#67-fpga-in-the-loop-testing" class="md-nav__link">
+<span class="md-ellipsis">
+6.7 FPGA-in-the-Loop Testing
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#68-summary" class="md-nav__link">
+<span class="md-ellipsis">
+6.8 Summary
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="ch07-verification.html" class="md-nav__link">
+<span class="md-ellipsis">
+7. Verification
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch08-synthesis.html" class="md-nav__link">
+<span class="md-ellipsis">
+8. Synthesis
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch09-physical-design.html" class="md-nav__link">
+<span class="md-ellipsis">
+9. Physical Design
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch10-pdks-and-fabrication.html" class="md-nav__link">
+<span class="md-ellipsis">
+10. PDKs and Fabrication
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="ch11-the-automation-pipeline.html" class="md-nav__link">
+<span class="md-ellipsis">
+11. The Automation Pipeline
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-a-quick-reference-commands.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix A: Quick Reference Commands
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-b-glossary.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix B: Glossary
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="appendix-c-further-reading.html" class="md-nav__link">
+<span class="md-ellipsis">
+Appendix C: Further Reading
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+<div class="md-sidebar__scrollwrap">
+<div class="md-sidebar__inner">
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+<label class="md-nav__title" for="__toc">
+<span class="md-nav__icon md-icon"></span>
+Table of contents
+</label>
+<ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+<li class="md-nav__item">
+<a href="#61-how-an-fpga-works-internally" class="md-nav__link">
+<span class="md-ellipsis">
+6.1 How an FPGA Works Internally
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#62-the-xilinx-vivado-flow" class="md-nav__link">
+<span class="md-ellipsis">
+6.2 The Xilinx Vivado Flow
+</span>
+</a>
+<nav class="md-nav" aria-label="6.2 The Xilinx Vivado Flow">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#621-build-flow-overview" class="md-nav__link">
+<span class="md-ellipsis">
+6.2.1 Build Flow Overview
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#622-running-the-arty-a7-build" class="md-nav__link">
+<span class="md-ellipsis">
+6.2.2 Running the Arty A7 Build
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#623-reading-timing-reports" class="md-nav__link">
+<span class="md-ellipsis">
+6.2.3 Reading Timing Reports
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#63-constraint-files-xdc" class="md-nav__link">
+<span class="md-ellipsis">
+6.3 Constraint Files (XDC)
+</span>
+</a>
+<nav class="md-nav" aria-label="6.3 Constraint Files (XDC)">
+<ul class="md-nav__list">
+<li class="md-nav__item">
+<a href="#631-clock-constraint" class="md-nav__link">
+<span class="md-ellipsis">
+6.3.1 Clock Constraint
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#632-io-pin-constraint" class="md-nav__link">
+<span class="md-ellipsis">
+6.3.2 I/O Pin Constraint
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</li>
+<li class="md-nav__item">
+<a href="#64-resource-utilisation-what-fits-where" class="md-nav__link">
+<span class="md-ellipsis">
+6.4 Resource Utilisation — What Fits Where
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#65-intel-quartus-flow-de10-nano" class="md-nav__link">
+<span class="md-ellipsis">
+6.5 Intel Quartus Flow (DE10-Nano)
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#66-ila-in-circuit-debugging" class="md-nav__link">
+<span class="md-ellipsis">
+6.6 ILA — In-Circuit Debugging
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#67-fpga-in-the-loop-testing" class="md-nav__link">
+<span class="md-ellipsis">
+6.7 FPGA-in-the-Loop Testing
+</span>
+</a>
+</li>
+<li class="md-nav__item">
+<a href="#68-summary" class="md-nav__link">
+<span class="md-ellipsis">
+6.8 Summary
+</span>
+</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="md-content" data-md-component="content">
+<article class="md-content__inner md-typeset">
+<h1 id="ch-fpga">Chapter 6: FPGA Prototyping<a class="headerlink" href="#ch-fpga" title="Permanent link">&para;</a></h1>
+<p>FPGA prototyping is the critical halfway point between writing RTL on your laptop and shipping silicon to a foundry. You program your design onto a real FPGA board, verify it works in hardware at speed, and fix any bugs <em>before</em> committing millions of dollars to manufacture.</p>
+<h2 id="61-how-an-fpga-works-internally"><span class="secnum">6.1</span> How an FPGA Works Internally<a class="headerlink" href="#61-how-an-fpga-works-internally" title="Permanent link">&para;</a></h2>
+<p>An FPGA chip is a sea of programmable resources:</p>
+<figure class="fig fig-diagram">
+<img class="tikz" src="img/tikz-9205fabc8c44.svg" alt="Internal structure of an FPGA (simplified)" loading="lazy" width="358" height="225">
+<figcaption><strong>Figure 6.1.</strong> Internal structure of an FPGA (simplified)</figcaption>
+</figure>
+<dl>
+<dt>CLB (Configurable Logic Block)</dt>
+<dd>Contains 4–8 <strong>Look-Up Tables (LUTs)</strong> and flip-flops. A 6-input LUT can implement <em>any</em> Boolean function of 6 variables. After synthesis, your HDL logic is mapped onto these LUTs.</dd>
+<dt>BRAM (Block RAM)</dt>
+<dd>Hard-macro memory blocks (18 Kb or 36 Kb each). Used for FIFOs, instruction memory, coefficient tables. Much more efficient than building memories from LUTs.</dd>
+<dt>DSP48/DSP58 Slice</dt>
+<dd>Dedicated 18<span class="arithmatex">\(\times\)</span>18 multiplier+accumulator. The FIR filter maps each tap’s multiply-add onto one DSP slice.</dd>
+<dt>I/O Banks</dt>
+<dd>Configurable I/O pins supporting LVCMOS, LVDS differential, DDR4 memory interface (via SERDES), and high-speed serial (PCIe, GTH).</dd>
+<dt>PLL/MMCM</dt>
+<dd>Clock management tiles — generate phase-locked, divided, or multiplied clocks from the board oscillator.</dd>
+</dl>
+<h2 id="62-the-xilinx-vivado-flow"><span class="secnum">6.2</span> The Xilinx Vivado Flow<a class="headerlink" href="#62-the-xilinx-vivado-flow" title="Permanent link">&para;</a></h2>
+<p><strong>Vivado</strong> is Xilinx’s primary EDA suite for Artix-7, Kintex UltraScale+, and Zynq devices. The project uses a <em>non-project</em> (scripted) mode — entirely driven by Tcl scripts, which is reproducible and version-control friendly.</p>
+<h3 id="621-build-flow-overview"><span class="secnum">6.2.1</span> Build Flow Overview<a class="headerlink" href="#621-build-flow-overview" title="Permanent link">&para;</a></h3>
+<figure class="fig fig-diagram">
+<img class="tikz" src="img/tikz-780d15cea134.svg" alt="Vivado non-project build flow" loading="lazy" width="221" height="176">
+<figcaption><strong>Figure 6.2.</strong> Vivado non-project build flow</figcaption>
+</figure>
+<h3 id="622-running-the-arty-a7-build"><span class="secnum">6.2.2</span> Running the Arty A7 Build<a class="headerlink" href="#622-running-the-arty-a7-build" title="Permanent link">&para;</a></h3>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># Build bitstream (takes 5-20 minutes depending on design size)</span>
+vivado<span class="w"> </span>-mode<span class="w"> </span>batch<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-source<span class="w"> </span>fpga/xilinx-artix7/build_arty_a7.tcl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-tclargs<span class="w"> </span>top<span class="w"> </span><span class="m">4</span><span class="w">   </span><span class="c1"># top module name, 4 parallel jobs</span>
+
+<span class="c1"># Output:</span>
+<span class="c1">#   fpga/xilinx-artix7/output/top.bit</span>
+<span class="c1">#   fpga/xilinx-artix7/output/top_timing.rpt   (timing report)</span>
+<span class="c1">#   fpga/xilinx-artix7/output/top_util.rpt     (resource usage)</span>
+
+<span class="c1"># Program the FPGA (board must be connected via USB-JTAG)</span>
+vivado<span class="w"> </span>-mode<span class="w"> </span>batch<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-source<span class="w"> </span>fpga/xilinx-artix7/program_arty.tcl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-tclargs<span class="w"> </span>fpga/xilinx-artix7/output/top.bit
+</code></pre></div>
+<h3 id="623-reading-timing-reports"><span class="secnum">6.2.3</span> Reading Timing Reports<a class="headerlink" href="#623-reading-timing-reports" title="Permanent link">&para;</a></h3>
+<p>After synthesis, always check the timing report. A negative <strong>Worst Negative Slack (WNS)</strong> means timing is <em>violated</em> — the design will malfunction at the target clock frequency:</p>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># From top_timing.rpt:</span>
+<span class="c1"># Design Timing Summary</span>
+<span class="c1"># ---------------------</span>
+<span class="c1"># WNS (ns)   TNS (ns)   TNS Failing Endpoints</span>
+<span class="c1">#   2.134      0.000        0              &lt;- PASS: WNS positive</span>
+<span class="c1">#</span>
+<span class="c1"># If failing:</span>
+<span class="c1"># WNS (ns)   TNS (ns)   TNS Failing Endpoints</span>
+<span class="c1">#  -0.512    -12.340       47             &lt;- FAIL: must fix</span>
+</code></pre></div>
+<div class="admonition warning box-bxwarn kind-safety">
+<p class="admonition-title">What to Do When Timing Fails</p>
+<ol>
+<li>
+<p><strong>Reduce clock frequency</strong>: In the XDC file, change the clock period from 10 ns (100 MHz) to 12 ns (83 MHz).</p>
+</li>
+<li>
+<p><strong>Pipeline the critical path</strong>: Add a register stage to break long logic chains into shorter ones.</p>
+</li>
+<li>
+<p><strong>Try aggressive optimisation</strong>: Use <code>-directive AggressiveExplore</code> in place/route commands.</p>
+</li>
+<li>
+<p><strong>Restructure the logic</strong>: Reduce logic depth between flip-flops.</p>
+</li>
+</ol>
+</div>
+<h2 id="63-constraint-files-xdc"><span class="secnum">6.3</span> Constraint Files (XDC)<a class="headerlink" href="#63-constraint-files-xdc" title="Permanent link">&para;</a></h2>
+<p>A <strong>constraint file</strong> (.xdc) tells Vivado three things:</p>
+<ol>
+<li>
+<p>Which physical pin carries which port signal.</p>
+</li>
+<li>
+<p>What the clock frequency is.</p>
+</li>
+<li>
+<p>Any exceptions to the timing rules (false paths, multicycle paths).</p>
+</li>
+</ol>
+<h3 id="631-clock-constraint"><span class="secnum">6.3.1</span> Clock Constraint<a class="headerlink" href="#631-clock-constraint" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># Tell Vivado: the signal sys_clk comes in on pin E3, at 100 MHz</span>
+<span class="nv">set_property</span><span class="w"> </span><span class="o">-</span>dict<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">PACKAGE_PIN</span><span class="w"> </span>E3<span class="w"> </span>IOSTANDARD<span class="w"> </span>LVCMOS33<span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">sys_clk</span><span class="w"> </span><span class="k">}]</span>
+
+<span class="nv">create_clock</span><span class="w"> </span><span class="o">-</span>add<span class="w"> </span><span class="o">-</span>name<span class="w"> </span>sys_clk_pin<span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-period</span><span class="w"> </span><span class="mf">10.00</span><span class="w"> </span><span class="err">\</span><span class="w">          </span><span class="err">#</span><span class="w"> </span><span class="mi">10</span><span class="w"> </span>ns<span class="w"> </span><span class="err">=</span><span class="w"> </span><span class="mi">100</span><span class="w"> </span>MHz
+<span class="w">    </span><span class="nv">-waveform</span><span class="w"> </span><span class="k">{</span><span class="nv">0</span><span class="w"> </span><span class="mi">5</span><span class="k">}</span><span class="w"> </span><span class="err">\</span><span class="w">        </span><span class="err">#</span><span class="w"> </span>rises<span class="w"> </span>at<span class="w"> </span><span class="mi">0</span><span class="w"> </span>ns,<span class="w"> </span>falls<span class="w"> </span>at<span class="w"> </span><span class="mi">5</span><span class="w"> </span>ns
+<span class="w">    </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">sys_clk</span><span class="w"> </span><span class="k">}]</span>
+</code></pre></div>
+<h3 id="632-io-pin-constraint"><span class="secnum">6.3.2</span> I/O Pin Constraint<a class="headerlink" href="#632-io-pin-constraint" title="Permanent link">&para;</a></h3>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># LEDs (4 green LEDs on the board)</span>
+<span class="nv">set_property</span><span class="w"> </span><span class="o">-</span>dict<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">PACKAGE_PIN</span><span class="w"> </span>H5<span class="w">  </span>IOSTANDARD<span class="w"> </span>LVCMOS33<span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">led</span><span class="k">[</span><span class="nv">0</span><span class="k">]</span><span class="w"> </span><span class="k">}]</span>
+<span class="nv">set_property</span><span class="w"> </span><span class="o">-</span>dict<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">PACKAGE_PIN</span><span class="w"> </span>J5<span class="w">  </span>IOSTANDARD<span class="w"> </span>LVCMOS33<span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">led</span><span class="k">[</span><span class="nv">1</span><span class="k">]</span><span class="w"> </span><span class="k">}]</span>
+<span class="nv">set_property</span><span class="w"> </span><span class="o">-</span>dict<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">PACKAGE_PIN</span><span class="w"> </span>T9<span class="w">  </span>IOSTANDARD<span class="w"> </span>LVCMOS33<span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">led</span><span class="k">[</span><span class="nv">2</span><span class="k">]</span><span class="w"> </span><span class="k">}]</span>
+<span class="nv">set_property</span><span class="w"> </span><span class="o">-</span>dict<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">PACKAGE_PIN</span><span class="w"> </span>T10<span class="w"> </span>IOSTANDARD<span class="w"> </span>LVCMOS33<span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">led</span><span class="k">[</span><span class="nv">3</span><span class="k">]</span><span class="w"> </span><span class="k">}]</span>
+
+<span class="c"># UART (connects to on-board FT2232HQ USB-UART bridge)</span>
+<span class="nv">set_property</span><span class="w"> </span><span class="o">-</span>dict<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">PACKAGE_PIN</span><span class="w"> </span>D10<span class="w"> </span>IOSTANDARD<span class="w"> </span>LVCMOS33<span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">uart_txd</span><span class="w"> </span><span class="k">}]</span>
+<span class="nv">set_property</span><span class="w"> </span><span class="o">-</span>dict<span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">PACKAGE_PIN</span><span class="w"> </span>A9<span class="w">  </span>IOSTANDARD<span class="w"> </span>LVCMOS33<span class="w"> </span><span class="k">}</span><span class="w"> </span><span class="k">[</span><span class="nv">get_ports</span><span class="w"> </span><span class="k">{</span><span class="w"> </span><span class="nv">uart_rxd</span><span class="w"> </span><span class="k">}]</span>
+</code></pre></div>
+<p>Package pin names (like <code>E3</code>, <code>H5</code>) come from the board’s schematic and the FPGA’s pinout diagram. The complete files for all boards are in <code>fpga/constraints/</code>.</p>
+<h2 id="64-resource-utilisation-what-fits-where"><span class="secnum">6.4</span> Resource Utilisation — What Fits Where<a class="headerlink" href="#64-resource-utilisation-what-fits-where" title="Permanent link">&para;</a></h2>
+<p>After synthesis, check the utilisation report to understand how much of the FPGA is used:</p>
+<div class="tbl">
+<div class="tbl-caption"><strong>Table 6.1.</strong> Typical utilisation for a UART+SPI+I2C peripheral SoC on Arty A7-35T</div>
+<div class="tbl-scroll">
+<table>
+<thead>
+<tr>
+<th style="text-align: left;"><strong>Resource</strong></th>
+<th style="text-align: right;"><strong>Used</strong></th>
+<th style="text-align: right;"><strong>Available</strong></th>
+<th style="text-align: right;"><strong>%</strong></th>
+<th style="text-align: right;"><strong>Notes</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">LUT</td>
+<td style="text-align: right;">3,124</td>
+<td style="text-align: right;">20,800</td>
+<td style="text-align: right;">15.0%</td>
+<td style="text-align: right;">OK</td>
+</tr>
+<tr>
+<td style="text-align: left;">Flip-Flops</td>
+<td style="text-align: right;">2,012</td>
+<td style="text-align: right;">41,600</td>
+<td style="text-align: right;">4.8%</td>
+<td style="text-align: right;">OK</td>
+</tr>
+<tr>
+<td style="text-align: left;">BRAM (18K)</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">16.0%</td>
+<td style="text-align: right;">OK</td>
+</tr>
+<tr>
+<td style="text-align: left;">DSP48</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">0%</td>
+<td style="text-align: right;">No multipliers used</td>
+</tr>
+<tr>
+<td style="text-align: left;">I/O</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">210</td>
+<td style="text-align: right;">5.7%</td>
+<td style="text-align: right;">OK</td>
+</tr>
+</tbody>
+</table>
+</div></div>
+<div class="admonition info box-bxkey kind-concept">
+<p class="admonition-title">Utilisation Guidelines</p>
+<ul>
+<li>
+<p>Stay below <strong>70% LUT</strong> utilisation to allow Vivado’s router room to manoeuvre. Above 80% causes dramatically longer build times and timing failures.</p>
+</li>
+<li>
+<p><strong>BRAM</strong> and <strong>DSP</strong> can safely use up to 90% since they don’t affect routing congestion.</p>
+</li>
+<li>
+<p>If your design uses <span class="arithmatex">\(&gt;\)</span>70% LUTs on an Arty A7-35T, consider moving to the A7-100T (same board, larger chip).</p>
+</li>
+</ul>
+</div>
+<h2 id="65-intel-quartus-flow-de10-nano"><span class="secnum">6.5</span> Intel Quartus Flow (DE10-Nano)<a class="headerlink" href="#65-intel-quartus-flow-de10-nano" title="Permanent link">&para;</a></h2>
+<p>The DE10-Nano uses an Intel Cyclone V SoC FPGA. The tool is Quartus Prime. The project provides <code>fpga/intel-altera/de10_nano_quartus.tcl</code>:</p>
+<div class="language-tcl highlight"><pre><span></span><code><span class="c"># Build from command line:</span>
+<span class="nv">quartus_sh</span><span class="w"> </span><span class="o">--</span>script<span class="w"> </span>fpga<span class="o">/</span>intel-altera<span class="o">/</span>de10_nano_quartus.tcl
+
+<span class="c"># Program via JTAG:</span>
+<span class="nv">quartus_pgm</span><span class="w"> </span><span class="o">-</span>m<span class="w"> </span>jtag<span class="w"> </span><span class="err">\</span>
+<span class="w">    </span><span class="nv">-o</span><span class="w"> </span><span class="s2">"p;fpga/intel-altera/output/de10_nano_top.sof"</span>
+</code></pre></div>
+<p>Key differences from Vivado:</p>
+<ul>
+<li>
+<p>Timing constraints use <strong>SDC</strong> files (<code>de10_nano.sdc</code>).</p>
+</li>
+<li>
+<p>Resource primitives are called ALMs (Adaptive Logic Modules) instead of LUTs.</p>
+</li>
+<li>
+<p>The HPS (Hard Processor System) on the Cyclone V SoC can run Linux and talk to the FPGA fabric via a lightweight AXI bus.</p>
+</li>
+</ul>
+<h2 id="66-ila-in-circuit-debugging"><span class="secnum">6.6</span> ILA — In-Circuit Debugging<a class="headerlink" href="#66-ila-in-circuit-debugging" title="Permanent link">&para;</a></h2>
+<p>When a bug only appears on real hardware (not in simulation), you need <strong>Integrated Logic Analyser (ILA)</strong> — a logic analyser baked into your FPGA design:</p>
+<div class="language-tcl highlight"><pre><span></span><code><span class="nb">source</span><span class="w"> </span>fpga<span class="o">/</span>ip-cores<span class="o">/</span>clk_wizard_config.tcl
+
+<span class="c"># Create ILA with 4 probes, 1024 sample depth</span>
+<span class="nv">create_ila</span><span class="w"> </span>ila_debug<span class="w"> </span><span class="mi">4</span><span class="w"> </span><span class="mi">1024</span>
+</code></pre></div>
+<div class="language-verilog highlight"><pre><span></span><code><span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">mark_debug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"true"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">uart_txd</span><span class="p">;</span>
+<span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">mark_debug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"true"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="p">[</span><span class="mh">7</span><span class="o">:</span><span class="mh">0</span><span class="p">]</span><span class="w"> </span><span class="n">tx_data</span><span class="p">;</span>
+<span class="p">(</span><span class="o">*</span><span class="w"> </span><span class="n">mark_debug</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">"true"</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="kt">logic</span><span class="w"> </span><span class="n">tx_valid</span><span class="p">;</span>
+</code></pre></div>
+<p>The <code>(<em> mark_debug </em>)</code> attribute tells Vivado to route these signals to the ILA probe inputs. After programming the FPGA:</p>
+<div class="language-bash highlight"><pre><span></span><code><span class="c1"># 1. Open Hardware Manager in Vivado GUI</span>
+<span class="c1"># 2. Program device with both .bit and .ltx files:</span>
+vivado<span class="w"> </span>-mode<span class="w"> </span>batch<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-source<span class="w"> </span>fpga/xilinx-ultrascale-plus/program_kcu.tcl<span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>-tclargs<span class="w"> </span>output/top.bit<span class="w"> </span>output/top.ltx
+
+<span class="c1"># 3. In Vivado Hardware Manager:</span>
+<span class="c1">#    - Set trigger: uart_txd = 0 (start bit falling edge)</span>
+<span class="c1">#    - Arm the trigger</span>
+<span class="c1">#    - Send data from terminal</span>
+<span class="c1">#    - View captured waveform</span>
+</code></pre></div>
+<h2 id="67-fpga-in-the-loop-testing"><span class="secnum">6.7</span> FPGA-in-the-Loop Testing<a class="headerlink" href="#67-fpga-in-the-loop-testing" title="Permanent link">&para;</a></h2>
+<p>After programming the FPGA, the script <code>verification/fpga-proto/</code><br> <code>fpga_in_the_loop.py</code> exercises the hardware from a Python test script running on your laptop:</p>
+<div class="language-python highlight"><pre><span></span><code><span class="kn">from</span><span class="w"> </span><span class="nn">verification.fpga_proto.fpga_in_the_loop</span><span class="w"> </span><span class="kn">import</span> <span class="n">FPGAInterface</span><span class="p">,</span> <span class="n">UARTLoopbackTest</span>
+
+<span class="c1"># Connect to FPGA via UART</span>
+<span class="n">fpga</span> <span class="o">=</span> <span class="n">FPGAInterface</span><span class="p">(</span><span class="n">port</span><span class="o">=</span><span class="s1">'/dev/ttyUSB0'</span><span class="p">,</span> <span class="n">baud</span><span class="o">=</span><span class="mi">115200</span><span class="p">)</span>
+<span class="n">fpga</span><span class="o">.</span><span class="n">connect</span><span class="p">()</span>
+
+<span class="c1"># Run UART register walk and loopback test</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">UARTLoopbackTest</span><span class="p">(</span><span class="n">fpga</span><span class="p">,</span> <span class="n">uart_base</span><span class="o">=</span><span class="mh">0x40000000</span><span class="p">)</span>
+<span class="n">fails</span> <span class="o">=</span> <span class="n">test</span><span class="o">.</span><span class="n">run_all</span><span class="p">()</span>
+<span class="c1"># Output:</span>
+<span class="c1">#   PASS: [Scratch] addr=0x001C got=0xDEADBEEF exp=0xDEADBEEF</span>
+<span class="c1">#   PASS: [LSR.DR set] addr=0x0014 got=0x00000001 exp=0x00000001</span>
+<span class="c1">#   Result: PASS (0 failures)</span>
+</code></pre></div>
+<h2 id="68-summary"><span class="secnum">6.8</span> Summary<a class="headerlink" href="#68-summary" title="Permanent link">&para;</a></h2>
+<ul>
+<li>
+<p>FPGAs are reconfigurable chips made of LUTs, flip-flops, BRAM, and DSP slices connected by programmable routing.</p>
+</li>
+<li>
+<p>The Vivado/Quartus flow takes RTL -&gt; synthesis -&gt; place &amp; route -&gt; bitstream -&gt; JTAG programming.</p>
+</li>
+<li>
+<p>Constraint files (.xdc) define pin assignments and clock frequencies.</p>
+</li>
+<li>
+<p>WNS <span class="arithmatex">\(\geq\)</span> 0 means timing passes; negative WNS means the design will malfunction at that clock frequency.</p>
+</li>
+<li>
+<p>ILA cores allow capturing internal signals on real hardware without oscilloscopes.</p>
+</li>
+<li>
+<p>FPGA-in-the-loop scripts automate hardware testing from Python.</p>
+</li>
+</ul>
+</article>
+</div>
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+</div>
+<button type="button" class="md-top md-icon" data-md-component="top" hidden>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+Back to top
+</button>
+</main>
+<footer class="md-footer">
+<nav class="md-footer__inner md-grid" aria-label="Footer" >
+<a href="ch05-bus-protocols-and-interconnects.html" class="md-footer__link md-footer__link--prev" aria-label="Previous: 5. Bus Protocols and Interconnects">
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+</div>
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Previous
+</span>
+<div class="md-ellipsis">
+5. Bus Protocols and Interconnects
+</div>
+</div>
+</a>
+<a href="ch07-verification.html" class="md-footer__link md-footer__link--next" aria-label="Next: 7. Verification">
+<div class="md-footer__title">
+<span class="md-footer__direction">
+Next
+</span>
+<div class="md-ellipsis">
+7. Verification
+</div>
+</div>
+<div class="md-footer__button md-icon">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+</div>
+</a>
+</nav>
+<div class="md-footer-meta md-typeset">
+<div class="md-footer-meta__inner md-grid">
+<div class="md-copyright">
+<div class="md-copyright__highlight">
+The Open Book Project: Reserve Shelf &middot;
+<a href="../../about.html">About this library</a> &middot;
+<a href="../../publish.html">Publish your book</a> &middot;
+© The authors of the books
+</div>
+Made with
+<a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+Material for MkDocs
+</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<div class="md-dialog" data-md-component="dialog">
+<div class="md-dialog__inner md-typeset"></div>
+</div>
+<script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tracking", "navigation.indexes", "navigation.prune", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "toc.follow", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+<script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+<script src="../../assets/mathjax.js"></script>
+<script src="../../assets/viz.js"></script>
+<script src="../../assets/remote.js"></script>
+<script src="../../assets/scans.js"></script>
+<script src="../../assets/reader.js"></script>
+<script src="../../assets/app.js"></script>
+<script src="../../assets/slides.js"></script>
+<script src="../../assets/speak.js"></script>
+<script src="../../assets/quiz.js"></script>
+<script>
+    /* offline reading: the service worker at the site root (its scope is the whole site) */
+    if ("serviceWorker" in navigator && window.isSecureContext) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register(new URL("../../sw.js", location.href).href).catch(function () {});
+      });
+    }
+  </script>
+</body>
+</html>
